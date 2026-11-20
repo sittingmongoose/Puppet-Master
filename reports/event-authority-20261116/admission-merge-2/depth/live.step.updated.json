@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.76",
+  "sha256": "295ec06204b842aca40dfc36c5341b16a15cc35ca366985c00da36b2c8597ed5",
   "family_count": 518,
   "row_pointer": "#/families/405"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/405 (canonical row SHA-256 c9f9e5af2ac4d798d48132b5d3b0237b938c215d5229582b0b08abac8110f142). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.76 as #/families/405, canonical row SHA-256 c9f9e5af2ac4d798d48132b5d3b0237b938c215d5229582b0b08abac8110f142. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -265,36 +265,58 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-643",
-       "line_start": 49311,
-       "line_end": 49311,
-       "quote": "Current selected assignment (2026-11-19): live.step.updated@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+       "line_start": 49313,
+       "line_end": 49322,
+       "quote": "  Current selected assignment (2026-11-19): live.step.updated@1.0.0 is registered for project_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2323. Its event history selects RP-RUNTIME-365D@1.0.0; Plans/storage-plan.md#SP-643\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  ds15_live_step_updated_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns\n  that stored value, not event history. Separate checkpoint assignment: ds15_live_step_updated_checkpoint uses RP-PROJECTION-3GEN@1.0.0\n  under its existing Plans/storage-plan.md#SP-643 contract; checkpoint retention grants no event/source deletion.\n  Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred\n  to them. Current append/publication still requires the exact selected schema/scope, original custody, current\n  permission, receipt and required producer adoption. Actual missing registration or unresolved required custody\n  refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-643, Plans/storage-plan.md:49246-49350",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-643, Plans/storage-plan.md:49248-49352",
+       "file_sha256": "1fa333c4ef3aa54859eae354a38973490a4de4ca54b6c8f066b2770f528c3bbb",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-643",
-        "line_start": 48974,
-        "line_end": 48974,
-        "quote": "\\ history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing\\",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 49311,
+        "line_end": 49311,
+        "quote": "Current selected assignment (2026-11-19): live.step.updated@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-643, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:49246-49350",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-643",
+         "line_start": 48974,
+         "line_end": 48974,
+         "quote": "\\ history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing\\",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "reanchor": {
+         "method": "exact_normalized",
+         "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+         "unit": "SP-643",
+         "old_quote": "\\ history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing\\",
+         "new_quote": "history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\n\n  Use the existing",
+         "normalizations": [
+          "whitespace/line wrapping",
+          "YAML quoting/escaping",
+          "Markdown escaping"
+         ],
+         "owner_change_commit": "ea68abacca470d9dd49885294f5bd5c4d0771024"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 49311
        },
-       "reanchor": {
-        "method": "exact_normalized",
-        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
-        "unit": "SP-643",
-        "old_quote": "\\ history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing\\",
-        "new_quote": "history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\n\n  Use the existing",
-        "normalizations": [
-         "whitespace/line wrapping",
-         "YAML quoting/escaping",
-         "Markdown escaping"
-        ],
-        "owner_change_commit": "ea68abacca470d9dd49885294f5bd5c4d0771024"
-       },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "82fcd08be4eff14dded876c2aa982cb389dfdf22",
+        "old_quote": "Current selected assignment (2026-11-19): live.step.updated@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-643",
+        "old_line_start": 49311,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -569,10 +591,9 @@
   "row_pointer": "#/families/405"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "6b9e93ab5d3261a9b64a790dd02042d53387b46465253aec361dfd31e1c213c8",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "82fcd08be4eff14dded876c2aa982cb389dfdf22",
+  "source_assessment_sha256": "34e7a0d02c53baf1798fa42af1f8159dbedd3787b04e2200fc45c90df12a205c",
+  "native_execution": "NOT_RUN"
  }
 }
