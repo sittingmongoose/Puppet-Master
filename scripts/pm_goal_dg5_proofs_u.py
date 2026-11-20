@@ -298,8 +298,10 @@ PROOFS = {
         kind='entailed-by-producer-construction',
         families=['goal.updated'],
         depends_on=[],
-        sites=[(U, 1805), (U, 1809), (U, 1814), ('scripts/pm_goal_test_storage.py', 598),
-               ('Plans/goal_update_command_custody.schema.json', 151)],
+        sites=[(U, 1469), (U, 1490), (U, 1805), (U, 1809), (U, 1814), (U, 1815), (U, 1816),
+               ('scripts/pm_goal_test_owner_adapters.py', 630), ('scripts/pm_goal_test_storage.py', 598),
+               ('Plans/goal_update_command_custody.schema.json', 151),
+               ('Plans/goal_update_command_custody.schema.json', 1886)],
         argument=(
             'publish (:1809-1814) validates an OriginalPublication assembled only from the '
             'append result the same call just read back: event_id from the frame-validated '
@@ -308,8 +310,10 @@ PROOFS = {
             'pm_goal_test_storage.py:598, in exactly the AppendReceipt/commitment shapes '
             'OriginalPublication references, :151), and original_append_result copied from '
             'that receipt plus the stored sequence. Every field is either a constant-shape '
-            'storage output or copied verbatim from it, so no complete publish call can make '
-            'this row refuse alone.')),
+            'storage output or copied verbatim from it. During the original recovery call '
+            'after the first receipt, disabling only this check sends the unchanged invalid '
+            'publication to Progress. That schema requires the identical OriginalPublication '
+            'definition in its event_issued branch. The original refusal returns on restoration.')),
     'dg5/dgu/inspect/event/schema': dict(
         kind='code-selection',
         families=['goal.updated'],
