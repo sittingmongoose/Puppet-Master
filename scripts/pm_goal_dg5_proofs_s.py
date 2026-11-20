@@ -668,3 +668,17 @@ PROOFS['dg5/read_current/final/root/schema'] = dict(
         'comparison to refuse.'
     ),
 )
+
+PROOFS['dg5/read_current/final/append/root/schema'] = dict(
+    kind='entailment',
+    families=['goal_run.started'],
+    depends_on=['dg5/read_current/root/schema'],
+    sites=[('scripts/pm_goal_dg_s_readers.py', 105), ('scripts/pm_goal_dg_s_readers.py', 253), ('scripts/pm_goal_dg_s_readers.py', 254), ('scripts/pm_goal_dg_s_readers.py', 256), ('scripts/pm_goal_dg_s_readers.py', 928), ('scripts/pm_goal_dg_s_readers.py', 935), ('scripts/pm_goal_dg_s_readers.py', 937)],
+    argument=(
+        'The append document checked at 105 goes unchanged into the required original_append '
+        'member at 254–256. The current reader result requires the same nested definition and '
+        'the final comparison requires both original documents to be type-exact equal. The '
+        'valid example records the same JSON in the result, and the invalid example gives the '
+        'same validation message after disabling only the early check.'
+    ),
+)
