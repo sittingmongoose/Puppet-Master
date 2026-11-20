@@ -3261,7 +3261,7 @@ def _detect_listed_survivor(context):
     """Fix round 17: a hand-written declared survivor (V04) names its rule and is listed by none; listing it, or a
     generated declared survivor, is a problem, and so is a witnessed hand-written mutation its rule omits."""
     spec = _gate_bar().load_spec(context.root)
-    survivor = next(m for m in spec["mutations"] if m.get("survives"))
+    survivor = next(m for m in spec["mutations"] if m["id"] == "hw-fix17-V04-automatic-empty-context-only")
     generated = next(k for k, e in spec["generated"]["points"].items() if e.get("survives"))
 
     def list_hand(spec):
@@ -3275,7 +3275,7 @@ def _detect_listed_survivor(context):
         rule["mutations"].remove("hw-fix17-B05-legacy-six-digit-fraction")
 
     quiet = not [p for p in _fresh_problems(context, lambda spec: None) if "survivor" in p]
-    return (quiet and survivor["id"] == "hw-fix17-V04-automatic-empty-context-only" and
+    return (quiet and survivor.get("survives") and
             any(p.endswith("lists the declared survivor %s; declared survivors are never listed" % survivor["id"])
                 for p in _fresh_problems(context, list_hand)) and
             any(("lists the declared survivor %s;" % generated) in p for p in _fresh_problems(context, list_generated)) and
