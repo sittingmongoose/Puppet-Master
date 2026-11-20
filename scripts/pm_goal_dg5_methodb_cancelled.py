@@ -9,6 +9,7 @@ from pathlib import Path
 import subprocess
 import sys
 import time
+from types import SimpleNamespace
 from unittest.mock import patch
 from uuid import UUID
 
@@ -20,48 +21,122 @@ from pm_goal_dg5_methodb_stage3 import (
 HERE = Path(__file__).resolve().parent
 
 
-def cancel_fixture(route, path, *, enrolled=False):
-    from pm_goal_dg_ca_owners import Clock
+def assignment_fixture(route, path):
+    from pm_goal_dg_ca_assignment import AssignedCancel, assigned_world
+    from pm_goal_dg_ca_c4_cases import STEPS
+
+    world = assigned_world(path)
+    cancellation = AssignedCancel(world)
+    cancellation.dispatch(cancellation.user_request())
+    method = route.split('/')[1]
+    action = 'append_original' if method == 'append_reserved' else method
+    for step in STEPS:
+        if step == action:
+            break
+        getattr(cancellation, step)()
+    return world, getattr(cancellation, action)
+
+
+def issue_action(world, scope, route):
+    from pm_goal_dg_cb_c5_cases import cancel_request, plan_bound
+
+    if route in ('issue/origin', 'issue/TEST_ONLY:host_stop_receipt'):
+        return lambda: world.host_stop.manual(scope, 'stop')
+    if route == 'issue/TEST_ONLY:plan_pending_attach':
+        return lambda: world.plans.stage_pending_attach(scope, disposition='no_effect')
+    if route == 'issue/TEST_ONLY:scheduler_callback_admission':
+        _, run = plan_bound(world, scope)
+        stop = world.host_stop.record(scope)
+        return lambda: world.scheduler.admit_callback(scope, run, run_epoch=0, stop_epoch=stop['user_stop_epoch'])
+    if route == 'issue/TEST_ONLY:workflow_activation_source':
+        return lambda: world.workflows.attach(scope)
+    if route == 'issue/TEST_ONLY:workflow_pending_operation':
+        run = world.workflows.attach(scope)
+        return lambda: world.workflows.begin_pending(scope, run)
+    if route in ('issue/TEST_ONLY:sir_accepted_dispatch', 'issue/sir_command_outcome'):
+        _, request = cancel_request(world, scope)
+        if route == 'issue/sir_command_outcome':
+            world.sir.accept(request)
+            return lambda: world.sir.finish_no_effect(request['command_instance_id'])
+        return lambda: world.sir.accept(request)
+    raise ValueError(f'unknown issuance fixture {route!r}')
+
+
+def migration_action(world, scope, route, *, enrolled, variant):
+    from pm_goal_dg_cb_c5_cases import cancel_request, plan_bound
     from pm_goal_dg_cb_c6_cases import withdrawal_request
+    import pm_goal_dg_cb_migration as migration
+
+    coordinator = world.coordinator
+    selection = migration.selector(scope)
+    mid = selection['migration_id']
+    if route in ('contracts/MigrationSelector', 'M/exclusion'):
+        return lambda: coordinator.capture(selection)
+    if route == 'contracts/OwnerMapping':
+        return lambda: world.goal.enumerate_for_migration(scope)
+    if route == 'contracts/MigrationRequest':
+        coordinator.acquire_exclusion(scope, mid)
+        return lambda: coordinator.capture(selection)
+    if route == 'contracts/ManifestPart':
+        request = coordinator.capture(selection)
+        return lambda: coordinator.commit(request)
+    if route.endswith(('/origin_schema', '/source_schema')):
+        if variant == 'plan':
+            world.plans.stage_pending_attach(scope, disposition='no_effect')
+        elif variant == 'workflow':
+            run_id = world.workflows.attach(scope)
+            world.workflows.begin_pending(scope, run_id)
+        elif variant == 'scheduler':
+            plan_bound(world, scope, callbacks=1, settled=1)
+        elif variant == 'sir':
+            _, request = cancel_request(world, scope)
+            world.sir.accept(request)
+            world.sir.finish_no_effect(request['command_instance_id'])
+        else:
+            require(variant is None, f'unknown source fixture {variant!r}')
+        if route.startswith('M/capture/'):
+            coordinator.acquire_exclusion(scope, mid)
+            return lambda: coordinator.capture(selection)
+        request = coordinator.capture(selection)
+        return lambda: coordinator.commit(request)
+    if enrolled or route in ('contracts/MigrationResult', 'domain/cutoff'):
+        coordinator.commit(coordinator.capture(selection))
+    if route == 'contracts/MigrationResult':
+        return lambda: coordinator.read_result(selection)
+    if route == 'domain/cutoff':
+        return world.binding.withdraw
+    if route in ('contracts/MigrationWithdrawalRequest', 'contracts/MigrationWithdrawalResult'):
+        request = withdrawal_request(world, scope, mid)
+        return lambda: coordinator.withdraw(request)
+    raise ValueError(f'unknown Goal Cancelled fixture {route!r}')
+
+
+def cancel_fixture(route, path, *, enrolled=False, variant=None):
+    from pm_goal_dg_ca_owners import Clock
     import pm_goal_dg_ca_owners as ca
     import pm_goal_dg_cb_migration as migration
     import pm_goal_dg_cb_owners as owners
 
-    if route == 'maintenance/source':
-        with patch.object(owners.MaintenanceOwner, 'birth', lambda self: None):
+    if route.startswith('C4A/'):
+        world, action = assignment_fixture(route, path)
+    elif route == 'maintenance/source':
+        if variant == 'update':
             world = migration.migration_world(path)
-        action = world.maintenance.birth
+            action = world.maintenance.maintenance_window
+        else:
+            with patch.object(owners.MaintenanceOwner, 'birth', lambda self: None):
+                world = migration.migration_world(path)
+            action = world.maintenance.birth
     else:
         world = migration.migration_world(path)
-        coordinator = world.coordinator
         if route == 'registration/state':
             action = world.registration.register_all
         else:
             scope = owners.legacy_goal(world, revisions=2)
-            selection = migration.selector(scope)
-            mid = selection['migration_id']
-            if route == 'contracts/MigrationSelector':
-                action = lambda: coordinator.capture(selection)
-            elif route in ('M/exclusion',):
-                action = lambda: coordinator.capture(selection)
-            elif route in ('contracts/MigrationRequest', 'contracts/OwnerMapping'):
-                coordinator.acquire_exclusion(scope, mid)
-                action = lambda: coordinator.capture(selection)
-            elif route == 'contracts/ManifestPart':
-                request = coordinator.capture(selection)
-                action = lambda: coordinator.commit(request)
+            if route.startswith('issue/'):
+                action = issue_action(world, scope, route)
             else:
-                if enrolled or route in ('contracts/MigrationResult', 'domain/cutoff'):
-                    coordinator.commit(coordinator.capture(selection))
-                if route == 'contracts/MigrationResult':
-                    action = lambda: coordinator.read_result(selection)
-                elif route == 'domain/cutoff':
-                    action = world.binding.withdraw
-                elif route in ('contracts/MigrationWithdrawalRequest', 'contracts/MigrationWithdrawalResult'):
-                    request = withdrawal_request(world, scope, mid)
-                    action = lambda: coordinator.withdraw(request)
-                else:
-                    raise ValueError(f'unknown Goal Cancelled fixture {route!r}')
+                action = migration_action(world, scope, route, enrolled=enrolled, variant=variant)
     stamp = time.time_ns() // 1_000_000 + 100
 
     def now(clock):
@@ -72,6 +147,9 @@ def cancel_fixture(route, path, *, enrolled=False):
         identifiers = count(1)
         with patch.object(Clock, 'now', now), patch.object(ca.uuid, 'uuid4',
                                                            side_effect=lambda: UUID(int=next(identifiers))):
+            if route == 'C4A/append_reserved/reference':
+                with patch.object(ca.S, 'time', SimpleNamespace(time_ns=lambda: stamp * 1_000_000)):
+                    return action()
             return action()
 
     return world, run
@@ -87,11 +165,17 @@ class CancelCheck(OwnerCheck):
         record = dict(errors=[], cut=self.row in tables.CUT, observations=[])
         expected = self.code + '/schema/'
         edited = []
+        matches = 0
+        occurrence = self.declare.get('occurrence')
         repeated = self.declare.get('repeat_equal', False)
         reference = self.declare['reference']
 
         def observe(bank, ref, value, code='root'):
+            nonlocal matches
             if code != self.code or ref != reference:
+                return original(bank, ref, value, code)
+            matches += 1
+            if occurrence is not None and matches != occurrence:
                 return original(bank, ref, value, code)
             frame = sys._getframe(1)
             site = [str(Path(frame.f_code.co_filename).relative_to(self.source)), frame.f_lineno]
@@ -231,7 +315,8 @@ def main():
     args.out.mkdir(parents=True)
     fixture = args.out / 'fixture'
     fixture.mkdir()
-    world, action = cancel_fixture(declare['route'], fixture, enrolled=declare.get('enrolled', False))
+    world, action = cancel_fixture(declare['route'], fixture, enrolled=declare.get('enrolled', False),
+                                   variant=declare.get('variant'))
     closure.patch_validator_classes(force=True)
     collector = sweep.Collector()
     check = CancelCheck(row, declare['site'], RootBank, source, fixture, declare, collector, args.disable_check)
