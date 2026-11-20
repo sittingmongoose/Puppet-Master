@@ -134,6 +134,8 @@ def fixture(declare, route, directory):
     consumer = getattr(world, 'consumer_class', reader.Consumer)(world)
     presentation = reader.Presentation(world)
     request = original.request_of(world)
+    if route['call'] == 'read_c3_proof':
+        return world, lambda: consumer.read_retained_native(request, presentation), request
     require(route['call'] == 'missing_original', f'unknown owner call {route}')
     presentation.cancellation = None
     return world, lambda: consumer.read_retained_native(request, presentation), (request, None)
@@ -381,6 +383,49 @@ def process_role_or_barrier_enum(nodes, name, path, cut, covering):
                 premise='Both rules apply together on every path to this field. The fixed value belongs to the enumeration.')
 
 
+def scope_proof_implication(nodes, name, path, cut):
+    from pm_goal_go_schema_closure import locations
+
+    location, word = name.rsplit('/', 1)
+    resource = location.split('#', 1)[0]
+    proof = resource + '#/$defs/WorkflowScopeProof'
+    schema = nodes[proof]['node']
+    if path == ['record', 'original_issuer', 'owner_method']:
+        source = proof + '/properties/original_issuer'
+        inherited, fixed = nodes[source]['node']['allOf']
+        value = fixed['properties']['owner_method']['const']
+        covering = source + '/allOf/1/properties/owner_method/const'
+        require(location == resource + '#/$defs/Issuer/properties/owner_method'
+                and word in ('type', 'minLength') and inherited['$ref'] ==
+                'https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Issuer'
+                and 'original_issuer' in schema['required']
+                and 'owner_method' in nodes[resource + '#/$defs/Issuer']['node']['required']
+                and nodes[location]['node']['type'] == 'string' and nodes[location]['node']['minLength'] == 1
+                and type(value) is str and len(value) >= 1
+                and locations(cut) == {covering}, 'the fixed scope-proof issuer rule changed')
+        return dict(source=source, covering_rule=covering,
+                    premise='The required issuer method is fixed to one nonempty string.')
+
+    condition, = schema['allOf']
+    field = 'preserved_terminal_status'
+    union = proof + '/properties/' + field
+    empty, terminal = nodes[union]['node']['oneOf']
+    when = condition['if']['properties']['d06_disposition']['const']
+    then = condition['then']['properties'][field]
+    else_ = condition['else']['properties'][field]
+    require(path == ['record', field] and name == union + '/oneOf'
+            and {'d06_disposition', field} <= set(schema['required'])
+            and schema['properties']['d06_disposition']['enum'] == ['cancelled_from_nonterminal', 'terminal_preserved']
+            and when == 'cancelled_from_nonterminal' and empty['type'] == then['type'] == 'null'
+            and terminal['enum'] == else_['enum']
+            and all(type(value) is str for value in terminal['enum']),
+            'the scope-proof disposition alternatives changed')
+    covering = proof + '/allOf/0/then/properties/' + field + '/type'
+    require(locations(cut) == {covering}, 'the original disposition condition must still refuse')
+    return dict(source=proof + '/allOf/0', covering_rule=covering,
+                premise='The required disposition selects one of the same two disjoint status alternatives.')
+
+
 def rule_path(document, path):
     prefix = path[:2] if path[:2] == ['content', 'checkpoint'] else []
     offset = len(prefix)
@@ -426,6 +471,14 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
                 f'{name}: declared branch control refused')
         guard = closure._guard_for_location(name)
         disabled = () if disabled_check == 'rule' else {guard}
+        if 'selector_messages' in example:
+            cut = go.errors_of(validator, control, disabled)
+            restored = go.errors_of(validator, control)
+            require(cut and go.locations(cut) == set(example['selector_messages']) and not restored,
+                    f'{name}: expected exact conditional messages')
+            results[name] = dict(cls='SELECTOR_OR_NEGATED', control=control, cut=errors_list(cut),
+                                 restored=errors_list(restored), source=name)
+            continue
         if example.get('intent_selector'):
             root = intent_condition(nodes, name)
             require(name == root + '/allOf/0/if/properties/kind/const'
@@ -490,6 +543,8 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
         elif example.get('process_role_or_barrier_enum'):
             record.update(cls='COVERED_LATER', implication=process_role_or_barrier_enum(
                 nodes, name, path, cut, example['process_role_or_barrier_enum']))
+        elif example.get('scope_proof_implication'):
+            record.update(cls='COVERED_LATER', implication=scope_proof_implication(nodes, name, path, cut))
         elif example.get('nullable_enum'):
             location, word = name.rsplit('/', 1)
             node = nodes[location]['node']
@@ -601,7 +656,7 @@ class OwnerExample:
                         'retained wrapper differs from the validated document')
                 returned = stored
             result['value_sha256'] = value_sha(returned)
-            if edit:
+            if edit and self.route['call'] != 'read_c3_proof':
                 require(returned.get(edit) == 'example', 'the accepted call did not return the altered document')
         except Exception as error:
             if type(error).__name__ not in bridge.REFUSAL_CLASSES:
@@ -708,6 +763,9 @@ class OwnerExample:
                 before, disabled, restored = self.trials[-3:]
                 require(before == restored and before['observations'] == disabled['observations']
                         and not disabled['errors'], 'the same invalid document and message must be restored')
+                if self.route['call'] == 'read_c3_proof':
+                    require(disabled['value_sha256'] == self.trials[0]['value_sha256'],
+                            'the accepted read must return the original retained value')
                 require(before['refusal'] == self.route['refusal'] and before['detail'] == self.route['detail'],
                         f"unexpected validation message: {before['refusal']} {before['detail']}")
         require(self.trials[0] == self.trials[-1], 'the restored valid call changed')
