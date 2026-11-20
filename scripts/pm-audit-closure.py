@@ -1480,19 +1480,27 @@ def _target_split_anchor_hashes(target: dict[str, Any], resolver: AnchorResolver
     return hashes
 
 
-def _target_stale_refs(target: dict[str, Any], resolver: AnchorResolver) -> set[tuple[str, str, str]]:
+DEFAULT_REGISTRY_REF = "Plans/.audits/_semantic_closure_registry.jsonl"
+
+
+def _target_stale_refs(
+    target: dict[str, Any], resolver: AnchorResolver, *, registry_ref: str = DEFAULT_REGISTRY_REF,
+) -> set[tuple[str, str, str]]:
     """(group, ref, stored) for each evidence ref of `target` whose content differs at `resolver`:
     whole-file hashes for legacy rows, anchor hashes for anchor.v1 rows, and split-only
     anchors for appended re-audits. Evidence that is
     missing or no longer resolves there counts as differing: the ordinary hash check reports
     it, so a re-audit that retires that report has to account for it too. Refs the ordinary
-    check never hashes (no repository path, or a directory) are left out, as it leaves them."""
+    check never hashes (no repository path, or a directory) are left out, as it leaves them.
+    A split-only row set of the target's own registry (`registry_ref`) leaves the target row
+    out, as the target's live split check does (T284)."""
     hashes = target.get("hashes") if isinstance(target.get("hashes"), dict) else {}
     anchored = hashes.get("hash_scope") == ANCHOR_SCOPE
     try:
         resolver = registry_row_resolver(target, resolver)
     except AnchorError:
         pass  # The registry validator reports malformed metadata as a structural error.
+    own_row_sets = _RegistryAnchorResolver(resolver, registry_ref, exclude_closure_id=target.get("closure_id"))
     out: set[tuple[str, str, str]] = set()
     groups = {
         "owner_evidence_hashes": hashes.get("owner_evidence_hashes"),
@@ -1504,8 +1512,9 @@ def _target_stale_refs(target: dict[str, Any], resolver: AnchorResolver) -> set[
             if not isinstance(ref, str) or not isinstance(stored, str):
                 continue
             if anchored or group == "split_anchor_hashes":
+                split_own_set = group == "split_anchor_hashes" and _registry_row_set_ref(ref, registry_ref)
                 try:
-                    current: str | None = resolver.sha256(ref)
+                    current: str | None = (own_row_sets if split_own_set else resolver).sha256(ref)
                 except AnchorError:
                     current = None
             else:
@@ -1806,10 +1815,10 @@ def validate_reaudit_split_outcome(
 
 def _bound_split_output(
     review: dict[str, Any], kind: str, supersedes: dict[str, Any], commit: str,
-    receipts: ReceiptLedger, label: str, who: str, errors: list[str],
+    receipts: ReceiptLedger, label: str, who: str, errors: list[str], *, split_id: str | None = None,
 ) -> tuple[dict[str, Any] | None, str | None]:
     try:
-        part = _bound_output_row(review, kind, supersedes, label, who, errors)
+        part = _bound_output_row(review, kind, supersedes, label, who, errors, split_id=split_id)
     except (OSError, UnicodeError) as exc:
         errors.append(f"{label}: record.reviews.{who} {kind} file cannot be read as UTF-8 JSONL: {exc}")
         return None, None
@@ -1846,7 +1855,9 @@ def validate_reaudit_split_receipt(
     if not split_id or not split_id.strip() or not _is_sha256(digest):
         errors.append(f"{label}: record.reviews.{who} needs a split_id and a SHA-256 split_row_digest")
         return None
-    split, split_commit = _bound_split_output(review, "split_packet", supersedes, commit, receipts, label, who, errors)
+    # The receipt's split_id selects its round, so a file holding two rounds for this closure resolves (T285).
+    split, split_commit = _bound_split_output(review, "split_packet", supersedes, commit, receipts, label, who, errors,
+                                              split_id=split_id)
     initial, _ = _bound_split_output(review, "initial_evidence", supersedes, commit, receipts, label, who, errors)
     if split is None or initial is None:
         return None
@@ -1868,6 +1879,34 @@ def validate_reaudit_split_receipt(
     _validate_reaudit_initial_output(initial, shown_digest, supersedes, commit,
                                      f"{label}: record.reviews.{who} initial evidence", errors)
     return split, initial
+
+
+REAUDIT_SPLIT_RECEIPT_FIELDS = ("split_id", "split_row_digest", "split_packet_path", "split_packet_sha256")
+
+
+def validate_reaudit_unanimous_split_receipt(
+    review: dict[str, Any], judged: dict[str, Any], label: str, who: str, errors: list[str],
+) -> None:
+    """Bind a unanimous record's split receipt to the final output it stands for (T282).
+
+    The owner path binds the split packet row, the receipt and the committed final judgment to one
+    split_id and canonical row digest. A unanimous record gets the same chain in two parts: here, an
+    output that echoes a split round needs the complete receipt, and the receipt's split_id and
+    split_row_digest must be the ones that output echoes; reaudit_split_anchor_hashes then requires
+    the selected packet row to have that split_id and digest. A receipt cannot select another
+    correctly pinned round with fewer anchors. This part reads no packet, so editing the packet of
+    a superseded row leaves its historical edge as split-only currentness leaves it (T275)."""
+    present = [field for field in REAUDIT_SPLIT_RECEIPT_FIELDS if field in review]
+    if not present and "split_id" not in judged and "split_row_digest" not in judged:
+        return  # an ordinary record, without a split round
+    split_id, digest = review.get("split_id"), review.get("split_row_digest")
+    if len(present) != len(REAUDIT_SPLIT_RECEIPT_FIELDS) or not isinstance(split_id, str) or not split_id.strip() \
+            or not _is_sha256(digest):
+        errors.append(f"{label}: record.reviews.{who} judged a split round, so it needs a split_id, a SHA-256 "
+                      "split_row_digest, split_packet_path and split_packet_sha256")
+        return
+    if judged.get("split_id") != split_id or judged.get("split_row_digest") != digest:
+        errors.append(f"{label}: record.reviews.{who} split receipt and output must bind the same split id and row digest")
 
 
 def validate_reaudit_split_readings(
@@ -2044,8 +2083,10 @@ def validate_reaudit_record(
         errors.append(f"{label}: record.stale_hashes_at_recheck must be a list of objects")
         stale = []
     declared = {(item.get("group"), item.get("ref"), item.get("stored")) for item in stale}
+    # validate_registry labels rows '<registry>:<line>'; a candidate stands in for the real registry.
+    registry_ref = resolver.registry_ref if isinstance(resolver, _RegistryAnchorResolver) else label.rpartition(":")[0]
     try:
-        expected = _target_stale_refs(target, at_commit)
+        expected = _target_stale_refs(target, at_commit, registry_ref=registry_ref or DEFAULT_REGISTRY_REF)
     except AnchorError as exc:
         errors.append(f"{label}: cannot check the superseded row's stale evidence at recheck_commit: {exc}")
         return
@@ -2184,6 +2225,8 @@ def validate_reaudit_record(
                 if judged.get(field) != record.get(field):
                     errors.append(f"{label}: record.{field} differs from the committed worker output it was assembled from")
             continue
+        if decision is None:
+            validate_reaudit_unanimous_split_receipt(review, judged, label, who, errors)
         shown = _bound_output_row(review, "packet", supersedes, label, who, errors)
         if shown is None:
             continue
@@ -2282,7 +2325,12 @@ def reaudit_split_anchor_hashes(
         if not split_id.strip():
             errors.append(f"{review_label} receipt needs a split_id")
             continue
-        receipt = (review["split_packet_path"], review["split_packet_sha256"], split_id)
+        # The selected row must be the round the receipt, and so the judged output, names (T282).
+        row_digest = review.get("split_row_digest")
+        if not _is_sha256(row_digest):
+            errors.append(f"{review_label} receipt needs a SHA-256 split_row_digest")
+            continue
+        receipt = (review["split_packet_path"], review["split_packet_sha256"], split_id, row_digest)
         if receipt in checked:
             continue
         checked.add(receipt)
@@ -2292,6 +2340,14 @@ def reaudit_split_anchor_hashes(
             errors.append(f"{review_label} file cannot be read as UTF-8 JSONL: {exc}")
             continue
         if packet is None:
+            continue
+        try:
+            packet_digest = sha256_text(canonical_json({key: value for key, value in packet.items() if key != "split_row_digest"}))
+        except (AnchorError, UnicodeError) as exc:
+            errors.append(f"{review_label} row cannot be digested as UTF-8 JSON: {exc}")
+            continue
+        if packet_digest != row_digest or packet.get("split_row_digest") != row_digest:
+            errors.append(f"{review_label} row and receipt must bind the same split id and row digest")
             continue
         anchors = packet.get("anchors_at_R")
         if not isinstance(anchors, list) or not anchors:
@@ -2320,17 +2376,23 @@ def _is_registry_file(dependency_path: str, registry_ref: str) -> bool:
         return False
 
 
+def _registry_row_set_ref(ref: Any, registry_ref: str) -> bool:
+    """Whether an anchor ref names a row set (jsonlset) of the registry at registry_ref."""
+    try:
+        if isinstance(ref, str):
+            path, kind = parse_anchor_ref(ref)[:2]
+            return kind == "jsonlset" and _is_registry_file(path, registry_ref)
+    except AnchorError:
+        pass
+    return False
+
+
 def reaudit_self_anchor(record: dict[str, Any], registry_ref: str) -> dict[str, str] | None:
     """The registry_self_anchor marker a re-audit row must carry: one exactly when its bound record
     depends on a row set of the registry the row is appended to (a row cannot hash itself)."""
     for ref in record.get("dependencies") or []:
-        try:
-            if isinstance(ref, str):
-                path, kind = parse_anchor_ref(ref)[:2]
-                if kind == "jsonlset" and _is_registry_file(path, registry_ref):
-                    return {"path": registry_ref, "scope": REGISTRY_SELF_ANCHOR_SCOPE}
-        except AnchorError:
-            continue
+        if _registry_row_set_ref(ref, registry_ref):
+            return {"path": registry_ref, "scope": REGISTRY_SELF_ANCHOR_SCOPE}
     return None
 
 
@@ -2622,8 +2684,16 @@ def validate_registry(registry_path: Path, *, anchor_registry_path: Path | None 
         split_hashes = reaudit_split_anchor_hashes(edge["record"], label, errors)
         if split_hashes:
             stale = []
-            row_resolver = registry_row_resolver(rows_by_line[line_no], resolver, registry_ref)
-            validate_anchor_hashes(split_hashes, "split_anchor_hashes", label, errors, stale, row_resolver)
+            row = rows_by_line[line_no]
+            row_resolver = registry_row_resolver(row, resolver, registry_ref)
+            # A split-only row set of this registry excludes this row, as the rule for a record's
+            # own dependencies does: a row cannot hash itself (T284). Every other row still counts.
+            own_sets = {ref: value for ref, value in split_hashes.items() if _registry_row_set_ref(ref, registry_ref)}
+            validate_anchor_hashes({ref: value for ref, value in split_hashes.items() if ref not in own_sets},
+                                   "split_anchor_hashes", label, errors, stale, row_resolver)
+            if own_sets:
+                self_resolver = _RegistryAnchorResolver(resolver, registry_ref, exclude_closure_id=row.get("closure_id"))
+                validate_anchor_hashes(own_sets, "split_anchor_hashes", label, errors, stale, self_resolver)
             if stale:
                 stale_by_line.setdefault(line_no, []).extend(stale)
         if len(errors) != before:
@@ -2697,6 +2767,8 @@ def validate_registry(registry_path: Path, *, anchor_registry_path: Path | None 
         "superseded_by": {str(k): v for k, v in sorted(superseded_by.items())},
         "superseded_stale_hash_count": superseded_stale,
         "unsuperseded_stale_hash_count": sum(len(v) for k, v in stale_by_line.items() if k not in superseded_by),
+        # Live re-audit rows with a structural split error (stale or unresolved anchors are not listed).
+        "split_error_lines": sorted(invalid_split_lines),
         "open_rows": open_rows,
         "errors": errors,
         "warnings": warnings,
@@ -5079,7 +5151,10 @@ def _reaudit_append(args: argparse.Namespace) -> int:
         (str((row.get("reaudit") or {}).get("record_sha256")), (row.get("supersedes") or {}).get("line")): row["_line_no"]
         for row in rows if isinstance(row.get("reaudit"), dict)
     }
-    accepted = validate_registry(registry_path).get("superseded_by", {}) if appended else {}
+    accepted_report = validate_registry(registry_path) if appended else {}
+    accepted = accepted_report.get("superseded_by", {})
+    # A live appended row whose split receipt validate reports a structural error on is not accepted (T283).
+    split_errors = set(accepted_report.get("split_error_lines", []))
     superseded = {
         (row.get("supersedes") or {}).get("line") for row in rows if isinstance(row.get("supersedes"), dict)
     }
@@ -5105,6 +5180,9 @@ def _reaudit_append(args: argparse.Namespace) -> int:
         if existing is not None:
             if accepted.get(str(record.get("line"))) != existing:
                 errors.append(f"{closure_id}: an earlier append of this record (line {existing}) does not validate; fix it before appending more")
+            elif existing in split_errors:
+                errors.append(f"{closure_id}: an earlier append of this record (line {existing}) has a split receipt error; "
+                              "fix it before appending more")
             else:
                 skipped.append(closure_id)
             continue
@@ -5707,7 +5785,14 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                 if split_case == "escaped_surrogate":
                     split["note"] = "\ud800"
                 packet = audit_dir / "reviews" / f"split-{counter[0]}.jsonl"
-                packet.write_text(json.dumps(split) + "\n")
+                rounds = [split]
+                if split_case == "two_rounds":
+                    # T285: an earlier round for the same line and closure in the same file.
+                    earlier_round = {key: value for key, value in split.items() if key != "split_row_digest"}
+                    earlier_round.update(split_id="fixture-split-0", note="An earlier round for the same closure.")
+                    earlier_round["split_row_digest"] = sha256_text(canonical_json(earlier_round))
+                    rounds.insert(0, earlier_round)
+                packet.write_text("".join(json.dumps(item) + "\n" for item in rounds))
                 if split_case == "separate_commit":
                     git("add", "--", rel(packet))
                     git("commit", "-qm", "split packet only")
@@ -5751,6 +5836,7 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                 ("owner_split_anchor_requires_snapshot_entry", "supported", split_record("supported", "not_supported", "supported", split_case="absent_anchor"), "split packet showed 'Plans/Fixture.md#unit=FIX-404' at a different snapshot"),
                 ("owner_split_anchor_requires_recheck_text", "supported", split_record("supported", "not_supported", "supported", split_case="false_anchor_text"), f"split packet text for {unit_ref} is not that anchor"),
                 ("owner_split_packet_and_output_require_same_commit", "supported", split_record("supported", "not_supported", "supported", split_case="separate_commit"), "split packet and split output were not committed together"),
+                ("owner_split_receipt_selects_its_round_among_two", "supported", split_record("supported", "not_supported", "supported", split_case="two_rounds"), None),
             ):
                 row = append_with(verdict, mutate=mutate)
                 report = validate_rows([legacy_row(), row])
@@ -6351,18 +6437,22 @@ def cmd_self_test(args: argparse.Namespace) -> int:
 
         split_only_ref = "Plans/Fixture.md#unit=FIX-002"
 
-        def bind_split_for_currentness(rec: dict[str, Any], *, conflict: bool = False) -> None:
+        def bind_split_for_currentness(rec: dict[str, Any], *, conflict: bool = False,
+                                       anchors: list[dict[str, Any]] | None = None) -> Path:
             resolver = AnchorResolver(tmp)
             split = {key: rec[key] for key in ("line", "closure_id")}
-            split.update(split_id=f"fixture-currentness-{counter[0]}", anchors_at_R=[
+            split.update(split_id=f"fixture-currentness-{counter[0]}", anchors_at_R=anchors if anchors is not None else [
                 {"ref": unit_ref, "sha256": "f" * 64 if conflict else resolver.sha256(unit_ref)},
                 {"ref": split_only_ref, "sha256": resolver.sha256(split_only_ref)},
             ])
+            split["split_row_digest"] = sha256_text(canonical_json(split))
             packet = audit_dir / "reviews" / f"{split['split_id']}.jsonl"
             packet.write_text(json.dumps(split) + "\n", encoding="utf-8")
+            echo = {key: split[key] for key in ("split_id", "split_row_digest")}
             for who in ("sol", "astra"):
-                rec["reviews"][who].update(split_id=split["split_id"], split_packet_path=rel(packet),
-                                           split_packet_sha256=sha256_file(packet))
+                rec["reviews"][who].update(echo, split_packet_path=rel(packet), split_packet_sha256=sha256_file(packet))
+                rewrite_output(rec, who, **echo)  # the final judgments echo the round they judged
+            return packet
 
         split_row = append_with(mutate=bind_split_for_currentness)
         current = validate_rows([legacy_row(), split_row])
@@ -6412,6 +6502,76 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             output.write("\n")
         report = validate_rows([legacy_row(), split_row])
         check("split_packet_sha256_mismatch_fails", has(report, "split_packet file is missing or its SHA-256 differs"), report["errors"])
+
+        # T282: a unanimous split receipt is bound to the round its reviewers judged, as on the owner path.
+        def other_split_packet(rec: dict[str, Any]) -> None:
+            shown_round = json.loads(bind_split_for_currentness(rec).read_text(encoding="utf-8"))
+            other = {key: value for key, value in shown_round.items() if key != "split_row_digest"}
+            other["anchors_at_R"] = other["anchors_at_R"][:1]  # same line, closure and split ID, fewer anchors
+            other["split_row_digest"] = sha256_text(canonical_json(other))
+            other_packet = audit_dir / "reviews" / f"other-split-{counter[0]}.jsonl"
+            other_packet.write_text(json.dumps(other) + "\n", encoding="utf-8")
+            for who in ("sol", "astra"):
+                rec["reviews"][who].update(split_packet_path=rel(other_packet), split_packet_sha256=sha256_file(other_packet))
+
+        row = append_with(mutate=other_split_packet)
+        report = validate_rows([legacy_row(), row])
+        check("unanimous_split_receipt_must_select_the_judged_round",
+              has(report, "split_packet row and receipt must bind the same split id and row digest"), report["errors"])
+        write_registry([legacy_row()])
+        code, report = run_append(dry_run=True)
+        check("reaudit_append_refuses_unanimous_split_receipt_of_another_round", code != 0 and report["would_append"] == 0
+              and has(report, "must bind the same split id and row digest"), report)
+
+        def drop_split_files(rec: dict[str, Any]) -> None:
+            bind_split_for_currentness(rec)
+            for who in ("sol", "astra"):
+                for field in ("split_packet_path", "split_packet_sha256"):
+                    rec["reviews"][who].pop(field)
+
+        row = append_with(mutate=drop_split_files)
+        report = validate_rows([legacy_row(), row])
+        check("unanimous_split_echo_needs_its_packet_receipt", has(report, "judged a split round, so it needs a split_id"),
+              report["errors"])
+
+        # T283: a replay does not count an appended split row that validate reports a split error on.
+        packet = audit_dir / "reviews" / f"fixture-currentness-{counter[0] + 1}.jsonl"
+        append_with(mutate=bind_split_for_currentness)
+        write_registry([legacy_row()])
+        code, first = run_append()
+        with packet.open("a", encoding="utf-8") as output:
+            output.write("\n")
+        replay_code, replay = run_append(dry_run=True)
+        check("reaudit_append_replay_reports_changed_split_packet", code == 0 and first["appended"] == 1
+              and replay_code != 0 and replay["already_appended"] == 0 and has(replay, "has a split receipt error"),
+              [first, replay])
+        conflict = append_with(mutate=lambda rec: bind_split_for_currentness(rec, conflict=True))
+        write_registry([legacy_row(), conflict])
+        code, replay = run_append(dry_run=True)
+        check("reaudit_append_replay_reports_live_split_error", code != 0 and replay["already_appended"] == 0
+              and has(replay, "has a split receipt error"), replay)
+
+        # T284: a split-only row set of this registry excludes the appended row itself.
+        registry_set = rel(registry) + "#jsonlset=audit_ids=audit-fixture"
+
+        def bind_registry_set(rec: dict[str, Any]) -> None:
+            now = AnchorResolver(tmp)
+            bind_split_for_currentness(rec, anchors=[{"ref": unit_ref, "sha256": now.sha256(unit_ref)},
+                                                     {"ref": registry_set, "sha256": now.sha256(registry_set)}])
+
+        append_with(mutate=bind_registry_set)
+        write_registry([legacy_row()])
+        code, dry = run_append(dry_run=True)
+        done_code, done = run_append()
+        live = validate_registry(registry)
+        check("split_only_registry_row_set_excludes_its_own_row", code == 0 and dry["would_append"] == 1 and not dry["errors"]
+              and done_code == 0 and done["appended"] == 1 and not live["errors"], [dry, done, live["errors"]])
+        # A successor's stale set leaves the predecessor out of that row set too, as its live check did.
+        own_set_row = append_with(mutate=bind_registry_set)
+        successor = append_with(rows_before=[legacy_row(), own_set_row], line=2, mutate=omit_stale_split_anchor)
+        report = validate_rows([legacy_row(), own_set_row, successor])
+        check("successor_leaves_predecessor_out_of_its_split_only_registry_row_set", not report["errors"]
+              and report["superseded_lines"] == [1, 2], report["errors"])
 
         append_with(mutate=lambda rec: rec["reviews"].pop("sol"))
         write_registry([legacy_row()])
