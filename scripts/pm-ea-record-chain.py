@@ -100,7 +100,7 @@ def main():
             record["depth_assessment"]["sha256"] = sha(depth)
             record["decision_section_sha256"] = sha(decision_bytes(decisions, record["decision_ref"].split("#")[1]))
             record["evidence_maintenance"] = dict(
-                authority="MERGE2-FIX4", source_commit=source,
+                authority=header["authority"], source_commit=source,
                 source_record_sha256=sha(old_record_raw), source_assessment_sha256=sha(old_depth),
                 source_decision_section_sha256=sha(decision_bytes(git_bytes(source, "Plans/Decision_Log.md"), old_record["decision_ref"].split("#")[1])),
                 original_registry_checkpoints_preserved=True)

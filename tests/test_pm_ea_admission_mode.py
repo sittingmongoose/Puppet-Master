@@ -840,7 +840,9 @@ class Merge2Fix1EvidenceTests(unittest.TestCase):
                 with self.subTest(row['event_type'],scope=scope):
                     self.assertTrue(sweep.decision_binding_matches(text,scope,policy))
                     self.assertFalse(sweep.decision_binding_matches(text,'wrong_'+scope,policy))
-                    self.assertFalse(sweep.decision_binding_matches(text,scope,dict(policy,policy_version='999.0.0')))
+                    wrong = (dict(policy,policy_version='999.0.0') if policy.get('policy_id') else
+                             dict(policy,setting_key=policy['setting_key']+'.wrong'))
+                    self.assertFalse(sweep.decision_binding_matches(text,scope,wrong))
                 checked += 1
         self.assertGreater(checked,0)
 
