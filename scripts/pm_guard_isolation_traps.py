@@ -191,8 +191,16 @@ def _census_traps(traps):
     unwitnessed = dict(fixtures['missing-negative'], id='unwitnessed-vector-proof', static_pass=True,
         expected='A vector without any own negative remains unproved before final failure clearing.',
         vector_proofs={'x': True, 'y': False})
+    root = 'https://pm.invalid/method-b/schema.json'
+    unused = 'https://pm.invalid/method-b/unused.json'
+    schema = dict(fixtures['schema-independent-bounds'],
+        id='declared-schema-root-unused', status='FAIL', proved_rows=0, static_pass=True,
+        expected='A declared schema root must be consumed even when it adds no guards.',
+        failure_kinds=['declared_schema_root_not_consumed'],
+        roots=[root, unused], documents={root: fixtures['schema-independent-bounds']['schema'], unused: {}},
+        validate_first_root_only=True)
     return [source, metadata, repeated, wrong_root, duplicate, graph, constructor,
-            restoration, tracing, invariants, unwitnessed]
+            restoration, tracing, invariants, unwitnessed, schema]
 
 
 def _schema_suite(g, trap, root):
@@ -219,7 +227,8 @@ def factory():
     return g.Case(table, check, context)
 '''
     path = root / 'subject.py'
-    path.write_text(source)
+    entries = '(ROOTS[0],)' if trap.get('validate_first_root_only') else 'ROOTS'
+    path.write_text(source.replace('for entry in ROOTS:', f'for entry in {entries}:'))
     module = _load(path, '_method_b_schema')
     uri = 'https://pm.invalid/method-b/schema.json'
     module.DOCUMENTS = trap.get('documents', {uri: trap['schema']})
@@ -245,9 +254,12 @@ def factory():
         _allow(g, 'subject.py', 'factory', 'call_review', 'g.schema_table(catalog, {entry: selected for entry in ROOTS})', 'Engine schema/table plumbing; no adapter-issued refusal.'),
         _allow(g, 'subject.py', 'factory.check', 'call_review', 'table.validate(entry, value)', 'Complete schema boundary for a declared root; a refusal stays tagged by the table and an unattributable refusal fails the run.')]
     suite.non_guards += [
-        _allow(g, 'subject.py', 'factory.check', 'data_operation', 'for entry in ROOTS:\n    table.validate(entry, value)', 'Iterate the declared immutable tuple of schema-root strings; each complete validation stays tagged.'),
+        _allow(g, 'subject.py', 'factory.check', 'data_operation', f'for entry in {entries}:\n    table.validate(entry, value)', 'Iterate the declared immutable tuple of schema-root strings; each complete validation stays tagged.'),
         _allow(g, 'subject.py', 'factory', 'data_operation', ' for entry in ROOTS', 'Construct selector bindings over the declared immutable tuple of roots.')]
     suite.non_guards.append(_allow(g, 'subject.py', 'factory', 'data_operation', '{entry: selected for entry in ROOTS}', 'Build a dictionary keyed only by the declared immutable root strings.'))
+    if trap.get('validate_first_root_only'):
+        suite.non_guards += [g.NonGuard(**site) for site in _review_sites('factory.check',
+            'Deliberately validate only the first declared root.', data_operation=['ROOTS[0]'])]
     return suite
 
 
