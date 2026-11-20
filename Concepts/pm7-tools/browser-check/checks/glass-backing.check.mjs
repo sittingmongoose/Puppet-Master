@@ -34,7 +34,7 @@ function grow(m, w, h, k) { const o = new Uint8Array(m.length); for (let y = 0; 
 function motionMask(a, b) { const m = new Uint8Array(a.data.length / 4); for (let i = 0, p = 0; i < a.data.length; i += 4, p++) if (Math.max(Math.abs(a.data[i] - b.data[i]), Math.abs(a.data[i + 1] - b.data[i + 1]), Math.abs(a.data[i + 2] - b.data[i + 2])) > THRESHOLD / 2) m[p] = 1; return m; }
 
 // how much of the page's content reads through the surface sel (null when it isn't on screen)
-async function readThrough(t, f, sel) {
+async function readThrough(t, f, sel, { rerenderAgents = false } = {}) {
 	const r = await f.evaluate((s) => {
 		const e = document.querySelector(s); if (!e) return null;
 		const b = e.getBoundingClientRect(), x = Math.max(0, b.left), y = Math.max(0, b.top);
@@ -70,6 +70,17 @@ async function readThrough(t, f, sel) {
 		document.head.appendChild(st);
 	}, sel);
 	try {
+		if (rerenderAgents) {
+			// Replace text leaves only. Rewriting the list's HTML also rebuilt its animated and painted descendants (T142).
+			const replaced = await f.evaluate(() => {
+				const labels = [...document.querySelectorAll('#panel-agents [data-work-rail] :is(.sh-hlabel, .wk-copy strong, .wk-copy .wk-sub, .wk-right b)')]
+					.filter((n) => n.childElementCount === 0 && n.textContent.trim() && n.checkVisibility({ visibilityProperty: true }));
+				for (const label of labels) label.replaceWith(label.cloneNode(true));
+				return labels.length;
+			});
+			if (replaced === 0) throw new Error('Glass backing rerender did not find visible Agents text leaves');
+			t.log(`Glass backing rerender: replaced ${replaced} Agents text elements before shot b`);
+		}
 		await f.waitForTimeout(350);
 		const b = await shot(t, r);
 		// Exclude the surface's own glyphs, grown by 2 px to cover re-rasterisation against another backdrop.
@@ -108,9 +119,9 @@ export default async function (t) {
 	const tierQuery = t.args.lgtier ? `lgtier=${t.args.lgtier}` : '';
 	let f = await t.app.open({ query: tierQuery });
 	const rows = [], bad = [];
-	const measure = async (sel) => {
+	const measure = async (sel, options) => {
 		sampleMemory(`before measuring ${sel}`);
-		const result = await readThrough(t, f, sel);
+		const result = await readThrough(t, f, sel, options);
 		sampleMemory(`after measuring ${sel}`);
 		return result;
 	};
@@ -190,7 +201,8 @@ export default async function (t) {
 				await f.waitForTimeout(800);
 				const fold = await f.evaluate(() => document.getElementById('sidePanelSlot').getAttribute('data-pm-rail-fold') || 'docked');
 				if ((mode === 'overlay') !== (fold === 'overlay')) { rows.push(`${look} rail ${target} (${mode}): the rail is ${fold}`); if (mode === 'overlay') bad.push(`${look} rail ${target}: no overlay at ${w}x${h} (${fold})`); continue; }
-				judge(look, `rail ${target.replace('panel-', '')} (${mode})`, await measure('#sidePanelSlot'));
+				const rerenderAgents = t.args.selftest === 'rerender' && target === 'panel-agents';
+				judge(look, `rail ${target.replace('panel-', '')} (${mode})`, await measure('#sidePanelSlot', { rerenderAgents }));
 			}
 		}
 		await t.viewport(1390, 900);
