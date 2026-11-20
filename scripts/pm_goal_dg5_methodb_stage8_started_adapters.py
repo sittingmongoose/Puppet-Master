@@ -5,9 +5,10 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+from unittest.mock import patch
 
 import pm_goal_dg5_methodb_stage7 as pilot
-from pm_goal_dg5_methodb_stage7_started_adapters import ADAPTERS, FAMILY, start_world
+from pm_goal_dg5_methodb_stage7_started_adapters import A, ADAPTERS, FAMILY, start_world
 
 
 def absent_owner(directory, negative):
@@ -22,8 +23,24 @@ def absent_owner(directory, negative):
     return world, world.registry.owner, (owner_id, owner.role), {}
 
 
+class WrongHandleType(A.OriginalHandle):
+    """A fixture-only way to supply the wrong Python type for the issued value."""
+
+
+def wrong_handle_type(directory, negative):
+    world = start_world(directory)
+    owner = world.owners["native"]
+    handle_type = WrongHandleType if negative else A.OriginalHandle
+    # Use the original issuance path to populate private custody. Restore
+    # the factory before testing the original resolver on that fixture.
+    with patch.object(A, "OriginalHandle", handle_type):
+        handle = owner.issue(None, {"fixture": "issued value"})
+    return world, owner.resolve, (handle,), {}
+
+
 CASES = {
     "absent-owner": (ADAPTERS, 329, "registry/unregistered_owner", absent_owner),
+    "wrong-handle-type": (ADAPTERS, 481, "original/handle_type", wrong_handle_type),
 }
 
 
