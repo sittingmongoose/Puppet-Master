@@ -1018,10 +1018,12 @@ def command_check_all(args):
 def command_matrix(args):
     fixtures = fixtures_now()
     out = {}
+    has_defects = False
     for name in args.boundary or BOUNDARIES:
         m = boundary_matrix(name, fixtures)
         out[name] = m
         defects = [e for e in m['negatives'] if 'defect' in e]
+        has_defects |= bool(m['errors'] or defects)
         print(json.dumps({'boundary': name, 'rows': len(m['rows']), 'controls': len(m['controls']),
                           'negatives': len(m['negatives']), 'control_errors': len(m['errors']),
                           'negative_defects': len(defects), 'unwitnessed_rows': m['unwitnessed_rows']}))
@@ -1029,6 +1031,7 @@ def command_matrix(args):
             print('  defect', e['id'], e['defect'], e['refused_by'], e['expected_codes'])
     if args.json:
         Path(args.json).write_text(json.dumps(out, indent=1, default=str) + '\n')
+    return 1 if args.strict and has_defects else 0
 
 
 # ---- Adapters ----------------------------------------------------------------------------------------------------
@@ -1244,9 +1247,13 @@ def command_run_suite(args):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest='command', required=True)
-    p = sub.add_parser('matrix')
+    p = sub.add_parser('matrix', description=(
+        'Export matrix diagnostics. By default a completed export exits 0. '
+        'Use --strict to check the exported boundaries, or check-all to also check adapters and row coverage.'))
     p.add_argument('--boundary', action='append')
     p.add_argument('--json')
+    p.add_argument('--strict', action='store_true',
+                   help='exit 1 if any selected boundary has control errors or negative defects')
     p.set_defaults(run=command_matrix)
     p = sub.add_parser('check-all')
     p.set_defaults(run=command_check_all)
