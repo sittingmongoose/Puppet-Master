@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Pip's sound: three concepts, the listening room (Fable 5.2)</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../../Icon-Concepts/Opus5.5icon/fonts.css">
+  <link rel="stylesheet" href="../opus-5.5-pip/fonts-extra.css">
+  <link rel="stylesheet" href="css/stage.css">
+  <link rel="stylesheet" href="css/plus.css">
+  <link rel="stylesheet" href="css/room.css">
+</head>
+<body class="rm" data-theme="friendly-dark" data-fam="friendly" data-scheme="dark">
+  <header class="rm-top" role="toolbar" aria-label="Listening room controls">
+    <span class="rm-brand"><span data-pip-mark="22"></span>Pip's sound <span class="rm-model" data-concept-model="Fable 5.2">Fable 5.2</span></span>
+    <label>Look <select id="rmLook" aria-label="Look"></select></label>
+    <button type="button" class="rm-btn" id="rmSound" aria-pressed="true">Sound on</button>
+    <span class="rm-hint" id="rmHint">Press any play button to start</span>
+    <span class="rm-gap"></span>
+    <a class="rm-btn" href="concept-1.html">1 Encore</a>
+    <a class="rm-btn" href="concept-2.html">2 House Band</a>
+    <a class="rm-btn" href="concept-3.html">3 Marionette Theatre</a>
+  </header>
+
+  <main class="rm-wrap">
+    <h1 class="rm-h">Three ways Pip's onboarding could sound</h1>
+    <p class="rm-lead">Every look has its own tune, its own voice for Pip and its own set of sounds, in three different directions. Everything is made in the browser as it plays: no audio files. Each concept opens as a short walk through the onboarding window; this page is for listening side by side.</p>
+
+    <section class="rm-hero" aria-label="Now playing">
+      <div class="rm-stagebox"><div id="rmStage"></div></div>
+      <div class="rm-card rm-how">
+        <div class="rm-now"><span class="rm-title" id="rmTitle">Nothing playing</span><span id="rmMeta"></span></div>
+        <div class="rm-parts" id="rmParts" aria-label="Parts playing"></div>
+        <div>
+          <div class="rm-lead" style="font-size:12.5px;margin-bottom:4px">How far along the person is (parts join as they go)</div>
+          <div class="rm-steps" id="rmSteps" role="group" aria-label="How far along"></div>
+        </div>
+        <div class="rm-row">
+          <button type="button" class="rm-btn rm-primary" id="rmPlay">Play</button>
+          <button type="button" class="rm-btn" id="rmStop">Stop</button>
+          <button type="button" class="rm-btn" id="rmWork" aria-pressed="false" title="The part that plays while the Project is being created">While creating</button>
+          <button type="button" class="rm-btn" id="rmPower" aria-pressed="false" title="The part that plays once AI is connected">AI connected</button>
+        </div>
+        <div class="rm-mix" id="rmMix" role="group" aria-label="Mix"></div>
+        <ol>
+          <li>Pick a tune in the table below: a row is a look, a column is a concept. <b>Today</b> is what PMConcept7 plays now.</li>
+          <li>Step through <b>how far along</b> to hear the parts come in, from Pip asleep to Ready.</li>
+          <li>Make Pip talk, and try the window's sounds, further down. They follow whichever tune is playing.</li>
+        </ol>
+      </div>
+    </section>
+
+    <h2 class="rm-h2">The three directions</h2>
+    <div class="rm-concepts" id="rmConcepts"></div>
+
+    <h2 class="rm-h2">One look, four ways</h2>
+    <p class="rm-lead">Press a cell to hear that look's tune in that concept. The page takes on the look, and Pip's stage on the left dresses for the concept.</p>
+    <div class="rm-grid" id="rmGrid" role="group" aria-label="Tunes by look and concept"></div>
+
+    <h2 class="rm-h2">Pip talks</h2>
+    <p class="rm-lead">Type anything. Pip says it in the current look's voice, at the pace the bubble types it, with a breath at each comma and full stop. In House Band it sings in the song's key and time; in Marionette Theatre its jaw clacks.</p>
+    <div class="rm-say">
+      <input type="text" id="rmText" value="Oh! Hi, I'm Pip. Shall we set things up together?" aria-label="What Pip says" maxlength="160">
+      <select id="rmMood" aria-label="Mood"></select>
+      <button type="button" class="rm-btn rm-primary" id="rmSay">Say it</button>
+    </div>
+    <div class="rm-lines" id="rmLines"></div>
+
+    <h2 class="rm-h2">The window's sounds</h2>
+    <p class="rm-lead">Each button is one moment of the onboarding. With a tune playing, they take their notes from its chord; in House Band they also wait for the next beat.</p>
+    <div class="rm-events" id="rmEvents"></div>
+
+    <h2 class="rm-h2">Notes</h2>
+    <div class="rm-notes">
+      <div class="rm-card">
+        <h3>What stayed</h3>
+        <ul>
+          <li>Pip's babble: one syllable for each group of vowels, typed and said together. It now has consonants, stress, pauses and a moving mouth.</li>
+          <li>One kit for each look, Retro Dark and Retro Light apart, and NieR its own.</li>
+          <li>The rules that came out of earlier listening: nothing is held (no hum), no two tones a hair apart (no wobble), nothing switched on and off fast (no buzz), no low thump on a page change, no moaning vowels in NieR. <code>tools/measure.mjs</code> measures the first three.</li>
+          <li>Nothing sounds before the first click or key, and the speaker switch stops everything.</li>
+        </ul>
+      </div>
+      <div class="rm-card">
+        <h3>Where Concept 3 comes from</h3>
+        <p>From "Marionette's Dream" (Tennon) only its quiet passages were used as a model: a key being wound, a clock's tick, a waltz's oom-pah-pah and a slow music-box line in D minor. Its heavy, fast sections were left alone. For NieR, "A Beautiful Song" gave D minor with a raised seventh, a lilting six-eight and the feeling of one voice on a stage; here there is no voice, choir or drum, the tune is on a soft bell over a harp, and it turns to D major at Ready. No melody from either piece is quoted.</p>
+      </div>
+      <div class="rm-card">
+        <h3>The stage</h3>
+        <p>Pip's mouth follows its voice. Pip nods on the beat and the light behind it breathes on the bar. Notes drift up from whatever plays the tune. Each look has more in it (a sun or moon and bunting, prisms, a drawing's title block and an oscilloscope line, a spectrum on the tube, a tempo strip on the paper, broken columns), and each concept dresses the stage: a music box, the band's instruments, or theatre curtains and footlights. Under Reduced Motion all of it is shown still.</p>
+      </div>
+      <div class="rm-card">
+        <h3>How it was checked</h3>
+        <p>The model that made this cannot hear. Every tune was checked on paper (each melody note against the chord under it), then rendered and measured: loudness (BS.1770), peaks, hum, wobble and buzz. Levels are matched across the eighteen looks by measurement: a spoken line sits at −26 LUFS, a full tune at −30. How it actually sounds is for a person to judge.</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    window.PIP_WALLS = { dark: new URL('../../Icon-Concepts/Opus5.5icon/wall-ribbons-dark.webp', document.baseURI).href, light: new URL('../../Icon-Concepts/Opus5.5icon/wall-ribbons-light.webp', document.baseURI).href };
+  </script>
+  <script src="concept-hub-bridge.js"></script>
+  <script src="../../Icon-Concepts/Opus5.5icon/pm-logo.js"></script>
+  <script src="js/worlds.js"></script>
+  <script src="js/audio/core.js"></script>
+  <script src="js/audio/inst.js"></script>
+  <script src="js/audio/music.js"></script>
+  <script src="js/audio/voice.js"></script>
+  <script src="js/audio/sfx.js"></script>
+  <script src="js/audio/concept1.js"></script>
+  <script src="js/audio/concept2.js"></script>
+  <script src="js/audio/concept3.js"></script>
+  <script src="js/audio/levels.js"></script>
+  <script src="js/audio/api.js"></script>
+  <script src="js/stage.js"></script>
+  <script src="js/stage-plus.js"></script>
+  <script src="js/room.js"></script>
+</body>
+</html>

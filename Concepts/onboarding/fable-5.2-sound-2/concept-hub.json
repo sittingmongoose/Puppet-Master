@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "id": "onboarding:fable-5.2-sound",
+  "topic": "onboarding",
+  "model": "Fable 5.2",
+  "presentation": "hybrid",
+  "order": 40,
+  "widthControl": {
+    "enabled": false,
+    "label": "Workspace width",
+    "role": "none",
+    "default": 1440,
+    "previewWidth": 1440
+  },
+  "workspace": {
+    "title": "Pip's sound · listening room",
+    "path": "index.html",
+    "openPath": "index.html",
+    "controlMode": "standard",
+    "openActions": "both"
+  },
+  "entries": [
+    {
+      "id": "sound-1-encore",
+      "title": "Sound 1 · Encore",
+      "path": "concept-1.html",
+      "openPath": "concept-1.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "onboarding",
+        "pip",
+        "sound",
+        "music",
+        "voice",
+        "stage"
+      ],
+      "order": 10
+    },
+    {
+      "id": "sound-2-house-band",
+      "title": "Sound 2 · House Band",
+      "path": "concept-2.html",
+      "openPath": "concept-2.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "onboarding",
+        "pip",
+        "sound",
+        "music",
+        "voice",
+        "stage"
+      ],
+      "order": 20
+    },
+    {
+      "id": "sound-3-marionette-theatre",
+      "title": "Sound 3 · Marionette Theatre",
+      "path": "concept-3.html",
+      "openPath": "concept-3.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "onboarding",
+        "pip",
+        "sound",
+        "music",
+        "voice",
+        "stage"
+      ],
+      "order": 30
+    }
+  ]
+}

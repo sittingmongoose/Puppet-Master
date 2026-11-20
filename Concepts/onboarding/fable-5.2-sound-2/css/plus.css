@@ -1,0 +1,39 @@
+/* The stage's extra layers (stage-plus.js) and the concept controls (Fable 5.2). */
+.ppx-pulse { transform-box: fill-box; transform-origin: 50% 62%; }
+.ppx-sun { animation: ppx-turn 60s linear infinite; }
+.ppx-flag { animation: ppx-sway 4.4s ease-in-out infinite; animation-delay: var(--dl, 0s); }
+.ppx-flower { animation: ppx-sway 5.2s ease-in-out infinite; animation-delay: var(--dl, 0s); }
+.ppx-prism { animation: ppx-float 9s ease-in-out infinite; animation-delay: var(--dl, 0s); }
+.ppx-star { animation: ppx-twinkle 3.4s ease-in-out infinite; animation-delay: var(--dl, 0s); }
+.ppx-inst { animation: ppx-hang var(--d, 6s) ease-in-out infinite; animation-delay: var(--dl, 0s); }
+.ppx-inst .ppx-drop { transform: translateY(-190px); opacity: 0; transition: opacity .2s; }
+.ppx-inst.ppx-in .ppx-drop { transform: none; opacity: 1; }
+.ppx-lampglow { opacity: .55; mix-blend-mode: plus-lighter; }
+.pst[data-scheme="light"] .ppx-lampglow { mix-blend-mode: normal; opacity: .4; }
+.ppx-set, .ppx-deco, .ppx-light, .ppx-front { pointer-events: none; }
+.ppx-note { pointer-events: none; }
+@keyframes ppx-turn { to { transform: rotate(360deg); } }
+@keyframes ppx-sway { 0%, 100% { transform: rotate(-3.5deg); } 50% { transform: rotate(3.5deg); } }
+@keyframes ppx-float { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-9px) rotate(5deg); } }
+@keyframes ppx-twinkle { 0%, 100% { opacity: .25; } 50% { opacity: .9; } }
+@keyframes ppx-hang { 0%, 100% { transform: rotate(-1.6deg); } 50% { transform: rotate(1.6deg); } }
+.pst[data-reduced="1"] .ppx-sun, .pst[data-reduced="1"] .ppx-flag, .pst[data-reduced="1"] .ppx-flower, .pst[data-reduced="1"] .ppx-prism, .pst[data-reduced="1"] .ppx-star, .pst[data-reduced="1"] .ppx-inst { animation: none; }
+@media (prefers-reduced-motion: reduce) { .ppx-sun, .ppx-flag, .ppx-flower, .ppx-prism, .ppx-star, .ppx-inst { animation: none; } }
+/* Retro's tubes draw in steps; their extra pieces do not glide either */
+.pst[data-tube] .ppx-star { animation-timing-function: steps(2, end); }
+
+/* ---------------------------------------------------------------- concept controls */
+.cc { flex-wrap: wrap; row-gap: 6px; }
+.cc-concepts { display: inline-flex; gap: 2px; padding: 2px; border-radius: 10px; background: color-mix(in srgb, currentColor 9%, transparent); }
+.cc-concepts button { font: inherit; font-size: 12px; font-weight: 600; padding: 5px 10px; border: 0; border-radius: 8px; background: transparent; color: inherit; cursor: pointer; white-space: nowrap; }
+.cc-concepts button[aria-pressed="true"] { background: var(--cc-on, #fff); color: var(--cc-on-ink, #111); box-shadow: 0 1px 2px rgba(0, 0, 0, .25); }
+.cc-concepts button:focus-visible, .cc-mix input:focus-visible, .cc-parts:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.cc-mix { display: inline-flex; align-items: center; gap: 10px; font-size: 11.5px; }
+.cc-mix label { display: inline-flex; align-items: center; gap: 5px; opacity: .9; }
+.cc-mix input[type="range"] { width: 68px; accent-color: currentColor; }
+.cc-parts { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; opacity: .92; }
+.cc-parts i { font-style: normal; padding: 2px 6px; border-radius: 6px; border: 1px solid color-mix(in srgb, currentColor 30%, transparent); opacity: .4; }
+.cc-parts i.on { opacity: 1; background: color-mix(in srgb, currentColor 14%, transparent); }
+.cc-now { font-size: 11.5px; opacity: .8; max-width: 46ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cc-hint { font-size: 11.5px; padding: 3px 8px; border-radius: 8px; background: color-mix(in srgb, currentColor 12%, transparent); }
+.cc-hint[hidden] { display: none; }
