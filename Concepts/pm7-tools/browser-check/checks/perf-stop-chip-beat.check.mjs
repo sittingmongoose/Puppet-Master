@@ -544,45 +544,29 @@ export function judgeSpeed(R) {
 	const marks = (R.marks || []).filter((m) => m.kind === 'speed' && m.i >= 0);
 	const bad = [];
 	const seen = [];
-	// NieR hides .ss-bl, and the glow loop lives inside it. A speed's own samples are what count:
-	// the Fast half of a NieR run can still catch a glow that a later restyle drops, and requiring
-	// that glow on Slow then reports the glyph as missing (Alexis, qw3 run-probe2). A window with
-	// no glow, on NieR, judges the glyph. A window that has a glow, and every other look, must
-	// produce both. A missing one fails the row.
+	// Judge each pace's terminal sample. NieR hides the backlight on restyle, so a glyph-only
+	// NieR sample is allowed even when that pace or another pace earlier showed a glow.
 	for (let s = 0; s < marks.length; s++) {
 		const m = marks[s];
 		const speed = /Fast/.test(m.name) ? 'Fast' : /Slow|Cinematic/.test(m.name) ? 'Slow' : null;
 		if (!speed) continue;
 		const factor = SPEED_FACTOR[speed];
 		const end = s + 1 < marks.length ? marks[s + 1].i : R.rows.length;
-		const lastB = {}, lastRow = {};
-		let nier = false, glow = false;
+		const lastRow = {};
 		for (let i = m.i; i < end && i < R.rows.length; i++) {
 			const r = R.rows[i];
 			if (!r || (r.flow !== 'waiting' && r.flow !== 'flowing')) continue;
-			if (r.nier === 'on') nier = true;
 			lastRow[r.flow] = r;
-			if (r.b && r.b.dur > 0) { lastB[r.flow] = r.b; glow = true; }
 		}
 		seen.push(speed);
 		for (const flow of ['waiting', 'flowing']) {
-			const term = lastRow[flow], glyph = term?.g, backlight = lastB[flow];
-			if (!(glyph?.dur > 0)) { bad.push({ speed, flow, layer: 'glyph', missing: true }); continue; }
-			// PM7PERF-STOPCHIP-SPEED-STALE-BACKLIGHT (R65 A1): the pace's terminal sample decides whether the
-			// backlight is there. An earlier scaled sample does not stand in for a later missing one: a glyph
-			// still sampled while the backlight has disappeared is a loop the run no longer shows, and a look
-			// that must draw both fails as could not judge. A terminal sample taken in NieR is exempt: NieR hides
-			// the backlight, and its Fast window can still catch a glow that the look's restyle then drops (the
-			// real page, NieR Dark, Alexis 2026-11-16: this rule first failed it), so a NieR sample with a glyph
-			// and no backlight is the look's normal state. NieR's glyph-only allowance is otherwise unchanged.
-			if (!(term.b?.dur > 0) && term.nier !== 'on') {
-				bad.push({ speed, flow, layer: 'backlight', missing: true });
-				continue;
-			}
+			const term = lastRow[flow], glyph = term?.g, backlight = term?.b;
 			const want = LOOP_BASE[flow] * factor;
-			if (Math.abs(glyph.dur - want) > 1) bad.push({ speed, flow, layer: 'glyph', dur: glyph.dur, want });
-			if (backlight) { if (Math.abs(backlight.dur - want) > 1) bad.push({ speed, flow, layer: 'backlight', dur: backlight.dur, want }); }
-			else if (!(nier && !glow)) bad.push({ speed, flow, layer: 'backlight', missing: true });
+			if (!(glyph?.dur > 0)) bad.push({ speed, flow, layer: 'glyph', missing: true });
+			else if (Math.abs(glyph.dur - want) > 1) bad.push({ speed, flow, layer: 'glyph', dur: glyph.dur, want });
+			if (backlight?.dur > 0) {
+				if (Math.abs(backlight.dur - want) > 1) bad.push({ speed, flow, layer: 'backlight', dur: backlight.dur, want });
+			} else if (term?.nier !== 'on') bad.push({ speed, flow, layer: 'backlight', missing: true });
 		}
 	}
 	if (!seen.includes('Fast') || !seen.includes('Slow')) bad.push({ missing: ['Fast', 'Slow'].filter((x) => !seen.includes(x)) });

@@ -131,4 +131,15 @@ const noLoops = judge(bothGone);
 assert.equal(noLoops.ok, false, 'earlier durations cannot replace missing terminal loops');
 assert.deepEqual(noLoops.bad.filter((x) => x.missing && x.layer === 'glyph').map((x) => `${x.speed}/${x.flow}`).sort(),
 	['Fast/flowing', 'Fast/waiting', 'Slow/flowing', 'Slow/waiting'], 'all four terminal glyphs are missing');
-console.log('stop-chip-speed: 12 cases pass');
+// R74/R75 C3: Fast briefly has a glow while waiting. Its flowing pace never shows one.
+const waitingGlow = nierGlowThenGone();
+waitingGlow.rows.splice(2, 1);
+waitingGlow.marks[1].i--;
+assert.equal(judge(waitingGlow).ok, true, 'a waiting glow does not require a flowing glow in NieR');
+waitingGlow.rows[0].b.dur = BASE.waiting;
+assert.equal(judge(waitingGlow).ok, true, 'a transient unscaled glow does not replace a glyph-only NieR terminal sample');
+waitingGlow.rows[1].b = { dur: BASE.waiting };
+const visibleGlow = judge(waitingGlow);
+assert.deepEqual(visibleGlow.bad, [{ speed: 'Fast', flow: 'waiting', layer: 'backlight', dur: 3200, want: 1920 }],
+	'a glow still present at the end of its pace must scale in NieR too');
+console.log('stop-chip-speed: 15 cases pass');
