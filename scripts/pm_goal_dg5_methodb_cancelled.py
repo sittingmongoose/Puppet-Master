@@ -148,6 +148,8 @@ def fixture(declare, route, directory):
         return world, lambda: consumer.read_retained_native(copy.deepcopy(request), presentation), request
     if route['call'] == 'read_c3_proof':
         return world, lambda: consumer.read_retained_native(request, presentation), request
+    if route['call'] == 'read_preserved_head':
+        return world, lambda: consumer.read_preserved(request, presentation), (request, presentation)
     if route['call'] == 'read_preserved':
         return world, lambda: consumer.read_preserved(request, presentation), request
     require(route['call'] == 'missing_original', f'unknown owner call {route}')
@@ -1059,6 +1061,7 @@ class OwnerExample:
         self.pointer = route['call'] == 'publish_pointer'
         self.stop = route['edition'] == 'w12b'
         self.checkpoint = route['call'] == 'project_checkpoint'
+        self.preserved_head = route['call'] == 'read_preserved_head'
         self.writes = self.pointer or self.checkpoint or route['call'] in (
             'issue_physical', 'filesafe_invocation', 'publish_workflow_head')
 
@@ -1089,7 +1092,7 @@ class OwnerExample:
                 require(registry_realm == self.route['registry_realm'],
                         f'owner validator selected unexpected registry realm {registry_realm}')
             require(ident == self.route['root'], f'owner call reached unexpected root {ident}')
-            if edit and len(result['observations']) + 1 == checks:
+            if edit and not self.preserved_head and len(result['observations']) + 1 == checks:
                 require(edit not in value, 'test example already has the extra member')
                 value[edit] = 'example' if not self.checkpoint or self.route['edition'] == 'integrated_native' else 'x' * 16384
             errors = errors_list(list(plain.iter_errors(value)))
@@ -1136,6 +1139,11 @@ class OwnerExample:
 
         try:
             with ExitStack() as stack:
+                if edit and self.preserved_head:
+                    presentation = inputs[1]
+                    handles = dict(presentation.cancellation)
+                    handles['original_d01_head'] = handles['result']
+                    stack.enter_context(patch.object(presentation, 'cancellation', handles))
                 if self.pointer:
                     stack.enter_context(patch.object(Bank, 'validate', validate_pointer))
                 elif self.stop:
@@ -1164,7 +1172,8 @@ class OwnerExample:
                             'retained wrapper differs from the validated document')
                 returned = stored
             result['value_sha256'] = value_sha(returned)
-            if edit and not self.checkpoint and self.route['call'] not in ('read_c3_proof', 'read_request'):
+            if edit and not self.checkpoint and not self.preserved_head and self.route['call'] not in (
+                    'read_c3_proof', 'read_request'):
                 require(returned.get(edit) == 'example', 'the accepted call did not return the altered document')
         except Exception as error:
             if type(error).__name__ not in bridge.REFUSAL_CLASSES:
@@ -1282,7 +1291,7 @@ class OwnerExample:
                             f"single-check trial {record['kill']}: {record.get('cut_errors')}")
                 require(before == restored and before['observations'] == disabled['observations'],
                         'the same invalid document and message must be restored')
-                if self.route['call'] in ('read_c3_proof', 'read_request'):
+                if self.preserved_head or self.route['call'] in ('read_c3_proof', 'read_request'):
                     require(disabled['value_sha256'] == self.trials[0]['value_sha256'],
                             'the accepted read must return the original retained value')
                 require(before['refusal'] == self.route['refusal'] and before['detail'] == self.route['detail'],
