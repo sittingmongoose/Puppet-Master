@@ -2264,7 +2264,9 @@
     var pre = m && m.target === target ? m : null;
     if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
     hiddenLenses.delete(L); showUnwatch(L);
-    if (!L.carryFrame && switchMotion === 'hop' && cfg.sel === '.pmw-strip' && target.getAttribute('data-tab-id') === 'dashboard:home') sampleCarryFrame(L);
+    if (!L.carryFrame && switchMotion === 'hop' &&
+        ((cfg.sel === '.pmw-strip' && target.getAttribute('data-tab-id') === 'dashboard:home') ||
+         (filesSwitcher(strip) && target.getAttribute('data-tab') === 'explorer'))) sampleCarryFrame(L);
     if (L.scroller && L.scroller.isConnected) {
       var out;
       if (pre && pre.scroller === L.scroller && pre.out !== undefined) out = pre.out;
@@ -2420,6 +2422,7 @@
     var T = L.hopTarget; if (!T || !L.hopFrames) return;
     if (!T.isConnected) { endHop(L); return; }
     var cfg = L.cfg; if (!T.matches(cfg.active || '.active')) return;
+    if (T.getAttribute('data-tab') === 'changed' && filesSwitcher(L.strip)) L.filesChangedSeen = true;
     /* (a carried block lands by its own clock, which a long task right after the press may have held back) */
     var K = L.carry, wait = K ? K.dur - carryAge(K) : L.hopEnd - performance.now();
     /* (and not before the compositor has reported the block's start, nor while its change is still to come: until then
@@ -2537,7 +2540,8 @@
   var CARRY_FOLLOW = 0.5, CARRY_FOLLOW_MS = 110;   /* the least time a carried chip takes to follow its tab to a new box: half
                                                      its trip, never under 110 ms (Basic's snap is 110 ms, Friendly's hop 440) */
   var FRAME_MS = 1000 / 60;
-  /* Measure the settled Home strip's refresh before a cold carry. At 120 Hz a 16.7 ms allowance per
+  function filesSwitcher(strip) { return strip.matches('#panel-files > .pm-segtab'); }
+  /* Measure the starting strip's refresh before a cold carry. At 120 Hz a 16.7 ms allowance per
      callback would spend two refreshes of travel in a single commit after even a short missed frame. */
   function sampleCarryFrame(L) {
     var last = null, count = 0;
@@ -2683,7 +2687,8 @@
     var T = plan(at, go ? null : 0, from), start = performance.now() - at;
     var coldAgents = !go && cfg.sel === '.pmw-strip' &&
       target.getAttribute('data-tab-id') === 'dashboard:agents' && window.PMW && !window.PMW.instances['dashboard:agents'];
-    var framePaced = go ? go.K.framePaced : coldAgents && hopping;
+    var coldChanged = !go && !L.filesChangedSeen && target.getAttribute('data-tab') === 'changed' && filesSwitcher(strip);
+    var framePaced = go ? go.K.framePaced : (coldAgents || coldChanged) && hopping;
     var parts = [F, G, S].concat(SK), anims = [], lead = null;
     parts.forEach(function (e, j) {
       if (!e) return;
@@ -2712,8 +2717,8 @@
     take(T);
     if (coldAgents && !framePaced && typeof window.PM_START_ON_SHOWN === 'function') window.PM_START_ON_SHOWN(anims, { startHeld: true, frames: 10 });
     if (framePaced) {
-      // The press can start this carry before pointerup mounts Agents. Its later layout and raster can
-      // miss frames after the chip has begun. Advance all its parts together and leave missed time out.
+      // The carry can start on pointerdown, before the click renders Agents or fits the Changed pane.
+      // Advance all parts together and leave out time from frames missed during that work.
       var last = null;
       var advance = function (now) {
         if (L.carry !== K) return;

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // FO-240. The recording is finalized after browser-check exits, so run this after the recorded check.
 // Accepts home-agents-first-press's native-press.json or switcher-carry-steps's --set dump= output
-// from a Friendly Dark Home run with --set film=1. Both films need --no-pointer-marker.
+// from a Friendly Dark Home or Files rail run with --set film=1. Use --no-pointer-marker.
 import { spawnSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { nativeStepLimit } from '../helpers/carry-frames.mjs';
@@ -25,7 +25,8 @@ const mark = (label) => timeOf(marks.find((m) => m.label === label));
 
 function firstPress(data) {
 	if (data.animation) {
-		if (!data.firstPress || !data.selected) throw new Error('A trusted first press did not select Agents');
+		if (!data.firstPress || !data.selected) throw new Error('Missing the trusted first press or its selected destination');
+		const rail = data.route === 'rail';
 		const { frames, dur, width: w, height: h } = data.animation;
 		const kf = frames.map(({ offset: o, transform }) => {
 			const m = /^translate\(([-\d.]+)px,\s*([-\d.]+)px\) rotate\(([-\d.]+)deg\) scale\(([-\d.]+),\s*([-\d.]+)\)$/.exec(transform);
@@ -33,29 +34,33 @@ function firstPress(data) {
 			const [dx, dy, r, kx, ky] = m.slice(1).map(Number);
 			return { o, dx, dy, r, kx, ky };
 		});
-		return { home: data.homeBox, agents: data.agentsBox, rec: { box: { x: 0, y: 0, w, h }, kf, dur },
-			start: mark('First Home to Agents press'), end: mark('Agents settled') + 0.05 };
+		return { from: data.homeBox, to: data.agentsBox, rail, rec: { box: { x: 0, y: 0, w, h }, kf, dur },
+			start: mark(rail ? 'First Explorer to Changed press' : 'First Home to Agents press'),
+			end: mark(rail ? 'Changed settled' : 'Agents settled') + 0.05 };
 	}
-	const cell = data.cells?.find((c) => c.look === 'friendly-dark' && c.mode === 'motion' && c.group === 'home');
+	const eligible = (c) => c.look === 'friendly-dark' && c.mode === 'motion';
+	const cell = data.cells?.find((c) => eligible(c) && c.group === 'home') ||
+		data.cells?.find((c) => eligible(c) && c.group === 'rail');
+	const rail = cell?.group === 'rail';
 	const label = cell?.tag + ' single 1', start = mark(label);
 	const press = data.pageMarks?.find((p) => p.label === label);
-	if (!cell || !press) throw new Error('Missing the Friendly Dark Home first press');
-	const strip = '.pmw-strip[data-tsm]';
+	if (!cell || !press) throw new Error('Missing the Friendly Dark first press');
+	const strip = rail ? '#sidePanelSlot .pm-segtab' : '.pmw-strip[data-tsm]';
 	const before = cell.smp.rows.findLast((r) => r.k === 'task' && r.now < press.pt && r.s[strip]?.items?.length >= 2)?.s[strip];
 	const rec = cell.data.anims.find((a) => a.strip === strip && a.created >= press.pt && a.created < cell.ends[0]);
 	if (!before || !rec) throw new Error('Missing the first press tab boxes or carry record');
-	return { home: bounds(before.items[0]), agents: bounds(before.items[1]), rec: { ...rec, kf: rec.kf0, dur: rec.dur0 },
+	return { from: bounds(before.items[0]), to: bounds(before.items[1]), rail, rec: { ...rec, kf: rec.kf0, dur: rec.dur0 },
 		start, end: Math.min(start + (cell.ends[0] - press.pt) / 1000, mark(cell.tag + ' single 0') - 0.08) };
 }
 
 function measure() {
-	const { home, agents, rec, start, end } = firstPress(json(observations));
+	const { from, to, rail, rec, start, end } = firstPress(json(observations));
 	if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start || !(rec.dur > 0) || rec.kf?.length < 2) {
 		throw new Error('Missing press marks or a readable motion reference');
 	}
-	const x = Math.floor(home.x) - 7, y = Math.floor(Math.min(home.y, agents.y)) - 10;
-	const w = Math.ceil(agents.x + agents.width) - x + 7;
-	const h = Math.ceil(Math.max(home.y + home.height, agents.y + agents.height)) - y + 6;
+	const x = Math.floor(from.x) - 7, y = Math.floor(Math.min(from.y, to.y)) - 10;
+	const w = Math.ceil(to.x + to.width) - x + 7;
+	const h = Math.ceil(Math.max(from.y + from.height, to.y + to.height)) - y + 6;
 	// Use packet presentation times for source-frame ordinals. Decode the matching frames in
 	// presentation order without resampling or filling gaps with synthetic images.
 	const probe = jsonBuffer(cmd('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_packets', '-show_streams',
@@ -70,23 +75,26 @@ function measure() {
 		'-frames:v', String(hi - lo + 1), '-fps_mode', 'passthrough', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-']);
 	if (raw.length !== n * (hi - lo + 1)) throw new Error('The decoder did not yield all frames in the press');
 
-	// Choose the chip fill from the interior of settled Home in the actual recording.
+	// Choose the chip fill from the settled starting tab in the actual recording.
 	const colors = new Map();
-	for (let j = Math.ceil(home.y - y) + 4; j < home.y - y + home.height - 4; j++) {
-		for (let i = Math.ceil(home.x - x) + 4; i < home.x - x + home.width - 4; i++) {
+	for (let j = Math.ceil(from.y - y) + 4; j < from.y - y + from.height - 4; j++) {
+		for (let i = Math.ceil(from.x - x) + 4; i < from.x - x + from.width - 4; i++) {
 			const rgb = raw.readUIntBE((j * w + i) * 3, 3);
 			colors.set(rgb, (colors.get(rgb) || 0) + 1);
 		}
 	}
 	const rgb = [...colors].sort((a, b) => b[1] - a[1])[0]?.[0];
-	if (rgb == null) throw new Error('The Home fill is unreadable');
+	if (rgb == null) throw new Error('The starting chip fill is unreadable');
 	const fill = [rgb >> 16, (rgb >> 8) & 255, rgb & 255];
+	// The rail's focus outline and shadow are distinct from its solid fill.
+	const matches = rail ? (p) => fill.reduce((sum, v, c) => sum + (v - raw[p + c]) ** 2, 0) <= 20 ** 2
+		: (p) => fill.every((v, c) => Math.abs(v - raw[p + c]) <= 24);
 	const frames = [];
 	for (let i = lo; i <= hi; i++) {
 		const columns = new Uint16Array(w);
 		for (let j = 0; j < h * w; j++) {
 			const p = (i - lo) * n + j * 3;
-			if (fill.every((v, c) => Math.abs(v - raw[p + c]) <= 24)) columns[j % w]++;
+			if (matches(p)) columns[j % w]++;
 		}
 		const left = columns.findIndex((c) => c >= 3), right = columns.findLastIndex((c) => c >= 3);
 		frames.push({ frame: i, pts: pts[i], left: left < 0 ? null : x + left, right: right < 0 ? null : x + right });
@@ -99,7 +107,7 @@ function measure() {
 	const worst = pairs.reduce((a, b) => !a || b.step > a.step ? b : a, null);
 	const missing = frames.filter((f) => f.right == null);
 	const anchored = (box, slice) => slice.every((f) => f.right != null && Math.abs(f.right - (box.x + box.width)) <= 5);
-	const complete = anchored(home, frames.slice(0, 2)) && anchored(agents, frames.slice(-2));
+	const complete = anchored(from, frames.slice(0, 2)) && anchored(to, frames.slice(-2));
 	const over = pairs.filter((p) => p.step > allow);
 	const ok = Number.isFinite(allow) && complete && !missing.length && !!worst && !over.length;
 	return { verdict: ok ? 'PASS' : 'FAIL', crop: [x, y, w, h], fill, allow, complete, missing, worst, over, frames };
