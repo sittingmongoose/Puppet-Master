@@ -73,7 +73,19 @@ def original_ref_type(directory, negative):
     return world, owner.authenticate, (ref, value), {}
 
 
+def withdrawn_reference(directory, negative):
+    world = start_world(directory)
+    owner = world.owners['native']
+    value = {'value': 'first'}
+    ref = 'TEST_ONLY:stage7-original-ref'
+    handle = owner.issue(None, value, ref=ref)
+    if negative:
+        owner.withdraw(handle)
+    return world, owner.authenticate, (ref, value), {}
+
+
 CASES = {
+    'withdrawn-reference': (ADAPTERS, 500, 'original/withdrawn', withdrawn_reference),
     'original-ref-type': (ADAPTERS, 497, 'original/ref_type', original_ref_type),
     'withdrawn-handle': (ADAPTERS, 484, 'original/withdrawn', withdrawn_handle),
     'issue-immutable': (ADAPTERS, 466, 'issue/immutable_ref', issue_immutable),
