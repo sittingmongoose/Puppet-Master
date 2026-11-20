@@ -126,6 +126,32 @@ test('R125 #2 control: a return on the second sample is still within two frames'
  assert.equal(v.r2.backFrames,2);
  assert.equal(v.r2.ok,true);
 });
+// R125 #3: a marker that outlives the nominal deadline must not be excused by a light that came back in the gap.
+test('R125 #3: a return seen before the marker removal fails, even when the marker outlives the deadline',()=>{
+ const r=make();
+ r.ops=[{t:101,op:'wheel'},{t:720,op:null}];
+ r.probe={due:670,fired:720};
+ r.cls=[{t:690,card:'new',on:true}];
+ for(const f of r.frames)Object.assign(f,{op:f.t<720?'wheel':null,lit:f.t>=690?['new']:[],tools:f.t>=690?.9:0});
+ const v=j(r);
+ assert.equal(v.r2.end,200);
+ assert.equal(v.r2.late,50);
+ assert.equal(v.r2.back,null);
+ assert.equal(v.r2.early,3);
+ assert.equal(v.r2.ok,false);
+});
+test('R125 #3 control: the same late end passes when the return follows the marker removal',()=>{
+ const r=make();
+ r.ops=[{t:101,op:'wheel'},{t:720,op:null}];
+ r.probe={due:670,fired:720};
+ r.cls=[{t:730,card:'new',on:true}];
+ for(const f of r.frames)Object.assign(f,{op:f.t<720?'wheel':null,lit:f.t>=730?['new']:[],tools:f.t>=730?.9:0});
+ const v=j(r);
+ assert.equal(v.r2.end,200);
+ assert.equal(v.r2.back,10);
+ assert.equal(v.r2.early,0);
+ assert.equal(v.r2.ok,true);
+});
 // TB6 item 1: a 258 ms driver gap is reported as a broken burst; a 30 ms cadence is not.
 test('TB6 item 1: a 258 ms driver gap is reported as a broken burst; a 30 ms cadence is not',()=>{
  const r=make();

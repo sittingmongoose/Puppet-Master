@@ -123,21 +123,27 @@ export function judge(rec, { rest, back }) {
 	const ins = rec.trans.filter((x) => during(x) && x.under && !x.approved && !x.chartControlled && !x.exiting && !neutralExit(x));
 	const litFrames = active.filter((x) => x.lit.concat(x.near || []).length > 0);
 	const toolFrames = active.filter((x) => x.t >= firstScroll + (rec.fadeMs ?? 140) + 50 && x.tools > 0.05);
-	// R2 times the first actual return after the independent rest deadline. An already-lit target is an early return.
+	// R2 times the first actual return after the pause's real end. An already-lit target is an early return.
 	const after = rec.frames.filter((x) => x.t >= due - 2);
 	const settled = after.at(-1), target = settled?.card;
+	const endT = release?.t ?? null;
+	// R125 #3: the return is judged only after the marker's actual removal. The old search started at the nominal
+	// deadline, so when the marker outlived it a light and tools already back in the gap counted (a negative back
+	// delay), and the row passed a page that never stayed suppressed to its end. Signals before the actual end are
+	// now an early return; the return itself must be seen at or after it.
+	const sinceEnd = (x) => endT != null && x.t >= endT;
+	const early = endT == null ? [] : after.filter((x) => x.t < endT && x.card === target && (x.lit.includes(target) || x.tools > 0.5));
 	const lightT = settled?.lit.includes(target) && settled.tools > 0.5 ?
-		(rec.cls || []).find((x) => x.t >= due - 2 && x.card === target && x.on)?.t ??
-		after.find((x) => x.card === target && x.lit.includes(target))?.t : null;
-	const toolsTr = rec.trans.find((x) => x.t >= due - 2 && x.card === target && x.prop === 'opacity' && /pmu-cardtools/.test(x.cls));
-	const toolsFr = after.find((x) => x.card === target && x.tools > 0.5);
+		(rec.cls || []).find((x) => sinceEnd(x) && x.card === target && x.on)?.t ??
+		after.find((x) => sinceEnd(x) && x.card === target && x.lit.includes(target))?.t : null;
+	const toolsTr = rec.trans.find((x) => sinceEnd(x) && x.card === target && x.prop === 'opacity' && /pmu-cardtools/.test(x.cls));
+	const toolsFr = after.find((x) => sinceEnd(x) && x.card === target && x.tools > 0.5);
 	const toolsT = toolsFr ? toolsFr.t : Infinity;
-	const backT = coverage && !litFrames.length && !toolFrames.length && lightT != null && toolsT !== Infinity ? Math.max(lightT, toolsT) : null;
+	const backT = coverage && !litFrames.length && !toolFrames.length && !early.length && lightT != null && toolsT !== Infinity ? Math.max(lightT, toolsT) : null;
 	// TB6 item 2: (a) the pause ends at the rest, no later than the host's own measured timer lateness (the probe armed
 	// with the last input); (b) the light and tools are back within two drawn frames of that end (the check's own rAF
 	// samples count frames, so a long frame between the end and the return costs one frame, not its milliseconds);
 	// (c) a hard outer cap still fails a page that returns very late.
-	const endT = release?.t ?? null;
 	const probe = rec.probe && Number.isFinite(rec.probe.due) && Number.isFinite(rec.probe.fired) ? rec.probe : null;
 	const late = probe ? Math.max(0, probe.fired - probe.due) : null;
 	const endDelay = endT != null ? endT - end : null;
@@ -154,7 +160,7 @@ export function judge(rec, { rest, back }) {
 			ms: backT != null ? Math.round(backT - end) : null, card: target,
 			light: lightT != null ? Math.round(lightT - end) : null, tools: toolsT !== Infinity ? Math.round(toolsT - end) : null, toolsTransition: toolsTr ? Math.round(toolsTr.t - end) : null,
 			end: endDelay != null ? Math.round(endDelay) : null, late: late != null ? Math.round(late) : null,
-			back: backDelay != null ? Math.round(backDelay) : null, backFrames,
+			back: backDelay != null ? Math.round(backDelay) : null, backFrames, early: early.length,
 			long: (rec.loaf || []).filter((x) => x.t + x.d > end && x.t < end + 400).map((x) => `+${Math.round(x.t - end)} ms ${x.d} ms (style/layout ${x.sl}: ${x.scripts.join('; ') || 'no script'})`) },
 		span: { wheel: Math.round(lastWheel - first), tail: Math.round(lastScroll - lastWheel), wheels: rec.wheels.length, scrolls: rec.scrolls.length },
 		burst: burstState(rec.wheels)
@@ -900,7 +906,7 @@ export default async function (t) {
 					res.r1.map((r, i) => `w${i + 1}: ${r.ins} hover-in transitions, ${r.litFrames} lit frames, ${r.toolFrames} shown-tool frames, marker coverage ${r.coverage}, ${r.frames} sampled frames, ${r.cardsPassed} cards passed`).join('; '));
 				await t.check(S + `after the wheel, the pause ends at its ${REST_MS} ms rest and the highlight is back within two frames without a move (outer cap ${BACK} ms)`, !burstBroke && n > 0 && res.r2.every((r) => r.ok),
 					burstBroke ? burstDetail :
-					res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'}; pause end ${r.end ?? 'never'} ms, host timer late ${r.late ?? '?'} ms, back ${r.back ?? 'never'} ms = ${r.backFrames ?? '?'} drawn frames)`).join('; '));
+					res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'}; pause end ${r.end ?? 'never'} ms, host timer late ${r.late ?? '?'} ms, back ${r.back ?? 'never'} ms = ${r.backFrames ?? '?'} drawn frames${r.early ? `, and ${r.early} samples showed the return before the end` : ''})`).join('; '));
 			}
 
 			// R3: keyboard focus is not paused. The board's first card takes keyboard focus (a key pressed first, so the
