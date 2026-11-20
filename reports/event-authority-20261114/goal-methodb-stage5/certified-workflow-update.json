@@ -1,0 +1,2773 @@
+{
+  "accepted_branches": {
+    "activation_abort_prestart": {
+      "record": {
+        "after_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "72490fc8e7377979c449f96f5565e62de4a686e24fc8eed6f9830554e31929d5",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "after_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "d3e52edfaa755a46587a3be8c459770b98581555dee844f4a3b81d4192ddbe54",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "cause": "owner_status",
+        "operation_id": "TEST_ONLY:operation:certified:1",
+        "original_owner_origin": {
+          "family_id": "workflow_standard_origin",
+          "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "physical_value_sha256": "e57006f9a5e95bb1d388f5a7604223fb316c8d12a747878c55686e186784a2a7",
+          "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "original_owner_result": {
+          "family_id": "workflow_standard_result",
+          "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "physical_value_sha256": "362e6402150e1284e5b8444972a08ec52f9d120520545b6960a2453a45869a9d",
+          "schema_id": "pm.storage_value.workflow_standard_result.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "previous_head": {
+          "family_id": "executor_workflow_workflow_head",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK:6",
+          "physical_value_sha256": "2838761c038d27e7d73dd3a47446075c7c7a9dc02a8774caac0307577e584633",
+          "schema_id": "pm.storage_value.executor_workflow_workflow_head.v8",
+          "schema_version": "8.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "revision": 7,
+        "scope": {
+          "goal_id": "TEST_ONLY:goal:1",
+          "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+          "project_id": "TEST_ONLY-project-\u03b2\u0301",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "transaction_id": "TEST_ONLY:tx:9e6a6f16-0e07-4c4e-844a-33fecb33460a:10",
+        "transition": {
+          "after": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "72490fc8e7377979c449f96f5565e62de4a686e24fc8eed6f9830554e31929d5",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 7,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "d3e52edfaa755a46587a3be8c459770b98581555dee844f4a3b81d4192ddbe54",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "certified",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "before": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 6,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "provisional_success",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "original_owner_origin": {
+            "family_id": "workflow_standard_origin",
+            "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "physical_value_sha256": "e57006f9a5e95bb1d388f5a7604223fb316c8d12a747878c55686e186784a2a7",
+            "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_owner_result": {
+            "family_id": "workflow_standard_result",
+            "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "physical_value_sha256": "362e6402150e1284e5b8444972a08ec52f9d120520545b6960a2453a45869a9d",
+            "schema_id": "pm.storage_value.workflow_standard_result.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_writer_method": "owner.workflow.activation.cancel_before_mutation.v1",
+          "rule": "activation_abort_prestart"
+        }
+      },
+      "schema_id": "pm.storage_value.executor_workflow_workflow_update.v8",
+      "schema_version": "8.0.0"
+    },
+    "activation_entrypoints": {
+      "record": {
+        "after_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "72490fc8e7377979c449f96f5565e62de4a686e24fc8eed6f9830554e31929d5",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "after_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "d3e52edfaa755a46587a3be8c459770b98581555dee844f4a3b81d4192ddbe54",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "cause": "stage_entrypoints",
+        "operation_id": "TEST_ONLY:operation:certified:1",
+        "original_owner_origin": {
+          "family_id": "workflow_standard_origin",
+          "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "physical_value_sha256": "e57006f9a5e95bb1d388f5a7604223fb316c8d12a747878c55686e186784a2a7",
+          "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "original_owner_result": {
+          "family_id": "workflow_standard_result",
+          "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "physical_value_sha256": "362e6402150e1284e5b8444972a08ec52f9d120520545b6960a2453a45869a9d",
+          "schema_id": "pm.storage_value.workflow_standard_result.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "previous_head": {
+          "family_id": "executor_workflow_workflow_head",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK:6",
+          "physical_value_sha256": "2838761c038d27e7d73dd3a47446075c7c7a9dc02a8774caac0307577e584633",
+          "schema_id": "pm.storage_value.executor_workflow_workflow_head.v8",
+          "schema_version": "8.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "revision": 7,
+        "scope": {
+          "goal_id": "TEST_ONLY:goal:1",
+          "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+          "project_id": "TEST_ONLY-project-\u03b2\u0301",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "transaction_id": "TEST_ONLY:tx:9e6a6f16-0e07-4c4e-844a-33fecb33460a:10",
+        "transition": {
+          "after": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "72490fc8e7377979c449f96f5565e62de4a686e24fc8eed6f9830554e31929d5",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 7,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "d3e52edfaa755a46587a3be8c459770b98581555dee844f4a3b81d4192ddbe54",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "certified",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "before": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 6,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "provisional_success",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "original_owner_origin": {
+            "family_id": "workflow_standard_origin",
+            "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "physical_value_sha256": "e57006f9a5e95bb1d388f5a7604223fb316c8d12a747878c55686e186784a2a7",
+            "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_owner_result": {
+            "family_id": "workflow_standard_result",
+            "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "physical_value_sha256": "362e6402150e1284e5b8444972a08ec52f9d120520545b6960a2453a45869a9d",
+            "schema_id": "pm.storage_value.workflow_standard_result.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_writer_method": "owner.workflow.activation.stage_entrypoints.v1",
+          "rule": "activation_entrypoints"
+        }
+      },
+      "schema_id": "pm.storage_value.executor_workflow_workflow_update.v8",
+      "schema_version": "8.0.0"
+    },
+    "activation_materialized": {
+      "record": {
+        "after_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "72490fc8e7377979c449f96f5565e62de4a686e24fc8eed6f9830554e31929d5",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "after_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "d3e52edfaa755a46587a3be8c459770b98581555dee844f4a3b81d4192ddbe54",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "cause": "materialized",
+        "operation_id": "TEST_ONLY:operation:certified:1",
+        "original_owner_origin": {
+          "family_id": "workflow_standard_origin",
+          "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "physical_value_sha256": "e57006f9a5e95bb1d388f5a7604223fb316c8d12a747878c55686e186784a2a7",
+          "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "original_owner_result": {
+          "family_id": "workflow_standard_result",
+          "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "physical_value_sha256": "362e6402150e1284e5b8444972a08ec52f9d120520545b6960a2453a45869a9d",
+          "schema_id": "pm.storage_value.workflow_standard_result.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "previous_head": {
+          "family_id": "executor_workflow_workflow_head",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK:6",
+          "physical_value_sha256": "2838761c038d27e7d73dd3a47446075c7c7a9dc02a8774caac0307577e584633",
+          "schema_id": "pm.storage_value.executor_workflow_workflow_head.v8",
+          "schema_version": "8.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "revision": 7,
+        "scope": {
+          "goal_id": "TEST_ONLY:goal:1",
+          "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+          "project_id": "TEST_ONLY-project-\u03b2\u0301",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "transaction_id": "TEST_ONLY:tx:9e6a6f16-0e07-4c4e-844a-33fecb33460a:10",
+        "transition": {
+          "after": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "72490fc8e7377979c449f96f5565e62de4a686e24fc8eed6f9830554e31929d5",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 7,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "d3e52edfaa755a46587a3be8c459770b98581555dee844f4a3b81d4192ddbe54",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "certified",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "before": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 6,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "provisional_success",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "original_owner_origin": {
+            "family_id": "workflow_standard_origin",
+            "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "physical_value_sha256": "e57006f9a5e95bb1d388f5a7604223fb316c8d12a747878c55686e186784a2a7",
+            "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_owner_result": {
+            "family_id": "workflow_standard_result",
+            "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "physical_value_sha256": "362e6402150e1284e5b8444972a08ec52f9d120520545b6960a2453a45869a9d",
+            "schema_id": "pm.storage_value.workflow_standard_result.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_writer_method": "owner.workflow.activation.commit_materialized.v1",
+          "rule": "activation_materialized"
+        }
+      },
+      "schema_id": "pm.storage_value.executor_workflow_workflow_update.v8",
+      "schema_version": "8.0.0"
+    },
+    "activation_prepare_start": {
+      "record": {
+        "after_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "72490fc8e7377979c449f96f5565e62de4a686e24fc8eed6f9830554e31929d5",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "after_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "d3e52edfaa755a46587a3be8c459770b98581555dee844f4a3b81d4192ddbe54",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "cause": "prepare_start",
+        "operation_id": "TEST_ONLY:operation:certified:1",
+        "original_owner_origin": {
+          "family_id": "workflow_standard_origin",
+          "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "physical_value_sha256": "e57006f9a5e95bb1d388f5a7604223fb316c8d12a747878c55686e186784a2a7",
+          "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "original_owner_result": {
+          "family_id": "workflow_standard_result",
+          "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "physical_value_sha256": "362e6402150e1284e5b8444972a08ec52f9d120520545b6960a2453a45869a9d",
+          "schema_id": "pm.storage_value.workflow_standard_result.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "previous_head": {
+          "family_id": "executor_workflow_workflow_head",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK:6",
+          "physical_value_sha256": "2838761c038d27e7d73dd3a47446075c7c7a9dc02a8774caac0307577e584633",
+          "schema_id": "pm.storage_value.executor_workflow_workflow_head.v8",
+          "schema_version": "8.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "revision": 7,
+        "scope": {
+          "goal_id": "TEST_ONLY:goal:1",
+          "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+          "project_id": "TEST_ONLY-project-\u03b2\u0301",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "transaction_id": "TEST_ONLY:tx:9e6a6f16-0e07-4c4e-844a-33fecb33460a:10",
+        "transition": {
+          "after": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "72490fc8e7377979c449f96f5565e62de4a686e24fc8eed6f9830554e31929d5",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 7,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "d3e52edfaa755a46587a3be8c459770b98581555dee844f4a3b81d4192ddbe54",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "certified",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "before": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 6,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "provisional_success",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "original_owner_origin": {
+            "family_id": "workflow_standard_origin",
+            "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "physical_value_sha256": "e57006f9a5e95bb1d388f5a7604223fb316c8d12a747878c55686e186784a2a7",
+            "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_owner_result": {
+            "family_id": "workflow_standard_result",
+            "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "physical_value_sha256": "362e6402150e1284e5b8444972a08ec52f9d120520545b6960a2453a45869a9d",
+            "schema_id": "pm.storage_value.workflow_standard_result.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_writer_method": "owner.workflow.activation.prepare_start.v1",
+          "rule": "activation_prepare_start"
+        }
+      },
+      "schema_id": "pm.storage_value.executor_workflow_workflow_update.v8",
+      "schema_version": "8.0.0"
+    },
+    "d06_cancel_nonterminal": {
+      "record": {
+        "after_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "72490fc8e7377979c449f96f5565e62de4a686e24fc8eed6f9830554e31929d5",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "after_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "d3e52edfaa755a46587a3be8c459770b98581555dee844f4a3b81d4192ddbe54",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "cause": "owner_status",
+        "operation_id": "TEST_ONLY:operation:certified:1",
+        "original_owner_origin": {
+          "family_id": "workflow_standard_origin",
+          "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "physical_value_sha256": "e57006f9a5e95bb1d388f5a7604223fb316c8d12a747878c55686e186784a2a7",
+          "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "original_owner_result": {
+          "family_id": "workflow_standard_result",
+          "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "physical_value_sha256": "362e6402150e1284e5b8444972a08ec52f9d120520545b6960a2453a45869a9d",
+          "schema_id": "pm.storage_value.workflow_standard_result.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "previous_head": {
+          "family_id": "executor_workflow_workflow_head",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK:6",
+          "physical_value_sha256": "2838761c038d27e7d73dd3a47446075c7c7a9dc02a8774caac0307577e584633",
+          "schema_id": "pm.storage_value.executor_workflow_workflow_head.v8",
+          "schema_version": "8.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "revision": 7,
+        "scope": {
+          "goal_id": "TEST_ONLY:goal:1",
+          "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+          "project_id": "TEST_ONLY-project-\u03b2\u0301",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "transaction_id": "TEST_ONLY:tx:9e6a6f16-0e07-4c4e-844a-33fecb33460a:10",
+        "transition": {
+          "after": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "72490fc8e7377979c449f96f5565e62de4a686e24fc8eed6f9830554e31929d5",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 7,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "d3e52edfaa755a46587a3be8c459770b98581555dee844f4a3b81d4192ddbe54",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "certified",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "before": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 6,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "provisional_success",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "original_owner_origin": {
+            "family_id": "workflow_standard_origin",
+            "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "physical_value_sha256": "e57006f9a5e95bb1d388f5a7604223fb316c8d12a747878c55686e186784a2a7",
+            "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_owner_result": {
+            "family_id": "workflow_standard_result",
+            "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "physical_value_sha256": "362e6402150e1284e5b8444972a08ec52f9d120520545b6960a2453a45869a9d",
+            "schema_id": "pm.storage_value.workflow_standard_result.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_writer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+          "rule": "d06_cancel_nonterminal"
+        }
+      },
+      "schema_id": "pm.storage_value.executor_workflow_workflow_update.v8",
+      "schema_version": "8.0.0"
+    },
+    "d06_preserve_terminal": {
+      "record": {
+        "after_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "72490fc8e7377979c449f96f5565e62de4a686e24fc8eed6f9830554e31929d5",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "after_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "d3e52edfaa755a46587a3be8c459770b98581555dee844f4a3b81d4192ddbe54",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "cause": "owner_status",
+        "operation_id": "TEST_ONLY:operation:certified:1",
+        "original_owner_origin": {
+          "family_id": "workflow_standard_origin",
+          "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "physical_value_sha256": "e57006f9a5e95bb1d388f5a7604223fb316c8d12a747878c55686e186784a2a7",
+          "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "original_owner_result": {
+          "family_id": "workflow_standard_result",
+          "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "physical_value_sha256": "362e6402150e1284e5b8444972a08ec52f9d120520545b6960a2453a45869a9d",
+          "schema_id": "pm.storage_value.workflow_standard_result.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "previous_head": {
+          "family_id": "executor_workflow_workflow_head",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK:6",
+          "physical_value_sha256": "2838761c038d27e7d73dd3a47446075c7c7a9dc02a8774caac0307577e584633",
+          "schema_id": "pm.storage_value.executor_workflow_workflow_head.v8",
+          "schema_version": "8.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "revision": 7,
+        "scope": {
+          "goal_id": "TEST_ONLY:goal:1",
+          "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+          "project_id": "TEST_ONLY-project-\u03b2\u0301",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "transaction_id": "TEST_ONLY:tx:9e6a6f16-0e07-4c4e-844a-33fecb33460a:10",
+        "transition": {
+          "after": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "72490fc8e7377979c449f96f5565e62de4a686e24fc8eed6f9830554e31929d5",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 7,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "d3e52edfaa755a46587a3be8c459770b98581555dee844f4a3b81d4192ddbe54",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "certified",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "before": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 6,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "provisional_success",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "original_owner_origin": {
+            "family_id": "workflow_standard_origin",
+            "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "physical_value_sha256": "e57006f9a5e95bb1d388f5a7604223fb316c8d12a747878c55686e186784a2a7",
+            "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_owner_result": {
+            "family_id": "workflow_standard_result",
+            "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "physical_value_sha256": "362e6402150e1284e5b8444972a08ec52f9d120520545b6960a2453a45869a9d",
+            "schema_id": "pm.storage_value.workflow_standard_result.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_writer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+          "rule": "d06_preserve_terminal"
+        }
+      },
+      "schema_id": "pm.storage_value.executor_workflow_workflow_update.v8",
+      "schema_version": "8.0.0"
+    },
+    "native_birth activation_begin": {
+      "record": {
+        "after_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "5265602ce7f47ce1ac7673ad1eb6b577cec6813858ba8a520e82226ac733c5ea",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "after_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "f20b0a1687ae4ac5ce4eddcee25fd8ede1d5da99a808240b5d5b9a92fea2f66e",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_body": null,
+        "before_control": null,
+        "cause": "activation",
+        "operation_id": "TEST_ONLY:operation:birth",
+        "original_owner_origin": {
+          "family_id": "executor_workflow_workflow_birth",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "29d6ebd1fb5f3e0353e9581759d86affb050737efcab79c27e773321521163e1",
+          "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v8",
+          "schema_version": "8.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "original_owner_result": {
+          "family_id": "executor_workflow_workflow_birth",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "29d6ebd1fb5f3e0353e9581759d86affb050737efcab79c27e773321521163e1",
+          "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v8",
+          "schema_version": "8.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "previous_head": null,
+        "revision": 1,
+        "scope": {
+          "goal_id": "TEST_ONLY:goal:1",
+          "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+          "project_id": "TEST_ONLY-project-\u03b2\u0301",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "transaction_id": "TEST_ONLY:tx:9e6a6f16-0e07-4c4e-844a-33fecb33460a:1",
+        "transition": {
+          "after": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "5265602ce7f47ce1ac7673ad1eb6b577cec6813858ba8a520e82226ac733c5ea",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 1,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "f20b0a1687ae4ac5ce4eddcee25fd8ede1d5da99a808240b5d5b9a92fea2f66e",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "running",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "before": null,
+          "original_owner_origin": {
+            "family_id": "executor_workflow_workflow_birth",
+            "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+            "physical_value_sha256": "29d6ebd1fb5f3e0353e9581759d86affb050737efcab79c27e773321521163e1",
+            "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v8",
+            "schema_version": "8.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_owner_result": {
+            "family_id": "executor_workflow_workflow_birth",
+            "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+            "physical_value_sha256": "29d6ebd1fb5f3e0353e9581759d86affb050737efcab79c27e773321521163e1",
+            "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v8",
+            "schema_version": "8.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_writer_method": "owner.workflow.activation.begin.v1",
+          "rule": "activation_begin"
+        }
+      },
+      "schema_id": "pm.storage_value.executor_workflow_workflow_update.v8",
+      "schema_version": "8.0.0"
+    },
+    "native_publication original_execution_progress": {
+      "record": {
+        "after_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "77375daaef58c06ef6bf4784138207ed1009271adf5004a33eb1beee35f84bf9",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "after_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "ef28da3878a09fa08868694fe31abbbb547389f3a0ef1e177dcc81063b17eb16",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "8f41b44a664d8ed681bbb0e2e9562def9126d2bbcd44e66cd82cadc1f5864a89",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "f5beed3483ea00d5e368ee758d8b32266e2ef054268e7a5390e8a389c1233889",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "cause": "owner_status",
+        "operation_id": "TEST_ONLY:operation:native-progress-4",
+        "original_owner_origin": {
+          "family_id": "workflow_standard_origin",
+          "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6e61746976652d70726f67726573732d34",
+          "physical_value_sha256": "dddce7920febdec7079e8873fc664e57ab994fc0116e8f5d1bcd9c292f140503",
+          "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "original_owner_result": {
+          "family_id": "workflow_standard_result",
+          "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6e61746976652d70726f67726573732d34",
+          "physical_value_sha256": "7a99ef21481648c2839f388d9b5ab7527b6b299f123c47708ef93dce454db371",
+          "schema_id": "pm.storage_value.workflow_standard_result.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "previous_head": {
+          "family_id": "executor_workflow_workflow_head",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK:4",
+          "physical_value_sha256": "68bad727cc851f1dc319fbb892d1b7423bb30070a2df51345bc4674ad561562a",
+          "schema_id": "pm.storage_value.executor_workflow_workflow_head.v8",
+          "schema_version": "8.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "revision": 5,
+        "scope": {
+          "goal_id": "TEST_ONLY:goal:1",
+          "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+          "project_id": "TEST_ONLY-project-\u03b2\u0301",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "transaction_id": "TEST_ONLY:tx:9e6a6f16-0e07-4c4e-844a-33fecb33460a:5",
+        "transition": {
+          "after": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "77375daaef58c06ef6bf4784138207ed1009271adf5004a33eb1beee35f84bf9",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 5,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "ef28da3878a09fa08868694fe31abbbb547389f3a0ef1e177dcc81063b17eb16",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "running",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "before": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "8f41b44a664d8ed681bbb0e2e9562def9126d2bbcd44e66cd82cadc1f5864a89",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 4,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "f5beed3483ea00d5e368ee758d8b32266e2ef054268e7a5390e8a389c1233889",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "running",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "original_owner_origin": {
+            "family_id": "workflow_standard_origin",
+            "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6e61746976652d70726f67726573732d34",
+            "physical_value_sha256": "dddce7920febdec7079e8873fc664e57ab994fc0116e8f5d1bcd9c292f140503",
+            "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_owner_result": {
+            "family_id": "workflow_standard_result",
+            "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6e61746976652d70726f67726573732d34",
+            "physical_value_sha256": "7a99ef21481648c2839f388d9b5ab7527b6b299f123c47708ef93dce454db371",
+            "schema_id": "pm.storage_value.workflow_standard_result.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_writer_method": "owner.workflow.standard.publish_execution.v1",
+          "rule": "original_execution_progress"
+        }
+      },
+      "schema_id": "pm.storage_value.executor_workflow_workflow_update.v8",
+      "schema_version": "8.0.0"
+    },
+    "native_publication original_provisional_success": {
+      "record": {
+        "after_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "after_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "77375daaef58c06ef6bf4784138207ed1009271adf5004a33eb1beee35f84bf9",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "ef28da3878a09fa08868694fe31abbbb547389f3a0ef1e177dcc81063b17eb16",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "cause": "owner_status",
+        "operation_id": "TEST_ONLY:operation:native-provisional-5",
+        "original_owner_origin": {
+          "family_id": "workflow_standard_origin",
+          "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6e61746976652d70726f766973696f6e616c2d35",
+          "physical_value_sha256": "b6d192e1ba94bd7d8aafa4dc43b69eefcc112b1a44e1282bb9d2c00850ff7bbc",
+          "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "original_owner_result": {
+          "family_id": "workflow_standard_result",
+          "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6e61746976652d70726f766973696f6e616c2d35",
+          "physical_value_sha256": "dc7976f7bc7f56ebe393157ee24a83d2122231eb4adb5a1f5c671d6bf0588cd1",
+          "schema_id": "pm.storage_value.workflow_standard_result.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "previous_head": {
+          "family_id": "executor_workflow_workflow_head",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK:5",
+          "physical_value_sha256": "bbcfed6a8e176d21a7a12850ac897c93993b5d9f1738c902adafedbf8b4bf02d",
+          "schema_id": "pm.storage_value.executor_workflow_workflow_head.v8",
+          "schema_version": "8.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "revision": 6,
+        "scope": {
+          "goal_id": "TEST_ONLY:goal:1",
+          "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+          "project_id": "TEST_ONLY-project-\u03b2\u0301",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "transaction_id": "TEST_ONLY:tx:9e6a6f16-0e07-4c4e-844a-33fecb33460a:6",
+        "transition": {
+          "after": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 6,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "provisional_success",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "before": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "77375daaef58c06ef6bf4784138207ed1009271adf5004a33eb1beee35f84bf9",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 5,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "ef28da3878a09fa08868694fe31abbbb547389f3a0ef1e177dcc81063b17eb16",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "running",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "original_owner_origin": {
+            "family_id": "workflow_standard_origin",
+            "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6e61746976652d70726f766973696f6e616c2d35",
+            "physical_value_sha256": "b6d192e1ba94bd7d8aafa4dc43b69eefcc112b1a44e1282bb9d2c00850ff7bbc",
+            "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_owner_result": {
+            "family_id": "workflow_standard_result",
+            "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6e61746976652d70726f766973696f6e616c2d35",
+            "physical_value_sha256": "dc7976f7bc7f56ebe393157ee24a83d2122231eb4adb5a1f5c671d6bf0588cd1",
+            "schema_id": "pm.storage_value.workflow_standard_result.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_writer_method": "owner.workflow.standard.publish_provisional_success.v1",
+          "rule": "original_provisional_success"
+        }
+      },
+      "schema_id": "pm.storage_value.executor_workflow_workflow_update.v8",
+      "schema_version": "8.0.0"
+    },
+    "original_workflow_start": {
+      "record": {
+        "after_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "72490fc8e7377979c449f96f5565e62de4a686e24fc8eed6f9830554e31929d5",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "after_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "d3e52edfaa755a46587a3be8c459770b98581555dee844f4a3b81d4192ddbe54",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "before_control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "cause": "owner_status",
+        "operation_id": "TEST_ONLY:operation:certified:1",
+        "original_owner_origin": {
+          "family_id": "workflow_standard_origin",
+          "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "physical_value_sha256": "e57006f9a5e95bb1d388f5a7604223fb316c8d12a747878c55686e186784a2a7",
+          "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "original_owner_result": {
+          "family_id": "workflow_standard_result",
+          "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "physical_value_sha256": "362e6402150e1284e5b8444972a08ec52f9d120520545b6960a2453a45869a9d",
+          "schema_id": "pm.storage_value.workflow_standard_result.v4",
+          "schema_version": "4.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "previous_head": {
+          "family_id": "executor_workflow_workflow_head",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK:6",
+          "physical_value_sha256": "2838761c038d27e7d73dd3a47446075c7c7a9dc02a8774caac0307577e584633",
+          "schema_id": "pm.storage_value.executor_workflow_workflow_head.v8",
+          "schema_version": "8.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "revision": 7,
+        "scope": {
+          "goal_id": "TEST_ONLY:goal:1",
+          "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+          "project_id": "TEST_ONLY-project-\u03b2\u0301",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "transaction_id": "TEST_ONLY:tx:9e6a6f16-0e07-4c4e-844a-33fecb33460a:10",
+        "transition": {
+          "after": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "72490fc8e7377979c449f96f5565e62de4a686e24fc8eed6f9830554e31929d5",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 7,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "d3e52edfaa755a46587a3be8c459770b98581555dee844f4a3b81d4192ddbe54",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "certified",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "before": {
+            "activation_revision": 1,
+            "activation_state": "active",
+            "body": {
+              "family_id": "workflow_goal_run_body",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+              "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "body_revision": 6,
+            "control": {
+              "family_id": "workflow_goal_run_control",
+              "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+              "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+              "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+            },
+            "identity": {
+              "goal_id": "TEST_ONLY:goal:1",
+              "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "workgraph_id": "TEST_ONLY:work_graph:1",
+              "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+              "workgraph_revision": 1,
+              "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+            },
+            "kind": "historical_native_issuance_commitment",
+            "status": "provisional_success",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+          },
+          "original_owner_origin": {
+            "family_id": "workflow_standard_origin",
+            "physical_key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "physical_value_sha256": "e57006f9a5e95bb1d388f5a7604223fb316c8d12a747878c55686e186784a2a7",
+            "schema_id": "pm.storage_value.workflow_standard_origin.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_owner_result": {
+            "family_id": "workflow_standard_result",
+            "physical_key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "physical_value_sha256": "362e6402150e1284e5b8444972a08ec52f9d120520545b6960a2453a45869a9d",
+            "schema_id": "pm.storage_value.workflow_standard_result.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+          },
+          "original_writer_method": "owner.workflow.original.start.v1",
+          "rule": "original_workflow_start"
+        }
+      },
+      "schema_id": "pm.storage_value.executor_workflow_workflow_update.v8",
+      "schema_version": "8.0.0"
+    }
+  },
+  "census_sha256": "cdeb7440041a74b33c0e5af00d25c046e867481f3643818f0f3453882b51503f",
+  "examples": {
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "record",
+        "transition",
+        "before"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/activation_revision/minimum": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "activation_revision"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/activation_revision/type": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "activation_revision"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/activation_state/enum": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "activation_state"
+      ],
+      "value": "activation_pendingx"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/body/allOf/1/properties/family_id/const": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "body",
+        "family_id"
+      ],
+      "value": "workflow_goal_run_bodyx"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/body/allOf/1/properties/schema_id/const": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "body",
+        "schema_id"
+      ],
+      "value": "pm.storage_value.workflow_goal_run_body.v1x"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/body/allOf/1/properties/schema_version/const": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "body",
+        "schema_version"
+      ],
+      "value": "1.0.0x"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/body_revision/minimum": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "body_revision"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/body_revision/type": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "body_revision"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/control/allOf/1/properties/family_id/const": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "control",
+        "family_id"
+      ],
+      "value": "workflow_goal_run_controlx"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/control/allOf/1/properties/schema_id/const": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "control",
+        "schema_id"
+      ],
+      "value": "pm.storage_value.workflow_goal_run_control.v1x"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/control/allOf/1/properties/schema_version/const": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "control",
+        "schema_version"
+      ],
+      "value": "1.0.0x"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/kind/const": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "kind"
+      ],
+      "value": "historical_native_issuance_commitmentx"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/status/enum": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "status"
+      ],
+      "value": "readyx"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/workflow_owner_epoch/minimum": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "workflow_owner_epoch"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/workflow_owner_epoch/type": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "workflow_owner_epoch"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/workflow_owner_ref/minLength": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "workflow_owner_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/properties/workflow_owner_ref/type": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "workflow_owner_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/required": {
+      "member": [
+        "remove",
+        "kind"
+      ],
+      "path": [
+        "record",
+        "transition",
+        "before"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BodyIssuanceCommitment/type": {
+      "path": [
+        "record",
+        "transition",
+        "before"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/BoundTransitionRule/enum": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "value": "activation_beginx"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageWorkflowUpdate/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageWorkflowUpdate/properties/schema_id/const": {
+      "path": [
+        "schema_id"
+      ],
+      "value": "pm.storage_value.executor_workflow_workflow_update.v8x"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageWorkflowUpdate/properties/schema_version/const": {
+      "path": [
+        "schema_version"
+      ],
+      "value": "8.0.0x"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageWorkflowUpdate/required": {
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageWorkflowUpdate/type": {
+      "path": [],
+      "value": true
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/0/if/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/0/then/properties/before/type",
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/0/then/properties/original_writer_method/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/0/then/properties/before/type": {
+      "control_name": "native_birth activation_begin",
+      "path": [
+        "record",
+        "transition",
+        "before"
+      ],
+      "value": {
+        "activation_revision": 1,
+        "activation_state": "active",
+        "body": {
+          "family_id": "workflow_goal_run_body",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9",
+          "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "body_revision": 6,
+        "control": {
+          "family_id": "workflow_goal_run_control",
+          "physical_key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+          "physical_value_sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a",
+          "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "9e6a6f16-0e07-4c4e-844a-33fecb33460a"
+        },
+        "identity": {
+          "goal_id": "TEST_ONLY:goal:1",
+          "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+          "plan_compile_run_id": "TEST_ONLY:plan-compile-run:1",
+          "project_id": "TEST_ONLY-project-\u03b2\u0301",
+          "workgraph_id": "TEST_ONLY:work_graph:1",
+          "workgraph_ref": "TEST_ONLY:workgraph-ref:1",
+          "workgraph_revision": 1,
+          "workgraph_sha256": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c42012283"
+        },
+        "kind": "historical_native_issuance_commitment",
+        "status": "provisional_success",
+        "workflow_owner_epoch": 1,
+        "workflow_owner_ref": "TEST_ONLY:workflow-owner"
+      }
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/0/then/properties/original_writer_method/const": {
+      "control_name": "native_birth activation_begin",
+      "path": [
+        "record",
+        "transition",
+        "original_writer_method"
+      ],
+      "value": "owner.workflow.activation.begin.v1x"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/1/if/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/1/then/properties/original_writer_method/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/1/then/properties/original_writer_method/const": {
+      "control_name": "activation_materialized",
+      "path": [
+        "record",
+        "transition",
+        "original_writer_method"
+      ],
+      "value": "owner.workflow.activation.commit_materialized.v1x"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/2/if/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/2/then/properties/original_writer_method/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/2/then/properties/original_writer_method/const": {
+      "control_name": "activation_entrypoints",
+      "path": [
+        "record",
+        "transition",
+        "original_writer_method"
+      ],
+      "value": "owner.workflow.activation.stage_entrypoints.v1x"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/3/if/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/3/then/properties/original_writer_method/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/3/then/properties/original_writer_method/const": {
+      "control_name": "activation_prepare_start",
+      "path": [
+        "record",
+        "transition",
+        "original_writer_method"
+      ],
+      "value": "owner.workflow.activation.prepare_start.v1x"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/4/if/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/4/then/properties/original_writer_method/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/4/then/properties/original_writer_method/const": {
+      "control_name": "activation_abort_prestart",
+      "path": [
+        "record",
+        "transition",
+        "original_writer_method"
+      ],
+      "value": "owner.workflow.activation.cancel_before_mutation.v1x"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/5/if/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/5/then/properties/original_writer_method/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/5/then/properties/original_writer_method/const": {
+      "control_name": "d06_cancel_nonterminal",
+      "path": [
+        "record",
+        "transition",
+        "original_writer_method"
+      ],
+      "value": "owner.workflow.executor_cancel.publish_disposition.v3x"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/6/if/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/6/then/properties/original_writer_method/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/allOf/6/then/properties/original_writer_method/const": {
+      "control_name": "d06_preserve_terminal",
+      "path": [
+        "record",
+        "transition",
+        "original_writer_method"
+      ],
+      "value": "owner.workflow.executor_cancel.publish_disposition.v3x"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "record",
+        "transition"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/properties/before/anyOf": {
+      "control_name": "original_workflow_start",
+      "native_transition_implication": true,
+      "path": [
+        "record",
+        "transition",
+        "before"
+      ],
+      "value": {}
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/properties/before/anyOf/1/type": {
+      "control_name": "original_workflow_start",
+      "native_transition_implication": true,
+      "path": [
+        "record",
+        "transition",
+        "before"
+      ],
+      "value": {}
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/properties/original_writer_method/minLength": {
+      "path": [
+        "record",
+        "transition",
+        "original_writer_method"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/properties/original_writer_method/type": {
+      "path": [
+        "record",
+        "transition",
+        "original_writer_method"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/required": {
+      "member": [
+        "remove",
+        "before"
+      ],
+      "path": [
+        "record",
+        "transition"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/TransitionCommitment/type": {
+      "control_name": "original_workflow_start",
+      "native_transition_implication": true,
+      "path": [
+        "record",
+        "transition"
+      ],
+      "value": []
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/0/if/properties/transition/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/0/then/properties/cause/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/0/then/properties/cause/const": {
+      "control_name": "native_birth activation_begin",
+      "path": [
+        "record",
+        "cause"
+      ],
+      "value": "owner_status"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/1/if/properties/transition/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/1/then/properties/cause/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/1/then/properties/cause/const": {
+      "control_name": "activation_materialized",
+      "path": [
+        "record",
+        "cause"
+      ],
+      "value": "activation"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/10/if/properties/transition/properties/rule/const": {
+      "control_name": "native_birth activation_begin",
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/10/then/properties/cause/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/10/then/properties/cause/const": {
+      "path": [
+        "record",
+        "cause"
+      ],
+      "value": "activation"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/2/if/properties/transition/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/2/then/properties/cause/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/2/then/properties/cause/const": {
+      "control_name": "activation_entrypoints",
+      "path": [
+        "record",
+        "cause"
+      ],
+      "value": "activation"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/3/if/properties/transition/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/3/then/properties/cause/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/3/then/properties/cause/const": {
+      "control_name": "activation_prepare_start",
+      "path": [
+        "record",
+        "cause"
+      ],
+      "value": "activation"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/4/if/properties/transition/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/4/then/properties/cause/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/4/then/properties/cause/const": {
+      "control_name": "activation_abort_prestart",
+      "path": [
+        "record",
+        "cause"
+      ],
+      "value": "activation"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/5/if/properties/transition/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/5/then/properties/cause/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/5/then/properties/cause/const": {
+      "control_name": "d06_cancel_nonterminal",
+      "path": [
+        "record",
+        "cause"
+      ],
+      "value": "activation"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/6/if/properties/transition/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/6/then/properties/cause/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/6/then/properties/cause/const": {
+      "control_name": "d06_preserve_terminal",
+      "path": [
+        "record",
+        "cause"
+      ],
+      "value": "activation"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/7/if/properties/transition/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/7/then/properties/cause/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/7/then/properties/cause/const": {
+      "control_name": "original_workflow_start",
+      "path": [
+        "record",
+        "cause"
+      ],
+      "value": "activation"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/8/if/properties/transition/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/8/then/properties/cause/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/8/then/properties/cause/const": {
+      "control_name": "native_publication original_execution_progress",
+      "path": [
+        "record",
+        "cause"
+      ],
+      "value": "activation"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/9/if/properties/transition/properties/rule/const": {
+      "path": [
+        "record",
+        "transition",
+        "rule"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/9/then/properties/cause/const"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/allOf/9/then/properties/cause/const": {
+      "control_name": "native_publication original_provisional_success",
+      "path": [
+        "record",
+        "cause"
+      ],
+      "value": "activation"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "record"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/properties/before_body/anyOf": {
+      "path": [
+        "record",
+        "before_body"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/properties/before_body/anyOf/1/type": {
+      "path": [
+        "record",
+        "before_body"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/properties/before_control/anyOf": {
+      "path": [
+        "record",
+        "before_control"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/properties/before_control/anyOf/1/type": {
+      "path": [
+        "record",
+        "before_control"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/properties/cause/enum": {
+      "control_name": "original_workflow_start",
+      "native_transition_implication": true,
+      "path": [
+        "record",
+        "cause"
+      ],
+      "value": "gc:not-a-member"
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/properties/operation_id/minLength": {
+      "path": [
+        "record",
+        "operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/properties/operation_id/type": {
+      "path": [
+        "record",
+        "operation_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/properties/previous_head/anyOf": {
+      "path": [
+        "record",
+        "previous_head"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/properties/previous_head/anyOf/1/type": {
+      "path": [
+        "record",
+        "previous_head"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/properties/revision/minimum": {
+      "path": [
+        "record",
+        "revision"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/properties/revision/type": {
+      "path": [
+        "record",
+        "revision"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/properties/transaction_id/minLength": {
+      "path": [
+        "record",
+        "transaction_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/properties/transaction_id/type": {
+      "path": [
+        "record",
+        "transaction_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/required": {
+      "member": [
+        "remove",
+        "scope"
+      ],
+      "path": [
+        "record"
+      ]
+    },
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate/type": {
+      "path": [
+        "record"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "record",
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/minLength": {
+      "path": [
+        "record",
+        "scope",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/type": {
+      "path": [
+        "record",
+        "scope",
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/minLength": {
+      "path": [
+        "record",
+        "scope",
+        "goal_run_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/type": {
+      "path": [
+        "record",
+        "scope",
+        "goal_run_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/minLength": {
+      "path": [
+        "record",
+        "scope",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/type": {
+      "path": [
+        "record",
+        "scope",
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/minLength": {
+      "path": [
+        "record",
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/type": {
+      "path": [
+        "record",
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/required": {
+      "member": [
+        "remove",
+        "storage_instance_id"
+      ],
+      "path": [
+        "record",
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/type": {
+      "path": [
+        "record",
+        "scope"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity"
+      ]
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/goal_id/minLength": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/goal_id/type": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/goal_run_id/minLength": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "goal_run_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/goal_run_id/type": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "goal_run_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/plan_compile_run_id/minLength": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "plan_compile_run_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/plan_compile_run_id/type": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "plan_compile_run_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/project_id/minLength": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/project_id/type": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/workgraph_id/minLength": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "workgraph_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/workgraph_id/type": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "workgraph_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/workgraph_ref/minLength": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "workgraph_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/workgraph_ref/type": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "workgraph_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/workgraph_revision/minimum": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "workgraph_revision"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/workgraph_revision/type": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "workgraph_revision"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/workgraph_sha256/pattern": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "workgraph_sha256"
+      ],
+      "value": "3c6626b2e3f3ff301f4eb20b4f59fbbcb0fd1cf30f082ef443eaaa2c4201228!"
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/properties/workgraph_sha256/type": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity",
+        "workgraph_sha256"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/required": {
+      "member": [
+        "remove",
+        "project_id"
+      ],
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity"
+      ]
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity/type": {
+      "path": [
+        "record",
+        "transition",
+        "before",
+        "identity"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "record",
+        "previous_head"
+      ]
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+      "path": [
+        "record",
+        "previous_head",
+        "family_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+      "path": [
+        "record",
+        "previous_head",
+        "family_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+      "path": [
+        "record",
+        "previous_head",
+        "physical_key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+      "path": [
+        "record",
+        "previous_head",
+        "physical_key"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+      "path": [
+        "record",
+        "previous_head",
+        "physical_value_sha256"
+      ],
+      "value": "2838761c038d27e7d73dd3a47446075c7c7a9dc02a8774caac0307577e58463!"
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+      "path": [
+        "record",
+        "previous_head",
+        "physical_value_sha256"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+      "path": [
+        "record",
+        "previous_head",
+        "schema_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+      "path": [
+        "record",
+        "previous_head",
+        "schema_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+      "path": [
+        "record",
+        "previous_head",
+        "schema_version"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+      "path": [
+        "record",
+        "previous_head",
+        "schema_version"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+      "path": [
+        "record",
+        "previous_head",
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+      "path": [
+        "record",
+        "previous_head",
+        "storage_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/required": {
+      "member": [
+        "remove",
+        "storage_instance_id"
+      ],
+      "path": [
+        "record",
+        "previous_head"
+      ]
+    },
+    "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/type": {
+      "path": [
+        "record",
+        "previous_head"
+      ],
+      "value": true
+    }
+  },
+  "family": "goal_run.certified",
+  "root": "dg5:28d076c056a5885a",
+  "route": "native",
+  "row": "dg5/native_publication/StorageWorkflowUpdate/schema",
+  "site": [
+    "scripts/pm_goal_dg_cf2_native.py",
+    114
+  ],
+  "source": "76e7a4f279d974b3635eaf22b08e07967dbbf2ae",
+  "transaction": true
+}

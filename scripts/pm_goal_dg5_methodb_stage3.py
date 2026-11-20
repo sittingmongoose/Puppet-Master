@@ -1055,6 +1055,61 @@ def native_afterimages_implication(nodes, name, path, control, errors, locations
                 premise='Every method requires one afterimages definition. Their closed member sets are disjoint.')
 
 
+def native_transition_implication(nodes, name, path, control, errors, locations):
+    namespace = name.split('#', 1)[0] + '#/$defs/'
+    transition = namespace + 'TransitionCommitment'
+    update = namespace + 'WorkflowUpdate'
+    commit = nodes[transition]['node']
+    record = control['record']
+    observed = locations(errors)
+    if name in (transition + '/properties/before/anyOf', transition + '/properties/before/anyOf/1/type'):
+        condition = commit['allOf'][0]
+        branches = [{'key': 'else', 'rule': '#/$defs/BodyIssuanceCommitment'},
+                    {'key': 'then', 'rule': 'null'}]
+        nullable = commit['properties']['before']['anyOf']
+        strip = lambda node: {key: value for key, value in node.items() if key != 'x-pm-oracle-id'}
+        require('before' in commit['required'] and condition['if']['properties']['rule']['const'] == 'activation_begin'
+                and [strip(condition[entry['key']]['properties']['before']) for entry in branches] ==
+                [strip(item) for item in nullable] == [{'$ref': branches[0]['rule']}, {'type': branches[1]['rule']}],
+                'the transition branches no longer enforce one alternative on every document')
+        source = namespace + 'BodyIssuanceCommitment/required'
+        require(path == ['record', 'transition', 'before'] and record['transition']['rule'] != 'activation_begin' and
+                observed == {('required', tuple(path), source)}, 'the original body message did not remain')
+        return dict(source=source, selector=transition + '/allOf/0',
+                    premise='Activation requires null. Every other transition requires the same BodyIssuanceCommitment.')
+    owner = nodes[update]['node']
+    causes = {}
+    for index, clause in enumerate(owner['allOf']):
+        selector = clause['if']
+        branch = selector['properties']['transition']
+        rule = branch['properties']['rule']
+        require(all(set(item) - {'x-pm-oracle-id'} == {'properties'} for item in (selector, branch))
+                and set(selector['properties']) == {'transition'} and set(branch['properties']) == {'rule'},
+                'the cause condition no longer matches a non-object transition')
+        constant = clause['then']['properties']['cause']['const']
+        causes[rule['const']] = (constant, update + f'/allOf/{index}/then/properties/cause/const')
+    require({'transition', 'cause'} <= set(owner['required']) and
+            owner['properties']['transition']['$ref'] == '#/$defs/TransitionCommitment' and
+            commit['type'] == 'object' and 'rule' in commit['required'] and
+            commit['properties']['rule']['$ref'] == '#/$defs/BoundTransitionRule' and
+            set(causes) == set(nodes[namespace + 'BoundTransitionRule']['node']['enum']),
+            'the cause conditions no longer cover the exact transition enum')
+    if name == transition + '/type':
+        require(path == ['record', 'transition'] and len({value for value, _ in causes.values()}) >= 2 and
+                observed == {('const', ('record', 'cause'), rule) for value, rule in causes.values()
+                             if record['cause'] != value},
+                'invalid transition did not activate the contradictory cause conditions')
+        return dict(source=[rule for _, rule in causes.values()],
+                    premise='A non-object transition activates every conditional. They require distinct cause values.')
+    require(name == update + '/properties/cause/enum' and path == ['record', 'cause'] and
+            {value for value, _ in causes.values()} <= set(owner['properties']['cause']['enum']),
+            'an allowed transition can now imply a cause outside the enum')
+    source = causes[record['transition']['rule']][1]
+    require(observed == {('const', tuple(path), source)}, 'the selected transition cause message did not remain')
+    return dict(source=source, same_document_path=path,
+                premise='Each required transition rule constrains the cause to a value in the enum.')
+
+
 EVENT_RECORD = 'https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#'
 
 
@@ -1355,6 +1410,9 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
                 nodes, name, path, cut, locations, validator))
         elif cut and example.get('native_afterimages_implication'):
             record.update(cls='COVERED_LATER', implication=native_afterimages_implication(
+                nodes, name, path, control, cut, locations))
+        elif cut and example.get('native_transition_implication'):
+            record.update(cls='COVERED_LATER', implication=native_transition_implication(
                 nodes, name, path, control, cut, locations))
         elif cut and example.get('evidence_type_implication'):
             record.update(cls='COVERED_LATER', implication=event_string_implication(
