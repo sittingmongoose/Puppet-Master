@@ -1594,7 +1594,7 @@
     PM51.panel({ title: 'Quota and budget console', subtitle: 'Every limit, budget and warning, in one place', icon: 'gauge', body });
   });
   PM51.on('providers-reset', () => PM51.confirm('Reset services to the example defaults?', 'Accounts, model choices, and routes go back to the example defaults. Settings on the other tabs are kept.', 'Reset', () => {
-    state.providers = clone(D.providers); state.freeRoutes = clone(D.freeRoutes); state.selectedProvider = state.providers[0]?.id || null; migrate(); save(); PM51.toast('Services reset', 'The example defaults are back.');
+    state.providers = clone(D.providers); state.freeRoutes = clone(D.freeRoutes); state.selectedProvider = state.providers[0]?.id || null; delete state.accountModels; migrate(); save(); PM51.toast('Services reset', 'The example defaults are back.');
   }, true));
   PM51.on('providers-help', () => PM51.panel({
     title: 'How AI services work', icon: 'info',
