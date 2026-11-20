@@ -4,7 +4,7 @@
  "family_id": "event-family-remote-access-public-security-violation-detected",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2551",
- "decision_section_sha256": "09f39db0e117ad4ce7ddd298ec7795bd5a69f8ae06d4914af2c429a35adfbd50",
+ "decision_section_sha256": "1bb9ab3061f4eae76d4ad6d5131a957d12e17185df31b8d2ed45d1c25fefd03f",
  "registry_before": {
   "revision": "2026-11-16.226",
   "sha256": "4940071fa5c5c2f47e29e28fe7679b2e16440ff0040bd70cfa73761b0cba9ef4",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "c93ed85722edad386e1a2cdf405ff74da33107331c8e71f2d04f50ffdb9182fe",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/remote_access.public_security_violation_detected.json",
-  "sha256": "d105f9983df9c299e9734c701fe99d16e2d0da914d5b717b59b836e8c6fe11d5"
+  "sha256": "a95b871b03c71d66dae0f82d1bc969af737948153fcb072fa311944eefda77b6"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,7 +37,7 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
   "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
   "source_record_sha256": "918cfdd4c28feeb4ddb34ea22ec866e4c825e1887d66182530f39b8e1b479050",
   "source_assessment_sha256": "2a110e637121cb6ecee0af6168fdde4039e7bbb643c2e0e9efa806f3b1d31492",

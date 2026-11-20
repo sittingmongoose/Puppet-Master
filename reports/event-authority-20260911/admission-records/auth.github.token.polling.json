@@ -4,7 +4,7 @@
  "family_id": "event-family-auth-github-token-polling",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2455",
- "decision_section_sha256": "f52ecba4eee0595f2c0a5128656b3083b15d25d8df914fded1f6cba2249b0590",
+ "decision_section_sha256": "93780fca8a469979b0ddb5ac4299f95e983b6c1d256144b89790e51cd5024c98",
  "registry_before": {
   "revision": "2026-11-16.12",
   "sha256": "00c9224678e694491c50085d4d6b55ced0b6e7e11b95bb205748cf3b31252e1a",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "1393c12ad4ff4ce7374c2eb807b13ef66ad4bbea322f720ea88e4275b000f0e4",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/auth.github.token.polling.json",
-  "sha256": "dab942ed5d5ab9d53704fa0d762b138c0198bb2b2ec02d2b040756612c3031d9"
+  "sha256": "88ec63bd11a061590c7d87f4dd8374ad5e897e6725277587d3214e1d0edbe5c4"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,7 +37,7 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
   "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
   "source_record_sha256": "7f86dd3ff2ce9a8cab8a549c401892b1f85c6c961140a43527523ed152a9d79d",
   "source_assessment_sha256": "3a4ca58982f1765bc715a070773539cf376c282f5768c408a9ff255dbae09b3a",

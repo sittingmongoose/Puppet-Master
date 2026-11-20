@@ -17,6 +17,12 @@ REGISTRY = 'Plans/event_family_registry.json'
 RECORDS = 'reports/event-authority-20260911/admission-records'
 DIRECTORY = 'reports/event-authority-20261116/admission-merge-3/corrections'
 AUTHORITY = 'MERGE3-POSTFIX / post-landing Astra findings'
+RETENTION_CITATION_AUTHORITY = 'MERGE3A R3 / cheap recheck finding 1'
+RETENTION_CITATION_DECISIONS = {
+    'safe_point.created': 'Plans/Decision_Log.md#DL-2598',
+    'safe_point.restored': 'Plans/Decision_Log.md#DL-2599',
+}
+
 
 
 def sha(raw):
@@ -124,8 +130,19 @@ def witness(record, root, *, require_committed=True):
     raw = (root/path).read_bytes()
     doc = json.loads(raw)
     event = record['event_type']
-    if doc.get('authority') != AUTHORITY or doc.get('event_type') != event:
+    citation_only = doc.get('authority') == RETENTION_CITATION_AUTHORITY
+    expected_authority = (
+        RETENTION_CITATION_AUTHORITY if event in RETENTION_CITATION_DECISIONS else AUTHORITY
+    )
+    if doc.get('authority') != expected_authority or doc.get('event_type') != event:
         raise ValueError('correction authority/family differs')
+    if citation_only and (
+        doc.get('decision_ref') != RETENTION_CITATION_DECISIONS[event]
+        or doc.get('findings') != [1]
+        or doc.get('registry_after') != doc.get('registry_before')
+        or doc.get('registry_row') != doc.get('before_row')
+    ):
+        raise ValueError('retention citation correction must preserve the complete registry')
     source = doc['source_commit']
     old_record_raw = git_bytes(root, source, RECORDS+'/'+event+'.json')
     old_record = json.loads(old_record_raw)
@@ -164,7 +181,7 @@ def witness(record, root, *, require_committed=True):
     after = copy.deepcopy(before)
     after['registry_revision'] = doc['registry_after']['revision']
     after['families'][indices[0]] = doc['registry_row']
-    after_raw = rendered(after)
+    after_raw = before_raw if citation_only else rendered(after)
     if doc['registry_after'] != pin(after_raw) or doc['registry_before']['family_count'] != doc['registry_after']['family_count']:
         raise ValueError('correction is not an exact one-family transition')
     if record['registry_row_sha256'] != canonical(doc['registry_row']) or record['decision_ref'] != doc['decision_ref']:
@@ -174,7 +191,7 @@ def witness(record, root, *, require_committed=True):
         raise ValueError('correction changes an unreviewed registry field')
     if changed and not set(doc['findings']) & {1, 2, 3}:
         raise ValueError('registry change has no selector/scope finding')
-    if doc['registry_row'] != corrected_row(doc['before_row'], root):
+    if not citation_only and doc['registry_row'] != corrected_row(doc['before_row'], root):
         raise ValueError('correction successor is not exactly derived from the owner bindings')
     if not doc['findings'] or set(doc['findings']) - {1, 2, 3, 4, 5, 6, 7}:
         raise ValueError('unreviewed correction finding')
@@ -215,6 +232,8 @@ def prior_states(doc, root):
             rec = json.loads(path.read_text())
             after = rec['registry_after']
             before = rec['registry_before']
+            if before == after:
+                continue  # Evidence-only corrections do not add a registry state.
             valid = (type(after['family_count']) is int and type(before['family_count']) is int
                 and after['family_count']==before['family_count']
                 and isinstance(after['revision'],str) and isinstance(before['revision'],str)

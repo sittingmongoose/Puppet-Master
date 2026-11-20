@@ -4,7 +4,7 @@
  "family_id": "event-family-gate-failed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2316",
- "decision_section_sha256": "4cad3a1cce7f85659c95c2494d9cd84f67d41f00bbddd6c38da37e4c38f7fa2d",
+ "decision_section_sha256": "8f1ed04b9bb01bddac01788a13ace99dc8a00819a3097f8c6384a41b640ae4da",
  "registry_before": {
   "revision": "2026-11-16.179",
   "sha256": "a1f57f3b16ce4d17a13aa461aca5446bbedcd61d6f17975128c1fd6fc4374b27",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "3102ebc183e82833dd9355c70163aad7ea8ed59a443c3372591af10ee2297d15",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/gate.failed.json",
-  "sha256": "cc2c1ecf86eb5e92cc3a4be829733c748b05d5e71aa6e98d75a49817920de6f3"
+  "sha256": "ddc67de19fbd294ca55abf6982e5a71677c11a488e34b0348d2f2c93209462a3"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,7 +37,7 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
   "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
   "source_record_sha256": "f430ff1414d1c7d10310d7a3399c116e94736e36419883278a6889e55b98e55a",
   "source_assessment_sha256": "82e91295af668ed9e61aad5e712df4b446aa14c3c67a4969319091089d476c2f",

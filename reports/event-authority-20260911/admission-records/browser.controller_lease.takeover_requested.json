@@ -4,7 +4,7 @@
  "family_id": "event-family-browser-controller-lease-takeover-requested",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2162",
- "decision_section_sha256": "8db7237b03c680ec1446bbbafb2959c6d389cb68734befd582932540dcb9448d",
+ "decision_section_sha256": "42d1eaeefd99ea158666985acd3f4b6506452613cb6a588e1b006f8660f3586e",
  "registry_before": {
   "revision": "2026-11-16.25",
   "sha256": "987edec1d0b64ce7b1934001bfa6d963c89d68bce1f217ae259ed753bcfc56e4",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "2de7907f6686966438318de2e2de59a42897d15e1f5e6bbc7b11367f0d6da2f6",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/browser.controller_lease.takeover_requested.json",
-  "sha256": "10b006d6cf3efe645016907d981d5cab3685484e00e256473c30ca9bd04427d0"
+  "sha256": "07ec0647b750054985d71e3470f17b23e169d9c404817f19441a5bd546546cb0"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,7 +37,7 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
   "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
   "source_record_sha256": "50acf7248c7501d87efd036d8c08e52bf1288e95982f3a2ff99dd2234bcb6207",
   "source_assessment_sha256": "df883725e2a3943acf32faea76429987c8ca8558503655cc3786920c4c5004e4",

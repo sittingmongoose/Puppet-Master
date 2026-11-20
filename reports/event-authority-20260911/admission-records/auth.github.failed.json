@@ -4,7 +4,7 @@
  "family_id": "event-family-auth-github-failed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2454",
- "decision_section_sha256": "d7f131020e92ddd425bcd5038df4f8948bd0f0a57d2fd2936d4ea121acd25bdc",
+ "decision_section_sha256": "33f2e423d5b09bbb379701083be6a3282e6234bbd687fbd1ed24988b3df389d3",
  "registry_before": {
   "revision": "2026-11-16.11",
   "sha256": "8e33379963ef36eab321738cc63d1b8da69882db8ab203c8060fee085a455389",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "d6ea21fb565a0dd737fef672e1bba9449619490511f69536962d292865adda58",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/auth.github.failed.json",
-  "sha256": "0c8c38e367304e5b1227e82e10faa3c0382faf92c8b0fa6ea6e3c989fea657db"
+  "sha256": "55efbf01e4cc0a84175400911ffb680f3ed16f5af1773979dd1ae32890af6ebf"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,7 +37,7 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
   "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
   "source_record_sha256": "471a91952c0095568af029dcbfc6fc2e9ed0a171a2c9380fca1d991d9525db88",
   "source_assessment_sha256": "a4c350d627246c64d50eadbf97e02878495c5384c29f817fceb9cb542b3d2db1",

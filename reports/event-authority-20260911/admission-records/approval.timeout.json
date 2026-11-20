@@ -4,7 +4,7 @@
  "family_id": "event-family-approval-timeout",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2144",
- "decision_section_sha256": "40a9e64a2f698c1d3d6cb5afabb4ca247adf0e80088929f431e50a20f00fc619",
+ "decision_section_sha256": "cdf06226b02e73982f84f955c53a84bc6aee7d1316302856e5ed00b93a317da1",
  "registry_before": {
   "revision": "2026-11-16.7",
   "sha256": "6be7c6179462e600ef0e49744f61a2bbe3de7ec6b1772bbf5ca1c0c0a8a91384",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "6e7b755ec48cc3f1d60205760ee252e575be3efa4ce7af065835335b207337ab",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/approval.timeout.json",
-  "sha256": "692d37a271e77b5dd9079627082dc7f11e21b3f9f90a8527b48618d63069d84c"
+  "sha256": "2ad332118ff2c620f364d97abcac9b0e736f9a3b85f74955701f241a97356fc9"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,7 +37,7 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
   "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
   "source_record_sha256": "e5bc77513440fac19b76f88adc6e0d58018b81339e564fc3c1fc8954e09a3da0",
   "source_assessment_sha256": "7797e2841bc19cb58760f31ebb119ab6289f3dca179ba07aa64d02d1d8b8dd18",

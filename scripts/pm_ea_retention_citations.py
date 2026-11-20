@@ -266,7 +266,51 @@ def dt_count_evidenced(bodies):
     return False
 
 
-def effective_count_missing(bodies, event, scope, lower):
+def project_limit(policy):
+    if not policy:
+        return None
+    for limit in (policy, *policy.get('additional_cardinality_limits', [])):
+        if limit.get('cardinality_scope') == 'project' and limit.get('max_cardinality') is not None:
+            return limit['max_cardinality']
+    return None
+
+
+def application_count_evidenced(bodies, event, policy, project_max):
+    """Require the cited family binding to account for its per-Project limit."""
+    family = re.escape(event.lower())
+    policy_id = re.escape(policy['policy_id'].lower())
+    for body in bodies:
+        clause = re.sub(r'\s+', ' ', body).lower()
+        if not re.search(r'(?<![\w.])' + family + r'(?![\w.])', clause) or not re.search(
+            r'(?<![\w-])' + policy_id + r'(?![\w-])', clause
+        ):
+            continue
+        if policy.get('cardinality_scope') == 'run':
+            run_max = f"{policy['max_cardinality']:,}"
+            run_count = re.search(re.escape(run_max) + r'(?: records)?(?: per |/)run\b', clause)
+            if not run_count:
+                continue
+        if (
+            'the project count applies only when there is a real project' in clause
+            and re.search(re.escape(f'{project_max:,}') + r'(?: records)?(?: per |/)project\b', clause)
+            and policy.get('cardinality_scope') == 'run'
+        ):
+            return True
+        if re.search(
+            r'sp-349 already decides one app server-wide counterpart bucket for ' + family
+            + r' with the same ' + re.escape(f'{project_max:,}') + r' cap\b', clause
+        ):
+            return True
+        if (
+            re.search(r'retention_policy_ref\s*=\s*' + policy_id + r' for ' + family + r'\b', clause)
+            and re.search(re.escape(f'{project_max:,}') + r'(?: records)?(?: per |/)project\b', clause)
+            and 'sp-349 binds one server-wide app counterpart bucket per family with the same limits' in clause
+        ):
+            return True
+    return False
+
+
+def effective_count_missing(bodies, event, scope, lower, policy):
     if event in CREW:
         return ('server counterpart' if scope == 'application' else 'project partition') not in lower
     if scope != 'application':
@@ -275,7 +319,10 @@ def effective_count_missing(bodies, event, scope, lower):
         return not github_count_evidenced(bodies)
     if event == 'filesafe.policy_degraded':
         return not all(token in lower for token in ('app:filesafe_policy_degraded', 'server', 'dl-2450'))
-    return event in DT_SERVER_COUNT and not dt_count_evidenced(bodies)
+    if event in DT_SERVER_COUNT:
+        return not dt_count_evidenced(bodies)
+    project_max = project_limit(policy)
+    return project_max is not None and not application_count_evidenced(bodies, event, policy, project_max)
 
 
 def union_missing(bodies, row, policies):
@@ -315,7 +362,7 @@ def union_missing(bodies, row, policies):
         if selected.get('setting_key') and not re.search(r'no count eviction|no cardinality|count[^.]{0,60}(?:none|unlimited|not applied)', lower):
             gaps.append(scope+':setting_count')
         event = row['event_type']
-        if effective_count_missing(bodies, event, scope, lower):
+        if effective_count_missing(bodies, event, scope, lower, policy):
             gaps.append(scope+':effective_count')
         count_owner = 'SP-351' if event in CREW else None
         if scope == 'application' and event in GITHUB_SIGN_IN:

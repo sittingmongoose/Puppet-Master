@@ -4,7 +4,7 @@
  "family_id": "event-family-doctor-custom-headless-checked",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2515",
- "decision_section_sha256": "1787f0a989d0991cd90e68ade486f4927a04bca76f5d7d68d4e26af9fa008126",
+ "decision_section_sha256": "5cac59d66f1c2abede0d4c2dacb4dc1b8c659601154ac9250db13c7c15c621a1",
  "registry_before": {
   "revision": "2026-11-16.157",
   "sha256": "40f00ed142631d217f6db2955fd8cdf8c331ebdf180563451da4f13895e641cb",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "33d3505655db2bc52e8f14b04be4ebeb5dc4eb9e11a892339ada8d8a1aa99876",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/doctor.custom_headless.checked.json",
-  "sha256": "8c80c57882c2e8bb3d2ed524f110b852cc8b77f0a99a39a91fd2d6e611a2f13b"
+  "sha256": "e317d8df6970351b98f57357155c8c3fb07d8f2bd2133d22106583fc0be105fc"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,7 +37,7 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
   "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
   "source_record_sha256": "8b2ca7df428c619af2aed78acc0ae618bfb72b8beee9a6a4cd73d4feb4b53704",
   "source_assessment_sha256": "ceefc5badd861c81a72ee0559fe9dbb913494d06b91090f3a2c3551d29fa2dd6",

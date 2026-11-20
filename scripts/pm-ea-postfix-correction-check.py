@@ -12,7 +12,8 @@ from unittest.mock import patch
 import pm_ea_postfix_corrections as c
 
 ROOT = Path(__file__).resolve().parents[1]
-REQUIRED_DECISIONS={f'Plans/Decision_Log.md#DL-{number}' for number in range(2451,2596)}
+REQUIRED_DECISIONS = {f'Plans/Decision_Log.md#DL-{number}' for number in range(2451, 2596)}
+REQUIRED_DECISIONS.update(c.RETENTION_CITATION_DECISIONS.values())
 
 
 def coverage_problems(records, witnesses, decisions):

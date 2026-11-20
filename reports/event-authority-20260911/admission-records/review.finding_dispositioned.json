@@ -4,7 +4,7 @@
  "family_id": "event-family-review-finding-dispositioned",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2373",
- "decision_section_sha256": "caf3417027344dbe8ef9eb5ebeff19f898239e42331b7a184ee17b660fc7e155",
+ "decision_section_sha256": "b2bf624394bad477074790d0f991e0f3a89ad5655a6600d85336b81ac8dca0ca",
  "registry_before": {
   "revision": "2026-11-16.236",
   "sha256": "8caa77849778bef5649b20de052938c9da0169c6d7b8c02c9ff2adfc23cfd3f8",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "36d7d261229988f8b096e61e79b23871781197da47d8638e4b3448bbcff5a00e",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/review.finding_dispositioned.json",
-  "sha256": "fefdae356212e4b707a267cf55def0b42d7925c7770efbf42262c6734137e032"
+  "sha256": "64d1c54d404251ce4417abf3770e27f99522367cf299e5edf946bb18eddd1db2"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,7 +37,7 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
   "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
   "source_record_sha256": "05933bc3659b2d75c35ffc85c5045229dbd35947de76b4747f25a4e5fe5e3c01",
   "source_assessment_sha256": "15150bd4dad84c3e0b54d2f4ebfa97fc87ca5ae55ffe2cb98fa96dd05de3bf69",

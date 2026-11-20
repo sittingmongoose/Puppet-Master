@@ -4,7 +4,7 @@
  "family_id": "event-family-runtime-artifact-hitl-approval",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2385",
- "decision_section_sha256": "8fec7e20cbf3fdfccce39c583b843d97bc6c8d01595bf9d5f75833f45e0abfd8",
+ "decision_section_sha256": "789c43a1b01abbd8a5f3a6fb5881fcc7470920363661428cf01d37f77d550243",
  "registry_before": {
   "revision": "2026-11-16.248",
   "sha256": "d08456ffb4f1e593b683b38374cb7ae0b1981c6b21f2c4414efcd8d33f9d8237",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "9981e31c7258b317aab2dc566062536947a6f90ce95369bf4ae0094322d693f4",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.hitl_approval.json",
-  "sha256": "6795909ab8566d0ef42d26801a3575ce420ea3977a3c1152e9b6831a98ac1fe6"
+  "sha256": "ea85578c6645fd4db37ea521949e25902d205b0808716d3bcc3752e104468cbf"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,7 +37,7 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
   "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
   "source_record_sha256": "1e68dc6ac33f54fb49fc0fa404ed86e08a600fdbeed87e85a46107bdff9dc09e",
   "source_assessment_sha256": "1165392f8744b2b64e7de258edfd2b9992e87ee7d44abb2a71e0c3cd32211003",

@@ -21,22 +21,28 @@ FOLDER = 'reports/event-authority-20261116/admission-merge-2'
 
 def check_received_effective_counts(ready, rows, policies, read):
     source = '5a5392ecf8ca34c79db7cd3ddd303d751e4c8601'
+    recheck_source = 'd40290457bdba327929cb21ac0f7de55131971b7'
+    safe_points = {'safe_point.created', 'safe_point.restored'}
 
-    @lru_cache(maxsize=16)
-    def received(path):
-        return subprocess.check_output(['git', '-C', str(ROOT), 'show', source+':'+path]).decode()
+    @lru_cache(maxsize=32)
+    def received(revision, path):
+        return subprocess.check_output(['git', '-C', str(ROOT), 'show', revision+':'+path]).decode()
 
     def cited_union(event, read_edition):
         assessment = json.loads(read_edition(f'{FOLDER}/depth/{event}.json'))
         return [range_text(item, read_edition) for item in assessment['rows'][0]['cells']['retention']['evidence']]
 
     gap = 'application:effective_count'
-    required_families = GITHUB_SIGN_IN | DT_SERVER_COUNT
-    original = {event: cited_union(event, received) for event in sorted(required_families)}
+    required_families = GITHUB_SIGN_IN | DT_SERVER_COUNT | safe_points
+    revisions = {event: recheck_source if event in safe_points else source for event in required_families}
+    original = {
+        event: cited_union(event, lambda path: received(revisions[event], path))
+        for event in sorted(required_families)
+    }
     regressions, findings, mutations = [], [], []
     for event, union in original.items():
         missing, _ = union_missing(union, rows[event], policies)
-        regressions.append(dict(event_type=event, source_commit=source, missing=missing, killed=missing == [gap]))
+        regressions.append(dict(event_type=event, source_commit=revisions[event], missing=missing, killed=missing == [gap]))
         if missing != [gap]:
             findings.append(dict(event_type=event, lane=ready[event]['lane'],
                 missing=['received union did not isolate the Application count gap'], actual=missing))
@@ -88,6 +94,27 @@ def check_received_effective_counts(ready, rows, policies, read):
         for name, candidate in controls:
             missing, _ = union_missing(candidate, rows[event], policies)
             killed = missing == [gap]
+            mutations.append(dict(event_type=event, mutation=name, killed=killed))
+            if not killed:
+                findings.append(dict(event_type=event, lane=ready[event]['lane'],
+                    missing=['effective count mutation survived: '+name], actual=missing))
+    for event in sorted(safe_points):
+        current = cited_union(event, read)
+        sibling = next(iter(safe_points - {event}))
+        sibling_rule = [
+            body for body in cited_union(sibling, read)
+            if 'the Project count applies only when there is a real Project' in body
+        ]
+        controls = [
+            ('remove the real-Project count condition', [
+                body.replace('the Project count applies only when there is a real Project', 'REMOVED_PROJECT_CONDITION')
+                for body in current
+            ]),
+            ('substitute the sibling SafePoint count assignment', original[event] + sibling_rule),
+        ]
+        for name, candidate in controls:
+            missing, _ = union_missing(candidate, rows[event], policies)
+            killed = missing == [gap] and bool(sibling_rule)
             mutations.append(dict(event_type=event, mutation=name, killed=killed))
             if not killed:
                 findings.append(dict(event_type=event, lane=ready[event]['lane'],

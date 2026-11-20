@@ -614,6 +614,16 @@
         "excerpt_sha256": "f1c44fbaf4a399a3b225f4c744c38522a265bb08b907344e202e36c771d5e3ed"
        },
        "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-557",
+       "line_start": 56213,
+       "line_end": 56213,
+       "quote": "**Retention — DL-401 G28 (sweep part 1, R7-B1).** `safe_point.created` EventRecord history adopts `retention_policy_ref = RP-RUNTIME-365D`, the existing Run year policy: one year (31,536,000 seconds) after the actual run completes, up to 1,000,000 records per run and the applicable 5,000,000 records per Project, then history continues in a linked successor without dropping records early. Both Project and application safe points require their real run identity; an application run does not acquire a fabricated Project or Orchestrator identity, and the Project count applies only when there is a real Project. A running run has no completion expiry anchor. Legal holds, recovery anchors, the automatic keep on each Project's latest 25 runs, live references and backups override expiry; existing authorized retention extensions and rollback/maintenance protections remain. Retries, replay, recovery and observation do not reset run completion. This is the approved G28 row, \"The 2 restore-point records: Run year,\" applied to the two original RT-G28 safe-point names, not to the separate Chat restore_point.* families. The source premises remain CV-557, FileSafe F2-213 and the required real run in the closed own payload. Released snapshot/body lifetimes and original restore journals remain separate under their existing policies. This binding decides no application-scope FileSafe security-event retention rule and grants no access to deleted or inaccessible bodies.",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-557, Plans/storage-plan.md:56162-56232",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888"
       }
      ],
      "carried_from": {
@@ -993,9 +1003,9 @@
   "row_pointer": "#/families/476"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
-  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
-  "source_assessment_sha256": "1a9ba18a251b51264c1d4e5ac2d32250f12f1d9943efe3cd79ae9da0ef15b0b7",
+  "authority": "MERGE3A R3 / cheap recheck finding 1",
+  "source_commit": "5c5570cb4a8018e0aeea6619244d1b793179dace",
+  "source_assessment_sha256": "912124ac777c39e91e1c0b961f85ebcc8b0793b269cd320807263209f869a103",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

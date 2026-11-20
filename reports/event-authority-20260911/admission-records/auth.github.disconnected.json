@@ -4,7 +4,7 @@
  "family_id": "event-family-auth-github-disconnected",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2453",
- "decision_section_sha256": "fcfc599d4dd437722d89bc202c421d0f93fe2c1df54d7c607958e4ec992ad8a4",
+ "decision_section_sha256": "a1032c4ab7d93b08d1252de55bec79220585dbe9b932427b120d671a19053388",
  "registry_before": {
   "revision": "2026-11-16.10",
   "sha256": "0c5977669441a847f20cac46f5ebb7266d07addc249c9de969061d41f84e0bd0",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "053efdcca8aa9d86143238bee746aae575fcdc66865ad21469291b17a66f922d",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/auth.github.disconnected.json",
-  "sha256": "21fab78379836a29efe2914f8fc2378735e454731a894783e7c85488981fddc5"
+  "sha256": "538c740c6d1c488820f0c8c23b35602652788da103e1b266d0886f544efd2b1c"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,7 +37,7 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
   "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
   "source_record_sha256": "ea9900a3b4d360194e1ad3e0f9e61f4f887ae514e47ccd97f057a7f4cb8f7a16",
   "source_assessment_sha256": "84b81530041cc57f6cadecc6f9a3b6bbe3ae20c5570b62a002e2bf70a198a1f5",

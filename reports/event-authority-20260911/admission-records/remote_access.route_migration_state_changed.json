@@ -4,7 +4,7 @@
  "family_id": "event-family-remote-access-route-migration-state-changed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2553",
- "decision_section_sha256": "0c213717fdc390e3fda26c9c2a689146acc22591399915f6b1d8b50982004ef5",
+ "decision_section_sha256": "f50966aec7bb9a38213532ab1d9a44f8067519c0a22a640dc8721081146d8f9c",
  "registry_before": {
   "revision": "2026-11-16.228",
   "sha256": "dd249beb82582c580dddf7ca1fd7b179d82bb6926b727ae9ff74ef78415386be",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "197419038a8b413c317f247f6e5f7ea8a276b61d1457fab6eb7299026e0e3987",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/remote_access.route_migration_state_changed.json",
-  "sha256": "4ee17123a1e02d109d4c2a32e14c0534eb1eaccee138ed7bfdebbb284e321657"
+  "sha256": "6bafa354e8fdb6999d41fb12bd9becb18002eccc00b31ff0ec4e946a292657a2"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,7 +37,7 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
   "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
   "source_record_sha256": "c720328370cfa1edade78df59344938305f638e515743c15e2cf78a3ece235ef",
   "source_assessment_sha256": "2e98c53c88506def1b329afd01bf19908141238aa49a6ebd0762d71e8cbc3a69",

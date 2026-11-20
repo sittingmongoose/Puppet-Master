@@ -5531,7 +5531,6 @@
     "DL-2555",
     "DL-2556",
     "DL-2557",
-    "DL-2558",
     "DL-2559",
     "DL-2560",
     "DL-2561",
@@ -5561,8 +5560,6 @@
     "DL-2585",
     "DL-2586",
     "DL-2587",
-    "DL-2588",
-    "DL-2589",
     "DL-2590",
     "DL-2592",
     "DL-2593",
@@ -7488,6 +7485,8 @@
     "RAP-116",
     "RAP-117",
     "RAP-118",
+    "DL-2598",
+    "DL-2599",
     "CV-620",
     "CV-621",
     "CV-622",
@@ -8516,6 +8515,9 @@
     "SP-720",
     "SP-721",
     "SP-722",
+    "DL-2558",
+    "DL-2588",
+    "DL-2589",
     "SMPFS-001",
     "SMPFS-144",
     "SP-352",
@@ -53139,6 +53141,11 @@
     {
       "edge_type": "depends_on",
       "from": "DL-2558",
+      "to": "DL-2597"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2558",
       "to": "DL-400"
     },
     {
@@ -53654,6 +53661,11 @@
     {
       "edge_type": "depends_on",
       "from": "DL-2588",
+      "to": "DL-2597"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2588",
       "to": "DL-400"
     },
     {
@@ -53665,6 +53677,11 @@
       "edge_type": "depends_on",
       "from": "DL-2589",
       "to": "DL-2427"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2589",
+      "to": "DL-2597"
     },
     {
       "edge_type": "depends_on",
@@ -53810,6 +53827,56 @@
       "edge_type": "depends_on",
       "from": "DL-2597",
       "to": "SP-349"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2598",
+      "to": "DL-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2598",
+      "to": "DL-2394"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2598",
+      "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2598",
+      "to": "DL-401"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2598",
+      "to": "SP-557"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2599",
+      "to": "DL-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2599",
+      "to": "DL-2395"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2599",
+      "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2599",
+      "to": "DL-401"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2599",
+      "to": "SP-558"
     },
     {
       "edge_type": "depends_on",
@@ -164557,7 +164624,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-20T21:21:53Z",
+  "generated_at_utc": "2026-11-20T23:29:43Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -217985,6 +218052,40 @@
         "heading_level": 3,
         "heading_line": 63005,
         "line": 63007,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge3_postfix",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2598",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_admission",
+      "source_location": {
+        "heading": "DL-2598: Event Authority cites the approved safe_point.created count",
+        "heading_level": 3,
+        "heading_line": 63052,
+        "line": 63054,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge3_postfix",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2599",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_admission",
+      "source_location": {
+        "heading": "DL-2599: Event Authority cites the approved safe_point.restored count",
+        "heading_level": 3,
+        "heading_line": 63111,
+        "line": 63113,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -328021,10 +328122,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27762,
+    "depends_on_edge_count": 27775,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30987,
-    "node_count": 9615,
+    "edge_count": 31000,
+    "node_count": 9617,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0

@@ -4,7 +4,7 @@
  "family_id": "event-family-filesafe-destructive-override-denied",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2517",
- "decision_section_sha256": "1e2f86187f4b04d0a0c2adfab0fc046e44dfde0c87d0e8ab939e2cff6ed3ec27",
+ "decision_section_sha256": "6d189323c4ffe2ffbc25f2265a30de1128fcb547031c887f7dabe69fc1c002a3",
  "registry_before": {
   "revision": "2026-11-16.165",
   "sha256": "679fa9e46e552241c5265a5e5eaef386f184dc00e714d5d753bb22ca1134075c",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "859170d0c67fbaf390bb13fde8b64011dbfe807d049e510a892651f28bb008cd",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/filesafe.destructive_override_denied.json",
-  "sha256": "f12cc53a26945e8f978cc08f3d4139f3b471c39579e6046d7a4e29d38f476df2"
+  "sha256": "79c5b5a4a17ec6f9cbd3dca3196a8caa96eb5cd2fc02768cd44d41707c6aad43"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,7 +37,7 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "authority": "MERGE3A R3 / refresh existing Storage citation locators and pins",
   "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
   "source_record_sha256": "daf0cdab1952f099dd8e307b49a6b274be698d9578b5945deafd53ac2fb84282",
   "source_assessment_sha256": "c33cd574c189625f4fe9aa123a1611916cedc4628f262dc034b33c31ffa660ec",
