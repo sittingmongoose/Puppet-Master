@@ -323,6 +323,7 @@ def check_frozen_producer_input(world, uri, *, publish):
     if publish:
         reader = inspect.getsource(world.producer.publish)
         require("lambda: w.source.read_progress(scope, op, where)" in reader and
+                "p['phase'] in ('event_ready', 'event_unknown')" in reader and
                 "candidate = copy.deepcopy(p['producer_input'])" in reader and
                 'ctx = dict(candidate=candidate)' in reader and
                 "A.same(ctx['candidate'], p['producer_input'])" in reader and
