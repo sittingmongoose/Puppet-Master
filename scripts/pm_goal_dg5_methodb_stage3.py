@@ -48,7 +48,7 @@ def errors_list(errors):
 def edit_example(go, document, path, change):
     go.get(document, path)
     if change.get('birth_selector'):
-        edit = copy.deepcopy(document['record']['birth'])
+        edit = copy.deepcopy(go.get(document, change.get('control_path', ['record']) + ['birth']))
     else:
         edit = tuple(change['member']) if 'member' in change else change['value']
     return go.apply(document, path, edit)
@@ -194,6 +194,15 @@ def certified_fixture(route, path):
                 return w.coordinator.f5d(*captured)
 
         return w, event_phase
+    if route == 'release':
+        run.until('readback')
+        stamp = w.storage.now()
+
+        def release():
+            with patch.object(w.storage, 'now', return_value=stamp):
+                return w.coordinator.release(ctx, run.obs['committed'], run.obs['readback'])
+
+        return w, release
     if route == 'native':
         run.until('append')
         stamp = w.storage.now()
@@ -425,9 +434,9 @@ CONTROL_PHASE_FIELDS = {
 }
 
 
-def control_phase(document, phase):
+def control_phase(document, phase, field):
     doc = copy.deepcopy(document)
-    record = doc['record']
+    record = doc[field]
     for member in CONTROL_PHASE_FIELDS['released']:
         record[member] = copy.deepcopy(record['birth']) if member in CONTROL_PHASE_FIELDS[phase] else None
     record['phase'] = phase
@@ -437,7 +446,7 @@ def control_phase(document, phase):
 def control_implication(nodes, name, path, errors, locations):
     """Each allowed phase independently requires one branch of the nullable selector."""
     location = name.split('/properties/', 1)[0]
-    require(location.endswith('#/$defs/Control') and path[0] == 'record' and len(path) == 2,
+    require(location.endswith('#/$defs/Control') and path[0] in ('record', 'control') and len(path) == 2,
             'the phase implication applies only to a Control member')
     node = nodes[location]['node']
     member = path[1]
@@ -589,7 +598,7 @@ def body_receipt_implication(nodes, name, path, errors, locations):
                 premise='The revision selects either the null branch or the same 64-character hash rule.')
 
 
-def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check):
+def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check, branches=None):
     import pm_goal_dg5_closure as closure
     import pm_goal_go_schema_closure as go
 
@@ -614,7 +623,9 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
     for name in installed:
         example = examples[name]
         path = example['path']
-        control = control_phase(document, example['phase']) if 'phase' in example else document
+        control_path = example.get('control_path', ['record'])
+        base = branches[example['control_name']] if 'control_name' in example else document
+        control = control_phase(base, example['phase'], control_path[0]) if 'phase' in example else base
         if 'control' in example:
             control = edit_example(go, document, example['control']['path'], example['control'])
         for change in example.get('controls', []):
@@ -647,7 +658,7 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
             expected = name.split('/if/', 1)[0] + '/then/'
             if name.endswith('/allOf/4/if/properties/phase/const'):
                 selector_type = name.split('#', 1)[0] + '#/$defs/Selector/type'
-                activated = locations(cut) == {('type', ('record', member), selector_type)
+                activated = locations(cut) == {('type', (*control_path, member), selector_type)
                                                for member in CONTROL_PHASE_FIELDS['released']}
             else:
                 activated = bool(cut) and all(rule.startswith(expected) for rule in go.locations(cut))
@@ -807,7 +818,7 @@ def main():
         require({(obs['root'], obs['registry_sha256']) for run in check.runs for obs in run['observations']}
                 == {(ident, root['registry_sha256'])}, 'root or registry differs from the census')
         clauses, gaps = test_rules(plain, actual_bank, accepted, ident, root['clause_ids'],
-                                   declare['examples'], args.disable_check)
+                                   declare['examples'], args.disable_check, declare.get('accepted_branches'))
         report.update(clauses=clauses, gaps=gaps)
         require(not gaps, f'{len(gaps)} rules still have another validation message')
         proof_output(source, args.out, declare, collector, clauses, ident, table_path)
