@@ -412,3 +412,20 @@ PROOFS['dg5/start/commit/schema'] = dict(
         'after bypass, and the restored early refusal.'
     ),
 )
+
+PROOFS['dg5/start/origin/schema'] = dict(
+    kind='entailment',
+    families=['goal_run.started'],
+    depends_on=['dg5/start/retained_native/schema'],
+    sites=[('scripts/pm_goal_dg_s_start.py', 1191), ('scripts/pm_goal_dg_s_start.py', 1192), ('scripts/pm_goal_dg_s_start.py', 1269), ('scripts/pm_goal_dg_s_start.py', 1270), ('scripts/pm_goal_dg_s_start.py', 1272)],
+    argument=(
+        'The StorageOrigin document checked at 1191 is placed unchanged in the required '
+        'RetainedNativeStart.origin member at 1269–1270 and checked at 1272 in the same '
+        'publication routine. The selector at 1192 uses the document without changing it. In v3 '
+        'and native v7 that required member resolves to the identical StorageOrigin definition. '
+        'If the complete call reaches 1272 after bypassing the early check, this same document '
+        'must satisfy the same definition there. The three exact-root replays bind the two '
+        'checks to the same accepted and invalid documents, the same first validation message '
+        'after bypass, and the restored early refusal.'
+    ),
+)

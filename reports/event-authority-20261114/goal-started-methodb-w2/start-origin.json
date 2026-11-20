@@ -1,0 +1,59 @@
+{
+  "row": "dg5/start/origin/schema",
+  "fixtures": [
+    {
+      "route": "publish_start_origin",
+      "edition": "v7",
+      "root": "dg5:8070852d7bd0cf36",
+      "hash_seed": 5,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "publish_start_origin",
+      "edition": "v3",
+      "root": "dg5:bcf3dd7cc9033e3b",
+      "hash_seed": 8,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "publish_start_origin",
+      "edition": "v7",
+      "root": "dg5:a93bd8c354079681",
+      "hash_seed": 13,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
