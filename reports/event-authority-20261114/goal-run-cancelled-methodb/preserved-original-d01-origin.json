@@ -1,0 +1,2968 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:19f9e78fcd1580e8": {
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/closed_members": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "coverage": {
+                "family_id": "executor_workflow_coverage_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "inventory": {
+                "family_id": "executor_workflow_inventory_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "scheduler": {
+                "family_id": "executor_workflow_scheduler_control",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.begin_coverage.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "afterimages"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/properties/coverage/allOf/1/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "coverage": {
+                "family_id": "executor_workflow_coverage_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "inventory": {
+                "family_id": "executor_workflow_inventory_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "scheduler": {
+                "family_id": "executor_workflow_scheduler_control",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.begin_coverage.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "coverage",
+          "family_id"
+        ],
+        "value": "executor_workflow_coverage_birthx"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/properties/coverage/allOf/1/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "coverage": {
+                "family_id": "executor_workflow_coverage_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "inventory": {
+                "family_id": "executor_workflow_inventory_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "scheduler": {
+                "family_id": "executor_workflow_scheduler_control",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.begin_coverage.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "coverage",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_workflow_coverage_birth.v4x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/properties/coverage/allOf/1/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "coverage": {
+                "family_id": "executor_workflow_coverage_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "inventory": {
+                "family_id": "executor_workflow_inventory_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "scheduler": {
+                "family_id": "executor_workflow_scheduler_control",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.begin_coverage.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "coverage",
+          "schema_version"
+        ],
+        "value": "4.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/properties/inventory/allOf/1/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "coverage": {
+                "family_id": "executor_workflow_coverage_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "inventory": {
+                "family_id": "executor_workflow_inventory_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "scheduler": {
+                "family_id": "executor_workflow_scheduler_control",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.begin_coverage.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "inventory",
+          "family_id"
+        ],
+        "value": "executor_workflow_inventory_headx"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/properties/inventory/allOf/1/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "coverage": {
+                "family_id": "executor_workflow_coverage_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "inventory": {
+                "family_id": "executor_workflow_inventory_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "scheduler": {
+                "family_id": "executor_workflow_scheduler_control",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.begin_coverage.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "inventory",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_workflow_inventory_head.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/properties/inventory/allOf/1/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "coverage": {
+                "family_id": "executor_workflow_coverage_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "inventory": {
+                "family_id": "executor_workflow_inventory_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "scheduler": {
+                "family_id": "executor_workflow_scheduler_control",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.begin_coverage.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "inventory",
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/properties/pointer/allOf/1/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "coverage": {
+                "family_id": "executor_workflow_coverage_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "inventory": {
+                "family_id": "executor_workflow_inventory_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "scheduler": {
+                "family_id": "executor_workflow_scheduler_control",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.begin_coverage.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "pointer",
+          "family_id"
+        ],
+        "value": "executor_workflow_current_pointerx"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/properties/pointer/allOf/1/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "coverage": {
+                "family_id": "executor_workflow_coverage_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "inventory": {
+                "family_id": "executor_workflow_inventory_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "scheduler": {
+                "family_id": "executor_workflow_scheduler_control",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.begin_coverage.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "pointer",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_workflow_current_pointer.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/properties/pointer/allOf/1/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "coverage": {
+                "family_id": "executor_workflow_coverage_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "inventory": {
+                "family_id": "executor_workflow_inventory_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "scheduler": {
+                "family_id": "executor_workflow_scheduler_control",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.begin_coverage.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "pointer",
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/properties/scheduler/allOf/1/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "coverage": {
+                "family_id": "executor_workflow_coverage_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "inventory": {
+                "family_id": "executor_workflow_inventory_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "scheduler": {
+                "family_id": "executor_workflow_scheduler_control",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.begin_coverage.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "scheduler",
+          "family_id"
+        ],
+        "value": "executor_workflow_scheduler_controlx"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/properties/scheduler/allOf/1/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "coverage": {
+                "family_id": "executor_workflow_coverage_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "inventory": {
+                "family_id": "executor_workflow_inventory_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "scheduler": {
+                "family_id": "executor_workflow_scheduler_control",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.begin_coverage.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "scheduler",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_workflow_scheduler_control.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/properties/scheduler/allOf/1/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "coverage": {
+                "family_id": "executor_workflow_coverage_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "inventory": {
+                "family_id": "executor_workflow_inventory_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "scheduler": {
+                "family_id": "executor_workflow_scheduler_control",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.begin_coverage.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "scheduler",
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/required": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "coverage": {
+                "family_id": "executor_workflow_coverage_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "inventory": {
+                "family_id": "executor_workflow_inventory_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "scheduler": {
+                "family_id": "executor_workflow_scheduler_control",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.begin_coverage.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "member": [
+          "remove",
+          "coverage"
+        ],
+        "path": [
+          "record",
+          "afterimages"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/type": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "coverage": {
+                "family_id": "executor_workflow_coverage_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_coverage_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "inventory": {
+                "family_id": "executor_workflow_inventory_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "scheduler": {
+                "family_id": "executor_workflow_scheduler_control",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_scheduler_control.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.begin_coverage.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowMutationOrigin/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowMutationOrigin/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_workflow_lineage_origin.v4x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowMutationOrigin/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "4.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowMutationOrigin/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowMutationOrigin/type": {
+        "path": [],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/closed_members": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "afterimages"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/properties/pointer/allOf/1/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "pointer",
+          "family_id"
+        ],
+        "value": "executor_workflow_current_pointerx"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/properties/pointer/allOf/1/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "pointer",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_workflow_current_pointer.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/properties/pointer/allOf/1/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "pointer",
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/properties/workflow_birth/allOf/1/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "workflow_birth",
+          "family_id"
+        ],
+        "value": "executor_workflow_workflow_birthx"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/properties/workflow_birth/allOf/1/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "workflow_birth",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_workflow_workflow_birth.v4x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/properties/workflow_birth/allOf/1/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "workflow_birth",
+          "schema_version"
+        ],
+        "value": "4.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/properties/workflow_head/allOf/1/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "workflow_head",
+          "family_id"
+        ],
+        "value": "executor_workflow_workflow_headx"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/properties/workflow_head/allOf/1/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "workflow_head",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_workflow_workflow_head.v4x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/properties/workflow_head/allOf/1/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "workflow_head",
+          "schema_version"
+        ],
+        "value": "4.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/properties/workflow_update/allOf/1/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "workflow_update",
+          "family_id"
+        ],
+        "value": "executor_workflow_workflow_updatex"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/properties/workflow_update/allOf/1/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "workflow_update",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_workflow_workflow_update.v4x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/properties/workflow_update/allOf/1/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "workflow_update",
+          "schema_version"
+        ],
+        "value": "4.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/required": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "member": [
+          "remove",
+          "workflow_update"
+        ],
+        "path": [
+          "record",
+          "afterimages"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/type": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin/allOf/0/if/properties/method/const": {
+        "path": [
+          "record",
+          "method"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowBirthAfterimages/required"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin/allOf/1/if/properties/method/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "pointer": {
+                "family_id": "executor_workflow_current_pointer",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_birth": {
+                "family_id": "executor_workflow_workflow_birth",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_birth.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_head": {
+                "family_id": "executor_workflow_workflow_head",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              },
+              "workflow_update": {
+                "family_id": "executor_workflow_workflow_update",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+                "schema_version": "4.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "causation": {
+              "family_id": "workflow_start_commit",
+              "physical_key": "workflow_start_commit:YTA3N2M5MTQtYzVhZS00MGNiLTgwNTMtY2VmMmExNDIwMWI0:a4e5538c342194505cfc5eec942beee1a684c6721a05cb14f7db125f538c8c34",
+              "physical_value_sha256": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548",
+              "schema_id": "pm.storage_value.workflow_start_commit.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "issued_at_utc": "2026-11-20T13:57:55.280Z",
+            "method": "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "operation_id": "TEST_ONLY:op:d01:409c0f866723",
+            "owner": {
+              "owner_epoch": 0,
+              "owner_ref": "TEST_ONLY:owner_ref:95ce9daaca664747",
+              "server_claim_epoch": 0,
+              "server_id": "TEST_ONLY:server_id:3f433f55e7e44573"
+            },
+            "preimages": [],
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-19de6e0057c2",
+              "goal_run_id": "TEST_ONLY-goal-run-19de6e0057c2",
+              "project_id": "TEST_ONLY-project-19de6e0057c2",
+              "storage_instance_id": "a077c914-c5ae-40cb-8053-cef2a14201b4"
+            },
+            "transaction_id": "TEST_ONLY:transaction_id:3aa0be087af84eae"
+          }
+        },
+        "path": [
+          "record",
+          "method"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdateAfterimages/closed_members"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin/allOf/2/if/properties/method/const": {
+        "path": [
+          "record",
+          "method"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/closed_members",
+          "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CoverageAfterimages/required"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin/properties/afterimages/oneOf": {
+        "mutation_afterimage_implication": [
+          "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdateAfterimages/type"
+        ],
+        "path": [
+          "record",
+          "afterimages"
+        ],
+        "value": false
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin/properties/issued_at_utc/format": {
+        "path": [
+          "record",
+          "issued_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin/properties/issued_at_utc/type": {
+        "path": [
+          "record",
+          "issued_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin/properties/method/enum": {
+        "path": [
+          "record",
+          "method"
+        ],
+        "value": "owner.executor.workflow_source.enroll_workflow_birth.v3x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin/properties/operation_id/minLength": {
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin/properties/operation_id/type": {
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin/properties/preimages/type": {
+        "path": [
+          "record",
+          "preimages"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin/properties/transaction_id/minLength": {
+        "path": [
+          "record",
+          "transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin/properties/transaction_id/type": {
+        "path": [
+          "record",
+          "transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowMutationOrigin/type": {
+        "path": [
+          "record"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdateAfterimages/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "afterimages"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdateAfterimages/properties/pointer/allOf/1/properties/family_id/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "pointer",
+          "family_id"
+        ],
+        "value": "executor_workflow_current_pointerx"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdateAfterimages/properties/pointer/allOf/1/properties/schema_id/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "pointer",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_workflow_current_pointer.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdateAfterimages/properties/pointer/allOf/1/properties/schema_version/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "pointer",
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdateAfterimages/properties/workflow_head/allOf/1/properties/family_id/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "workflow_head",
+          "family_id"
+        ],
+        "value": "executor_workflow_workflow_headx"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdateAfterimages/properties/workflow_head/allOf/1/properties/schema_id/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "workflow_head",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_workflow_workflow_head.v4x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdateAfterimages/properties/workflow_head/allOf/1/properties/schema_version/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "workflow_head",
+          "schema_version"
+        ],
+        "value": "4.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdateAfterimages/properties/workflow_update/allOf/1/properties/family_id/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "workflow_update",
+          "family_id"
+        ],
+        "value": "executor_workflow_workflow_updatex"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdateAfterimages/properties/workflow_update/allOf/1/properties/schema_id/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "workflow_update",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_workflow_workflow_update.v4x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdateAfterimages/properties/workflow_update/allOf/1/properties/schema_version/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "workflow_update",
+          "schema_version"
+        ],
+        "value": "4.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdateAfterimages/required": {
+        "member": [
+          "remove",
+          "workflow_update"
+        ],
+        "path": [
+          "record",
+          "afterimages"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/WorkflowUpdateAfterimages/type": {
+        "path": [
+          "record",
+          "afterimages"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "owner"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_epoch/minimum": {
+        "path": [
+          "record",
+          "owner",
+          "owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_epoch/type": {
+        "path": [
+          "record",
+          "owner",
+          "owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_ref/minLength": {
+        "path": [
+          "record",
+          "owner",
+          "owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_ref/type": {
+        "path": [
+          "record",
+          "owner",
+          "owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_claim_epoch/minimum": {
+        "path": [
+          "record",
+          "owner",
+          "server_claim_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_claim_epoch/type": {
+        "path": [
+          "record",
+          "owner",
+          "server_claim_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_id/minLength": {
+        "path": [
+          "record",
+          "owner",
+          "server_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_id/type": {
+        "path": [
+          "record",
+          "owner",
+          "server_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/required": {
+        "member": [
+          "remove",
+          "owner_ref"
+        ],
+        "path": [
+          "record",
+          "owner"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/type": {
+        "path": [
+          "record",
+          "owner"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/type": {
+        "path": [
+          "record",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "causation"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "path": [
+          "record",
+          "causation",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "path": [
+          "record",
+          "causation",
+          "family_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          "record",
+          "causation",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          "record",
+          "causation",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          "record",
+          "causation",
+          "physical_value_sha256"
+        ],
+        "value": "4f9794de74f6f70127d7971538f46798bd286bd15360cb2400b3b3e41dd79548\n"
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "path": [
+          "record",
+          "causation",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "path": [
+          "record",
+          "causation",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "path": [
+          "record",
+          "causation",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "path": [
+          "record",
+          "causation",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "path": [
+          "record",
+          "causation",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "causation",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "causation",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "causation"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "record",
+          "causation"
+        ],
+        "value": null
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "routes": [
+    {
+      "call": "read_preserved_issued",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "original_profile",
+      "refusal": "tuple/preserved/original_d01_origin/schema/",
+      "root": "dg5:19f9e78fcd1580e8",
+      "site": [
+        "scripts/pm_goal_dg_r_readers.py",
+        149
+      ],
+      "terminal": "certified"
+    }
+  ],
+  "row": "dg5/tuple/preserved/original_d01_origin/schema",
+  "rule_controls": {
+    "dg5:19f9e78fcd1580e8": {
+      "record": {
+        "afterimages": {
+          "pointer": {
+            "family_id": "executor_workflow_current_pointer",
+            "physical_key": "executor_workflow_current_pointer:M2E4YTJkZWMtZDMzOC00ODI3LThkNDgtYTA0ZmU0OWJmNzAw:e7f25602da01c3c67f4d5045897a4b059f6452d8e7d7169e13493c8413e17f44",
+            "physical_value_sha256": "af95d25ef86ce005d92c9af83b65cb68c78fc5ae9b591eda780c11bb8524c632",
+            "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+            "schema_version": "2.0.0",
+            "storage_instance_id": "3a8a2dec-d338-4827-8d48-a04fe49bf700"
+          },
+          "workflow_head": {
+            "family_id": "executor_workflow_workflow_head",
+            "physical_key": "executor_workflow_workflow_head:M2E4YTJkZWMtZDMzOC00ODI3LThkNDgtYTA0ZmU0OWJmNzAw:527caa059ba64d03a04d2bde761e763f6ca46c6433351e9cf1a5b6312da0fd1d",
+            "physical_value_sha256": "a6b68b956ee3cdbe27a12bdeb435cce4a329cb6b6eb0455d74ae7e28c203e095",
+            "schema_id": "pm.storage_value.executor_workflow_workflow_head.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "3a8a2dec-d338-4827-8d48-a04fe49bf700"
+          },
+          "workflow_update": {
+            "family_id": "executor_workflow_workflow_update",
+            "physical_key": "executor_workflow_workflow_update:M2E4YTJkZWMtZDMzOC00ODI3LThkNDgtYTA0ZmU0OWJmNzAw:4893446238026d2afffa2920d9556487386cb6d384a98490702a2182144e4619",
+            "physical_value_sha256": "5dc8d3b1d2606deacc9c353d036543e4afef999401a0b747154e089ddb5c8abb",
+            "schema_id": "pm.storage_value.executor_workflow_workflow_update.v4",
+            "schema_version": "4.0.0",
+            "storage_instance_id": "3a8a2dec-d338-4827-8d48-a04fe49bf700"
+          }
+        },
+        "causation": {
+          "family_id": "workflow_start_commit",
+          "physical_key": "workflow_start_commit:M2E4YTJkZWMtZDMzOC00ODI3LThkNDgtYTA0ZmU0OWJmNzAw:97f74a3b8c874ed7dcdf78c08217c8ed5cefad382f066593ee0ee00d4aa843db",
+          "physical_value_sha256": "06c49a4fc648acc578ee3c2392b9a5481517d8f06293a5083604ec90feb73330",
+          "schema_id": "pm.storage_value.workflow_start_commit.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "3a8a2dec-d338-4827-8d48-a04fe49bf700"
+        },
+        "issued_at_utc": "2026-11-20T15:12:02.798Z",
+        "method": "owner.executor.workflow_source.update_workflow.v3",
+        "operation_id": "TEST_ONLY:op:d01:60adb93db80e",
+        "owner": {
+          "owner_epoch": 0,
+          "owner_ref": "TEST_ONLY:owner_ref:a36fc6e51e3b4e27",
+          "server_claim_epoch": 0,
+          "server_id": "TEST_ONLY:server_id:a36fc6e51e3b4e27"
+        },
+        "preimages": [],
+        "scope": {
+          "goal_id": "TEST_ONLY-goal-93f27c343fc6",
+          "goal_run_id": "TEST_ONLY-goal-run-93f27c343fc6",
+          "project_id": "TEST_ONLY-project-93f27c343fc6",
+          "storage_instance_id": "3a8a2dec-d338-4827-8d48-a04fe49bf700"
+        },
+        "transaction_id": "TEST_ONLY:transaction_id:a36fc6e51e3b4e27"
+      },
+      "schema_id": "pm.storage_value.executor_workflow_lineage_origin.v4",
+      "schema_version": "4.0.0"
+    }
+  },
+  "sites": [
+    [
+      "scripts/pm_goal_dg_r_readers.py",
+      149
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}
