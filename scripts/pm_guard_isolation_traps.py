@@ -13,6 +13,7 @@ from pathlib import Path
 import random
 import sys
 import tempfile
+from unittest.mock import patch
 
 
 def _load(path, name, private_builtins=False):
@@ -75,6 +76,96 @@ def _code_suite(g, trap, root):
     return suite
 
 
+
+def _single_guard_trap(trap_id, expected, failure, **overrides):
+    source = '''import pm_guard_isolation as g
+
+def px(value, context):
+    return 'bad_x' if value['x'] < 0 else None
+
+def factory():
+    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])
+    context = None
+    def check(value):
+        table.require('x', value, context)
+        return True
+    return g.Case(table, check, context)
+'''
+    return dict({
+        'id': trap_id, 'kind': 'code', 'expected': expected, 'failure_kinds': [failure],
+        'source': source,
+        'controls': [{'id': 'valid', 'value': {'x': 0}}],
+        'negatives': [{'id': 'bad-x', 'value': {'x': -1}, 'target': 'x', 'code': 'bad_x'}],
+    }, **overrides)
+
+
+def _review_sites(function, reason, **sites):
+    return [dict(path='subject.py', function=function, kind=kind, source=source, reason=reason)
+            for kind, sources in sites.items() for source in sources]
+
+
+def _census_traps(traps):
+    fixtures = {trap['id']: trap for trap in traps}
+    source = _single_guard_trap('inventory-checker-switch', 'Refuse a checker source change between cases.',
+                                'infrastructure_or_declaration', static_pass=True, error_contains='checker source changed between cases')
+    source['source'] = source['source'].replace('def check(value):', 'def positive(value):').replace(
+        '    return g.Case(table, check, context)', '''    def negative(value):
+        table.require('x', value, context)
+        return True
+    check = positive if value['x'] >= 0 else negative
+    return g.Case(table, check, context)''').replace('def factory():', 'def factory(value):')
+    source['non_guards'] = _review_sites('factory', 'Select between two equivalent, complete checkers.',
+        data_operation=["positive if value['x'] >= 0 else negative", "value['x'] >= 0", "value['x']"])
+    for name in ('positive', 'negative'):
+        source['non_guards'] += _review_sites('factory.' + name, 'Delegate to the same registered guard.',
+            call_review=["table.require('x', value, context)"])
+
+    metadata = _single_guard_trap('inventory-metadata-switch', 'Refuse changed invariant metadata between cases.',
+                                  'infrastructure_or_declaration', static_pass=True, error_contains='guard table declaration changed between cases')
+    metadata['source'] = metadata['source'].replace('def factory():', '''def factory(value):
+    wording = 'nonnegative' if value['x'] >= 0 else 'at least zero'\n'''.rstrip()).replace(
+        "g.Invariant('/x', 'nonnegative')", "g.Invariant('/x', wording)")
+    metadata['non_guards'] = _review_sites('factory', 'Choose between equivalent invariant descriptions.',
+        data_operation=["'nonnegative' if value['x'] >= 0 else 'at least zero'", "value['x'] >= 0", "value['x']"],
+        call_review=["g.Invariant('/x', wording)"])
+
+    repeated = _single_guard_trap('additional-uncut-trace-change', 'The extra uncut valid run accepts with a different trace.',
+                                  'baseline_nondeterministic', clock=True, baseline_repeats=1,
+                                  observed_uncut_at_least=2, static_pass=True)
+    repeated['source'] = repeated['source'].replace('    def check(value):', '''    def check(value):
+        if g.time.monotonic() == 3:
+            return True''')
+    repeated['non_guards'] = _review_sites('factory.check', 'The test clock skips the guard only on the extra valid run.',
+        call_review=['g.time.monotonic()'],
+        data_operation=['if g.time.monotonic() == 3:\n    return True', 'g.time.monotonic() == 3', 'g.time.monotonic', 'g.time'])
+
+    # SOLMAX G02: _test still rejects the foreign root after the require check is removed.
+    # Assert the earlier protocol diagnosis separately.
+    wrong_root = dict(id='require-foreign-root', kind='require-foreign-root',
+                      expected='Require explicitly refuses an equal but foreign root.')
+    # SOLMAX G19: dropping the per-site conjunction leaves the only-site failures and final
+    # failure clearing in place. Require the aggregate diagnostic as well.
+    duplicate = dict(fixtures['genuine-duplicate'],
+        id='duplicate-unused-third-site', status='FAIL', duplicate_proved=False,
+        expected='An uncalled third duplicate member prevents credit despite a successful joint cut.',
+        failure_kinds=['unrelated_result_changed', 'duplicate_unproved'])
+    duplicate['source'] = duplicate['source'].replace('def upper(v, context):',
+        "def pc(v, context):\n    return 'low' if v['x'] < 0 else None\ndef upper(v, context):").replace(
+        "g.Guard('upper',", "g.Guard('c',g.Invariant('/x','nonnegative'),'low',pc),g.Guard('upper',")
+    duplicate['duplicates'] = [dict(duplicate['duplicates'][0], sites=['a', 'b', 'c'],
+        evidence='All three predicates test the same field, and each site must independently refuse.')]
+    # SOLMAX G10 / ASTRA G11: the joined snapshot still detects this discrepancy
+    # without the case-only comparison. Require the case-only diagnostic.
+    graph = _single_guard_trap('per-input-case-graph-change', 'Fresh cases for identical inputs must have equal graphs.',
+                               'factory_nondeterministic', clock=True, static_pass=True,
+                               error_contains='same input produced a different table/context/checker closure graph')
+    graph['source'] = graph['source'].replace('context = None', 'context = g.time.monotonic() == 2')
+    graph['non_guards'] = _review_sites('factory', 'The test clock varies one case context for the same input.',
+        call_review=['g.time.monotonic()'],
+        data_operation=['g.time.monotonic() == 2', 'g.time.monotonic', 'g.time'])
+    return [source, metadata, repeated, wrong_root, duplicate, graph]
+
+
 def _schema_suite(g, trap, root):
     # No synthetic acceptance callback: this source calls the actual complete
     # JSON Schema validator via the table's runtime tagging boundary.
@@ -133,6 +224,21 @@ def factory():
 
 def _special(g, trap, memory):
     kind = trap['kind']
+    if kind == 'require-foreign-root':
+        def predicate(value, context):
+            return None
+        table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', predicate)])
+        value = {'x': 0}
+        table._bind(value, None, frozenset())
+        try:
+            table.require('x', dict(value))
+        except g.IsolationError as exc:
+            error = str(exc)
+        else:
+            error = None
+        finally:
+            table._restore()
+        return error == 'require must use the complete bound value and context', {'error': error}
     if kind == 'snapshot-scalar-topology':
         left = bytearray(b'a noninterned scalar identity').decode()
         right = bytearray(b'a noninterned scalar identity').decode()
@@ -254,7 +360,7 @@ def exercise(g, memory, *, scratch=None):
         raise RuntimeError('expected Method B trap corpus')
     report = {'version': 2, 'method': 'B: guard tables', 'status': 'FAIL', 'caught': 0, 'skipped': 0, 'traps': []}
     scratch = _scratch_parent(scratch)
-    for trap in corpus['traps']:
+    for trap in [*corpus['traps'], *_census_traps(corpus['traps'])]:
         memory.check()
         row = {'id': trap['id'], 'expected': trap['expected'], 'caught': False}
         if tuple(trap.get('min_python', ())) > sys.version_info[:2]:
@@ -282,6 +388,11 @@ def exercise(g, memory, *, scratch=None):
                                 result = g.run(suite, memory=memory, demonstrate_runtime=bool(trap.get('runtime_behind_static')))
                             finally:
                                 random.setstate(saved_random)
+                        elif trap.get('clock'):
+                            # MemoryGate already holds its real clock. Only the fixture consumes these ticks.
+                            ticks = iter(range(1, sys.maxsize))
+                            with patch.object(g.time, 'monotonic', lambda: next(ticks)):
+                                result = g.run(suite, memory=memory)
                         else:
                             result = g.run(suite, memory=memory, demonstrate_runtime=bool(trap.get('runtime_behind_static')))
                         if trap.get('repeat'):
@@ -319,6 +430,8 @@ def exercise(g, memory, *, scratch=None):
                         row['caught'] = row['caught'] and any(trap['failure_reason'] in f.get('reasons', []) for f in result['failures'])
                     if trap.get('error_contains'):
                         row['caught'] = row['caught'] and any(trap['error_contains'] in f.get('error', '') for f in result['failures'])
+                    if trap.get('static_pass'):
+                        row['caught'] = row['caught'] and result.get('static', {}).get('status') == 'PASS'
                     if trap.get('static_kind'):
                         row['caught'] = row['caught'] and any(s['kind'] == trap['static_kind'] and not s['non_guard'] for s in result.get('static', {}).get('sites', []))
                     if trap.get('static_error_kind'):
