@@ -656,6 +656,50 @@ def workflow_transition_implication(plain, nodes, name, path, control, cut):
                 premise='With a nonobject transition all property-only conditions succeed, requiring incompatible causes.')
 
 
+def execution_binding_implication(nodes, name, path, cut):
+    from pm_goal_go_schema_closure import locations
+
+    location, word = name.rsplit('/', 1)
+    owner = location.split('#', 1)[0] + '#/$defs/ExecutionBinding'
+    schema = nodes[owner]['node']
+    require(len(path) == 2 and path[0] == 'original_execution_binding', 'unexpected execution binding path')
+    field = path[1]
+    branch, = schema['allOf']
+    require({'kind', field} <= set(schema['required'])
+            and schema['properties']['kind']['enum'] == ['no_bound_plan', 'bound_plan']
+            and branch['if']['properties']['kind']['const'] == 'bound_plan',
+            'the binding plan selector changed')
+    non_null, null = schema['properties'][field]['oneOf']
+    selected = branch['then']['properties'][field]
+
+    def keywords(node):
+        return {key: value for key, value in node.items() if key != 'x-pm-oracle-id'}
+
+    require(keywords(non_null) == keywords(selected) and non_null['type'] in ('string', 'integer')
+            and keywords(null) == {'type': 'null'}, 'the selected bound-plan predicate changed')
+    source = owner + '/allOf/0'
+    then = source + '/then/properties/' + field
+    union = owner + '/properties/' + field + '/oneOf'
+    if location != then:
+        other = branch['else']['properties'][field]
+        require(keywords(other) == keywords(null), 'the no-plan field must satisfy the same null alternative')
+    if name == union:
+        covering = then + '/type'
+        require(locations(cut) == {covering}, 'the selected bound-plan type must still refuse')
+        return dict(source=source, covering_rule=covering,
+                    premise='The required kind chooses a disjoint alternative already enforced by the field schema.')
+
+    require(word in ('minLength', 'minimum', 'pattern') and word in non_null
+            and location in (then, union + '/0'), 'unexpected duplicate bound-plan assertion')
+    if location == then:
+        remaining = {union, union + '/0/' + word, union + '/1/type'}
+    else:
+        remaining = {then + '/' + word}
+    require(locations(cut) == remaining, 'the other copy of the bound-plan rule must still refuse')
+    return dict(source=source, covering_rules=sorted(remaining),
+                premise='The bound-plan field is subject to the same assertion in both locations.')
+
+
 def rule_path(document, path):
     prefix = path[:2] if path[:2] == ['content', 'checkpoint'] else []
     offset = len(prefix)
@@ -795,6 +839,8 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
         elif example.get('workflow_transition_implication'):
             record.update(cls='COVERED_LATER',
                           implication=workflow_transition_implication(plain, nodes, name, path, control, cut))
+        elif example.get('execution_binding_implication'):
+            record.update(cls='COVERED_LATER', implication=execution_binding_implication(nodes, name, path, cut))
         elif example.get('nullable_enum'):
             location, word = name.rsplit('/', 1)
             node = nodes[location]['node']
