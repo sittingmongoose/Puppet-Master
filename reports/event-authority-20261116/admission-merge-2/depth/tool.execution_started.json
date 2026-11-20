@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.139",
+  "sha256": "838c3f4101028e92367fdc4101766373149c8d9ce26a0653dded644374679a02",
   "family_count": 518,
   "row_pointer": "#/families/509"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/509 (canonical row SHA-256 ce16c5e3dff7493472ba315fc6b25393d03b62cbf015c218bf097e8fc1d28903). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.139 as #/families/509, canonical row SHA-256 ce16c5e3dff7493472ba315fc6b25393d03b62cbf015c218bf097e8fc1d28903. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -320,41 +320,90 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-592",
-       "line_start": 40551,
-       "line_end": 40551,
-       "quote": "Current selected assignment (2026-11-19): tool.execution_started@1.0.0 is registered for application_or_project",
+       "line_start": 40553,
+       "line_end": 40561,
+       "quote": "  Current selected assignment (2026-11-19): tool.execution_started@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2427. Its event history selects Application\n  = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion, cardinality_scope=run), Project = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion,\n  cardinality_scope=run); Plans/storage-plan.md#SP-592 owns the event policy''s existing anchors, counts, holds\n  and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime\n  is not transferred to them. Current append/publication still requires the exact selected schema/scope, original\n  custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-592, Plans/storage-plan.md:40382-40584",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-592, Plans/storage-plan.md:40384-40586",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-592",
-        "line_start": 39076,
-        "line_end": 39076,
-        "quote": "retention_policy_ref = RP-RUNTIME-365D",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 40551,
+        "line_end": 40551,
+        "quote": "Current selected assignment (2026-11-19): tool.execution_started@1.0.0 is registered for application_or_project",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-592, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:40382-40584",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-592",
+         "line_start": 39076,
+         "line_end": 39076,
+         "quote": "retention_policy_ref = RP-RUNTIME-365D",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 40551
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "a2606783a7474f44b19d2d8bf978f79f19e81041",
+        "old_quote": "Current selected assignment (2026-11-19): tool.execution_started@1.0.0 is registered for application_or_project",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-592",
+        "old_line_start": 40551,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       },
       {
-       "path": "scripts/pm-dt-event-contracts.py",
-       "unit": "sweep2b",
-       "line_start": 2486,
-       "line_end": 2486,
-       "quote": "now_refusal, now = exact_instant(value['now'])",
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-592",
+       "line_start": 40553,
+       "line_end": 40561,
+       "quote": "  Current selected assignment (2026-11-19): tool.execution_started@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2427. Its event history selects Application\n  = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion, cardinality_scope=run), Project = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion,\n  cardinality_scope=run); Plans/storage-plan.md#SP-592 owns the event policy''s existing anchors, counts, holds\n  and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime\n  is not transferred to them. Current append/publication still requires the exact selected schema/scope, original\n  custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "quote_scope": "unit SP-592, Plans/storage-plan.md:40384-40586",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "scripts/pm-dt-event-contracts.py",
-        "unit": "sweep2b",
+        "unit": "python:function:retention_eligible",
         "line_start": 2486,
         "line_end": 2486,
         "quote": "now_refusal, now = exact_instant(value['now'])",
-        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+        "quote_check": "exact",
+        "quote_scope": "unit python:function:retention_eligible, scripts/pm-dt-event-contracts.py@10ba97e699d51287673d6f1db4d994f54c59b4ed:2483-2491",
+        "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+        "source_citation": {
+         "path": "scripts/pm-dt-event-contracts.py",
+         "unit": "sweep2b",
+         "line_start": 2486,
+         "line_end": 2486,
+         "quote": "now_refusal, now = exact_instant(value['now'])",
+         "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "received_unit": "sweep2b",
+        "locator_maintenance": {
+         "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+         "reason": "Bind the historical script line to its actual declared function, preserving the received stage label and exact Git bytes; it no longer supplies current retention credit."
+        },
+        "sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+        "line": 2486
+       },
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "a2606783a7474f44b19d2d8bf978f79f19e81041",
+        "old_quote": "now_refusal, now = exact_instant(value['now'])",
+        "old_path": "scripts/pm-dt-event-contracts.py",
+        "old_unit": "python:function:retention_eligible",
+        "old_line_start": 2486,
+        "reason": "Re-cite the exact existing per-family owner assignment; the old evidence is retained at the Git predecessor."
        }
       }
      ],
@@ -743,10 +792,9 @@
   "row_pointer": "#/families/509"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "f7c168748ab754089e39db5e5c2e2a0ed11f95c58142cf598fbadf5f5b5211f3",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "a2606783a7474f44b19d2d8bf978f79f19e81041",
+  "source_assessment_sha256": "4a13de57ef3dc81e858a8ebc5d307d47e7318b9e8d85f389f197ed7f720b9dcc",
+  "native_execution": "NOT_RUN"
  }
 }
