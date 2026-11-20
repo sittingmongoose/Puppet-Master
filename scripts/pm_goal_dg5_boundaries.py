@@ -202,6 +202,8 @@ class _DescriptorPickler(pickle.Pickler):
             return NotImplemented  # the stream's own reconstructor, saved by reference
         world = self.world
         ident = id(value)
+        if type(value) is object and value in _CONTEXT_SENTINELS:
+            return (_rebuild, _token(*_CONTEXT_SENTINELS[value]))
         if value is world and world is not None:
             return (_rebuild, _token('original_world', ident))
         if isinstance(value, Path):
