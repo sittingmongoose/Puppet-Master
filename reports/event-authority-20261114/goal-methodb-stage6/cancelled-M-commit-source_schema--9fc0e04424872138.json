@@ -1,0 +1,103 @@
+{
+  "accepted_branches": {
+    "0": {
+      "record": {
+        "acknowledgement_frame_id": "TEST_ONLY:dispatch-frame:34eb928f-e59c-45f8-a0f6-d85d1ee7171f",
+        "acknowledgement_frame_offset": 0,
+        "acknowledgement_receipt_ref": "TEST_ONLY:acknowledgement:db856f2b-f79f-4376-a079-d4ab62a7dc9f",
+        "command_id": "cmd.chat.goal.cancel",
+        "dispatch_frame_id": "TEST_ONLY:dispatch-frame:34eb928f-e59c-45f8-a0f6-d85d1ee7171f",
+        "error_ref": null,
+        "idempotency_key": "TEST_ONLY:sir-idempotency:59ed5c6a-0fbc-47a6-9b9a-344ef24085d5",
+        "identity": {
+          "attempt_id": null,
+          "command_instance_id": "TO-cmd-f2aab77abc3f4637bde8",
+          "execution_environment_id": "TEST_ONLY:environment:5dc78f57-865d-44b2-9d59-98f421b5e1e6",
+          "execution_host_id": "TEST_ONLY:host:79c4c1e6-82b3-4b37-8836-d1fe34b927dd",
+          "goal_id": "TO-goal-553b5791c7344d5789b0",
+          "named_plan_id": null,
+          "operation_generation": 0,
+          "operation_id": "TO-op-c7442cf102fe455c8e16",
+          "project_home_server_id": "TEST_ONLY:server:71d0a8ea-1d22-497e-9793-50ae794d0e2f",
+          "project_id": "TO-proj-2da10203d205435d9a20",
+          "scope_kind": "project",
+          "server_id": "TEST_ONLY:server:71d0a8ea-1d22-497e-9793-50ae794d0e2f",
+          "source_location_id": null,
+          "thread_id": "TO-thr-757fb107a86d448dad95",
+          "topology_generation": 1
+        },
+        "observed_at": "2026-11-18T16:26:12.184Z",
+        "outcome": "acknowledged",
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "owner_result_sha256": null,
+        "payload_sha256": "02f9a5c3762db42dee1eeb5739b673778d84692d133da81dd234b211cbceba5c",
+        "record_kind": "command_outcome",
+        "result_receipt_ref": null,
+        "same_frame_acknowledged": true,
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "target_generation": 1
+      },
+      "schema_id": "pm.test_only.sir_command_outcome.v1",
+      "schema_version": "1.0.0"
+    }
+  },
+  "census_sha256": "aa1159e67c87c9874e95cb4da891ca18dd7218972f30e79228d4e2e27653f96c",
+  "examples": {
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SirCommandOutcome/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SirCommandOutcome/properties/record/type": {
+      "control_name": "0",
+      "path": [
+        "record"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SirCommandOutcome/properties/schema_id/const": {
+      "control_name": "0",
+      "path": [
+        "schema_id"
+      ],
+      "value": "pm.test_only.sir_command_outcome.v1x"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SirCommandOutcome/properties/schema_version/const": {
+      "control_name": "0",
+      "path": [
+        "schema_version"
+      ],
+      "value": "1.0.0x"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SirCommandOutcome/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SirCommandOutcome/type": {
+      "control_name": "0",
+      "path": [],
+      "value": null
+    }
+  },
+  "family": "goal.cancelled",
+  "occurrence": 1,
+  "reference": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SirCommandOutcome",
+  "root": "dg5:9fc0e04424872138",
+  "route": "M/commit/source_schema",
+  "row": "dg5/M/commit/source_schema/schema",
+  "site": [
+    "scripts/pm_goal_dg_cb_owners.py",
+    199
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "transaction": true,
+  "variant": "sir"
+}
