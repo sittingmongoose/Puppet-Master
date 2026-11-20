@@ -444,32 +444,83 @@ def update_implication(nodes, info, name, keyword, cut, path):
     return None
 
 
-def accepted_branch_controls(plain, validator, controls, info, cache):
+def afterimages_implication(nodes, name, cut, path):
+    marker = '#/$defs/WorkflowMutationOrigin'
+    if not name.endswith(marker + '/properties/afterimages/oneOf'):
+        return None
+    location = name.split(marker, 1)[0] + marker
+    entry = nodes[location]
+    node = entry['node']
+    props = node['properties']
+    annotation = 'x-pm-oracle-id'
+    if not {'method', 'afterimages'} <= set(node['required']):
+        return None
+    options = {}
+    for arm in node['allOf']:
+        condition = arm['if']
+        if (set(condition) - {annotation} != {'properties'} or
+                set(condition['properties']) != {'method'}):
+            return None
+        selector = condition['properties']['method']
+        if set(selector) - {annotation} != {'const'}:
+            return None
+        branch = arm['then']['properties']['afterimages']
+        if set(branch) - {annotation} != {'$ref'}:
+            return None
+        options[selector['const']] = branch['$ref']
+    union = props['afterimages']['oneOf']
+    if (len(options) != len(node['allOf']) or len(set(options.values())) != len(options) or
+            set(options) != set(props['method']['enum']) or
+            any(set(branch) - {annotation} != {'$ref'} for branch in union) or
+            sorted(branch['$ref'] for branch in union) != sorted(options.values())):
+        return None
+    definitions = {}
+    for ref in options.values():
+        branch = entry['resolver'].lookup(ref).contents
+        if (branch.get('type') != 'object' or branch.get('additionalProperties') is not False or
+                branch.get('patternProperties')):
+            return None
+        definitions[ref] = (set(branch['required']), set(branch['properties']))
+    definitions_list = list(definitions.values())
+    for index, (required, allowed) in enumerate(definitions_list):
+        if any(not (required - other_allowed or other_required - allowed)
+               for other_required, other_allowed in definitions_list[:index]):
+            return None
+    other = {rule for rule, instance_path in pilot.located_errors(cut)
+             if instance_path[:len(path)] == tuple(path)}
+    if not other:
+        return None
+    return dict(covering_rules=sorted(other), method_references=options, source=location,
+                premise='Each allowed method requires a union branch. Their closed member sets and required members make the branches mutually exclusive.')
+
+
+def accepted_branch_controls(plain, validator, controls, seeds, info, cache):
     """Reuse the Goal suite's branch fixture construction."""
     for reach in info['reach']:
-        for variant in range(3):
-            key = (reach['ipath'], tuple(rules.ctx_key(c) for c in reach['ctx']), variant)
-            if key not in cache:
-                try:
-                    value, path = rules.realize(controls[0], reach, variant, validator)
-                except (KeyError, IndexError, TypeError, ValueError, RecursionError):
-                    value, path = None, None
-                cache[key] = None
-                if path is None or value is None or value == controls[0]:
-                    continue
-                if list(plain.iter_errors(value)) or rules.errors_of(validator, value):
-                    continue
-                digest = stage.sweep.digest(value)
-                index = next((i for i, control in enumerate(controls) if stage.sweep.digest(control) == digest), None)
-                if index is None:
-                    index = len(controls)
-                    controls.append(value)
-                cache[key] = (index, path)
-            if cache[key] is not None:
-                yield cache[key]
+        for seed_index, seed in enumerate(seeds):
+            for variant in range(3):
+                key = (seed_index, reach['ipath'], tuple(rules.ctx_key(c) for c in reach['ctx']), variant)
+                if key not in cache:
+                    try:
+                        value, path = rules.realize(seed, reach, variant, validator)
+                    except (KeyError, IndexError, TypeError, ValueError, RecursionError):
+                        value, path = None, None
+                    cache[key] = None
+                    if path is None or value is None or value == seed:
+                        continue
+                    if list(plain.iter_errors(value)) or rules.errors_of(validator, value):
+                        continue
+                    digest = stage.sweep.digest(value)
+                    index = next((i for i, control in enumerate(controls) if stage.sweep.digest(control) == digest), None)
+                    if index is None:
+                        index = len(controls)
+                        controls.append(value)
+                    cache[key] = (index, path)
+                if cache[key] is not None:
+                    yield cache[key]
 
 
-def per_rule_candidates(plain, validator, controls, info, keyword, old, cache):
+def per_rule_candidates(plain, validator, controls, seeds, info, keyword, old, cache):
     def edits(control, path):
         return rules.defects(keyword, info['node'], rules.get(control, path))
 
@@ -489,12 +540,12 @@ def per_rule_candidates(plain, validator, controls, info, keyword, old, cache):
                         alternate = rules.get(candidate, path)
                         if alternate is not None:
                             yield index, path, alternate, 'value from another accepted branch'
-    for index, path in accepted_branch_controls(plain, validator, controls, info, cache):
+    for index, path in accepted_branch_controls(plain, validator, controls, seeds, info, cache):
         for edit in edits(controls[index], path):
             yield index, path, edit, 'accepted branch document'
 
 
-def replay_rule(plain, validator, nodes, controls, rule_id, info, keyword, old, disable, cache):
+def replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword, old, disable, cache):
     node = info['node']
     if all(any(c[0] in ('if', 'not') for c in reach['ctx']) for reach in info['reach']):
         return dict(cls='SELECTOR_OR_NEGATED', reason='all occurrences are inside an if condition or negation'), None
@@ -503,7 +554,7 @@ def replay_rule(plain, validator, nodes, controls, rule_id, info, keyword, old, 
     _, guard = closure._clause_identity(node, keyword)
     result = None
     tried = set()
-    for index, path, edit, source in per_rule_candidates(plain, validator, controls, info, keyword, old, cache):
+    for index, path, edit, source in per_rule_candidates(plain, validator, controls, seeds, info, keyword, old, cache):
         candidate_key = (index, tuple(path), repr(edit))
         if candidate_key in tried:
             continue
@@ -528,6 +579,7 @@ def replay_rule(plain, validator, nodes, controls, rule_id, info, keyword, old, 
                            conditional_union_implication(nodes, rule_id, path, cut) or
                            member_and_type_implication(plain, nodes, info, rule_id, keyword, cut, path) or
                            update_implication(nodes, info, rule_id, keyword, cut, path) or
+                           afterimages_implication(nodes, rule_id, cut, path) or
                            stage.regex_implication(plain, node, keyword, rule_id, path, cut))
         record = dict(path=list(path), edit=repr(edit), edit_source=source, control=index,
                       input_sha256=stage.sweep.digest(changed), before=actual, cut=error_records(cut),
@@ -575,6 +627,7 @@ def replay_root(fixture, captured, reference, examples, disable):
             f'only current={sorted(set(ids) - set(expected))[:3]}, '
             f'only reference={sorted(set(expected) - set(ids))[:3]}')
     controls = list(fixture.variants(captured))
+    seeds = tuple(controls)
     require(all(not error_records(plain.iter_errors(value)) and not rules.errors_of(validator, value)
                 for value in controls), f'{root}: accepted schema control refused')
     results, gaps, branch_cache = {}, {}, {}
@@ -582,7 +635,7 @@ def replay_root(fixture, captured, reference, examples, disable):
         node = info['node']
         for keyword in rules.clauses_of(node):
             rule_id = location + '/' + closure.clause_name(node, keyword)
-            record, problem = replay_rule(plain, validator, nodes, controls, rule_id, info, keyword,
+            record, problem = replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword,
                                           examples.get(rule_id, ()), disable, branch_cache)
             (gaps if problem else results)[rule_id] = problem or record
     require(set(results) | set(gaps) == set(ids), f'{root}: incomplete rule accounting')
