@@ -1693,11 +1693,11 @@ def inspection_event_implication(nodes, name, path, errors, locations, validator
                 premise='The allowed constant or enum satisfies the overlapping EventRecord rule.')
 
 
-def producer_rule_implication(nodes, name, path, errors, locations, validator):
+def producer_rule_implication(nodes, name, path, errors, locations, validator, definition='ProducerInput'):
     from pm_goal_test_numrule import DT
     from pm_goal_test_owner_adapters import _owner_timestamp_properties
 
-    producer = NORMALIZED.removesuffix('NormalizedIdentity') + 'ProducerInput'
+    producer = NORMALIZED.removesuffix('NormalizedIdentity') + definition
     require(len(path) == 1 and path[0] in ('redaction_profile', 'schema_id', 'schema_version', 'occurred_at_utc'),
             'unexpected producer implication field')
     field = path[0]
@@ -1734,6 +1734,36 @@ def producer_rule_implication(nodes, name, path, errors, locations, validator):
     require(locations(errors) == expected, 'producer timestamp did not leave the expected original profile message')
     return dict(source=profile, same_document_path=path, implementation='scripts/pm_goal_test_owner_adapters.py:199',
                 premise='The EventRecord timestamp parser requires a nonempty string and checks the same format.')
+
+
+def progress_implication(nodes, name, path, control, errors, locations, go, validator, expected):
+    prefix = NORMALIZED.removesuffix('NormalizedIdentity')
+    progress = nodes[prefix + 'Progress']['node']
+    require(go.locations(errors) == set(expected) and prefix + 'Progress/oneOf' in expected,
+            'the exact progress phase messages changed')
+    member = path[0]
+    definition = {'producer_input': 'ProducerInput', 'producer_metadata': 'ProducerMetadata',
+                  'publication': 'OriginalPublication'}[member]
+    phases = {branch['properties']['phase']['const']: branch for branch in progress['oneOf']}
+    require(len(phases) == len(progress['oneOf']) and all(
+        {'phase', member} <= set(branch['required']) and
+        (branch['properties'][member].get('$ref') == prefix + definition or
+         branch['properties'][member].get('type') == 'null') for branch in phases.values()) and
+        phases[control['phase']]['properties'][member].get('$ref') == prefix + definition,
+        'the original selected phase no longer requires this exact definition')
+
+    def same_field(listing):
+        return {item for item in locations(listing) if item[1] == tuple(path)}
+
+    if member == 'publication':
+        return nonempty_timestamp_implication(nodes, name, path, errors, same_field, validator)
+    if path[1:2] == ['payload']:
+        return request_implication(nodes, name, path, errors, same_field)
+
+    def producer_field(listing):
+        return {(keyword, at[1:], key) for keyword, at, key in same_field(listing)}
+
+    return producer_rule_implication(nodes, name, path[1:], errors, producer_field, validator, definition)
 
 
 IDENTITY = 'https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope'
@@ -2226,6 +2256,9 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         elif cut and 'terminal_result_implication' in example:
             record.update(cls='COVERED_LATER', implication=terminal_result_implication(
                 nodes, name, path, cut, go, locations, validator, example['terminal_result_implication']))
+        elif cut and 'progress_implication' in example:
+            record.update(cls='COVERED_LATER', implication=progress_implication(
+                nodes, name, path, control, cut, locations, go, validator, example['progress_implication']))
         elif cut and 'normalized_paired_rule' in example:
             record.update(cls='COVERED_LATER', implication=normalized_rule_implication(
                 nodes, name, path, cut, locations, example['normalized_paired_rule']))
