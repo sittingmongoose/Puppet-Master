@@ -27,14 +27,14 @@ CASES = {
 }
 
 
-def main():
+def main(cases=CASES):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("case", choices=CASES)
+    parser.add_argument("case", choices=cases)
     parser.add_argument("--worklist", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--leave-enabled", action="store_true")
     args = parser.parse_args()
-    path, line, _, _ = CASES[args.case]
+    path, line, _, _ = cases[args.case]
     row = pilot.bridge.site_name(path, line)
     worklist = json.loads(args.worklist.read_bytes())
     current, = (item for item in worklist["rows"] if item["row"] == row)
@@ -44,7 +44,7 @@ def main():
                   source.decode().splitlines()[line - 1].strip() == current["source"],
                   "current caller source differs from the worklist")
     start = monotonic()
-    result = pilot.run(args.case, args.out, leave_enabled=args.leave_enabled, cases=CASES, family=FAMILY)
+    result = pilot.run(args.case, args.out, leave_enabled=args.leave_enabled, cases=cases, family=FAMILY)
     original = result["negative"]
     pilot.require(original["store_snapshot_sha256"] == original["store_after_sha256"],
                   "the refused complete call wrote to its store")
