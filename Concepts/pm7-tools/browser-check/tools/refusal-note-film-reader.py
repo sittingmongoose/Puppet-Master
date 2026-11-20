@@ -55,6 +55,10 @@ def main():
     off = log['off']
     report = []
     for r in log['rows']:
+        if r.get('invalid'):
+            report.append({'tag': r['tag'], 'note': False, 'invalid': r['invalid']})
+            print(r['tag'], 'invalid:', r['invalid'])
+            continue
         if not r.get('rect'):
             report.append({'tag': r['tag'], 'note': False}); print(r['tag'], 'no note'); continue
         at, wall = marks[f"press {r['tag']}"]
