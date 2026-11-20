@@ -113,7 +113,36 @@ def objective(directory):
                 source=[source(U, 88, 211, 212, 722, 723, 724), source(RUNTIME, 199, 200, 201, 202)])
 
 
+def check_later(fixture, label, row, code, later, later_code):
+    runs = options(fixture, label, dict(baseline=(), first_disabled=(row,), later_disabled=(later,), restored=()))
+    verdict(runs['baseline'], row, code)
+    verdict(runs['first_disabled'], later, later_code)
+    verdict(runs['later_disabled'], row, code)
+    verdict(runs['restored'], row, code)
+    return runs
+
+
+def reserve_cas(directory):
+    world, goal = pilot.updated._goal(directory / 'reserve')
+    request = O.direct_request(world, goal, 'reservation preimage')
+    admission, _ = world.command.admit_and_capture(request)
+    fixture = world, world.command.reserve, (admission,), {}
+    control = pilot.call(fixture, 'unchanged final preimage', sweep.Collector(judge=False))
+    verdict(control)
+
+    def pause(owner_world, context):
+        owner_world.lifecycle.change(goal['scope'], 'paused')
+
+    world.inject('body.reserve', 'before_release', pause)
+    row, dep = site(1188), site(1657, ST)
+    result = check_later(fixture, 'changed final preimage', row, 'dgu/body/reserve/final_control_preimage',
+                         dep, 'tx/cas_version')
+    return dict(row=row, dependency=dep, control=control, trials=result,
+                source=[source(U, 1187, 1188, 1195, 1197), source(ST, 1657, 1664, 1674)])
+
+
 CHECKS = {
+    'reserve_cas': reserve_cas,
     'objective': objective,
 }
 
