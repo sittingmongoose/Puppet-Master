@@ -399,6 +399,18 @@ PROOFS = {
             'const reader_binding and string bounds). The identical value cannot newly fail '
             'the identical constraints, so no complete inspect call can make this row refuse '
             'alone. It closes by this proof once the inspect event schema row is closed.')),
+    'dg5/dgu/body/reserve/pending/schema': dict(
+        kind='entailed-by-body-control-pending',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/body/goal_body_control/schema'],
+        sites=[(U, 1081), (U, 1181), (U, 1183), (U, 1189), (U, 1196),
+               ('Plans/goal_cancel_command_custody.schema.json', 1481),
+               ('Plans/goal_cancel_command_custody.schema.json', 3693)],
+        argument=(
+            'Reservation inserts an exact copy of its pending document into the Body Control '
+            'record and checks equality before the write. Body Control requires the identical '
+            'pending schema for a non-null value. The complete call passed the same invalid '
+            'document to that later check with only the earlier check disabled.')),
     'dg5/dgu/reader/input/request/schema': dict(
         kind='entailed-by-input-result-request',
         families=['goal.updated'],
