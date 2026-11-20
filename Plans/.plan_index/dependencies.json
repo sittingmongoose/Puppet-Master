@@ -3547,6 +3547,7 @@
     "DL-450",
     "DL-410",
     "DL-093",
+    "DL-2596",
     "ACD-221",
     "F3-477",
     "F3-460",
@@ -51473,6 +51474,11 @@
       "edge_type": "depends_on",
       "from": "DL-259",
       "to": "RAS-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2596",
+      "to": "DL-078"
     },
     {
       "edge_type": "depends_on",
@@ -162210,7 +162216,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-19T17:28:19Z",
+  "generated_at_utc": "2026-11-20T10:53:29Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -213139,6 +213145,23 @@
         "heading_level": 3,
         "heading_line": 28059,
         "line": 28061,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge3",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2596",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_evidence_maintenance",
+      "source_location": {
+        "heading": "DL-2596: Event Authority corrects the retained Goal created coverage citation",
+        "heading_level": 3,
+        "heading_line": 54009,
+        "line": 54011,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -323175,10 +323198,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27322,
+    "depends_on_edge_count": 27323,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30547,
-    "node_count": 9468,
+    "edge_count": 30548,
+    "node_count": 9469,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0

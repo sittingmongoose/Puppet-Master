@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L54007
+Source lines: L28747-L54052
 
-Source SHA256: `7da54f8f4338fe41e5b24a5d9b72112e09d64d7df774cd47c1cc03063900c645`
+Source SHA256: `e1da44777cd249bbe16b59c1d6d8cd1208210017733104bbd868a980f50d452f`
 
 ---
 
@@ -25268,4 +25268,49 @@ preserved_exact_tokens: ["usage.event", "event-family-usage-event", "2026-11-18.
 negative_constraints:
 - No other family, validator, seal condition, retention assignment or holding bucket changes.
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
+```
+
+### DL-2596: Event Authority corrects the retained Goal created coverage citation
+
+```yaml
+plan_unit_id: DL-2596
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |
+  This entry records an evidence correction for goal.created criterion 12. The original GO citation used
+  closed_members for additionalProperties and unevaluatedProperties at one location in the retained v2 schema.
+  The replay at 3af916f4b663aced600d1929b8d9195035c97114, from pilot ff51a4257a5640e5002752baf4a1b7489b810fd2, used the same invalid document
+  as GO. Suppressing either keyword removed its own refusal and preserved the other keyword's refusal.
+  Restoring the keyword restored both original messages. The retained reader continued to refuse that input.
+  The correction record is reports/event-authority-20261116/admission-merge-3/evidence-corrections/goal.created.json with SHA-256 b756947d2b2cea7de44c6b56d6cbebf76a0e1ef4aca66b902d68b51bedd79e43.
+  The registered 3.0.0 family row, predecessor assessments and all twelve verdicts are preserved.
+  This evidence correction makes no policy decision. The selected assessment can cite the replay during P's reseal.
+gui_related: false
+gui_classification_reason: Corrects recorded test evidence for an existing event family.
+depends_on: [DL-078]
+unblocks: []
+acceptance_criteria:
+- The unchanged GO input reproduces each of the two keyword refusals and both restorations.
+- The correction record pins the existing grade, registry row and independent replay.
+validation_surfaces:
+- scripts/pm_goal_created_retained_closure_test.py
+risk_class: event_authority_evidence_maintenance
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3
+implementation_surfaces: []
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/event-authority-20261115/PNC019-C12-GO2-grades.json
+- reports/event-authority-20261116/admission-merge-3/evidence-corrections/goal.created.json
+preserved_exact_tokens:
+- goal.created
+- closed_members
+- additionalProperties
+- unevaluatedProperties
+negative_constraints:
+- Preserve the registered row and predecessor assessments. Native execution remains NOT_RUN.
 ```
