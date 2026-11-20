@@ -199,8 +199,15 @@ def _census_traps(traps):
         failure_kinds=['declared_schema_root_not_consumed'],
         roots=[root, unused], documents={root: fixtures['schema-independent-bounds']['schema'], unused: {}},
         validate_first_root_only=True)
+    control = _single_guard_trap('guard-refuses-skipped-control', 'A guard must accept the control even on a path that skips it.',
+                                 'predicate_refuses_control', static_pass=True)
+    control['source'] = control['source'].replace("value['x'] < 0", "value['x'] <= 0").replace(
+        "        table.require('x', value, context)", '''        if value['x'] != 0:
+            table.require('x', value, context)''')
+    control['non_guards'] = _review_sites('factory.check', 'Use the zero path to isolate the individual control check.',
+        data_operation=["if value['x'] != 0:\n    table.require('x', value, context)", "value['x'] != 0", "value['x']"])
     return [source, metadata, repeated, wrong_root, duplicate, graph, constructor,
-            restoration, tracing, invariants, unwitnessed, schema]
+            restoration, tracing, invariants, unwitnessed, schema, control]
 
 
 def _schema_suite(g, trap, root):
