@@ -1,0 +1,163 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "dev.session.restarting",
+ "findings": [
+  4
+ ],
+ "source_commit": "2e45a25e9e4753e46cfe16d8be37d31043717acd",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2290",
+ "decision_ref": "Plans/Decision_Log.md#DL-2511",
+ "registry_before": {
+  "revision": "2026-11-19.60",
+  "sha256": "bbb8138a7d746598a4a466ef8ebf27baa1aa57cc0e8ae5c73a8729b148863919",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.61",
+  "sha256": "87dbdafc2448d797e3f847f0791f8c6d5b48b1d154955619e995b9ec4ebd30fb",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-dev-session-restarting",
+  "family_revision": "1.0.0",
+  "event_type": "dev.session.restarting",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-314",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-671",
+  "payload_schema_id": "pm.ds15.dev_session_restarting.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/ds15_dev_session_restarting.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.ds15.dev_session_restarting.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-314",
+   "Plans/Contracts_V0.md#CV-671",
+   "Plans/storage-plan.md#SP-651",
+   "Plans/ds15_dev_session_restarting.schema.json#",
+   "Plans/ds15_event_contracts.json#/10",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-TELEMETRY-90D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-dev-session-restarting",
+  "family_revision": "1.0.0",
+  "event_type": "dev.session.restarting",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-314",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-671",
+  "payload_schema_id": "pm.ds15.dev_session_restarting.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/ds15_dev_session_restarting.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.ds15.dev_session_restarting.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-314",
+   "Plans/Contracts_V0.md#CV-671",
+   "Plans/storage-plan.md#SP-651",
+   "Plans/ds15_dev_session_restarting.schema.json#",
+   "Plans/ds15_event_contracts.json#/10",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-TELEMETRY-90D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "b8917f6e3bb1e07a96f777876b480cdabcf3f1e2981a47e8c1f9fe7fc25bfbad",
+ "predecessor_assessment_sha256": "3e107b4235f5d96910057df481fe0f613e54fe4d3ff0c67670cfad967425603e",
+ "applied_record_sha256": "265d8c1357503606bbee921b6c97fdc8a696c2ff6b6b7d04785eb8803a844a5a",
+ "applied_assessment_sha256": "4204faba1dab9462ae9ff629c50fc68fc5f6729639b7e34000c720746873dcb4",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-651",
+    "line_start": 50144,
+    "line_end": 50144,
+    "quote": "Current selected assignment (2026-11-19): dev.session.restarting@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-651, Plans/storage-plan.md:50085-50185",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-651",
+     "line_start": 49491,
+     "line_end": 49491,
+     "quote": "Event history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-415, DL-500.\\n\\nUse\\",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-651",
+    "line_start": 50146,
+    "line_end": 50157,
+    "quote": "  Current selected assignment (2026-11-19): dev.session.restarting@1.0.0 is registered for project_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2290. Its event history selects RP-TELEMETRY-90D@1.0.0; Plans/storage-plan.md#SP-651\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  ds15_dev_session_restarting_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this\n  assigns that stored value, not event history. Separate stored-value assignment: dev_session_record uses RP-DEBUG-30D@1.0.0\n  under Plans/Decision_Log.md#DL-506; this assigns that stored value, not event history. Separate checkpoint assignment:\n  ds15_dev_session_restarting_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-651\n  contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their\n  independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires\n  the exact selected schema/scope, original custody, current permission, receipt and required producer adoption.\n  Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native\n  adoption, new retention choice or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-651, Plans/storage-plan.md:50087-50187"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

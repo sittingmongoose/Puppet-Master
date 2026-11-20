@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.61",
+  "sha256": "87dbdafc2448d797e3f847f0791f8c6d5b48b1d154955619e995b9ec4ebd30fb",
   "family_count": 518,
   "row_pointer": "#/families/372"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/372 (canonical row SHA-256 6cc16e13ee1606ebd0e2808ad565848a01346a1d023733982cff7c7817c262f2). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.61 as #/families/372, canonical row SHA-256 6cc16e13ee1606ebd0e2808ad565848a01346a1d023733982cff7c7817c262f2. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -265,23 +265,45 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-651",
-       "line_start": 50144,
-       "line_end": 50144,
-       "quote": "Current selected assignment (2026-11-19): dev.session.restarting@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+       "line_start": 50146,
+       "line_end": 50157,
+       "quote": "  Current selected assignment (2026-11-19): dev.session.restarting@1.0.0 is registered for project_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2290. Its event history selects RP-TELEMETRY-90D@1.0.0; Plans/storage-plan.md#SP-651\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  ds15_dev_session_restarting_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this\n  assigns that stored value, not event history. Separate stored-value assignment: dev_session_record uses RP-DEBUG-30D@1.0.0\n  under Plans/Decision_Log.md#DL-506; this assigns that stored value, not event history. Separate checkpoint assignment:\n  ds15_dev_session_restarting_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-651\n  contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their\n  independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires\n  the exact selected schema/scope, original custody, current permission, receipt and required producer adoption.\n  Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native\n  adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-651, Plans/storage-plan.md:50085-50185",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-651, Plans/storage-plan.md:50087-50187",
+       "file_sha256": "1fa333c4ef3aa54859eae354a38973490a4de4ca54b6c8f066b2770f528c3bbb",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-651",
-        "line_start": 49491,
-        "line_end": 49491,
-        "quote": "Event history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-415, DL-500.\\n\\nUse\\",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 50144,
+        "line_end": 50144,
+        "quote": "Current selected assignment (2026-11-19): dev.session.restarting@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-651, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:50085-50185",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-651",
+         "line_start": 49491,
+         "line_end": 49491,
+         "quote": "Event history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-415, DL-500.\\n\\nUse\\",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 50144
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "2e45a25e9e4753e46cfe16d8be37d31043717acd",
+        "old_quote": "Current selected assignment (2026-11-19): dev.session.restarting@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-651",
+        "old_line_start": 50144,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -530,10 +552,9 @@
   "row_pointer": "#/families/372"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "8e2093431f0bafed6595ef120071d1fe6ea0e530cc6938870f284867837042ef",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "2e45a25e9e4753e46cfe16d8be37d31043717acd",
+  "source_assessment_sha256": "3e107b4235f5d96910057df481fe0f613e54fe4d3ff0c67670cfad967425603e",
+  "native_execution": "NOT_RUN"
  }
 }
