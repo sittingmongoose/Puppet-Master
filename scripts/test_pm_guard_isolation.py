@@ -39,6 +39,25 @@ class GuardEngineTests(unittest.TestCase):
         self.assertFalse(report['runtime'], report['runtime'][:1])
         self.assertEqual(report['status'], 'PASS', report['failures'])
 
+    def test_prescan_dotted_relative_and_reflective_reads(self):
+        source = ROOT / 'scripts/guard-isolation/prescan_fixture.py'
+        errors = guard.prescan_sources(source)
+        observed = {(Path(e['path']).name, e['kind'], e['source']) for e in errors}
+        self.assertEqual(observed, {
+            ('prescan_fixture.py', 'dynamic_code_or_import', 'operator.attrgetter'),
+            ('prescan_fixture.py', 'dynamic_code_or_import', 'operator.methodcaller'),
+            ('prescan_fixture.py', 'external_binding_mutable_read', 'operator.attrgetter'),
+            ('prescan_fixture.py', 'external_binding_mutable_read', 'operator.methodcaller'),
+            ('prescan_fixture.py', 'dynamic_code_or_import', 'importlib.import_module'),
+            ('prescan_fixture.py', 'table_private_state', 'engine._fixture_marker'),
+            ('sibling.py', 'dynamic_code_or_import', 'globals'),
+        })
+        suite = ddbg.retry_request_suite()
+        suite.checker_modules = (source,)
+        scan = guard.static_scan(suite, guard.GuardTable([]))
+        dynamic_reads = {e['source'] for e in scan['errors'] if e['kind'] == 'dynamic_code_or_import'}
+        self.assertTrue({'operator.attrgetter', 'operator.methodcaller', 'importlib.import_module'} <= dynamic_reads)
+
     def test_ddbg_preparation_import_boundary(self):
         source = ROOT / 'scripts/guard-isolation/ddbg_setup_fixture.py'
         dependency = ROOT / 'scripts/pm_debug_investigation_views.py'

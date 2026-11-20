@@ -20,6 +20,7 @@ import hashlib
 import importlib.util
 import json
 import math
+import operator
 from pathlib import Path
 import resource
 import re
@@ -131,7 +132,7 @@ def _certified_module_value(value, root):
             value.__defaults__ is None or all(_immutable_literal(v) for v in value.__defaults__)) and (
             not value.__kwdefaults__ or all(_immutable_literal(v) for v in value.__kwdefaults__.values())):
         return ('stdlib-function', value.__qualname__)
-    if type(value) is type and value.__flags__ & _IMMUTABLE_TYPE_FLAG:
+    if _immutable_type(value) and value not in (operator.attrgetter, operator.methodcaller):
         return ('immutable-type', value.__qualname__)
     return _certified_external(value, root)
 
@@ -194,7 +195,10 @@ class StaticStopBeforeImport(IsolationError):
 # (the names static_scan's dynamic-code rule reads, less compile, which it exempts for the standard library's own)
 _PRESCAN_SENSITIVE = frozenset({'eval', 'exec', '__import__', 'getattr', 'globals', 'locals', 'vars', 'import_module',
                                 'spec_from_file_location', 'settrace', 'setprofile', 'run_module', 'run_path', 'gettrace',
-                                'getprofile', '__builtins__'})
+                                'getprofile', '__builtins__', 'attrgetter', 'methodcaller'})
+_REFLECTIVE_ATTRIBUTES = frozenset({'import_module', 'spec_from_file_location', 'settrace', 'setprofile',
+                                    'run_module', 'run_path', 'gettrace', 'getprofile', '__import__',
+                                    '__builtins__', 'attrgetter', 'methodcaller'})
 
 
 def prescan_sources(start, *, search=None, reset_seams=(), trusted_setup_sources=()):
@@ -231,6 +235,23 @@ def prescan_sources(start, *, search=None, reset_seams=(), trusted_setup_sources
         if location in trusted or not location.is_relative_to(home) or _stdlib_path(str(location)) or any(location.is_relative_to(d) for d in _SITE_DIRS):
             return None
         return location
+
+    def resolve(dotted, locations):
+        # Walk the package's actual search locations without importing its initializer.
+        for part in dotted.split('.'):
+            try:
+                spec = importlib.machinery.PathFinder.find_spec(part, locations)
+            except (ImportError, ValueError):
+                break
+            if spec is None:
+                break
+            found = local(spec)
+            if found is not None:
+                yield found
+            locations = spec.submodule_search_locations
+            if locations is None:
+                break
+
     while pending:
         path = pending.pop()
         if path in seen:
@@ -242,19 +263,20 @@ def prescan_sources(start, *, search=None, reset_seams=(), trusted_setup_sources
             errors.append({'kind': 'unscannable_module', 'path': str(path), 'reason': type(exc).__name__ + ': ' + str(exc)})
             continue
         parents = {child: node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
-        def follow_import(spec, node):
-            found = local(spec)
-            if found is None:
-                return
-            if found in setup_sources:
-                scope = parents.get(node)
-                while scope is not None:
-                    if isinstance(scope, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                        return
-                    scope = parents.get(scope)
-            pending.append(found)
+        def function_local(node):
+            scope = parents.get(node)
+            while scope is not None:
+                if isinstance(scope, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    return True
+                scope = parents.get(scope)
+            return False
 
-        certified = {}
+        def follow_import(dotted, locations, node):
+            for found in resolve(dotted, locations):
+                if found not in setup_sources or not function_local(node):
+                    pending.append(found)
+
+        certified, engine_bindings = {}, set()
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
                 for alias in node.names:
@@ -262,25 +284,19 @@ def prescan_sources(start, *, search=None, reset_seams=(), trusted_setup_sources
                     bound = alias.asname or top
                     if (alias.asname and alias.name in STDLIB_IMMUTABLE_MODULES) or (not alias.asname and top in STDLIB_IMMUTABLE_MODULES):
                         certified[bound] = alias.name if alias.asname else top
-                    for name in [alias.name] + ['.'.join(alias.name.split('.')[:i]) for i in range(1, alias.name.count('.') + 1)]:
-                        try:
-                            spec = importlib.machinery.PathFinder.find_spec(name, search)
-                        except (ImportError, ValueError):
-                            spec = None
-                        follow_import(spec, node)
+                    if alias.name == 'pm_guard_isolation' and not function_local(node):
+                        engine_bindings.add(bound)
+                    follow_import(alias.name, search, node)
             elif isinstance(node, ast.ImportFrom):
                 if any(alias.name == '*' for alias in node.names):
                     errors.append({'kind': 'star_import', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(node)})
                 base = node.module or ''
-                where = [str(path.parent)] if node.level else search
-                for name in [base] + [base + '.' + alias.name for alias in node.names if base]:
-                    if not name:
-                        continue
-                    try:
-                        spec = importlib.machinery.PathFinder.find_spec(name, where)
-                    except (ImportError, ValueError):
-                        spec = None
-                    follow_import(spec, node)
+                where = [str(path.parents[node.level - 1])] if 0 < node.level <= len(path.parents) else search
+                if base:
+                    follow_import(base, where, node)
+                for alias in node.names:
+                    if alias.name != '*':
+                        follow_import((base + '.' if base else '') + alias.name, where, node)
                 if not node.level and base in STDLIB_IMMUTABLE_MODULES:
                     for alias in node.names:
                         try:
@@ -300,6 +316,12 @@ def prescan_sources(start, *, search=None, reset_seams=(), trusted_setup_sources
         for node in ast.walk(tree):
             if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and node.id in _PRESCAN_SENSITIVE:
                 errors.append({'kind': 'dynamic_code_or_import', 'path': str(path), 'line': node.lineno, 'source': node.id})
+            if isinstance(node, ast.Attribute):
+                if isinstance(node.ctx, ast.Load) and node.attr in _REFLECTIVE_ATTRIBUTES:
+                    errors.append({'kind': 'dynamic_code_or_import', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(node)})
+                if (isinstance(node.value, ast.Name) and node.value.id in engine_bindings and
+                        node.attr.startswith('_') and not function_local(node)):
+                    errors.append({'kind': 'table_private_state', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(node)})
             if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in ('setattr', 'delattr') and node.args:
                 first = node.args[0]
                 while isinstance(first, (ast.Attribute, ast.Subscript)):
@@ -2129,8 +2151,9 @@ def static_scan(suite, table):
                 errors.append({'kind': 'table_private_state', 'path': _relative(path, root), 'line': node.lineno, 'source': repr(node.value)})
             # C8-G2: harness detection names join the dynamic set: gettrace and getprofile tell the tool's own run
             # (a trace hook is always set) from production (none is), so a gate on them is non-causal by construction.
-            sensitive = {'eval', 'exec', 'compile', '__import__', 'getattr', 'globals', 'locals', 'vars', 'import_module', 'spec_from_file_location', 'settrace', 'setprofile', 'run_module', 'run_path',
-                         'gettrace', 'getprofile'}
+            sensitive = _PRESCAN_SENSITIVE | {'compile'}
+            if isinstance(node, ast.Attribute) and isinstance(node.ctx, ast.Load) and node.attr in _REFLECTIVE_ATTRIBUTES:
+                errors.append({'kind': 'dynamic_code_or_import', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(node)})
             # Any read of a sensitive name, or of __builtins__, can carry the function to a call the scan cannot see.
             if (isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and (node.id in sensitive or node.id == '__builtins__') and
                     not (isinstance(parents.get(node), ast.Call) and parents[node].func is node)):
