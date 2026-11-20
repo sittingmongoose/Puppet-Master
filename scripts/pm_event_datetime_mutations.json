@@ -1883,6 +1883,14 @@
  },
  "mutations": [
   {
+   "id": "review-M02-comma-fraction-separator",
+   "module": "pm_event_datetime",
+   "find": "(?:\\.([0-9]+))?",
+   "replace": "(?:[.,]([0-9]+))?",
+   "witness": "check:datetime_eventrecord_comma_fraction_refused",
+   "rule": "predicate.whole-string"
+  },
+  {
    "id": "review-B03-omit-century",
    "module": "pm_event_datetime",
    "find": " + previous // 4 - previous // 100 + previous // 400",
@@ -3085,6 +3093,7 @@
    "mutations": [
     "site:datetime:date_time:date_time_syntax#1",
     "hw-predicate-prefix-match",
+    "review-M02-comma-fraction-separator",
     "hw-tb4-unicode-digit-year",
     "hw-tb4-unicode-digit-month",
     "hw-tb4-unicode-digit-day",

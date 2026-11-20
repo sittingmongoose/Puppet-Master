@@ -694,6 +694,26 @@ def _real_envelope(context):
             validator.is_valid({"event": dict(event, occurred_at_utc="2026-01-01t00:00:00+05:30")}))
 
 
+
+@check("datetime_eventrecord_comma_fraction_refused")
+def _eventrecord_comma_fraction(context):
+    """Only the decimal point separates fractional seconds, including in a full EventRecord."""
+    dt, _, _, m = _mods()
+    path = "Plans/event_record.schema.json"
+    schema = json.loads((context.root / path).read_text())
+    event = json.loads((context.root / "Plans/seglog_frame_v2_wire_fixtures.json").read_text())["base_event"]
+    validator = _bound(schema, selection=_selection([(schema, {"": context.row(path, "")})]))
+    field = "occurred_at_utc"
+    good = "2024-04-30T12:00:00.5Z"
+    bad = "2024-04-30T12:00:00,5Z"
+    errors = _refused_at(validator, dict(event, **{field: bad}), field)
+    return (validator.is_valid(dict(event, **{field: good})) and
+            outcome(dt.date_time, good) == ("accept", good) and
+            outcome(dt.date_time, bad) == ("refuse", "date_time_syntax") and
+            errors is not None and any(e.validator == "format" and isinstance(e.cause, m.Refusal)
+                                       and e.cause.reason == "date_time_syntax" for e in errors))
+
+
 def _eventrecord_host_string(field, kind):
     """Sol max gate finding 1 (REAL): datetime_validator over the complete committed EventRecord schema refuses a host
     string-like value (HOST_STRINGS[kind]) at field, the malformed text and base_event's own valid text alike: every
