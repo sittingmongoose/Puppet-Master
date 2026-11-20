@@ -26,6 +26,7 @@ import traceback
 
 import pm_goal_test_numrule as NR
 import pm_goal_test_storage as S
+import pm_goal_test_source as GS
 import pm_goal_test_owner_adapters as A
 import pm_goal_dg_r_world as W
 import pm_goal_dg_r_readers as R
@@ -672,6 +673,11 @@ LONG_ACTOR = lambda n: (lambda p: p.update(actor_ref='TEST_ONLY:actor:' + 'a' * 
 def off_run_event(w, kind='goal_run.started', same_run=False, pending=False, extra=None):
     """Append a genuine Storage event for another (or the same) run."""
     run = w.scope['goal_run_id'] if same_run else w.scope['goal_run_id'] + '-other'
+    registered, _ = GS.event_family_registration()
+    schemas = {schema for event_type, scope, schema in registered if (event_type, scope) == (kind, 'project')}
+    if len(schemas) != 1:
+        raise ValueError(f'{kind} fixture needs one registered Project payload schema')
+    schema, = schemas
     tag = os.urandom(6).hex()
     event = dict(schema_id='pm.event.v0', schema_version='2.0.0', scope_kind='project', event_id=str(__import__('uuid').uuid4()),
                  event_type=kind, project_id=w.scope['project_id'], thread_id=None, run_id=None, node_id=None,
@@ -679,13 +685,7 @@ def off_run_event(w, kind='goal_run.started', same_run=False, pending=False, ext
                  effective_account_ref=None, occurred_at_utc=w.clock.now(), producer_sequence_id=None,
                  correlation_id='TEST_ONLY:correlation:' + tag, causation_event_id=None, parent_event_id=None,
                  idempotency_key='TEST_ONLY:%s:%s' % (kind, tag),
-                 payload_schema_id={
-                     'goal_run.started': 'pm.goal_runtime_event.goal_run_started.schema.v3',
-                     'goal_run.cancelled': 'pm.goal_runtime_event.goal_run_cancelled.schema.v3',
-                     'goal_run.stopped': 'pm.goal_runtime_event.goal_run_stopped.schema.v2',
-                     'goal_run.blocked': 'pm.goal_runtime_event.goal_run_blocked.schema.v2',
-                     'goal_run.replanned': 'pm.goal_runtime_event.goal_run_replanned.schema.v2',
-                 }[kind],
+                 payload_schema_id=schema,
                  payload=dict(goal_id=w.scope['goal_id'], payload=dict(goal_run_id=run)), payload_ref=None,
                  redaction_profile='no_secrets', replay_policy='dedupe_by_idempotency_key',
                  migration=dict(migrated_from_schema_id=None, migrated_from_schema_version=None, migration_id=None,
