@@ -172,10 +172,10 @@ export function frames(data, sel) {
 	let prev = null;
 	for (const row of data.samples) {
 		const s = row.s[sel]; if (!s) continue;
-		const Td = row.now - row.t > FRAME * 1.5 ? row.now : row.t;
 		// (a block's change, glass.js carry's, takes new keyframes that match the old up to where the change starts, so
 		// its latest keyframes are its frames at every time)
 		const r0 = s.block ? liveAt(row.now) : null;
+		const Td = !r0?.framePaced && row.now - row.t > FRAME * 1.5 ? row.now : row.t;
 		// (switcher-carry-steps, FO-227: a block can be made inside a frame of the gap, after its layout, and drawn from the
 		// next one: each frame of the gap draws the block the compositor had first drawn by then, its start plus its hold,
 		// or for a block on its trip's clock the frame its probe dates, and the earlier block only before that)
@@ -205,7 +205,7 @@ export function frames(data, sel) {
 		// box, untransformed (it did, for two frames, head film F1344-F1345): that frame is judged too
 		if (f && m && r && row.t < r.start && beforeBare(r)) out.push({ t: Td - 1, box: [r.box.x, r.box.y, r.box.w, r.box.h], src: 'rec:' + r.id, rec: r, early: true });
 		if (f) out.push(f);
-		prev = { t: Td, rec: s.block ? r : null };
+		prev = f;
 	}
 	return out;
 }

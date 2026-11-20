@@ -2264,6 +2264,7 @@
     var pre = m && m.target === target ? m : null;
     if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
     hiddenLenses.delete(L); showUnwatch(L);
+    if (!L.carryFrame && switchMotion === 'hop' && cfg.sel === '.pmw-strip' && target.getAttribute('data-tab-id') === 'dashboard:home') sampleCarryFrame(L);
     if (L.scroller && L.scroller.isConnected) {
       var out;
       if (pre && pre.scroller === L.scroller && pre.out !== undefined) out = pre.out;
@@ -2536,6 +2537,18 @@
   var CARRY_FOLLOW = 0.5, CARRY_FOLLOW_MS = 110;   /* the least time a carried chip takes to follow its tab to a new box: half
                                                      its trip, never under 110 ms (Basic's snap is 110 ms, Friendly's hop 440) */
   var FRAME_MS = 1000 / 60;
+  /* Measure the settled Home strip's refresh before a cold carry. At 120 Hz a 16.7 ms allowance per
+     callback would spend two refreshes of travel in a single commit after even a short missed frame. */
+  function sampleCarryFrame(L) {
+    var last = null, count = 0;
+    L.carryFrame = FRAME_MS;
+    function sample(now) {
+      if (last != null && now > last && now - last < FRAME_MS * 0.75) L.carryFrame = FRAME_MS / 2;
+      last = now;
+      if (++count < 12 && L.carryFrame === FRAME_MS) requestAnimationFrame(sample);
+    }
+    requestAnimationFrame(sample);
+  }
   /* go: the trip under way that a new block goes on with ({ K: that trip, at: its age now, zero: when its age was 0, or
      null if no frame has drawn it yet, retarget: its tab changed under it }). Retarget (FO-195): the trip so far stays as
      it was, its lift, tilt and squash included, and the change of box is added to it from the new block's first frame
@@ -2668,8 +2681,9 @@
     var g0 = go ? go.K.from || 0 : 0;
     var from = go ? g0 + Math.floor(Math.max(0, (zero != null ? Math.min(at, tl - zero) : at) - g0) / FRAME_MS) * FRAME_MS : 0;
     var T = plan(at, go ? null : 0, from), start = performance.now() - at;
-    var framePaced = go ? go.K.framePaced : cfg.sel === '.pmw-strip' &&
+    var coldAgents = !go && cfg.sel === '.pmw-strip' &&
       target.getAttribute('data-tab-id') === 'dashboard:agents' && window.PMW && !window.PMW.instances['dashboard:agents'];
+    var framePaced = go ? go.K.framePaced : coldAgents && hopping;
     var parts = [F, G, S].concat(SK), anims = [], lead = null;
     parts.forEach(function (e, j) {
       if (!e) return;
@@ -2696,13 +2710,20 @@
       L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, Math.max(0, start + P.end - performance.now()) + 1);
     }
     take(T);
+    if (coldAgents && !framePaced && typeof window.PM_START_ON_SHOWN === 'function') window.PM_START_ON_SHOWN(anims, { startHeld: true, frames: 10 });
     if (framePaced) {
       // The press can start this carry before pointerup mounts Agents. Its later layout and raster can
       // miss frames after the chip has begun. Advance all its parts together and leave missed time out.
       var last = null;
       var advance = function (now) {
         if (L.carry !== K) return;
-        var end = K.dur - K.from, time = Math.min(end, lead.currentTime + (last == null ? 0 : Math.min(now - last, FRAME_MS / 2)));
+        var end = K.dur - K.from, time = Math.min(end, lead.currentTime + (last == null ? 0 : Math.min(now - last, L.carryFrame || FRAME_MS)));
+        // Once the cold hop has run for its nominal duration and landed, its remaining squash can
+        // finish as soon as both edges are within a pixel of rest.
+        if (!go && time > 0 && now - made >= end) {
+          var P = K.pose(K.from + time);
+          if (!P.lift && (P.sx - 1) * P.w < 2 && (1 - P.sy) * P.h < 2) time = end;
+        }
         last = now;
         anims.forEach(function (a) { a.currentTime = time; });
         if (time < end || K.change) requestAnimationFrame(advance);
@@ -2718,7 +2739,7 @@
          drawn in that frame whatever its probe says). A block that goes on with a drawn trip has the trip's start time
          from the moment it is made, so its age never needs this */
       var drawn = inFrame || probe.startTime != null || lead.startTime != null; probe.cancel();
-      if (L.carry !== K) return;
+      if (L.carry !== K || coldAgents) return;
       if (drawn) { K.drawn = made; return; }
       setTimeout(function () { if (K.drawn == null) K.drawn = performance.now(); }, 0);
     });
