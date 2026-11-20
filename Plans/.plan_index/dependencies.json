@@ -5543,6 +5543,7 @@
     "DL-2567",
     "DL-2568",
     "DL-2569",
+    "DL-2570",
     "DL-451",
     "DL-694",
     "F3-585",
@@ -53308,6 +53309,21 @@
       "edge_type": "depends_on",
       "from": "DL-257",
       "to": "UIW-043"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2570",
+      "to": "DL-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2570",
+      "to": "DL-2407"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2570",
+      "to": "DL-400"
     },
     {
       "edge_type": "depends_on",
@@ -164135,7 +164151,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-20T01:36:29Z",
+  "generated_at_utc": "2026-11-20T01:38:46Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -217070,6 +217086,23 @@
         "heading_level": 3,
         "heading_line": 27788,
         "line": 27790,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge3_postfix",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2570",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_admission",
+      "source_location": {
+        "heading": "DL-2570: Event Authority corrects subagent.completed (merge 3 post-landing)",
+        "heading_level": 3,
+        "heading_line": 61399,
+        "line": 61401,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -327140,10 +327173,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27683,
+    "depends_on_edge_count": 27686,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30908,
-    "node_count": 9588,
+    "edge_count": 30911,
+    "node_count": 9589,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
