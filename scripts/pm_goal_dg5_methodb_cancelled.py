@@ -51,8 +51,9 @@ def fixture(declare, route, directory):
         World = legacy.CancelWorld
         config['edition'] = edition
     world = World(config, base=directory)
-    if route['call'] in ('issue_physical', 'publish_pointer', 'prepare_body', 'prepare_control', 'filesafe_invocation'):
-        if route['call'] == 'publish_pointer':
+    publications = ('publish_pointer', 'publish_workflow_head')
+    if route['call'] in ('issue_physical', *publications, 'prepare_body', 'prepare_control', 'filesafe_invocation'):
+        if route['call'] in publications:
             from pm_goal_dg_int_world import S1D01Owner
             cls, method = S1D01Owner, 'publish_head'
         elif route['call'] in ('prepare_body', 'prepare_control'):
@@ -91,7 +92,11 @@ def fixture(declare, route, directory):
             return world, action, (args, kwargs)
         if method == 'publish_head':
             import pm_goal_dg_s_start as start
-            target = start.d01_families(owner.edition)['pointer'], owner.s1.pointer_key()
+            families = start.d01_families(owner.edition)
+            if route['call'] == 'publish_pointer':
+                target = families['pointer'], owner.s1.pointer_key()
+            else:
+                target = families['workflow_head'], owner.s1.head_key(args[0])
         elif method == '_filesafe_invocation':
             realm, operation, _ = args
             journal = world.seeder.seed('filesafe_consumer', realm + 'JournalSelector')['family_id']
@@ -348,7 +353,8 @@ class OwnerExample:
         self.observed = None
         self.trials = []
         self.pointer = route['call'] == 'publish_pointer'
-        self.writes = self.pointer or route['call'] in ('issue_physical', 'filesafe_invocation')
+        self.writes = self.pointer or route['call'] in (
+            'issue_physical', 'filesafe_invocation', 'publish_workflow_head')
 
     def call(self, world, action, inputs, edit):
         import pm_goal_dg5_boundaries as bridge
