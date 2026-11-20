@@ -593,6 +593,69 @@ def mutation_afterimages_implication(nodes, name, path, control, cut):
                 premise='Each allowed method chooses one distinct closed afterimage shape with every field required.')
 
 
+def workflow_transition_implication(plain, nodes, name, path, control, cut):
+    from jsonschema import Draft202012Validator
+    from pm_goal_go_schema_closure import locations
+
+    defs = name.split('#', 1)[0] + '#/$defs/'
+    commitment = defs + 'TransitionCommitment'
+    update = defs + 'WorkflowUpdate'
+    transition = nodes[commitment]['node']
+    owner = nodes[update]['node']
+    if path == ['record', 'transition', 'before']:
+        union = commitment + '/properties/before/anyOf'
+        arms = transition['properties']['before']['anyOf']
+        condition = transition['allOf'][0]
+        selected = condition['then']['properties']['before']
+        alternative = condition['else']['properties']['before']
+        covering = commitment + '/allOf/0/then/properties/before/type'
+        require(name in (union, union + '/1/type') and {'before', 'rule'} <= set(transition['required'])
+                and condition['if']['properties']['rule']['const'] == 'activation_begin'
+                and arms[0]['$ref'] == alternative['$ref'] == '#/$defs/BodyIssuanceCommitment'
+                and arms[1]['type'] == selected['type'] == 'null' and locations(cut) == {covering},
+                'the activation condition selects different before commitments')
+        return dict(source=commitment + '/allOf/0', covering_rule=covering,
+                    premise='The required rule selects the same null or original body commitment as the alternatives.')
+
+    def members(node):
+        return set(node) - {'x-pm-oracle-id'}
+
+    require({'transition', 'cause'} <= set(owner['required']) and 'rule' in transition['required']
+            and owner['properties']['transition']['$ref'] == '#/$defs/TransitionCommitment'
+            and transition['properties']['rule']['$ref'] == '#/$defs/BoundTransitionRule',
+            'the Workflow update transition is bound differently')
+    rules = nodes[defs + 'BoundTransitionRule']['node']['enum']
+    causes = owner['properties']['cause']['enum']
+    cases = {}
+    for index, clause in enumerate(owner['allOf']):
+        probe = clause['if']
+        condition = probe['properties']['transition']
+        selector = condition['properties']['rule']
+        chosen = clause['then']['properties']['cause']
+        require(members(clause) == {'if', 'then'} and members(probe) == members(condition) == {'properties'}
+                and set(probe['properties']) == {'transition'} and set(condition['properties']) == {'rule'}
+                and members(selector) == members(chosen) == {'const'}
+                and selector['const'] not in cases and chosen['const'] in causes,
+                'the Workflow update cause condition changed')
+        cases[selector['const']] = (chosen['const'], f'{update}/allOf/{index}/then/properties/cause/const')
+    require(set(cases) == set(rules), 'each transition must select its own allowed cause')
+    if name == update + '/properties/cause/enum' and path == ['record', 'cause']:
+        _, covering = cases[control['record']['transition']['rule']]
+        require(locations(cut) == {covering}, 'the selected cause constant must still refuse')
+        return dict(source=update + '/allOf', covering_rule=covering,
+                    premise='Every permitted transition fixes the cause to one member of its enumeration.')
+
+    require(name == commitment + '/type' and path == ['record', 'transition']
+            and transition['type'] == 'object'
+            and plain.VALIDATORS['properties'] is Draft202012Validator.VALIDATORS['properties']
+            and len({value for value, _ in cases.values()}) > 1,
+            'the target must be an object or activate contradictory cause rules')
+    remaining = {source for value, source in cases.values() if value != control['record']['cause']}
+    require(locations(cut) == remaining, 'the exact contradictory cause checks must still refuse')
+    return dict(source=update + '/allOf', covering_rules=sorted(remaining),
+                premise='With a nonobject transition all property-only conditions succeed, requiring incompatible causes.')
+
+
 def rule_path(document, path):
     prefix = path[:2] if path[:2] == ['content', 'checkpoint'] else []
     offset = len(prefix)
@@ -729,6 +792,9 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
         elif example.get('mutation_afterimage_implication'):
             record.update(cls='COVERED_LATER',
                           implication=mutation_afterimages_implication(nodes, name, path, control, cut))
+        elif example.get('workflow_transition_implication'):
+            record.update(cls='COVERED_LATER',
+                          implication=workflow_transition_implication(plain, nodes, name, path, control, cut))
         elif example.get('nullable_enum'):
             location, word = name.rsplit('/', 1)
             node = nodes[location]['node']
@@ -1090,7 +1156,8 @@ def run(args):
                                                           'nullable_enum', 'append_acknowledgment_nonempty',
                                                           'origin_afterimages_implication', 'binding_implication',
                                                           'filesafe_selector_implication',
-                                                          'mutation_afterimage_implication'}
+                                                          'mutation_afterimage_implication',
+                                                          'workflow_transition_implication'}
                              for example in examples.values()):
                 clauses = literal_rules(plain, bank, accepted, ident, ids, examples, args.disable_check, scoped)
             else:
