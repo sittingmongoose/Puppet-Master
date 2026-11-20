@@ -1,0 +1,129 @@
+{
+  "census_sha256": "647eb062f2b9f8438e26716e3e058e1ac61193a2c266bbf12f4664495598fab7",
+  "examples": {
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/event_id/minLength": {
+      "path": [
+        "event_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/event_id/type": {
+      "path": [
+        "event_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/goal_id/minLength": {
+      "path": [
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/goal_id/type": {
+      "path": [
+        "goal_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/project_id/minLength": {
+      "path": [
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/project_id/type": {
+      "path": [
+        "project_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/reader_binding/const": {
+      "path": [
+        "reader_binding"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/selected_index_key/minLength": {
+      "path": [
+        "selected_index_key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/selected_index_key/type": {
+      "path": [
+        "selected_index_key"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/sequence_id/maximum": {
+      "path": [
+        "sequence_id"
+      ],
+      "value": 18446744073709551616
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/sequence_id/minimum": {
+      "path": [
+        "sequence_id"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/sequence_id/type": {
+      "path": [
+        "sequence_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/storage_instance_id/minLength": {
+      "path": [
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/storage_instance_id/type": {
+      "path": [
+        "storage_instance_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/thread_id/minLength": {
+      "path": [
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/properties/thread_id/type": {
+      "path": [
+        "thread_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/required": {
+      "member": [
+        "remove",
+        "reader_binding"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest/type": {
+      "path": [],
+      "value": null
+    }
+  },
+  "family": "goal.updated",
+  "later_refusal": "dgu/inspect/witness/schema/request",
+  "root": "dg5:74e5932197f8f902",
+  "route": "inspect_request_recheck",
+  "row": "dg5/dgu/inspect/request/schema",
+  "site": [
+    "scripts/pm_goal_dg_u_owners.py",
+    1854
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0"
+}
