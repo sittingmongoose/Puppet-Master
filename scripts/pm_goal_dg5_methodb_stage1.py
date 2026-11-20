@@ -8,8 +8,8 @@ import hashlib
 import json
 import multiprocessing
 from pathlib import Path
-import sys
 import subprocess
+import sys
 import time
 from unittest.mock import patch
 
@@ -50,18 +50,21 @@ class Inventory:
         result = {}
         for root in row['schema_closure']['roots']:
             ident = root['root']
-            paths = root['reports']
-            first = self.root(paths[0], ident)
+            entries = [(path, self.root(path, ident)) for path in root['reports']]
+            sources = [(path, item) for path, item in entries if 'registry_sha256' in item and 'clauses' in item]
+            require(sources, f'{ident}: no historical report records the original registry and rule IDs')
+            reference, first = sources[0]
             keys = set(first['clauses'])
             differences = []
-            for path in paths[1:]:
-                entry = self.root(path, ident)
-                other = set(entry['clauses'])
+            for path, entry in entries:
+                other = set(entry.get('clauses', ()))
                 if keys != other:
                     differences.append(dict(report=path, missing=sorted(keys - other), added=sorted(other - keys)))
-                require(first['registry_sha256'] == entry['registry_sha256'],
+                require('registry_sha256' not in entry or first['registry_sha256'] == entry['registry_sha256'],
                         f'{ident}: identical root ID has a different registry digest')
-            result[ident] = dict(reference=paths[0], rule_count=len(keys), differences=differences,
+            result[ident] = dict(reference=reference, rule_count=len(keys), differences=differences,
+                                 reports_without_registry=[path for path, entry in entries
+                                                           if 'registry_sha256' not in entry],
                                  gaps=root['uncovered_clauses'], matrix_error=root['error'])
         return result
 
@@ -155,6 +158,7 @@ class Example:
 
             def evaluate(presented):
                 require(sweep.digest(presented) == sweep.digest(value), 'changed complete-call input')
+                require(not tables.CUT - {self.row}, 'this replay disables only the selected validation row')
                 cut = self.row in tables.CUT or (disable == 'row' and not valid)
                 record = self.run(edit, cut)
                 require('exception' not in record, record.get('exception'))
@@ -238,6 +242,8 @@ class Fixture:
             return owner.issue, (entry['root'], value)
         if route == 'd01/current_source':
             return w.owners['d01'].current_source, (w.owners['native'].current(),)
+        if route == 'cutover_original':
+            return readers.original_started, (w,)
         if route == 'reducer':
             artifact = readers.original_started(w)
             append = artifact['original_append']
@@ -268,6 +274,15 @@ class Fixture:
 
     def call(self, edit):
         args = self.args
+        if self.route == 'cutover_original':
+            retained = original.R.retained_native
+
+            def changed(*arguments, **keywords):
+                value = retained(*arguments, **keywords)
+                return clauses.apply(value, edit[1], tuple(edit[2])) if edit else value
+
+            with patch.object(original.R, 'retained_native', changed):
+                return self.action(*args, where='cutover/original')
         if edit and self.route == 'logical_checkpoint':
             args = (self.invalid_checkpoint,)
         elif edit:
@@ -290,6 +305,13 @@ class Fixture:
         if self.route == 'storage_checkpoint':
             _, logical = self.projector.checkpoint()
             yield self.projector.rep.encode_checkpoint(logical, store=False, force='payload_reference')
+        if self.route in ('projector_logical', 'storage_checkpoint', 'logical_checkpoint'):
+            variant = copy.deepcopy(value)
+            logical = variant['content']['checkpoint'] if self.route == 'storage_checkpoint' else variant
+            generation = logical['generations'][logical['current_generation_id']]
+            if not generation['hold_refs']:
+                generation['hold_refs'] = ['TEST_ONLY:hold:stage-1']
+                yield variant
 
 
 def actual_path(document, recorded):
@@ -297,7 +319,9 @@ def actual_path(document, recorded):
     output = []
     current = document
     for key in recorded:
-        if isinstance(key, str) and key.startswith('grsg_') and key not in current:
+        if isinstance(current, list) and isinstance(key, str) and key.isdecimal():
+            key = int(key)
+        if isinstance(current, dict) and isinstance(key, str) and key.startswith('grsg_') and key not in current:
             keys = [item for item in current if item.startswith('grsg_')]
             require(len(keys) == 1, 'generation instance path is ambiguous')
             key, = keys
@@ -388,11 +412,22 @@ def test_declared_rules(fixture, captured, entry, disable=None):
         if 'path' not in expected or 'edit' not in expected:
             result['gaps'][name] = f"no replayable exact example ({expected['cls']})"
             continue
-        edit = ast.literal_eval(expected['edit'])
+        try:
+            edit = ast.literal_eval(expected['edit'])
+            recipe = 'historical edit'
+        except (SyntaxError, ValueError):
+            if name.endswith('/LogicalCheckpoint/properties/generations/maxProperties') and node[keyword] == 3:
+                recipe = 'four entries copied from one accepted Generation'
+            else:
+                result['gaps'][name] = 'historical edit was truncated and needs an authored example'
+                continue
         cut_id = common.schema_guard(node, keyword)
         for index, control in enumerate(controls):
             try:
                 path = actual_path(control, expected['path'])
+                if recipe == 'four entries copied from one accepted Generation':
+                    entry = next(iter(clauses.get(control, path).values()))
+                    edit = {f'grsg_{i:064x}': entry for i in range(4)}
                 changed = clauses.apply(control, path, edit)
             except (KeyError, IndexError, TypeError, ValueError):
                 continue
@@ -417,6 +452,8 @@ def test_declared_rules(fixture, captured, entry, disable=None):
                                            path=path, edit=expected['edit'], control=index,
                                            before=error_records(actual), cut=error_records(cut),
                                            restored=error_records(restored), input_sha256=sweep.digest(changed))
+            if recipe != 'historical edit':
+                result['clauses'][name].update(recipe=recipe, invalid_value=edit)
             if implication:
                 result['clauses'][name]['implication'] = implication
             result['gaps'].pop(name, None)
@@ -426,16 +463,17 @@ def test_declared_rules(fixture, captured, entry, disable=None):
     return result
 
 
-def run_row(row, declaration, inventory, output, disable):
+def run_row(row, declaration, inventory, output, disable, fragments=False):
     started = time.monotonic()
     name = row['row']
     sites = {(site['path'], site['line']) for site in row['predicate']['sites']}
-    root_inventory = inventory.compare(row)
     output.mkdir(parents=True)
-    report = dict(row=name, status='NOT_COVERED', historical=root_inventory, roots={}, calls={})
+    report = dict(row=name, status='NOT_COVERED', roots={}, calls={})
     results = {}
     collector = sweep.Collector()
     try:
+        root_inventory = inventory.compare(row)
+        report['historical'] = root_inventory
         if not declaration:
             require(any(root['matrix_error'] for root in root_inventory.values()),
                     'a constructible single-root row needs a declared fixture')
@@ -444,12 +482,14 @@ def run_row(row, declaration, inventory, output, disable):
         pilot.SITES.clear()
         pilot.SITES.update({name: min(sites)})
         pilot.configure_tables()
+        current_sites = {tuple(site) for site in declaration.get('current_sites', ())} or sites
+        report['source_sites'] = dict(matrix=sorted(sites), observed_expected=sorted(current_sites))
         scratch = output / 'stores'
         scratch.mkdir()
         suite = original.Suite(scratch)
         for spec in declaration['fixtures']:
             fixture = Fixture(suite, spec['route'], spec['edition'])
-            experiment = Example(fixture, name, sites, spec)
+            experiment = Example(fixture, name, current_sites, spec)
             try:
                 captured = experiment.prove(collector, disable)
             finally:
@@ -472,10 +512,13 @@ def run_row(row, declaration, inventory, output, disable):
                                           verify=dict(passed=counts['KILLED'] + counts['COVERED_LATER'],
                                                       failed=0, unverifiable=0))
         report['missing_roots'] = sorted(root_inventory.keys() - report['roots'].keys())
-        require(set(report['roots']) == set(root_inventory), 'exact root coverage incomplete')
+        report['complete_roots'] = sorted(results)
+        require(current_sites == sites, 'original validation call moved from the matrix source site')
+        require(set(report['roots']) <= set(root_inventory), 'original root differs from the matrix inventory')
         require(not any(record['matrix_error'] for record in root_inventory.values()),
                 'DG5 has conflicting inventory or verification records for this row')
-        require(len(results) == len(root_inventory), 'exact rule coverage incomplete')
+        require(results and len(results) == len(report['roots']), 'exact rule coverage incomplete')
+        require(fragments or not report['missing_roots'], 'exact root coverage incomplete')
         require(not collector.failures, f'unexpected complete-call failures: {collector.failures}')
         proof = pilot.run_gates(collector, output, [name])
         binding_path = proof / 'source-bindings.json'
@@ -484,7 +527,7 @@ def run_row(row, declaration, inventory, output, disable):
         bindings['files'].update({str(path.relative_to(ROOT)): sha(path) for path in own_files})
         write(binding_path, bindings)
         write(output / 'clause-replay.json', {'roots': results})
-        report['status'] = 'READY_FOR_MATRIX'
+        report['status'] = 'ROOT_FRAGMENTS' if report['missing_roots'] else 'READY_FOR_MATRIX'
         return report
     except (ValueError, KeyError) as error:
         report['reason'] = str(error)
@@ -500,6 +543,7 @@ def main():
     parser.add_argument('--out', required=True, type=Path)
     parser.add_argument('--case', type=Path, action='append', default=[])
     parser.add_argument('--inventory-blockers', action='store_true')
+    parser.add_argument('--root-fragments', action='store_true')
     parser.add_argument('--merge', type=Path, action='append', default=[])
     parser.add_argument('--disable', choices=('row', 'clause', 'inventory'))
     args = parser.parse_args()
@@ -508,9 +552,16 @@ def main():
     baseline, rows, files = matrix_inputs(args.matrix)
     args.out.mkdir(parents=True)
     if args.merge:
+        covered_roots = defaultdict(set)
         for directory in args.merge:
-            require(json.loads((directory / 'result.json').read_bytes())['status'] == 'READY_FOR_MATRIX',
-                    f'{directory}: proof was not complete')
+            result = json.loads((directory / 'result.json').read_bytes())
+            require(result['status'] in ('READY_FOR_MATRIX', 'ROOT_FRAGMENTS'), f'{directory}: no exact proof')
+            replay = json.loads((directory / 'clause-replay.json').read_bytes())['roots']
+            require(sorted(replay) == result['complete_roots'], f'{directory}: coverage root list differs from the replay')
+            covered_roots[result['row']].update(replay)
+        for row, roots in covered_roots.items():
+            expected = {item['root'] for item in rows[row]['schema_closure']['roots']}
+            require(roots == expected, f'{row}: exact root coverage incomplete: {sorted(expected - roots)}')
         command = [sys.executable, '-B', pilot.matrix.__file__, *baseline['proof_dirs']]
         command += [str(directory / 'proof') for directory in args.merge]
         for shared in baseline['shared_proof_dirs']:
@@ -521,7 +572,7 @@ def main():
         command += ['--family', FAMILY, '--out', str(path)]
         subprocess.run(command, check=True, cwd=ROOT)
         after = {r['row']: r for r in json.loads(path.read_bytes())['families'][FAMILY]['matrix']}
-        selected = {json.loads((directory / 'result.json').read_bytes())['row'] for directory in args.merge}
+        selected = set(covered_roots)
         require(rows.keys() == after.keys(), 'matrix row inventory changed')
         changed = {row for row in rows if rows[row]['status'] != after[row]['status']}
         require(changed == selected and all(after[row]['status'] == 'CLOSED' for row in selected),
@@ -539,9 +590,10 @@ def main():
         declaration = json.loads(path.read_bytes())
         row = rows[declaration['row']]
         print('Checking', row['row'], flush=True)
-        result = run_row(row, declaration, inventory, args.out / sweep.table_id([row['row']]), args.disable)
+        result = run_row(row, declaration, inventory, args.out / sweep.table_id([row['row']]),
+                         args.disable, args.root_fragments)
         print(row['row'], result['status'], result.get('reason', ''), f"{result['seconds']} s", flush=True)
-        okay &= result['status'] == 'READY_FOR_MATRIX'
+        okay &= result['status'] in ('READY_FOR_MATRIX', 'ROOT_FRAGMENTS')
     return 0 if okay else 1
 
 
