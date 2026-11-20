@@ -92,7 +92,7 @@ def fixture(declare, route, directory):
                 pass
         require(len(captured) == 1, f'original cancellation did not call {family}')
         owner, args, kwargs = captured[0]
-        if family == 'workflow_cancel_result':
+        if family == 'workflow_cancel_result' or route.get('freeze_owner_clock'):
             stamp = world.clock.now()
 
             def action():
@@ -440,7 +440,7 @@ def origin_afterimages_implication(nodes, name, path, cut):
     publish = method + 'publish_disposition.v3'
     condition, = owner['allOf']
     variants = owner['properties']['afterimages']['oneOf']
-    require(path == ['origin', 'afterimages'] and word == 'oneOf'
+    require(path in (['origin', 'afterimages'], ['record', 'afterimages']) and word == 'oneOf'
             and location == source + 'Origin/properties/afterimages'
             and {'issuer_method', 'afterimages'} <= set(owner['required'])
             and owner['properties']['issuer_method']['enum'] == [prepare, publish]
@@ -939,7 +939,8 @@ def run(args):
             accepted = declare.get('rule_controls', {}).get(ident, accepted)
             scoped = ':sha256:' in ids[0].split('#', 1)[0]
             if reference or scoped or any(set(example) & {'vacuous', 'intent_selector', 'intent_implication',
-                                                          'nullable_enum', 'append_acknowledgment_nonempty'}
+                                                          'nullable_enum', 'append_acknowledgment_nonempty',
+                                                          'origin_afterimages_implication'}
                              for example in examples.values()):
                 clauses = literal_rules(plain, bank, accepted, ident, ids, examples, args.disable_check, scoped)
             else:
