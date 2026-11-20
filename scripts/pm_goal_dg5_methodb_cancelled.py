@@ -146,6 +146,8 @@ def fixture(declare, route, directory):
     consumer = getattr(world, 'consumer_class', reader.Consumer)(world)
     presentation = reader.Presentation(world)
     request = original.request_of(world)
+    if route['call'] == 'read_filesafe':
+        return world, lambda: consumer.read_retained_native(request, presentation), (request, presentation)
     if route['call'] == 'read_request':
         return world, lambda: consumer.read_retained_native(copy.deepcopy(request), presentation), request
     if route['call'] == 'read_c3_proof':
@@ -382,6 +384,7 @@ def process_role_or_barrier_enum(nodes, name, path, cut, covering):
     pairs = {
         ('value', 'invocation', 'role'): ('DispatchInvocation', 'ProcessInvocation', 'process'),
         ('invocation', 'role'): ('DispatchInvocation', 'FileSafeInvocation', 'filesafe'),
+        (0, 'binding', 'value', 'invocation', 'role'): ('DispatchInvocation', 'FileSafeInvocation', 'filesafe'),
         ('record', 'first_append_receipt', 'durability_class'): ('AppendReceipt', 'FirstBarrier', 'barrier'),
     }
     require(tuple(path) in pairs, 'unexpected enumeration path')
@@ -395,11 +398,12 @@ def process_role_or_barrier_enum(nodes, name, path, cut, covering):
     owner = const_source.split('/allOf/', 1)[0]
     inherited, narrowed = nodes[owner]['node']['allOf']
     enum_info, const_info = nodes[enum_source], nodes[const_source]
+    instance_path = tuple('#' if type(part) is int else part for part in path)
     require(inherited['$ref'].endswith(f'#/$defs/{base}')
             and narrowed['properties'][field] == const_info['node']
             and const_info['node']['const'] == fixed and fixed in enum_info['node']['enum']
             and all({(reach['ipath'], bool(reach['ctx'])) for reach in entry['reach']} ==
-                    {(tuple(path), False)} for entry in (enum_info, const_info))
+                    {(instance_path, False)} for entry in (enum_info, const_info))
             and locations(cut) == {covering}, 'the same field must also satisfy its constant rule')
     return dict(source=owner + '/allOf', covering_rule=covering,
                 premise='Both rules apply together on every path to this field. The fixed value belongs to the enumeration.')
@@ -613,6 +617,46 @@ def filesafe_selector_implication(nodes, name, path, cut):
     require(locations(cut) == expected, 'the independent fixed FileSafe selector rule must still refuse')
     return dict(source=owner, covering_rule=covering,
                 premise='Every reachable selector role fixes this field to a nonempty string.')
+
+
+def filesafe_tuple_selector_implication(nodes, name, path, cut):
+    """All six references to the common ID field have a narrower string constant."""
+    from pm_goal_go_schema_closure import locations
+
+    location, keyword = name.rsplit('/', 1)
+    defs = location.split('#', 1)[0] + '#/$defs/'
+    field = path[-1]
+    require(path == [0, 'binding', 'selector', field] and field in ('family_id', 'schema_id', 'schema_version')
+            and keyword in ('type', 'minLength') and location == defs + 'SourceSelector/properties/' + field,
+            'unexpected FileSafe tuple selector field')
+    refs = {
+        ('#', 'binding', 'selector', field): ('BindingValue', 'selector', 'BindingSelector'),
+        ('#', 'original_terminal_journal', 'selector', field): ('JournalValue', 'selector', 'JournalSelector'),
+        ('#', 'complete_original_origins', '#', 'selector', field): ('OriginValue', 'selector', 'OriginSelector'),
+        ('#', 'complete_original_origins', '#', 'value', 'binding', field): (
+            'FileSafeJournalOrigin', 'binding', 'BindingSelector'),
+        ('#', 'complete_original_origins', '#', 'value', 'prior_origin', field): (
+            'FileSafeJournalOrigin', 'prior_origin', 'OriginSelector'),
+        ('#', 'complete_original_origins', '#', 'value', 'resolved_original_result', field): (
+            'FileSafeJournalOrigin', 'resolved_original_result', 'OriginSelector'),
+    }
+    shared = nodes[defs+'SourceSelector']['node']
+    require({reach['ipath'] for reach in nodes[location]['reach']} == set(refs)
+            and field in shared['required'] and shared['properties'][field]['type'] == 'string'
+            and shared['properties'][field]['minLength'] == 1, 'common FileSafe selector rule changed')
+    for owner, member, selector in refs.values():
+        child = nodes[defs+owner]['node']['properties'][member]
+        if member in ('prior_origin', 'resolved_original_result'):
+            child = child['anyOf'][0]
+        inherited, narrowed = nodes[defs+selector]['node']['allOf']
+        value = narrowed['properties'][field]['const']
+        require(child['$ref'].endswith('#/$defs/'+selector)
+                and inherited['$ref'].endswith('#/$defs/SourceSelector')
+                and type(value) is str and value, 'a FileSafe tuple selector lost its fixed identifier')
+    covering = defs + 'BindingSelector/allOf/1/properties/' + field + '/const'
+    require(locations(cut) == {covering}, 'the fixed identifier must still refuse the changed binding selector')
+    return dict(source=defs+'SourceSelector', covering_rule=covering,
+                premise='Every reachable selector role narrows this field to a nonempty string constant.')
 
 
 def safestop_settlement_selector_implication(nodes, name, path, control, cut):
@@ -881,7 +925,8 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
     else:
         validator = closure.closure_validator(plain, ident, bank)
         nodes, walked = closure._clause_inventory(validator)
-        if plain.schema['$ref'].endswith(('#/$defs/FileSafeJournalOrigin', '#/$defs/TerminationResultPhysical')):
+        if plain.schema['$ref'].endswith(('#/$defs/FileSafeJournalOrigin', '#/$defs/TerminationResultPhysical',
+                                          '#/$defs/RetainedFileSafeEffects')):
             # A not error prints its child schema. Keep the original node so
             # the message retains the exact schema text.
             locations = {id(plain._resolver.lookup(location).contents): location
@@ -1001,6 +1046,8 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
             record.update(cls='COVERED_LATER', implication=binding_revision_implication(nodes, name, path, cut))
         elif example.get('filesafe_selector_implication'):
             record.update(cls='COVERED_LATER', implication=filesafe_selector_implication(nodes, name, path, cut))
+        elif example.get('filesafe_tuple_selector'):
+            record.update(cls='COVERED_LATER', implication=filesafe_tuple_selector_implication(nodes, name, path, cut))
         elif example.get('safestop_settlement_selector'):
             record.update(cls='COVERED_LATER', implication=safestop_settlement_selector_implication(
                 nodes, name, path, control, cut))
@@ -1018,7 +1065,8 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
             location, word = name.rsplit('/', 1)
             node = nodes[location]['node']
             covering = location + '/enum'
-            require(word == 'type' and path in (['restore_outcome'], ['conflict_reason_code'])
+            valid_path = path[:-1] in ([], [0, 'original_terminal_journal', 'value'])
+            require(word == 'type' and valid_path and path[-1] in ('restore_outcome', 'conflict_reason_code')
                     and set(node[word]) == {'string', 'null'}
                     and all(item is None or type(item) is str for item in node['enum'])
                     and go.locations(cut) == {covering}, 'the FileSafe nullable enumeration changed')
@@ -1108,6 +1156,7 @@ class OwnerExample:
         self.checkpoint = route['call'] == 'project_checkpoint'
         self.preserved_head = route['call'] == 'read_preserved_head'
         self.preserved_issued = route['call'] == 'read_preserved_issued'
+        self.filesafe_effects = route['call'] == 'read_filesafe'
         self.writes = self.pointer or self.checkpoint or route['call'] in (
             'issue_physical', 'filesafe_invocation', 'publish_workflow_head')
 
@@ -1148,7 +1197,7 @@ class OwnerExample:
                 require(ident == provenance['root'] and binding == provenance['binding']
                         and same(value, provenance['document']),
                         'the preserved reader must validate the exact originally checked document')
-            if edit and not self.preserved_head and len(result['observations']) + 1 == checks:
+            if edit and not (self.preserved_head or self.filesafe_effects) and len(result['observations']) + 1 == checks:
                 require(edit not in value, 'test example already has the extra member')
                 value[edit] = 'example' if not self.checkpoint or self.route['edition'] == 'integrated_native' else 'x' * 16384
             errors = errors_list(list(plain.iter_errors(value)))
@@ -1200,6 +1249,11 @@ class OwnerExample:
                     handles = dict(presentation.cancellation)
                     handles['original_d01_head'] = handles['result']
                     stack.enter_context(patch.object(presentation, 'cancellation', handles))
+                if edit and self.filesafe_effects:
+                    presentation = inputs[1]
+                    invocations = [dict(item) for item in presentation.filesafe]
+                    invocations[0]['binding'] = invocations[0]['journal']
+                    stack.enter_context(patch.object(presentation, 'filesafe', invocations))
                 if self.pointer:
                     stack.enter_context(patch.object(Bank, 'validate', validate_pointer))
                 elif self.stop:
@@ -1228,7 +1282,7 @@ class OwnerExample:
                             'retained wrapper differs from the validated document')
                 returned = stored
             result['value_sha256'] = value_sha(returned)
-            if edit and not self.checkpoint and not self.preserved_head and self.route['call'] not in (
+            if edit and not (self.checkpoint or self.preserved_head or self.filesafe_effects) and self.route['call'] not in (
                     'read_c3_proof', 'read_request'):
                 require(returned.get(edit) == 'example', 'the accepted call did not return the altered document')
         except Exception as error:
@@ -1353,7 +1407,7 @@ class OwnerExample:
                             f"single-check trial {record['kill']}: {record.get('cut_errors')}")
                 require(before == restored and before['observations'] == disabled['observations'],
                         'the same invalid document and message must be restored')
-                if self.preserved_head or self.route['call'] in ('read_c3_proof', 'read_request'):
+                if self.preserved_head or self.filesafe_effects or self.route['call'] in ('read_c3_proof', 'read_request'):
                     require(disabled['value_sha256'] == self.trials[0]['value_sha256'],
                             'the accepted read must return the original retained value')
                 require(before['refusal'] == self.route['refusal'] and before['detail'] == self.route['detail'],
@@ -1532,10 +1586,14 @@ def run(args):
             inventory = dict(binding, rows=[row], families=[FAMILY], clause_ids=ids,
                              clause_inventory=closure._clause_inventory_pin(ids))
             if ident in inventories:
-                require(inventories[ident] == inventory,
-                        f'{ident}: the coverage table needs one exact binding per root ID')
-            reports[ident] = clauses
-            inventories[ident] = inventory
+                previous = inventories[ident]
+                require(previous['clause_ids'] == ids and reports[ident] == clauses,
+                        f'{ident}: repeated root bindings must replay the same exact rule cases and messages')
+                checked = dict(binding, realm=route.get('realm'), registry_realm=route.get('registry_realm'))
+                previous.setdefault('additional_verified_bindings', []).append(checked)
+            else:
+                reports[ident] = clauses
+                inventories[ident] = inventory
         publish(source, args.out, declare, collector, reports, inventories, table_path)
         result['status'] = 'COVERED'
     except ValueError as error:
