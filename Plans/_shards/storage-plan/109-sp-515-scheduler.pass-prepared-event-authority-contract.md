@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L48092-L53886
 
-Source SHA256: `9a6b117386238d8803a5c362c72acb35fa091213dbc9a2ac0afb2f03c2dc1b2b`
+Source SHA256: `1ef412985c9b7f584fe49f74f2fcef3247c5bcf390f06403acfcba32f70546f8`
 
 ---
 
@@ -3541,7 +3541,7 @@ canonical_text: |-
 
   PNC-019 s4r retention binding for `panel.redocked` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
+  Event history: Application = `RP-AUTHORITY-INDEFINITE@1.0.0`, Project = `RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
 
   Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
 
