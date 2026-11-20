@@ -1,6 +1,7 @@
 import io
 import json
 import unittest
+from collections import Counter
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 from runpy import run_path
@@ -79,6 +80,51 @@ class DuplicateRootMergeTest(unittest.TestCase):
         roots = json.loads(save.call_args.args[0])['roots']
         self.assertEqual(list(roots), ['root-a'])
         self.assertEqual(list(roots['root-a']['clauses']), ['location/type'])
+
+
+class ClosureDiffTest(unittest.TestCase):
+    def diff(self, before, after):
+        script = Path(__file__).with_name('pm-goal-gc2-closure-diff.py')
+        main = run_path(str(script))['main']
+
+        def report(roots):
+            return json.dumps(dict(sources={'own_a': dict(roots={
+                root: dict(clauses={c: {'cls': classification} for c, classification in clauses.items()},
+                           counts=dict(Counter(clauses.values())))
+                for root, clauses in roots.items()
+            })}))
+
+        inputs = {Path('before.json'): report(before), Path('after.json'): report(after)}
+        argv = [str(script), '--before', 'before.json', '--after', 'after.json', '--out', 'diff.json']
+        with (patch('sys.argv', argv),
+              patch.object(Path, 'read_text', autospec=True, side_effect=inputs.__getitem__),
+              patch.object(Path, 'write_text') as save, redirect_stdout(io.StringIO())):
+            code = main()
+        return code, json.loads(save.call_args.args[0])['sources']['own_a']
+
+    def test_missing_empty_root_fails_with_equal_root_counts(self):
+        code, source = self.diff({'old-root': {}}, {'new-root': {}})
+        self.assertEqual(code, 1)
+        self.assertEqual(source['roots_only_in_one_run'], [
+            dict(root='new-root', before=False, after=True),
+            dict(root='old-root', before=True, after=False),
+        ])
+
+    def test_missing_clause_fails_even_with_no_uncovered_clauses(self):
+        code, source = self.diff({'root': {'old/type': 'KILLED'}}, {'root': {'new/type': 'KILLED'}})
+        self.assertEqual(code, 1)
+        self.assertEqual(source['uncovered_after'], [])
+        self.assertEqual(len(source['only_in_one_run']), 2)
+
+    def test_class_change_with_matching_inventory_passes(self):
+        code, source = self.diff({'root': {'clause': 'COVERED_LATER'}}, {'root': {'clause': 'KILLED'}})
+        self.assertEqual(code, 0)
+        self.assertEqual(len(source['occurrence_changes']), 1)
+
+    def test_uncovered_clause_with_matching_inventory_still_fails(self):
+        code, source = self.diff({'root': {'clause': 'KILLED'}}, {'root': {'clause': 'UNCOVERED'}})
+        self.assertEqual(code, 1)
+        self.assertEqual(source['uncovered_after'], ['clause'])
 
 
 if __name__ == '__main__':
