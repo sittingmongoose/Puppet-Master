@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L58989
+Source lines: L28747-L59051
 
-Source SHA256: `a91689ddbda6b25a0a1f65693bfe7972870c8cfab7f3de7a51bf926b1c4c1f54`
+Source SHA256: `ce1262fa49eb2f47df7ea2ab03e1c4347b5acdfeab407f9428ec735e84e44d9d`
 
 ---
 
@@ -30248,6 +30248,68 @@ preserved_exact_tokens:
 - 993b7e233dc30f201a954e3630a1437a0c2e196973421126abc9291a03e4339c
 - 2026-11-19.79
 - 2026-11-19.80
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2531: Event Authority corrects persona.created (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2531
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for persona.created only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2341; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 c9fe0bbb51b66d9f757fc0c9e1a15d378a86b9d141907aae9621e9f9c1738b09.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_created`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/persona_created`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.80, 518 families, SHA-256 85691e3b0dc7c029ee9224cc4a953833a582f931a0ff7eea09dc6640f8763c60,
+  to 2026-11-19.81, 518 families, SHA-256 d929710105e23521af996de1af38bd5c440443c8436b90b4bbe498982f1c6e1d, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/persona.created.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/persona.created.json, SHA-256 5342d380c2ffb09873fe953ee054f55f65dd17e24f27741ee48daaddf81275e6.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.204 SHA-256 011f4a31e87c8026e925e9c689f60402c2ebe2ade81059e92920a30113249c99;
+  after 2026-11-16.205 SHA-256 ae6055bf22a8ecf647bd2955590ec288e26b9df2a0b51033bbe206f949fac18c. Existing semantic owner Plans/Personas.md#P-120,
+  payload owner Plans/Contracts_V0.md#CV-691, resource Plans/dg6b_event_contracts.schema.json#/$defs/persona_created retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2341
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2341
+preserved_exact_tokens:
+- persona.created
+- c9fe0bbb51b66d9f757fc0c9e1a15d378a86b9d141907aae9621e9f9c1738b09
+- 2026-11-19.80
+- 2026-11-19.81
 negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
