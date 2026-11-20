@@ -38,42 +38,55 @@ def fixture(declare, route, directory):
 
     edition = route['edition']
     config = {'start': route.get('start', 'started')}
+    if route.get('mutation'):
+        config.update(effects='mutation', filesafe=['rollback', 'commit'])
     if edition == 'integrated_original':
         from pm_goal_dg_int_old import World
+    elif edition == 'integrated_native':
+        from pm_goal_dg_int_cancel import CancelWorld as World
     else:
         require(edition in ('original_profile', 'native_v7'), f'unknown edition {edition}')
         World = legacy.CancelWorld
         config['edition'] = edition
     world = World(config, base=directory)
-    if route['call'] == 'issue_physical':
+    if route['call'] in ('issue_physical', 'publish_pointer'):
+        if route['call'] == 'publish_pointer':
+            from pm_goal_dg_int_world import S1D01Owner
+            cls, method = S1D01Owner, 'publish_head'
+        else:
+            cls, method = legacy.PhysOwner, 'issue_physical'
         family = declare['row'].removeprefix('dg5/issue/').removesuffix('/schema')
-        original_issue = legacy.PhysOwner.issue_physical
+        original_issue = getattr(cls, method)
         captured = []
 
-        def before_issue(owner, selected, *args, **kwargs):
-            if selected == family:
-                captured.append((owner, selected, args, kwargs))
+        def before_issue(owner, *args, **kwargs):
+            if method == 'publish_head' or args[0] == family:
+                captured.append((owner, args, kwargs))
                 raise BeforeIssue
-            return original_issue(owner, selected, *args, **kwargs)
+            return original_issue(owner, *args, **kwargs)
 
-        with patch.object(legacy.PhysOwner, 'issue_physical', before_issue):
+        with patch.object(cls, method, before_issue):
             try:
                 world.build()
             except BeforeIssue:
                 pass
         require(len(captured) == 1, f'original cancellation did not call {family}')
-        owner, selected, args, kwargs = captured[0]
-        inputs = (selected, args, kwargs)
-        return world, lambda: original_issue(owner, selected, *args, **kwargs), inputs
+        owner, args, kwargs = captured[0]
+        if method == 'publish_head':
+            import pm_goal_dg_s_start as start
+            target = start.d01_families(owner.edition)['pointer'], owner.s1.pointer_key()
+        else:
+            target = args[0], args[3]
+        return world, lambda: original_issue(owner, *args, **kwargs), (target, args, kwargs)
     world.build()
     if route['call'] == 'current_started':
         owner = getattr(world, 'projector_class', projector.Projector)(world)
         return world, owner.read_current_started, owner.request()
-    require(route['call'] == 'missing_original', f'unknown owner call {route}')
     consumer = getattr(world, 'consumer_class', reader.Consumer)(world)
     presentation = reader.Presentation(world)
-    presentation.cancellation = None
     request = original.request_of(world)
+    require(route['call'] == 'missing_original', f'unknown owner call {route}')
+    presentation.cancellation = None
     return world, lambda: consumer.read_retained_native(request, presentation), (request, None)
 
 
@@ -86,8 +99,8 @@ def root_binding(closure, bank, plain):
                        schema=schema, registry_sha256=registry, validator_class=validator)
 
 
-def scoped_rules(plain, bank, accepted, ident, ids, examples, disabled_check):
-    """Run the same rule tests on the original nodes of a location-scoped bank.
+def scoped_validator(plain, nodes):
+    """Keep the original node identities when testing a location-scoped bank.
 
     A copied reference node cannot use this bank's original identity map.
     Keep the bank's nodes and all its reference handlers in place and wrap the
@@ -99,10 +112,6 @@ def scoped_rules(plain, bank, accepted, ident, ids, examples, disabled_check):
     import pm_goal_go_schema_closure as go
     import pm_goal_oracle_common as common
 
-    nodes, walked = closure._scoped_census(plain, ident, bank, closure._realm_location)
-    if disabled_check == 'inventory':
-        examples = dict(list(examples.items())[1:])
-    require(walked == ids and set(walked) == set(examples), 'scoped rule examples differ from exact inventory')
     locations = {id(info['node']): location for location, info in nodes.items()}
     classes = {}
 
@@ -141,24 +150,62 @@ def scoped_rules(plain, bank, accepted, ident, ids, examples, disabled_check):
         return cls(**{field.alias: getattr(prototype, field.name)
                       for field in attrs.fields(type(prototype)) if field.init})
 
-    validator = instantiate(guarded(type(plain)), plain)
+    return instantiate(guarded(type(plain)), plain)
+
+
+def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, scoped):
+    import pm_goal_dg5_closure as closure
+    import pm_goal_go_schema_closure as go
+
+    if scoped:
+        nodes, walked = closure._scoped_census(plain, ident, bank, closure._realm_location)
+        validator = scoped_validator(plain, nodes)
+    else:
+        validator = closure.closure_validator(plain, ident, bank)
+        nodes, walked = closure._clause_inventory(validator)
+    if disabled_check == 'inventory':
+        examples = dict(list(examples.items())[1:])
+    require(walked == ids, f'{ident}: installed assertions differ from the census')
+    require(set(walked) == set(examples), 'declared test examples differ from exact inventory')
     require(not list(plain.iter_errors(accepted)) and not go.errors_of(validator, accepted),
             'original and instrumented validators must both accept the valid document')
     results = {}
     for name in ids:
         example = examples[name]
         path = example['path']
-        invalid = edit_example(go, accepted, path, example)
+        control = accepted
+        if 'control' in example:
+            change = example['control']
+            control = edit_example(go, control, change['path'], change)
+        require(not list(plain.iter_errors(control)) and not go.errors_of(validator, control),
+                f'{name}: declared branch control refused')
+        guard = closure._guard_for_location(name)
+        disabled = () if disabled_check == 'rule' else {guard}
+        if example.get('vacuous'):
+            location, word = name.rsplit('/', 1)
+            node = nodes[location]['node']
+            require(word == 'minItems' and node[word] == 0 and go.get(control, path) == [],
+                    f'{name}: vacuous minimum premise changed')
+            invalid = go.apply(control, path, False)
+            before = errors_list(list(plain.iter_errors(invalid)))
+            cut = errors_list(go.errors_of(validator, invalid, disabled))
+            restored = errors_list(go.errors_of(validator, invalid))
+            require(before and before == cut == restored,
+                    f'{name}: a zero minimum must leave the array type refusal intact')
+            results[name] = dict(cls='VACUOUS', source=name, control=control, wrong_type=invalid,
+                                 before=before, cut=cut, restored=restored,
+                                 premise='A JSON array has at least zero items. The keyword ignores other types.')
+            continue
+        invalid = edit_example(go, control, path, example)
         actual = errors_list(list(plain.iter_errors(invalid)))
         before = go.errors_of(validator, invalid)
-        guard = closure._guard_for_location(name)
-        require(any(error.oracle_guard == guard and list(error.absolute_path) == path
+        require(any(getattr(error, 'oracle_guard', None) == guard and list(error.absolute_path) == path
                     for error in each_error(before)) and actual == errors_list(before),
                 f'{name}: expected exact original validation message at {path}')
-        cut = go.errors_of(validator, invalid, () if disabled_check == 'rule' else {guard})
+        cut = go.errors_of(validator, invalid, disabled)
         restored = errors_list(go.errors_of(validator, invalid))
         require(not cut and actual == restored, f'{name}: disabling and restoring that one rule failed')
-        results[name] = dict(cls='KILLED', control=accepted, invalid=invalid, before=actual,
+        results[name] = dict(cls='KILLED', control=control, invalid=invalid, before=actual,
                              cut=errors_list(cut), restored=restored)
     return results
 
@@ -172,27 +219,25 @@ class OwnerExample:
         self.disabled_check = disabled_check
         self.observed = None
         self.trials = []
-        self.writes = route['call'] == 'issue_physical'
+        self.pointer = route['call'] == 'publish_pointer'
+        self.writes = self.pointer or route['call'] == 'issue_physical'
 
-    def call(self, world, action, edit):
+    def call(self, world, action, inputs, edit):
         import pm_goal_dg5_boundaries as bridge
         import pm_goal_dg5_closure as closure
         import pm_goal_dg_int_schema_cache as cache
         import pm_goal_guard_tables as tables
         from pm_goal_dg_r_world import Roots
+        from pm_goal_dg_s_world import Bank
         from pm_goal_go2_closure import value_sha
 
-        original = Roots.validate
         code = self.row.removeprefix('dg5/').removesuffix('/schema')
         result = dict(errors=[], observations=[])
 
-        def validate(bank, realm, ref, value, label):
-            if label != code:
-                return original(bank, realm, ref, value, label)
-            caller = sys._getframe(1)
+        def decide(bank, realm, ref, value, caller, enforce):
             site = [str(Path(caller.f_code.co_filename).relative_to(self.source)), caller.f_lineno]
             require(site == self.route['site'], f'owner source moved to {site}')
-            plain = bank.validator(realm, ref)
+            plain = bank.validator(ref) if realm is None else bank.validator(realm, ref)
             ident, binding = root_binding(closure, bank, plain)
             require(ident == self.route['root'], f'owner call reached unexpected root {ident}')
             if edit:
@@ -209,17 +254,31 @@ class OwnerExample:
                 self.observed = plain, bank, copy.deepcopy(value), binding
             if decision and self.row in tables.CUT and self.disabled_check != 'row':
                 return value
-            return original(bank, realm, ref, value, label)
+            return enforce()
+
+        roots_validate, adapter_validate = Roots.validate, Bank.validate
+
+        def validate(bank, realm, ref, value, label):
+            enforce = lambda: roots_validate(bank, realm, ref, value, label)
+            return decide(bank, realm, ref, value, sys._getframe(1), enforce) if label == code else enforce()
+
+        def validate_pointer(bank, ref, value, label='root'):
+            enforce = lambda: adapter_validate(bank, ref, value, label)
+            return decide(bank.original, None, ref, value, sys._getframe(1), enforce) if label == code else enforce()
 
         try:
             with ExitStack() as stack:
-                stack.enter_context(patch.object(Roots, 'validate', validate))
+                if self.pointer:
+                    stack.enter_context(patch.object(Bank, 'validate', validate_pointer))
+                else:
+                    stack.enter_context(patch.object(Roots, 'validate', validate))
                 if isinstance(world.roots, cache.Roots):
                     stack.enter_context(patch.object(world.roots, 'success', {}))
                 returned = action()
             if self.writes:
-                stored = world.storage.cell(returned.family, returned.key)['value']
-                require(stored == returned.wrapper, 'retained wrapper differs from its Storage cell')
+                stored = world.storage.cell(*inputs[0])['value']
+                require(stored == result['observations'][0]['document'],
+                        'retained wrapper differs from the validated document')
                 returned = stored
             result['value_sha256'] = value_sha(returned)
             if edit:
@@ -246,15 +305,15 @@ class OwnerExample:
 
         def run_child():
             try:
-                family, (_, _, key, *_), _ = inputs
-                before = copy.deepcopy(world.storage.cell(family, key))
+                target = inputs[0]
+                before = copy.deepcopy(world.storage.cell(*target))
                 # The fixture builder may issue ancillary provenance first.
                 # Give those private writes the same distinct IDs in each copy.
                 ids = count(UUID('a36fc6e5-1e3b-4e27-8200-000000000001').int)
                 with patch.object(world.storage, 'root', path), patch.object(
                         uuid, 'uuid4', side_effect=lambda: UUID(int=next(ids))):
-                    result = self.call(world, action, edit)
-                current = world.storage.cell(family, key)
+                    result = self.call(world, action, inputs, edit)
+                current = world.storage.cell(*target)
                 published = current != before
                 require(published != bool(result['errors']), 'target publication does not match the verdict')
                 result['target_published'] = published
@@ -278,8 +337,12 @@ class OwnerExample:
         observed, = result['observations']
         self.collector.observe(self.row, not observed['messages'], tuple(observed['site']))
         if edit is None:
-            bank = world.roots.original if isinstance(world.roots, CachedRoots) else world.roots
-            validator = bank.validator(observed['realm'], observed['ref'])
+            if self.pointer:
+                bank = world.d01.edition.bank.original
+                validator = bank.validator(observed['ref'])
+            else:
+                bank = world.roots.original if isinstance(world.roots, CachedRoots) else world.roots
+                validator = bank.validator(observed['realm'], observed['ref'])
             self.observed = validator, bank, observed['document'], observed['binding']
         return result
 
@@ -298,7 +361,7 @@ class OwnerExample:
                 require(not tables.CUT - {self.row}, 'more than the selected validation rule was disabled')
                 require(bridge.context_value(inputs, world) == bound_inputs, 'original owner arguments changed')
                 result = (self.issue_on_copy(world, action, inputs, edit, initial) if self.writes
-                          else self.call(world, action, edit))
+                          else self.call(world, action, inputs, edit))
                 require(bridge.manifest(bridge.file_state(world.storage.root)) == initial,
                         'passive call changed the original store')
                 return result
@@ -402,8 +465,9 @@ def run(args):
                     f'owner validator binding changed for {ident}')
             ids = root['clause_ids']
             examples = declare['examples'][ident]
-            if ids[0].split('#', 1)[0].count(':sha256:') == 1:
-                clauses = scoped_rules(plain, bank, accepted, ident, ids, examples, args.disable_check)
+            scoped = ':sha256:' in ids[0].split('#', 1)[0]
+            if scoped or any(example.get('vacuous') for example in examples.values()):
+                clauses = literal_rules(plain, bank, accepted, ident, ids, examples, args.disable_check, scoped)
             else:
                 clauses, gaps = test_rules(plain, bank, accepted, ident, ids, examples, args.disable_check)
                 require(not gaps, f'{ident} needs checked implications for {sorted(gaps)}')
