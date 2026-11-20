@@ -31,15 +31,29 @@
      Studio's resets); a new run of setup keeps them. A record from before it (the Projects only in the onboarding
      record's finished / commit) is still read below. */
   const MADE = 'pm7:shell:setup-projects:v1';
-  const madeGet = () => { try { const v = JSON.parse(window.localStorage.getItem(MADE) || '[]'); return Array.isArray(v) ? v.filter((p) => p && typeof p.id === 'string' && p.id) : []; } catch (_) { return []; } };
-  const madeSet = (list) => { try { if (list.length) window.localStorage.setItem(MADE, JSON.stringify(list)); else window.localStorage.removeItem(MADE); } catch (_) { /* no storage */ } };
+  /* (FO-230: a page with no storage — T3's sandboxed preview, an opaque origin — keeps the record in memory for the
+     visit, as O55.store keeps its own (20-store.js): a Project made during the visit is still setup's, and forgetSetup
+     must see it. madeLive mirrors every write; madeGet reads the stored record and the visit's own as one list) */
+  let madeLive = [];
+  const madeGet = () => {
+    let stored = [];
+    try { const v = JSON.parse(window.localStorage.getItem(MADE) || '[]'); stored = Array.isArray(v) ? v.filter((p) => p && typeof p.id === 'string' && p.id) : []; } catch (_) { /* no storage */ }
+    const out = stored.slice();
+    madeLive.forEach((p) => { if (!out.some((q) => q.id === p.id)) out.push(p); });
+    return out;
+  };
+  const madeSet = (list) => { madeLive = list.slice(); try { if (list.length) window.localStorage.setItem(MADE, JSON.stringify(list)); else window.localStorage.removeItem(MADE); } catch (_) { /* no storage */ } };
   function madeKeep(id, name, info) {
     const list = madeGet(), was = list.find((p) => p.id === id);
     const next = { id, name: name || (was && was.name) || id, info: (info && (info.path || info.branch)) ? info : ((was && was.info) || info || null) };
     madeSet(list.filter((p) => p.id !== id).concat(next));
   }
+  /* (FO-230: the fresh-load exclusion is the initial boot's only: restoreEarly and restoreProject run before 95-boot.js
+     clears the old record, and must not list its Projects; once boot's forgetSetup has run, the Projects made during
+     the visit are setup's own and setupProjects lists them again) */
+  let freshBoot = freshInstall;
   function setupProjects() {
-    if (freshInstall) return [];
+    if (freshBoot) return [];
     const rec = O55.store.get('onboarding', null), out = madeGet().map((p) => ({ id: p.id, name: p.name || p.id, info: p.info || null }));
     if (!rec) return out;
     const d = rec.drafts && rec.drafts.main, cm = rec.commit, fin = rec.finished;
@@ -143,6 +157,9 @@
       const sel = document.querySelector('#projectMenu .pm6-tb-menu-item.is-selected[data-project]'), box = window.PM_PROJECT_BOX;
       const moved = !!(sel && gone(sel.getAttribute('data-project')) && box && defaultProject && box.select(defaultProject));
       document.querySelectorAll('#projectMenu [data-o55-added][data-project]').forEach((r) => { if (gone(r.getAttribute('data-project'))) r.remove(); });
+      /* (FO-230: the boot's exclusion ends here — the first forgetSetup of a fresh load is 95-boot.js's own; from now
+         on setupProjects lists what the visit makes) */
+      freshBoot = false;
       return moved;
     },
     /* before a new run of setup replaces the onboarding record (R87-P2: Run Onboarding Again, Start over, a finished run
