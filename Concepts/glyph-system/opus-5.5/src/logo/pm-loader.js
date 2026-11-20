@@ -216,13 +216,16 @@
     (r.querySelectorAll ? [...list, ...r.querySelectorAll('[data-pip-loader]')] : list).forEach((el) => { if (!el.hasAttribute('data-pml-run')) arm(el); });
   }
   const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-  /* o: { motion = 'swing', px = 16 (the size the host expects), size? (a CSS length; default 1em), className? } */
+  /* o: { motion = 'swing', px = 16, size? (a CSS length; default 1em), className?, deferDrawing? }.
+     A list can lay out the fixed-size slots first. The first pml-arm event draws the pixel mark before its usual fade. */
   function html(o) {
     o = o || {};
     const motion = MOTIONS.indexOf(o.motion) >= 0 ? o.motion : 'swing', px = +o.px > 0 ? +o.px : 16, look = L.look();
     const size = o.size ? ` style="--pml-size:${esc(o.size)}"` : '';
-    return `<span class="pml-ld${o.className ? ' ' + esc(o.className) : ''}" data-pip-loader="${motion}" data-pip-px="${px}" data-pml-look="${look}" aria-hidden="true"${size}>` +
-      (isNier(look) ? NIER : L.mark({ px, motion, mood: motion === 'think' ? 'working' : 'idle', look, decorative: true })) + '</span>';
+    let drawing = '';
+    if (isNier(look)) drawing = NIER;
+    else if (!o.deferDrawing) drawing = L.mark({ px, motion, mood: motion === 'think' ? 'working' : 'idle', look, decorative: true });
+    return `<span class="pml-ld${o.className ? ' ' + esc(o.className) : ''}" data-pip-loader="${motion}" data-pip-px="${px}" data-pml-look="${look}" aria-hidden="true"${size}>${drawing}</span>`;
   }
   /* A host waiting: aria-busy on the host and a loader in it (first, or o.slot: 'end' or an element). The host's own
      words say what it waits for; o.status adds role="status" for a wait with no words of its own. */

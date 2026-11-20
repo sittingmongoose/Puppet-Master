@@ -202,7 +202,7 @@ function mountAgents(rec) {
   var U = WORK();
   if (!U) { list.appendChild(h('p', { class: 'pmw-dash-agent-empty', text: 'Agents show here once the work projection is running.' })); return; }
   rec.work = U.list(list, {
-    label: 'Agents at work', empty: 'No agents match this filter.', where: true,
+    label: 'Agents at work', empty: 'No agents match this filter.', where: true, deferLoaderDrawing: true,
     filter: function (it) { var f = rec.filter || 'all'; return it.kind === 'agent' && (f === 'all' || U.agentGroup(it) === f); },
     active: function () { return !rec.gone && rec.shown !== false; },
     onPaint: function () { if (rec.paintLeft) rec.paintLeft(); }

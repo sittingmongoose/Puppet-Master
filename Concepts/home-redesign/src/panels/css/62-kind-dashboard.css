@@ -34,6 +34,8 @@
   .pmw-dash-agents { padding: 8px 8px 12px; }
   .pmw-dash-agent-list { grid-template-columns: minmax(0, 1fr); }
 }
+/* Each 16 px mark has a fixed slot. Scroll it into view before laying out its artwork. */
+.pmw-dash-agent-list .wk-pip { content-visibility: auto; contain: strict; }
 .pmw-dash-agent-empty { margin: 24px 0 0; text-align: center; font-size: 12.5px; color: var(--pmw-text-3); }
 .pmw-dash-agent {
   position: relative;
