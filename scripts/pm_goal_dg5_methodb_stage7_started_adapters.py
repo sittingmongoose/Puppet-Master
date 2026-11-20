@@ -24,7 +24,16 @@ def registry_role_type(directory, negative):
     return world, world.registry.register, (owner, role), {}
 
 
+def registry_duplicate(directory, negative):
+    world = start_world(directory)
+    owner = world.owners['native']
+    if not negative:
+        owner = A.TestOwner(A.OwnerRegistry(), owner_id='TEST_ONLY:stage7-new-owner')
+    return world, world.registry.register, (owner, owner.role), {}
+
+
 CASES = {
+    'registry-duplicate': (ADAPTERS, 322, 'registry/duplicate_id', registry_duplicate),
     'registry-role-type': (ADAPTERS, 321, 'registry/role_type', registry_role_type),
 }
 
