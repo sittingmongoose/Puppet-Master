@@ -11,6 +11,7 @@ from contextlib import ExitStack
 import copy
 import gzip
 import hashlib
+from itertools import count
 import json
 import multiprocessing
 from pathlib import Path
@@ -220,6 +221,7 @@ class OwnerCheck:
         import pm_goal_dg5_boundaries as bridge
         import pm_goal_dg5_closure as closure
         import pm_goal_guard_tables as tables
+        import pm_goal_test_storage as storage
 
         original = self.bank_class.validate
         errors_method = self.bank_class.errors
@@ -269,8 +271,23 @@ class OwnerCheck:
                 return original(bank, *validator_args, args[-1])
             return document
 
+        # Storage issues transient snapshot IDs on each read. Keep the IDs
+        # distinct within an action and repeat their sequence for each trial.
+        snapshots = count(1)
+
+        def preserve_ids(read):
+            def stable_read(store):
+                with patch.object(storage.secrets, 'token_hex',
+                                  side_effect=lambda n: next(snapshots).to_bytes(n, 'big').hex()):
+                    return read(store)
+            return stable_read
+
         try:
-            with patch.object(self.bank_class, 'validate', observe):
+            with ExitStack() as changes:
+                changes.enter_context(patch.object(self.bank_class, 'validate', observe))
+                for method in ('snapshot', 'acquire_source'):
+                    current = getattr(storage.TestOwnerStorage, method)
+                    changes.enter_context(patch.object(storage.TestOwnerStorage, method, preserve_ids(current)))
                 result = action()
             record['result_sha256'] = self.result_digest(result)
         except Exception as error:
@@ -476,7 +493,8 @@ def approval_implication(nodes, name, path, errors, locations, validator):
 def request_implication(nodes, name, path, errors, locations):
     """The request's complete two-way conditional enforces both nullable members."""
     parent = name.split('/allOf/', 1)[0].split('/properties/', 1)[0]
-    request = parent.endswith('#/$defs/GoalUpdateRequestV2')
+    request = (parent.endswith('#/$defs/GoalUpdateRequestV2') or
+               parent.endswith('/pm.goal_runtime_event.goal_updated.schema.v3#'))
     require(request or parent.endswith('#/$defs/revision'), 'unexpected update request or revision definition')
     node = nodes[parent]['node']
     member = path[-1]
