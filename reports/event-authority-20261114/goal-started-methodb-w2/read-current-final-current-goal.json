@@ -1,0 +1,26 @@
+{
+  "row": "dg5/read_current/final/current_goal/schema",
+  "fixtures": [
+    {
+      "route": "current_goal/final",
+      "root": "dg5:1e09d3946e9cea28",
+      "edition": "v3",
+      "bank": "goal-v3",
+      "schema_reference": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+      "rule_test_row": "dg5/issue/CurrentGoalArgument/schema",
+      "hash_seed": 55,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
