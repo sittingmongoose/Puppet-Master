@@ -90,9 +90,23 @@
     if (!w || pm51HasTabs(w)) return false;
     return (domainSectionMap[w.id] || []).filter(s => !s.advanced && !pm51IsMain(w.id, s.id)).length >= 4;
   };
+  /* What is not shown is not in the page: a hidden column still held a link for every tab of every manager, and
+     anything that looks for "the first control of tab X" (stream F's checks do) met the unseen link first. The column
+     draws the page in view only, and nothing when it is not wanted. */
+  const rfInner = pm51IndexGroupInner;
+  pm51IndexGroupInner = function (w) {
+    if (!w || w.id !== state.workspace || !rfIndexWanted()) return '';
+    return rfInner.apply(this, arguments);
+  };
+  let rfIndexFor = null, rfIndexBusy = false;
   const rfPaintIndex = () => {
     root.setAttribute('data-rf-index', rfIndexWanted() ? 'on' : 'off');
     root.querySelectorAll('.pm51-index-group').forEach(g => g.classList.toggle('rf-here', g.dataset.indexWs === state.workspace));
+    /* the page in view changed (a jump, or the scroll crossed into the next manager): draw its entries, drop the others' */
+    const key = `${state.home ? '' : state.domain}/${state.workspace}/${rfIndexWanted()}`;
+    if (key === rfIndexFor || rfIndexBusy || !PM51.syncIndex) return;
+    const was = rfIndexFor ? rfIndexFor.split('/')[1] : null; rfIndexFor = key; rfIndexBusy = true;
+    try { if (was && was !== state.workspace) PM51.syncIndex(was); PM51.syncIndex(state.workspace); } finally { rfIndexBusy = false; }
   };
   const rfMark = pm51MarkIndex;
   pm51MarkIndex = function () { const r = rfMark.apply(this, arguments); rfPaintIndex(); return r; };
