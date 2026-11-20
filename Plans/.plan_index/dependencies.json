@@ -5481,6 +5481,7 @@
     "DL-2506",
     "DL-2507",
     "DL-2508",
+    "DL-2509",
     "DL-2450",
     "DL-451",
     "DL-694",
@@ -52301,6 +52302,21 @@
     {
       "edge_type": "depends_on",
       "from": "DL-2508",
+      "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2509",
+      "to": "DL-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2509",
+      "to": "DL-2288"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2509",
       "to": "DL-400"
     },
     {
@@ -163159,7 +163175,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-20T00:03:40Z",
+  "generated_at_utc": "2026-11-20T00:04:44Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -214938,6 +214954,23 @@
         "heading_level": 3,
         "heading_line": 57575,
         "line": 57577,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge3_postfix",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2509",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_admission",
+      "source_location": {
+        "heading": "DL-2509: Event Authority corrects debug.investigation.target_bound (merge 3 post-landing)",
+        "heading_level": 3,
+        "heading_line": 57636,
+        "line": 57638,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -325127,10 +325160,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27500,
+    "depends_on_edge_count": 27503,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30725,
-    "node_count": 9527,
+    "edge_count": 30728,
+    "node_count": 9528,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
