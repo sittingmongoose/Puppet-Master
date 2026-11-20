@@ -5,7 +5,7 @@
 // from the new-check proof runs are appended below once those runs land).
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {rasterAbVerdict, rasterAbStrict, captureResolution, edgeResolution, shrinkResolution, RASTER_AB_TOL_MS, RASTER_AB_BITE_MS} from '../helpers/raster-ab-verdict.mjs';
+import {rasterAbVerdict, rasterAbStrict, captureResolution, edgeResolution, shrinkResolution, iqr, RASTER_AB_TOL_MS, RASTER_AB_BITE_MS, RASTER_AB_RETAINED_IQR_MAX_MS} from '../helpers/raster-ab-verdict.mjs';
 
 const pairsOf = (head, control) => Object.fromEntries(Object.keys(head).map(k => [k, head[k].map((v, i) => ({diff: v - control[k][i], resolved: true}))]));
 
@@ -153,4 +153,40 @@ test('bite: the bite-threshold shift fails on top of the real resolved green noi
 			assert.equal(rasterAbVerdict(shifted, {minResolved: 6})[k].ok, false, `${surf} ${k}: +${RASTER_AB_BITE_MS[k]} ms over green noise must fail`);
 		}
 	}
+});
+
+// retainedMs IQR gate (lead 1120233156-26c3): judged only when the clip race is quiet. Real records:
+// quiet = run-baseline-mac alone (IQR 12.5 <= 25, median -16.7 -> PASS); noisy = run-green3-r1-1 opaque under 3-way
+// load (IQR 45.8 > 25 -> could-not-judge clip-race noise, never a numeric false fail even though median 33.4 > 25).
+const QUIET_RETAINED = [-33.3, -16.7, -16.7, -16.7, 0, 33.3];
+const NOISY_RETAINED = [-150.0, 16.7, 16.7, 50.0, 66.7, 133.3];
+const retPairs = a => ({retainedMs: a.map(d => ({diff: d, resolved: true}))});
+
+test('retained: a quiet real record is judged on the median and passes', () => {
+	const v = rasterAbVerdict(retPairs(QUIET_RETAINED), {minResolved: 6}).retainedMs;
+	assert.equal(v.iqrMs, 12.5);
+	assert.equal(v.couldNotJudge, false);
+	assert.equal(v.ok, true);
+	assert.equal(v.medianDiffMs, -16.7);
+});
+
+test('retained: a noisy real record is could-not-judge clip-race noise, never a numeric false fail', () => {
+	const v = rasterAbVerdict(retPairs(NOISY_RETAINED), {minResolved: 6}).retainedMs;
+	assert.equal(v.iqrMs, 45.8);
+	assert.equal(v.couldNotJudge, true);
+	assert.equal(v.ok, false);
+	assert.match(v.rule, /could not judge: clip-race noise, IQR 45\.8 ms over 25 \(6 of 6 resolved\)/);
+	assert.equal(v.medianDiffMs, 33.4, 'the median is reported but not judged as a numeric fail');
+});
+
+test('retained: the IQR bound is set from the alone baseline and never above 50', () => {
+	assert.ok(RASTER_AB_RETAINED_IQR_MAX_MS <= 50);
+	assert.equal(RASTER_AB_RETAINED_IQR_MAX_MS, 25, '2 x the alone baseline IQR 12.5');
+	assert.equal(iqr(QUIET_RETAINED), 12.5);
+	// a noisy record whose median is within tolerance is still could-not-judge (the race, not the median, blocks it)
+	const noisyButSmallMedian = [-50, -20, 0, 20, 40, 60];
+	const v = rasterAbVerdict(retPairs(noisyButSmallMedian), {minResolved: 6}).retainedMs;
+	assert.equal(v.medianDiffMs, 10);
+	assert.equal(v.iqrMs, 50);
+	assert.equal(v.couldNotJudge, true);
 });

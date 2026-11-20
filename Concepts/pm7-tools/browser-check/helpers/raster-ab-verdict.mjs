@@ -29,9 +29,17 @@ export const RASTER_AB_TOL_MS = Object.freeze({firstNewMs: 35, retainedMs: 25, s
 export const RASTER_AB_BITE_MS = Object.freeze({firstNewMs: 50, retainedMs: 50, settledMs: 100});
 // resolution: an edge gap above R is unresolved. R = min(factor x median frame interval, capMs).
 export const RASTER_AB_RES = Object.freeze({factor: 3, capMs: 50});
+// retainedMs is judged only when the clip race is quiet: the IQR of the resolved paired differences must be <= this
+// bound, else the row is a named "could not judge: clip-race noise" infrastructure failure (never a numeric false fail).
+// Set from the alone baseline's resolved retained IQR (12.5 ms on the Mac local client); 2 x that = 25 ms, under the
+// 50 ms ceiling (2 x the 25 ms tolerance). Lead ruling 1120233156-26c3. Under load the race stretches the IQR past
+// this, so retained reads could-not-judge; the opaque firstNewMs row carries the child-side slowdown under load.
+export const RASTER_AB_RETAINED_IQR_MAX_MS = 25;
 
 export const median = a => { const s = [...a].sort((x, y) => x - y); return s.length ? (s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2) : null; };
 export const r1 = v => v == null ? null : Math.round(v * 10) / 10;
+// interquartile range (Q3 - Q1, linear interpolation) of a list of numbers; null when empty.
+export const iqr = a => { const s = [...a].sort((x, y) => x - y); const n = s.length; if (!n) return null; const q = p => { const pos = (n - 1) * p, lo = Math.floor(pos), f = pos - lo; return lo + 1 < n ? s[lo] + f * (s[lo + 1] - s[lo]) : s[lo]; }; return r1(q(0.75) - q(0.25)); };
 
 // The capture's frame cadence: median interval between consecutive screencast samples, and the resolution radius R.
 // samples: [{ms}] in any order. Pure.
@@ -78,24 +86,27 @@ export function shrinkResolution(r, measures) {
 
 // pairsByMeasure: {firstNewMs: [{diff, resolved}, ...], settledMs: [...], retainedMs?: [...]}. diff is head - control
 // for one balanced-order pair (null when either side was not measured); resolved says both sides' edges were resolved.
-// Returns one verdict per measure: {ok, rule, tolMs, medianDiffMs, diffs, nResolved, nTotal, couldNotJudge}. ok is false
-// when fewer than minResolved pairs are resolved (could not judge) or the resolved paired median exceeds the tolerance.
-export function rasterAbVerdict(pairsByMeasure, {tolMs = RASTER_AB_TOL_MS, minResolved = 6} = {}) {
+// Returns one verdict per measure: {ok, rule, tolMs, medianDiffMs, iqrMs, diffs, nResolved, nTotal, couldNotJudge}.
+// ok is false when fewer than minResolved pairs are resolved, or (retainedMs only) the resolved paired IQR exceeds
+// retainedIqrMaxMs (clip-race noise) — both named could-not-judge infrastructure rows, never a numeric false fail —
+// or the resolved paired median exceeds the tolerance. firstNewMs/settledMs have no IQR gate.
+export function rasterAbVerdict(pairsByMeasure, {tolMs = RASTER_AB_TOL_MS, minResolved = 6, retainedIqrMaxMs = RASTER_AB_RETAINED_IQR_MAX_MS} = {}) {
 	const out = {};
 	for (const [key, raw] of Object.entries(pairsByMeasure)) {
 		const all = raw || [];
 		const diffs = all.filter(p => p.resolved && p.diff != null).map(p => r1(p.diff));
 		const nResolved = diffs.length, nTotal = all.length;
 		const med = r1(median(diffs));
+		const spread = iqr(diffs);
 		const tol = tolMs[key];
-		const couldNotJudge = nResolved < minResolved;
-		out[key] = {
-			ok: couldNotJudge ? false : med <= tol,
-			rule: couldNotJudge
-				? `could not judge: capture gaps, ${nResolved} of ${nTotal} pairs resolved (need ${minResolved})`
-				: `paired median(head - control) over ${nResolved} resolved pairs <= ${tol} ms`,
-			tolMs: tol, medianDiffMs: med, diffs, nResolved, nTotal, couldNotJudge
-		};
+		const tooFew = nResolved < minResolved;
+		const noisy = key === 'retainedMs' && !tooFew && spread != null && spread > retainedIqrMaxMs;
+		const couldNotJudge = tooFew || noisy;
+		let rule;
+		if (tooFew) rule = `could not judge: capture gaps, ${nResolved} of ${nTotal} pairs resolved (need ${minResolved})`;
+		else if (noisy) rule = `could not judge: clip-race noise, IQR ${spread} ms over ${retainedIqrMaxMs} (${nResolved} of ${nTotal} resolved)`;
+		else rule = `paired median(head - control) over ${nResolved} resolved pairs <= ${tol} ms`;
+		out[key] = {ok: couldNotJudge ? false : med <= tol, rule, tolMs: tol, medianDiffMs: med, iqrMs: spread, diffs, nResolved, nTotal, couldNotJudge};
 	}
 	return out;
 }
