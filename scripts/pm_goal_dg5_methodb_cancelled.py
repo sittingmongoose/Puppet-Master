@@ -136,6 +136,8 @@ def fixture(declare, route, directory):
     request = original.request_of(world)
     if route['call'] == 'read_c3_proof':
         return world, lambda: consumer.read_retained_native(request, presentation), request
+    if route['call'] == 'read_preserved':
+        return world, lambda: consumer.read_preserved(request, presentation), request
     require(route['call'] == 'missing_original', f'unknown owner call {route}')
     presentation.cancellation = None
     return world, lambda: consumer.read_retained_native(request, presentation), (request, None)
@@ -342,7 +344,8 @@ def append_acknowledgment_nonempty(plain, nodes, name, path, cut):
         expected.update((result + '/oneOf', preserved + '/closed_members',
                          preserved + '/required', preserved + '/properties/kind/const'))
     require(path in (['record', 'append_receipt', 'acknowledged_at_utc'],
-                     ['record', 'first_append_receipt', 'acknowledged_at_utc'])
+                     ['record', 'first_append_receipt', 'acknowledged_at_utc'],
+                     ['result', 'append_receipt', 'acknowledged_at_utc'])
             and source.endswith('#/$defs/AppendReceipt/properties/acknowledged_at_utc')
             and word == 'minLength' and node[word] == 1 and node['format'] == 'date-time'
             and node['type'] == 'string' and plain.format_checker.checkers['date-time'][0] is utc
@@ -424,6 +427,37 @@ def scope_proof_implication(nodes, name, path, cut):
     require(locations(cut) == {covering}, 'the original disposition condition must still refuse')
     return dict(source=proof + '/allOf/0', covering_rule=covering,
                 premise='The required disposition selects one of the same two disjoint status alternatives.')
+
+
+def origin_afterimages_implication(nodes, name, path, cut):
+    from pm_goal_go_schema_closure import locations
+
+    location, word = name.rsplit('/', 1)
+    source = location.split('#', 1)[0] + '#/$defs/'
+    owner = nodes[source + 'Origin']['node']
+    method = 'owner.workflow.executor_cancel.'
+    prepare = method + 'prepare_disposition.v3'
+    publish = method + 'publish_disposition.v3'
+    condition, = owner['allOf']
+    variants = owner['properties']['afterimages']['oneOf']
+    require(path == ['origin', 'afterimages'] and word == 'oneOf'
+            and location == source + 'Origin/properties/afterimages'
+            and {'issuer_method', 'afterimages'} <= set(owner['required'])
+            and owner['properties']['issuer_method']['enum'] == [prepare, publish]
+            and condition['if']['properties']['issuer_method']['const'] == prepare
+            and [variant['$ref'] for variant in variants] == [
+                condition[branch]['properties']['afterimages']['$ref'] for branch in ('then', 'else')]
+            == ['#/$defs/PrepareAfterimages', '#/$defs/PublishAfterimages'],
+            'the Workflow cancellation origin alternatives changed')
+    for name_, kind in (('PrepareAfterimages', 'prepare'), ('PublishAfterimages', 'publish')):
+        schema = nodes[source + name_]['node']
+        require(schema['type'] == 'object' and 'kind' in schema['required']
+                and schema['properties']['kind']['const'] == kind,
+                'the afterimages must be disjoint by their required kind')
+    covering = source + 'PublishAfterimages/type'
+    require(locations(cut) == {covering}, 'the original published afterimages type must still refuse')
+    return dict(source=source + 'Origin/allOf/0', covering_rule=covering,
+                premise='The required issuer method selects exactly one of the two disjoint afterimage forms.')
 
 
 def rule_path(document, path):
@@ -545,6 +579,8 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
                 nodes, name, path, cut, example['process_role_or_barrier_enum']))
         elif example.get('scope_proof_implication'):
             record.update(cls='COVERED_LATER', implication=scope_proof_implication(nodes, name, path, cut))
+        elif example.get('origin_afterimages_implication'):
+            record.update(cls='COVERED_LATER', implication=origin_afterimages_implication(nodes, name, path, cut))
         elif example.get('nullable_enum'):
             location, word = name.rsplit('/', 1)
             node = nodes[location]['node']
