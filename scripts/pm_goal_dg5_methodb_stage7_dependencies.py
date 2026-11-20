@@ -158,7 +158,21 @@ def scope_project(directory):
                         source('Plans/event_record.schema.json', 165, 177, 178, 185, 186, 187)])
 
 
+def event_type(directory):
+    world, event = pilot.published_event(directory / 'event-type')
+    control = pilot.call((world, S.validate_event_record, (event, 'append/event'), {}), 'valid EventRecord',
+                         sweep.Collector(judge=False))
+    verdict(control)
+    row, dep = site(470, ST), site(473, ST)
+    fixture = world, S.validate_event_record, ([], 'append/event'), {}
+    result = check_later(fixture, 'non-object EventRecord', row, 'append/event/type',
+                         dep, 'append/event/schema/')
+    return dict(row=row, dependency=dep, control=control, trials=result,
+                source=[source(ST, 468, 470, 471, 472, 473), source('Plans/event_record.schema.json', 5, 6)])
+
+
 CHECKS = {
+    'event_type': event_type,
     'scope_project': scope_project,
     'reserve_cas': reserve_cas,
     'objective': objective,
