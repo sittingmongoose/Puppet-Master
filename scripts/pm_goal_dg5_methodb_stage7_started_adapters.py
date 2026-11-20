@@ -84,7 +84,17 @@ def withdrawn_reference(directory, negative):
     return world, owner.authenticate, (ref, value), {}
 
 
+def original_bytes(directory, negative):
+    world = start_world(directory)
+    owner = world.owners['native']
+    ref = 'TEST_ONLY:stage7-original-ref'
+    owner.issue(None, {'value': 'first'}, ref=ref)
+    presented = {'value': 'changed' if negative else 'first'}
+    return world, owner.authenticate, (ref, presented), {}
+
+
 CASES = {
+    'original-bytes': (ADAPTERS, 503, 'original/bytes', original_bytes),
     'withdrawn-reference': (ADAPTERS, 500, 'original/withdrawn', withdrawn_reference),
     'original-ref-type': (ADAPTERS, 497, 'original/ref_type', original_ref_type),
     'withdrawn-handle': (ADAPTERS, 484, 'original/withdrawn', withdrawn_handle),
