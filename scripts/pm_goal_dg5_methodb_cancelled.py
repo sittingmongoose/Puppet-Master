@@ -6,6 +6,7 @@ from collections import Counter
 import copy
 from contextlib import ExitStack
 import gzip
+import inspect
 from itertools import count
 import json
 import multiprocessing
@@ -121,6 +122,12 @@ def fixture(declare, route, directory):
             target = args[0], args[3]
         return world, action, (target, args, kwargs)
     world.build()
+    if route['call'] == 'project_checkpoint':
+        owner = world.projector_class(world)
+        scope = owner.request()['scope']
+        if edition == 'integrated_native':
+            check_checkpoint_repeated(owner)
+        return world, owner.project, (('checkpoints', owner.checkpoint_key(scope)),)
     if route['call'] in ('read_checkpoint', 'checkpoint_wrapper'):
         owner = world.projector_class(world)
         owner.project()
@@ -1022,6 +1029,22 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
     return results
 
 
+def check_checkpoint_repeated(owner):
+    """The inline projector revalidates the whole afterimage before writing."""
+    from pm_goal_dg_r_projector import Projector, ProjectorV7
+
+    require(type(owner).checkpoint_wrapper is ProjectorV7.checkpoint_wrapper
+            and type(owner).project is Projector.project, 'checkpoint validation path changed')
+    project = inspect.getsource(owner.project)
+    afterimage = "self.roots.validate('native_consumer', self.root('LogicalCheckpoint'), new_logical, 'checkpoint/afterimage')"
+    wrapper = 'ck = self.checkpoint_wrapper(new_logical)'
+    require(afterimage + '\n            ' + wrapper in project,
+            'the projector no longer passes the same afterimage immediately to the wrapper')
+    check = "self.roots.validate('native_consumer', self.root('LogicalCheckpoint'), logical, 'checkpoint/wrapper')"
+    require(inspect.getsource(owner.checkpoint_wrapper).splitlines()[1].strip() == check,
+            'the wrapper no longer validates the whole afterimage first')
+
+
 class OwnerExample:
     def __init__(self, source, row, route, collector, disabled_check):
         self.source = source
@@ -1033,7 +1056,8 @@ class OwnerExample:
         self.trials = []
         self.pointer = route['call'] == 'publish_pointer'
         self.stop = route['edition'] == 'w12b'
-        self.writes = self.pointer or route['call'] in (
+        self.checkpoint = route['call'] == 'project_checkpoint'
+        self.writes = self.pointer or self.checkpoint or route['call'] in (
             'issue_physical', 'filesafe_invocation', 'publish_workflow_head')
 
     def call(self, world, action, inputs, edit):
@@ -1065,7 +1089,7 @@ class OwnerExample:
             require(ident == self.route['root'], f'owner call reached unexpected root {ident}')
             if edit and len(result['observations']) + 1 == checks:
                 require(edit not in value, 'test example already has the extra member')
-                value[edit] = 'example'
+                value[edit] = 'example' if not self.checkpoint or self.route['edition'] == 'integrated_native' else 'x' * 16384
             errors = errors_list(list(plain.iter_errors(value)))
             result['observations'].append(dict(root=ident, binding=binding, site=site, realm=realm, ref=ref,
                                                registry_realm=registry_realm,
@@ -1085,7 +1109,20 @@ class OwnerExample:
 
         def validate(bank, realm, ref, value, label):
             enforce = lambda: roots_validate(bank, realm, ref, value, label)
-            return decide(bank, realm, ref, value, sys._getframe(1), enforce) if label == code else enforce()
+            if label == code:
+                return decide(bank, realm, ref, value, sys._getframe(1), enforce)
+            if self.checkpoint and self.route['edition'] == 'integrated_native' and label == 'checkpoint/wrapper':
+                from pm_goal_test_owner_adapters import same
+
+                earlier, = result['observations']
+                plain = bank.validator(realm, ref)
+                require(ref == earlier['ref'] and realm == earlier['realm']
+                        and root_binding(closure, bank, plain)[1] == earlier['binding']
+                        and same(value, earlier['document'])
+                        and errors_list(list(plain.iter_errors(value))) == earlier['messages'],
+                        'the later checkpoint validator changed the schema, document or messages')
+                result['later_checkpoint_matches'] = True
+            return enforce()
 
         def validate_pointer(bank, ref, value, label='root'):
             enforce = lambda: adapter_validate(bank, ref, value, label)
@@ -1108,11 +1145,24 @@ class OwnerExample:
                 returned = action()
             if self.writes:
                 stored = world.storage.cell(*inputs[0])['value']
-                require(stored == result['observations'][0]['document'],
-                        'retained wrapper differs from the validated document')
+                if self.checkpoint:
+                    from pm_goal_test_owner_adapters import same
+
+                    require(same(stored, returned['checkpoint']), 'published checkpoint changed')
+                    if self.route['edition'] == 'integrated_original':
+                        content = stored['content']
+                        if edit:
+                            require(content['kind'] == 'payload_reference', 'the edited checkpoint must be packed')
+                        stored = (content['checkpoint'] if content['kind'] == 'inline' else
+                                  world.projector_class(world).unpack(content['reference']))
+                    require(same(stored, result['observations'][0]['document']),
+                            'published checkpoint lost the validated afterimage')
+                else:
+                    require(stored == result['observations'][0]['document'],
+                            'retained wrapper differs from the validated document')
                 returned = stored
             result['value_sha256'] = value_sha(returned)
-            if edit and self.route['call'] != 'read_c3_proof':
+            if edit and not self.checkpoint and self.route['call'] != 'read_c3_proof':
                 require(returned.get(edit) == 'example', 'the accepted call did not return the altered document')
         except Exception as error:
             if type(error).__name__ not in bridge.REFUSAL_CLASSES:
@@ -1128,6 +1178,7 @@ class OwnerExample:
         import pm_goal_dg5_boundaries as bridge
         from pm_goal_dg_int_schema_cache import Roots as CachedRoots
         from pm_goal_dg_r_world import uuid
+        from pm_goal_test_storage import secrets
 
         path = world.tmp / f'methodb-store-{len(self.trials)}'
         shutil.copytree(world.storage.root, path)
@@ -1142,8 +1193,12 @@ class OwnerExample:
                 # The fixture builder may issue ancillary provenance first.
                 # Give those private writes the same distinct IDs in each copy.
                 ids = count(UUID('a36fc6e5-1e3b-4e27-8200-000000000001').int)
-                with patch.object(world.storage, 'root', path), patch.object(
-                        uuid, 'uuid4', side_effect=lambda: UUID(int=next(ids))):
+                with ExitStack() as stack:
+                    stack.enter_context(patch.object(world.storage, 'root', path))
+                    stack.enter_context(patch.object(uuid, 'uuid4', side_effect=lambda: UUID(int=next(ids))))
+                    if self.checkpoint:
+                        require('13' * 32 not in world.storage.seeds, 'the fixture seed is already in use')
+                        stack.enter_context(patch.object(secrets, 'token_hex', return_value='13' * 32))
                     result = self.call(world, action, inputs, edit)
                 current = world.storage.cell(*target)
                 published = current != before
@@ -1214,11 +1269,17 @@ class OwnerExample:
             require(not self.collector.failures, self.collector.failures)
             require(record['outcome'] == ('exact_expected' if edit else 'control'), record)
             if edit:
-                require(record['kill'] == 'KILLED',
-                        f"single-check trial {record['kill']}: {record.get('cut_errors')}")
                 before, disabled, restored = self.trials[-3:]
-                require(before == restored and before['observations'] == disabled['observations']
-                        and not disabled['errors'], 'the same invalid document and message must be restored')
+                if self.checkpoint and self.route['edition'] == 'integrated_native':
+                    require(record['kill'] == 'COVERED_LATER' and disabled['later_checkpoint_matches']
+                            and disabled['refusal'] == 'checkpoint/wrapper/schema/'
+                            and disabled['detail'] == before['detail'],
+                            'the later checkpoint check must refuse the same invalid afterimage')
+                else:
+                    require(record['kill'] == 'KILLED' and not disabled['errors'],
+                            f"single-check trial {record['kill']}: {record.get('cut_errors')}")
+                require(before == restored and before['observations'] == disabled['observations'],
+                        'the same invalid document and message must be restored')
                 if self.route['call'] == 'read_c3_proof':
                     require(disabled['value_sha256'] == self.trials[0]['value_sha256'],
                             'the accepted read must return the original retained value')
@@ -1249,7 +1310,10 @@ def publish(source, out, declare, collector, reports, inventories, table_path):
     write(collection, value)
     bindings = out / 'proof/source-bindings.json'
     value = json.loads(bindings.read_text())
-    for relative, _ in declare['sites']:
+    cited = list(declare['sites'])
+    if declare['row'] == 'dg5/checkpoint/afterimage/schema':
+        cited.extend(('scripts/pm_goal_dg_r_projector.py', line) for line in (399, 409, 509, 510, 792, 793))
+    for relative, _ in cited:
         value['files'][relative] = sha(source / relative)
     write(bindings, value)
 
