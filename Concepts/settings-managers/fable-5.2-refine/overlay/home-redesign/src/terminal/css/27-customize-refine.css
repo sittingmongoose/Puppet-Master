@@ -1,0 +1,23 @@
+/* Refine · the Customize screens (editor and terminal): the example never leaves.
+   Jared, 2026-11-10: "when you make changes, you cant see the example section as it is all the way at the top".
+   The example was the first thing in a scroll of about 6,000 px; a small copy followed it and covered options.
+   In a dialog 1040 px wide or more the options scroll in the left column and the example, its meter, the presets and
+   "Try it" stay in the right column at full size. Narrower dialogs keep the docked copy as before. */
+@container pmt-cz (min-width: 1040px) {
+  .pmt-cz-dialog .pmt-cz-body { grid-template-columns: minmax(0, 1fr) minmax(420px, 42%); column-gap: 22px; row-gap: 0; }
+  .pmt-cz-dialog .pmt-cz-body > * { grid-column: 1; }
+  .pmt-cz-dialog .pmt-cz-body > * + * { margin-top: 22px; }
+  .pmt-cz-dialog .pmt-cz-body > .pmt-cz-top { grid-column: 2; grid-row: 1 / span 60; margin-top: 0; position: sticky; top: 0; align-self: start; grid-template-columns: minmax(0, 1fr); }
+  .pmt-cz-dialog .pmt-cz-body > .pmt-cz-nav { grid-row: 1; margin: -6px -8px 0; }
+  .pmt-cz-dialog .pmt-cz-dock { display: none; }
+  .pmt-cz-dialog .pmt-cz-pvbox { height: 300px; }
+  .pmt-cz-dialog .pmt-cz-side { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .pmt-cz-dialog .pmt-cz-side > :is(.pmt-cz-meter, .pmt-cz-try, .pmt-cz-note) { grid-column: 1 / -1; }
+  .pmt-cz-dialog .pmt-cz-sets { grid-column: 1 / -1; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+/* What you just changed, said under the example, and a short ring around the example so the eye goes there. */
+.pmt-cz-dialog .rf-changed { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 8px; min-height: 22px; margin: -4px 2px 0; font-size: 12px; color: var(--pmw-text-2, inherit); }
+.pmt-cz-dialog .rf-changed[hidden] { display: none; }
+.pmt-cz-dialog .rf-changed > b { font-weight: 650; color: var(--pmw-text, inherit); }
+.pmt-cz-dialog .rf-changed > i { font-style: normal; color: var(--pmt-cz-accent); font-weight: 650; }
+.pmt-cz-dialog .pmt-cz-preview.rf-pulse { outline: 2px solid var(--pmt-cz-accent); outline-offset: 2px; }

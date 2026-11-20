@@ -101,3 +101,70 @@
   /* ---- 6. Facts: what is true right now, on one line (not rows that look like settings) ----------------------- */
   PM51.facts = (items, { action } = {}) => `<div class="rf-facts">${items.filter(Boolean).map(f => `<span class="rf-fact${f.tone ? ' tone-' + a(f.tone) : ''}">${f.pill || ''}${f.label ? `<span class="rf-fact-label">${h(f.label)}</span>` : ''}${f.value != null ? `<span class="rf-fact-value">${h(String(f.value))}</span>` : ''}${f.end || ''}</span>`).join('')}${action ? `<span class="rf-facts-end">${typeof action === 'string' ? action : PM51.btn(Object.assign({ small: true }, action))}</span>` : ''}</div>`;
 })();
+
+/* Refine · the example says what you just changed (Editor and Terminal Customize, Customize Pip, Adjust NieR).
+   Jared, 2026-11-10: "make sure that example section actually shows what is being changed". The example already
+   redraws on every change; some changes are a few pixels. A line under the example now names the thing changed, and
+   the example wears a ring for a moment so the eye goes to it. It reads the control that was used, so it needs no
+   list of options and cannot drift from them. */
+(function rfChanged() {
+  const T = s => String(s || '').replace(/\s+/g, ' ').trim();
+  const line = (after, cls) => {
+    let el = after.parentElement.querySelector(':scope > .rf-changed');
+    if (!el) { el = document.createElement('div'); el.className = 'rf-changed'; el.setAttribute('role', 'status'); after.insertAdjacentElement('afterend', el); }
+    return el;
+  };
+  const show = (picture, text, note) => {
+    if (!picture || !picture.isConnected || !text) return;
+    const el = line(picture);
+    el.innerHTML = '<i>Changed</i><b></b>' + (note ? '<small></small>' : '');
+    el.querySelector('b').textContent = text;
+    if (note) el.querySelector('small').textContent = note;
+    picture.classList.add('rf-pulse'); clearTimeout(picture.__rfT); picture.__rfT = setTimeout(() => picture.classList.remove('rf-pulse'), 900);
+  };
+  /* ---- Editor and Terminal Customize ---- */
+  const czName = el => {
+    const field = el.closest('.pmt-cz-field');
+    const fl = field && field.querySelector('.pmt-cz-flabel');
+    if (fl) return T(fl.textContent);
+    const group = el.closest('.pmt-cz-group');
+    const g = group ? T((group.querySelector('.pmt-cz-ghead, h3, h4') || {}).textContent) : '';
+    const pick = el.closest('.pmt-cz-tile, .pmt-cz-scheme, .pmt-cz-chipbox, .pmt-cz-chip, .pmt-cz-segopt, .pmt-cz-swatch');
+    if (pick) {
+      const n = pick.querySelector('.pmt-cz-tname, .pmt-cz-chipname, strong, b');
+      const name = T(n ? n.textContent : (pick.getAttribute('aria-label') || pick.textContent)).slice(0, 56);
+      return g && name ? `${g} · ${name}` : (name || g);
+    }
+    return T(el.getAttribute('aria-label')) || g;
+  };
+  const onCz = e => {
+    const t = e.target && e.target.closest ? e.target : null; if (!t) return;
+    const dialog = t.closest('.pmt-cz-dialog'); if (!dialog) return;
+    const inBody = t.closest('.pmt-cz-body'), preset = t.closest('.pmt-cz-set');
+    if (!inBody || t.closest('.pmt-cz-nav, .pmt-cz-search, .pmt-cz-try') || (t.closest('.pmt-cz-top') && !preset)) return;
+    const ctl = t.closest('button, input, select, [role=switch], [role=radio], [role=slider]'); if (!ctl) return;
+    if (e.type === 'click' && ctl.matches('input, select')) return;
+    if (e.type === 'click' && !(ctl.matches('[aria-checked], [aria-pressed], [role=switch], [role=radio]') || ctl.closest('.pmt-cz-stepper, .pmt-cz-seg, .pmt-cz-swatches, .pmt-cz-tiles, .pmt-cz-schemes, .pmt-cz-chips'))) return;
+    const name = preset ? `Preset · ${T((preset.querySelector('b, strong, .pmt-cz-pname') || preset).textContent).slice(0, 40)}` : czName(ctl);
+    setTimeout(() => show(dialog.querySelector('.pmt-cz-top > .pmt-cz-preview'), name), 80);
+  };
+  /* ---- Customize Pip, Adjust NieR ---- */
+  const onParts = e => {
+    const t = e.target && e.target.closest ? e.target : null; if (!t) return;
+    const chip = t.closest('.pipe-chip, .o55nc-chip'), preset = t.closest('.pipe-preset, .o55nc-preset'); if (!chip && !preset) return;
+    const host = t.closest('.pipe, .o55nc'); if (!host) return;
+    const pip = host.classList.contains('pipe');
+    setTimeout(() => {
+      const picture = host.querySelector(pip ? '.pipe-top .pipe-stage' : '.o55nc-top .o55nc-pv, .o55nc-top > :first-child');
+      if (preset) { show(picture, `Preset · ${T((preset.querySelector('span') || preset).textContent)}`); return; }
+      const name = T((chip.querySelector('.pipe-chip-name, .o55nc-chip-name') || chip).textContent);
+      const state = T((chip.querySelector('.pipe-chip-state, .o55nc-chip-state') || {}).textContent);
+      const group = chip.closest('[data-pipe-group], [data-o55nc-group]');
+      const where = pip && group && /where/i.test(group.getAttribute('data-pipe-group') || '');
+      show(picture, `${name}${state ? ' · ' + state : ''}`, where ? 'Where Pip appears shows in the chat itself, not in this picture.' : '');
+    }, 80);
+  };
+  document.addEventListener('click', e => { onCz(e); onParts(e); }, true);
+  document.addEventListener('input', onCz, true);
+  document.addEventListener('change', onCz, true);
+})();

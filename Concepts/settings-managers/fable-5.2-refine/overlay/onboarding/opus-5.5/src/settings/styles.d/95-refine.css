@@ -86,3 +86,24 @@
 #panel-settings .pm51-mgr .o55-providers-tools { justify-content: flex-start; gap: 6px; }
 #panel-settings .pm51-mgr .o55-providers-tools .btn { min-height: 28px; padding: 0 9px; border-color: transparent; background: none; color: var(--k3-text-3); font-size: 12px; box-shadow: none; }
 #panel-settings .pm51-mgr .o55-providers-tools .btn:is(:hover, :focus-visible) { color: var(--k3-text-1); border-color: var(--k3-line); }
+
+/* ---- Customize Pip and Adjust NieR: the picture stays beside the parts ----
+   The picture, its meter, the presets and Play were the top of a long sheet; a small copy followed the scroll. Now the
+   parts scroll in the left column and the picture stays in the right one, at full size, in a wider sheet. */
+#panel-settings .drawer.pm51-panel[data-size="wide"]:is(.pipe-panel, .o55nc-panel) { width: min(860px, calc(100vw - 80px)); }
+:is(#panel-settings, .pipe-host) .pipe { grid-template-columns: minmax(0, 1fr) minmax(250px, 36%); column-gap: 18px; row-gap: 0; }
+:is(#panel-settings, .pipe-host) .pipe > * { grid-column: 1; }
+:is(#panel-settings, .pipe-host) .pipe > * + * { margin-top: 16px; }
+:is(#panel-settings, .pipe-host) .pipe > .pipe-top { grid-column: 2; grid-row: 1 / span 30; margin-top: 0; position: sticky; top: 0; align-self: start; grid-template-columns: minmax(0, 1fr); }
+:is(#panel-settings, .pipe-host) .pipe > .pipe-dock { display: none; }
+:is(#panel-settings, .pipe-host) .pipe > .pipe-reach { margin-top: 0; }
+:is(#panel-settings, .o55nc-host) .o55nc { grid-template-columns: minmax(0, 1fr) minmax(250px, 36%); column-gap: 18px; row-gap: 0; }
+:is(#panel-settings, .o55nc-host) .o55nc > * { grid-column: 1; }
+:is(#panel-settings, .o55nc-host) .o55nc > * + * { margin-top: 18px; }
+:is(#panel-settings, .o55nc-host) .o55nc > .o55nc-top { grid-column: 2; grid-row: 1 / span 30; margin-top: 0; position: sticky; top: 0; align-self: start; grid-template-columns: minmax(0, 1fr); }
+/* what you just changed, under the picture, and a short ring around it */
+:is(#panel-settings, .pipe-host, .o55nc-host) .rf-changed { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; min-height: 20px; font-size: 12px; color: var(--k3-text-2); }
+:is(#panel-settings, .pipe-host, .o55nc-host) .rf-changed > i { font-style: normal; font-weight: 650; color: var(--accent-primary, var(--k3-accent)); }
+:is(#panel-settings, .pipe-host, .o55nc-host) .rf-changed > b { font-weight: 650; color: var(--k3-text-1); }
+:is(#panel-settings, .pipe-host, .o55nc-host) .rf-changed > small { flex-basis: 100%; font-size: 11.5px; color: var(--k3-text-3); }
+:is(#panel-settings, .pipe-host, .o55nc-host) .rf-pulse { outline: 2px solid var(--accent-primary, var(--k3-accent)); outline-offset: 2px; }
