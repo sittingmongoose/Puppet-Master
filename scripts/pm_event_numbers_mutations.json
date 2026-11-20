@@ -3680,6 +3680,39 @@
       "data_walk_domain": "Every for loop over a computed collection whose body holds a refusal site: the mutant walks only the first item."
     },
     "points": {
+      "data:loop_member:current_append_policy:drop_entry 'append_once'#1": {
+        "witness": "append-append_once"
+      },
+      "data:loop_member:current_append_policy:drop_entry 'dedupe_by_event_id'#1": {
+        "witness": "append-dedupe_by_event_id"
+      },
+      "data:loop_member:current_append_policy:drop_entry 'dedupe_by_idempotency_key'#1": {
+        "witness": "append-dedupe_by_idempotency_key"
+      },
+      "data:loop_member:_declared_numeric_kind:drop_entry None#1": {
+        "witness": "jcs-decimal-undeclared"
+      },
+      "data:loop_member:_declared_numeric_kind:drop_entry 'integer'#1": {
+        "witness": "jcs-1"
+      },
+      "data:loop_member:_declared_numeric_kind:drop_entry 'float'#1": {
+        "witness": "jcs-1.0"
+      },
+      "data:loop_member:_declared_numeric_kind:drop_entry 'decimal'#1": {
+        "witness": "jcs-decimal-kind-1.25"
+      },
+      "data:loop_member:qualified_jcs.number:drop_entry Decimal#1": {
+        "witness": "jcs-1e-9999"
+      },
+      "data:loop_member:qualified_jcs.number:drop_entry ParsedDecimal#1": {
+        "witness": "jcs-current-1e-9999"
+      },
+      "data:loop_member:storage_value_bytes:drop_entry EVENT_VALUE#1": {
+        "witness": "physical-default-profile-float32"
+      },
+      "data:loop_member:storage_value_bytes:drop_entry APP_PHYSICAL#1": {
+        "witness": "app-binary"
+      },
       "site:_refuse:raise#1": {
         "witness": "app-binary-reported-length-4294967296"
       },

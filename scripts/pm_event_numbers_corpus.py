@@ -1387,14 +1387,12 @@ def _data_points(tree, parents, sites, refusing):
             display = node.iter
         elif (isinstance(node, ast.Compare) and len(node.ops) == 1 and isinstance(node.ops[0], (ast.In, ast.NotIn))
               and isinstance(node.comparators[0], (ast.Tuple, ast.List, ast.Set)) and len(node.comparators[0].elts) > 1):
-            # (a literal set tested with in/not in that is not itself a refusal guard's predicate, which
-            # refusal_predicate already drops element by element)
+            # Direct membership guards read each entry independently.
+            # _weakenings drops generator members, not direct comparators.
             statement = node
             while statement in parents and not isinstance(statement, ast.stmt):
                 statement = parents[statement]
-            in_guard = any(isinstance(g, ast.If) and any(x is node for x in ast.walk(g.test))
-                           for site in sites for g in (_guards(site, parents) if isinstance(site, ast.Call) else ()))
-            if not in_guard and holds(statement):
+            if holds(statement):
                 display = node.comparators[0]
         if display is not None and len(display.elts) > 1:
             for position, text in _entries(display):

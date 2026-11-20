@@ -7816,6 +7816,23 @@
       "single_defect": "jcs_decimal"
     },
     {
+      "id": "jcs-current-1e-9999",
+      "parser": "current",
+      "op": "jcs",
+      "raw": "1e-9999",
+      "conflicts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C08"
+      ],
+      "error": "jcs_decimal",
+      "target_predicate": "jcs_decimal",
+      "enforcement": "authored",
+      "single_defect": "jcs_decimal"
+    },
+    {
       "id": "jcs--9007199254740992",
       "op": "jcs",
       "raw": "-9007199254740992",
