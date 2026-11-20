@@ -119,7 +119,31 @@ def binding_pending(directory, negative):
     return world, route.capture_source, (), {}
 
 
+def progress_phase(directory, negative):
+    world, route = cancelled.c1_until(cancelled.Suite(directory), "append_original")
+    ready = deepcopy(route.progress)
+    route.append_original(lose_ack=True)
+    world.root = world.storage.root
+    if negative:
+        # Keep the original stored event but present the preceding progress phase.
+        table = "goal_cancel_progress"
+        epoch = route.progress["progress_epoch"]
+        progress = dict(ready, progress_epoch=epoch)
+        key = route.progress_key(epoch)
+        head_key = route.key(table) + ":head"
+        head = route._head(epoch, progress)
+        world.write([
+            world.put(table, key, route.wrap("StorageProgress", progress),
+                      expected=world.cell(table, key)["version"]),
+            world.put(table, head_key, route.wrap("StorageProgress", head),
+                      expected=world.cell(table, head_key)["version"]),
+        ])
+        route.progress = progress
+    return world, route.resolve_original, (), {}
+
+
 CASES = {
+    "progress-phase": (C1, 431, "C1/resolve_original/phase", progress_phase),
     "binding-pending": (C1, 315, "C1/capture_source/binding_pending", binding_pending),
     "capture-retry": (C1, 292, "C1/capture_source/retry_conflict", capture_retry),
     "replay-operation": (C1, 819, "C1/replay/operation", replay_operation),
