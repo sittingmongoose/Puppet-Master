@@ -2007,6 +2007,15 @@ def check_definition(ctx: Context, block: Block, owner_unit: str, definition: An
             rep.add("C13", "owner_request_differs_from_wiring", detail=f"wiring {sorted(wired)}", **where)
 
 
+def scalar_value_start(text: str, token: yaml.ScalarToken) -> int:
+    """Skip a block scalar's header, whose comment is outside the value."""
+    start, end = token.start_mark.index, token.end_mark.index
+    if token.style in ("|", ">"):
+        newline = re.search(r"\r\n|[\r\n\x85\u2028\u2029]", text[start:end])
+        return start + newline.end() if newline else end
+    return start
+
+
 def yaml_comments(text: str) -> list[tuple[int, int, str, bool]]:
     """The YAML comments of a well-formed fence as (first line, last line, text, whole-line), 0-based
     lines. A comment is a `#` at a line start or after a space or tab that no scalar token spans, so
@@ -2016,7 +2025,7 @@ def yaml_comments(text: str) -> list[tuple[int, int, str, bool]]:
     try:
         for token in yaml.scan(text, Loader=yaml.SafeLoader):
             if isinstance(token, yaml.ScalarToken):
-                spans.append((token.start_mark.index, token.end_mark.index))
+                spans.append((scalar_value_start(text, token), token.end_mark.index))
     except Exception:  # noqa: BLE001 - malformed YAML is reported as a C14 YAML error
         return []
     spans.sort()
@@ -2352,11 +2361,7 @@ class _AliasSpanLoader(yaml.SafeLoader):
         self.scalar_value_starts: dict[int, int] = {}
         for token in yaml.scan(stream):
             if isinstance(token, yaml.tokens.ScalarToken):
-                start, end = token.start_mark.index, token.end_mark.index
-                if token.style in ("|", ">"):
-                    newline = re.search(r"\r\n|[\r\n\x85\u2028\u2029]", stream[start:end])
-                    start = start + newline.end() if newline else end
-                self.scalar_value_starts[end] = start
+                self.scalar_value_starts[token.end_mark.index] = scalar_value_start(stream, token)
 
     def compose_node(self, parent: yaml.Node | None, index: yaml.Node | int | None) -> yaml.Node:
         if self.check_event(yaml.AliasEvent) and isinstance(index, yaml.Node):
@@ -3793,6 +3798,17 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
           check=lambda r: [e.get("command_id", "") for e in comment_rows(r)] == [""])
     def _(fx: Fixture) -> None:
         fx.raw_block_replace["CRAU-116"] = [("  definitions:", "  # shared conventions for this block\n  definitions:")]
+
+    for style in (">-", "|"):
+        @case(f"fail T109: YAML comment on a {style} block-scalar header", 1, {"C11"},
+              kinds={"yaml_comment_in_definitions_block"},
+              check=lambda r: len(comment_rows(r)) == 1
+              and comment_rows(r)[0]["command_id"] == "cmd.docker.image.tag"
+              and comment_rows(r)[0]["detail"].endswith("# header comment"))
+        def _(fx: Fixture, style=style) -> None:
+            tag_args(fx)["new_tag"]["gap_note"] = "fixture marker"
+            fx.raw_block_replace["CRAU-115"] = [
+                ("gap_note: fixture marker", f"gap_note: {style} # header comment\n          # literal hash text")]
 
     @case("pass: '# JUDGMENT' inside a quoted scalar and a block scalar of gap fields is not a comment", 0, set())
     def _(fx: Fixture) -> None:
