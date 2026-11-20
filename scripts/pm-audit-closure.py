@@ -1436,7 +1436,7 @@ def _is_sha256(value: Any) -> bool:
     return isinstance(value, str) and bool(SHA256_RE.match(value))
 
 
-def _jsonl_row_for(path: Path, line: int, closure_id: str) -> dict[str, Any] | None:
+def _jsonl_row_for(path: Path, line: int, closure_id: str, *, split_id: str | None = None) -> dict[str, Any] | None:
     """The one row of a review or worker output file that judges registry line `line`."""
     found = None
     for raw in _lines(path.read_text(encoding="utf-8")):
@@ -1446,7 +1446,8 @@ def _jsonl_row_for(path: Path, line: int, closure_id: str) -> dict[str, Any] | N
             item = strict_json_loads(raw)
         except (json.JSONDecodeError, AnchorError):
             return None
-        if isinstance(item, dict) and item.get("line") == line and item.get("closure_id") == closure_id:
+        if (isinstance(item, dict) and item.get("line") == line and item.get("closure_id") == closure_id
+                and (split_id is None or item.get("split_id") == split_id)):
             if found is not None:
                 return None
             found = item
@@ -2153,7 +2154,8 @@ def validate_reaudit_record(
 
 
 def _bound_output_row(
-    review: dict[str, Any], kind: str, supersedes: dict[str, Any], label: str, who: str, errors: list[str]
+    review: dict[str, Any], kind: str, supersedes: dict[str, Any], label: str, who: str, errors: list[str],
+    *, split_id: str | None = None,
 ) -> dict[str, Any] | None:
     """The single row of a committed output file (kind evidence or packet) for this closure."""
     path_ref = review.get(f"{kind}_path")
@@ -2169,10 +2171,52 @@ def _bound_output_row(
     if not output.is_file() or sha256_file(output) != digest:
         errors.append(f"{label}: record.reviews.{who} {kind} file is missing or its SHA-256 differs")
         return None
-    judged = _jsonl_row_for(output, supersedes.get("line"), supersedes.get("closure_id"))
+    judged = _jsonl_row_for(output, supersedes.get("line"), supersedes.get("closure_id"), split_id=split_id)
     if judged is None:
-        errors.append(f"{label}: record.reviews.{who} {kind} file has no single row for this closure")
+        split = f" with split_id {split_id!r}" if split_id is not None else ""
+        errors.append(f"{label}: record.reviews.{who} {kind} file has no single row for this closure{split}")
     return judged
+
+
+def reaudit_split_anchor_hashes(record: dict[str, Any], label: str, errors: list[str]) -> dict[str, str]:
+    """Return the receipt-bound split anchors that the dependency snapshot does not cover."""
+    snapshot = record["dependency_hashes_at_recheck"]
+    extra: dict[str, str] = {}
+    checked: set[tuple[str, str, str]] = set()
+    for who in ("sol", "astra"):
+        review = record["reviews"].get(who, {})
+        if not {"split_packet_path", "split_packet_sha256"} <= review.keys():
+            continue
+        split_id = review.get("split_id", "")
+        review_label = f"{label}: record.reviews.{who} split_packet"
+        if not split_id.strip():
+            errors.append(f"{review_label} receipt needs a split_id")
+            continue
+        receipt = (review["split_packet_path"], review["split_packet_sha256"], split_id)
+        if receipt in checked:
+            continue
+        checked.add(receipt)
+        try:
+            packet = _bound_output_row(review, "split_packet", record, label, who, errors, split_id=split_id)
+        except (OSError, UnicodeError) as exc:
+            errors.append(f"{review_label} file cannot be read as UTF-8 JSONL: {exc}")
+            continue
+        if packet is None:
+            continue
+        anchors = packet.get("anchors_at_R")
+        if not isinstance(anchors, list) or not anchors:
+            errors.append(f"{review_label} row shows no anchors_at_R")
+            continue
+        for anchor in anchors:
+            ref = anchor.get("ref") if isinstance(anchor, dict) else None
+            digest = anchor.get("sha256") if isinstance(anchor, dict) else None
+            if not isinstance(ref, str) or not _is_sha256(digest):
+                errors.append(f"{review_label} anchors_at_R entries need a string ref and a SHA-256")
+                continue
+            recorded = snapshot[ref] if ref in snapshot else extra.setdefault(ref, digest)
+            if recorded != digest:
+                errors.append(f"{review_label} has a conflicting hash for {ref} (recorded {recorded}, shown {digest})")
+    return extra
 
 
 def _is_registry_file(dependency_path: str, registry_ref: str) -> bool:
@@ -2333,7 +2377,8 @@ def validate_reaudit_row(
         if differing:
             errors.append(f"{label}: self-excluding re-audit generated fields differ from bound record and predecessor: {differing}")
             return None
-    return {"target": line, "verdict": record.get("verdict"), "later_closure_id": record.get("later_closure_id")}
+    return {"target": line, "verdict": record.get("verdict"), "later_closure_id": record.get("later_closure_id"),
+            "record": record}
 
 
 def validate_registry(registry_path: Path, *, anchor_registry_path: Path | None = None) -> dict[str, Any]:
@@ -2476,6 +2521,24 @@ def validate_registry(registry_path: Path, *, anchor_registry_path: Path | None 
             superseded_by.pop(target, None)
             proposed.pop(s_line, None)
 
+    # Only a live re-audit row needs its split-only anchors to be current. Keep that
+    # check separate from the historical proof of the supersession edge.
+    invalid_split_lines: set[int] = set()
+    for line_no, edge in proposed.items():
+        if line_no in superseded_by:
+            continue
+        label = f"{rel(registry_path)}:{line_no}"
+        before = len(errors)
+        split_hashes = reaudit_split_anchor_hashes(edge["record"], label, errors)
+        if split_hashes:
+            stale = []
+            row_resolver = registry_row_resolver(rows_by_line[line_no], resolver, registry_ref)
+            validate_anchor_hashes(split_hashes, "split_anchor_hashes", label, errors, stale, row_resolver)
+            if stale:
+                stale_by_line.setdefault(line_no, []).extend(stale)
+        if len(errors) != before:
+            invalid_split_lines.add(line_no)
+
     superseded_stale = 0
     for line_no, stale in sorted(stale_by_line.items()):
         if line_no in superseded_by:
@@ -2497,7 +2560,8 @@ def validate_registry(registry_path: Path, *, anchor_registry_path: Path | None 
         if current == line_no:
             return False
         leaf = rows_by_line[current]
-        return leaf.get("closure_status") not in OPEN_STATUSES and current not in stale_by_line
+        return (leaf.get("closure_status") not in OPEN_STATUSES and current not in stale_by_line
+                and current not in invalid_split_lines)
 
     def leaf_of(line_no: int) -> int:
         seen_lines = {line_no}
@@ -4902,8 +4966,8 @@ def cmd_reaudit_append(args: argparse.Namespace) -> int:
 def _reaudit_append(args: argparse.Namespace) -> int:
     """Migration: append one re-audit row per reviewed record whose anchors have not moved.
 
-    A record whose dependency anchors hash differently now than when it was rechecked is
-    not appended; it is listed under `moved` for a delta re-audit. Records already
+    A record whose dependency or split anchors hash differently now than when it was rechecked is
+    not appended; it is listed under `moved_since_recheck` for a delta re-audit. Records already
     appended (same record hash) are skipped, so the command is idempotent.
     """
     registry_path = repo_path(args.registry)
@@ -4966,17 +5030,25 @@ def _reaudit_append(args: argparse.Namespace) -> int:
                 or not isinstance(record.get("dependency_hashes_at_recheck"), dict):
             errors.append(f"{closure_id}: record has an unknown verdict or malformed dependencies")
             continue
+        snapshot = record["dependency_hashes_at_recheck"]
+        if set(snapshot) != set(record["dependencies"]):
+            errors.append(f"{closure_id}: dependency_hashes_at_recheck must cover exactly the dependencies")
+            continue
+        split_hashes = {}
+        if "owner_decision" not in record:
+            before = len(errors)
+            split_hashes = reaudit_split_anchor_hashes(record, closure_id, errors)
+            if len(errors) != before:
+                continue
+        # Owner decisions already require every split anchor to match the snapshot.
         changed: dict[str, Any] = {}
-        for ref, recorded in sorted((record.get("dependency_hashes_at_recheck") or {}).items()):
+        for ref, recorded in sorted((snapshot | split_hashes).items()):
             try:
                 now_hash = resolver.sha256(ref)
             except AnchorError as exc:
                 now_hash = f"unresolved: {exc}"
             if now_hash != recorded:
                 changed[ref] = {"at_recheck": recorded, "now": now_hash}
-        if set(record.get("dependency_hashes_at_recheck") or {}) != set(record.get("dependencies") or []):
-            errors.append(f"{closure_id}: dependency_hashes_at_recheck must cover exactly the dependencies")
-            continue
         if changed:
             moved.append({"closure_id": closure_id, "line": line, "changed_anchors": changed})
             continue
@@ -5009,7 +5081,7 @@ def _reaudit_append(args: argparse.Namespace) -> int:
         baseline = set(validate_registry(registry_path)["errors"])
         stale_pattern = re.compile(
             rf"{re.escape(rel(registry_path))}:(?P<line>[1-9][0-9]*): "
-            r"(?P<group>owner_evidence_hashes|closure_evidence_hashes) for (?P<ref>.+) "
+            r"(?P<group>owner_evidence_hashes|closure_evidence_hashes|split_anchor_hashes) for (?P<ref>.+) "
             r"is stale \(stored (?P<stored>[0-9a-f]{64}), current (?P<current>[0-9a-f]{64})\)"
         )
 
@@ -6119,6 +6191,61 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         check("reaudit_append_holds_back_moved_anchor", moved["appended"] == 0 and len(moved["moved_since_recheck"]) == 1
               and len(registry.read_text().splitlines()) == 1, moved)
         write_doc()
+
+        split_only_ref = "Plans/Fixture.md#unit=FIX-002"
+
+        def bind_split_for_currentness(rec: dict[str, Any], *, conflict: bool = False) -> None:
+            resolver = AnchorResolver(tmp)
+            split = {key: rec[key] for key in ("line", "closure_id")}
+            split.update(split_id=f"fixture-currentness-{counter[0]}", anchors_at_R=[
+                {"ref": unit_ref, "sha256": "f" * 64 if conflict else resolver.sha256(unit_ref)},
+                {"ref": split_only_ref, "sha256": resolver.sha256(split_only_ref)},
+            ])
+            packet = audit_dir / "reviews" / f"{split['split_id']}.jsonl"
+            packet.write_text(json.dumps(split) + "\n", encoding="utf-8")
+            for who in ("sol", "astra"):
+                rec["reviews"][who].update(split_id=split["split_id"], split_packet_path=rel(packet),
+                                           split_packet_sha256=sha256_file(packet))
+
+        split_row = append_with(mutate=bind_split_for_currentness)
+        current = validate_rows([legacy_row(), split_row])
+        check("split_only_anchor_current_validates", not current["errors"], current["errors"])
+        stored = AnchorResolver(tmp).sha256(split_only_ref)
+        write_doc(SELF_TEST_DOC.replace("unrelated unit that other edits change", "unrelated unit, edited"))
+        changed_hash = AnchorResolver(tmp).sha256(split_only_ref)
+        stale_error = f"split_anchor_hashes for {split_only_ref} is stale (stored {stored}, current {changed_hash})"
+        changed = validate_registry(registry)
+        check("split_only_anchor_move_is_stale", has(changed, stale_error)
+              and changed["unsuperseded_stale_hash_count"] == 1, changed["errors"])
+        write_registry([legacy_row()])
+        code, held = run_append()
+        check("reaudit_append_holds_back_moved_split_only_anchor",
+              code == 0 and held["would_append"] == 0 and not held["errors"]
+              and len(held["moved_since_recheck"]) == 1
+              and held["moved_since_recheck"][0]["changed_anchors"] == {
+                  split_only_ref: {"at_recheck": stored, "now": changed_hash}},
+              held)
+        successor = append_with(rows_before=[legacy_row(), split_row], line=2)
+        superseded = validate_rows([legacy_row(), split_row, successor])
+        check("superseded_split_only_anchor_is_exempt", not superseded["errors"]
+              and superseded["superseded_lines"] == [1, 2], superseded["errors"])
+        check("row_without_split_receipt_is_unaffected", superseded["unsuperseded_stale_hash_count"] == 0, superseded)
+
+        write_doc()
+        conflict = append_with(mutate=lambda rec: bind_split_for_currentness(rec, conflict=True))
+        report = validate_rows([legacy_row(), conflict])
+        check("split_anchor_hash_conflict_with_snapshot_fails", has(report, f"conflicting hash for {unit_ref}"), report["errors"])
+        write_registry([legacy_row()])
+        code, report = run_append()
+        check("reaudit_append_refuses_split_anchor_conflict", code != 0 and report["would_append"] == 0
+              and has(report, f"conflicting hash for {unit_ref}"), report)
+        split_row = append_with(mutate=bind_split_for_currentness)
+        packet = audit_dir / "reviews" / f"fixture-currentness-{counter[0]}.jsonl"
+        with packet.open("a", encoding="utf-8") as output:
+            output.write("\n")
+        report = validate_rows([legacy_row(), split_row])
+        check("split_packet_sha256_mismatch_fails", has(report, "split_packet file is missing or its SHA-256 differs"), report["errors"])
+
         append_with(mutate=lambda rec: rec["reviews"].pop("sol"))
         write_registry([legacy_row()])
         code, invalid = run_append()
