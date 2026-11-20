@@ -276,10 +276,25 @@
     // the title bar's own menu marks the chosen project when it has it
     D.querySelectorAll('#projectMenu .pm6-tb-menu-item[data-project]').forEach((b) => b.classList.toggle('is-selected', b.getAttribute('data-project') === pid));
   }
+  /* Jared 2026-11-20 (FO-186 r2 on the layered page): the engine reloads a project from PM_SETTINGS_PROJECT_SNAPSHOTS,
+     which the layer writes at each feed. A reload the layer didn't start (the page's own, a check's) read the copy from
+     the last feed, so whatever had changed since without a routed value was lost: a model's thinking depth (the page
+     keeps it beside the value, in its own state: state.pm51.o55Depth), and the rows and page state the layer doesn't
+     model. Any reload of the project on show now first refreshes the copy from the engine's live state. */
+  function guardReload(K) {
+    if (!K || K.__psxReload || typeof K.reloadProject !== 'function') return;
+    const reload = K.reloadProject;
+    K.reloadProject = function () {
+      if (!feeding && engineProject() && engineProject() === W.PM_ACTIVE_PROJECT_ID) { try { captureCurrent(); writeSnapshots(); } catch (e) { /* the copy as it was */ } }
+      return reload.apply(this, arguments);
+    };
+    K.__psxReload = true;
+  }
   /* switch the engine to the context's project and feed every snapshot; a context change that keeps the project
      (another device, Home NAS answering or not) pushes only what changed */
   function full(opts) {
     const K = kimi(); if (!K) return false;
+    guardReload(K);
     opts = opts || {};
     feeding++;
     try {
@@ -308,6 +323,7 @@
   /* push only what differs, without a reload (the world changed, or the device changed) */
   function push() {
     const K = kimi(); if (!K) return 0;
+    guardReload(K);
     feeding++;
     let n = 0;
     try {

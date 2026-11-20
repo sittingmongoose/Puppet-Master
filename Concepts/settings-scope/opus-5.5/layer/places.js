@@ -312,7 +312,7 @@
       const isOwn = typeof value === 'string' && ((PSX.factsOf(id) || {}).options || []).includes(value);
       const maker = isOwn ? '' : makerOf(PSX.modelOf(value));
       const name = value == null || value === '' ? 'No model yet' : iw ? iw.label : isOwn ? vt(id, value) : nameOf(id === NICKNAMES ? 'ai.models.default-model' : id, value);
-      const sub = value == null || value === '' ? 'Choose a model' : iw ? (iw.model ? `${iw.model} here` : '') : isOwn ? (W.PM51 && W.PM51.valueHint ? W.PM51.valueHint(id, value) : '') : [maker, o.noDepth ? '' : PSX.effortOf(value) ? `${PSX.effortOf(value)} thinking` : 'Model’s own depth'].filter(Boolean).join(' · ');
+      const sub = value == null || value === '' ? 'Choose a model' : iw ? (iw.model ? `${iw.model}${iw.through ? ` · through ${label(iw.through)}` : ''}` : '') : isOwn ? (W.PM51 && W.PM51.valueHint ? W.PM51.valueHint(id, value) : '') : [maker, o.noDepth ? '' : PSX.effortOf(value) ? `${PSX.effortOf(value)} thinking` : 'Model’s own depth'].filter(Boolean).join(' · ');
       b.innerHTML = `<span class="o55-pick-mark" aria-hidden="true">${isOwn || iw ? icon('spark') : mark(maker, 16)}</span><span class="o55-pick-copy"><strong>${esc(name)}</strong>${sub ? `<small>${esc(sub)}</small>` : ''}</span><span class="o55-pick-chev" aria-hidden="true">${icon('down')}</span>`;
       b.setAttribute('aria-label', `${label(id)} for ${o.name}: ${name}${sub ? ', ' + sub : ''}`);
       b.__psxValue = value;
@@ -346,7 +346,7 @@
     const row = (it, i) => {
       const own = !!it.own, inh = it.value === 'inherit' && iw;
       const nm = inh ? iw.label : own ? vt(id, it.value) : nameOf(id, it.value, it);
-      const sub = inh ? (iw.model ? `${iw.model} here${iw.through ? ` · through ${label(iw.through)}` : ''}` : '') : own ? (W.PM51 && W.PM51.valueHint ? W.PM51.valueHint(id, it.value) : '') : (it.meta || it.maker || '');
+      const sub = inh ? (iw.model ? `${iw.model}${iw.through ? ` · through ${label(iw.through)}` : ''}` : '') : own ? (W.PM51 && W.PM51.valueHint ? W.PM51.valueHint(id, it.value) : '') : (it.meta || it.maker || '');
       const on = same(PSX.modelOf(value), it.value);
       return `<div class="pm51-popout-item o55-pick-item is-model" role="option" id="${pid}-${i}" data-index="${i}" data-value="${esc(it.value)}" data-brand="${esc(own ? '' : it.maker)}" aria-selected="${on}"><span class="o55-pick-mark" aria-hidden="true">${own || inh ? icon('spark') : mark(it.maker, 15)}</span><span class="o55-pick-copy"><strong>${esc(nm)}</strong>${sub ? `<small>${esc(sub)}</small>` : ''}</span><span class="o55-pick-tick" aria-hidden="true">${on ? icon('check') : ''}</span></div>`;
     };

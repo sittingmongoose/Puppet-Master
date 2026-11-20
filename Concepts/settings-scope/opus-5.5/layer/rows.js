@@ -325,7 +325,10 @@
     let el = bar.querySelector(':scope > .psx-head');
     // the page's own actions sit over the toolbar's right end (Page options; its project button is hidden): keep clear
     const pa = bar.querySelector(':scope > .page-actions');
-    const pr = pa && getComputedStyle(pa).position === 'absolute' ? Math.max(48, pa.offsetWidth + 16) : 12;
+    /* Jared 2026-11-20 (740x900): measured by the buttons it shows, never its box. In a Settings under 720px the base
+       page's narrow rule makes the box the toolbar's whole width (it stays absolute); taking that width made the header's
+       padding 745px, which widened all of Settings past the window and squeezed the header's words to nothing */
+    const pr = pa && getComputedStyle(pa).position === 'absolute' ? Math.max(48, Math.round(actionsWidth(pa)) + 16) : 12;
     if (el && el.__pr !== pr) { el.style.paddingRight = pr + 'px'; el.__pr = pr; }
     if (el && el.__html === html) return;
     if (!el) { el = D.createElement('div'); el.className = 'psx-head'; el.setAttribute('data-o55-foreign', ''); el.setAttribute('role', 'group'); el.setAttribute('aria-label', 'Whose settings these are'); bar.insertBefore(el, bar.firstChild); }
@@ -336,6 +339,11 @@
     fitHead(el);
     if (!el.__psxRO && W.ResizeObserver) { el.__psxRO = new W.ResizeObserver(() => fitHead(el)); el.__psxRO.observe(el); }
     if (had) { const f = el.querySelector(`[data-psx-head="${had}"]`) || el.querySelector('[data-psx-head="view"]'); if (f) try { f.focus({ preventScroll: true }); } catch (e) { /* gone */ } }
+  }
+  function actionsWidth(pa) {
+    const pb = pa.getBoundingClientRect();
+    const shown = [...pa.children].filter((k) => k.getClientRects().length && getComputedStyle(k).visibility !== 'hidden');
+    return shown.length ? Math.max(0, pb.right - Math.min(...shown.map((k) => k.getBoundingClientRect().left))) : 0;
   }
   function fitHead(el) {
     const main = el.querySelector('.psx-head-main'), ctx = el.querySelector('.psx-head-ctx'), vs = el.__variants;
