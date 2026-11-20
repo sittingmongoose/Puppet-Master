@@ -63059,7 +63059,9 @@ owner_doc: Plans/Decision_Log.md
 canonical_text: 'Citation correction for safe_point.created under DL-077 and DL-400. Original admission: Plans/Decision_Log.md#DL-2394.
   The current retention assessment cites Plans/storage-plan.md:56213 (SP-557), which records DL-401 G28. The selected RP-RUNTIME-365D
   policy counts up to 1,000,000 records per actual Run. The 5,000,000 per-Project count applies only when there is a real
-  Project. An Application Run uses its actual Run identity.
+  Project. An Application Run uses its actual Run identity. Its scope is application_or_project. Payload editions:
+  application `https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption);
+  project `https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption).
 
 
   The registry remains at 2026-11-19.145, 518 families, SHA-256 e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30.
@@ -63118,7 +63120,9 @@ owner_doc: Plans/Decision_Log.md
 canonical_text: 'Citation correction for safe_point.restored under DL-077 and DL-400. Original admission: Plans/Decision_Log.md#DL-2395.
   The current retention assessment cites Plans/storage-plan.md:56284 (SP-558), which records DL-401 G28. The selected RP-RUNTIME-365D
   policy counts up to 1,000,000 records per actual Run. The 5,000,000 per-Project count applies only when there is a real
-  Project. An Application Run uses its actual Run identity.
+  Project. An Application Run uses its actual Run identity. Its scope is application_or_project. Payload editions:
+  application `https://puppetmaster.local/schemas/event_payloads/safe_point_restored/2.0.0` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption);
+  project `https://puppetmaster.local/schemas/event_payloads/safe_point_restored/2.0.0` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption).
 
 
   The registry remains at 2026-11-19.145, 518 families, SHA-256 e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30.
