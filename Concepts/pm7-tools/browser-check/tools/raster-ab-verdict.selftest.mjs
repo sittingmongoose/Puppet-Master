@@ -127,3 +127,33 @@ test('bite: a sustained shift at the bite threshold fails on top of real resolve
 		assert.equal(rasterAbVerdict(shifted, {minResolved: 6})[k].ok, false, `${k}: bite over baseline noise`);
 	}
 });
+
+// run-baseline-mac: NEW check, reps=6, both surfaces, main vs main, alone on the Mac with a LOCAL client and file://
+// pages (76 checks PASS, 448 s). The vsync marker + free client give regular ~16.7 ms frames; 6/6 pairs resolved per
+// measure. These are the resolved paired differences (head - control), sorted. Classification unchanged from the old
+// baseline (normal firstNewKind intermediate, opaque final), so the marker measures the same painting.
+const GREEN_MAC = {
+	normal: {firstNewMs: [-16.2, -6.5, -3.1, -2.3, 2.3, 6.2], settledMs: [-35.6, -23.1, -16.2, 2.3, 6.2, 13.6]},
+	opaque: {firstNewMs: [-16.9, -14.9, -14.5, -8.2, -0.7, 27.5], settledMs: [-16.9, -14.9, -14.5, -8.2, -0.7, 27.5], retainedMs: [-33.3, -16.7, -16.7, -16.7, 0, 33.3]}
+};
+const greenPairs = surf => Object.fromEntries(Object.keys(GREEN_MAC[surf]).map(k => [k, GREEN_MAC[surf][k].map(d => ({diff: d, resolved: true}))]));
+
+test('green: real resolved main-against-main pairs pass on both surfaces', () => {
+	for (const surf of ['normal', 'opaque']) {
+		const v = rasterAbVerdict(greenPairs(surf), {minResolved: 6});
+		for (const k of Object.keys(v)) {
+			assert.equal(v[k].nResolved, 6, `${surf} ${k}`);
+			assert.equal(v[k].ok, true, `${surf} ${k}: resolved paired median ${v[k].medianDiffMs} within tol`);
+		}
+	}
+});
+
+test('bite: the bite-threshold shift fails on top of the real resolved green noise', () => {
+	for (const surf of ['normal', 'opaque']) {
+		const g = greenPairs(surf);
+		for (const k of Object.keys(g)) {
+			const shifted = {[k]: g[k].map(p => ({diff: p.diff + RASTER_AB_BITE_MS[k], resolved: true}))};
+			assert.equal(rasterAbVerdict(shifted, {minResolved: 6})[k].ok, false, `${surf} ${k}: +${RASTER_AB_BITE_MS[k]} ms over green noise must fail`);
+		}
+	}
+});
