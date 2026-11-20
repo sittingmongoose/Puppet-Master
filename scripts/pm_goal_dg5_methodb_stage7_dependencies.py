@@ -171,7 +171,29 @@ def event_type(directory):
                 source=[source(ST, 468, 470, 471, 472, 473), source('Plans/event_record.schema.json', 5, 6)])
 
 
+def frame_shape(directory):
+    world, event = pilot.published_event(directory / 'frame-shape')
+    header = S.canonical(S.event_header(event))
+    kwargs = dict(generation=1, prior_sequence=None, prior_control=False)
+
+    def buffer(value):
+        payload = S.canonical(value)
+        prefix = S._prefix(len(header), len(payload), 0, 1, event['sequence_id'], S.crc32(header), S.crc32(payload))
+        return prefix + header + payload
+
+    control = pilot.call((world, S.decode_frame, (buffer(event), 0), kwargs), 'valid frame payload',
+                         sweep.Collector(judge=False))
+    verdict(control)
+    row, dep = site(577, ST), site(581, ST)
+    fixture = world, S.decode_frame, (buffer([]), 0), kwargs
+    result = check_later(fixture, 'frame with non-object payload', row, 'Corrupt:payload_shape',
+                         dep, 'Corrupt:event_record:frame/event/type')
+    return dict(row=row, dependency=dep, control=control, trials=result,
+                source=[source(ST, 470, 577, 579, 581, 583)])
+
+
 CHECKS = {
+    'frame_shape': frame_shape,
     'event_type': event_type,
     'scope_project': scope_project,
     'reserve_cas': reserve_cas,
