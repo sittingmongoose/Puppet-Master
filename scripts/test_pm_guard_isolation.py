@@ -1,6 +1,7 @@
 """Focused regressions for the guard engine, using the DDBG fixtures where applicable."""
 
 from contextlib import chdir
+import importlib.util
 from pathlib import Path
 import sys
 import unittest
@@ -34,6 +35,26 @@ class GuardEngineTests(unittest.TestCase):
     def test_ddbg_retry_from_repository_root(self):
         with chdir(ROOT):
             report = guard.run(ddbg.retry_request_suite())
+        self.assertFalse(report['runtime'], report['runtime'][:1])
+        self.assertEqual(report['status'], 'PASS', report['failures'])
+
+    def test_ddbg_short_circuit_digest(self):
+        original = ddbg.payload_target_bound_suite()
+        negative = next(n for n in original.negatives if n.target == 'payload.target_sha256_hex')
+        control = next(c for c in original.controls if c.id == negative.control)
+        source = ROOT / 'scripts/guard-isolation/target_digest_fixture.py'
+        spec = importlib.util.spec_from_file_location('target_digest_fixture', source)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        self.addCleanup(sys.modules.pop, spec.name)
+        spec.loader.exec_module(module)
+        suite = guard.Suite('DDBG digest generator', module.make_case, [control], [negative],
+                            (source,), ROOT, non_guards=[
+                                guard.NonGuard(str(source.relative_to(ROOT)), 'make_case', 'return',
+                                    'return g.Case(table, check, context)', 'Return the fresh case.'),
+                            ])
+        report = guard.run(suite)
+        self.assertFalse(report['static']['errors'], report['static']['errors'])
         self.assertFalse(report['runtime'], report['runtime'][:1])
         self.assertEqual(report['status'], 'PASS', report['failures'])
 

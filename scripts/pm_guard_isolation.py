@@ -3365,6 +3365,17 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
                     if frame.f_code not in instructions:
                         instructions[frame.f_code] = list(dis.get_instructions(frame.f_code))
                     instruction = next((i for i in reversed(instructions[frame.f_code]) if i.offset <= frame.f_lasti), None)
+                    parent = frame.f_back
+                    if (type(exc) is GeneratorExit and traceback.tb_next is None and instruction is not None and
+                            frame.f_code.co_name == '<genexpr>' and table._in_predicate and parent is not None and
+                            parent.f_code in predicate_codes and any(code is frame.f_code for code in parent.f_code.co_consts)):
+                        # Closing a suspended generator reports YIELD_VALUE or its following RESUME,
+                        # depending on the CPython version. An explicit raise reports its own site.
+                        suspended_at = instruction
+                        if instruction.opname == 'RESUME':
+                            suspended_at = next((i for i in reversed(instructions[frame.f_code]) if i.offset < instruction.offset), None)
+                        if suspended_at is not None and suspended_at.opname == 'YIELD_VALUE':
+                            return trace
                     position = instruction.positions if instruction else None
                     site = (str(path), instruction.opname if instruction else '',
                             (position.lineno, position.end_lineno, position.col_offset, position.end_col_offset) if position else ())
