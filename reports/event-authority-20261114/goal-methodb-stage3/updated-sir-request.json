@@ -1,0 +1,469 @@
+{
+  "census_sha256": "647eb062f2b9f8438e26716e3e058e1ac61193a2c266bbf12f4664495598fab7",
+  "examples": {
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/allOf/0/else/properties/approval_id/minLength": {
+      "controls": [
+        {
+          "path": [
+            "change_source"
+          ],
+          "value": "agent_proposed_user_approved"
+        },
+        {
+          "path": [
+            "approval_id"
+          ],
+          "value": "approval:TEST_ONLY:stage3"
+        },
+        {
+          "path": [
+            "source_message_id"
+          ],
+          "value": "message:TEST_ONLY:stage3"
+        }
+      ],
+      "path": [
+        "approval_id"
+      ],
+      "request_implication": true,
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/allOf/0/else/properties/approval_id/type": {
+      "controls": [
+        {
+          "path": [
+            "change_source"
+          ],
+          "value": "agent_proposed_user_approved"
+        },
+        {
+          "path": [
+            "approval_id"
+          ],
+          "value": "approval:TEST_ONLY:stage3"
+        },
+        {
+          "path": [
+            "source_message_id"
+          ],
+          "value": "message:TEST_ONLY:stage3"
+        }
+      ],
+      "path": [
+        "approval_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/allOf/0/else/properties/source_message_id/minLength": {
+      "controls": [
+        {
+          "path": [
+            "change_source"
+          ],
+          "value": "agent_proposed_user_approved"
+        },
+        {
+          "path": [
+            "approval_id"
+          ],
+          "value": "approval:TEST_ONLY:stage3"
+        },
+        {
+          "path": [
+            "source_message_id"
+          ],
+          "value": "message:TEST_ONLY:stage3"
+        }
+      ],
+      "path": [
+        "source_message_id"
+      ],
+      "request_implication": true,
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/allOf/0/else/properties/source_message_id/type": {
+      "controls": [
+        {
+          "path": [
+            "change_source"
+          ],
+          "value": "agent_proposed_user_approved"
+        },
+        {
+          "path": [
+            "approval_id"
+          ],
+          "value": "approval:TEST_ONLY:stage3"
+        },
+        {
+          "path": [
+            "source_message_id"
+          ],
+          "value": "message:TEST_ONLY:stage3"
+        }
+      ],
+      "path": [
+        "source_message_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/allOf/0/if/properties/change_source/const": {
+      "controls": [
+        {
+          "path": [
+            "change_source"
+          ],
+          "value": "agent_proposed_user_approved"
+        },
+        {
+          "path": [
+            "approval_id"
+          ],
+          "value": "approval:TEST_ONLY:stage3"
+        },
+        {
+          "path": [
+            "source_message_id"
+          ],
+          "value": "message:TEST_ONLY:stage3"
+        }
+      ],
+      "path": [
+        "change_source"
+      ],
+      "request_selector": true
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/allOf/0/then/properties/approval_id/type": {
+      "path": [
+        "approval_id"
+      ],
+      "value": "gc"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/allOf/0/then/properties/source_message_id/type": {
+      "path": [
+        "source_message_id"
+      ],
+      "value": "gc"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/actor_ref/maxLength": {
+      "path": [
+        "actor_ref"
+      ],
+      "value": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/actor_ref/minLength": {
+      "path": [
+        "actor_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/actor_ref/type": {
+      "path": [
+        "actor_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/approval_id/anyOf": {
+      "path": [
+        "approval_id"
+      ],
+      "request_implication": true,
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/approval_id/anyOf/0/minLength": {
+      "path": [
+        "approval_id"
+      ],
+      "request_implication": true,
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/approval_id/anyOf/0/type": {
+      "path": [
+        "approval_id"
+      ],
+      "request_implication": true,
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/approval_id/anyOf/1/type": {
+      "path": [
+        "approval_id"
+      ],
+      "request_implication": true,
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/change_source/enum": {
+      "controls": [
+        {
+          "path": [
+            "change_source"
+          ],
+          "value": "agent_proposed_user_approved"
+        },
+        {
+          "path": [
+            "approval_id"
+          ],
+          "value": "approval:TEST_ONLY:stage3"
+        },
+        {
+          "path": [
+            "source_message_id"
+          ],
+          "value": "message:TEST_ONLY:stage3"
+        }
+      ],
+      "path": [
+        "change_source"
+      ],
+      "value": "user_directx"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/command_id/const": {
+      "path": [
+        "command_id"
+      ],
+      "value": "cmd.chat.goal.updatex"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/command_instance_id/maxLength": {
+      "path": [
+        "command_instance_id"
+      ],
+      "value": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/command_instance_id/minLength": {
+      "path": [
+        "command_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/command_instance_id/type": {
+      "path": [
+        "command_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/expected_currentness_hash/pattern": {
+      "path": [
+        "expected_currentness_hash"
+      ],
+      "value": "d90f90aa172cea7ca06cf81961905ab7d9d268ad62c9e5c31de8a7f723b4d0d1\n"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/expected_currentness_hash/type": {
+      "path": [
+        "expected_currentness_hash"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/expected_revision/minimum": {
+      "path": [
+        "expected_revision"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/expected_revision/type": {
+      "path": [
+        "expected_revision"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/goal_id/minLength": {
+      "path": [
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/goal_id/type": {
+      "path": [
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/idempotency_key/maxLength": {
+      "path": [
+        "idempotency_key"
+      ],
+      "value": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/idempotency_key/minLength": {
+      "path": [
+        "idempotency_key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/idempotency_key/type": {
+      "path": [
+        "idempotency_key"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/objective_text/maxLength": {
+      "path": [
+        "objective_text"
+      ],
+      "value": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/objective_text/pattern": {
+      "path": [
+        "objective_text"
+      ],
+      "value": "  Updated objective \ud83c\udf3f\n\ud800"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/objective_text/type": {
+      "path": [
+        "objective_text"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/permission_snapshot_ref/maxLength": {
+      "path": [
+        "permission_snapshot_ref"
+      ],
+      "value": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/permission_snapshot_ref/minLength": {
+      "path": [
+        "permission_snapshot_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/permission_snapshot_ref/type": {
+      "path": [
+        "permission_snapshot_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/project_id/maxLength": {
+      "path": [
+        "project_id"
+      ],
+      "value": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/project_id/minLength": {
+      "path": [
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/project_id/type": {
+      "path": [
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/return_route_ref/maxLength": {
+      "path": [
+        "return_route_ref"
+      ],
+      "value": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/return_route_ref/minLength": {
+      "path": [
+        "return_route_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/return_route_ref/type": {
+      "path": [
+        "return_route_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/schema_id/const": {
+      "path": [
+        "schema_id"
+      ],
+      "value": "pm.goal.update.request.v2x"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/schema_version/const": {
+      "path": [
+        "schema_version"
+      ],
+      "value": "2.0.0x"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/source_message_id/anyOf": {
+      "path": [
+        "source_message_id"
+      ],
+      "request_implication": true,
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/source_message_id/anyOf/0/minLength": {
+      "path": [
+        "source_message_id"
+      ],
+      "request_implication": true,
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/source_message_id/anyOf/0/type": {
+      "path": [
+        "source_message_id"
+      ],
+      "request_implication": true,
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/source_message_id/anyOf/1/type": {
+      "path": [
+        "source_message_id"
+      ],
+      "request_implication": true,
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/source_surface/minLength": {
+      "path": [
+        "source_surface"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/source_surface/type": {
+      "path": [
+        "source_surface"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/thread_id/maxLength": {
+      "path": [
+        "thread_id"
+      ],
+      "value": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/thread_id/minLength": {
+      "path": [
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/properties/thread_id/type": {
+      "path": [
+        "thread_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/required": {
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2/type": {
+      "path": [],
+      "value": true
+    }
+  },
+  "family": "goal.updated",
+  "root": "dg5:47ba4572111e55cd",
+  "route": "admit",
+  "row": "dg5/dgu/sir/request/schema",
+  "site": [
+    "scripts/pm_goal_dg_u_owners.py",
+    722
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "transaction": true
+}

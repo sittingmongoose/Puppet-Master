@@ -59,7 +59,40 @@ def update_fixture(route, path):
     if route in ('approval_request', 'approval_resolution'):
         return approval_fixture(oracle, route, path)
     w = oracle.world(path)
+    if route == 'body_start':
+        captured = []
+
+        def before_start(*args):
+            captured.extend(args)
+            raise RootCapture
+
+        with patch.object(w.body, 'start', before_start):
+            try:
+                oracle.O.birth_goal(w)
+            except RootCapture:
+                pass
+        require(len(captured) == 5, 'birth fixture did not supply body start arguments')
+        marker = UUID('696965ee-ec46-4f9b-b0ba-1651f5958cc7')
+        stamp = w.now()
+
+        def start():
+            with patch.object(w, 'now', return_value=stamp), patch.object(oracle.O.uuid, 'uuid4',
+                                                                         return_value=marker):
+                return w.body.start(*captured)
+
+        return w, start
     goal = oracle.O.birth_goal(w)
+    if route == 'admit':
+        document = oracle.O.direct_request(w, goal, 'Stage 3 request control')
+        timestamp = w.now()
+        marker = UUID('2a4f4713-f9d9-4324-9470-1c92785ca940')
+
+        def admit():
+            with patch.object(w, 'now', return_value=timestamp), patch.object(oracle.O.uuid, 'uuid4',
+                                                                            return_value=marker):
+                return w.sir.admit(document)
+
+        return w, admit
     _, admission = oracle.run_direct(w, goal)
     progress = oracle.progress(w, goal, oracle.op_of(admission))
     request = progress['body_commit']['receipt_request']
@@ -69,6 +102,8 @@ def update_fixture(route, path):
     if route == 'inspect':
         event_request = inspect.request_for(goal['scope'], progress['publication']['event_id'])
         return w, lambda: inspect.inspect(event_request, actor, permission)
+    if route == 'input':
+        return w, oracle._input_call(w, goal, oracle.op_of(admission))
     if route == 'receipt':
         return w, lambda: w.body.read_receipt(request, actor, permission)
     if route == 'oracle_receipt':
@@ -427,6 +462,30 @@ def approval_implication(nodes, name, path, errors, locations, validator):
                        'It skips None only for the nullable expiry, where the null branch applies.')
 
 
+def request_implication(nodes, name, path, errors, locations):
+    """The request's complete two-way conditional enforces both nullable members."""
+    parent = name.split('/allOf/', 1)[0].split('/properties/', 1)[0]
+    require(parent.endswith('#/$defs/GoalUpdateRequestV2'), 'request implication applied outside its definition')
+    node = nodes[parent]['node']
+    member = path[-1]
+    require(member in ('approval_id', 'source_message_id') and member in node['required'] and
+            'change_source' in node['required'], 'request implication member changed')
+    direct, agent = node['allOf'][0]['then']['properties'][member], node['allOf'][0]['else']['properties'][member]
+    choices = node['properties'][member]['anyOf']
+    members = lambda item: {key: value for key, value in item.items() if key != 'x-pm-oracle-id'}
+    require(node['allOf'][0]['if']['properties']['change_source']['const'] == 'user_direct' and
+            [members(choice) for choice in choices] == [members(agent), members(direct)] ==
+            [{'type': 'string', 'minLength': 1}, {'type': 'null'}], 'request conditional branches changed')
+    if '/else/' in name:
+        peer = parent + '/properties/' + member + '/anyOf/0/minLength'
+        require(('minLength', tuple(path), peer) in locations(errors), 'same length rule did not remain')
+    else:
+        peer = parent + '/allOf/0/then/properties/' + member + '/type'
+        require(locations(errors) == {('type', tuple(path), peer)}, 'exact direct null rule did not remain')
+    return dict(source=parent + '/allOf/0', independent_rule=peer,
+                reason='Direct requests require null. Every other request requires a nonempty string.')
+
+
 def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check):
     import pm_goal_dg5_closure as closure
     import pm_goal_go_schema_closure as go
@@ -455,9 +514,29 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         control = control_phase(document, example['phase']) if 'phase' in example else document
         if 'control' in example:
             control = edit_example(go, document, example['control']['path'], example['control'])
+        for change in example.get('controls', []):
+            control = edit_example(go, control, change['path'], change)
         require(not list(plain.iter_errors(control)), f'{name}: branch control refused')
         guard = closure._guard_for_location(name)
         disable = () if disabled_check == 'rule' else {guard}
+        if 'selector_messages' in example:
+            cut = go.errors_of(validator, control, disable)
+            restored = go.errors_of(validator, control)
+            require(cut and go.locations(cut) == set(example['selector_messages']) and not restored,
+                    f'{name}: expected exact conditional messages {example["selector_messages"]}')
+            result[name] = dict(cls='SELECTOR_OR_NEGATED', control=control, cut=errors_list(cut),
+                                restored=errors_list(restored), condition=name)
+            continue
+        if 'request_selector' in example:
+            cut = go.errors_of(validator, control, disable)
+            restored = go.errors_of(validator, control)
+            parent = name.split('/if/',1)[0] + '/then/properties/'
+            require(cut and go.locations(cut) == {parent + field + '/type'
+                                                 for field in ('approval_id', 'source_message_id')} and not restored,
+                    'disabling the request selector did not activate both direct-request rules')
+            result[name] = dict(cls='SELECTOR_OR_NEGATED', control=control, cut=errors_list(cut),
+                                restored=errors_list(restored), condition=name)
+            continue
         if 'selector' in example:
             require(not go.errors_of(validator, control), 'Control selector control refused')
             cut = go.errors_of(validator, control, disable)
@@ -489,6 +568,24 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
                       cut=errors_list(cut), restored=errors_list(restore))
         if cut and example.get('control_phase_implication'):
             record.update(cls='COVERED_LATER', implication=control_implication(nodes, name, path, cut, locations))
+        elif cut and 'duplicate_rule' in example:
+            other = example['duplicate_rule']
+            bound = name.split('/allOf/',1)[0]
+            property_id = bound + '/properties/blocked_reason_ref'
+            then = nodes[name.rsplit('/',1)[0]]['node']
+            branches = nodes[property_id]['node']['anyOf']
+            require(name == bound + '/allOf/0/then/properties/blocked_reason_ref/minLength' and
+                    path == ['record','blocked_reason_ref'] and other == property_id + '/anyOf/0/minLength' and
+                    then['type'] == branches[0]['type'] == 'string' and branches[1]['type'] == 'null' and
+                    then['minLength'] == branches[0]['minLength'], 'blocked reason rules changed')
+            require(locations(cut) == {
+                ('minLength', tuple(path), other), ('anyOf', tuple(path), property_id + '/anyOf'),
+                ('type', tuple(path), property_id + '/anyOf/1/type'),
+            }, 'the identical length rule did not remain')
+            record.update(cls='COVERED_LATER', implication=dict(source=other, same_document_path=path,
+                          premise='The blocked state requires a string, so the nonempty string branch applies.'))
+        elif cut and example.get('request_implication'):
+            record.update(cls='COVERED_LATER', implication=request_implication(nodes, name, path, cut, locations))
         elif cut and example.get('approval_implication'):
             record.update(cls='COVERED_LATER', implication=approval_implication(
                 nodes, name, path, cut, locations, validator))
