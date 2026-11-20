@@ -1,0 +1,41 @@
+{
+  "fixtures": [
+    {
+      "edit": [
+        1,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "edition": "v7",
+      "error": [
+        [],
+        "additionalProperties"
+      ],
+      "hash_seed": 37,
+      "root": "dg5:0c8e4db1af706f02",
+      "route": "issue/seven_input:native_compile"
+    },
+    {
+      "edit": [
+        1,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "edition": "v3",
+      "error": [
+        [],
+        "additionalProperties"
+      ],
+      "hash_seed": 37,
+      "root": "dg5:f6d28ce59c221912",
+      "route": "issue/seven_input:native_compile"
+    }
+  ],
+  "row": "dg5/issue/seven_input:native_compile/schema"
+}
