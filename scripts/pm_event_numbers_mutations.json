@@ -1135,6 +1135,16 @@
       "rule": "payload.blake3-id"
     },
     {
+      "id": "review-astramax-A19-payload-normalizes-crlf",
+      "api": "verify_payload_bytes",
+      "class": "wrong_hash",
+      "module": "pm_event_numbers",
+      "find": "blake3.blake3(raw).digest()",
+      "replace": "blake3.blake3(raw.replace(b\"\\r\\n\", b\"\\n\")).digest()",
+      "witness": "payload-crlf-original-id",
+      "rule": "payload.blake3-id"
+    },
+    {
       "id": "payload-no-media-refusal",
       "api": "verify_payload_bytes",
       "class": "removed_refusal",
@@ -3614,6 +3624,7 @@
       "rule": "Payload IDs are BLAKE3 of the exact original bytes, never another hash.",
       "mutations": [
         "payload-sha256",
+        "review-astramax-A19-payload-normalizes-crlf",
         "review-fix4-X3",
         "review-tb2-N07"
       ]

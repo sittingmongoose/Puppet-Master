@@ -10807,6 +10807,45 @@
       "single_defect": "payload_digest"
     },
     {
+      "id": "payload-crlf-original-id",
+      "op": "payload",
+      "length": 1,
+      "raw": "{\"n\":1}\r\n",
+      "route": "reference",
+      "descriptor": {
+        "byte_size": 9,
+        "id": "e30bc1e3a0ffd497bbbe9462ffcc1e66c9989143006f3091fb65fa73185285bc"
+      },
+      "conflicts": [
+        "C05",
+        "C06",
+        "C09"
+      ],
+      "output": "accepted",
+      "returns": null,
+      "target_predicate": "payload.exact_bytes"
+    },
+    {
+      "id": "payload-crlf-normalized-id",
+      "op": "payload",
+      "length": 1,
+      "raw": "{\"n\":1}\r\n",
+      "route": "reference",
+      "descriptor": {
+        "byte_size": 9,
+        "id": "f950f36a08134ac4263c95ed4d09c4c7cc1f37827303dbffba52d2c58b4fbb8e"
+      },
+      "conflicts": [
+        "C05",
+        "C06",
+        "C09"
+      ],
+      "error": "payload_digest",
+      "target_predicate": "payload_digest",
+      "enforcement": "authored",
+      "single_defect": "payload_digest"
+    },
+    {
       "id": "payload-media",
       "op": "payload",
       "length": 6,
