@@ -176,7 +176,10 @@ def _census_traps(traps):
     restoration['non_guards'] = _review_sites('factory.check', 'Skip the guard only on the restored negative.',
         call_review=['g.time.monotonic()'],
         data_operation=['if g.time.monotonic() == 6:\n    return True', 'g.time.monotonic() == 6', 'g.time.monotonic', 'g.time'])
-    return [source, metadata, repeated, wrong_root, duplicate, graph, constructor, restoration]
+    tracing = _single_guard_trap('preexisting-trace-hook', 'Refuse to use a trace hook that is already occupied.',
+                                 'untracked_refusal', occupied_trace=True, static_pass=True,
+                                 error_contains='runtime requires an exclusive trace hook')
+    return [source, metadata, repeated, wrong_root, duplicate, graph, constructor, restoration, tracing]
 
 
 def _schema_suite(g, trap, root):
@@ -415,6 +418,16 @@ def exercise(g, memory, *, scratch=None):
                                 result = g.run(suite, memory=memory, demonstrate_runtime=bool(trap.get('runtime_behind_static')))
                             finally:
                                 random.setstate(saved_random)
+                        elif trap.get('occupied_trace'):
+                            def existing_trace(frame, event, arg):
+                                return None
+                            previous = sys.gettrace()
+                            try:
+                                sys.settrace(existing_trace)
+                                result = g.run(suite, memory=memory)
+                                row['trace_preserved'] = sys.gettrace() is existing_trace
+                            finally:
+                                sys.settrace(previous)
                         elif trap.get('clock'):
                             # MemoryGate already holds its real clock. Only the fixture consumes these ticks.
                             ticks = iter(range(1, sys.maxsize))
@@ -457,6 +470,8 @@ def exercise(g, memory, *, scratch=None):
                         row['caught'] = row['caught'] and any(trap['failure_reason'] in f.get('reasons', []) for f in result['failures'])
                     if trap.get('error_contains'):
                         row['caught'] = row['caught'] and any(trap['error_contains'] in f.get('error', '') for f in result['failures'])
+                    if trap.get('occupied_trace'):
+                        row['caught'] = row['caught'] and row.get('trace_preserved') is True
                     if trap.get('static_pass'):
                         row['caught'] = row['caught'] and result.get('static', {}).get('status') == 'PASS'
                     if trap.get('static_kind'):
