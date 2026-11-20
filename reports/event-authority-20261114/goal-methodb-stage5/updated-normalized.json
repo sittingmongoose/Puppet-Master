@@ -1,0 +1,624 @@
+{
+  "accepted_branches": {
+    "optional identifier fields": {
+      "command_id": "cmd.chat.goal.update",
+      "command_instance_id": "command:TEST_ONLY:e7f04164b6",
+      "dispatch_frame_id": "frame:TEST_ONLY:2a4f4713f9d9432494701c92785ca940",
+      "idempotency_key": "sir-idempotency:TEST_ONLY:e7f04164b6",
+      "operation_id": "goal-operation:TEST_ONLY:2a4f4713f9d9432494701c92785ca940",
+      "owner_identity": {
+        "attempt_id": "TEST_ONLY:attempt",
+        "command_instance_id": "command:TEST_ONLY:e7f04164b6",
+        "execution_environment_id": "TEST_ONLY:environment:c45f4add36d8",
+        "execution_host_id": "TEST_ONLY:host:c45f4add36d8",
+        "goal_id": "TEST_ONLY:goal",
+        "named_plan_id": "TEST_ONLY:plan",
+        "operation_generation": 0,
+        "operation_id": "goal-operation:TEST_ONLY:2a4f4713f9d9432494701c92785ca940",
+        "project_home_server_id": "TEST_ONLY:server:c45f4add36d8",
+        "project_id": "TEST_ONLY-project-\u03b1-89319f1e",
+        "scope_kind": "project",
+        "server_id": "TEST_ONLY:server:c45f4add36d8",
+        "source_location_id": "TEST_ONLY:source",
+        "thread_id": "thr_TEST_ONLY_89319f1e",
+        "topology_generation": 0
+      },
+      "payload_sha256": "409197b91f8d514f8720be6b5e6c2872640708b6331778435d8f70d1f43143cb",
+      "request_ref": "request:TEST_ONLY:2a4f4713f9d9432494701c92785ca940",
+      "target_generation": 0
+    }
+  },
+  "census_sha256": "647eb062f2b9f8438e26716e3e058e1ac61193a2c266bbf12f4664495598fab7",
+  "examples": {
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/maxLength": {
+      "path": [
+        "owner_identity",
+        "operation_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/minLength": {
+      "path": [
+        "owner_identity",
+        "operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type": {
+      "path": [
+        "owner_identity",
+        "operation_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/if/properties/scope_kind/const": {
+      "normalized_selector": true,
+      "path": [
+        "owner_identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/if/required": {
+      "normalized_selector": true,
+      "path": [
+        "owner_identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/then/properties/named_plan_id/type": {
+      "path": [
+        "owner_identity"
+      ],
+      "unreachable_application": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/then/properties/project_home_server_id/type": {
+      "path": [
+        "owner_identity"
+      ],
+      "unreachable_application": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/then/properties/project_id/type": {
+      "path": [
+        "owner_identity"
+      ],
+      "unreachable_application": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/if/properties/scope_kind/const": {
+      "normalized_selector": true,
+      "path": [
+        "owner_identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/if/required": {
+      "normalized_selector": true,
+      "path": [
+        "owner_identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/maxLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_home_server_id/maxLength",
+      "path": [
+        "owner_identity",
+        "project_home_server_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/minLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_home_server_id/minLength",
+      "path": [
+        "owner_identity",
+        "project_home_server_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/type": {
+      "path": [
+        "owner_identity",
+        "project_home_server_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/maxLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_id/maxLength",
+      "path": [
+        "owner_identity",
+        "project_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/minLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_id/minLength",
+      "path": [
+        "owner_identity",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/type": {
+      "path": [
+        "owner_identity",
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "owner_identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/attempt_id/maxLength": {
+      "control_name": "optional identifier fields",
+      "path": [
+        "owner_identity",
+        "attempt_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/attempt_id/minLength": {
+      "control_name": "optional identifier fields",
+      "path": [
+        "owner_identity",
+        "attempt_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/attempt_id/type": {
+      "control_name": "optional identifier fields",
+      "path": [
+        "owner_identity",
+        "attempt_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/command_instance_id/maxLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/command_instance_id/maxLength",
+      "path": [
+        "owner_identity",
+        "command_instance_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/command_instance_id/minLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/command_instance_id/minLength",
+      "path": [
+        "owner_identity",
+        "command_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/command_instance_id/type": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/command_instance_id/type",
+      "path": [
+        "owner_identity",
+        "command_instance_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/goal_id/maxLength": {
+      "control_name": "optional identifier fields",
+      "path": [
+        "owner_identity",
+        "goal_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/goal_id/minLength": {
+      "control_name": "optional identifier fields",
+      "path": [
+        "owner_identity",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/goal_id/type": {
+      "control_name": "optional identifier fields",
+      "path": [
+        "owner_identity",
+        "goal_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/named_plan_id/maxLength": {
+      "path": [
+        "owner_identity",
+        "named_plan_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/named_plan_id/minLength": {
+      "path": [
+        "owner_identity",
+        "named_plan_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/named_plan_id/type": {
+      "path": [
+        "owner_identity",
+        "named_plan_id"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/operation_generation/minimum": {
+      "path": [
+        "owner_identity",
+        "operation_generation"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/operation_generation/type": {
+      "path": [
+        "owner_identity",
+        "operation_generation"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_home_server_id/maxLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/maxLength",
+      "path": [
+        "owner_identity",
+        "project_home_server_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_home_server_id/minLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/minLength",
+      "path": [
+        "owner_identity",
+        "project_home_server_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_home_server_id/type": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/type",
+      "path": [
+        "owner_identity",
+        "project_home_server_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_id/maxLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/maxLength",
+      "path": [
+        "owner_identity",
+        "project_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_id/minLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/minLength",
+      "path": [
+        "owner_identity",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_id/type": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/type",
+      "path": [
+        "owner_identity",
+        "project_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/scope_kind/enum": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/scope_kind/const",
+      "path": [
+        "owner_identity",
+        "scope_kind"
+      ],
+      "value": "TEST_ONLY:other"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/source_location_id/maxLength": {
+      "control_name": "optional identifier fields",
+      "path": [
+        "owner_identity",
+        "source_location_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/source_location_id/minLength": {
+      "control_name": "optional identifier fields",
+      "path": [
+        "owner_identity",
+        "source_location_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/source_location_id/type": {
+      "control_name": "optional identifier fields",
+      "path": [
+        "owner_identity",
+        "source_location_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/thread_id/maxLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/thread_id/maxLength",
+      "path": [
+        "owner_identity",
+        "thread_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/thread_id/minLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/thread_id/minLength",
+      "path": [
+        "owner_identity",
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/thread_id/type": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/thread_id/type",
+      "path": [
+        "owner_identity",
+        "thread_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/topology_generation/minimum": {
+      "path": [
+        "owner_identity",
+        "topology_generation"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/topology_generation/type": {
+      "path": [
+        "owner_identity",
+        "topology_generation"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/required": {
+      "member": [
+        "remove",
+        "scope_kind"
+      ],
+      "path": [
+        "owner_identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/type": {
+      "path": [
+        "owner_identity"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/command_id/const": {
+      "path": [
+        "command_id"
+      ],
+      "value": "cmd.chat.goal.updatex"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/command_instance_id/maxLength": {
+      "path": [
+        "command_instance_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/command_instance_id/minLength": {
+      "path": [
+        "command_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/command_instance_id/type": {
+      "path": [
+        "command_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/dispatch_frame_id/maxLength": {
+      "path": [
+        "dispatch_frame_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/dispatch_frame_id/minLength": {
+      "path": [
+        "dispatch_frame_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/dispatch_frame_id/type": {
+      "path": [
+        "dispatch_frame_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/idempotency_key/maxLength": {
+      "path": [
+        "idempotency_key"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/idempotency_key/minLength": {
+      "path": [
+        "idempotency_key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/idempotency_key/type": {
+      "path": [
+        "idempotency_key"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/operation_id/maxLength": {
+      "path": [
+        "operation_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/operation_id/minLength": {
+      "path": [
+        "operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/operation_id/type": {
+      "path": [
+        "operation_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/command_instance_id/maxLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/command_instance_id/maxLength",
+      "path": [
+        "owner_identity",
+        "command_instance_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/command_instance_id/minLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/command_instance_id/minLength",
+      "path": [
+        "owner_identity",
+        "command_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/command_instance_id/type": {
+      "path": [
+        "owner_identity",
+        "command_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/scope_kind/const": {
+      "application_identity": true,
+      "path": [
+        "owner_identity",
+        "scope_kind"
+      ],
+      "value": "application"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/thread_id/maxLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/thread_id/maxLength",
+      "path": [
+        "owner_identity",
+        "thread_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/thread_id/minLength": {
+      "control_name": "optional identifier fields",
+      "normalized_paired_rule": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/thread_id/minLength",
+      "path": [
+        "owner_identity",
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/thread_id/type": {
+      "path": [
+        "owner_identity",
+        "thread_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/required": {
+      "member": [
+        "remove",
+        "thread_id"
+      ],
+      "path": [
+        "owner_identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/payload_sha256/pattern": {
+      "path": [
+        "payload_sha256"
+      ],
+      "value": "1566e4874e033e9d33d5b66dca6c8ad384652744725b0754cb715edc7b5c23e1\n"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/payload_sha256/type": {
+      "path": [
+        "payload_sha256"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/request_ref/maxLength": {
+      "path": [
+        "request_ref"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/request_ref/minLength": {
+      "path": [
+        "request_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/request_ref/type": {
+      "path": [
+        "request_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/target_generation/minimum": {
+      "path": [
+        "target_generation"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/target_generation/type": {
+      "path": [
+        "target_generation"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/required": {
+      "member": [
+        "remove",
+        "request_ref"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/type": {
+      "path": [],
+      "value": true
+    }
+  },
+  "family": "goal.updated",
+  "root": "dg5:13948e69a9e6e168",
+  "route": "admit",
+  "row": "dg5/dgu/sir/normalized/schema",
+  "site": [
+    "scripts/pm_goal_dg_u_owners.py",
+    750
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "transaction": true
+}

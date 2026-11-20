@@ -737,6 +737,84 @@ def receipt_timestamp_implication(nodes, name, path, errors, locations, validato
                 premise='The only string with length less than one is empty. The pinned date-time format refuses it.')
 
 
+IDENTITY = 'https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope'
+NORMALIZED = ('https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/'
+              'goal_update_command_custody.schema.json#/$defs/NormalizedIdentity')
+
+
+def normalized_scope(nodes):
+    identity = nodes[IDENTITY]['node']
+    normalized = nodes[NORMALIZED + '/properties/owner_identity']['node']
+    require(normalized['allOf'][0]['$ref'] == IDENTITY and
+            normalized['allOf'][1]['properties']['scope_kind']['const'] == 'project' and
+            'scope_kind' in identity['required'] and
+            [branch['if']['properties']['scope_kind']['const'] for branch in identity['allOf']] ==
+            ['application', 'project'] and
+            all(branch['if']['required'] == ['scope_kind'] for branch in identity['allOf']),
+            'normalized identity scope premise changed')
+
+
+def normalized_rule_implication(nodes, name, path, errors, locations, other):
+    normalized_scope(nodes)
+    require(len(path) == 2 and path[0] == 'owner_identity', 'normalized identity implication path changed')
+    member = path[1]
+    node, keyword = name.rsplit('/', 1)
+    active, active_keyword = other.rsplit('/', 1)
+    generic = IDENTITY + '/properties/' + member
+    if member in ('project_id', 'project_home_server_id'):
+        enforced = IDENTITY + '/allOf/1/then/properties/' + member
+    else:
+        require(member in ('command_instance_id', 'thread_id', 'scope_kind'), 'unknown normalized identity implication')
+        enforced = NORMALIZED + '/properties/owner_identity/allOf/1/properties/' + member
+    a, b = nodes[node]['node'], nodes[active]['node']
+    require({node, active} == {generic, enforced} and locations(errors) == {(active_keyword, tuple(path), other)},
+            'the paired normalized identity message did not remain on the same field')
+    if keyword == 'enum':
+        require(node == generic and active_keyword == 'const' and b['const'] in a['enum'],
+                'scope constant no longer implies the identity enumeration')
+    else:
+        require(keyword == active_keyword and (
+            keyword in ('minLength', 'maxLength') and a[keyword] == b[keyword] or
+            keyword == 'type' and (a[keyword] == b[keyword] or
+                                   node == generic and a[keyword] == ['string', 'null'] and b[keyword] == 'string')),
+            'the paired normalized identity constraints no longer imply each other on this field')
+    return dict(source=other, same_document_path=path,
+                premise='Both constraints apply to the same field of the required project identity.')
+
+
+def normalized_selector_trial(nodes, validator, go, control, name, disabled):
+    normalized_scope(nodes)
+    data = copy.deepcopy(control)
+    identity = data['owner_identity']
+    branch = name.split('/if/', 1)[0]
+    suffix = name[len(branch):]
+    application = IDENTITY + '/allOf/0'
+    project = IDENTITY + '/allOf/1'
+    require(branch in (application, project) and suffix in ('/if/required', '/if/properties/scope_kind/const'),
+            'unknown normalized identity selector')
+    fields = ('project_id', 'project_home_server_id')
+    if suffix == '/if/required':
+        del identity['scope_kind']
+        if branch == project:
+            identity['project_id'] = None
+            fields = ('project_id',)
+        expected_original = {IDENTITY + '/required'}
+    elif branch == project:
+        identity.update(scope_kind='application', project_id=None, project_home_server_id=None, named_plan_id=None)
+        expected_original = {NORMALIZED + '/properties/owner_identity/allOf/1/properties/scope_kind/const'}
+    else:
+        expected_original = set()
+    expected_added = {branch + '/then/properties/' + field + '/type' for field in fields}
+    before = go.errors_of(validator, data)
+    cut = go.errors_of(validator, data, disabled)
+    restored = go.errors_of(validator, data)
+    require(go.locations(before) == expected_original and go.locations(cut) == expected_original | expected_added and
+            errors_list(before) == errors_list(restored), 'disabling this identity selector did not change the exact branch messages')
+    return dict(cls='SELECTOR_OR_NEGATED', input=data, original=errors_list(before),
+                cut=errors_list(cut), restored=errors_list(restored),
+                source=branch, premise='The outer definition requires a project scope and the identity requires scope_kind.')
+
+
 def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check, branches=None):
     import pm_goal_dg5_closure as closure
     import pm_goal_go_schema_closure as go
@@ -772,6 +850,18 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         require(not list(plain.iter_errors(control)), f'{name}: branch control refused')
         guard = closure._guard_for_location(name)
         disable = () if disabled_check == 'rule' else {guard}
+        if example.get('normalized_selector'):
+            result[name] = normalized_selector_trial(nodes, validator, go, control, name, disable)
+            continue
+        if example.get('unreachable_application'):
+            normalized_scope(nodes)
+            node = name.rsplit('/', 1)[0]
+            require(node.startswith(IDENTITY + '/allOf/0/then/properties/'), 'unexpected unreachable identity rule')
+            premise = go.pinned_proof(nodes[node], nodes, validator, inventory[name])
+            require(premise and premise['cls'] == 'UNREACHABLE' and not go.errors_of(validator, control, disable),
+                    'application-only rule is reachable under the project pin')
+            result[name] = premise
+            continue
         if 'selector_messages' in example:
             cut = go.errors_of(validator, control, disable)
             restored = go.errors_of(validator, control)
@@ -807,6 +897,11 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
                                 restored=errors_list(restored), condition=name)
             continue
         invalid = edit_example(go, control, path, example)
+        if example.get('application_identity'):
+            require(name == NORMALIZED + '/properties/owner_identity/allOf/1/properties/scope_kind/const' and
+                    path == ['owner_identity', 'scope_kind'] and example['value'] == 'application',
+                    'unexpected application identity example')
+            invalid['owner_identity'].update(project_id=None, project_home_server_id=None, named_plan_id=None)
         before = go.errors_of(validator, invalid)
         actual = list(plain.iter_errors(invalid))
         require(errors_list(before) == errors_list(actual), f'{name}: original and instrumented errors differ')
@@ -850,6 +945,9 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         elif cut and example.get('receipt_timestamp_implication'):
             record.update(cls='COVERED_LATER', implication=receipt_timestamp_implication(
                 nodes, name, path, cut, locations, validator))
+        elif cut and 'normalized_paired_rule' in example:
+            record.update(cls='COVERED_LATER', implication=normalized_rule_implication(
+                nodes, name, path, cut, locations, example['normalized_paired_rule']))
         elif cut:
             gaps[name] = record
             continue
