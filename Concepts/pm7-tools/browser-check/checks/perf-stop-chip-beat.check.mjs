@@ -555,20 +555,19 @@ export function judgeSpeed(R) {
 		if (!speed) continue;
 		const factor = SPEED_FACTOR[speed];
 		const end = s + 1 < marks.length ? marks[s + 1].i : R.rows.length;
-		const lastG = {}, lastB = {}, lastRow = {};
+		const lastB = {}, lastRow = {};
 		let nier = false, glow = false;
 		for (let i = m.i; i < end && i < R.rows.length; i++) {
 			const r = R.rows[i];
 			if (!r || (r.flow !== 'waiting' && r.flow !== 'flowing')) continue;
 			if (r.nier === 'on') nier = true;
 			lastRow[r.flow] = r;
-			if (r.g && r.g.dur > 0) lastG[r.flow] = r.g;
 			if (r.b && r.b.dur > 0) { lastB[r.flow] = r.b; glow = true; }
 		}
 		seen.push(speed);
 		for (const flow of ['waiting', 'flowing']) {
-			const glyph = lastG[flow], backlight = lastB[flow];
-			if (!glyph) { bad.push({ speed, flow, missing: true }); continue; }
+			const term = lastRow[flow], glyph = term?.g, backlight = lastB[flow];
+			if (!(glyph?.dur > 0)) { bad.push({ speed, flow, layer: 'glyph', missing: true }); continue; }
 			// PM7PERF-STOPCHIP-SPEED-STALE-BACKLIGHT (R65 A1): the pace's terminal sample decides whether the
 			// backlight is there. An earlier scaled sample does not stand in for a later missing one: a glyph
 			// still sampled while the backlight has disappeared is a loop the run no longer shows, and a look
@@ -576,8 +575,7 @@ export function judgeSpeed(R) {
 			// the backlight, and its Fast window can still catch a glow that the look's restyle then drops (the
 			// real page, NieR Dark, Alexis 2026-11-16: this rule first failed it), so a NieR sample with a glyph
 			// and no backlight is the look's normal state. NieR's glyph-only allowance is otherwise unchanged.
-			const term = lastRow[flow];
-			if (term && term.g && term.g.dur > 0 && !(term.b && term.b.dur > 0) && term.nier !== 'on') {
+			if (!(term.b?.dur > 0) && term.nier !== 'on') {
 				bad.push({ speed, flow, layer: 'backlight', missing: true });
 				continue;
 			}

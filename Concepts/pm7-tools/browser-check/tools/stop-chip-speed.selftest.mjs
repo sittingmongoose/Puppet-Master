@@ -124,4 +124,11 @@ assert.equal(nierGone.ok, true, `NieR dropping its glow inside the Fast window m
 const notNierGone = nierGlowThenGone();
 for (const r of notNierGone.rows) delete r.nier;
 assert.equal(judge(notNierGone).ok, false, 'the same disappearing backlight outside NieR must fail');
-console.log('stop-chip-speed: 11 cases pass');
+// R74 C2: terminal loss of both loops must fail every speed/cadence, even with a good earlier sample.
+const bothGone = staleBacklightPage();
+for (let i = 1; i < bothGone.rows.length; i += 2) delete bothGone.rows[i].g;
+const noLoops = judge(bothGone);
+assert.equal(noLoops.ok, false, 'earlier durations cannot replace missing terminal loops');
+assert.deepEqual(noLoops.bad.filter((x) => x.missing && x.layer === 'glyph').map((x) => `${x.speed}/${x.flow}`).sort(),
+	['Fast/flowing', 'Fast/waiting', 'Slow/flowing', 'Slow/waiting'], 'all four terminal glyphs are missing');
+console.log('stop-chip-speed: 12 cases pass');
