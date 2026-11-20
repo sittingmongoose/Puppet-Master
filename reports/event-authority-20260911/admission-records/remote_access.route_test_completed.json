@@ -3,8 +3,8 @@
  "event_type": "remote_access.route_test_completed",
  "family_id": "event-family-remote-access-route-test-completed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
- "decision_ref": "Plans/Decision_Log.md#DL-2368",
- "decision_section_sha256": "07f3f9fbcfd506c1e3d97f1176738d03797799dc787f309b0e2e56595e5e8ff6",
+ "decision_ref": "Plans/Decision_Log.md#DL-2556",
+ "decision_section_sha256": "9df50e40d5406c5cee318d8b8d8f7c9809b37eaa8d55da4cee99548ca80f747d",
  "registry_before": {
   "revision": "2026-11-16.231",
   "sha256": "c0872dedd7fbbc06cb0900f2a3a22042af25524442a22e0bc738391e466bb387",
@@ -15,10 +15,10 @@
   "sha256": "9b3ddee04154b9ccba18d28a812def09d37a90cc396fe765fe7bad86a011d77e",
   "family_count": 451
  },
- "registry_row_sha256": "7074696c01245268ccb42009354b6920d5809af44a1b52d43080005f599ad64a",
+ "registry_row_sha256": "6d15df4bdc64c7b55ad7d3d1e9bd197fa57eab51371847279e8fe1d893e9c1a4",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/remote_access.route_test_completed.json",
-  "sha256": "32f4a8223cc88ae85508fb51dd5e1d2488344b7ca0ea5dd1469a3b876d277047"
+  "sha256": "5422f48ae444167e26a9f5889a8a7000448e10034eded7b50c7ce6b03a2a93ea"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,13 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_record_sha256": "3729a9df7d145569b9d9539551a960155e23ed8e9da78c1ce6827844317000a3",
-  "source_assessment_sha256": "7b4a53995a457967ad186dacb1e04594d353ebc897bc0af969276f01e3ad3cca",
-  "source_decision_section_sha256": "df4a01c458451607736777236c361c8861b693e76107599fa4c84a3c17617895",
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "bc4c93d6e56efe438765b691a6658323d7fae875",
+  "source_record_sha256": "3e153a45d7bc301ee103fecc850a9f3f2299e50b02e273bf14b5b602986a897a",
+  "source_assessment_sha256": "32f4a8223cc88ae85508fb51dd5e1d2488344b7ca0ea5dd1469a3b876d277047",
+  "source_decision_section_sha256": "07f3f9fbcfd506c1e3d97f1176738d03797799dc787f309b0e2e56595e5e8ff6",
   "original_registry_checkpoints_preserved": true
- }
+ },
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2368",
+ "postfix_correction": "reports/event-authority-20261116/admission-merge-3/corrections/remote_access.route_test_completed.json"
 }
