@@ -207,9 +207,9 @@ def save_proof(output, collector, row, site, table_report, table_path, family):
             json.dump(value, stream, sort_keys=True)
 
 
-def run(name, output, *, leave_enabled=False, cases=CASES, family=FAMILY):
+def run(name, output, *, leave_enabled=False, cases=CASES, family=FAMILY, row=None):
     source, line, expected, make = cases[name]
-    row = bridge.site_name(source, line)
+    row = row or bridge.site_name(source, line)
     site = (source, line)
     output.mkdir(parents=True)
     tables.DISCOVERY = True
