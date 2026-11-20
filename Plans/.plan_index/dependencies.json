@@ -5527,6 +5527,7 @@
     "DL-2551",
     "DL-2552",
     "DL-2553",
+    "DL-2554",
     "DL-451",
     "DL-694",
     "F3-585",
@@ -53021,6 +53022,21 @@
     {
       "edge_type": "depends_on",
       "from": "DL-2553",
+      "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2554",
+      "to": "DL-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2554",
+      "to": "DL-2366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2554",
       "to": "DL-400"
     },
     {
@@ -163879,7 +163895,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-20T01:15:26Z",
+  "generated_at_utc": "2026-11-20T01:16:19Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -216508,6 +216524,23 @@
         "heading_level": 3,
         "heading_line": 60351,
         "line": 60353,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge3_postfix",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2554",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_admission",
+      "source_location": {
+        "heading": "DL-2554: Event Authority corrects remote_access.route_preference_changed (merge 3 post-landing)",
+        "heading_level": 3,
+        "heading_line": 60413,
+        "line": 60415,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -326612,10 +326645,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27635,
+    "depends_on_edge_count": 27638,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30860,
-    "node_count": 9572,
+    "edge_count": 30863,
+    "node_count": 9573,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0

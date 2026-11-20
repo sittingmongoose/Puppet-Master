@@ -1,0 +1,153 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "remote_access.route_preference_changed",
+ "findings": [
+  1,
+  4
+ ],
+ "source_commit": "0c69c77d95cf96df0b1e38a6cdc45c2a5898a100",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2366",
+ "decision_ref": "Plans/Decision_Log.md#DL-2554",
+ "registry_before": {
+  "revision": "2026-11-19.103",
+  "sha256": "78ea2e0cdf33fbcc3d88ebde9afce75f5cc96dc670348abd51768c4202fc5685",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.104",
+  "sha256": "9908fcbfda36cdc2f246ac3057d1241d07c9b3899bf3b7b74d227dd018ffea7a",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-remote-access-route-preference-changed",
+  "family_revision": "1.0.0",
+  "event_type": "remote_access.route_preference_changed",
+  "scope_policy": "application_only",
+  "semantic_owner_doc": "Plans/Remote_Access_System.md#RAS-1407",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-1407",
+  "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_preference_changed/1.0.0/schema.json",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/w3e/remote_access_route_preference_changed.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_preference_changed/1.0.0/schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Remote_Access_System.md#RAS-1407",
+   "Plans/Contracts_V0.md#CV-1407",
+   "Plans/storage-plan.md#SP-1407",
+   "Plans/event_payloads/w3e/remote_access_route_preference_changed.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-remote-access-route-preference-changed",
+  "family_revision": "1.0.0",
+  "event_type": "remote_access.route_preference_changed",
+  "scope_policy": "application_only",
+  "semantic_owner_doc": "Plans/Remote_Access_System.md#RAS-1407",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-1407",
+  "payload_schema_id": "pm.event_payload.remote_access.route_preference_changed.v1",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/w3e/remote_access_route_preference_changed.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_preference_changed/1.0.0/schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Remote_Access_System.md#RAS-1407",
+   "Plans/Contracts_V0.md#CV-1407",
+   "Plans/storage-plan.md#SP-1407",
+   "Plans/event_payloads/w3e/remote_access_route_preference_changed.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "Plans/event_payloads/w3e/remote_access_route_preference_changed.schema.json#/properties/schema_id/const"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "f8e2792378a76f9e5cbd3c05937a66b11990a9ac4966982a31e68c139b12588a",
+ "predecessor_assessment_sha256": "336d395692b05b787b2ef3444a2ea8466b6b5feb66e3b3da650d9ee268eb51aa",
+ "applied_record_sha256": "36d7d543375fd5183841e90afac1a9cc3c45f06ec8a12ccc56d8a05be53b7842",
+ "applied_assessment_sha256": "0781a76058cc17ffd94cc81f207598b1ee676b7ec3e822441c14c7f8701d7d87",
+ "citation_changes": [
+  {
+   "ordinal": 1,
+   "old": {
+    "path": "Plans/Contracts_V0.md",
+    "unit": "CV-1407",
+    "line_start": 50851,
+    "line_end": 50851,
+    "quote": "Current selected assignment (2026-11-19): remote_access.route_preference_changed@1.0.0 is registered for application_only",
+    "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+    "quote_check": "exact",
+    "quote_scope": "unit CV-1407, Plans/Contracts_V0.md:50820-50899",
+    "source_citation": {
+     "path": "Plans/Contracts_V0.md",
+     "unit": "CV-1407",
+     "line_start": 48728,
+     "line_end": 48728,
+     "quote": "retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the delet",
+     "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/Contracts_V0.md",
+    "unit": "CV-1407",
+    "line_start": 50854,
+    "line_end": 50860,
+    "quote": "  Current selected assignment (2026-11-19): remote_access.route_preference_changed@1.0.0 is registered for application_only\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2366. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0;\n  Plans/storage-plan.md#SP-1407 owns the event policy''s existing anchors, counts, holds and deletion rules. Original\n  sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to\n  them. Current append/publication still requires the exact selected schema/scope, original custody, current permission,\n  receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native\n  execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit CV-1407, Plans/Contracts_V0.md:50823-50902"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}
