@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L61583
+Source lines: L28747-L61645
 
-Source SHA256: `fa3acd10e85b7a9bb1852eb32bceb5bb8326c069ef96195ab945d2563cbeac01`
+Source SHA256: `b7095a94ecd470763299dadb036976f5d46f814b748320bbcc4ed87424bd104b`
 
 ---
 
@@ -32842,6 +32842,68 @@ preserved_exact_tokens:
 - 9171135a40b0554ada69ca7d0bfbfeb8da93472622ba192cd15b24ea01e2e1c8
 - 2026-11-19.121
 - 2026-11-19.122
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2573: Event Authority corrects subagent.failed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2573
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for subagent.failed only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [2].
+  The original admission authority remains Plans/Decision_Log.md#DL-2410; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 4a212403370c8f6ce6799e03e43546a4916167432b9ea15f1e5226fa4bbc0631.
+  Its scope is application_or_project. Payload editions: application `pm.event_payload.subagent_failed.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.event_payload.subagent_failed.v1@1.0.0` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.122, 518 families, SHA-256 f38ea2af9204838a89b074884d68c191750de7b653dc33689e7b9f445599a965,
+  to 2026-11-19.123, 518 families, SHA-256 07548071d945e6668a48442a504cd09a607e22036b20078c7e7724ad1bae2970, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/subagent.failed.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/subagent.failed.json, SHA-256 b4166617a8bd949d757abf7579afccb23694e0a93ab1e23fbaa2966213feac3f.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.273 SHA-256 0616ce1fd12d1195764d8d0010ea56aab3d4b3b247dd77f56bbccd9597cd606c;
+  after 2026-11-16.274 SHA-256 ec703247d0d906fc0d2815d39a4b38668666897e4b56f14aa69333924903c5fd. Existing semantic owner Plans/orchestrator-subagent-integration.md#OSI-691,
+  payload owner Plans/orchestrator-subagent-integration.md#OSI-691, resource Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_failed
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2410
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2410
+preserved_exact_tokens:
+- subagent.failed
+- 4a212403370c8f6ce6799e03e43546a4916167432b9ea15f1e5226fa4bbc0631
+- 2026-11-19.122
+- 2026-11-19.123
 negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
