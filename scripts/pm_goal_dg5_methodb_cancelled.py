@@ -111,8 +111,9 @@ def fixture(declare, route, directory):
                 target = families['workflow_head'], owner.s1.head_key(args[0])
         elif method == '_filesafe_invocation':
             realm, operation, _ = args
-            journal = world.seeder.seed('filesafe_consumer', realm + 'JournalSelector')['family_id']
-            target = journal, world.filesafe.key(journal, operation)
+            selector = 'BindingSelector' if family == 'executor_filesafe_invocation_binding' else 'JournalSelector'
+            physical_family = world.seeder.seed('filesafe_consumer', realm + selector)['family_id']
+            target = physical_family, world.filesafe.key(physical_family, operation)
         else:
             target = args[0], args[3]
         return world, action, (target, args, kwargs)
@@ -356,6 +357,7 @@ def process_role_or_barrier_enum(nodes, name, path, cut, covering):
 
     pairs = {
         ('value', 'invocation', 'role'): ('DispatchInvocation', 'ProcessInvocation', 'process'),
+        ('invocation', 'role'): ('DispatchInvocation', 'FileSafeInvocation', 'filesafe'),
         ('record', 'first_append_receipt', 'durability_class'): ('AppendReceipt', 'FirstBarrier', 'barrier'),
     }
     require(tuple(path) in pairs, 'unexpected enumeration path')
@@ -732,10 +734,9 @@ def publish(source, out, declare, collector, reports, inventories, table_path):
     write(bindings, value)
 
 
-def fresh_root(census, reference, scope, row, route, binding, closure):
+def fresh_root(census, reference, row, route, binding, closure):
     ident = route['root']
-    if ident not in scope['roots_with_inventory_variants']:
-        require('fresh_literal_sha256' not in route, f'{ident}: the original inventory is exact')
+    if 'fresh_literal_sha256' not in route:
         return census['roots'][ident]
 
     matches = [variant for variant in reference['roots'][ident]
@@ -770,7 +771,10 @@ def run(args):
     require({tuple(route['site']) for route in declare['routes']} == {tuple(site) for site in declare['sites']},
             'every census site needs an owner call')
     reference = None
-    if census_row['roots_with_inventory_variants']:
+    fresh_roots = {route['root'] for route in declare['routes'] if 'fresh_literal_sha256' in route}
+    require(set(census_row['roots_with_inventory_variants']) <= fresh_roots,
+            'conflicting roots need a published rule list')
+    if fresh_roots:
         expected_sha = declare.get('fresh_reference_sha256')
         require(args.fresh_reference and sha(args.fresh_reference) == expected_sha,
                 'a conflicting rule list requires the pinned fresh reference')
@@ -778,7 +782,7 @@ def run(args):
             reference = json.load(stream)
         require(reference['tools'] == revision and reference['sizing']['sha256'] == declare['census_sha256'],
                 'fresh references use a different closure tool or sizing census')
-        require(set(census_row['roots_with_inventory_variants']) <= set(reference['roots']),
+        require(fresh_roots <= set(reference['roots']),
                 'fresh references omit a conflicting root')
     else:
         require('fresh_reference_sha256' not in declare, 'the original census is exact for this row')
@@ -826,7 +830,7 @@ def run(args):
             ident = route['root']
             if reference is None and ident in reports:
                 continue
-            root = fresh_root(census, reference, census_row, row, route, binding, closure)
+            root = fresh_root(census, reference, row, route, binding, closure)
             require(all(root[key] == value for key, value in binding.items()),
                     f'owner validator binding changed for {ident}')
             ids = root['clause_ids']

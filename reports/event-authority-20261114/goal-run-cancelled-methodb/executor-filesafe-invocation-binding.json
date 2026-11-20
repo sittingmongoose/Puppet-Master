@@ -1,0 +1,734 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:e98ed2d57a3095c5": {
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "invocation"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/attempt_id/minLength": {
+        "path": [
+          "invocation",
+          "attempt_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/attempt_id/type": {
+        "path": [
+          "invocation",
+          "attempt_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/attempt_number/minimum": {
+        "path": [
+          "invocation",
+          "attempt_number"
+        ],
+        "value": 0
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/attempt_number/type": {
+        "path": [
+          "invocation",
+          "attempt_number"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/dispatch_operation_id/minLength": {
+        "path": [
+          "invocation",
+          "dispatch_operation_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/dispatch_operation_id/type": {
+        "path": [
+          "invocation",
+          "dispatch_operation_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/dispatch_transaction_id/minLength": {
+        "path": [
+          "invocation",
+          "dispatch_transaction_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/dispatch_transaction_id/type": {
+        "path": [
+          "invocation",
+          "dispatch_transaction_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/effect_owner_epoch/minimum": {
+        "path": [
+          "invocation",
+          "effect_owner_epoch"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/effect_owner_epoch/type": {
+        "path": [
+          "invocation",
+          "effect_owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/effect_owner_ref/minLength": {
+        "path": [
+          "invocation",
+          "effect_owner_ref"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/effect_owner_ref/type": {
+        "path": [
+          "invocation",
+          "effect_owner_ref"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/invocation_id/minLength": {
+        "path": [
+          "invocation",
+          "invocation_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/invocation_id/type": {
+        "path": [
+          "invocation",
+          "invocation_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/role/enum": {
+        "path": [
+          "invocation",
+          "role"
+        ],
+        "process_role_or_barrier_enum": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocation/allOf/1/properties/role/const",
+        "value": "toolx"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "invocation"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/type": {
+        "path": [
+          "invocation"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "invocation",
+          "execution_unit"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "path": [
+          "invocation",
+          "execution_unit",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "path": [
+          "invocation",
+          "execution_unit",
+          "family_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          "invocation",
+          "execution_unit",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          "invocation",
+          "execution_unit",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          "invocation",
+          "execution_unit",
+          "physical_value_sha256"
+        ],
+        "value": "4caad07372c5ddbd9273673aac45f09a68d6f0184571da11db95b12b1fc4c29c\n"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "path": [
+          "invocation",
+          "execution_unit",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "path": [
+          "invocation",
+          "execution_unit",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "path": [
+          "invocation",
+          "execution_unit",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "path": [
+          "invocation",
+          "execution_unit",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "path": [
+          "invocation",
+          "execution_unit",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "invocation",
+          "execution_unit",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          "invocation",
+          "execution_unit",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "invocation",
+          "execution_unit"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "invocation",
+          "execution_unit"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "invocation",
+          "scope"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/goal_id/minLength": {
+        "path": [
+          "invocation",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/goal_id/type": {
+        "path": [
+          "invocation",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/goal_run_id/minLength": {
+        "path": [
+          "invocation",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/goal_run_id/type": {
+        "path": [
+          "invocation",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/project_id/minLength": {
+        "path": [
+          "invocation",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/project_id/type": {
+        "path": [
+          "invocation",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/storage_instance_id/minLength": {
+        "path": [
+          "invocation",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/storage_instance_id/type": {
+        "path": [
+          "invocation",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/workgraph_id/minLength": {
+        "path": [
+          "invocation",
+          "scope",
+          "workgraph_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/workgraph_id/type": {
+        "path": [
+          "invocation",
+          "scope",
+          "workgraph_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/workgraph_revision/minimum": {
+        "path": [
+          "invocation",
+          "scope",
+          "workgraph_revision"
+        ],
+        "value": 0
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/workgraph_revision/type": {
+        "path": [
+          "invocation",
+          "scope",
+          "workgraph_revision"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/worknode_id/minLength": {
+        "path": [
+          "invocation",
+          "scope",
+          "worknode_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/worknode_id/type": {
+        "path": [
+          "invocation",
+          "scope",
+          "worknode_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "invocation",
+          "scope"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/type": {
+        "path": [
+          "invocation",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocation/allOf/1/properties/role/const": {
+        "path": [
+          "invocation",
+          "role"
+        ],
+        "value": "tool"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/admitted_at_utc/format": {
+        "path": [
+          "admitted_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/admitted_at_utc/type": {
+        "path": [
+          "admitted_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/execution_host_ref/minLength": {
+        "path": [
+          "execution_host_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/execution_host_ref/type": {
+        "path": [
+          "execution_host_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_admission_transaction_id/minLength": {
+        "path": [
+          "original_admission_transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_admission_transaction_id/type": {
+        "path": [
+          "original_admission_transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_command_id/const": {
+        "path": [
+          "original_command_id"
+        ],
+        "value": "cmd.runtime.restore_safe_point_then_retryx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_filesafe_operation_id/minLength": {
+        "path": [
+          "original_filesafe_operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_filesafe_operation_id/type": {
+        "path": [
+          "original_filesafe_operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_filesafe_owner_epoch/minimum": {
+        "path": [
+          "original_filesafe_owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_filesafe_owner_epoch/type": {
+        "path": [
+          "original_filesafe_owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_filesafe_owner_ref/minLength": {
+        "path": [
+          "original_filesafe_owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_filesafe_owner_ref/type": {
+        "path": [
+          "original_filesafe_owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/profile/const": {
+        "path": [
+          "profile"
+        ],
+        "value": "local_safe_point_exact_replace_v1x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/redaction_profile/const": {
+        "path": [
+          "redaction_profile"
+        ],
+        "value": "redacted_refs_onlyx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/restore_transaction_id/minLength": {
+        "path": [
+          "restore_transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/restore_transaction_id/type": {
+        "path": [
+          "restore_transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_filesafe_invocation_binding.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/source_location_ref/minLength": {
+        "path": [
+          "source_location_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/source_location_ref/type": {
+        "path": [
+          "source_location_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/storage_instance_id/minLength": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/storage_instance_id/type": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/type": {
+        "path": [],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "original_canonical_payload"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/attempt_id/minLength": {
+        "path": [
+          "original_canonical_payload",
+          "attempt_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/attempt_id/type": {
+        "path": [
+          "original_canonical_payload",
+          "attempt_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/baseline_target/const": {
+        "path": [
+          "original_canonical_payload",
+          "baseline_target"
+        ],
+        "value": "safe_pointx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/blocked_sequence/minimum": {
+        "path": [
+          "original_canonical_payload",
+          "blocked_sequence"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/blocked_sequence/type": {
+        "path": [
+          "original_canonical_payload",
+          "blocked_sequence"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/node_id/minLength": {
+        "path": [
+          "original_canonical_payload",
+          "node_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/node_id/type": {
+        "path": [
+          "original_canonical_payload",
+          "node_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/project_id/minLength": {
+        "path": [
+          "original_canonical_payload",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/project_id/type": {
+        "path": [
+          "original_canonical_payload",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/repo_id/minLength": {
+        "path": [
+          "original_canonical_payload",
+          "repo_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/repo_id/type": {
+        "path": [
+          "original_canonical_payload",
+          "repo_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/run_id/minLength": {
+        "path": [
+          "original_canonical_payload",
+          "run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/run_id/type": {
+        "path": [
+          "original_canonical_payload",
+          "run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/safe_point_id/minLength": {
+        "path": [
+          "original_canonical_payload",
+          "safe_point_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/safe_point_id/type": {
+        "path": [
+          "original_canonical_payload",
+          "safe_point_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/worktree_id/minLength": {
+        "path": [
+          "original_canonical_payload",
+          "worktree_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/worktree_id/type": {
+        "path": [
+          "original_canonical_payload",
+          "worktree_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/required": {
+        "member": [
+          "remove",
+          "project_id"
+        ],
+        "path": [
+          "original_canonical_payload"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/type": {
+        "path": [
+          "original_canonical_payload"
+        ],
+        "value": null
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "fresh_reference_sha256": "1a8193ac78dbe047dd7fda0f897b004fb4a6cf64a16ebbbdd9a875f47296e43a",
+  "routes": [
+    {
+      "call": "filesafe_invocation",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "original_profile",
+      "fresh_literal_sha256": "ad722424a77d4b729ca66e23dcf7f6070c8e7ad1c10cd44e4ad4fa22d6148624",
+      "mutation": true,
+      "realm": "filesafe_consumer",
+      "refusal": "issue/executor_filesafe_invocation_binding/schema/",
+      "restore": "rollback",
+      "root": "dg5:e98ed2d57a3095c5",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ]
+    }
+  ],
+  "row": "dg5/issue/executor_filesafe_invocation_binding/schema",
+  "sites": [
+    [
+      "scripts/pm_goal_dg_r_world.py",
+      446
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}
