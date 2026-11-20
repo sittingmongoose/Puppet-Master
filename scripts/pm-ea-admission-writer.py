@@ -541,10 +541,20 @@ def refresh_evidence(item: dict, *, digest_convention: str = "whole_line", sourc
     if rel.startswith("Plans/") and rel.endswith(".md") and span is None:
         if unit or _split_and_spans(text)[1]:
             raise Gap(f"canonical Markdown evidence needs a resolvable unit or heading bound: {rel}#{unit}")
+    owner_span = span
+    if span is not None and rel.startswith("Plans/") and rel.endswith(".md") and event_type:
+        from pm_ea_evidence_projection import markdown_family_span, registered_event_types
+        try:
+            span = markdown_family_span(text, span, event_type, registered_event_types(file_text(REGISTRY)),
+                                        criterion, quote)
+        except ValueError as exc:
+            raise Gap(f"{rel}#{unit}: {exc}") from exc
     if isinstance(quote, str) and quote:
         want = item.get("line_start") if isinstance(item.get("line_start"), int) else 1
         found = relocate(text, quote, want, span)
         if found is None:
+            if span != owner_span:
+                raise Gap(f"{rel}#{unit}: Markdown evidence quotation is outside the subject row for {event_type}")
             where = f"unit {unit} ({rel}:{span[0]}-{span[1]})" if span else rel
             raise Gap(f"cited quotation not present in {where}: {quote[:80]!r}")
         out["line_start"], out["line_end"], out["quote_check"] = found
