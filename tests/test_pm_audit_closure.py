@@ -270,6 +270,9 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         answer_changes: dict | None = None, missing_split_field: str | None = None,
         tamper_file: str | None = None, bad_digest_echo: bool = False,
         bad_split_encoding: bool = False,
+        split_changes: Callable[[dict], None] | None = None,
+        assembled_worker: str | None = None, initial_without_verdict: bool = False,
+        split_packet_earlier_commit: bool = False,
         scope: str | list[int] = "standing",
     ) -> None:
         m = pm_audit_closure
@@ -293,25 +296,47 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         self.addCleanup(pins_patch.stop)
 
         def configure(record: dict, packet: dict) -> None:
+            worker_review = record["reviews"]["worker"]
+            worker_path = self.root / worker_review["evidence_path"]
+            source = dict(json.loads(worker_path.read_bytes()), verdict=worker, status_now=None)
+            source_path = self.audit_dir / "worker-source.jsonl"
+            write_jsonl(source_path, [source])
+            worker_review.update(source_path=m.rel(source_path), source_sha256=m.sha256_file(source_path))
+            earlier = [dict(reading="A", verdict=source["verdict"], status_now=source["status_now"],
+                            rationale=source["rationale"])]
+            for role, who, vote in (("C", "sol", "not_supported"), ("D", "astra", "supported")):
+                initial = self.audit_dir / f"initial-{who}.jsonl"
+                output = self.root / record["reviews"][who]["evidence_path"]
+                source_vote = dict(json.loads(output.read_bytes()), verdict=vote, reason=f"Initial reading from {who}.")
+                earlier.append(dict(reading=role, verdict=source_vote["verdict"], reason=source_vote["reason"]))
+                if who == "sol" and initial_without_verdict:
+                    source_vote.pop("verdict")
+                write_jsonl(initial, [source_vote])
+                record["reviews"][who].update(initial_evidence_path=m.rel(initial),
+                                              initial_evidence_sha256=m.sha256_file(initial))
             split = {key: packet[key] for key in ("line", "closure_id", "recheck_commit", "packet_row_digest")}
-            split.update(split_id="fixture-1", packet_row=dict(packet, held_line=1))
+            split.update(split_id="fixture-1", packet_row=dict(packet, held_line=1), readings=earlier,
+                         anchors_at_R=copy.deepcopy(packet["dependency_anchors"]))
+            if split_changes:
+                split_changes(split)
             split["split_row_digest"] = m.sha256_text(m.canonical_json(split))
             split_path = self.audit_dir / "split-packet.jsonl"
             write_jsonl(split_path, [split])
             if bad_split_encoding:
                 split_path.write_bytes(b"\xff")
-            for who, vote, status in (("worker", worker, None), ("sol", sol, sol_status), ("astra", astra, astra_status)):
+            if split_packet_earlier_commit:
+                self.git("add", "--", m.rel(split_path))
+                self.git("commit", "-qm", "isolated split packet")
+            for who, vote, status in (("worker", assembled_worker or worker, None),
+                                      ("sol", sol, sol_status), ("astra", astra, astra_status)):
                 review = record["reviews"][who]
                 path = self.root / review["evidence_path"]
                 judged = json.loads(path.read_bytes())
                 if who != "worker":
-                    initial = self.audit_dir / f"initial-{who}.jsonl"
-                    initial.write_bytes(path.read_bytes())
                     split_fields = {key: split[key] for key in ("split_id", "split_row_digest")}
                     judged.update(split_fields)
                     review.update(split_fields, split_packet_path=m.rel(split_path),
-                                  split_packet_sha256=m.sha256_file(split_path),
-                                  initial_evidence_path=m.rel(initial), initial_evidence_sha256=m.sha256_file(initial))
+                                  split_packet_sha256=m.sha256_file(split_path))
                     if who == "sol" and missing_split_field:
                         review.pop(missing_split_field)
                     if who == "sol" and bad_digest_echo:
@@ -397,6 +422,60 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
     def test_owner_split_packet_with_a_matching_hash_must_still_be_readable(self) -> None:
         self.prepare_owner_split(bad_split_encoding=True)
         self.assert_owner_split_result("split_packet file cannot be read as UTF-8 JSONL")
+
+    def test_owner_split_packet_must_include_the_three_earlier_readings(self) -> None:
+        def omit_readings(split: dict) -> None:
+            split.pop("readings")
+
+        self.prepare_owner_split(split_changes=omit_readings)
+        self.assert_owner_split_result("split packet must carry one earlier reading each")
+
+    def test_owner_split_packet_may_include_a_preliminary_reading_alongside_bound_readings(self) -> None:
+        def add_preliminary(split: dict) -> None:
+            split["readings"].insert(1, {"reading": "B", "verdict": "not_supported", "reason": "Preliminary reading."})
+
+        self.prepare_owner_split(split_changes=add_preliminary)
+        self.assert_owner_split_result()
+
+    def test_owner_earlier_reading_must_match_its_initial_judgment(self) -> None:
+        self.prepare_owner_split(split_changes=lambda split: split["readings"][1].update(
+            verdict="supported", status_now="repaired", later_closure_id="another-closure", reason="Different reason.",
+        ))
+        self.assert_owner_split_result("earlier reading C must match the committed sol judgment and reason")
+
+    def test_owner_initial_receipt_must_be_a_judgment_with_a_verdict(self) -> None:
+        self.prepare_owner_split(initial_without_verdict=True)
+        self.assert_owner_split_result("initial evidence must carry a judgment verdict")
+
+    def test_owner_assembled_worker_cannot_change_the_worker_vote_after_the_split(self) -> None:
+        self.prepare_owner_split(worker="not_supported", assembled_worker="supported")
+        self.assert_owner_split_result("assembled worker judgment or reason differs from the committed worker source")
+
+    def test_owner_split_anchor_must_be_in_the_record_snapshot(self) -> None:
+        self.prepare_owner_split(split_changes=lambda split: split["anchors_at_R"][0].update(
+            ref="Plans/Fixture.md#section=Added for the split",
+        ))
+        self.assert_owner_split_result("split packet showed 'Plans/Fixture.md#section=Added for the split' at a different snapshot")
+
+    def test_owner_split_anchor_hash_must_match_the_record_snapshot(self) -> None:
+        self.prepare_owner_split(split_changes=lambda split: split["anchors_at_R"][0].update(sha256="a" * 64))
+        self.assert_owner_split_result(f"split packet showed {self.anchor!r} at a different snapshot")
+
+    def test_owner_split_anchor_text_must_match_the_recheck_commit(self) -> None:
+        self.prepare_owner_split(split_changes=lambda split: split["anchors_at_R"][0].update(text="Invented text."))
+        self.assert_owner_split_result(f"split packet text for {self.anchor} is not that anchor's text at recheck_commit")
+
+    def test_owner_split_anchor_may_show_a_flagged_prefix(self) -> None:
+        def truncate(split: dict) -> None:
+            anchor = split["anchors_at_R"][0]
+            anchor.update(text=anchor["text"][:20], truncated=True)
+
+        self.prepare_owner_split(split_changes=truncate)
+        self.assert_owner_split_result()
+
+    def test_owner_split_packet_and_output_must_be_added_in_the_same_commit(self) -> None:
+        self.prepare_owner_split(split_packet_earlier_commit=True)
+        self.assert_owner_split_result("split packet and split output were not committed together")
 
     def test_owner_decision_cannot_be_attached_to_unanimous_readings(self) -> None:
         self.prepare_owner_split(sol="supported")
