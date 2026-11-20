@@ -1371,6 +1371,20 @@ REAUDIT_VERDICTS = {"supported", "resolved_differently", "superseded_by_later_cl
 REAUDIT_REVIEWERS = ("worker", "sol", "astra")
 REAUDIT_MIN_QUOTE = 12
 REAUDIT_WORKER_FIELDS = ("verdict", "claim", "dependencies", "evidence", "stale_ref_dispositions", "rationale", "fix")
+OWNER_DECISIONS = {
+    "vm.pm-closure-lead--C-FP2-SPLIT": {
+        "card_sha256": "0662836eb9edde4f109464b1bd56d913a9f8bec1cbd02d48d42580f8ad62034a",
+        "answer_sha256": "80f35e1d0052aa4d38c960e1188858a950ad4450fafb607170e3ac2d443891b2",
+        "key_sha256": "c7cbc2509f98671e48097b4c5a756f0afb0ca4292a677f595e9369313b6ed55a",
+        "choice": "B",
+        "rule": "split_majority_of_three",
+        "scope": "standing",
+    },
+}
+OWNER_DECISION_FILES = ("card", "answer", "key")
+OWNER_DECISION_FIELDS = ("rule", "card_id", "choice") + tuple(
+    f"{kind}_{field}" for kind in OWNER_DECISION_FILES for field in ("path", "sha256")
+)
 
 
 def raw_registry_lines(registry_path: Path) -> dict[int, str]:
@@ -1665,7 +1679,136 @@ def reaudit_record_shape_problems(record: Any) -> list[str]:
         for review in reviews.values()
     ):
         out.append("record.reviews must map reviewers to objects of strings")
+    if "owner_decision" in record:
+        decision = record["owner_decision"]
+        if not isinstance(decision, dict) or set(decision) != set(OWNER_DECISION_FIELDS) or not all(
+            isinstance(value, str) and value.strip() for value in decision.values()
+        ):
+            out.append("record.owner_decision must contain exactly the rule, card_id, choice and three file paths and SHA-256 values")
     return out
+
+
+def validate_reaudit_owner_decision(decision: dict[str, str], line: int, label: str, errors: list[str]) -> None:
+    label = f"{label}: record.owner_decision"
+    card_id = decision["card_id"]
+    pins = OWNER_DECISIONS.get(card_id)
+    if pins is None or decision["choice"] != pins["choice"]:
+        errors.append(f"{label}: unpinned card or choice {card_id!r}/{decision['choice']!r}")
+        return
+    if decision["rule"] != pins["rule"] or decision["rule"] != "split_majority_of_three":
+        errors.append(f"{label}: rule must match the pinned split_majority_of_three rule")
+    if pins["scope"] != "standing" and line not in pins["scope"]:
+        errors.append(f"{label}: pinned scope does not cover closure line {line}")
+    documents = {}
+    for kind in OWNER_DECISION_FILES:
+        path_ref = decision[f"{kind}_path"]
+        digest = decision[f"{kind}_sha256"]
+        try:
+            if not path_ref.startswith("Plans/.audits/"):
+                raise AnchorError("must be under Plans/.audits/")
+            path = contained_path(ROOT, path_ref)
+            if not path.is_file():
+                raise AnchorError("file is missing")
+            data = path.read_bytes()
+            if digest != pins[f"{kind}_sha256"] or hashlib.sha256(data).hexdigest() != digest:
+                raise AnchorError("file SHA-256 must match both the record and the owner decision pin")
+            if kind != "key":
+                document = strict_json_loads(data.decode("utf-8"))
+                if not isinstance(document, dict):
+                    raise AnchorError("must contain a JSON object")
+                documents[kind] = document
+        except (AnchorError, OSError, UnicodeError, json.JSONDecodeError) as exc:
+            errors.append(f"{label}.{kind}_path: {exc}")
+    if len(documents) != 2:
+        return
+    card, answer = documents["card"], documents["answer"]
+    if not (answer.get("cardId") == card.get("id") == card_id):
+        errors.append(f"{label}: answer.cardId must equal card.id and the pinned card id")
+    if not (_is_int(answer.get("cardSeq")) and _is_int(card.get("seq")) and answer["cardSeq"] <= card["seq"]):
+        errors.append(f"{label}: answer.cardSeq must be an integer at or below card.seq")
+    if answer.get("kind") != "answer" or answer.get("choice") != [pins["choice"]] or answer.get("answeredBy") != "owner":
+        errors.append(f"{label}: answer must record the pinned choice {pins['choice']!r} from the owner")
+    options = card.get("options")
+    if not isinstance(options, list) or not any(isinstance(option, dict) and option.get("key") == pins["choice"] for option in options):
+        errors.append(f"{label}: card.options must include the pinned choice {pins['choice']!r}")
+
+
+def _reaudit_split_reading(judged: dict[str, Any], old_status: str) -> tuple[str, str | None, str | None] | None:
+    verdict, status, later_id = (judged.get(key) for key in ("verdict", "status_now", "later_closure_id"))
+    if not isinstance(verdict, str) or verdict not in REAUDIT_VERDICTS or (
+        status is not None and not isinstance(status, str)
+    ) or (later_id is not None and not isinstance(later_id, str)):
+        return None
+    if verdict == "resolved_differently":
+        if status not in ALLOWED_STATUSES - OPEN_STATUSES or later_id is not None:
+            return None
+        # A recheck that keeps the existing status is supported, as in the unanimous path.
+        return ("supported", None, None) if status == old_status else (verdict, status, None)
+    if verdict == "superseded_by_later_closure":
+        return (verdict, None, later_id) if later_id and later_id.strip() and status is None else None
+    # Workers can repeat the target's status on a supported reading. The status is implicit.
+    if later_id is not None or (status is not None and (verdict != "supported" or status != old_status)):
+        return None
+    return verdict, None, None
+
+
+def validate_reaudit_split_outcome(
+    record: dict[str, Any], readings: dict[str, tuple[str, str | None, str | None]], label: str, errors: list[str],
+) -> None:
+    if len(readings) != len(REAUDIT_REVIEWERS):
+        return  # missing or invalid readings already have diagnostics
+    worker, sol, astra = (readings[who] for who in REAUDIT_REVIEWERS)
+    if worker == sol == astra:
+        errors.append(f"{label}: owner_decision is unnecessary when all three readings agree")
+        return
+    if sol == astra:
+        errors.append(f"{label}: owner_decision requires disagreement between the split reviewers")
+        return
+    selected = tuple(record.get(key) for key in ("verdict", "status_now", "later_closure_id"))
+    if worker in (sol, astra):
+        if selected != worker:
+            errors.append(f"{label}: record must equal the split majority reading {worker!r}, got {selected!r}")
+    elif selected != ("not_supported", None, None):
+        errors.append(f"{label}: split has no majority, so the record must be not_supported (reopened)")
+
+
+def validate_reaudit_split_receipt(
+    review: dict[str, Any], judged: dict[str, Any], shown: dict[str, Any], supersedes: dict[str, Any],
+    commit: str, receipts: ReceiptLedger, label: str, who: str, errors: list[str],
+) -> tuple[str, str] | None:
+    split_id, digest = review.get("split_id"), review.get("split_row_digest")
+    if not split_id or not split_id.strip() or not _is_sha256(digest):
+        errors.append(f"{label}: record.reviews.{who} needs a split_id and a SHA-256 split_row_digest")
+        return None
+    parts = {}
+    for kind in ("split_packet", "initial_evidence"):
+        try:
+            part = _bound_output_row(review, kind, supersedes, label, who, errors)
+        except (OSError, UnicodeError) as exc:
+            errors.append(f"{label}: record.reviews.{who} {kind} file cannot be read as UTF-8 JSONL: {exc}")
+            return None
+        if part is None:
+            return None
+        parts[kind] = part
+        _, problem = receipts.check(review[f"{kind}_path"], commit)
+        if problem:
+            errors.append(f"{label}: record.reviews.{who}.{kind}_path: {problem}")
+    split, initial = parts["split_packet"], parts["initial_evidence"]
+    try:
+        split_digest = sha256_text(canonical_json({key: value for key, value in split.items() if key != "split_row_digest"}))
+    except AnchorError:
+        split_digest = None
+    if (split_digest != digest or split.get("split_row_digest") != digest or judged.get("split_row_digest") != digest
+            or split.get("split_id") != split_id or judged.get("split_id") != split_id):
+        errors.append(f"{label}: record.reviews.{who} split packet, receipt and output must bind the same split id and row digest")
+    packet_row = split.get("packet_row")
+    shown_digest = shown.get("packet_row_digest")
+    if (split.get("recheck_commit") != commit or split.get("packet_row_digest") != shown_digest
+            or not isinstance(packet_row, dict) or {k: v for k, v in packet_row.items() if k != "held_line"} != shown):
+        errors.append(f"{label}: record.reviews.{who} split packet must wrap the original packet row at recheck_commit")
+    if initial.get("packet_row_digest") != shown_digest or "split_id" in initial or "split_row_digest" in initial:
+        errors.append(f"{label}: record.reviews.{who} initial evidence must judge the original packet before the split")
+    return split_id, digest
 
 
 def validate_reaudit_record(
@@ -1694,6 +1837,7 @@ def validate_reaudit_record(
         errors.extend(f"{label}: {problem}" for problem in shape)
         return
     verdict = record["verdict"]
+    decision = record.get("owner_decision")
     deps = record["dependencies"]
     evidence = record["evidence"]
     if record.get("schema_id") != REAUDIT_RECORD_SCHEMA or record.get("reaudit_id") != reaudit.get("reaudit_id"):
@@ -1823,10 +1967,17 @@ def validate_reaudit_record(
     reviews = record["reviews"]
     claim_view = {k: v for k, v in target.items() if k not in ("hashes", "_line_no")}
     receipts = receipts if receipts is not None else ReceiptLedger(ROOT)
+    readings: dict[str, tuple[str, str | None, str | None]] = {}
+    split_rounds: dict[str, tuple[str, str]] = {}
+    if decision is not None:
+        validate_reaudit_owner_decision(decision, supersedes["line"], label, errors)
     for who in REAUDIT_REVIEWERS:
         review = reviews.get(who)
-        if not isinstance(review, dict) or review.get("verdict") != verdict:
+        if decision is None and (not isinstance(review, dict) or review.get("verdict") != verdict):
             errors.append(f"{label}: record.reviews.{who}.verdict must equal the record verdict {verdict!r}")
+            continue
+        if not isinstance(review, dict):
+            errors.append(f"{label}: record.reviews.{who} is required for owner_decision")
             continue
         if not isinstance(review.get("model"), str) or not review["model"].strip():
             errors.append(f"{label}: record.reviews.{who}.model must name the model")
@@ -1855,7 +2006,13 @@ def validate_reaudit_record(
         judged_verdict = judged.get("verdict")
         if judged_verdict == "resolved_differently" and judged.get("status_now") == target.get("closure_status"):
             judged_verdict = "supported"  # the status decides
-        if judged_verdict != verdict:
+        if decision is not None:
+            reading = _reaudit_split_reading(judged, target.get("closure_status"))
+            if reading is None or review.get("verdict") != reading[0]:
+                errors.append(f"{label}: record.reviews.{who}.verdict must match a valid reading in its judged output")
+            else:
+                readings[who] = reading
+        elif judged_verdict != verdict:
             errors.append(f"{label}: record.reviews.{who} evidence judged this row {judged.get('verdict')!r}, not {verdict!r}")
         elif verdict == "resolved_differently" and judged.get("status_now") != record.get("status_now"):
             errors.append(f"{label}: record.reviews.{who} evidence gives a different status_now")
@@ -1872,6 +2029,12 @@ def validate_reaudit_record(
             # The record is assembled from the committed worker output: its judgement fields must be that output's.
             bound = list(REAUDIT_WORKER_FIELDS) + (["status_now"] if verdict == "resolved_differently" else []) \
                 + (["later_closure_id"] if verdict == "superseded_by_later_closure" else [])
+            if decision is not None:
+                # The owner's outcome has its own rationale and can require a reopening fix.
+                # Keep the worker's claim, evidence, dependency and stale-ref bindings.
+                bound = ["claim", "dependencies", "evidence", "stale_ref_dispositions"]
+                if readings.get(who) == tuple(record.get(k) for k in ("verdict", "status_now", "later_closure_id")):
+                    bound.append("fix")
             for field in bound:
                 if judged.get(field) != record.get(field):
                     errors.append(f"{label}: record.{field} differs from the committed worker output it was assembled from")
@@ -1879,6 +2042,10 @@ def validate_reaudit_record(
         shown = _bound_output_row(review, "packet", supersedes, label, who, errors)
         if shown is None:
             continue
+        if decision is not None:
+            split = validate_reaudit_split_receipt(review, judged, shown, supersedes, commit, receipts, label, who, errors)
+            if split is not None:
+                split_rounds[who] = split
         if shown.get("claim") != claim_view:
             errors.append(f"{label}: record.reviews.{who} packet showed a different claim than the superseded row")
         for field, expected in (("recheck_commit", commit), ("row_sha256", supersedes.get("row_sha256"))):
@@ -1916,6 +2083,10 @@ def validate_reaudit_record(
                 errors.append(f"{label}: record.reviews.{who} packet text for {ref} is not that anchor's text at recheck_commit")
         if len(set(map(str, shown_refs))) != len(shown_refs):
             errors.append(f"{label}: record.reviews.{who} packet shows an anchor twice")
+    if decision is not None:
+        if len(split_rounds) == 2 and split_rounds["sol"] != split_rounds["astra"]:
+            errors.append(f"{label}: owner_decision requires both reviewers to judge the same split packet row")
+        validate_reaudit_split_outcome(record, readings, label, errors)
 
 
 def _bound_output_row(
@@ -4957,6 +5128,7 @@ def cmd_self_test(args: argparse.Namespace) -> int:
     import io  # noqa: PLC0415
     import shutil  # noqa: PLC0415
     import tempfile  # noqa: PLC0415
+    from unittest.mock import patch  # noqa: PLC0415
 
     global ROOT, LEGACY_INVENTORY_SHA256  # noqa: PLW0603 - the fixtures live in a temporary repository root.
     saved_root = ROOT
@@ -5225,6 +5397,80 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                 assert verdict
                 rec["reviews"][who]["evidence_sha256"] = sha256_file(path)
             return apply
+
+        decision_card = audit_dir / "decision-card.json"
+        decision_answer = audit_dir / "decision-answer.json"
+        decision_key = audit_dir / "decision-key.pub"
+        card_body = {"id": "fixture-split", "seq": 3, "options": [{"key": "B"}]}
+        answer_body = {"kind": "answer", "cardId": "fixture-split", "cardSeq": 2, "choice": ["B"], "answeredBy": "owner"}
+        decision_card.write_text(json.dumps(card_body))
+        decision_answer.write_text(json.dumps(answer_body))
+        decision_key.write_text("Fixture public key.\n")
+        owner_fields = {"card_id": "fixture-split", "choice": "B", "rule": "split_majority_of_three"}
+        pins: dict[str, Any] = {"choice": "B", "rule": "split_majority_of_three", "scope": "standing"}
+        for kind, path in zip(OWNER_DECISION_FILES, (decision_card, decision_answer, decision_key)):
+            pins[f"{kind}_sha256"] = sha256_file(path)
+            owner_fields.update({f"{kind}_sha256": pins[f"{kind}_sha256"], f"{kind}_path": rel(path)})
+
+        def split_record(worker: str, sol: str, astra: str, *, decision: bool = True, **changes: str) -> Any:
+            def apply(rec: dict[str, Any]) -> None:
+                if decision:
+                    rec["owner_decision"] = dict(owner_fields, **changes)
+                rewrite_output(rec, "worker", verdict=worker, status_now="repaired" if worker == "supported" else None)
+                rec["reviews"]["worker"]["verdict"] = worker
+                for who, vote in (("sol", sol), ("astra", astra)):
+                    review = rec["reviews"][who]
+                    shown = json.loads((tmp / review["packet_path"]).read_bytes())
+                    initial = audit_dir / "reviews" / f"initial-{who}-{counter[0]}.jsonl"
+                    initial.write_bytes((tmp / review["evidence_path"]).read_bytes())
+                    split = {k: shown[k] for k in ("line", "closure_id", "packet_row_digest", "recheck_commit")}
+                    split.update(split_id="fixture-split-1", packet_row=shown)
+                    split["split_row_digest"] = sha256_text(canonical_json(split))
+                    packet = audit_dir / "reviews" / f"split-{who}-{counter[0]}.jsonl"
+                    packet.write_text(json.dumps(split) + "\n")
+                    receipt = {k: split[k] for k in ("split_id", "split_row_digest")}
+                    review.update(receipt, verdict=vote, split_packet_path=rel(packet), split_packet_sha256=sha256_file(packet),
+                                  initial_evidence_path=rel(initial), initial_evidence_sha256=sha256_file(initial))
+                    rewrite_output(rec, who, **receipt, verdict=vote, status_now="stale_retired" if vote == "resolved_differently" else None)
+            return apply
+
+        with patch.dict(OWNER_DECISIONS, {"fixture-split": pins}):
+            for name, verdict, mutate, expected in (
+                ("owner_two_supported_votes_pass", "supported", split_record("supported", "not_supported", "supported"), None),
+                ("owner_minoritarian_record_fails", "not_supported", split_record("supported", "not_supported", "supported"), "split majority reading"),
+                ("owner_three_distinct_readings_reopen", "not_supported", split_record("supported", "resolved_differently", "not_supported"), None),
+                ("owner_three_distinct_readings_cannot_close", "supported", split_record("supported", "resolved_differently", "not_supported"), "split has no majority"),
+                ("owner_unpinned_card_fails", "supported", split_record("supported", "not_supported", "supported", card_id="unreviewed"), "unpinned card or choice"),
+                ("owner_unpinned_choice_fails", "supported", split_record("supported", "not_supported", "supported", choice="A"), "unpinned card or choice"),
+                ("owner_unanimity_needs_no_decision", "supported", split_record("supported", "supported", "supported"), "all three readings agree"),
+                ("owner_split_reviewers_must_disagree", "supported", split_record("not_supported", "supported", "supported"), "disagreement between the split reviewers"),
+                ("disagreement_without_owner_receipt_fails", "supported", split_record("supported", "not_supported", "supported", decision=False), "reviews.sol.verdict"),
+            ):
+                row = append_with(verdict, mutate=mutate)
+                report = validate_rows([legacy_row(), row])
+                check(name, has(report, expected) if expected else not report["errors"], report["errors"])
+
+            for kind in OWNER_DECISION_FILES:
+                row = append_with(mutate=split_record("supported", "not_supported", "supported", **{f"{kind}_sha256": "f" * 64}))
+                report = validate_rows([legacy_row(), row])
+                check(f"owner_{kind}_hash_mismatch_fails", has(report, f"owner_decision.{kind}_path: file SHA-256"), report["errors"])
+
+            def missing_split_field(rec: dict[str, Any]) -> None:
+                split_record("supported", "not_supported", "supported")(rec)
+                rec["reviews"]["sol"].pop("split_row_digest")
+
+            row = append_with(mutate=missing_split_field)
+            report = validate_rows([legacy_row(), row])
+            check("owner_initial_review_cannot_replace_split_receipt", has(report, "needs a split_id and a SHA-256 split_row_digest"), report["errors"])
+
+            bad_answer = audit_dir / "other-answer.json"
+            bad_answer.write_text(json.dumps(dict(answer_body, cardId="different-card")))
+            bad_hash = sha256_file(bad_answer)
+            with patch.dict(pins, {"answer_sha256": bad_hash}):
+                row = append_with(mutate=split_record("supported", "not_supported", "supported",
+                                                      answer_path=rel(bad_answer), answer_sha256=bad_hash))
+                report = validate_rows([legacy_row(), row])
+                check("owner_answer_must_name_its_card_even_when_pinned", has(report, "answer.cardId must equal card.id"), report["errors"])
 
         for name, mutate, text in (
             ("reviewer_disagreement_fails", set_review("astra", verdict="not_supported"), "reviews.astra.verdict"),
