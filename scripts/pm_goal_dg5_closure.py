@@ -425,7 +425,8 @@ def _describe_inventory(entry, plain, ident, bank=None):
                 raise
             if module == 'pm_goal_own_c3_w5_successor_oracles' and type(bank).__name__ == 'ScopedInstances':
                 _, clauses = _scoped_census(plain, ident, bank, _instance_location)
-            elif module in ('pm_goal_dg_int_roots', 'pm_goal_dg_r_world') and hasattr(bank, 'node_origin'):
+            elif hasattr(bank, 'node_origin') and any(
+                    base.__module__ in ('pm_goal_dg_int_roots', 'pm_goal_dg_r_world') for base in type(bank).__mro__):
                 _, clauses = _scoped_census(plain, ident, bank, _realm_location)
             else:
                 raise
