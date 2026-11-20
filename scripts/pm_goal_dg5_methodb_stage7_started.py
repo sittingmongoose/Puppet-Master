@@ -89,7 +89,16 @@ def stored_group(directory, negative):
     return world, world.storage.active_durable_group, (event_id,), {}
 
 
+def frame_header(directory, negative):
+    world, _, outcome = source.started(source.Suite(directory))
+    event = world.storage.read_event(outcome['original_append']['event']['event_id'])
+    if negative:
+        event['event_id'] = 'TEST_ONLY:' + ('x' * S.HEADER_CAP)
+    return world, S.encode_event_frame, (event, 1), {}
+
+
 CASES = {
+    'frame-header': (pilot.STORAGE, 440, 'frame/header_cap', frame_header),
     'stored-group': (pilot.STORAGE, 1618, 'group/schema', stored_group),
     'projection-commitment': (READERS, 491, 'representation/commitment_recomputed', projection_commitment),
     'complete-projection': (READERS, 654, 'projector/reducer/unsupported_same_run:goal_run.blocked', complete_projection),
