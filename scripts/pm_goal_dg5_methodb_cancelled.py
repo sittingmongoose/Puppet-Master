@@ -40,6 +40,8 @@ def fixture(declare, route, directory):
     if edition == 'w12b':
         return stop_fixture(route)
     config = {'start': route.get('start', 'started')}
+    if route.get('terminal'):
+        config['terminal'] = route['terminal']
     if route.get('mutation'):
         config.update(effects='mutation', filesafe=['rollback', 'commit'])
     if route.get('pre_attempt_effect'):
@@ -54,7 +56,8 @@ def fixture(declare, route, directory):
         config['edition'] = edition
     world = World(config, base=directory)
     publications = ('publish_pointer', 'publish_workflow_head')
-    if route['call'] in ('issue_physical', *publications, 'prepare_body', 'prepare_control', 'filesafe_invocation'):
+    if route['call'] in ('issue_physical', 'build_wrapper', *publications,
+                         'prepare_body', 'prepare_control', 'filesafe_invocation'):
         if route['call'] in publications:
             from pm_goal_dg_int_world import S1D01Owner
             cls, method = S1D01Owner, 'publish_head'
@@ -65,13 +68,13 @@ def fixture(declare, route, directory):
         elif route['call'] == 'filesafe_invocation':
             cls, method = legacy.CancelWorld, '_filesafe_invocation'
         else:
-            cls, method = legacy.PhysOwner, 'issue_physical'
+            cls, method = legacy.PhysOwner, route['call']
         family = declare['row'].removeprefix('dg5/issue/').removesuffix('/schema')
         original_issue = getattr(cls, method)
         captured = []
 
         def before_issue(owner, *args, **kwargs):
-            if method == 'issue_physical':
+            if method in ('issue_physical', 'build_wrapper'):
                 selected = args[0] == family and args[2] is not None
             elif method == '_filesafe_invocation':
                 selected = args[2] == route['restore']
@@ -89,8 +92,15 @@ def fixture(declare, route, directory):
                 pass
         require(len(captured) == 1, f'original cancellation did not call {family}')
         owner, args, kwargs = captured[0]
-        action = lambda: original_issue(owner, *args, **kwargs)
-        if route['call'] in ('prepare_body', 'prepare_control'):
+        if family == 'workflow_cancel_result':
+            stamp = world.clock.now()
+
+            def action():
+                with patch.object(world.clock, 'now', return_value=stamp):
+                    return original_issue(owner, *args, **kwargs)
+        else:
+            action = lambda: original_issue(owner, *args, **kwargs)
+        if route['call'] in ('prepare_body', 'prepare_control', 'build_wrapper'):
             return world, action, (args, kwargs)
         if method == 'publish_head':
             import pm_goal_dg_s_start as start
@@ -311,6 +321,32 @@ def checkpoint_payload_width(plain, nodes, name, path, cut):
                 premise='The full hexadecimal match requires exactly 64 characters.')
 
 
+def append_acknowledgment_nonempty(plain, nodes, name, path, cut):
+    from pm_goal_go_schema_closure import locations
+    from pm_goal_own_c_oracles import utc
+
+    source, word = name.rsplit('/', 1)
+    node = nodes[source]['node']
+    covering = source + '/format'
+    result, = [where for where in nodes if where.endswith('#/$defs/Result')]
+    schema = nodes[result]['node']
+    require([arm['$ref'] for arm in schema['oneOf']] ==
+            ['#/$defs/CancelledResult', '#/$defs/PreservedResult'],
+            'the Workflow cancel result alternatives changed')
+    preserved = result.removesuffix('/Result') + '/PreservedResult'
+    require(path == ['record', 'append_receipt', 'acknowledged_at_utc']
+            and source.endswith('#/$defs/AppendReceipt/properties/acknowledged_at_utc')
+            and word == 'minLength' and node[word] == 1 and node['format'] == 'date-time'
+            and node['type'] == 'string' and plain.format_checker.checkers['date-time'][0] is utc
+            and not utc('') and utc('2026-11-05T09:00:00Z')
+            and locations(cut) == {covering, result + '/oneOf', preserved + '/closed_members',
+                                   preserved + '/required', preserved + '/properties/kind/const'},
+            'the original acknowledgment time must still refuse the empty string')
+    return dict(source=source, covering_rule=covering, validator=utc.__name__,
+                validator_line=utc.__code__.co_firstlineno, validator_sha256=sha(Path(utc.__code__.co_filename)),
+                premise='The required full UTC time match always consumes at least one character.')
+
+
 def rule_path(document, path):
     prefix = path[:2] if path[:2] == ['content', 'checkpoint'] else []
     offset = len(prefix)
@@ -412,6 +448,9 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
         elif example.get('checkpoint_payload_width'):
             record.update(cls='COVERED_LATER',
                           implication=checkpoint_payload_width(plain, nodes, name, path, cut))
+        elif example.get('append_acknowledgment_nonempty'):
+            record.update(cls='COVERED_LATER',
+                          implication=append_acknowledgment_nonempty(plain, nodes, name, path, cut))
         elif example.get('nullable_enum'):
             location, word = name.rsplit('/', 1)
             node = nodes[location]['node']
@@ -714,7 +753,8 @@ def run(args):
             examples = declare['examples'][ident]
             accepted = declare.get('rule_controls', {}).get(ident, accepted)
             scoped = ':sha256:' in ids[0].split('#', 1)[0]
-            if scoped or any(set(example) & {'vacuous', 'intent_selector', 'intent_implication', 'nullable_enum'}
+            if scoped or any(set(example) & {'vacuous', 'intent_selector', 'intent_implication', 'nullable_enum',
+                                             'append_acknowledgment_nonempty'}
                              for example in examples.values()):
                 clauses = literal_rules(plain, bank, accepted, ident, ids, examples, args.disable_check, scoped)
             else:
