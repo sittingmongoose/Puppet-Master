@@ -599,5 +599,36 @@ def exercise(g, *, scratch=None):
         case("lazy-" + form + "-keeps-item", lambda f: f.update(owner=lazy_fence(prefix, lazy, column)),
              verify=lambda r: r["witness_exact_tokens"][0]["units_with_both"] == ["AA-001"])
 
+    # SOLMAX-GW-01 and ASTRA-GW-20261107-02: check both witnesses, including the
+    # positive controls where a token is visible next to a comment or quoted as code.
+    def hidden_token(r):
+        token, = r["witness_exact_tokens"]
+        hygiene, = r["witness_registry_hygiene"]
+        return (token["fires"] and not token["units_with_token_in_prose"]
+                and token["units_with_token_in_registry"] == ["AA-001"]
+                and hygiene["fires"] and hygiene["entries_absent_from_unit_text"] == ["live token"])
+
+    for form, body in (
+        ("inline", "Visible text. <!-- live token --> End."),
+        ("multiline-inline", "Visible text. <!-- first line\nlive token\nlast line --> End."),
+        ("block", "<!-- live token -->"),
+        ("unmatched-code-delimiter", "Visible ` <!-- live token --> End."),
+    ):
+        case(form + "-comment-cannot-supply-token",
+             lambda f: f.update(owner=owner("AA-001", body, ["live token"])),
+             status="findings", exit_code=2, verify=hidden_token)
+    for form, body in (
+        ("adjacent-visible", "Visible text. <!-- note --> Required live token."),
+        ("inline-code", "Example: ``<!-- live token -->``."),
+        ("multiline-code-span", "Example: `<!--\nlive token -->`."),
+        ("fenced-code", "~~~text\n<!-- live token -->\n~~~"),
+        ("indented-code", "    <!-- live token -->"),
+        ("escaped", r"Example: \<!-- live token -->"),
+    ):
+        case(form + "-comment-control",
+             lambda f: f.update(owner=owner("AA-001", body, ["live token"])),
+             verify=lambda r: r["witness_exact_tokens"][0]["units_with_both"] == ["AA-001"]
+             and not r["witness_registry_hygiene"][0]["fires"])
+
     return {"schema_id": "pm.ledger_compile_witness.self_test.v1", "status": "pass" if all(row["caught"] for row in rows) else "findings",
             "caught": sum(row["caught"] for row in rows), "tests": rows}

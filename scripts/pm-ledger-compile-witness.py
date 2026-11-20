@@ -25,6 +25,7 @@ Exit 0 for pass or explicit --allow-empty, 2 for findings/vacuity, 1 for input/r
 from __future__ import annotations
 
 import argparse
+from itertools import groupby
 import json
 import re
 import subprocess
@@ -242,7 +243,7 @@ def blocks_in(lines: list[str]) -> dict:
     html: (start, end), both lines included. An HTML block starts outside any fence (kind 7 not inside a paragraph)
     and runs to its end condition: kinds 1-5 the line holding the end marker, kinds 6 and 7 the line before the next
     blank line. It holds no fence and no heading."""
-    fences, html, outdented = [], [], []
+    fences, html, outdented, indented_code = [], [], [], set()
     lines = [line.expandtabs(4) for line in lines]   # (T62: tabs to 4-column stops, as CommonMark counts them)
     i, paragraph = 0, False
     while i < len(lines):
@@ -291,12 +292,14 @@ def blocks_in(lines: list[str]) -> dict:
             html.append((i, k))
             i, paragraph = k + 1, False
             continue
+        if line.strip() and not paragraph and _indent(line) >= 4:
+            indented_code.add(i)
         # (T62, finding 3: only paragraph text keeps a paragraph open for kind 7's rule: a thematic break, an indented
         # code line outside a paragraph, a heading and a setext underline leave it closed)
         paragraph = bool(line.strip()) and not any_head(line) and not SETEXT_UNDER.match(line) and not THEMATIC.match(line) and (
             paragraph or _indent(line) < 4)
         i += 1
-    return {"fences": fences, "html": html, "outdented_closers": outdented}
+    return {"fences": fences, "html": html, "outdented_closers": outdented, "indented_code": indented_code}
 
 
 def fences_in(lines: list[str]) -> list[tuple[int, int]]:
@@ -483,12 +486,53 @@ def registry(block: str) -> list[str]:
     return list(dict.fromkeys(found))
 
 
+INLINE_MARKER = re.compile(r"\\[\\<`]|`+|<!--")
+
+
+def _strip_inline_comments(text: str) -> str:
+    """Remove closed inline HTML comments while preserving escapes and matched code spans."""
+    if "<!--" not in text:
+        return text
+    parts, cursor, kept = [], 0, 0
+    while (match := INLINE_MARKER.search(text, cursor)) is not None:
+        marker = match[0]
+        cursor = match.end()
+        if marker.startswith("`"):
+            end = re.search(r"(?<!`)" + marker + r"(?!`)", text[cursor:])
+            if end is not None:
+                cursor += end.end()
+        elif marker == "<!--":
+            end = text.find("-->", cursor)
+            if end != -1:
+                parts.append(text[kept:match.start()])
+                cursor = kept = end + 3
+    return "".join(parts) + text[kept:]
+
+
 def prose(block: str) -> str:
-    """Exclude the entire inline/block token registry from token evidence, and (T62, REVIEW-etools-tb3-opus finding 6)
-    the lines of every HTML block or comment: CommonMark renders nothing of them, so a token only there is no prose."""
+    """Exclude token registries, HTML blocks and inline HTML comments from token evidence.
+
+    Markdown code examples, including literal comment syntax, count as evidence.
+    """
     raw = block.splitlines(keepends=True)
-    html = html_lines_in([line.rstrip("\r\n") for line in raw])
-    lines = [line for k, line in enumerate(raw) if k not in html]
+    blocks = blocks_in([line.rstrip("\r\n") for line in raw])
+    html = {i for start, end in blocks["html"] for i in range(start, end + 1)}
+    code = blocks["indented_code"] | {i for start, stop, close in blocks["fences"]
+                                      for i in range(start, close + 1 if close is not None else stop)}
+
+    def context(i):
+        if i in html:
+            return "html"
+        if i in code or not raw[i].strip():
+            return "literal"
+        return "inline"
+
+    lines = []
+    for kind, indexes in groupby(range(len(raw)), key=context):
+        if kind != "html":
+            text = "".join(raw[i] for i in indexes)
+            lines.extend(text.splitlines(keepends=True) if kind == "literal"
+                         else _strip_inline_comments(text).splitlines(keepends=True))
     out, index = [], 0
     while index < len(lines):
         match = re.match(r"^[ \t]*preserved_exact_tokens:[ \t]*(.*)$", lines[index].rstrip("\r\n"))
