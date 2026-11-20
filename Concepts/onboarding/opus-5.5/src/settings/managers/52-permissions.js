@@ -61,6 +61,13 @@
     const match = P.find(p => presetOf(p) === want); if (!match) return;
     P.forEach(x => { if (inUse(x)) x.status = 'available'; }); match.status = 'default';
   }
+  /* the profile in use as the Profiles tab will show it (the same rule, without moving anything): a persona's "Same
+     as Profile in use · <name>" reads it before this page has been opened */
+  PM51.profileInUse = () => {
+    const want = PM51.value('safety.rules.permission-preset'); const P = profiles() || [];
+    const cur = P.find(inUse); if (cur && presetOf(cur) === want) return cur;
+    return P.find(p => presetOf(p) === want) || cur || null;
+  };
   const TOOLS = [['bash', 'Run commands'], ['edit', 'Edit files'], ['read', 'Read files'], ['grep', 'Search in files'], ['question', 'Ask you a question'], ['todo_write', 'Write the to-do list'], ['todo_read', 'Read the to-do list'], ['skill', 'Use skills'], ['lsp_readonly', 'Code intelligence (read only)']];
   const WEB_TOOLS = [['websearch', 'Search the web'], ['webfetch', 'Read one page'], ['webextract', 'Turn pages into data'], ['webresearch', 'Research'], ['webcrawl', 'Crawl a site'], ['webmap', 'Outline a site']];
   const ANSWERS = [['allow', 'Allow'], ['ask', 'Ask'], ['deny', 'Block']];
