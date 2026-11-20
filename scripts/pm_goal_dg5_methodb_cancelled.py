@@ -561,6 +561,38 @@ def filesafe_selector_implication(nodes, name, path, cut):
                 premise='Every reachable selector role fixes this field to a nonempty string.')
 
 
+def mutation_afterimages_implication(nodes, name, path, control, cut):
+    from pm_goal_go_schema_closure import locations
+
+    defs = name.split('#', 1)[0] + '#/$defs/'
+    owner = defs + 'WorkflowMutationOrigin'
+    schema = nodes[owner]['node']
+    prefix = 'owner.executor.workflow_source.'
+    methods = [prefix + suffix for suffix in ('enroll_workflow_birth.v3', 'update_workflow.v3', 'begin_coverage.v3')]
+    variants = ['WorkflowBirthAfterimages', 'WorkflowUpdateAfterimages', 'CoverageAfterimages']
+    refs = ['#/$defs/' + variant for variant in variants]
+    conditions = schema['allOf']
+    require(path == ['record', 'afterimages'] and name == owner + '/properties/afterimages/oneOf'
+            and {'method', 'afterimages'} <= set(schema['required'])
+            and schema['properties']['method']['enum'] == methods
+            and [part['if']['properties']['method']['const'] for part in conditions] == methods
+            and [part['then']['properties']['afterimages']['$ref'] for part in conditions] ==
+            [part['$ref'] for part in schema['properties']['afterimages']['oneOf']] == refs,
+            'the Workflow mutation method selects different afterimages')
+    property_sets = set()
+    for variant in variants:
+        branch = nodes[defs + variant]['node']
+        properties = frozenset(branch['properties'])
+        require(branch['type'] == 'object' and branch['additionalProperties'] is False
+                and set(branch['required']) == properties, 'the afterimages are no longer closed required shapes')
+        property_sets.add(properties)
+    require(len(property_sets) == len(variants), 'the afterimage shapes are no longer disjoint')
+    covering = defs + variants[methods.index(control['record']['method'])] + '/type'
+    require(locations(cut) == {covering}, 'the independently selected afterimage type must still refuse')
+    return dict(source=owner + '/allOf', covering_rule=covering,
+                premise='Each allowed method chooses one distinct closed afterimage shape with every field required.')
+
+
 def rule_path(document, path):
     prefix = path[:2] if path[:2] == ['content', 'checkpoint'] else []
     offset = len(prefix)
@@ -694,6 +726,9 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
             record.update(cls='COVERED_LATER', implication=binding_selection_implication(nodes, name, path, cut))
         elif example.get('filesafe_selector_implication'):
             record.update(cls='COVERED_LATER', implication=filesafe_selector_implication(nodes, name, path, cut))
+        elif example.get('mutation_afterimage_implication'):
+            record.update(cls='COVERED_LATER',
+                          implication=mutation_afterimages_implication(nodes, name, path, control, cut))
         elif example.get('nullable_enum'):
             location, word = name.rsplit('/', 1)
             node = nodes[location]['node']
@@ -1054,7 +1089,8 @@ def run(args):
             if reference or scoped or any(set(example) & {'vacuous', 'intent_selector', 'intent_implication',
                                                           'nullable_enum', 'append_acknowledgment_nonempty',
                                                           'origin_afterimages_implication', 'binding_implication',
-                                                          'filesafe_selector_implication'}
+                                                          'filesafe_selector_implication',
+                                                          'mutation_afterimage_implication'}
                              for example in examples.values()):
                 clauses = literal_rules(plain, bank, accepted, ident, ids, examples, args.disable_check, scoped)
             else:
