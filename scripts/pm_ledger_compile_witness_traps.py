@@ -701,5 +701,16 @@ def exercise(g, *, scratch=None):
          lambda f: flow_registry(f, "[ALPHA, 'unclosed]", "ALPHA and unclosed.", ["ALPHA"]),
          status="error", exit_code=1, verify=refused_because("unsupported preserved_exact_tokens flow list"))
 
+    # ASTRA-GW-20261107-03: an atom with no tokens still gets registry hygiene.
+    case("indentless-registry-ghost-fires-with-zero-source-tokens",
+         lambda f: flow_registry(f, "\n- GHOST", "Visible requirement text.", []),
+         status="findings", exit_code=2,
+         verify=lambda r: not r["vacuous"] and not r["witness_exact_tokens"]
+         and r["witness_registry_hygiene"][0]["entries_absent_from_unit_text"] == ["GHOST"])
+    case("indentless-registry-visible-token-control",
+         lambda f: flow_registry(f, '\n- "live token"\n- SECOND', "Required live token and SECOND.", ["live token"]),
+         verify=lambda r: r["witness_exact_tokens"][0]["units_with_both"] == ["AA-001"]
+         and r["witness_registry_hygiene"][0]["registry_entries"] == 2)
+
     return {"schema_id": "pm.ledger_compile_witness.self_test.v1", "status": "pass" if all(row["caught"] for row in rows) else "findings",
             "caught": sum(row["caught"] for row in rows), "tests": rows}

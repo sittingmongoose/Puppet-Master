@@ -508,8 +508,11 @@ def registry(block: str) -> list[str]:
     found = []
     for match in FLOW_REGISTRY.finditer(block):
         found.extend(_flow_tokens(block, match.end()))
-    for m in re.finditer(r"^\s*preserved_exact_tokens:\s*\n((?:\s+-\s.*\n?)+)", block, flags=re.M):
-        found.extend(re.sub(r"^\s*-\s*", "", l).strip().strip('"').strip("'") for l in m.group(1).splitlines() if l.strip())
+    # YAML allows a sequence at the key's own indentation as well as deeper.
+    for match in re.finditer(r"^([ \t]*)preserved_exact_tokens:[ \t]*\r?\n"
+                             r"((?:(?:[ \t]*\r?\n)*\1[ \t]*-[ \t]+[^\r\n]+(?:\r?\n|$))+)", block, re.M):
+        found.extend(re.sub(r"^[ \t]*-[ \t]+", "", line).strip().strip('"').strip("'")
+                     for line in match[2].splitlines() if line.strip())
     return list(dict.fromkeys(found))
 
 
