@@ -1,0 +1,37 @@
+{
+  "row": "dg5/d01/new_pointer/schema",
+  "fixtures": [
+    {
+      "route": "publish_pointer",
+      "edition": "v3",
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "publish_pointer",
+      "edition": "v7",
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}

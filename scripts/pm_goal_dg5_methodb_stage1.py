@@ -3,11 +3,13 @@
 import argparse
 import ast
 from collections import Counter, defaultdict
+from contextlib import ExitStack
 import copy
 import hashlib
 import json
 import multiprocessing
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import time
@@ -89,13 +91,19 @@ class Example:
         self.sites = sites
         self.declaration = declaration
         self.before = store(fixture.path)
+        self.clock_ns = time.time_ns()
         self.runs = []
 
     def run(self, edit=None, cut=False):
         require(store(self.fixture.path) == self.before, 'complete-call store preimage changed')
+        replay = self.fixture.path
+        if self.fixture.route.startswith('publish_'):
+            replay = replay.parent / (replay.name + f'-publication-replay-{len(self.runs)}')
+            shutil.copytree(self.fixture.path, replay)
+            require(store(replay) == self.before, 'publication replay copy differs from its source')
         context = multiprocessing.get_context('fork')
         receiver, sender = context.Pipe(duplex=False)
-        child = context.Process(target=self.in_child, args=(sender, edit, cut))
+        child = context.Process(target=self.in_child, args=(sender, edit, cut, replay))
         child.start()
         sender.close()
         try:
@@ -104,11 +112,14 @@ class Example:
             receiver.close()
             child.join()
         require(child.exitcode == 0, 'complete-call child failed')
-        require(record['after'] == self.before, 'complete call changed stored test bytes')
+        require(store(self.fixture.path) == self.before, 'complete call changed the original stored test bytes')
+        require(record['after'] == self.before or
+                (replay != self.fixture.path and record.get('result_sha256') is not None),
+                'refused or passive call changed stored test bytes')
         self.runs.append(record)
         return record
 
-    def in_child(self, sender, edit, cut):
+    def in_child(self, sender, edit, cut, replay):
         original_validate = world.Bank.validate
         record = dict(code=None, observations=[], cut=cut, edit=edit)
 
@@ -135,14 +146,20 @@ class Example:
             return value
 
         try:
-            with patch.object(world.Bank, 'validate', observe):
+            with ExitStack() as changes:
+                changes.enter_context(patch.object(world.Bank, 'validate', observe))
+                if replay != self.fixture.path:
+                    storage = self.fixture.world.storage
+                    storage_path = storage.root.relative_to(self.fixture.path)
+                    changes.enter_context(patch.object(storage, 'root', replay / storage_path))
+                    changes.enter_context(patch.object(original.S.time, 'time_ns', return_value=self.clock_ns))
                 result = self.fixture.call(edit)
             record['result_sha256'] = self.fixture.result_digest(result)
         except self.fixture.refusals as error:
             record['code'] = world.code_of(error)
         except Exception as error:
             record['exception'] = f'{type(error).__name__}: {error}'
-        record['after'] = store(self.fixture.path)
+        record['after'] = store(replay)
         sender.send(record)
         sender.close()
 
@@ -202,7 +219,7 @@ class Fixture:
     def __init__(self, suite, route, edition):
         self.route = route
         self.edition = edition
-        if route == 'entry_joins':
+        if route in ('entry_joins', 'start_candidate') or route.startswith('publish_'):
             self.world, self.handles = original.new_world(suite, edition)
         else:
             self.world, self.handles, _ = original.started(suite, edition)
@@ -233,6 +250,11 @@ class Fixture:
         if route == 'entry_joins':
             sources, _ = w.start.acquire_all(self.handles)
             return w.start.entry_joins, (original.request(w), sources)
+        if route == 'body_commitment':
+            native = w.owners['native'].current()
+            return w.start.body_commitment, (native['body'], native['control'])
+        if route == 'start_candidate' or route.startswith('publish_'):
+            return self.capture_start_arguments('candidate' if route == 'start_candidate' else 'publication_union')
         if route.startswith('issue/'):
             kind = route.split('/', 1)[1]
             owner = w.owners['activation:' + kind]
@@ -272,8 +294,31 @@ class Fixture:
             return self.projector.rep.decode_checkpoint, (wrapper,)
         raise ValueError(f'unknown Goal started fixture {route}')
 
+    def capture_start_arguments(self, method):
+        """Seal the actual caller arguments at the entry to the test routine."""
+        start = self.world.start
+        action = getattr(start, method)
+        captured = []
+
+        class AtBoundary(Exception):
+            pass
+
+        def capture(*args):
+            captured.extend(args)
+            raise AtBoundary
+
+        with patch.object(start, method, capture):
+            try:
+                start.commit_start(original.request(self.world), self.handles)
+            except AtBoundary:
+                pass
+        require(captured, f'original Start call did not reach {method}')
+        return action, tuple(captured)
+
     def call(self, edit):
         args = self.args
+        if self.route.startswith('publish_'):
+            return self.call_publication(edit)
         if self.route == 'cutover_original':
             retained = original.R.retained_native
 
@@ -292,6 +337,45 @@ class Fixture:
         if self.route.startswith('issue/'):
             return self.action(*args, kind='activation_source:' + self.route.split('/', 1)[1])
         return self.action(*args)
+
+    def call_publication(self, edit):
+        if not edit:
+            return self.action(*self.args)
+        _, path, value = edit
+        w = self.world
+        args = list(self.args)
+        change = lambda document: clauses.apply(document, path, tuple(value))
+        if self.route == 'publish_control':
+            args[2] = copy.deepcopy(args[2])
+            origin = args[2]['native_birth']
+            origin['start_control'] = change(origin['start_control'])
+            return self.action(*args)
+        if self.route == 'publish_origin':
+            args[-1] = dict(args[-1], d01_origin=change)
+            return self.action(*args)
+        if self.route == 'publish_head':
+            skeleton = world.skeleton
+
+            def selected(bank, ref):
+                document = skeleton(bank, ref)
+                if ref == w.edition.consumer + '#/$defs/RetainedNativeStart':
+                    document['original_d01_head'] = change(document['original_d01_head'])
+                return document
+
+            with patch.object(world, 'skeleton', selected):
+                return self.action(*args)
+        require(self.route == 'publish_pointer', f'unknown publication fixture {self.route}')
+        cell = w.storage.cell
+        pointer = (original.ST.d01_families(w.edition)['pointer'], w.owners['d01'].pointer_key())
+
+        def chosen(family, key):
+            stored = cell(family, key)
+            if (family, key) == pointer:
+                return dict(stored, value=change(stored['value']))
+            return stored
+
+        with patch.object(w.storage, 'cell', chosen):
+            return self.action(*args)
 
     def result_digest(self, result):
         if self.route.startswith('issue/'):
@@ -356,6 +440,33 @@ def regex_implication(validator, node, keyword, name, path, cut):
     return dict(covering_rule=other, checked_pattern=pattern, premise=premise,
                 sources=[dict(path=str(Path(f.__code__.co_filename).relative_to(ROOT)),
                               line=f.__code__.co_firstlineno, sha256=sha(Path(f.__code__.co_filename))) for f in source])
+
+
+def body_selector_implication(validator, bank, ref, node, keyword, path, cut):
+    """Check the installed selector's sibling constant for the same field."""
+    if not ref.endswith('#/$defs/BodyIssuanceCommitment') or len(path) != 2 or path[0] not in ('body', 'control'):
+        return None
+    if keyword not in ('type', 'minLength'):
+        return None
+    which, field = path
+    root = validator._resolver.lookup(ref)
+    shared, narrowed = root.contents['properties'][which]['allOf']
+    selector = root.resolver.lookup(shared['$ref'])
+    selector = selector.resolver.lookup(selector.contents['$ref'])
+    assertion = selector.contents['properties'].get(field)
+    constant = narrowed['properties'].get(field)
+    if assertion is not node or constant is None or type(constant.get('const')) is not str:
+        return None
+    value = constant['const']
+    if not (keyword == 'type' and assertion['type'] == 'string' or
+            keyword == 'minLength' and len(value) >= assertion['minLength']):
+        return None
+    other = constant['x-pm-oracle-id'] + '/const'
+    if (other, tuple(path)) not in pilot.located_errors(cut):
+        return None
+    return dict(covering_rule=other, constant=value, premise='The selector field must equal this string.',
+                sources=[pilot.schema_documents(bank, uri) for uri in
+                         (ref.split('#', 1)[0], assertion['x-pm-oracle-id'].split('#', 1)[0])])
 
 
 def test_declared_rules(fixture, captured, entry, disable=None):
@@ -442,7 +553,10 @@ def test_declared_rules(fixture, captured, entry, disable=None):
             require((name, tuple(path)) not in pilot.located_errors(cut) and
                     error_records(original_errors) == error_records(restored),
                     f'{name}: individual rule cut/restoration failed')
-            implication = regex_implication(plain, node, keyword, name, path, cut) if cut else None
+            implication = None
+            if cut:
+                implication = (regex_implication(plain, node, keyword, name, path, cut) or
+                               body_selector_implication(validator, bank, resolved, node, keyword, path, cut))
             if cut and implication is None:
                 result['gaps'][name] = dict(reason='needs a checked implication for the remaining rejection',
                                             path=path, edit=expected['edit'], control=index,

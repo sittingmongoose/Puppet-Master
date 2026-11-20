@@ -21,9 +21,11 @@ def main():
     parser.add_argument('--case', type=Path, required=True)
     parser.add_argument('--enabled', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--root-fragments', action='store_true')
     args = parser.parse_args()
     enabled = json.loads((args.enabled / 'result.json').read_bytes())
-    require(enabled['status'] == 'READY_FOR_MATRIX', 'enabled reader example did not pass')
+    ready = {'READY_FOR_MATRIX', 'ROOT_FRAGMENTS'} if args.root_fragments else {'READY_FOR_MATRIX'}
+    require(enabled['status'] in ready, 'enabled validation example did not pass')
     row = json.loads(args.case.read_bytes())['row']
     require(row == enabled['row'], 'enabled example is from a different validation row')
     args.out.mkdir(parents=True)
@@ -33,6 +35,8 @@ def main():
         output = args.out / disabled
         command = [sys.executable, '-B', str(script), '--matrix', str(args.matrix),
                    '--case', str(args.case), '--out', str(output), '--disable', disabled]
+        if args.root_fragments:
+            command.append('--root-fragments')
         run = subprocess.run(command, capture_output=True, text=True)
         (args.out / f'{disabled}.log').write_text(run.stdout + run.stderr)
         refusal = json.loads((output / sweep.table_id([row]) / 'result.json').read_bytes())
