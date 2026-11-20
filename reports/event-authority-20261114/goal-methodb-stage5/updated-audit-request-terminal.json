@@ -1,0 +1,425 @@
+{
+  "accepted_branches": {
+    "current progress": {
+      "goal_id": "goal:TEST_ONLY:\u03b1-ca8adcf5",
+      "operation_id": "goal-operation:TEST_ONLY:ff00cd43689c4a66bebff3e0cede450a",
+      "project_id": "TEST_ONLY-project-\u03b1-ca8adcf5",
+      "reader_binding": "reader.goal.update_command_audit@1.0.0",
+      "selection": {
+        "kind": "current_progress"
+      },
+      "storage_instance_id": "87a4413e-ecba-4ba3-8530-f33555ae5b8e",
+      "thread_id": "thr_TEST_ONLY_ca8adcf5"
+    },
+    "immutable progress": {
+      "goal_id": "goal:TEST_ONLY:\u03b1-ca8adcf5",
+      "operation_id": "goal-operation:TEST_ONLY:ff00cd43689c4a66bebff3e0cede450a",
+      "project_id": "TEST_ONLY-project-\u03b1-ca8adcf5",
+      "reader_binding": "reader.goal.update_command_audit@1.0.0",
+      "selection": {
+        "kind": "immutable_progress",
+        "selector": {
+          "goal_id": "goal:TEST_ONLY:\u03b1-ca8adcf5",
+          "operation_id": "goal-operation:TEST_ONLY:ff00cd43689c4a66bebff3e0cede450a",
+          "progress_epoch": 2,
+          "project_id": "TEST_ONLY-project-\u03b1-ca8adcf5",
+          "snapshot_key": "goal_update_progress:38376134343133652d656362612d346261332d383533302d663333353535616535623865:544553545f4f4e4c592d70726f6a6563742dceb12d6361386164636635:7468725f544553545f4f4e4c595f6361386164636635:676f616c3a544553545f4f4e4c593aceb12d6361386164636635:676f616c2d6f7065726174696f6e3a544553545f4f4e4c593a6666303063643433363839633461363662656266663365306365646534353061:epoch:2",
+          "storage_instance_id": "87a4413e-ecba-4ba3-8530-f33555ae5b8e",
+          "thread_id": "thr_TEST_ONLY_ca8adcf5"
+        }
+      },
+      "storage_instance_id": "87a4413e-ecba-4ba3-8530-f33555ae5b8e",
+      "thread_id": "thr_TEST_ONLY_ca8adcf5"
+    },
+    "terminal members": {
+      "goal_id": "goal:TEST_ONLY:\u03b1-ca8adcf5",
+      "operation_id": "goal-operation:TEST_ONLY:ff00cd43689c4a66bebff3e0cede450a",
+      "project_id": "TEST_ONLY-project-\u03b1-ca8adcf5",
+      "reader_binding": "reader.goal.update_command_audit@1.0.0",
+      "selection": {
+        "kind": "terminal_members"
+      },
+      "storage_instance_id": "87a4413e-ecba-4ba3-8530-f33555ae5b8e",
+      "thread_id": "thr_TEST_ONLY_ca8adcf5"
+    }
+  },
+  "census_sha256": "647eb062f2b9f8438e26716e3e058e1ac61193a2c266bbf12f4664495598fab7",
+  "examples": {
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/closed_members": {
+      "control_name": "immutable progress",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "selection",
+        "selector"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/properties/goal_id/minLength": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "selector",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/properties/goal_id/type": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "selector",
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/properties/operation_id/minLength": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "selector",
+        "operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/properties/operation_id/type": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "selector",
+        "operation_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/properties/progress_epoch/minimum": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "selector",
+        "progress_epoch"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/properties/progress_epoch/type": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "selector",
+        "progress_epoch"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/properties/project_id/minLength": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "selector",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/properties/project_id/type": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "selector",
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/properties/snapshot_key/minLength": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "selector",
+        "snapshot_key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/properties/snapshot_key/type": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "selector",
+        "snapshot_key"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/properties/storage_instance_id/minLength": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "selector",
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/properties/storage_instance_id/type": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "selector",
+        "storage_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/properties/thread_id/minLength": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "selector",
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/properties/thread_id/type": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "selector",
+        "thread_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/required": {
+      "control_name": "immutable progress",
+      "member": [
+        "remove",
+        "storage_instance_id"
+      ],
+      "path": [
+        "selection",
+        "selector"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector/type": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "selector"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest/closed_members": {
+      "control_name": "current progress",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest/properties/goal_id/minLength": {
+      "control_name": "current progress",
+      "path": [
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest/properties/goal_id/type": {
+      "control_name": "current progress",
+      "path": [
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest/properties/operation_id/minLength": {
+      "control_name": "current progress",
+      "path": [
+        "operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest/properties/operation_id/type": {
+      "control_name": "current progress",
+      "path": [
+        "operation_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest/properties/project_id/minLength": {
+      "control_name": "current progress",
+      "path": [
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest/properties/project_id/type": {
+      "control_name": "current progress",
+      "path": [
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest/properties/reader_binding/const": {
+      "control_name": "current progress",
+      "path": [
+        "reader_binding"
+      ],
+      "value": "reader.goal.update_command_audit@1.0.0x"
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest/properties/selection/oneOf": {
+      "control_name": "current progress",
+      "path": [
+        "selection"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest/properties/storage_instance_id/minLength": {
+      "control_name": "current progress",
+      "path": [
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest/properties/storage_instance_id/type": {
+      "control_name": "current progress",
+      "path": [
+        "storage_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest/properties/thread_id/minLength": {
+      "control_name": "current progress",
+      "path": [
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest/properties/thread_id/type": {
+      "control_name": "current progress",
+      "path": [
+        "thread_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest/required": {
+      "control_name": "current progress",
+      "member": [
+        "remove",
+        "reader_binding"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest/type": {
+      "control_name": "current progress",
+      "path": [],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/CurrentProgressSelection/closed_members": {
+      "control_name": "current progress",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "selection"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/CurrentProgressSelection/properties/kind/const": {
+      "control_name": "current progress",
+      "path": [
+        "selection",
+        "kind"
+      ],
+      "value": "current_progressx"
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/CurrentProgressSelection/required": {
+      "control_name": "current progress",
+      "member": [
+        "remove",
+        "kind"
+      ],
+      "path": [
+        "selection"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/CurrentProgressSelection/type": {
+      "control_name": "current progress",
+      "path": [
+        "selection"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/ImmutableProgressSelection/closed_members": {
+      "control_name": "immutable progress",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "selection"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/ImmutableProgressSelection/properties/kind/const": {
+      "control_name": "immutable progress",
+      "path": [
+        "selection",
+        "kind"
+      ],
+      "value": "immutable_progressx"
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/ImmutableProgressSelection/required": {
+      "control_name": "current progress",
+      "member": [
+        "remove",
+        "kind"
+      ],
+      "path": [
+        "selection"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/ImmutableProgressSelection/type": {
+      "control_name": "current progress",
+      "path": [
+        "selection"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/TerminalMembersSelection/closed_members": {
+      "control_name": "terminal members",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "selection"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/TerminalMembersSelection/properties/kind/const": {
+      "control_name": "current progress",
+      "path": [
+        "selection",
+        "kind"
+      ],
+      "value": "terminal_membersx"
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/TerminalMembersSelection/required": {
+      "control_name": "current progress",
+      "member": [
+        "remove",
+        "kind"
+      ],
+      "path": [
+        "selection"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/TerminalMembersSelection/type": {
+      "control_name": "current progress",
+      "path": [
+        "selection"
+      ],
+      "value": null
+    }
+  },
+  "family": "goal.updated",
+  "later_refusal": "dgu/reader/audit/result/schema/request",
+  "root": "dg5:ae61395d8117463a",
+  "route": "audit_terminal_request",
+  "row": "dg5/dgu/reader/audit/request/schema",
+  "site": [
+    "scripts/pm_goal_dg_u_owners.py",
+    1637
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0"
+}
