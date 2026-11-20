@@ -53,7 +53,7 @@ export const CHIP_SAMPLER = withPaintedChip((opts) => {
 				if (a) {
 					st = a.startTime;
 					ct = a.currentTime;
-					heldPose = a.__pmHeld === true && a.playState === 'paused' && ct != null;
+					heldPose = st == null && ct != null && a.effect.getComputedTiming().progress != null;
 				}
 				edge = edgeOf(b, b.parentElement);
 			} else {
