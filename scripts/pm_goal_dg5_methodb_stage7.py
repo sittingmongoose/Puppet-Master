@@ -126,8 +126,16 @@ def frame_header_cap(directory, negative):
     return world, updated.O.S.encode_event_frame, (event, 1), {}
 
 
+def frame_payload_cap(directory, negative):
+    world, event = published_event(directory)
+    if negative:
+        event['payload'] = dict(event['payload'], stage7_large_value='x' * updated.O.S.PAYLOAD_CAP)
+    return world, updated.O.S.encode_event_frame, (event, 1), {}
+
+
 # The explicit lines match the input matrix. Validate the observed location on every run.
 CASES = {
+    'frame-payload-cap': (STORAGE, 441, 'frame/payload_cap', frame_payload_cap),
     'frame-header-cap': (STORAGE, 440, 'frame/header_cap', frame_header_cap),
     'event-record': (STORAGE, 473, 'append/event/schema/correlation_id', event_record),
     'stored-producer': (OWNERS, 1807, 'dgu/producer/publish/stored_producer', stored_producer),
