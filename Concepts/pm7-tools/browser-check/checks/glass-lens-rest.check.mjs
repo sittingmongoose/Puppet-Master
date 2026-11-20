@@ -32,7 +32,7 @@ const list = (v, all) => (v ? String(v).split(',').map((s) => s.trim()).filter(B
 const VIEWS = { home: 'dashboard', usage: 'usage', settings: 'settings', wizard: 'wizard', orchestrator: 'orchestrator', projects: 'projects' };
 
 /* in the page: the lenses, their strips (glass.js STRIPS, the ones a press can reach) and a per-frame sampler */
-const PROBE = () => {
+export const PROBE = () => {
 	/* the Activity bar icon lens's resting tint (glass.js KINDS.lensIcon.sat, restSat) */
 	const ICON_REST = 'saturate(1.12)';
 	/* the hover bead's while it shows (glass.css .lg-bead.on, KINDS.bead.sat) */
@@ -159,10 +159,12 @@ const PROBE = () => {
 				document.addEventListener('pointerup', () => { if (this.on) { this.phase = 'released'; this.tUp = Math.round(performance.now()); } }, true);
 			}
 			const which = () => { const c = chosen && document.querySelector(chosen); return c ? (c.getAttribute('data-target') || c.getAttribute('aria-label') || c.textContent || '').trim().slice(0, 24) : ''; };
-			const tick = (ts) => {
+			const tick = () => {
 				if (!this.on) return;
+				// A pointer event may have run since the frame timestamp. Stamp the read on the event clock.
+				const t = Math.round(performance.now());
 				const f = getComputedStyle(l).backdropFilter;
-				this.frames.push({ t: Math.round(ts), ph: this.phase, mv: moving(l), up: l.hasAttribute('data-lg-lifted'), bend: /url\(/.test(f || ''), tint: f === ICON_REST, fl: f && f !== 'none' ? f : '', b: box(l), ch: chosen ? which() : undefined });
+				this.frames.push({ t, ph: this.phase, mv: moving(l), up: l.hasAttribute('data-lg-lifted'), bend: /url\(/.test(f || ''), tint: f === ICON_REST, fl: f && f !== 'none' ? f : '', b: box(l), ch: chosen ? which() : undefined });
 				requestAnimationFrame(tick);
 			};
 			requestAnimationFrame(tick);
