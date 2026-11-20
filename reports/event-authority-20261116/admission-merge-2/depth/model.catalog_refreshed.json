@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.77",
+  "sha256": "b115975a43d4b41510c4267443f99af47deb18be58e50ef992822be08cec13cb",
   "family_count": 518,
   "row_pointer": "#/families/419"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/419 (canonical row SHA-256 84bbfad129f762ac02993231fe8ea86b11996ab4ee5371bd04f1c8ad0a7788a6). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.77 as #/families/419, canonical row SHA-256 84bbfad129f762ac02993231fe8ea86b11996ab4ee5371bd04f1c8ad0a7788a6. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -283,45 +283,89 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-602",
-       "line_start": 53540,
-       "line_end": 53540,
-       "quote": "Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project",
+       "line_start": 53542,
+       "line_end": 53550,
+       "quote": "  Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2337. Its event history selects Application\n  = RP-MODEL-CATALOG-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-TELEMETRY-90D@1.0.0\n  (anchor_kind=creation, cardinality_scope=project); Plans/storage-plan.md#SP-602 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner\n  policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected\n  schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration\n  or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice\n  or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-602, Plans/storage-plan.md:53331-53576",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-602, Plans/storage-plan.md:53333-53578",
+       "file_sha256": "1fa333c4ef3aa54859eae354a38973490a4de4ca54b6c8f066b2770f528c3bbb",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-602",
-        "line_start": 53081,
-        "line_end": 53081,
-        "quote": "\\ binding for `model.catalog_refreshed` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`,\\",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 53540,
+        "line_end": 53540,
+        "quote": "Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-602, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:53331-53576",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-602",
+         "line_start": 53081,
+         "line_end": 53081,
+         "quote": "\\ binding for `model.catalog_refreshed` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`,\\",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 53540
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "3b3fffd9e43344d70be4938bbbb7817aed2a7332",
+        "old_quote": "Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-602",
+        "old_line_start": 53540,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-602",
-       "line_start": 53540,
-       "line_end": 53540,
-       "quote": "Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project",
+       "line_start": 53542,
+       "line_end": 53550,
+       "quote": "  Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2337. Its event history selects Application\n  = RP-MODEL-CATALOG-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-TELEMETRY-90D@1.0.0\n  (anchor_kind=creation, cardinality_scope=project); Plans/storage-plan.md#SP-602 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner\n  policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected\n  schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration\n  or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice\n  or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-602, Plans/storage-plan.md:53331-53576",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-602, Plans/storage-plan.md:53333-53578",
+       "file_sha256": "1fa333c4ef3aa54859eae354a38973490a4de4ca54b6c8f066b2770f528c3bbb",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-602",
-        "line_start": 53085,
-        "line_end": 53085,
-        "quote": "\\ application edition selects `RP-MODEL-CATALOG-APPLICATION-90D@1.0.0`; Project records select the Project\\",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 53540,
+        "line_end": 53540,
+        "quote": "Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-602, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:53331-53576",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-602",
+         "line_start": 53085,
+         "line_end": 53085,
+         "quote": "\\ application edition selects `RP-MODEL-CATALOG-APPLICATION-90D@1.0.0`; Project records select the Project\\",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 53540
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "3b3fffd9e43344d70be4938bbbb7817aed2a7332",
+        "old_quote": "Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-602",
+        "old_line_start": 53540,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -871,10 +915,9 @@
   "row_pointer": "#/families/419"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "34cb6502622ed593a4027e02f268ddd8e327b08f83e335d81c98ce78058afa3e",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "3b3fffd9e43344d70be4938bbbb7817aed2a7332",
+  "source_assessment_sha256": "ef3b9544b12bf0259f1a5f46cabc681ca48cdd917d30303b99f3362cec1543e1",
+  "native_execution": "NOT_RUN"
  }
 }

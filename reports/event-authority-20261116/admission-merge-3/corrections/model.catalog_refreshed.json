@@ -1,0 +1,268 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "model.catalog_refreshed",
+ "findings": [
+  4
+ ],
+ "source_commit": "3b3fffd9e43344d70be4938bbbb7817aed2a7332",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2337",
+ "decision_ref": "Plans/Decision_Log.md#DL-2527",
+ "registry_before": {
+  "revision": "2026-11-19.76",
+  "sha256": "295ec06204b842aca40dfc36c5341b16a15cc35ca366985c00da36b2c8597ed5",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.77",
+  "sha256": "b115975a43d4b41510c4267443f99af47deb18be58e50ef992822be08cec13cb",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-model-catalog-refreshed",
+  "family_revision": "1.0.0",
+  "event_type": "model.catalog_refreshed",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Models_System.md#MS-199",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-622",
+  "payload_schema_id": "pm.event_payload.model_catalog_refreshed.v1",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/model_catalog_refreshed.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.event_payload.model_catalog_refreshed.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Models_System.md#MS-199",
+   "Plans/Contracts_V0.md#CV-622",
+   "Plans/event_payloads/model_catalog_refreshed.schema.json#",
+   "Plans/small_owner_event_fixtures.json#/families/2",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-TELEMETRY-90D",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.event_payload.model_catalog_refreshed.v1",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/model_catalog_refreshed.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.event_payload.model_catalog_refreshed.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Models_System.md#MS-199",
+    "read_owner_ref": "Plans/Models_System.md#MS-199",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-MODEL-CATALOG-APPLICATION-90D",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.event_payload.model_catalog_refreshed.v1",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/model_catalog_refreshed.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.event_payload.model_catalog_refreshed.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Models_System.md#MS-199",
+    "read_owner_ref": "Plans/Models_System.md#MS-199",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-TELEMETRY-90D",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "registry_row": {
+  "family_id": "event-family-model-catalog-refreshed",
+  "family_revision": "1.0.0",
+  "event_type": "model.catalog_refreshed",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Models_System.md#MS-199",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-622",
+  "payload_schema_id": "pm.event_payload.model_catalog_refreshed.v1",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/model_catalog_refreshed.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.event_payload.model_catalog_refreshed.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Models_System.md#MS-199",
+   "Plans/Contracts_V0.md#CV-622",
+   "Plans/event_payloads/model_catalog_refreshed.schema.json#",
+   "Plans/small_owner_event_fixtures.json#/families/2",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-TELEMETRY-90D",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.event_payload.model_catalog_refreshed.v1",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/model_catalog_refreshed.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.event_payload.model_catalog_refreshed.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Models_System.md#MS-199",
+    "read_owner_ref": "Plans/Models_System.md#MS-199",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-MODEL-CATALOG-APPLICATION-90D",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.event_payload.model_catalog_refreshed.v1",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/model_catalog_refreshed.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.event_payload.model_catalog_refreshed.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Models_System.md#MS-199",
+    "read_owner_ref": "Plans/Models_System.md#MS-199",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-TELEMETRY-90D",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "predecessor_record_sha256": "c02f5d7613b659566a7ed00cead53ca10c93d7091a2f554edabc0dec607522f8",
+ "predecessor_assessment_sha256": "ef3b9544b12bf0259f1a5f46cabc681ca48cdd917d30303b99f3362cec1543e1",
+ "applied_record_sha256": "d08a8b4a9d33e693c9db161e366498e42fe57af808e605c470a999258c8280c3",
+ "applied_assessment_sha256": "0b6e709790e2c898621b735e39ca03cc71999abdea7b58dd470e7736df438471",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-602",
+    "line_start": 53540,
+    "line_end": 53540,
+    "quote": "Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-602, Plans/storage-plan.md:53331-53576",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-602",
+     "line_start": 53081,
+     "line_end": 53081,
+     "quote": "\\ binding for `model.catalog_refreshed` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`,\\",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-602",
+    "line_start": 53542,
+    "line_end": 53550,
+    "quote": "  Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2337. Its event history selects Application\n  = RP-MODEL-CATALOG-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-TELEMETRY-90D@1.0.0\n  (anchor_kind=creation, cardinality_scope=project); Plans/storage-plan.md#SP-602 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner\n  policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected\n  schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration\n  or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice\n  or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-602, Plans/storage-plan.md:53333-53578"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  },
+  {
+   "ordinal": 1,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-602",
+    "line_start": 53540,
+    "line_end": 53540,
+    "quote": "Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-602, Plans/storage-plan.md:53331-53576",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-602",
+     "line_start": 53085,
+     "line_end": 53085,
+     "quote": "\\ application edition selects `RP-MODEL-CATALOG-APPLICATION-90D@1.0.0`; Project records select the Project\\",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-602",
+    "line_start": 53542,
+    "line_end": 53550,
+    "quote": "  Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2337. Its event history selects Application\n  = RP-MODEL-CATALOG-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-TELEMETRY-90D@1.0.0\n  (anchor_kind=creation, cardinality_scope=project); Plans/storage-plan.md#SP-602 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner\n  policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected\n  schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration\n  or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice\n  or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-602, Plans/storage-plan.md:53333-53578"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}
