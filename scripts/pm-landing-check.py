@@ -565,8 +565,9 @@ class RenameContext:
         """T88 (TOOLBATCH4 pre-check findings 6 and 7): read only, with no optional lock (`git status` refreshed and
         wrote the shared checkout's index), and nothing hidden from it: `git status` with ignored files too (an untracked
         evidence file under a .gitignored or info/exclude'd folder kept the excuse); the index's own flags (an edit under
-        skip-worktree or assume-unchanged does not show in status); and the file's bytes against HEAD's (which catches
-        both, whatever git reports). Returns (alone, why not)."""
+        skip-worktree or assume-unchanged does not show in status); and the file's Git blob ID after applying clean
+        filters against the ID at HEAD, so checkout conversions such as CRLF do not look like edits (T137).
+        Returns (alone, why not)."""
         parts = path.split("/")
         if any((self.root / "/".join(parts[:i])).is_symlink() for i in range(1, len(parts) + 1)):
             return False, "evidence is or sits under a symbolic link"
@@ -589,15 +590,16 @@ class RenameContext:
         tag = flags.stdout.decode("utf-8", "surrogateescape").split("\0")[0][:1]
         if tag == "S" or (tag and tag.islower()):
             return False, "evidence is flagged " + ("skip-worktree" if tag in ("S", "s") else "assume-unchanged") + " in the index"
-        blob = self._git("cat-file", "blob", "HEAD:" + path)
-        on_disk = self.root / path
+        head_blob = self._git("rev-parse", "--verify", "HEAD:" + path)
+        if head_blob.returncode != 0:
+            reason = "evidence is not in HEAD"
+            if (self.root / path).exists():
+                reason += " but is on disk"
+            return False, reason
+        blob = self._git("hash-object", f"--path={path}", "--", path)
         if blob.returncode != 0:
-            return (False, "evidence is not in HEAD but is on disk") if on_disk.exists() else (False, "evidence is not in HEAD")
-        try:
-            data = on_disk.read_bytes()
-        except OSError:
-            return False, "evidence is in HEAD but not on disk"
-        if data != blob.stdout:
+            return False, "git hash-object failed for the evidence on disk"
+        if blob.stdout != head_blob.stdout:
             return False, "evidence differs from HEAD on disk"
         return True, ""
 

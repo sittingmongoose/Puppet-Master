@@ -337,6 +337,30 @@ class RenamedShardStaleness(unittest.TestCase):
 
     # T63 (REVIEW-etools-tb3-opus findings 7 and 8): the branch left the evidence file alone, in its commits read raw
     # and in the working tree, and the file is no symbolic link
+    def test_clean_crlf_evidence_keeps_the_rename_excuse(self):
+        evidence = self.root / self.EVIDENCE
+        self._git("config", "core.autocrlf", "true")
+        evidence.unlink()
+        self._git("checkout-index", "--index", "--", self.EVIDENCE)
+        self.assertEqual(evidence.read_bytes(), b"{}\r\n")
+        self.assertEqual(self._git("status", "--porcelain", "--", self.EVIDENCE).stdout, b"")
+        self.assertTrue(self.stale(self.ref(self.OLD)), self.context.why)
+        self.assertNotIn(self.EVIDENCE, self.context.why)
+
+    def test_filtered_blob_check_rejects_content_edits_even_when_status_is_clean(self):
+        self._git("config", "core.autocrlf", "true")
+        (self.root / self.EVIDENCE).write_bytes(b'{"edited": true}\r\n')
+        real_git = self.context._git
+
+        def hide_status(*args):
+            if args[0] == "status":
+                return subprocess.CompletedProcess(args, 0, stdout=b"")
+            return real_git(*args)
+
+        with patch.object(self.context, "_git", side_effect=hide_status):
+            self.assertFalse(self.stale(self.ref(self.OLD)))
+        self.assertEqual(self.context.why[self.EVIDENCE], "evidence differs from HEAD on disk")
+
     def test_an_uncommitted_edit_of_the_evidence_keeps_its_class(self):
         (self.root / self.EVIDENCE).write_text('{"edited": true}\n')
         self.assertFalse(self.stale(self.ref(self.OLD)))

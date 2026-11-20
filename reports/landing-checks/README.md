@@ -369,6 +369,11 @@ recording the baseline, the rule never applies. `renamed_shard_ref` and `RenameC
 the rule; `tests/test_pm_landing_check.py` `RenamedShardStaleness` reproduces the Q5 case against a git base
 and the negatives, P6 and P8 among them.
 
+The working-tree check includes ignored files and rejects skip-worktree or assume-unchanged index
+flags. It also compares the on-disk file's blob ID after Git applies the path's clean filters with the
+blob ID at HEAD (T137). A clean CRLF checkout can keep the rename classification, and a content edit
+that changes the filtered blob still loses it.
+
 Deliberately not on the list: the shard and index kinds such as `shard_hash_stale` and
 `stale_generated_index_artifact`, because a branch that edits canon regenerates those and a stale one
 is the branch's to fix; `event_authority_currentness_audit_unavailable`, which says the ignored audit
