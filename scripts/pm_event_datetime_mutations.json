@@ -2788,6 +2788,14 @@
    "rule": "composition.storage-utc-z"
   },
   {
+   "id": "review-B16-storage-terminal-z-anchor",
+   "module": "pm_event_datetime",
+   "find": "\"pattern\": r\"Z(?![\\s\\S])\"",
+   "replace": "\"pattern\": r\"Z\"",
+   "witness": "check:datetime_unit_composition_terminal_z_diagnostics",
+   "rule": "composition.storage-utc-z"
+  },
+  {
    "id": "hw-fix17-composition-pattern-dropped",
    "module": "pm_event_datetime",
    "find": "\"format\": \"date-time\",\n                                                              \"pattern\": r\"Z(?![\\s\\S])\"},",
@@ -3451,6 +3459,7 @@
     "hw-fix17-B08-composition-type-dropped",
     "hw-fix17-composition-format-dropped",
     "hw-fix17-composition-pattern-dropped",
+    "review-B16-storage-terminal-z-anchor",
     "hw-fix17-composition-descend-dropped"
    ]
   },

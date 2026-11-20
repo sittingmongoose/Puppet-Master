@@ -3641,6 +3641,17 @@ def _composed_alone_check(keyword, hook):
     return run
 
 
+@check("datetime_unit_composition_terminal_z_diagnostics")
+def _composed_terminal_z(context):
+    """The composed pattern and format both diagnose a suffix after Z."""
+    _, validator, _ = _untyped_validators()
+    bad = dict(COMPOSED_GOOD, observed_at_utc="Zbogus")
+    errors = {(e.validator, tuple(e.absolute_path)) for e in validator.iter_errors(bad)}
+    return validator.is_valid(COMPOSED_GOOD) and errors == {
+        ("format", ("observed_at_utc",)), ("pattern", ("observed_at_utc",)),
+    }
+
+
 for _keyword in COMPOSED_ALONE:
     for _hook in ("root", "through_reference"):
         check("datetime_unit_composition_%s_alone_%s" % (_keyword, _hook))(_composed_alone_check(_keyword, _hook))
