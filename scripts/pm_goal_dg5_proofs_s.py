@@ -696,3 +696,17 @@ PROOFS['dg5/goal/current_argument/schema'] = dict(
         'the original early refusal.'
     ),
 )
+
+PROOFS['dg5/read_current/current_goal/schema'] = dict(
+    kind='entailment',
+    families=['goal_run.started'],
+    depends_on=['dg5/issue/CurrentGoalArgument/schema'],
+    sites=[('scripts/pm_goal_dg_s_readers.py', 854), ('scripts/pm_goal_dg_s_readers.py', 855), ('scripts/pm_goal_dg_s_readers.py', 925), ('scripts/pm_goal_dg_s_readers.py', 934), ('scripts/pm_goal_dg_s_start.py', 345), ('scripts/pm_goal_dg_s_start.py', 347), ('scripts/pm_goal_test_owner_adapters.py', 83)],
+    argument=(
+        'The other Goal copy is constructed and validated by the original owner and reader. The '
+        'final comparison at 934 requires type-exact equality with that schema-valid copy. The '
+        'example records both operands and verifies that the original Goal argument issuer and '
+        'reader use the same installed schema. Disabling just this check leaves the bad copy '
+        'for the comparison, and restoring it restores the same early validation message.'
+    ),
+)
