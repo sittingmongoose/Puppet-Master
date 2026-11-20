@@ -1,0 +1,3514 @@
+{
+  "accepted_branches": {
+    "application event": {
+      "certification_visible": false,
+      "control": {
+        "birth": {
+          "key": "goal_certified_event_birth.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a",
+          "sha256": "72b88d7e283080cc676e30a5b7834c34b16aa95f7ca3a94092b8a1090cdeb6ff"
+        },
+        "commit": null,
+        "epoch": 2,
+        "event_phase": {
+          "key": "goal_certified_event_eventphase.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "sha256": "1b93e3a5b6b2246a1c4cac2f48ce7ac9cc1ccf6c173873bb3f88cc12f140e4c2"
+        },
+        "intent": {
+          "key": "goal_certified_event_intent.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "sha256": "f23c51848e6c72f97e2e5b930e27b1363f71accc65603777b3ebe77bedc40f4b"
+        },
+        "origin": null,
+        "phase": "event_durable",
+        "release": null,
+        "scope": {
+          "goal_id": "TEST_ONLY:goal:1",
+          "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+          "project_id": "TEST_ONLY-project-\u03b2\u0301",
+          "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtzrLMgQ",
+          "storage_instance_id": "31412a18-533d-46f9-985e-7ac3c98ea8aa",
+          "work_graph_id": "TEST_ONLY:work_graph:1"
+        }
+      },
+      "event_phase": {
+        "active_group_sha256": "1754c373aeb636e8670b1d4f0d9c0fb7d8a32b3ca972254e9837a849605ab2ec",
+        "all_member_custody_sha256": "1424a6452f6d7ffb0475bb4127010336d4ab8518e410809b30d320f08bd9ae77",
+        "event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+        "first_custody": {
+          "key": "custody_v2:goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+          "sha256": "226759a265cee9ef64e4b28eda8b83858ea4f6c1144f1a99cfad678d85dc17fb"
+        },
+        "idempotency_key": "goal_run.certified.v3:30:TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a93:TEST_ONLY:standard-certification:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a9:certified1:61:7",
+        "intent": {
+          "key": "goal_certified_event_intent.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "sha256": "f23c51848e6c72f97e2e5b930e27b1363f71accc65603777b3ebe77bedc40f4b"
+        },
+        "issued_at_utc": "2026-11-20T13:04:35.855Z",
+        "original_event_value_sha256": "84c59eb8a6977d3f9845cf0510d26f454eafb324bf21d3f1b480c258033a461e",
+        "original_full_value_result_sha256": "33dc973f0ac1dd82821e708c01e302cbe8dafde3ad20a7856eec1414e61fe238",
+        "owner": {
+          "operation_id": "TEST_ONLY:operation:certified:1",
+          "owner_epoch": 1,
+          "owner_id": "TEST_ONLY:owner:coordinator:5ffc54f2-0697-4a07-b283-2c1b48093b19"
+        },
+        "producer_semantic_digest": "91e56300f1d90b46fea29e9e2e2f8f3f14f14fe6b9e4864446098936c8e7cf95",
+        "scope": {
+          "goal_id": "TEST_ONLY:goal:1",
+          "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+          "project_id": "TEST_ONLY-project-\u03b2\u0301",
+          "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtzrLMgQ",
+          "storage_instance_id": "31412a18-533d-46f9-985e-7ac3c98ea8aa",
+          "work_graph_id": "TEST_ONLY:work_graph:1"
+        },
+        "transaction_id": "TEST_ONLY:tx:31412a18-533d-46f9-985e-7ac3c98ea8aa:9",
+        "whole_first_append_receipt_sha256": "ef401456d8a5d5cf9fbcd4814a3b369e043c167334deb0a2acb944cbcd9c4a57",
+        "whole_producer25_sha256": "66bedd020b2890b0562266c3a8a44e7a08391c38c6584de74c6cec1049e9a4ae"
+      },
+      "evidence": {
+        "active_durable_group": {
+          "commit_group_id": "TEST_ONLY:group:ffca96b1-b733-4167-897d-eb171e3ea3fc:2",
+          "durability_class": "barrier",
+          "durable_end_offset": 5249,
+          "durable_start_offset": 1467,
+          "group_digest": "6dd56cf6e1171a03ba94ac8cfeb58be3a4b972fc6dded7a3593b60852ec5eab7",
+          "manifest_generation": 2,
+          "members": [
+            {
+              "byte_offset": 1467,
+              "event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+              "frame_length": 2742,
+              "frame_sha256": "64a910e0798673ba7b31ca895ef0db976cbad1d2195c24bf76081c6dd2a8aee5",
+              "sequence_id": 1
+            },
+            {
+              "byte_offset": 4209,
+              "event_id": "TEST_ONLY:goal_test.unrelated:cf2",
+              "frame_length": 1040,
+              "frame_sha256": "a567e98ad710fbbfce68431d8867c73bfa7b02f2be9ba3e5cf3d45f13afc51de",
+              "sequence_id": 2
+            }
+          ],
+          "restore_admission": null,
+          "schema_version": "2.0.0",
+          "segment_generation": 1,
+          "segment_name": "segment-1",
+          "storage_instance_id": "ffca96b1-b733-4167-897d-eb171e3ea3fc"
+        },
+        "members": [
+          {
+            "custody": {
+              "event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+              "event_type": "goal_run.certified",
+              "first_append_receipt": {
+                "acknowledged_at_utc": "2026-11-20T13:05:04.660Z",
+                "byte_offset": 1467,
+                "commit_group_id": "TEST_ONLY:group:ffca96b1-b733-4167-897d-eb171e3ea3fc:2",
+                "durability_class": "barrier",
+                "durability_state": "synced",
+                "durable_end_offset": 5249,
+                "event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+                "manifest_generation": 2,
+                "segment_generation": 1,
+                "segment_name": "segment-1",
+                "sequence_id": 1
+              },
+              "group_digest": "6dd56cf6e1171a03ba94ac8cfeb58be3a4b972fc6dded7a3593b60852ec5eab7",
+              "idempotency_key": "goal_run.certified.v3:30:TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a93:TEST_ONLY:standard-certification:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a9:certified1:61:7",
+              "original_event_value_commitment": {
+                "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+                "domain": "pm.storage.original_event_value_commitment.v1",
+                "event_schema_id": "pm.event.v0",
+                "event_schema_version": "2.0.0",
+                "schema_id": "pm.storage.original_event_value_commitment.v1",
+                "schema_version": "1.0.0",
+                "sha256": "159ef3b7b67413a934a34b7f6a0383f449ae9321570e30513fcd9ce4094198c8"
+              },
+              "original_segment_ref": "TEST_ONLY:segment-ref:a4f490fafe0717d80c6aff382558fb78ca7aad95ed81704dd6fd4d83779ff4e2",
+              "producer_semantic_digest": "91e56300f1d90b46fea29e9e2e2f8f3f14f14fe6b9e4864446098936c8e7cf95",
+              "redaction_profile": "no_secrets",
+              "schema_id": "pm.storage_value.event_append_receipt_custody.v2",
+              "schema_version": "2.0.0",
+              "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtzrLMgQ",
+              "storage_instance_id": "ffca96b1-b733-4167-897d-eb171e3ea3fc"
+            },
+            "event": {
+              "actor_ref": "TEST_ONLY:actor:certifier",
+              "attempt_id": null,
+              "causation_event_id": "TEST_ONLY:goal_test.cause:cf01",
+              "correlation_id": "TEST_ONLY:correlation:cf01",
+              "effective_account_ref": "TEST_ONLY:account:1",
+              "event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+              "event_type": "goal_run.certified",
+              "idempotency_key": "goal_run.certified.v3:30:TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a93:TEST_ONLY:standard-certification:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a9:certified1:61:7",
+              "migration": {
+                "compatibility_event_type": null,
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null
+              },
+              "node_id": null,
+              "observed_at_utc": "2026-11-20T13:05:04.659Z",
+              "occurred_at_utc": "2026-11-11T12:00:00.250+01:00",
+              "parent_event_id": null,
+              "payload": {
+                "actor_ref": "TEST_ONLY:actor:certifier",
+                "artifact_refs": [],
+                "causation_event_ref": "TEST_ONLY:goal_test.cause:cf01",
+                "correlation_id": "TEST_ONLY:correlation:cf01",
+                "effective_account_ref": "TEST_ONLY:account:1",
+                "effective_model_ref": "TEST_ONLY:model:a-2026",
+                "effective_provider_ref": "TEST_ONLY:provider:a",
+                "event_name": "goal_run.certified",
+                "evidence_refs": [
+                  "TEST_ONLY:evidence:1"
+                ],
+                "execution_role": "verifier",
+                "expected_goal_run_revision": 6,
+                "goal_id": "TEST_ONLY:goal:1",
+                "goal_revision": 3,
+                "goal_run_revision": 7,
+                "idempotency_key": "goal_run.certified.v3:30:TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a93:TEST_ONLY:standard-certification:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a9:certified1:61:7",
+                "occurred_at_utc": "2026-11-11T12:00:00.250+01:00",
+                "payload": {
+                  "certification_receipt_ref": "TEST_ONLY:standard-certification:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a",
+                  "final_certifier_decision": "certified",
+                  "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+                  "unresolved_risk_refs": [],
+                  "validator_outputs": [
+                    {
+                      "evidence_ref": "TEST_ONLY:evidence:1",
+                      "outcome": "passed",
+                      "validator_id": "TEST_ONLY:validator:1"
+                    }
+                  ],
+                  "worknode_receipt_refs": [
+                    "TEST_ONLY:worknode-receipt:1"
+                  ]
+                },
+                "project_id": "TEST_ONLY-project-\u03b2\u0301",
+                "requested_account_ref": "TEST_ONLY:account:1",
+                "requested_model_ref": "TEST_ONLY:model:a",
+                "requested_provider_ref": "TEST_ONLY:provider:a",
+                "schema_version": "pm.goal_runtime_event.goal_run_certified.schema.v3",
+                "thread_id": "TEST_ONLY:thread:1"
+              },
+              "payload_ref": null,
+              "payload_schema_id": "pm.goal_runtime_event.goal_run_certified.schema.v3",
+              "persisted_at_utc": "2026-11-20T13:05:04.660Z",
+              "producer_sequence_id": null,
+              "project_id": null,
+              "redaction_profile": "no_secrets",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "requested_account_ref": "TEST_ONLY:account:1",
+              "run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "sequence_id": 1,
+              "thread_id": "TEST_ONLY:thread:1"
+            },
+            "full_value_result": {
+              "first_append_receipt": {
+                "acknowledged_at_utc": "2026-11-20T13:05:04.660Z",
+                "byte_offset": 1467,
+                "commit_group_id": "TEST_ONLY:group:ffca96b1-b733-4167-897d-eb171e3ea3fc:2",
+                "durability_class": "barrier",
+                "durability_state": "synced",
+                "durable_end_offset": 5249,
+                "event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+                "manifest_generation": 2,
+                "segment_generation": 1,
+                "segment_name": "segment-1",
+                "sequence_id": 1
+              },
+              "original_event_value_commitment": {
+                "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+                "domain": "pm.storage.original_event_value_commitment.v1",
+                "event_schema_id": "pm.event.v0",
+                "event_schema_version": "2.0.0",
+                "schema_id": "pm.storage.original_event_value_commitment.v1",
+                "schema_version": "1.0.0",
+                "sha256": "159ef3b7b67413a934a34b7f6a0383f449ae9321570e30513fcd9ce4094198c8"
+              },
+              "original_segment_ref": "TEST_ONLY:segment-ref:a4f490fafe0717d80c6aff382558fb78ca7aad95ed81704dd6fd4d83779ff4e2"
+            }
+          },
+          {
+            "custody": {
+              "event_id": "TEST_ONLY:goal_test.unrelated:cf2",
+              "event_type": "goal_test.unrelated",
+              "first_append_receipt": {
+                "acknowledged_at_utc": "2026-11-20T13:05:04.660Z",
+                "byte_offset": 4209,
+                "commit_group_id": "TEST_ONLY:group:ffca96b1-b733-4167-897d-eb171e3ea3fc:2",
+                "durability_class": "barrier",
+                "durability_state": "synced",
+                "durable_end_offset": 5249,
+                "event_id": "TEST_ONLY:goal_test.unrelated:cf2",
+                "manifest_generation": 2,
+                "segment_generation": 1,
+                "segment_name": "segment-1",
+                "sequence_id": 2
+              },
+              "group_digest": "6dd56cf6e1171a03ba94ac8cfeb58be3a4b972fc6dded7a3593b60852ec5eab7",
+              "idempotency_key": "TEST_ONLY:unrelated:cf2",
+              "original_event_value_commitment": {
+                "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+                "domain": "pm.storage.original_event_value_commitment.v1",
+                "event_schema_id": "pm.event.v0",
+                "event_schema_version": "2.0.0",
+                "schema_id": "pm.storage.original_event_value_commitment.v1",
+                "schema_version": "1.0.0",
+                "sha256": "6860be95d36f90809f75b1e4ef090b15a944b29cdf813c47030315d64e6e0315"
+              },
+              "original_segment_ref": "TEST_ONLY:segment-ref:a4f490fafe0717d80c6aff382558fb78ca7aad95ed81704dd6fd4d83779ff4e2",
+              "producer_semantic_digest": "a6b168cd70bb5e042ee9511989e8d5bdbad62443de0ac123de2af3d30b9eb681",
+              "redaction_profile": "no_secrets",
+              "schema_id": "pm.storage_value.event_append_receipt_custody.v2",
+              "schema_version": "2.0.0",
+              "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtdW5yZWxhdGVkLWNmMg",
+              "storage_instance_id": "ffca96b1-b733-4167-897d-eb171e3ea3fc"
+            },
+            "event": {
+              "actor_ref": "TEST_ONLY:actor:unrelated",
+              "attempt_id": null,
+              "causation_event_id": null,
+              "correlation_id": "TEST_ONLY:correlation:unrelated",
+              "effective_account_ref": null,
+              "event_id": "TEST_ONLY:goal_test.unrelated:cf2",
+              "event_type": "goal_test.unrelated",
+              "idempotency_key": "TEST_ONLY:unrelated:cf2",
+              "migration": {
+                "compatibility_event_type": null,
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null
+              },
+              "node_id": null,
+              "observed_at_utc": "2026-11-20T13:05:04.659Z",
+              "occurred_at_utc": "2026-11-11T12:00:01Z",
+              "parent_event_id": null,
+              "payload": {
+                "qualification": "TEST_ONLY",
+                "tag": "cf2"
+              },
+              "payload_ref": null,
+              "payload_schema_id": "TEST_ONLY:unrelated.v1",
+              "persisted_at_utc": "2026-11-20T13:05:04.660Z",
+              "producer_sequence_id": null,
+              "project_id": "TEST_ONLY-project-unrelated-cf2",
+              "redaction_profile": "no_secrets",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "requested_account_ref": null,
+              "run_id": null,
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "sequence_id": 2,
+              "thread_id": null
+            },
+            "full_value_result": {
+              "first_append_receipt": {
+                "acknowledged_at_utc": "2026-11-20T13:05:04.660Z",
+                "byte_offset": 4209,
+                "commit_group_id": "TEST_ONLY:group:ffca96b1-b733-4167-897d-eb171e3ea3fc:2",
+                "durability_class": "barrier",
+                "durability_state": "synced",
+                "durable_end_offset": 5249,
+                "event_id": "TEST_ONLY:goal_test.unrelated:cf2",
+                "manifest_generation": 2,
+                "segment_generation": 1,
+                "segment_name": "segment-1",
+                "sequence_id": 2
+              },
+              "original_event_value_commitment": {
+                "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+                "domain": "pm.storage.original_event_value_commitment.v1",
+                "event_schema_id": "pm.event.v0",
+                "event_schema_version": "2.0.0",
+                "schema_id": "pm.storage.original_event_value_commitment.v1",
+                "schema_version": "1.0.0",
+                "sha256": "6860be95d36f90809f75b1e4ef090b15a944b29cdf813c47030315d64e6e0315"
+              },
+              "original_segment_ref": "TEST_ONLY:segment-ref:a4f490fafe0717d80c6aff382558fb78ca7aad95ed81704dd6fd4d83779ff4e2"
+            }
+          }
+        ],
+        "target_event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf"
+      },
+      "outcome": "event_durable_held"
+    },
+    "restored receipt": {
+      "certification_visible": false,
+      "control": {
+        "birth": {
+          "key": "goal_certified_event_birth.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a",
+          "sha256": "72b88d7e283080cc676e30a5b7834c34b16aa95f7ca3a94092b8a1090cdeb6ff"
+        },
+        "commit": null,
+        "epoch": 2,
+        "event_phase": {
+          "key": "goal_certified_event_eventphase.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "sha256": "1b93e3a5b6b2246a1c4cac2f48ce7ac9cc1ccf6c173873bb3f88cc12f140e4c2"
+        },
+        "intent": {
+          "key": "goal_certified_event_intent.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "sha256": "f23c51848e6c72f97e2e5b930e27b1363f71accc65603777b3ebe77bedc40f4b"
+        },
+        "origin": null,
+        "phase": "event_durable",
+        "release": null,
+        "scope": {
+          "goal_id": "TEST_ONLY:goal:1",
+          "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+          "project_id": "TEST_ONLY-project-\u03b2\u0301",
+          "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtzrLMgQ",
+          "storage_instance_id": "31412a18-533d-46f9-985e-7ac3c98ea8aa",
+          "work_graph_id": "TEST_ONLY:work_graph:1"
+        }
+      },
+      "event_phase": {
+        "active_group_sha256": "1754c373aeb636e8670b1d4f0d9c0fb7d8a32b3ca972254e9837a849605ab2ec",
+        "all_member_custody_sha256": "1424a6452f6d7ffb0475bb4127010336d4ab8518e410809b30d320f08bd9ae77",
+        "event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+        "first_custody": {
+          "key": "custody_v2:goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+          "sha256": "226759a265cee9ef64e4b28eda8b83858ea4f6c1144f1a99cfad678d85dc17fb"
+        },
+        "idempotency_key": "goal_run.certified.v3:30:TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a93:TEST_ONLY:standard-certification:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a9:certified1:61:7",
+        "intent": {
+          "key": "goal_certified_event_intent.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+          "sha256": "f23c51848e6c72f97e2e5b930e27b1363f71accc65603777b3ebe77bedc40f4b"
+        },
+        "issued_at_utc": "2026-11-20T13:04:35.855Z",
+        "original_event_value_sha256": "84c59eb8a6977d3f9845cf0510d26f454eafb324bf21d3f1b480c258033a461e",
+        "original_full_value_result_sha256": "33dc973f0ac1dd82821e708c01e302cbe8dafde3ad20a7856eec1414e61fe238",
+        "owner": {
+          "operation_id": "TEST_ONLY:operation:certified:1",
+          "owner_epoch": 1,
+          "owner_id": "TEST_ONLY:owner:coordinator:5ffc54f2-0697-4a07-b283-2c1b48093b19"
+        },
+        "producer_semantic_digest": "91e56300f1d90b46fea29e9e2e2f8f3f14f14fe6b9e4864446098936c8e7cf95",
+        "scope": {
+          "goal_id": "TEST_ONLY:goal:1",
+          "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+          "project_id": "TEST_ONLY-project-\u03b2\u0301",
+          "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtzrLMgQ",
+          "storage_instance_id": "31412a18-533d-46f9-985e-7ac3c98ea8aa",
+          "work_graph_id": "TEST_ONLY:work_graph:1"
+        },
+        "transaction_id": "TEST_ONLY:tx:31412a18-533d-46f9-985e-7ac3c98ea8aa:9",
+        "whole_first_append_receipt_sha256": "ef401456d8a5d5cf9fbcd4814a3b369e043c167334deb0a2acb944cbcd9c4a57",
+        "whole_producer25_sha256": "66bedd020b2890b0562266c3a8a44e7a08391c38c6584de74c6cec1049e9a4ae"
+      },
+      "evidence": {
+        "active_durable_group": {
+          "commit_group_id": "TEST_ONLY:group:ffca96b1-b733-4167-897d-eb171e3ea3fc:2",
+          "durability_class": "barrier",
+          "durable_end_offset": 5249,
+          "durable_start_offset": 1467,
+          "group_digest": "6dd56cf6e1171a03ba94ac8cfeb58be3a4b972fc6dded7a3593b60852ec5eab7",
+          "manifest_generation": 2,
+          "members": [
+            {
+              "byte_offset": 1467,
+              "event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+              "frame_length": 2742,
+              "frame_sha256": "64a910e0798673ba7b31ca895ef0db976cbad1d2195c24bf76081c6dd2a8aee5",
+              "sequence_id": 1
+            },
+            {
+              "byte_offset": 4209,
+              "event_id": "TEST_ONLY:goal_test.unrelated:cf2",
+              "frame_length": 1040,
+              "frame_sha256": "a567e98ad710fbbfce68431d8867c73bfa7b02f2be9ba3e5cf3d45f13afc51de",
+              "sequence_id": 2
+            }
+          ],
+          "restore_admission": {
+            "members": [
+              {
+                "event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+                "event_type": "goal_run.certified",
+                "idempotency_key": "goal_run.certified.v3:30:TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a93:TEST_ONLY:standard-certification:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a9:certified1:61:7",
+                "owner_id": "TEST_ONLY:owner",
+                "owner_operation_id": "TEST_ONLY:operation",
+                "owner_operation_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+                "producer_semantic_digest": "2222222222222222222222222222222222222222222222222222222222222222",
+                "scope_partition": "TEST_ONLY:scope"
+              }
+            ],
+            "publication_id": "TEST_ONLY:publication",
+            "recovery_epoch": 1,
+            "restore_journal_ref": "TEST_ONLY:journal",
+            "restore_journal_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "restore_occurrence_id": "TEST_ONLY:restore",
+            "restored_boundary_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "TEST_ONLY:storage"
+          },
+          "schema_version": "2.0.0",
+          "segment_generation": 1,
+          "segment_name": "segment-1",
+          "storage_instance_id": "ffca96b1-b733-4167-897d-eb171e3ea3fc"
+        },
+        "members": [
+          {
+            "custody": {
+              "event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+              "event_type": "goal_run.certified",
+              "first_append_receipt": {
+                "acknowledged_at_utc": "2026-11-20T13:05:04.660Z",
+                "byte_offset": 1467,
+                "commit_group_id": "TEST_ONLY:group:ffca96b1-b733-4167-897d-eb171e3ea3fc:2",
+                "durability_class": "barrier",
+                "durability_state": "synced",
+                "durable_end_offset": 5249,
+                "event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+                "manifest_generation": 2,
+                "segment_generation": 1,
+                "segment_name": "segment-1",
+                "sequence_id": 1
+              },
+              "group_digest": "6dd56cf6e1171a03ba94ac8cfeb58be3a4b972fc6dded7a3593b60852ec5eab7",
+              "idempotency_key": "goal_run.certified.v3:30:TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a93:TEST_ONLY:standard-certification:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a9:certified1:61:7",
+              "original_event_value_commitment": {
+                "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+                "domain": "pm.storage.original_event_value_commitment.v1",
+                "event_schema_id": "pm.event.v0",
+                "event_schema_version": "2.0.0",
+                "schema_id": "pm.storage.original_event_value_commitment.v1",
+                "schema_version": "1.0.0",
+                "sha256": "159ef3b7b67413a934a34b7f6a0383f449ae9321570e30513fcd9ce4094198c8"
+              },
+              "original_segment_ref": "TEST_ONLY:segment-ref:a4f490fafe0717d80c6aff382558fb78ca7aad95ed81704dd6fd4d83779ff4e2",
+              "producer_semantic_digest": "91e56300f1d90b46fea29e9e2e2f8f3f14f14fe6b9e4864446098936c8e7cf95",
+              "redaction_profile": "no_secrets",
+              "schema_id": "pm.storage_value.event_append_receipt_custody.v2",
+              "schema_version": "2.0.0",
+              "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtzrLMgQ",
+              "storage_instance_id": "ffca96b1-b733-4167-897d-eb171e3ea3fc"
+            },
+            "event": {
+              "actor_ref": "TEST_ONLY:actor:certifier",
+              "attempt_id": null,
+              "causation_event_id": "TEST_ONLY:goal_test.cause:cf01",
+              "correlation_id": "TEST_ONLY:correlation:cf01",
+              "effective_account_ref": "TEST_ONLY:account:1",
+              "event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+              "event_type": "goal_run.certified",
+              "idempotency_key": "goal_run.certified.v3:30:TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a93:TEST_ONLY:standard-certification:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a9:certified1:61:7",
+              "migration": {
+                "compatibility_event_type": null,
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null
+              },
+              "node_id": null,
+              "observed_at_utc": "2026-11-20T13:05:04.659Z",
+              "occurred_at_utc": "2026-11-11T12:00:00.250+01:00",
+              "parent_event_id": null,
+              "payload": {
+                "actor_ref": "TEST_ONLY:actor:certifier",
+                "artifact_refs": [],
+                "causation_event_ref": "TEST_ONLY:goal_test.cause:cf01",
+                "correlation_id": "TEST_ONLY:correlation:cf01",
+                "effective_account_ref": "TEST_ONLY:account:1",
+                "effective_model_ref": "TEST_ONLY:model:a-2026",
+                "effective_provider_ref": "TEST_ONLY:provider:a",
+                "event_name": "goal_run.certified",
+                "evidence_refs": [
+                  "TEST_ONLY:evidence:1"
+                ],
+                "execution_role": "verifier",
+                "expected_goal_run_revision": 6,
+                "goal_id": "TEST_ONLY:goal:1",
+                "goal_revision": 3,
+                "goal_run_revision": 7,
+                "idempotency_key": "goal_run.certified.v3:30:TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a93:TEST_ONLY:standard-certification:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a9:certified1:61:7",
+                "occurred_at_utc": "2026-11-11T12:00:00.250+01:00",
+                "payload": {
+                  "certification_receipt_ref": "TEST_ONLY:standard-certification:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a",
+                  "final_certifier_decision": "certified",
+                  "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+                  "unresolved_risk_refs": [],
+                  "validator_outputs": [
+                    {
+                      "evidence_ref": "TEST_ONLY:evidence:1",
+                      "outcome": "passed",
+                      "validator_id": "TEST_ONLY:validator:1"
+                    }
+                  ],
+                  "worknode_receipt_refs": [
+                    "TEST_ONLY:worknode-receipt:1"
+                  ]
+                },
+                "project_id": "TEST_ONLY-project-\u03b2\u0301",
+                "requested_account_ref": "TEST_ONLY:account:1",
+                "requested_model_ref": "TEST_ONLY:model:a",
+                "requested_provider_ref": "TEST_ONLY:provider:a",
+                "schema_version": "pm.goal_runtime_event.goal_run_certified.schema.v3",
+                "thread_id": "TEST_ONLY:thread:1"
+              },
+              "payload_ref": null,
+              "payload_schema_id": "pm.goal_runtime_event.goal_run_certified.schema.v3",
+              "persisted_at_utc": "2026-11-20T13:05:04.660Z",
+              "producer_sequence_id": null,
+              "project_id": "TEST_ONLY-project-\u03b2\u0301",
+              "redaction_profile": "no_secrets",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "requested_account_ref": "TEST_ONLY:account:1",
+              "run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "sequence_id": 1,
+              "thread_id": "TEST_ONLY:thread:1"
+            },
+            "full_value_result": {
+              "first_append_receipt": {
+                "acknowledged_at_utc": "2026-11-20T13:05:04.660Z",
+                "byte_offset": 1467,
+                "commit_group_id": "TEST_ONLY:group:ffca96b1-b733-4167-897d-eb171e3ea3fc:2",
+                "durability_class": "barrier",
+                "durability_state": "synced",
+                "durable_end_offset": 5249,
+                "event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+                "manifest_generation": 2,
+                "segment_generation": 1,
+                "segment_name": "segment-1",
+                "sequence_id": 1
+              },
+              "original_event_value_commitment": {
+                "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+                "domain": "pm.storage.original_event_value_commitment.v1",
+                "event_schema_id": "pm.event.v0",
+                "event_schema_version": "2.0.0",
+                "schema_id": "pm.storage.original_event_value_commitment.v1",
+                "schema_version": "1.0.0",
+                "sha256": "159ef3b7b67413a934a34b7f6a0383f449ae9321570e30513fcd9ce4094198c8"
+              },
+              "original_segment_ref": "TEST_ONLY:segment-ref:a4f490fafe0717d80c6aff382558fb78ca7aad95ed81704dd6fd4d83779ff4e2"
+            }
+          },
+          {
+            "custody": {
+              "event_id": "TEST_ONLY:goal_test.unrelated:cf2",
+              "event_type": "goal_test.unrelated",
+              "first_append_receipt": {
+                "acknowledged_at_utc": "2026-11-20T13:05:04.660Z",
+                "byte_offset": 4209,
+                "commit_group_id": "TEST_ONLY:group:ffca96b1-b733-4167-897d-eb171e3ea3fc:2",
+                "durability_class": "barrier",
+                "durability_state": "synced",
+                "durable_end_offset": 5249,
+                "event_id": "TEST_ONLY:goal_test.unrelated:cf2",
+                "manifest_generation": 2,
+                "segment_generation": 1,
+                "segment_name": "segment-1",
+                "sequence_id": 2
+              },
+              "group_digest": "6dd56cf6e1171a03ba94ac8cfeb58be3a4b972fc6dded7a3593b60852ec5eab7",
+              "idempotency_key": "TEST_ONLY:unrelated:cf2",
+              "original_event_value_commitment": {
+                "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+                "domain": "pm.storage.original_event_value_commitment.v1",
+                "event_schema_id": "pm.event.v0",
+                "event_schema_version": "2.0.0",
+                "schema_id": "pm.storage.original_event_value_commitment.v1",
+                "schema_version": "1.0.0",
+                "sha256": "6860be95d36f90809f75b1e4ef090b15a944b29cdf813c47030315d64e6e0315"
+              },
+              "original_segment_ref": "TEST_ONLY:segment-ref:a4f490fafe0717d80c6aff382558fb78ca7aad95ed81704dd6fd4d83779ff4e2",
+              "producer_semantic_digest": "a6b168cd70bb5e042ee9511989e8d5bdbad62443de0ac123de2af3d30b9eb681",
+              "redaction_profile": "no_secrets",
+              "schema_id": "pm.storage_value.event_append_receipt_custody.v2",
+              "schema_version": "2.0.0",
+              "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtdW5yZWxhdGVkLWNmMg",
+              "storage_instance_id": "ffca96b1-b733-4167-897d-eb171e3ea3fc"
+            },
+            "event": {
+              "actor_ref": "TEST_ONLY:actor:unrelated",
+              "attempt_id": null,
+              "causation_event_id": null,
+              "correlation_id": "TEST_ONLY:correlation:unrelated",
+              "effective_account_ref": null,
+              "event_id": "TEST_ONLY:goal_test.unrelated:cf2",
+              "event_type": "goal_test.unrelated",
+              "idempotency_key": "TEST_ONLY:unrelated:cf2",
+              "migration": {
+                "compatibility_event_type": null,
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null
+              },
+              "node_id": null,
+              "observed_at_utc": "2026-11-20T13:05:04.659Z",
+              "occurred_at_utc": "2026-11-11T12:00:01Z",
+              "parent_event_id": null,
+              "payload": {
+                "qualification": "TEST_ONLY",
+                "tag": "cf2"
+              },
+              "payload_ref": null,
+              "payload_schema_id": "TEST_ONLY:unrelated.v1",
+              "persisted_at_utc": "2026-11-20T13:05:04.660Z",
+              "producer_sequence_id": null,
+              "project_id": "TEST_ONLY-project-unrelated-cf2",
+              "redaction_profile": "no_secrets",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "requested_account_ref": null,
+              "run_id": null,
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "sequence_id": 2,
+              "thread_id": null
+            },
+            "full_value_result": {
+              "first_append_receipt": {
+                "acknowledged_at_utc": "2026-11-20T13:05:04.660Z",
+                "byte_offset": 4209,
+                "commit_group_id": "TEST_ONLY:group:ffca96b1-b733-4167-897d-eb171e3ea3fc:2",
+                "durability_class": "barrier",
+                "durability_state": "synced",
+                "durable_end_offset": 5249,
+                "event_id": "TEST_ONLY:goal_test.unrelated:cf2",
+                "manifest_generation": 2,
+                "segment_generation": 1,
+                "segment_name": "segment-1",
+                "sequence_id": 2
+              },
+              "original_event_value_commitment": {
+                "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+                "domain": "pm.storage.original_event_value_commitment.v1",
+                "event_schema_id": "pm.event.v0",
+                "event_schema_version": "2.0.0",
+                "schema_id": "pm.storage.original_event_value_commitment.v1",
+                "schema_version": "1.0.0",
+                "sha256": "6860be95d36f90809f75b1e4ef090b15a944b29cdf813c47030315d64e6e0315"
+              },
+              "original_segment_ref": "TEST_ONLY:segment-ref:a4f490fafe0717d80c6aff382558fb78ca7aad95ed81704dd6fd4d83779ff4e2"
+            }
+          }
+        ],
+        "target_event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf"
+      },
+      "outcome": "event_durable_held"
+    }
+  },
+  "census_sha256": "cdeb7440041a74b33c0e5af00d25c046e867481f3643818f0f3453882b51503f",
+  "examples": {
+    "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "evidence"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence/properties/members/minItems": {
+      "path": [
+        "evidence",
+        "members"
+      ],
+      "value": []
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence/properties/members/type": {
+      "path": [
+        "evidence",
+        "members"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence/properties/target_event_id/minLength": {
+      "path": [
+        "evidence",
+        "target_event_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence/properties/target_event_id/type": {
+      "path": [
+        "evidence",
+        "target_event_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence/required": {
+      "member": [
+        "remove",
+        "active_durable_group"
+      ],
+      "path": [
+        "evidence"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence/type": {
+      "path": [
+        "evidence"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendedHeld/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendedHeld/properties/certification_visible/const": {
+      "path": [
+        "certification_visible"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendedHeld/properties/outcome/const": {
+      "path": [
+        "outcome"
+      ],
+      "value": "TEST_ONLY:alternate-outcome"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendedHeld/required": {
+      "member": [
+        "remove",
+        "outcome"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendedHeld/type": {
+      "path": [],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/WholeGroupMember/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "evidence",
+        "members",
+        0
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/WholeGroupMember/required": {
+      "member": [
+        "remove",
+        "event"
+      ],
+      "path": [
+        "evidence",
+        "members",
+        0
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/WholeGroupMember/type": {
+      "path": [
+        "evidence",
+        "members",
+        0
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/0/if/properties/phase/const": {
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "phase"
+      ],
+      "phase": "released",
+      "selector": true
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/0/then/properties/commit/type": {
+      "birth_selector": true,
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "commit"
+      ],
+      "phase": "empty"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/0/then/properties/event_phase/type": {
+      "birth_selector": true,
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "event_phase"
+      ],
+      "phase": "empty"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/0/then/properties/intent/type": {
+      "birth_selector": true,
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "intent"
+      ],
+      "phase": "empty"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/0/then/properties/origin/type": {
+      "birth_selector": true,
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "origin"
+      ],
+      "phase": "empty"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/0/then/properties/release/type": {
+      "birth_selector": true,
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "release"
+      ],
+      "phase": "empty"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/1/if/properties/phase/const": {
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "phase"
+      ],
+      "phase": "released",
+      "selector": true
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/1/then/properties/commit/type": {
+      "birth_selector": true,
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "commit"
+      ],
+      "phase": "armed"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/1/then/properties/event_phase/type": {
+      "birth_selector": true,
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "event_phase"
+      ],
+      "phase": "armed"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/1/then/properties/origin/type": {
+      "birth_selector": true,
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "origin"
+      ],
+      "phase": "armed"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/1/then/properties/release/type": {
+      "birth_selector": true,
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "release"
+      ],
+      "phase": "armed"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/2/if/properties/phase/const": {
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "phase"
+      ],
+      "phase": "released",
+      "selector": true
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/2/then/properties/commit/type": {
+      "birth_selector": true,
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "commit"
+      ],
+      "phase": "event_durable"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/2/then/properties/origin/type": {
+      "birth_selector": true,
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "origin"
+      ],
+      "phase": "event_durable"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/2/then/properties/release/type": {
+      "birth_selector": true,
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "release"
+      ],
+      "phase": "event_durable"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/3/if/properties/phase/const": {
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "phase"
+      ],
+      "phase": "released",
+      "selector": true
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/3/then/properties/release/type": {
+      "birth_selector": true,
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "release"
+      ],
+      "phase": "native_committed"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/allOf/4/if/properties/phase/const": {
+      "control_path": [
+        "control"
+      ],
+      "path": [
+        "control",
+        "phase"
+      ],
+      "phase": "empty",
+      "selector": true
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "control"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/properties/commit/anyOf": {
+      "control_path": [
+        "control"
+      ],
+      "control_phase_implication": true,
+      "path": [
+        "control",
+        "commit"
+      ],
+      "phase": "empty",
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/properties/commit/anyOf/1/type": {
+      "control_path": [
+        "control"
+      ],
+      "control_phase_implication": true,
+      "path": [
+        "control",
+        "commit"
+      ],
+      "phase": "empty",
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/properties/epoch/minimum": {
+      "path": [
+        "control",
+        "epoch"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/properties/epoch/type": {
+      "path": [
+        "control",
+        "epoch"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/properties/event_phase/anyOf": {
+      "control_path": [
+        "control"
+      ],
+      "control_phase_implication": true,
+      "path": [
+        "control",
+        "event_phase"
+      ],
+      "phase": "empty",
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/properties/event_phase/anyOf/1/type": {
+      "control_path": [
+        "control"
+      ],
+      "control_phase_implication": true,
+      "path": [
+        "control",
+        "event_phase"
+      ],
+      "phase": "empty",
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/properties/intent/anyOf": {
+      "control_path": [
+        "control"
+      ],
+      "control_phase_implication": true,
+      "path": [
+        "control",
+        "intent"
+      ],
+      "phase": "empty",
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/properties/intent/anyOf/1/type": {
+      "control_path": [
+        "control"
+      ],
+      "control_phase_implication": true,
+      "path": [
+        "control",
+        "intent"
+      ],
+      "phase": "empty",
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/properties/origin/anyOf": {
+      "control_path": [
+        "control"
+      ],
+      "control_phase_implication": true,
+      "path": [
+        "control",
+        "origin"
+      ],
+      "phase": "empty",
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/properties/origin/anyOf/1/type": {
+      "control_path": [
+        "control"
+      ],
+      "control_phase_implication": true,
+      "path": [
+        "control",
+        "origin"
+      ],
+      "phase": "empty",
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/properties/phase/enum": {
+      "path": [
+        "control",
+        "phase"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/properties/release/anyOf": {
+      "control_path": [
+        "control"
+      ],
+      "control_phase_implication": true,
+      "path": [
+        "control",
+        "release"
+      ],
+      "phase": "empty",
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/properties/release/anyOf/1/type": {
+      "control_path": [
+        "control"
+      ],
+      "control_phase_implication": true,
+      "path": [
+        "control",
+        "release"
+      ],
+      "phase": "empty",
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/required": {
+      "member": [
+        "remove",
+        "scope"
+      ],
+      "path": [
+        "control"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Control/type": {
+      "path": [
+        "control"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "event_phase"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/active_group_sha256/pattern": {
+      "path": [
+        "event_phase",
+        "active_group_sha256"
+      ],
+      "value": "not-a-valid-hash-or-timestamp"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/active_group_sha256/type": {
+      "path": [
+        "event_phase",
+        "active_group_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/all_member_custody_sha256/pattern": {
+      "path": [
+        "event_phase",
+        "all_member_custody_sha256"
+      ],
+      "value": "not-a-valid-hash-or-timestamp"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/all_member_custody_sha256/type": {
+      "path": [
+        "event_phase",
+        "all_member_custody_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/event_id/minLength": {
+      "path": [
+        "event_phase",
+        "event_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/event_id/type": {
+      "path": [
+        "event_phase",
+        "event_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/idempotency_key/minLength": {
+      "path": [
+        "event_phase",
+        "idempotency_key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/idempotency_key/type": {
+      "path": [
+        "event_phase",
+        "idempotency_key"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/issued_at_utc/format": {
+      "path": [
+        "event_phase",
+        "issued_at_utc"
+      ],
+      "value": "not-a-valid-hash-or-timestamp"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/issued_at_utc/type": {
+      "path": [
+        "event_phase",
+        "issued_at_utc"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/original_event_value_sha256/pattern": {
+      "path": [
+        "event_phase",
+        "original_event_value_sha256"
+      ],
+      "value": "not-a-valid-hash-or-timestamp"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/original_event_value_sha256/type": {
+      "path": [
+        "event_phase",
+        "original_event_value_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/original_full_value_result_sha256/pattern": {
+      "path": [
+        "event_phase",
+        "original_full_value_result_sha256"
+      ],
+      "value": "not-a-valid-hash-or-timestamp"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/original_full_value_result_sha256/type": {
+      "path": [
+        "event_phase",
+        "original_full_value_result_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/producer_semantic_digest/pattern": {
+      "path": [
+        "event_phase",
+        "producer_semantic_digest"
+      ],
+      "value": "not-a-valid-hash-or-timestamp"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/producer_semantic_digest/type": {
+      "path": [
+        "event_phase",
+        "producer_semantic_digest"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/transaction_id/minLength": {
+      "path": [
+        "event_phase",
+        "transaction_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/transaction_id/type": {
+      "path": [
+        "event_phase",
+        "transaction_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/whole_first_append_receipt_sha256/pattern": {
+      "path": [
+        "event_phase",
+        "whole_first_append_receipt_sha256"
+      ],
+      "value": "not-a-valid-hash-or-timestamp"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/whole_first_append_receipt_sha256/type": {
+      "path": [
+        "event_phase",
+        "whole_first_append_receipt_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/whole_producer25_sha256/pattern": {
+      "path": [
+        "event_phase",
+        "whole_producer25_sha256"
+      ],
+      "value": "not-a-valid-hash-or-timestamp"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/whole_producer25_sha256/type": {
+      "path": [
+        "event_phase",
+        "whole_producer25_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/required": {
+      "member": [
+        "remove",
+        "scope"
+      ],
+      "path": [
+        "event_phase"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/type": {
+      "path": [
+        "event_phase"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "event_phase",
+        "owner"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/properties/operation_id/minLength": {
+      "path": [
+        "event_phase",
+        "owner",
+        "operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/properties/operation_id/type": {
+      "path": [
+        "event_phase",
+        "owner",
+        "operation_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/properties/owner_epoch/minimum": {
+      "path": [
+        "event_phase",
+        "owner",
+        "owner_epoch"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/properties/owner_epoch/type": {
+      "path": [
+        "event_phase",
+        "owner",
+        "owner_epoch"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/properties/owner_id/minLength": {
+      "path": [
+        "event_phase",
+        "owner",
+        "owner_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/properties/owner_id/type": {
+      "path": [
+        "event_phase",
+        "owner",
+        "owner_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/required": {
+      "member": [
+        "remove",
+        "owner_id"
+      ],
+      "path": [
+        "event_phase",
+        "owner"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/type": {
+      "path": [
+        "event_phase",
+        "owner"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "event_phase",
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/goal_id/minLength": {
+      "path": [
+        "event_phase",
+        "scope",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/goal_id/type": {
+      "path": [
+        "event_phase",
+        "scope",
+        "goal_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/goal_run_id/minLength": {
+      "path": [
+        "event_phase",
+        "scope",
+        "goal_run_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/goal_run_id/type": {
+      "path": [
+        "event_phase",
+        "scope",
+        "goal_run_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/project_id/minLength": {
+      "path": [
+        "event_phase",
+        "scope",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/project_id/type": {
+      "path": [
+        "event_phase",
+        "scope",
+        "project_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/scope_partition/minLength": {
+      "path": [
+        "event_phase",
+        "scope",
+        "scope_partition"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/scope_partition/type": {
+      "path": [
+        "event_phase",
+        "scope",
+        "scope_partition"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/storage_instance_id/minLength": {
+      "path": [
+        "event_phase",
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/storage_instance_id/type": {
+      "path": [
+        "event_phase",
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/work_graph_id/minLength": {
+      "path": [
+        "event_phase",
+        "scope",
+        "work_graph_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/work_graph_id/type": {
+      "path": [
+        "event_phase",
+        "scope",
+        "work_graph_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/required": {
+      "member": [
+        "remove",
+        "project_id"
+      ],
+      "path": [
+        "event_phase",
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/type": {
+      "path": [
+        "event_phase",
+        "scope"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Selector/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "event_phase",
+        "intent"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Selector/properties/key/minLength": {
+      "path": [
+        "event_phase",
+        "intent",
+        "key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Selector/properties/key/type": {
+      "path": [
+        "event_phase",
+        "intent",
+        "key"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Selector/properties/sha256/pattern": {
+      "path": [
+        "event_phase",
+        "intent",
+        "sha256"
+      ],
+      "value": "not-a-valid-hash-or-timestamp"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Selector/properties/sha256/type": {
+      "path": [
+        "event_phase",
+        "intent",
+        "sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Selector/required": {
+      "member": [
+        "remove",
+        "key"
+      ],
+      "path": [
+        "event_phase",
+        "intent"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Selector/type": {
+      "path": [
+        "event_phase",
+        "intent"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/acknowledged_at_utc/format": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "acknowledged_at_utc"
+      ],
+      "value": "2026-02-30T12:00:00Z"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/acknowledged_at_utc/minLength": {
+      "evidence_timestamp_implication": true,
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "acknowledged_at_utc"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/acknowledged_at_utc/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "acknowledged_at_utc"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/byte_offset/minimum": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "byte_offset"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/byte_offset/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "byte_offset"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/commit_group_id/minLength": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "commit_group_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/commit_group_id/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "commit_group_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/durability_class/enum": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "durability_class"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/durability_state/const": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "durability_state"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/durable_end_offset/minimum": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "durable_end_offset"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/durable_end_offset/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "durable_end_offset"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/event_id/minLength": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "event_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/event_id/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "event_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/manifest_generation/minimum": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "manifest_generation"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/manifest_generation/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "manifest_generation"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/segment_generation/minimum": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "segment_generation"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/segment_generation/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "segment_generation"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/segment_name/minLength": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "segment_name"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/segment_name/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "segment_name"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/sequence_id/minimum": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "sequence_id"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/properties/sequence_id/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt",
+        "sequence_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/required": {
+      "member": [
+        "remove",
+        "event_id"
+      ],
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "first_append_receipt"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "evidence",
+        "active_durable_group"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/commit_group_id/minLength": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "commit_group_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/commit_group_id/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "commit_group_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/durability_class/enum": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "durability_class"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/durable_end_offset/maximum": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "durable_end_offset"
+      ],
+      "value": 18446744073709551616
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/durable_end_offset/minimum": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "durable_end_offset"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/durable_end_offset/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "durable_end_offset"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/durable_start_offset/maximum": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "durable_start_offset"
+      ],
+      "value": 18446744073709551616
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/durable_start_offset/minimum": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "durable_start_offset"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/durable_start_offset/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "durable_start_offset"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/group_digest/pattern": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "group_digest"
+      ],
+      "value": "TEST_ONLY:malformed-hash"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/group_digest/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "group_digest"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/manifest_generation/maximum": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "manifest_generation"
+      ],
+      "value": 18446744073709551616
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/manifest_generation/minimum": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "manifest_generation"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/manifest_generation/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "manifest_generation"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/members/minItems": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members"
+      ],
+      "value": []
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/members/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/restore_admission/oneOf": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/restore_admission/oneOf/0/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/schema_version/const": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "schema_version"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/segment_generation/maximum": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "segment_generation"
+      ],
+      "value": 18446744073709551616
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/segment_generation/minimum": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "segment_generation"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/segment_generation/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "segment_generation"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/segment_name/minLength": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "segment_name"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/segment_name/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "segment_name"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/storage_instance_id/minLength": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/properties/storage_instance_id/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "storage_instance_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/required": {
+      "member": [
+        "remove",
+        "schema_version"
+      ],
+      "path": [
+        "evidence",
+        "active_durable_group"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group/type": {
+      "path": [
+        "evidence",
+        "active_durable_group"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/event_id/minLength": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "event_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/event_id/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "event_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/event_type/minLength": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "event_type"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/event_type/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "event_type"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/group_digest/pattern": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "group_digest"
+      ],
+      "value": "TEST_ONLY:malformed-hash"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/group_digest/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "group_digest"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/idempotency_key/minLength": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "idempotency_key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/idempotency_key/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "idempotency_key"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/original_segment_ref/minLength": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "original_segment_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/original_segment_ref/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "original_segment_ref"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/producer_semantic_digest/pattern": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "producer_semantic_digest"
+      ],
+      "value": "TEST_ONLY:malformed-hash"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/producer_semantic_digest/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "producer_semantic_digest"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/redaction_profile/const": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "redaction_profile"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/schema_id/const": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "schema_id"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/schema_version/const": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "schema_version"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/scope_partition/minLength": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "scope_partition"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/scope_partition/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "scope_partition"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/storage_instance_id/minLength": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/properties/storage_instance_id/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "storage_instance_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/required": {
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "full_value_result"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result/properties/original_segment_ref/minLength": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "full_value_result",
+        "original_segment_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result/properties/original_segment_ref/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "full_value_result",
+        "original_segment_ref"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result/required": {
+      "member": [
+        "remove",
+        "first_append_receipt"
+      ],
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "full_value_result"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "full_value_result"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/properties/byte_offset/maximum": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0,
+        "byte_offset"
+      ],
+      "value": 18446744073709551616
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/properties/byte_offset/minimum": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0,
+        "byte_offset"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/properties/byte_offset/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0,
+        "byte_offset"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/properties/event_id/minLength": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0,
+        "event_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/properties/event_id/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0,
+        "event_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/properties/frame_length/maximum": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0,
+        "frame_length"
+      ],
+      "value": 18446744073709551616
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/properties/frame_length/minimum": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0,
+        "frame_length"
+      ],
+      "value": 47
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/properties/frame_length/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0,
+        "frame_length"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/properties/frame_sha256/pattern": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0,
+        "frame_sha256"
+      ],
+      "value": "TEST_ONLY:malformed-hash"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/properties/frame_sha256/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0,
+        "frame_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/properties/sequence_id/maximum": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0,
+        "sequence_id"
+      ],
+      "value": 18446744073709551616
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/properties/sequence_id/minimum": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0,
+        "sequence_id"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/properties/sequence_id/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0,
+        "sequence_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/required": {
+      "member": [
+        "remove",
+        "event_id"
+      ],
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/member/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "members",
+        0
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "original_event_value_commitment"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment/properties/codec/const": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "original_event_value_commitment",
+        "codec"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment/properties/domain/const": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "original_event_value_commitment",
+        "domain"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment/properties/event_schema_id/const": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "original_event_value_commitment",
+        "event_schema_id"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment/properties/event_schema_version/const": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "original_event_value_commitment",
+        "event_schema_version"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment/properties/schema_id/const": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "original_event_value_commitment",
+        "schema_id"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment/properties/schema_version/const": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "original_event_value_commitment",
+        "schema_version"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment/properties/sha256/pattern": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "original_event_value_commitment",
+        "sha256"
+      ],
+      "value": "TEST_ONLY:malformed-hash"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment/properties/sha256/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "original_event_value_commitment",
+        "sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment/required": {
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "original_event_value_commitment"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "custody",
+        "original_event_value_commitment"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/closed_members": {
+      "control_name": "restored receipt",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/members/minItems": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members"
+      ],
+      "value": []
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/members/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/publication_id/minLength": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "publication_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/publication_id/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "publication_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/recovery_epoch/maximum": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "recovery_epoch"
+      ],
+      "value": 18446744073709551616
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/recovery_epoch/minimum": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "recovery_epoch"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/recovery_epoch/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "recovery_epoch"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/restore_journal_ref/minLength": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "restore_journal_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/restore_journal_ref/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "restore_journal_ref"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/restore_journal_sha256/pattern": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "restore_journal_sha256"
+      ],
+      "value": "TEST_ONLY:malformed-hash"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/restore_journal_sha256/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "restore_journal_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/restore_occurrence_id/minLength": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "restore_occurrence_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/restore_occurrence_id/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "restore_occurrence_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/restored_boundary_sha256/pattern": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "restored_boundary_sha256"
+      ],
+      "value": "TEST_ONLY:malformed-hash"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/restored_boundary_sha256/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "restored_boundary_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/schema_version/const": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "schema_version"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/storage_instance_id/minLength": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/properties/storage_instance_id/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "storage_instance_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/required": {
+      "control_name": "restored receipt",
+      "member": [
+        "remove",
+        "schema_version"
+      ],
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admission/type": {
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/closed_members": {
+      "control_name": "restored receipt",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/event_id/minLength": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "event_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/event_id/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "event_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/event_type/minLength": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "event_type"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/event_type/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "event_type"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/idempotency_key/minLength": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "idempotency_key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/idempotency_key/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "idempotency_key"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/owner_id/minLength": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "owner_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/owner_id/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "owner_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/owner_operation_id/minLength": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "owner_operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/owner_operation_id/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "owner_operation_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/owner_operation_sha256/pattern": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "owner_operation_sha256"
+      ],
+      "value": "TEST_ONLY:malformed-hash"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/owner_operation_sha256/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "owner_operation_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/producer_semantic_digest/pattern": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "producer_semantic_digest"
+      ],
+      "value": "TEST_ONLY:malformed-hash"
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/producer_semantic_digest/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "producer_semantic_digest"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/scope_partition/minLength": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "scope_partition"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/properties/scope_partition/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0,
+        "scope_partition"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/required": {
+      "control_name": "restored receipt",
+      "member": [
+        "remove",
+        "event_id"
+      ],
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/restore_admitted_member/type": {
+      "control_name": "restored receipt",
+      "path": [
+        "evidence",
+        "active_durable_group",
+        "restore_admission",
+        "members",
+        0
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/date_time_string/format": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "occurred_at_utc"
+      ],
+      "value": "2026-02-30T12:00:00Z"
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/date_time_string/minLength": {
+      "evidence_timestamp_implication": true,
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "occurred_at_utc"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/date_time_string/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "occurred_at_utc"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/migration/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "migration"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/migration/required": {
+      "member": [
+        "remove",
+        "migrated_from_schema_id"
+      ],
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "migration"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/migration/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "migration"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string/minLength": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "event_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "event_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string/anyOf": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "thread_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string/anyOf/1/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "thread_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_negative_integer/anyOf": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "producer_sequence_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_negative_integer/anyOf/0/minimum": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "producer_sequence_id"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_negative_integer/anyOf/0/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "producer_sequence_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_negative_integer/anyOf/1/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "producer_sequence_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/allOf/0/if/properties/scope_kind/const": {
+      "event_scope_selector": true,
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/allOf/0/if/required": {
+      "event_scope_selector": true,
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/allOf/0/then/properties/project_id/type": {
+      "control_name": "application event",
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "project_id"
+      ],
+      "value": "TEST_ONLY:wrong-type"
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/allOf/1/if/properties/scope_kind/const": {
+      "control_name": "application event",
+      "event_scope_selector": true,
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/allOf/1/if/required": {
+      "control_name": "application event",
+      "event_scope_selector": true,
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/event_type/pattern": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "event_type"
+      ],
+      "value": "TEST_ONLY:malformed-hash"
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/event_type/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "event_type"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/payload/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "payload"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/redaction_profile/enum": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "redaction_profile"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/redaction_profile/type": {
+      "evidence_type_implication": true,
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "redaction_profile"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/replay_policy/enum": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "replay_policy"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/replay_policy/type": {
+      "evidence_type_implication": true,
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "replay_policy"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id/const": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "schema_id"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id/type": {
+      "evidence_type_implication": true,
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "schema_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_version/const": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "schema_version"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_version/type": {
+      "evidence_type_implication": true,
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "schema_version"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/scope_kind/enum": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "scope_kind"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/scope_kind/type": {
+      "evidence_type_implication": true,
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "scope_kind"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id/minimum": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "sequence_id"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/sequence_id/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event",
+        "sequence_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/required": {
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event"
+      ]
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/type": {
+      "path": [
+        "evidence",
+        "members",
+        0,
+        "event"
+      ],
+      "value": false
+    }
+  },
+  "family": "goal_run.certified",
+  "root": "dg5:d09c95f3cd985592",
+  "route": "retry",
+  "row": "dg5/retry/result/schema",
+  "site": [
+    "scripts/pm_goal_dg_cf2_world.py",
+    1033
+  ],
+  "source": "76e7a4f279d974b3635eaf22b08e07967dbbf2ae"
+}
