@@ -4,11 +4,12 @@
 # Home layer that owns the Customize screens), through PMConcept7's own build (build.py --out). Nothing of PMConcept7 in
 # the repository is touched: the build runs in a scratch copy.
 #   tools/build.sh [out.html]          default out: ~/.cache/smx-refine/serve/refined.html
-# Environment: SMX_TREE (scratch copy, default ~/.cache/smx-refine/tree).
+# Environment: SMX_TREE (scratch copy, default ~/.cache/smx-refine/tree); SMX_BASE (try another base commit without
+# changing ../BASE, with its own SMX_TREE).
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")/.." && pwd)
 REPO=$(git -C "$HERE" rev-parse --show-toplevel)
-BASE=$(tr -d ' \n' < "$HERE/BASE")
+BASE=${SMX_BASE:-$(tr -d ' \n' < "$HERE/BASE")}
 TREE=${SMX_TREE:-$HOME/.cache/smx-refine/tree}
 OUT=${1:-$HOME/.cache/smx-refine/serve/refined.html}
 PKG=Concepts/onboarding/opus-5.5
