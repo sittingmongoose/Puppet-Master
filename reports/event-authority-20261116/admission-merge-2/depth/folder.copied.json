@@ -110,7 +110,7 @@
        "quote": "Append uses only the frozen settled payload/identity and current native admission.",
        "quote_check": "exact",
        "quote_scope": "unit SP-560, Plans/storage-plan.md:52756-53196",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -239,7 +239,7 @@
        "quote": "Missing original full value, v2 witness or native domain evidence fences;",
        "quote_check": "exact",
        "quote_scope": "unit SP-560, Plans/storage-plan.md:52756-53196",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -306,7 +306,7 @@
        "quote": "  Current selected assignment (2026-11-19): folder.copied@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2308. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-560 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
        "quote_scope": "unit SP-560, Plans/storage-plan.md:52756-53196",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -367,7 +367,7 @@
        "quote": "physical companion through their own F unit.",
        "quote_check": "exact",
        "quote_scope": "unit SP-560, Plans/storage-plan.md:52756-53196",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -403,7 +403,7 @@
        "quote": "The actual redb value validates operation_custody_value or family_control_value: either that exact",
        "quote_check": "exact",
        "quote_scope": "unit SP-560, Plans/storage-plan.md:52756-53196",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -532,7 +532,7 @@
        "quote": "Active-to-draining CAS closes new command acceptance,",
        "quote_check": "exact",
        "quote_scope": "unit SP-560, Plans/storage-plan.md:52756-53196",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -568,7 +568,7 @@
        "quote": "A large family-control drain set uses the same complete-value reference",
        "quote_check": "exact",
        "quote_scope": "unit SP-560, Plans/storage-plan.md:52756-53196",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -602,7 +602,7 @@
        "line_start": 43175,
        "line_end": 43175,
        "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "quote_check": "exact",
        "quote_scope": "unit CV-560, Plans/Contracts_V0.md:43112-43222",
        "source_citation": {
@@ -724,7 +724,7 @@
        "line_start": 11734,
        "line_end": 11734,
        "quote": "Every product refusal of the checker is one named row of a Method B guard table",
-       "file_sha256": "9578cb2d7c8a6b000935bb1602650c67ada31d8cbbbad9e3baabee00ec961997",
+       "file_sha256": "eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8",
        "quote_check": "exact",
        "quote_scope": "unit ATS-280, Plans/Automated_Testing_System.md:11715-11820",
        "source_citation": {
@@ -742,7 +742,7 @@
        "line_start": 43154,
        "line_end": 43154,
        "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "quote_check": "exact",
        "quote_scope": "unit CV-560, Plans/Contracts_V0.md:43112-43222",
        "source_citation": {
@@ -814,7 +814,7 @@
        "line_start": 43166,
        "line_end": 43166,
        "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "quote_check": "exact",
        "quote_scope": "unit CV-560, Plans/Contracts_V0.md:43112-43222",
        "source_citation": {
@@ -832,7 +832,7 @@
        "line_start": 11744,
        "line_end": 11744,
        "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
-       "file_sha256": "9578cb2d7c8a6b000935bb1602650c67ada31d8cbbbad9e3baabee00ec961997",
+       "file_sha256": "eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8",
        "quote_check": "exact",
        "quote_scope": "unit ATS-280, Plans/Automated_Testing_System.md:11715-11820",
        "source_citation": {
@@ -953,9 +953,9 @@
   "row_pointer": "#/families/390"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX final citation maintenance",
-  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
-  "source_assessment_sha256": "f5cd25145d1f6b8379ac130c406f846bda7fbc4a9dec7fae88de45386ba19512",
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_assessment_sha256": "a1732b837c3132df70cca278f47ee63307c7df85da5d23f78b7f9b7b395e82ea",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

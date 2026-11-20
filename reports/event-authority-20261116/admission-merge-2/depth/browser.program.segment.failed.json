@@ -147,7 +147,7 @@
        "quote": "`storage.first_append_receipt.issue.v2` issues the eleven-field first receipt",
        "quote_check": "exact",
        "quote_scope": "unit SP-2530, Plans/storage-plan.md:22709-22782",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2530",
@@ -197,7 +197,7 @@
        "quote": "`Plans/browser_event_payloads.schema.json#/$defs/program_segment_failed` (`pm.browser_event.program_segment_failed.schema.v1`) is its closed payload",
        "quote_check": "exact",
        "quote_scope": "unit CV-2530, Plans/Contracts_V0.md:29047-29113",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2530",
@@ -228,7 +228,7 @@
        "quote": "`scope_kind=project` only, with `scope_partition=project~base64url_no_pad(UTF8(project_id))`",
        "quote_check": "exact",
        "quote_scope": "unit CV-2530, Plans/Contracts_V0.md:29047-29113",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2530",
@@ -246,7 +246,7 @@
        "quote": "`event_id` is `evt_browser_` ",
        "quote_check": "exact",
        "quote_scope": "unit CV-2530, Plans/Contracts_V0.md:29047-29113",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2530",
@@ -277,7 +277,7 @@
        "quote": "Every current write selects `replay_policy=dedupe_by_idempotency_key`",
        "quote_check": "exact",
        "quote_scope": "unit CV-2530, Plans/Contracts_V0.md:29047-29113",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2530",
@@ -295,7 +295,7 @@
        "quote": "A lost-ack retry returns the original receipt from `storage.first_append_receipt.resolve.v2`",
        "quote_check": "exact",
        "quote_scope": "unit SP-2530, Plans/storage-plan.md:22709-22782",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2530",
@@ -373,7 +373,7 @@
        "quote": "Current selected assignment (2026-11-19): browser.program.segment.failed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2178. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
        "quote_check": "exact",
        "quote_scope": "unit SP-2530, Plans/storage-plan.md:22709-22782",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2530",
@@ -426,7 +426,7 @@
        "quote": "Storage holds the original record, its custody v2 first receipt and its sealed SP-1101 write receipt under",
        "quote_check": "exact",
        "quote_scope": "unit SP-2530, Plans/storage-plan.md:22709-22782",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2530",
@@ -506,7 +506,7 @@
        "quote": "Derived family `browser_program_segment_failed_index_checkpoint`",
        "quote_check": "exact",
        "quote_scope": "unit SP-2530, Plans/storage-plan.md:22709-22782",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2530",
@@ -524,7 +524,7 @@
        "quote": "It explicitly adopts SP-278",
        "quote_check": "exact",
        "quote_scope": "unit SP-2530, Plans/storage-plan.md:22709-22782",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2530",
@@ -542,7 +542,7 @@
        "quote": "It stores only the nine-field durable read token (DL-076), never `redb_snapshot_id`",
        "quote_check": "exact",
        "quote_scope": "unit SP-2530, Plans/storage-plan.md:22709-22782",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2530",
@@ -591,7 +591,7 @@
        "quote": "A reviewed withdrawal first cuts off writers (checked before dedupe",
        "quote_check": "exact",
        "quote_scope": "unit SP-2530, Plans/storage-plan.md:22709-22782",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2530",
@@ -609,7 +609,7 @@
        "quote": "A retained `browser.program.segment.failed` original is read under the recipe named by the one write",
        "quote_check": "exact",
        "quote_scope": "unit SP-2530, Plans/storage-plan.md:22709-22782",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2530",
@@ -640,7 +640,7 @@
        "quote": "### ATS-2500 - Browser Program prepared families criterion-12 oracles (s4b)",
        "quote_check": "exact",
        "quote_scope": "unit ATS-2500, Plans/Automated_Testing_System.md:15708-15765",
-       "file_sha256": "9578cb2d7c8a6b000935bb1602650c67ada31d8cbbbad9e3baabee00ec961997",
+       "file_sha256": "eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8",
        "source_citation": {
         "path": "Plans/Automated_Testing_System.md",
         "unit": "ATS-2500",
@@ -687,9 +687,9 @@
   "row_pointer": "#/families/260"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX final citation maintenance",
-  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
-  "source_assessment_sha256": "6d53242aac26d660304c32673e8b041ab9f84bb2a1d1fdd683a240ae832361fd",
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_assessment_sha256": "39d863f179d34811d5d7ebb8e9d96ff5ad43c810ff9c6e987e4dd155866ecaaf",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

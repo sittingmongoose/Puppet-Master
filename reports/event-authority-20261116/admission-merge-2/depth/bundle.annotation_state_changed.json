@@ -61,7 +61,7 @@
        "quote": "Newly authored owner contract for ",
        "quote_check": "exact",
        "quote_scope": "unit F3-708, Plans/FinalGUISpec.md:52948-53199",
-       "file_sha256": "7db03e5a15b3fa5f1e4e3adc60619414a387104625a88aa7a0e05651d96fe37d",
+       "file_sha256": "b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-708",
@@ -92,7 +92,7 @@
        "quote": "Producer and transitions: there is no current producer",
        "quote_check": "exact",
        "quote_scope": "unit F3-708, Plans/FinalGUISpec.md:52948-53199",
-       "file_sha256": "7db03e5a15b3fa5f1e4e3adc60619414a387104625a88aa7a0e05651d96fe37d",
+       "file_sha256": "b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-708",
@@ -123,7 +123,7 @@
        "quote": "Payload and scope: the exact closed schema is ",
        "quote_check": "exact",
        "quote_scope": "unit F3-708, Plans/FinalGUISpec.md:52948-53199",
-       "file_sha256": "7db03e5a15b3fa5f1e4e3adc60619414a387104625a88aa7a0e05651d96fe37d",
+       "file_sha256": "b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-708",
@@ -154,7 +154,7 @@
        "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))",
        "quote_check": "exact",
        "quote_scope": "unit F3-708, Plans/FinalGUISpec.md:52948-53199",
-       "file_sha256": "7db03e5a15b3fa5f1e4e3adc60619414a387104625a88aa7a0e05651d96fe37d",
+       "file_sha256": "b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-708",
@@ -183,7 +183,7 @@
        "line_start": 52998,
        "line_end": 52999,
        "quote": "No timestamp guess, identifier\n  similarity, replay of note commands",
-       "file_sha256": "7db03e5a15b3fa5f1e4e3adc60619414a387104625a88aa7a0e05651d96fe37d",
+       "file_sha256": "b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899",
        "quote_check": "exact",
        "quote_scope": "unit F3-708, Plans/FinalGUISpec.md:52948-53199",
        "source_citation": {
@@ -229,7 +229,7 @@
        "quote": "  Current selected assignment (2026-11-19): bundle.annotation_state_changed@1.0.0 is registered for project_only\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2224. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0;\n  Plans/FinalGUISpec.md#F3-708 owns the event policy''s existing anchors, counts, holds and deletion rules. Separate\n  stored-value assignment: bundle_annotation_state_changed_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500;\n  this assigns that stored value, not event history. Separate stored-value assignment: existing annotation compatibility\n  mapping uses RP-AUTHORITY-INDEFINITE@1.0.0 under signed E8-3 (send f66b1af9-f851-493f-a2ee-6b666b477920); this\n  assigns that stored value, not event history. Separate checkpoint assignment: bundle_annotation_state_changed_checkpoint\n  uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/FinalGUISpec.md#F3-708 contract; checkpoint retention grants\n  no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event\n  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,\n  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
        "quote_check": "exact",
        "quote_scope": "unit F3-708, Plans/FinalGUISpec.md:52948-53199",
-       "file_sha256": "7db03e5a15b3fa5f1e4e3adc60619414a387104625a88aa7a0e05651d96fe37d",
+       "file_sha256": "b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-708",
@@ -286,7 +286,7 @@
        "quote": "Mandatory coherent backup/restore preserves them together",
        "quote_check": "exact",
        "quote_scope": "unit F3-708, Plans/FinalGUISpec.md:52948-53199",
-       "file_sha256": "7db03e5a15b3fa5f1e4e3adc60619414a387104625a88aa7a0e05651d96fe37d",
+       "file_sha256": "b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-708",
@@ -317,7 +317,7 @@
        "quote": "Producer and transitions:",
        "quote_check": "exact",
        "quote_scope": "unit F3-708, Plans/FinalGUISpec.md:52948-53199",
-       "file_sha256": "7db03e5a15b3fa5f1e4e3adc60619414a387104625a88aa7a0e05651d96fe37d",
+       "file_sha256": "b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-708",
@@ -348,7 +348,7 @@
        "quote": "Explicitly adopt\n  SP-278/DL-076:",
        "quote_check": "exact",
        "quote_scope": "unit F3-708, Plans/FinalGUISpec.md:52948-53199",
-       "file_sha256": "7db03e5a15b3fa5f1e4e3adc60619414a387104625a88aa7a0e05651d96fe37d",
+       "file_sha256": "b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-708",
@@ -377,7 +377,7 @@
        "line_start": 53067,
        "line_end": 53068,
        "quote": "Close exact-family writer admission\n  first",
-       "file_sha256": "7db03e5a15b3fa5f1e4e3adc60619414a387104625a88aa7a0e05651d96fe37d",
+       "file_sha256": "b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899",
        "quote_check": "exact",
        "quote_scope": "unit F3-708, Plans/FinalGUISpec.md:52948-53199",
        "source_citation": {
@@ -441,7 +441,7 @@
        "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
        "quote_check": "exact",
        "quote_scope": "unit F3-708, Plans/FinalGUISpec.md:52948-53199",
-       "file_sha256": "7db03e5a15b3fa5f1e4e3adc60619414a387104625a88aa7a0e05651d96fe37d",
+       "file_sha256": "b8f3716574ec58d25116d0f986d378f01086f979e61556cc9661c483ff61e899",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-708",
@@ -668,9 +668,9 @@
   "row_pointer": "#/families/306"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX final citation maintenance",
-  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
-  "source_assessment_sha256": "856ad8fdce51d770958fbc03ddec5902e0345fa086379d9b1172963841d2f5a8",
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_assessment_sha256": "823436600e602afaf7150aa4880648b9923810e0c160b4b6b9630aed02f8679b",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

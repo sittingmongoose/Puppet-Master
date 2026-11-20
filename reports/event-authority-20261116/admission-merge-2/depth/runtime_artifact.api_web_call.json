@@ -128,7 +128,7 @@
        "quote": "Explicitly adopt SP-337 store-once packs for this family. Newly authored exact dispatch binding under DL-045: encode the unchanged logical payload as RFC 8785 canonical JSON, UTF-8 without B",
        "quote_check": "exact",
        "quote_scope": "unit CV-520, Plans/Contracts_V0.md:43830-43865",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-520",
@@ -159,7 +159,7 @@
        "quote": "Payload dispatch prepared for runtime_artifact.api_web_call@1.0.0 only: Plans/runtime_artifact_api_web_call.schema.json, schema ID pm.runtime_artifact.api_web_call.schema.v1, root object wit",
        "quote_check": "exact",
        "quote_scope": "unit CV-520, Plans/Contracts_V0.md:43830-43865",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-520",
@@ -208,7 +208,7 @@
        "quote": "Envelope run_id/attempt_id/thread_id/node_id equal the corresponding payload values or required-present null for absent optional fields; occurred_at_utc equals payload.created_at_utc. actor_",
        "quote_check": "exact",
        "quote_scope": "unit CV-520, Plans/Contracts_V0.md:43830-43865",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-520",
@@ -257,7 +257,7 @@
        "quote": "Retries freeze the original payload route/ref/bytes as producer-semantic inputs; no repacking or re-encoding may silently change the original digest or first receipt. Envelope run_id/attempt",
        "quote_check": "exact",
        "quote_scope": "unit CV-520, Plans/Contracts_V0.md:43830-43865",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-520",
@@ -288,7 +288,7 @@
        "quote": "The reused event_record_index rows retain RP-EVENT-INDEX-SOURCE, source-coupled to the retained EventRecord, with complete target-generation rebuild/remapping at compaction. Only event_recor",
        "quote_check": "exact",
        "quote_scope": "unit SP-520, Plans/storage-plan.md:53997-54034",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-520",
@@ -314,6 +314,33 @@
         "line_end": 3646,
         "quote": "Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body",
         "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       }
+      },
+      {
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "unit": "RAP-100",
+       "line_start": 3642,
+       "line_end": 3642,
+       "quote": "  The producer is WebOperation artifact writer, through the newly named handler owner.runtime_artifacts.api_web_call.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_api_web_call.schema.json (pm.runtime_artifact.api_web_call.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the canonical CV-317 envelope project_id, scope_kind=project; artifact_type=api_web_call, schema_id=pm.runtime_artifact.api_web_call.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.",
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+       "quote_check": "exact",
+       "quote_scope": "unit RAP-100, Plans/Runtime_Artifacts_Panel.md:3633-3672",
+       "source_citation": {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "unit": "RAP-100",
+        "line_start": 3642,
+        "line_end": 3642,
+        "quote": "  The producer is WebOperation artifact writer, through the newly named handler owner.runtime_artifacts.api_web_call.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_api_web_call.schema.json (pm.runtime_artifact.api_web_call.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the canonical CV-317 envelope project_id, scope_kind=project; artifact_type=api_web_call, schema_id=pm.runtime_artifact.api_web_call.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.",
+        "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+        "quote_check": "exact",
+        "quote_scope": "unit RAP-100, Plans/Runtime_Artifacts_Panel.md@20697031603d52f52b3dba3d4d621f909be15e88:3633-3672",
+        "commit": "20697031603d52f52b3dba3d4d621f909be15e88",
+        "sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+        "line": 3642
+       },
+       "locator_maintenance": {
+        "authority": "MERGE3-POSTFIX fix round 2 / finding 1",
+        "reason": "Existing exact family-owner EventRecord edition clause; selected policies and every verdict remain unchanged."
        }
       }
      ],
@@ -373,7 +400,7 @@
        "quote": "Pack bytes and index are durable before acknowledgement through SP-337's pack-first sync or same-group segment staging/seal protocol. Retained EventRecord references keep the full logical me",
        "quote_check": "exact",
        "quote_scope": "unit CV-520, Plans/Contracts_V0.md:43830-43865",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-520",
@@ -453,7 +480,7 @@
        "quote": "The exact physical checkpoint is event_record_index_checkpoint.v1:{storage_instance_id} in the checkpoints table; value pm.storage_value.event_record_index_checkpoint.v1@1.0.0 at Plans/event",
        "quote_check": "exact",
        "quote_scope": "unit SP-520, Plans/storage-plan.md:53997-54034",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-520",
@@ -471,7 +498,7 @@
        "quote": "The adopted full-index projector advances rows and frontier atomically in one redb transaction with prior-generation/frontier CAS, as SP-278 requires. The live token has ten fields; any dura",
        "quote_check": "exact",
        "quote_scope": "unit SP-520, Plans/storage-plan.md:53997-54034",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-520",
@@ -570,7 +597,7 @@
        "unit": "SP-520",
        "quote_check": "exact",
        "quote_scope": "unit SP-520, Plans/storage-plan.md:53997-54034",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "line_end": 53908,
         "line_start": 53908,
@@ -588,7 +615,7 @@
        "unit": "CV-520",
        "quote_check": "exact",
        "quote_scope": "unit CV-520, Plans/Contracts_V0.md:43830-43865",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "line_end": 41703,
         "line_start": 41703,
@@ -624,7 +651,7 @@
        "unit": "ATS-260",
        "quote_check": "exact",
        "quote_scope": "unit ATS-260, Plans/Automated_Testing_System.md:12032-12074",
-       "file_sha256": "9578cb2d7c8a6b000935bb1602650c67ada31d8cbbbad9e3baabee00ec961997",
+       "file_sha256": "eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8",
        "source_citation": {
         "line_end": 11266,
         "line_start": 11266,
@@ -642,7 +669,7 @@
        "unit": "ATS-260",
        "quote_check": "exact",
        "quote_scope": "unit ATS-260, Plans/Automated_Testing_System.md:12032-12074",
-       "file_sha256": "9578cb2d7c8a6b000935bb1602650c67ada31d8cbbbad9e3baabee00ec961997",
+       "file_sha256": "eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8",
        "source_citation": {
         "line_end": 11267,
         "line_start": 11267,
@@ -887,9 +914,9 @@
   "row_pointer": "#/families/457"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX final citation maintenance",
-  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
-  "source_assessment_sha256": "143af8e6a36e5f77575e7ca65710e76860e1afa5f4bf9181485f60ddc4bd053a",
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_assessment_sha256": "2fe250ed7f0fe0fa85008a182a6ccf062753103bcd8c5552feb7b3519a58bcc5",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

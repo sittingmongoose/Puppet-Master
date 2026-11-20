@@ -4,7 +4,7 @@
  "family_id": "event-family-bundle-annotation-state-changed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2461",
- "decision_section_sha256": "dbfe7beb9ec18b25f266744cd4a5c42fa929d34e215110de7e453cddec656fc9",
+ "decision_section_sha256": "6f37abb366b44043e54f522ec0e7d6809e2b744cf9036055c21b6314e3f8026e",
  "registry_before": {
   "revision": "2026-11-16.87",
   "sha256": "b890558c9fdcee820301a72364020f8a59bf3fbdfa794635e1ffa08b251cd511",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "79bcbe1a2264a8c24a53edb9553c6a0a8d4179e7e81fb064d7e3ede6cab9a7db",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/bundle.annotation_state_changed.json",
-  "sha256": "823436600e602afaf7150aa4880648b9923810e0c160b4b6b9630aed02f8679b"
+  "sha256": "a9f672224d9bfb0081752e9c2342184a75e00d8ac290fa999d658c80b8217802"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX final citation maintenance",
-  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
-  "source_record_sha256": "e4ff038e64308ef0b2479dab66138db0ab78ef95b6d43b6c4235b2ef8df5f3c7",
-  "source_assessment_sha256": "856ad8fdce51d770958fbc03ddec5902e0345fa086379d9b1172963841d2f5a8",
-  "source_decision_section_sha256": "536c665b9bf55f9ed6861a038889ea76a595aeed755296f1353a5d78d604edb2",
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_record_sha256": "a4e6099b8afcb8d3736b6f1e4073f4ffa258bc878ae0e3e9296996b60d873c87",
+  "source_assessment_sha256": "823436600e602afaf7150aa4880648b9923810e0c160b4b6b9630aed02f8679b",
+  "source_decision_section_sha256": "dbfe7beb9ec18b25f266744cd4a5c42fa929d34e215110de7e453cddec656fc9",
   "original_registry_checkpoints_preserved": true
  },
  "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2224",

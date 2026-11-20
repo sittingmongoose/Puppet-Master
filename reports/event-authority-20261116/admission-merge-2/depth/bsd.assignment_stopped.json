@@ -110,7 +110,7 @@
        "quote": "It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload pa",
        "quote_check": "exact",
        "quote_scope": "unit SP-1354, Plans/storage-plan.md:77744-77805",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1354",
@@ -195,7 +195,7 @@
        "quote": "This EventRecord 2.0.0 family keeps its closed payload inline (payload_ref null): only the EventRecord 3.0.0 successor materializes the SP-337 event-payload reference route and this family has not ado",
        "quote_check": "exact",
        "quote_scope": "unit CV-1354, Plans/Contracts_V0.md:56678-56735",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1354",
@@ -226,7 +226,7 @@
        "quote": "The canonical operation ID is bsd-op@1:<hex(original_source_id)>:<hex(transition_component)>:<hex(subject_id)>; every component is an exact string from the authentic original source, never a caller as",
        "quote_check": "exact",
        "quote_scope": "unit CV-1354, Plans/Contracts_V0.md:56678-56735",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1354",
@@ -244,7 +244,7 @@
        "quote": "This family adopts by name the shared CV-1100/SP-1100 number rules (current_integer, storage_uint64, producer_semantic_digest, qualified_jcs, storage_value_bytes and full_value_commitment), the CV-110",
        "quote_check": "exact",
        "quote_scope": "unit CV-1354, Plans/Contracts_V0.md:56678-56735",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1354",
@@ -378,7 +378,7 @@
        "quote": "RP-RUNTIME-365D\", \"policy_version\": \"1.0.0\"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes ",
        "quote_check": "exact",
        "quote_scope": "unit SP-1354, Plans/storage-plan.md:77744-77805",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1354",
@@ -404,6 +404,33 @@
         "line_end": 293,
         "quote": "\"retention_model\": {",
         "file_sha256": "ab5e66154d464d0db804512059282383c55c16f0e6dc587762e84ddb7b808b56"
+       }
+      },
+      {
+       "path": "Plans/Back_Seat_Driver.md",
+       "unit": "BSD-1354",
+       "line_start": 2938,
+       "line_end": 2938,
+       "quote": "  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1354. Never borrow another family's recipe.",
+       "file_sha256": "4647b3698f1d7fe7616ff00de8f87078498a8433bd70d62f010312d3360c0bcf",
+       "quote_check": "exact",
+       "quote_scope": "unit BSD-1354, Plans/Back_Seat_Driver.md:2925-2994",
+       "source_citation": {
+        "path": "Plans/Back_Seat_Driver.md",
+        "unit": "BSD-1354",
+        "line_start": 2938,
+        "line_end": 2938,
+        "quote": "  5 scope/identity: project_only and exact original source/assignment/binding/run/epoch/generation/actor/account joins are defined independently for this event in CV-1354. Never borrow another family's recipe.",
+        "file_sha256": "4647b3698f1d7fe7616ff00de8f87078498a8433bd70d62f010312d3360c0bcf",
+        "quote_check": "exact",
+        "quote_scope": "unit BSD-1354, Plans/Back_Seat_Driver.md@20697031603d52f52b3dba3d4d621f909be15e88:2925-2994",
+        "commit": "20697031603d52f52b3dba3d4d621f909be15e88",
+        "sha256": "4647b3698f1d7fe7616ff00de8f87078498a8433bd70d62f010312d3360c0bcf",
+        "line": 2938
+       },
+       "locator_maintenance": {
+        "authority": "MERGE3-POSTFIX fix round 2 / finding 1",
+        "reason": "Existing exact family-owner EventRecord edition clause; selected policies and every verdict remain unchanged."
        }
       }
      ],
@@ -561,7 +588,7 @@
        "quote": "Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.",
        "quote_check": "exact",
        "quote_scope": "unit SP-1354, Plans/storage-plan.md:77744-77805",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1354",
@@ -796,9 +823,9 @@
   "row_pointer": "#/families/295"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX final citation maintenance",
-  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
-  "source_assessment_sha256": "5699126d93250d0559990de0df9984cdd87ae2bb320182adebef2c21ae94cbb8",
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_assessment_sha256": "861096363558ce93f4c29f5afe4eb9004f9cb499eff1cba1fbda753fe4d71bca",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

@@ -270,7 +270,7 @@
        "quote": "  Current selected assignment (2026-11-19): format.applied@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2314. Its event history selects RP-TELEMETRY-90D@1.0.0; Plans/storage-plan.md#SP-600 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
        "quote_scope": "unit SP-600, Plans/storage-plan.md:53197-53264",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-600",
@@ -808,9 +808,9 @@
   "row_pointer": "#/families/396"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX final citation maintenance",
-  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
-  "source_assessment_sha256": "422d2f078fd497f0faea7c8cd0c6e6941aa512045439540e97adbabd38d24d2e",
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_assessment_sha256": "d855c8682c8c11b585cf81fd3625bc1ee3d6f364126e936855479f11e31169c3",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

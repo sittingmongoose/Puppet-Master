@@ -243,6 +243,33 @@
         "quote": "Retention:",
         "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
        }
+      },
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-326",
+       "line_start": 18577,
+       "line_end": 18577,
+       "quote": "  Scope and identity: actual Project or application namespace selected by the owning component, never current focus, time or a fabricated Project. This family has scope_policy=project_only. Original event_id is allocated once and retained. Idempotency recipe: sha256(canonical MessagePack array [\"tool.custom_headless.skipped\", \"1.0.0\", actual project_id]). Application server_id and original_operation_id resolve from the immutable owner operation source; Project partition is encoded project~base64url, app partition is app. scope_key is SHA-256 of the canonical MessagePack scope map in UTF-8 key order. Retried caller-supplied CV-317 semantic body must equal the original; Storage-assigned sequence and timestamps are excluded from retry comparison and independently authenticated by full-value original custody.",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-326, Plans/Section15_MVP_Promoted_Features_Spec.md:18564-18618",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-326",
+        "line_start": 18577,
+        "line_end": 18577,
+        "quote": "  Scope and identity: actual Project or application namespace selected by the owning component, never current focus, time or a fabricated Project. This family has scope_policy=project_only. Original event_id is allocated once and retained. Idempotency recipe: sha256(canonical MessagePack array [\"tool.custom_headless.skipped\", \"1.0.0\", actual project_id]). Application server_id and original_operation_id resolve from the immutable owner operation source; Project partition is encoded project~base64url, app partition is app. scope_key is SHA-256 of the canonical MessagePack scope map in UTF-8 key order. Retried caller-supplied CV-317 semantic body must equal the original; Storage-assigned sequence and timestamps are excluded from retry comparison and independently authenticated by full-value original custody.",
+        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+        "quote_check": "exact",
+        "quote_scope": "unit SMPFS-326, Plans/Section15_MVP_Promoted_Features_Spec.md@20697031603d52f52b3dba3d4d621f909be15e88:18564-18618",
+        "commit": "20697031603d52f52b3dba3d4d621f909be15e88",
+        "sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+        "line": 18577
+       },
+       "locator_maintenance": {
+        "authority": "MERGE3-POSTFIX fix round 2 / finding 1",
+        "reason": "Existing exact family-owner EventRecord edition clause; selected policies and every verdict remain unchanged."
+       }
       }
      ],
      "carried_from": {
@@ -577,9 +604,9 @@
   "row_pointer": "#/families/506"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX final citation maintenance",
-  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
-  "source_assessment_sha256": "4b8e3058bc0667a6dbaf34fe259d32dabf4e988f062d21349107d3dcc38fab88",
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_assessment_sha256": "b771b396444fd7d6fc0c9fe745c46838696eaad1c9b5d65c1595ca996d791fe1",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

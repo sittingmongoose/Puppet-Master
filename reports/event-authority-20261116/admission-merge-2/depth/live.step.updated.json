@@ -270,7 +270,7 @@
        "quote": "  Current selected assignment (2026-11-19): live.step.updated@1.0.0 is registered for project_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2323. Its event history selects RP-RUNTIME-365D@1.0.0; Plans/storage-plan.md#SP-643\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  ds15_live_step_updated_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns\n  that stored value, not event history. Separate checkpoint assignment: ds15_live_step_updated_checkpoint uses RP-PROJECTION-3GEN@1.0.0\n  under its existing Plans/storage-plan.md#SP-643 contract; checkpoint retention grants no event/source deletion.\n  Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred\n  to them. Current append/publication still requires the exact selected schema/scope, original custody, current\n  permission, receipt and required producer adoption. Actual missing registration or unresolved required custody\n  refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
        "quote_scope": "unit SP-643, Plans/storage-plan.md:49248-49352",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-643",
@@ -591,9 +591,9 @@
   "row_pointer": "#/families/405"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX final citation maintenance",
-  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
-  "source_assessment_sha256": "2a131caa82f7ad2f512f706cb16b38f5d37ed735d335babb4b153dd957ca9fb5",
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_assessment_sha256": "c50f0d475e4ddbdfc308ebc2f297afcde677b73beb7d8cd49aed99d7c03424ef",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

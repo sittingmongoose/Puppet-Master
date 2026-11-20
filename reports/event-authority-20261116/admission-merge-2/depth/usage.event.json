@@ -61,7 +61,7 @@
        "quote": "Newly authored owner contract under DL-045 for usage.event@1.0.0 only",
        "quote_check": "exact",
        "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35801-36006",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-614",
@@ -92,7 +92,7 @@
        "quote": "For usage.event alone, the newly authored original-source custody",
        "quote_check": "exact",
        "quote_scope": "unit SP-594, Plans/storage-plan.md:40629-40908",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-594",
@@ -178,7 +178,7 @@
        "quote": "For usage.event alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35801-36006",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-614",
@@ -209,7 +209,7 @@
        "quote": "immutable before.account_id, billing_entity_id and provider_account_ref are required nullable\n  source slots.",
        "quote_check": "exact",
        "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35801-36006",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-614",
@@ -240,7 +240,7 @@
        "quote": "For usage.event alone, current writer and retry paths refuse",
        "quote_check": "exact",
        "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35801-36006",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-614",
@@ -294,7 +294,7 @@
        "quote": "For usage.event alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35801-36006",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-614",
@@ -325,7 +325,7 @@
        "quote": "  source-result, run-finish or recovery time. There is no count eviction. Daily account/provider/model totals remain\n  canonical, backed up and permanent; commit their accounting before detail cleanup and never rebuild them from\n  expired detail. Holds, required references, recovery, rollback and protected backups still block deletion. This\n  is the existing setting-driven policy selector, not a newly minted policy ID. The registry retention_policy_ref\n  setting-selected form carries setting_key=ai.usage.usage-retention, anchor=first_durable_save, anchor_immutable=true\n  and owner_ref=Plans/storage-plan.md#SP-594, with no policy_id or policy_version. The separate original source\n  rows keep their exact DL-507 assignments; no source-row lifetime is transferred from this event answer. `PENDING_RETENTION_BINDING`\n  is resolved for this event; separate admission, storage implementation and native proof remain required.\n\n\n  Signed answer: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md`,\n  card `E8-1`, send `f66b1af9-f851-493f-a2ee-6b666b477920`, signed 2026-11-14 at 3:25 PM EST (20:25 UTC); SHA-256\n  `509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b`. No Decision Log ID is minted here; integration\n  records the later entry.\n\n\n  This signed binding supersedes earlier pending-retention language for this exact facet, including the prior s4r\n  pending question; other source, checkpoint, custody and admission requirements remain with their existing owners.\n\n\n\n  Current selected assignment (2026-11-19): usage.event@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,",
        "quote_check": "exact",
        "quote_scope": "unit SP-594, Plans/storage-plan.md:40629-40908",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-594",
@@ -369,7 +369,7 @@
        "quote": "  source-result, run-finish or recovery time. There is no count eviction. Daily account/provider/model totals remain\n  canonical, backed up and permanent; commit their accounting before detail cleanup and never rebuild them from\n  expired detail. Holds, required references, recovery, rollback and protected backups still block deletion. This\n  is the existing setting-driven policy selector, not a newly minted policy ID. The registry retention_policy_ref\n  setting-selected form carries setting_key=ai.usage.usage-retention, anchor=first_durable_save, anchor_immutable=true\n  and owner_ref=Plans/storage-plan.md#SP-594, with no policy_id or policy_version. The separate original source\n  rows keep their exact DL-507 assignments; no source-row lifetime is transferred from this event answer. `PENDING_RETENTION_BINDING`\n  is resolved for this event; separate admission, storage implementation and native proof remain required.\n\n\n  Signed answer: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md`,\n  card `E8-1`, send `f66b1af9-f851-493f-a2ee-6b666b477920`, signed 2026-11-14 at 3:25 PM EST (20:25 UTC); SHA-256\n  `509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b`. No Decision Log ID is minted here; integration\n  records the later entry.\n\n\n  This signed binding supersedes earlier pending-retention language for this exact facet, including the prior s4r\n  pending question; other source, checkpoint, custody and admission requirements remain with their existing owners.\n\n\n\n  Current selected assignment (2026-11-19): usage.event@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,",
        "quote_check": "exact",
        "quote_scope": "unit SP-594, Plans/storage-plan.md:40629-40908",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-594",
@@ -424,7 +424,7 @@
        "line_start": 40706,
        "line_end": 40708,
        "quote": "Source\n  stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent\n  backup closure.",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "quote_check": "exact",
        "quote_scope": "unit SP-594, Plans/storage-plan.md:40629-40908",
        "source_citation": {
@@ -470,7 +470,7 @@
        "quote": "For usage.event alone, the explicit lifecycle transition is",
        "quote_check": "exact",
        "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35801-36006",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-614",
@@ -501,7 +501,7 @@
        "quote": "For usage.event alone, its SP-278/DL-076 checkpoint",
        "quote_check": "exact",
        "quote_scope": "unit SP-594, Plans/storage-plan.md:40629-40908",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-594",
@@ -548,7 +548,7 @@
        "line_start": 40669,
        "line_end": 40669,
        "quote": "Withdrawal first cuts off this family''s append admission",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "quote_check": "exact",
        "quote_scope": "unit SP-594, Plans/storage-plan.md:40629-40908",
        "source_citation": {
@@ -599,7 +599,7 @@
        "quote": "For usage.event alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35801-36006",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-614",
@@ -630,7 +630,7 @@
        "unit": "ATS-297",
        "quote_check": "exact",
        "quote_scope": "unit ATS-297, Plans/Automated_Testing_System.md:9309-9347",
-       "file_sha256": "9578cb2d7c8a6b000935bb1602650c67ada31d8cbbbad9e3baabee00ec961997",
+       "file_sha256": "eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8",
        "source_citation": {
         "line_end": 9311,
         "line_start": 9311,
@@ -667,7 +667,7 @@
        "unit": "SP-594",
        "quote_check": "exact",
        "quote_scope": "unit SP-594, Plans/storage-plan.md:40629-40908",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "line_end": 39270,
         "line_start": 39270,
@@ -804,9 +804,9 @@
   "row_pointer": "#/families/517"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX final citation maintenance",
-  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
-  "source_assessment_sha256": "d8466e46263e81266d921e4a8b3bf9ca8935d27efb1688edc9e606c3f308c424",
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_assessment_sha256": "0eff6edee58e7377f4851900208730aef3c4e0fc191e4291212db76393a50fd3",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

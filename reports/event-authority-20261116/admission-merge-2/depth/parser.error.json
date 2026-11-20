@@ -261,6 +261,33 @@
         "quote": "Event history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-086.",
         "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
        }
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-684",
+       "line_start": 32863,
+       "line_end": 32863,
+       "quote": "**Payload and scope.** `Plans/orchestrator_event_payloads.schema.json#/$defs/parser_error` (`pm.event_payload.parser_error.v1@1.0.0`) is the closed payload. Project scope only; use the actual Orchestrator/interview Project. Envelope scope, project_id, run_id, thread_id and occurred_at_utc equal payload values; actor_ref identifies the actual producer. No invented Project/root, null partition or focus-derived scope. Parent/child/crew identities join their original admitted canonical records, not text labels. Requested/effective runtime references resolve retained immutable snapshots when different.",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-684, Plans/orchestrator-subagent-integration.md:32859-32933",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-684",
+        "line_start": 32863,
+        "line_end": 32863,
+        "quote": "**Payload and scope.** `Plans/orchestrator_event_payloads.schema.json#/$defs/parser_error` (`pm.event_payload.parser_error.v1@1.0.0`) is the closed payload. Project scope only; use the actual Orchestrator/interview Project. Envelope scope, project_id, run_id, thread_id and occurred_at_utc equal payload values; actor_ref identifies the actual producer. No invented Project/root, null partition or focus-derived scope. Parent/child/crew identities join their original admitted canonical records, not text labels. Requested/effective runtime references resolve retained immutable snapshots when different.",
+        "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
+        "quote_check": "exact",
+        "quote_scope": "unit OSI-684, Plans/orchestrator-subagent-integration.md@20697031603d52f52b3dba3d4d621f909be15e88:32859-32933",
+        "commit": "20697031603d52f52b3dba3d4d621f909be15e88",
+        "sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
+        "line": 32863
+       },
+       "locator_maintenance": {
+        "authority": "MERGE3-POSTFIX fix round 2 / finding 1",
+        "reason": "Existing exact family-owner EventRecord edition clause; selected policies and every verdict remain unchanged."
+       }
       }
      ],
      "carried_from": {
@@ -513,9 +540,9 @@
   "row_pointer": "#/families/422"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX final citation maintenance",
-  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
-  "source_assessment_sha256": "3c3c6f3ad8b18b19ee5b0ac816ec16966f6b8186f4912dbe53984bbe587f59b9",
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_assessment_sha256": "40289020d91c509cae4dbb44377a32775bfd50f5885f2f955a62c929f088a802",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

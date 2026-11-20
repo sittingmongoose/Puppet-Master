@@ -61,7 +61,7 @@
        "quote": "Newly authored owner contract under DL-045 for gate.passed@1.0.0 only",
        "quote_check": "exact",
        "quote_scope": "unit CV-607, Plans/Contracts_V0.md:35519-35557",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-607",
@@ -92,7 +92,7 @@
        "quote": "For gate.passed alone, the newly authored original-source custody",
        "quote_check": "exact",
        "quote_scope": "unit SP-587, Plans/storage-plan.md:39836-39878",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-587",
@@ -142,7 +142,7 @@
        "quote": "Exposing either scalar requires both dispatch fields and the matching node_id.",
        "quote_check": "exact",
        "quote_scope": "unit CV-607, Plans/Contracts_V0.md:35519-35557",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-607",
@@ -196,7 +196,7 @@
        "quote": "For gate.passed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-607, Plans/Contracts_V0.md:35519-35557",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-607",
@@ -227,7 +227,7 @@
        "quote": "For gate.passed alone, source codec",
        "quote_check": "exact",
        "quote_scope": "unit SP-587, Plans/storage-plan.md:39836-39878",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-587",
@@ -258,7 +258,7 @@
        "quote": "For gate.passed alone, current writer and retry paths refuse",
        "quote_check": "exact",
        "quote_scope": "unit CV-607, Plans/Contracts_V0.md:35519-35557",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-607",
@@ -312,7 +312,7 @@
        "quote": "For gate.passed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-607, Plans/Contracts_V0.md:35519-35557",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-607",
@@ -343,7 +343,7 @@
        "quote": "  Current selected assignment (2026-11-19): gate.passed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2317. Its event history selects RP-RUNTIME-365D@1.0.0; Plans/storage-plan.md#SP-587 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
        "quote_scope": "unit SP-587, Plans/storage-plan.md:39836-39878",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-587",
@@ -404,7 +404,7 @@
        "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
        "quote_check": "exact",
        "quote_scope": "unit SP-587, Plans/storage-plan.md:39836-39878",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-587",
@@ -435,7 +435,7 @@
        "quote": "For gate.passed alone, the explicit lifecycle transition is",
        "quote_check": "exact",
        "quote_scope": "unit CV-607, Plans/Contracts_V0.md:35519-35557",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-607",
@@ -466,7 +466,7 @@
        "quote": "For gate.passed alone, its SP-278/DL-076 checkpoint",
        "quote_check": "exact",
        "quote_scope": "unit SP-587, Plans/storage-plan.md:39836-39878",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-587",
@@ -515,7 +515,7 @@
        "quote": "Withdrawal first cuts off this family's append admission",
        "quote_check": "exact",
        "quote_scope": "unit SP-587, Plans/storage-plan.md:39836-39878",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-587",
@@ -551,7 +551,7 @@
        "quote": "For gate.passed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-607, Plans/Contracts_V0.md:35519-35557",
-       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "file_sha256": "287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-607",
@@ -582,7 +582,7 @@
        "unit": "ATS-293",
        "quote_check": "exact",
        "quote_scope": "unit ATS-293, Plans/Automated_Testing_System.md:9155-9193",
-       "file_sha256": "9578cb2d7c8a6b000935bb1602650c67ada31d8cbbbad9e3baabee00ec961997",
+       "file_sha256": "eb4a9e10a80cc73e94ade88cd2fa4494dc396127505d2ea0529a526542ed37c8",
        "source_citation": {
         "line_end": 9159,
         "line_start": 9159,
@@ -619,7 +619,7 @@
        "unit": "SP-587",
        "quote_check": "exact",
        "quote_scope": "unit SP-587, Plans/storage-plan.md:39836-39878",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "line_end": 38722,
         "line_start": 38722,
@@ -756,9 +756,9 @@
   "row_pointer": "#/families/399"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX final citation maintenance",
-  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
-  "source_assessment_sha256": "e44817cbfe30f651f99ae2d1c7e048ea249259b165bc9cc66b164b82806640e6",
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_assessment_sha256": "89464b82385c44b8fa0a232526c2164e130cfb4b6b0c514ab869c77c548404ef",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

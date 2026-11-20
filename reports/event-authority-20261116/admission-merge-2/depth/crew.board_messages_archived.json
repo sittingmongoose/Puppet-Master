@@ -141,7 +141,7 @@
        "quote": "Its closed member `crew_board_messages_archived` is copied from Plans/coordination_event_payloads.schema.json#/$defs/crew_board_messages_archived, the file the row's value_schema_ref names, including schema_version and scope union;",
        "quote_check": "exact",
        "quote_scope": "unit SP-722, Plans/storage-plan.md:35943-35987",
-       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-722",
@@ -575,9 +575,9 @@
   "row_pointer": "#/families/364"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX final citation maintenance",
-  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
-  "source_assessment_sha256": "8da38e555985437481f75a6919c4ade7b4d5e52e1047c927b271d79128526bc0",
+  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
+  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
+  "source_assessment_sha256": "1592c5d55df2890e5578786ecc9494eb3711149437b0ad21226941643049b9a5",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }
