@@ -738,3 +738,18 @@ PROOFS['dg5/d01/current_source/schema'] = dict(
         'the original early refusal.'
     ),
 )
+
+PROOFS['dg5/inspect_original/original/root/schema'] = dict(
+    kind='entailment',
+    families=['goal_run.started'],
+    depends_on=[],
+    sites=[('scripts/pm_goal_dg_s_readers.py', 94), ('scripts/pm_goal_dg_s_readers.py', 253), ('scripts/pm_goal_dg_s_readers.py', 255), ('scripts/pm_goal_dg_s_readers.py', 256), ('scripts/pm_goal_dg_s_readers.py', 878), ('scripts/pm_goal_dg_s_readers.py', 883), ('scripts/pm_goal_dg_s_readers.py', 884), ('scripts/pm_goal_dg_s_readers.py', 888), ('scripts/pm_goal_test_owner_adapters.py', 83)],
+    argument=(
+        'The retained document at 94 is unchanged in the enclosing object at 255–256, whose '
+        'required native_start member uses the same definition. The other copy in the '
+        'comparison at 884 still passes the enclosing schema at 256, and equality requires the '
+        'same JSON types and values. Each test observes the unaffected check or the '
+        'schema-valid comparison operand while only the selected site is disabled and observes '
+        'the exact original refusal after restoration.'
+    ),
+)
