@@ -9,6 +9,18 @@ MESSAGEPACK = [
 ]
 
 PROOFS = {
+    'dg5/f5d/evidence/schema': {
+        'kind': 'entailed-by-outer-append-evidence',
+        'families': [FAMILY],
+        'depends_on': ['dg5/append_outer/evidence/schema'],
+        'sites': [(WORLD, line) for line in (932, 975, 986, 990, 1002, 1008)],
+        'argument': (
+            'Both F5d checks pass the same evidence to the same schema. The outer '
+            'responder rechecks that evidence without altering it. Disabling only the '
+            'F5d row removes both refusals and reaches the later refusal. The copied '
+            'fixture verifies that the intervening write is identical to the valid call.'
+        ),
+    },
     'dg5/append_outer/evidence/schema': {
         'kind': 'entailed-by-append-result-evidence',
         'families': [FAMILY],
