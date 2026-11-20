@@ -2464,23 +2464,40 @@ def check_evidence_lines(ctx: Context, value: Any = None, doc: str = CATALOG) ->
             spans[key] = allowed
         return spans[key]
 
+    sources: dict[str, tuple[str, list[int]]] = {}
+
+    def matches_hint(evidence: dict[str, Any]) -> bool:
+        line = evidence["line"]
+        words = str(evidence["quote"]).split()
+        if not isinstance(line, int) or isinstance(line, bool) or line < 1 or not words:
+            return False
+        target = str(evidence["doc"])
+        if target not in sources:
+            text = ctx.corpus.text(target) or ""
+            sources[target] = text, [-1, *(m.start() for m in re.finditer("\n", text)), len(text)]
+        text, breaks = sources[target]
+        if line >= len(breaks):
+            return False
+        first, last = breaks[line - 1] + 1, breaks[line]
+        pattern = re.compile(r"\s+".join(re.escape(word) for word in words))
+        for start, end in source_spans(evidence, text):
+            # Start inside both the hinted line and the scalar value. An earlier match
+            # (such as one starting in an anchor name) must not consume an eligible start.
+            start = max(start, first)
+            if start < min(last, end):
+                match = pattern.search(text, start, end)
+                if match is not None and match.start() < last:
+                    return True
+        return False
+
     def walk(value: Any, doc: str) -> None:
         if isinstance(value, list):
             for child in value:
                 walk(child, doc)
         elif isinstance(value, dict):
-            if "line" in value and "doc" in value and "quote" in value:
-                text = ctx.corpus.text(str(value["doc"]))
-                line = value["line"]
-                valid = isinstance(line, int) and not isinstance(line, bool) and line > 0
-                words = str(value["quote"]).split()
-                matches = re.finditer(r"\s+".join(re.escape(word) for word in words), text or "") if words else []
-                allowed = source_spans(value, text or "")
-                if not valid or not any(line_of(text or "", match.start()) == line
-                                        and any(start <= match.start() and match.end() <= end for start, end in allowed)
-                                        for match in matches):
-                    ctx.report.add("C05", "evidence_line_mismatch", path=doc,
-                                   detail=f"{value['doc']}:{line}: {value['quote']}")
+            if "line" in value and "doc" in value and "quote" in value and not matches_hint(value):
+                ctx.report.add("C05", "evidence_line_mismatch", path=doc,
+                               detail=f"{value['doc']}:{value['line']}: {value['quote']}")
             for child in value.values():
                 walk(child, doc)
     walk(ctx.map if value is None else value, doc)
@@ -4650,6 +4667,25 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
                 text = fx.files()[CATALOG]
                 marker = "  " + quote if correct else "- " + header
                 evidence["line"] = line_of(text, text.index(marker, text.index(replacement)))
+
+    for correct in (True, False):
+        @case(f"{'pass' if correct else 'fail'} T255: repeated quote {'inside the value' if correct else 'starts in the anchor'}",
+              0 if correct else 1, set() if correct else {"C05"},
+              kinds=set() if correct else {"evidence_line_mismatch"})
+        def _(fx: Fixture, correct=correct) -> None:
+            external(fx)
+            evidence = fx.map["outside_range_commands"][0]["evidence"]
+            cmd = fx.map["outside_range_commands"][0]["command_id"]
+            quote = f"retry {cmd} retry"
+            if correct:
+                replacement = f"canonical_text: &retry {cmd} {quote}"
+            else:
+                replacement = f"canonical_text:\n- &retry {cmd} retry\n- {quote}"
+            fx.doc_suffix[CATALOG] = fx.doc_suffix[CATALOG].replace(
+                "canonical_text: " + evidence["quote"], replacement, 1)
+            evidence.update(quote=quote, line=1)
+            text = fx.files()[CATALOG]
+            evidence["line"] = line_of(text, text.index("&retry", text.index(replacement)))
 
     @case("fail MAX1: deleted in-record discriminator", 1, {"C05"}, kinds={"typed_discriminator_branch_value_mismatch"})
     def _(fx: Fixture) -> None:
