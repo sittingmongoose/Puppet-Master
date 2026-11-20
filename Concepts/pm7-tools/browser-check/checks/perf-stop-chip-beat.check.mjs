@@ -431,15 +431,18 @@ function rates(R) {
 // name which frame the restyle was.
 function windowSpans(R, frame) {
 	const out = [];
-	for (const name of ['onboarding window opens (holds the glyph), no more words', 'onboarding window closes']) {
-		const m = R.marks.find((x) => x.name === name);
-		if (!m || m.i <= 0) continue;
-		const from = m.i, until = R.rows.findIndex((r, i) => i > from && r.w - R.rows[from].w > 3000);
+	const names = ['onboarding window opens (holds the glyph), no more words', 'onboarding window closes'];
+	const events = R.marks.filter((m) => names.includes(m.name) && m.i > 0 && m.i < R.rows.length).sort((a, b) => a.i - b.i);
+	for (let e = 0; e < events.length; e++) {
+		const { name, i: from } = events[e];
+		const until = R.rows.findIndex((r, i) => i > from && r.w - R.rows[from].w > 3000);
 		const to = until < 0 ? R.rows.length : until;
+		// The next action owns every reference sample from its mark onward, even inside this span.
+		const referenceEnd = Math.min(to, events[e + 1]?.i ?? to);
 		let other = 0, otherAt = null, otherI = null;
 		// a pause or resume taken by a late frame's time moves a loop by at most the time between the two samples around
 		// it: a reference step past that (its own timing changed: NieR restyles it) is not a measure of the window's jump
-		for (let i = from; i < to; i++) {
+		for (let i = from; i < referenceEnd; i++) {
 			const r0 = R.rows[i - 1], r1 = R.rows[i];
 			if (!r0.os || !r1.os) continue;
 			for (let k = 0; k < Math.min(r0.os.length, r1.os.length); k++) {
