@@ -3345,8 +3345,10 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
             if filename == engine_name:
                 return None
             if filename not in path_cache:
-                resolved = Path(filename).resolve()
-                path_cache[filename] = resolved if resolved != engine and resolved.is_relative_to(root) else None
+                # Generated library frames such as <string> have no file origin.
+                # Resolving these labels would place them under the caller's cwd.
+                resolved = None if filename.startswith('<') and filename.endswith('>') else Path(filename).resolve()
+                path_cache[filename] = resolved if resolved is not None and resolved != engine and resolved.is_relative_to(root) else None
             path = path_cache[filename]
             if path is None:
                 return None

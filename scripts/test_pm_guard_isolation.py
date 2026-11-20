@@ -1,5 +1,6 @@
 """Focused regressions for the guard engine, using the DDBG fixtures where applicable."""
 
+from contextlib import chdir
 from pathlib import Path
 import unittest
 
@@ -24,6 +25,12 @@ def reference_nodes(document):
 
 
 class GuardEngineTests(unittest.TestCase):
+    def test_ddbg_retry_from_repository_root(self):
+        with chdir(ROOT):
+            report = guard.run(ddbg.retry_request_suite())
+        self.assertFalse(report['runtime'], report['runtime'][:1])
+        self.assertEqual(report['status'], 'PASS', report['failures'])
+
     def test_ddbg_reversed_reference_walk(self):
         suite = ddbg.references_suite()
         document = suite.controls[0].value
