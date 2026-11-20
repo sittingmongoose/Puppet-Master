@@ -613,7 +613,7 @@
         : PM51.scoped.row('ai.models.provider-enabled', p.status !== 'disabled', { scope: SVC, data, label: 'Use this service', help: 'Off sends it nothing new. Accounts and choices are kept.' }),
       p.id === 'github-copilot' ? plainRow('Copilot plan', 'Separate from the GitHub account you use for your code.', PM51.dropdown(p.entitlement || 'Individual', ['Individual', 'Organization', 'Enterprise'], { action: 'pm51-providers-entitlement', data, label: 'Copilot plan' })) : '',
       plainRow('When it runs out', (RUNS_OUT[cur] || [])[1] + (!auto && cur === 'next-account' ? ' Automatic switching is off for this service, so work stops and asks.' : ''), PM51.dropdown(cur, choices.map(c => ({ value: c, label: RUNS_OUT[c][0], meta: RUNS_OUT[c][1] })), { action: 'pm51-providers-exhaustion', data, label: 'When it runs out' })),
-      policyRows(p),
+      /* Refine: its switching rules are on Limits & switching, on this service's line (they were here as well) */
       p.id === 'free-models' ? PM51.bound.row('ai.usage.free-models-auto-apply', { label: 'Add newly free models by themselves', help: 'The list follows the community free-coding-models list.' }) : ''
     ];
     return PM51.section({ title: 'This service', body: PM51.scoped.rows(rows) });
@@ -735,15 +735,20 @@
       const at = usedText(policyOf(p, 'ai.accounts.hard-switch-level')), warn = usedText(policyOf(p, 'ai.accounts.soft-warning-level'));
       const own = POLICY_IDS.filter(id => ownPolicy(p, id) !== undefined);
       const desc = `${autoOf(p) ? `Switches at ${at}` : 'Off'} · warns at ${warn} · ${own.length ? 'its own setting' : 'shared setting'} · ${(p.accounts || []).length} accounts`;
-      return `<div class="setting-row o55-row o55-scoped o55-policy-row${own.length ? ' is-own' : ''}" data-setting-id="ai.accounts.multi-account-switching" data-provider="${a(p.id)}">
-        <div class="setting-copy"><div class="setting-label">${h(p.name)}</div><div class="setting-description">${h(desc)}</div></div>
-        <div class="setting-control o55-policy-ctl">${PM51.toggle(autoOf(p), { action: 'pm51-scoped-toggle', data, label: `Auto-switch for ${p.name}` })}${levelControl(p, 'ai.accounts.hard-switch-level', SWITCH_LEFT, 'Switch when this much is left')}</div>
-        <button type="button" class="icon-btn details-btn o55-about" data-action="pm51-providers-policy-open" data-provider="${a(p.id)}" aria-label="${a('Open ' + p.name)}" data-pm-hover-label="${a('Open ' + p.name)}" data-pm-hover-detail="All of its choices, under Services.">${icon('arrowRight')}</button>
+      /* Refine: a service's own switching rules had two homes: this line (the switch and one level, with an arrow that
+         only opened the service) and "This service" under Services (the switch again and three levels). They live here
+         only now, all on the service's line: on or off, when to switch, when to warn, how long to rest. */
+      const reset = own.length ? PM51.link({ label: 'Use shared', action: 'pm51-providers-policy-shared', data: { provider: p.id }, cls: 'rf-policy-reset' }) : '';
+      return `<div class="setting-row o55-row o55-scoped o55-policy-row rf-policy-row${own.length ? ' is-own' : ''}" data-setting-id="ai.accounts.multi-account-switching" data-provider="${a(p.id)}">
+        <div class="setting-copy"><div class="setting-label">${h(p.name)}${reset}</div><div class="setting-description">${h(desc)}</div></div>
+        <div class="setting-control o55-policy-ctl">${PM51.toggle(autoOf(p), { action: 'pm51-scoped-toggle', data, label: `Auto-switch for ${p.name}` })}${levelControl(p, 'ai.accounts.hard-switch-level', SWITCH_LEFT, 'Switch when this much is left')}${levelControl(p, 'ai.accounts.soft-warning-level', WARN_LEFT, 'Warn when this much is left')}${levelControl(p, 'ai.accounts.cooldown-policy', [], 'Rest after a rate limit')}</div>
+        <span></span>
       </div>`;
     });
+    const head = '<div class="rf-policy-head" aria-hidden="true"><span>On</span><span>Switch at</span><span>Warn at</span><span>Rest after a limit</span></div>';
     const quiet = single.length ? `<p class="o55-quiet-line o55-policy-quiet">${h(single.map(p => p.name).join(', '))}: one account each. Auto-switch is off until a second account is signed in.</p>` : '';
-    const body = (rows.length ? `<div class="setting-list o55-bound-rows o55-policies">${rows.join('')}</div>` : PM51.note('No service has two accounts yet. Auto-switch starts once a second account is signed in.')) + quiet;
-    return PM51.section({ title: 'Auto-switch policies', help: 'Each service with two or more accounts switches on its own terms. One without its own choice follows the shared setting below.', body, id: 'o55-auto-switch-policies' });
+    const body = (rows.length ? head + `<div class="setting-list o55-bound-rows o55-policies">${rows.join('')}</div>` : PM51.note('No service has two accounts yet. Auto-switch starts once a second account is signed in.')) + quiet;
+    return PM51.section({ title: 'Each service', help: 'Each service with two or more accounts switches on its own terms. One without its own choice follows the shared setting below.', body, id: 'o55-auto-switch-policies' });
   }
   /* The switch level always stays below the warn level (MA-073, Settings_System section 8), held here at the owner's
      write point as well as in the choices, so a write that does not come from a choice (the Usage page's transaction, a
