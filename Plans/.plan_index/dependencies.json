@@ -5495,6 +5495,7 @@
     "DL-2520",
     "DL-2450",
     "DL-2521",
+    "DL-2522",
     "DL-451",
     "DL-694",
     "F3-585",
@@ -52509,6 +52510,21 @@
     {
       "edge_type": "depends_on",
       "from": "DL-2521",
+      "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2522",
+      "to": "DL-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2522",
+      "to": "DL-2319"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2522",
       "to": "DL-400"
     },
     {
@@ -163367,7 +163383,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-20T00:23:35Z",
+  "generated_at_utc": "2026-11-20T00:24:45Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -215401,6 +215417,23 @@
         "heading_level": 3,
         "heading_line": 58378,
         "line": 58380,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge3_postfix",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2522",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_admission",
+      "source_location": {
+        "heading": "DL-2522: Event Authority corrects live.artifact.created (merge 3 post-landing)",
+        "heading_level": 3,
+        "heading_line": 58441,
+        "line": 58443,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -325556,10 +325589,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27539,
+    "depends_on_edge_count": 27542,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30764,
-    "node_count": 9540,
+    "edge_count": 30767,
+    "node_count": 9541,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
