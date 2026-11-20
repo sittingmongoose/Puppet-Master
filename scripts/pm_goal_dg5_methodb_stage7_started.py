@@ -56,7 +56,18 @@ def prepared_candidate(directory, negative):
     return world, world.start.commit_start, (source.request(world), handles), {}
 
 
+def complete_projection(directory, negative):
+    world, _, _ = source.started(source.Suite(directory))
+    if negative:
+        source.extra_event(world, 'stage7-post-start', run=world.ctx.goal_run_id, event_type='goal_run.blocked')
+    projector = R.StartedProjector(world.registry, world=world)
+    projector.install()
+    generation = projector.stage()
+    return world, projector.replay, (generation,), {}
+
+
 CASES = {
+    'complete-projection': (READERS, 654, 'projector/reducer/unsupported_same_run:goal_run.blocked', complete_projection),
     'prepared-candidate': (START, 1002, 'start/idempotency_conflict', prepared_candidate),
     'selector': (WORLD, 458, 'start/d01_head_body/selector_type', selector),
 }
