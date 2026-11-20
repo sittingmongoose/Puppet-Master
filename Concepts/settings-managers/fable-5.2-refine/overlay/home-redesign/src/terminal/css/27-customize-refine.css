@@ -11,9 +11,8 @@
   .pmt-cz-dialog .pmt-cz-body > .pmt-cz-nav { grid-row: 1; margin: -6px -8px 0; }
   .pmt-cz-dialog .pmt-cz-dock { display: none; }
   .pmt-cz-dialog .pmt-cz-pvbox { height: 300px; }
-  .pmt-cz-dialog .pmt-cz-side { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .pmt-cz-dialog .pmt-cz-side > :is(.pmt-cz-meter, .pmt-cz-try, .pmt-cz-note) { grid-column: 1 / -1; }
-  .pmt-cz-dialog .pmt-cz-sets { grid-column: 1 / -1; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pmt-cz-dialog .pmt-cz-side { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .pmt-cz-dialog .pmt-cz-sets { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 /* What you just changed, said under the example, and a short ring around the example so the eye goes there. */
 .pmt-cz-dialog .rf-changed { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 8px; min-height: 22px; margin: -4px 2px 0; font-size: 12px; color: var(--pmw-text-2, inherit); }

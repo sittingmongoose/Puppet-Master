@@ -128,11 +128,12 @@
     const fl = field && field.querySelector('.pmt-cz-flabel');
     if (fl) return T(fl.textContent);
     const group = el.closest('.pmt-cz-group');
-    const g = group ? T((group.querySelector('.pmt-cz-ghead, h3, h4') || {}).textContent) : '';
+    const g = group ? T((group.querySelector('.pmt-cz-ghead h3, .pmt-cz-ghead h4, h3, h4') || {}).textContent) : '';
     const pick = el.closest('.pmt-cz-tile, .pmt-cz-scheme, .pmt-cz-chipbox, .pmt-cz-chip, .pmt-cz-segopt, .pmt-cz-swatch');
     if (pick) {
-      const n = pick.querySelector('.pmt-cz-tname, .pmt-cz-chipname, strong, b');
-      const name = T(n ? n.textContent : (pick.getAttribute('aria-label') || pick.textContent)).slice(0, 56);
+      /* its own name element first: a scheme's thumbnail holds bold code words that are not its name */
+      const n = pick.querySelector('.pmt-cz-tname') || pick.querySelector('.pmt-cz-chipname') || pick.querySelector('.pmt-cz-pname');
+      const name = T(n ? n.textContent : (pick.getAttribute('aria-label') || '')).slice(0, 56);
       return g && name ? `${g} · ${name}` : (name || g);
     }
     return T(el.getAttribute('aria-label')) || g;
@@ -145,7 +146,7 @@
     const ctl = t.closest('button, input, select, [role=switch], [role=radio], [role=slider]'); if (!ctl) return;
     if (e.type === 'click' && ctl.matches('input, select')) return;
     if (e.type === 'click' && !(ctl.matches('[aria-checked], [aria-pressed], [role=switch], [role=radio]') || ctl.closest('.pmt-cz-stepper, .pmt-cz-seg, .pmt-cz-swatches, .pmt-cz-tiles, .pmt-cz-schemes, .pmt-cz-chips'))) return;
-    const name = preset ? `Preset · ${T((preset.querySelector('b, strong, .pmt-cz-pname') || preset).textContent).slice(0, 40)}` : czName(ctl);
+    const name = preset ? `Preset · ${T((preset.querySelector('.pmt-cz-pname') || preset.querySelector('b, strong') || preset.firstElementChild || preset).textContent).slice(0, 40)}` : czName(ctl);
     setTimeout(() => show(dialog.querySelector('.pmt-cz-top > .pmt-cz-preview'), name), 80);
   };
   /* ---- Customize Pip, Adjust NieR ---- */

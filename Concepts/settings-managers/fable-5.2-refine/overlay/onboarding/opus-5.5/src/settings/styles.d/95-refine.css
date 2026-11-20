@@ -90,17 +90,19 @@
 /* ---- Customize Pip and Adjust NieR: the picture stays beside the parts ----
    The picture, its meter, the presets and Play were the top of a long sheet; a small copy followed the scroll. Now the
    parts scroll in the left column and the picture stays in the right one, at full size, in a wider sheet. */
-#panel-settings .drawer.pm51-panel[data-size="wide"]:is(.pipe-panel, .o55nc-panel) { width: min(860px, calc(100vw - 80px)); }
-:is(#panel-settings, .pipe-host) .pipe { grid-template-columns: minmax(0, 1fr) minmax(250px, 36%); column-gap: 18px; row-gap: 0; }
-:is(#panel-settings, .pipe-host) .pipe > * { grid-column: 1; }
-:is(#panel-settings, .pipe-host) .pipe > * + * { margin-top: 16px; }
-:is(#panel-settings, .pipe-host) .pipe > .pipe-top { grid-column: 2; grid-row: 1 / span 30; margin-top: 0; position: sticky; top: 0; align-self: start; grid-template-columns: minmax(0, 1fr); }
-:is(#panel-settings, .pipe-host) .pipe > .pipe-dock { display: none; }
-:is(#panel-settings, .pipe-host) .pipe > .pipe-reach { margin-top: 0; }
-:is(#panel-settings, .o55nc-host) .o55nc { grid-template-columns: minmax(0, 1fr) minmax(250px, 36%); column-gap: 18px; row-gap: 0; }
-:is(#panel-settings, .o55nc-host) .o55nc > * { grid-column: 1; }
-:is(#panel-settings, .o55nc-host) .o55nc > * + * { margin-top: 18px; }
-:is(#panel-settings, .o55nc-host) .o55nc > .o55nc-top { grid-column: 2; grid-row: 1 / span 30; margin-top: 0; position: sticky; top: 0; align-self: start; grid-template-columns: minmax(0, 1fr); }
+/* side by side from 900 px of window; below that, one column and the small copy that follows, as before */
+@media (min-width: 900px) {
+  :is(#panel-settings, .pipe-host) .pipe { grid-template-columns: minmax(0, 1fr) minmax(250px, 36%); column-gap: 18px; row-gap: 0; }
+  :is(#panel-settings, .pipe-host) .pipe > * { grid-column: 1; }
+  :is(#panel-settings, .pipe-host) .pipe > * + * { margin-top: 16px; }
+  :is(#panel-settings, .pipe-host) .pipe > .pipe-top { grid-column: 2; grid-row: 1 / span 30; margin-top: 0; position: sticky; top: 0; align-self: start; grid-template-columns: minmax(0, 1fr); }
+  :is(#panel-settings, .pipe-host) .pipe > .pipe-dock { display: none; }
+  :is(#panel-settings, .pipe-host) .pipe > .pipe-reach { margin-top: 0; }
+  :is(#panel-settings, .o55nc-host) .o55nc { grid-template-columns: minmax(0, 1fr) minmax(250px, 36%); column-gap: 18px; row-gap: 0; }
+  :is(#panel-settings, .o55nc-host) .o55nc > * { grid-column: 1; }
+  :is(#panel-settings, .o55nc-host) .o55nc > * + * { margin-top: 18px; }
+  :is(#panel-settings, .o55nc-host) .o55nc > .o55nc-top { grid-column: 2; grid-row: 1 / span 30; margin-top: 0; position: sticky; top: 0; align-self: start; grid-template-columns: minmax(0, 1fr); }
+}
 /* what you just changed, under the picture, and a short ring around it */
 :is(#panel-settings, .pipe-host, .o55nc-host) .rf-changed { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; min-height: 20px; font-size: 12px; color: var(--k3-text-2); }
 :is(#panel-settings, .pipe-host, .o55nc-host) .rf-changed > i { font-style: normal; font-weight: 650; color: var(--accent-primary, var(--k3-accent)); }
