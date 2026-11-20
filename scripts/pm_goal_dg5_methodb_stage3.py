@@ -344,6 +344,53 @@ def certified_fixture(route, path):
     raise ValueError(route)
 
 
+def certified_producer_fixture(path):
+    from pm_goal_dg_cf1_oracles import W, run_path
+
+    captured = []
+
+    def before_prepare(owner, *args, **kwargs):
+        captured.extend((owner, args, kwargs))
+        raise RootCapture
+
+    with patch.object(W.WholeProducer, 'prepare', before_prepare):
+        try:
+            run_path(path)
+        except RootCapture:
+            pass
+    require(len(captured) == 3, 'the original certified run did not reach the producer')
+    owner, args, kwargs = captured
+    realm, reference = W.ROOTS[W.SUBMISSION]
+    pre, _ = W.C.realm_bank()
+    binding = pre.registries[realm].resolver().lookup(reference)
+    schema = binding.contents
+    payload = schema['properties']['payload']
+    require('payload' in schema['required'] and payload == {'$ref': W.D.PAYLOAD},
+            'the submission no longer requires the original certified payload')
+    require(binding.resolver.lookup(W.D.PAYLOAD).contents == W.D.bank().documents[W.D.PAYLOAD],
+            'the submission no longer references the original certified payload document')
+    method = inspect.getsource(owner.submission)
+    require("sub[key] = copy.deepcopy(event[key])" in method and
+            "rvalidate(SUBMISSION, sub, 'producer/submission')" in method,
+            'the original producer no longer copies the payload into submission')
+    check = inspect.getsource(owner.check)
+    require(all(statement in check for statement in (
+        "for field in ('goal_revision', 'expected_goal_run_revision', 'goal_run_revision')",
+        "NR.integer(payload[field], 'producer/payload.' + field, minimum=1)",
+        "NR.event_time(event['occurred_at_utc'], 'producer/occurred_at_utc')",
+        "'occurred_at_utc': native['decision']['issued_at_utc']",
+        "'payload.occurred_at_utc':\n                native['decision']['issued_at_utc']",
+        "A.same(actual, value)")),
+        'the original producer no longer checks the payload integer and timestamp fields')
+    stamp = time.time_ns()
+
+    def prepare():
+        with patch.object(time, 'time_ns', return_value=stamp):
+            return owner.prepare(*args, **kwargs)
+
+    return owner.world, prepare
+
+
 class RootCapture(BaseException):
     pass
 
@@ -640,6 +687,7 @@ class OwnerCheck:
         request_validation = []
         evidence_validation = []
         projection = REQUEST_PROJECTIONS.get(self.declare['route'])
+        producer_payloads = []
         repeated_evidence = self.declare['route'] == 'f5d_repeated_evidence'
         next_evidence_check = {
             'commit_evidence_recheck': 'commit_final/evidence',
@@ -703,6 +751,8 @@ class OwnerCheck:
                     document[member] = 'gc'
             if projection or self.declare['route'] in ('receipt_recheck', 'input_recheck', 'inspect_receipt_recheck'):
                 request_validation.append((bank, args[0], copy.deepcopy(document)))
+            if self.declare['route'] == 'producer_prepare':
+                producer_payloads.append(copy.deepcopy(document))
             if next_evidence_check:
                 evidence_validation.append((bank, args[0], args[1], copy.deepcopy(document)))
             validator_args = args[:-1]
@@ -748,6 +798,19 @@ class OwnerCheck:
         try:
             with ExitStack() as changes:
                 changes.enter_context(patch.object(self.bank_class, 'validate', observe))
+                if self.declare['route'] == 'producer_prepare':
+                    import pm_goal_dg_cf1_world as world
+
+                    validate_submission = world.rvalidate
+
+                    def observe_submission(name, document, code):
+                        if code == 'producer/submission':
+                            require(name == world.SUBMISSION and producer_payloads == [document['payload']],
+                                    'the original submission used a different certified payload')
+                            record['same_submission_payload'] = True
+                        return validate_submission(name, document, code)
+
+                    changes.enter_context(patch.object(world, 'rvalidate', observe_submission))
                 for method in ('snapshot', 'acquire_source'):
                     current = getattr(storage.TestOwnerStorage, method)
                     changes.enter_context(patch.object(storage.TestOwnerStorage, method, preserve_ids(current)))
@@ -791,11 +854,11 @@ class OwnerCheck:
             require(store is None or store is world.storage or store.root.is_relative_to(self.scratch),
                     'unexpected auxiliary backing store')
         manifest = bridge.manifest(bridge.file_state(copied))
-        allow_prefix = self.declare['route'] == 'f5d_after_event_phase'
+        allow_prefix = self.declare['route'] in ('f5d_after_event_phase', 'producer_prepare')
         repeat_before_prefix = self.declare['route'] == 'f5d_repeated_evidence'
         if allow_prefix:
-            require(self.row in ('dg5/append/result/schema', 'dg5/append_outer/evidence/schema'),
-                    'only the F5d checks after EventPhase may have a written prefix')
+            require(self.row in ('dg5/append/result/schema', 'dg5/append_outer/evidence/schema',
+                                 'dg5/producer/payload/schema'), 'unexpected validator after a copied fixture write')
         context = multiprocessing.get_context('fork')
         receiver, sender = context.Pipe(duplex=False)
 
@@ -812,7 +875,7 @@ class OwnerCheck:
                     if allow_prefix:
                         require(record['store_wrote'] and
                                 record['store_at_validator'] == self.result_digest(final_manifest),
-                                'F5d must write only its EventPhase prefix before this validation')
+                                'the copied fixture needs the original write before validation and no writes after it')
                     elif repeat_before_prefix:
                         require(record['store_at_validator'] == self.result_digest(manifest),
                                 'the first F5d evidence check must precede the EventPhase write')
@@ -889,25 +952,33 @@ class OwnerCheck:
                 if self.declare['route'] == 'f5d_repeated_evidence':
                     require(cut.get('same_later_document') and cut['final_store'] == self.runs[0]['final_store'],
                             'repeated F5d checks did not validate the same evidence and leave the same EventPhase write')
+                if self.declare['route'] == 'producer_prepare':
+                    require(cut.get('same_submission_payload'), 'the submission did not get the original payload')
                 require(before == restored and before['observations'][0] == cut['observations'][0] and
                         bool(cut['errors']) == bool(later),
                         'the complete call did not restore the same document and validation message')
         require(self.runs[0] == self.runs[-1], 'the restored accepted control changed')
-        if self.declare['route'] in ('f5d_after_event_phase', 'f5d_repeated_evidence'):
+        if self.declare['route'] in ('f5d_after_event_phase', 'f5d_repeated_evidence', 'producer_prepare'):
             require(len({record['store_at_validator'] for record in self.runs}) == 1,
-                    'the trials changed the EventPhase prefix')
+                    'the trials changed the copied store prefix')
             control = self.runs[0]
             document = control['observations'][0]['document']
             sink = []
             saved = closure.CAPTURE[0]
             closure.CAPTURE[0] = sink
             try:
-                errors = world.realm.errors(*control['realm_ref'], document)
+                if self.declare['route'] == 'producer_prepare':
+                    from pm_goal_dg_cf1_world import D
+
+                    bank = D.bank()
+                else:
+                    bank = world.realm
+                errors = bank.errors(*control['realm_ref'], document)
             finally:
                 closure.CAPTURE[0] = saved
             require(sink and not errors and bridge.manifest(bridge.file_state(self.scratch)) == initial,
                     'the original schema failed to accept the copied document without writing')
-            return sink[0], world.realm.scoped, document
+            return sink[0], getattr(bank, 'scoped', bank), document
         if self.declare.get('transaction'):
             self.probe_root = True
             try:
@@ -1309,6 +1380,85 @@ def selected_event_scope(nodes):
     return selected + '/allOf/1/properties/'
 
 
+def certified_payload_implication(nodes, name, errors, go, expected):
+    root = 'pm.goal_runtime_event.goal_run_certified.schema.v3#'
+    payload = root + '/$defs/event_payload'
+    output = root + '/$defs/validator_output'
+    projected = root + '/allOf/1/properties/payload/properties/'
+    ordinary = payload + '/properties/'
+    conditional = payload + '/allOf/0/then/properties/'
+    decision = 'final_certifier_decision'
+    risk = 'unresolved_risk_refs'
+    outputs = 'validator_outputs'
+    schemas = lambda location: nodes[location]['node']
+    require(go.locations(errors) == set(expected) and expected, 'the exact certified payload messages did not remain')
+    require(schemas(projected + decision)['const'] == 'certified' and decision in schemas(payload)['required'] and
+            schemas(ordinary + decision)['enum'] == ['certified', 'certified_with_approved_exception'],
+            'the certified decision pin changed')
+    guarded = schemas(projected + outputs + '/items/properties/outcome')
+    require(guarded['const'] == 'passed' and 'outcome' in schemas(output)['required'] and
+            schemas(payload)['allOf'][0]['if']['properties'][decision]['const'] == 'certified',
+            'the certified outcome pin or decision condition changed')
+    peers = {}
+    risk_condition = conditional + risk
+    risk_cap = projected + risk
+    require(schemas(risk_condition)['maxItems'] == schemas(risk_cap)['maxItems'] == 0 and
+            schemas(risk_condition)['type'] == schemas(root + '/$defs/ref_array')['type'] == 'array' and
+            schemas(ordinary + risk)['$ref'] == '#/$defs/ref_array' and
+            schemas(payload)['allOf'][1]['if']['properties'][decision]['const'] == 'certified_with_approved_exception' and
+            schemas(payload)['allOf'][1]['then']['properties'][risk]['$ref'] == '#/$defs/non_empty_ref_array' and
+            schemas(root + '/$defs/non_empty_ref_array')['minItems'] == 1 and risk in schemas(payload)['required'],
+            'the certified and exception risk rules no longer imply the checked result')
+    peers.update({risk_condition + '/maxItems': risk_cap + '/maxItems',
+                  risk_condition + '/type': root + '/$defs/ref_array/type',
+                  risk_cap + '/maxItems': risk_condition + '/maxItems',
+                  projected + decision + '/const': risk_cap + '/maxItems',
+                  ordinary + decision + '/enum': projected + decision + '/const',
+                  ordinary + decision + '/type': projected + decision + '/const'})
+    negative_branch = schemas(conditional + outputs)['not']
+    require(set(negative_branch) - {'x-pm-oracle-id'} == {'contains'} and
+            negative_branch['contains']['properties']['outcome']['enum'] == ['failed', 'blocked'],
+            'the negated certified validator-output branch changed')
+    require(schemas(output)['type'] == 'object' and
+            all(set(branch) - {'x-pm-oracle-id'} == {'properties', 'required'} for branch in schemas(output)['oneOf']) and
+            schemas(output + '/oneOf/0/properties/outcome')['const'] == 'passed' and
+            schemas(output + '/oneOf/1/properties/outcome')['enum'] == ['failed', 'blocked', 'skipped'] and
+            schemas(output + '/properties/outcome')['enum'] == ['passed', 'failed', 'blocked', 'skipped'],
+            'the certified output alternative definitions changed')
+    skip = schemas(ordinary + outputs + '/items')['allOf'][1]
+    require(skip['if']['properties']['outcome']['const'] == 'skipped' and 'outcome' in skip['if']['required'] and
+            skip['then']['required'] == ['waiver_ref'] and schemas(ordinary + outputs)['type'] == 'array',
+            'the waiver and validator-output type premises changed')
+    pinned_output = projected + outputs + '/items/properties/outcome/const'
+    peers.update({conditional + outputs + '/not': pinned_output, output + '/oneOf/1/required': pinned_output,
+                  ordinary + outputs + '/items/allOf/1/then/required': pinned_output,
+                  output + '/oneOf/0/properties/outcome/const': pinned_output,
+                  output + '/properties/outcome/enum': pinned_output, output + '/properties/outcome/type': pinned_output,
+                  output + '/type': output + '/oneOf',
+                  ordinary + outputs + '/type': conditional + outputs + '/not'})
+    document = schemas(root)
+    require(document['additionalProperties'] is document['unevaluatedProperties'] is False and
+            'patternProperties' not in document and
+            set(document['allOf'][1]['properties']) == {'payload'} and
+            set(document['allOf'][0]['then']) - {'x-pm-oracle-id'} == {'required'} and
+            document['allOf'][0]['if']['properties']['payload']['properties'][decision]['const'] ==
+            'certified_with_approved_exception' and {'payload'} <= set(document['required']),
+            'the closed payload and pinned approval condition changed')
+    peers.update({root + '/additionalProperties': root + '/unevaluatedProperties',
+                  root + '/unevaluatedProperties': root + '/additionalProperties',
+                  root + '/allOf/0/then/required': projected + decision + '/const'})
+    for prop in (root + '/$defs/execution_role', root + '/properties/event_name', root + '/properties/schema_version'):
+        rule = schemas(prop)
+        keyword = 'enum' if 'enum' in rule else 'const'
+        values = rule['enum'] if keyword == 'enum' else [rule['const']]
+        require(rule['type'] == 'string' and values and all(type(value) is str for value in values),
+                'certified constant or enumeration no longer implies a string')
+        peers[prop + '/type'] = prop + '/' + keyword
+    require(name in peers and peers[name] in expected, 'the source counterpart did not refuse the payload')
+    return dict(source=peers[name], same_document_rule=name,
+                retained_messages=expected, pinned_decision='certified', pinned_outcome='passed')
+
+
 def inspection_event_selector(nodes, validator, go, control, name, disabled):
     pinned = selected_event_scope(nodes) + 'scope_kind/const'
     application, project = (EVENT_RECORD + '/allOf/' + n for n in ('0', '1'))
@@ -1562,6 +1712,21 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         if example.get('inspection_event_selector'):
             result[name] = inspection_event_selector(nodes, validator, go, control, name, disable)
             continue
+        if 'certified_payload_selector' in example:
+            require(ident == 'dg5:9c8b338493d0a78c', 'unexpected certified payload selector')
+            value = control
+            for change in example['certified_payload_selector']:
+                value = edit_example(go, value, change['path'], change)
+            before = go.errors_of(validator, value)
+            cut = go.errors_of(validator, value, disable)
+            restored = go.errors_of(validator, value)
+            require(go.locations(before) == set(example['expected_before']) and
+                    go.locations(cut) == set(example['expected_disabled']) and
+                    errors_list(before) != errors_list(cut) and errors_list(before) == errors_list(restored),
+                    'the certified selector did not change and restore the exact validation messages')
+            result[name] = dict(cls='SELECTOR_OR_NEGATED', input=value, original=errors_list(before),
+                                cut=errors_list(cut), restored=errors_list(restored), condition=name)
+            continue
         if example.get('inspection_unreachable_application'):
             selected_event_scope(nodes)
             require(name == EVENT_RECORD + '/allOf/0/then/properties/project_id/type',
@@ -1617,7 +1782,13 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
             result[name] = dict(cls='SELECTOR_OR_NEGATED', control=control, cut=errors_list(cut),
                                 restored=errors_list(restored), condition=name)
             continue
-        invalid = edit_example(go, control, path, example)
+        invalid = control
+        if 'certified_payload_changes' in example:
+            require(ident == 'dg5:9c8b338493d0a78c', 'unexpected certified payload changes')
+            for change in example['certified_payload_changes']:
+                invalid = edit_example(go, invalid, change['path'], change)
+        else:
+            invalid = edit_example(go, control, path, example)
         if example.get('inspection_application_variant'):
             require(name.endswith('#/$defs/SelectedActiveEvent/allOf/1/properties/scope_kind/const') and
                     path == ['scope_kind'] and example['value'] == 'application', 'unexpected inspection scope edit')
@@ -1629,7 +1800,9 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
             invalid['owner_identity'].update(project_id=None, project_home_server_id=None, named_plan_id=None)
         before = go.errors_of(validator, invalid)
         actual = list(plain.iter_errors(invalid))
-        require(errors_list(before) == errors_list(actual), f'{name}: original and instrumented errors differ')
+        instrumented = (certified_payload_messages(before) if ident == 'dg5:9c8b338493d0a78c'
+                        else errors_list(before))
+        require(instrumented == errors_list(actual), f'{name}: original and instrumented errors differ')
         cut = go.errors_of(validator, invalid, disable)
         restore = go.errors_of(validator, invalid)
         keyword = inventory[name]
@@ -1684,6 +1857,9 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         elif cut and example.get('inspection_event_implication'):
             record.update(cls='COVERED_LATER', implication=inspection_event_implication(
                 nodes, name, path, cut, locations, validator))
+        elif cut and 'certified_payload_messages' in example:
+            record.update(cls='COVERED_LATER', implication=certified_payload_implication(
+                nodes, name, cut, go, example['certified_payload_messages']))
         elif cut and 'normalized_paired_rule' in example:
             record.update(cls='COVERED_LATER', implication=normalized_rule_implication(
                 nodes, name, path, cut, locations, example['normalized_paired_rule']))
@@ -1701,6 +1877,30 @@ def each_error(errors):
     for error in errors:
         yield error
         yield from each_error(error.context)
+
+
+def certified_payload_messages(errors):
+    """Use the schema's original wording when a message prints an annotated definition."""
+    def without_test_annotations(node):
+        if isinstance(node, dict):
+            return {key: without_test_annotations(value) for key, value in node.items() if key != 'x-pm-oracle-id'}
+        if isinstance(node, list):
+            return [without_test_annotations(value) for value in node]
+        return node
+
+    result = errors_list(errors)
+    for error, display in zip(errors, result):
+        rendered = f'{error.instance!r} should not be valid under {error.validator_value!r}'
+        if error.validator == 'not' and error.message == rendered:
+            original = without_test_annotations(error.validator_value)
+            display[3] = f'{error.instance!r} should not be valid under {original!r}'
+        if error.validator == 'oneOf' and len(error.validator_value) == 2:
+            branches = tuple(reversed(error.validator_value))
+            rendering = repr(error.instance) + ' is valid under each of '
+            if error.message == rendering + ', '.join(map(repr, branches)):
+                display[3] = rendering + ', '.join(repr(without_test_annotations(branch)) for branch in branches)
+        display[4] = certified_payload_messages(error.context)
+    return result
 
 
 def proof_output(source, output, declare, collector, clauses, root, table_path):
@@ -1776,6 +1976,7 @@ def main():
         ('dg5/retry/evidence/schema', 'retry_evidence_recheck'): 'retry/result/schema/evidence',
         ('dg5/append_outer/evidence/schema', 'f5d_after_event_phase'): 'append/result/schema/evidence',
         ('dg5/f5d/evidence/schema', 'f5d_repeated_evidence'): 'append_outer/evidence/schema/',
+        ('dg5/producer/payload/schema', 'producer_prepare'): 'producer/submission/schema/payload',
         ('dg5/current/guard/schema', 'current_guard_recheck'): 'current_final/guard/schema/',
         ('dg5/dgu/reader/receipt/receipt_request/schema', 'receipt_recheck'):
             'dgu/reader/receipt/final/receipt_request/schema/',
@@ -1818,6 +2019,9 @@ def main():
     fixture.mkdir()
     if declare['family'] == 'goal.updated':
         world, action = update_fixture(declare['route'], fixture)
+        bank = RootBank
+    elif declare['route'] == 'producer_prepare':
+        world, action = certified_producer_fixture(fixture)
         bank = RootBank
     else:
         from pm_goal_dg_cf2_world import RealmBank
