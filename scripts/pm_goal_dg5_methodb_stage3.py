@@ -880,16 +880,18 @@ def body_receipt_implication(nodes, name, path, errors, locations):
                 premise='The revision selects either the null branch or the same 64-character hash rule.')
 
 
-def receipt_timestamp_implication(nodes, name, path, errors, locations, validator):
+def nonempty_timestamp_implication(nodes, name, path, errors, locations, validator):
     from pm_goal_test_numrule import DT
 
     schema_node = name.removesuffix('/minLength')
     format_id = schema_node + '/format'
     node = nodes[schema_node]['node']
     checker, _ = validator.format_checker.checkers['date-time']
-    require(name.endswith('/AppendReceipt/properties/acknowledged_at_utc/minLength') and
-            path == ['first_append_receipt', 'acknowledged_at_utc'] and
-            node['minLength'] == 1 and node['format'] == 'date-time',
+    receipt = (name.endswith('/AppendReceipt/properties/acknowledged_at_utc/minLength') and
+               path[-2:] == ['first_append_receipt', 'acknowledged_at_utc'])
+    event = (name == EVENT_RECORD + '/$defs/date_time_string/minLength' and
+             path[-1] in ('occurred_at_utc', 'observed_at_utc', 'persisted_at_utc'))
+    require((receipt or event) and node['minLength'] == 1 and node['format'] == 'date-time',
             'receipt timestamp length rule changed')
     require(checker.__module__ == DT.__name__ and DT._DATE_TIME.fullmatch('') is None and
             not validator.format_checker.conforms('', 'date-time') and
@@ -898,6 +900,48 @@ def receipt_timestamp_implication(nodes, name, path, errors, locations, validato
     return dict(source=format_id, same_document_path=path,
                 implementation='scripts/pm_event_datetime.py:63',
                 premise='The only string with length less than one is empty. The pinned date-time format refuses it.')
+
+
+EVENT_RECORD = 'https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#'
+
+
+def event_scope_trial(nodes, validator, go, control, path, name, disabled):
+    schema = nodes[EVENT_RECORD]['node']
+    require('scope_kind' in schema['required'] and all(
+        branch['if']['required'] == ['scope_kind'] for branch in schema['allOf']),
+        'EventRecord no longer requires the scope selector')
+    selected = name.split('/if/', 1)[0]
+    application, project = (EVENT_RECORD + '/allOf/' + n for n in ('0', '1'))
+    require(selected in (application, project) and name[len(selected):] in ('/if/required', '/if/properties/scope_kind/const') and
+            [b['if']['properties']['scope_kind']['const'] for b in schema['allOf']] == ['application', 'project'],
+            'EventRecord scope condition changed')
+    document = copy.deepcopy(control)
+    original = set()
+    if name.endswith('/if/required'):
+        del go.get(document, path)['scope_kind']
+        original = {EVENT_RECORD + '/required'}
+    added = (application + '/then/properties/project_id/type' if selected == application
+             else EVENT_RECORD + '/$defs/non_empty_string/type')
+    before = go.errors_of(validator, document)
+    cut = go.errors_of(validator, document, disabled)
+    restored = go.errors_of(validator, document)
+    require(go.locations(before) == original and go.locations(cut) == original | {added} and
+            errors_list(before) == errors_list(restored), 'EventRecord selector did not produce the exact branch message')
+    return dict(cls='SELECTOR_OR_NEGATED', condition=name, input=document, original=errors_list(before),
+                cut=errors_list(cut), restored=errors_list(restored))
+
+
+def event_string_implication(nodes, name, path, cut, locations):
+    member = path[-1]
+    node_id = EVENT_RECORD + '/properties/' + member
+    node = nodes[node_id]['node']
+    keyword = 'const' if 'const' in node else 'enum'
+    allowed = [node['const']] if keyword == 'const' else node['enum']
+    peer = node_id + '/' + keyword
+    require(name == node_id + '/type' and node['type'] == 'string' and allowed and
+            all(type(item) is str for item in allowed) and locations(cut) == {(keyword, tuple(path), peer)},
+            'the EventRecord values no longer imply the same string type')
+    return dict(source=peer, same_document_path=path, premise='Every allowed value is a string.')
 
 
 def producer_rule_implication(nodes, name, path, errors, locations, validator):
@@ -1056,6 +1100,9 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         require(not list(plain.iter_errors(control)), f'{name}: branch control refused')
         guard = closure._guard_for_location(name)
         disable = () if disabled_check == 'rule' else {guard}
+        if example.get('event_scope_selector'):
+            result[name] = event_scope_trial(nodes, validator, go, control, path, name, disable)
+            continue
         if example.get('normalized_selector'):
             result[name] = normalized_selector_trial(nodes, validator, go, control, name, disable)
             continue
@@ -1150,9 +1197,12 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         elif cut and example.get('approval_implication'):
             record.update(cls='COVERED_LATER', implication=approval_implication(
                 nodes, name, path, cut, locations, validator))
-        elif cut and example.get('receipt_timestamp_implication'):
-            record.update(cls='COVERED_LATER', implication=receipt_timestamp_implication(
+        elif cut and (example.get('receipt_timestamp_implication') or example.get('evidence_timestamp_implication')):
+            record.update(cls='COVERED_LATER', implication=nonempty_timestamp_implication(
                 nodes, name, path, cut, locations, validator))
+        elif cut and example.get('evidence_type_implication'):
+            record.update(cls='COVERED_LATER', implication=event_string_implication(
+                nodes, name, path, cut, locations))
         elif cut and 'normalized_paired_rule' in example:
             record.update(cls='COVERED_LATER', implication=normalized_rule_implication(
                 nodes, name, path, cut, locations, example['normalized_paired_rule']))
