@@ -70,6 +70,9 @@ class Fixture(stage.Fixture):
             return self.issue_arguments(owner, kind)
         if self.route in ('publish_result', 'publish_original_append'):
             return self.world.start.commit_start, (stage.original.request(self.world), self.handles)
+        if self.route.startswith('read_append/read_historical/'):
+            _, reader, _ = stage.original.projected(self.world)
+            return reader.read_historical, (stage.original.sreq(self.world),)
         if self.route.startswith(('read_append/', 'read_native/')):
             method = 'inspect_original' if self.route.startswith('read_append/') else 'read_retained_native'
             reader = stage.original.R.StartedReaders(self.world.registry, world=self.world)

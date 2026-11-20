@@ -16,6 +16,10 @@ import pm_goal_dg5_methodb_w2 as worker
 START = 'scripts/pm_goal_dg_s_start.py'
 READERS = 'scripts/pm_goal_dg_s_readers.py'
 REPRESENTATION = 'dg5/representation/record/schema'
+HISTORICAL_APPEND = {
+    f'dg5/read_historical/{phase}/append/root/schema': f'read_historical/{phase}/root'
+    for phase in ('original', 'final')
+}
 DEPENDENCIES = {
     'dg5/start/commit/schema': ('start/retained_native', 'commit', 'StorageCommit', 1272, 'commit'),
     'dg5/start/origin/schema': ('start/retained_native', 'origin', 'StorageOrigin', 1272, 'origin'),
@@ -23,6 +27,10 @@ DEPENDENCIES = {
         'start/publication_result', 'original_append', 'FullOriginalAppend', 1042, 'original_append/full_value_result'
     ),
     REPRESENTATION: ('representation/record_equal', None, 'Projection', 486, None),
+    **{
+        row: (later, 'original_append', 'FullOriginalAppend', 256, 'original_append/full_value_result')
+        for row, later in HISTORICAL_APPEND.items()
+    },
 }
 
 
@@ -33,12 +41,26 @@ class ForwardedCall(worker.CompleteCall):
         original_validate = worker.world.Bank.validate
         reader = worker.stage.original.R
         original_same = reader.same
+        historical = []
 
         def observe(bank, reference, value, prefix='root'):
-            if prefix == code:
+            reader_append = self.row in HISTORICAL_APPEND
+            if reader_append and prefix == 'read_historical/root':
+                target = bank.lookup(reference)
+                embedded = target.contents['properties']['original']
+                original = target.resolver.lookup(embedded['$ref'])
+                append = original.contents['properties']['original_append']
+                exact_ref = self.fixture.world.edition.custody + '#/$defs/' + definition
+                worker.require('original' in target.contents['required'] and
+                               'original_append' in original.contents['required'] and
+                               original.resolver.lookup(append['$ref']).contents is bank.lookup(exact_ref).contents,
+                               'the historical result must require the same append definition')
+                historical.append(copy.deepcopy(value['original']['original_append']))
+            if prefix == code and (not reader_append or reference.endswith('#/$defs/OriginalStarted')):
                 frame = sys._getframe(2)
                 site = (str(Path(frame.f_code.co_filename).relative_to(worker.ROOT)), frame.f_lineno)
-                worker.require(site == (START, line), f'forwarded validation moved to {site}')
+                worker.require(site == (READERS if reader_append else START, line),
+                               f'forwarded validation moved to {site}')
                 target = bank.lookup(reference)
                 selected = target.contents['properties'][member]
                 exact_ref = self.fixture.world.edition.custody + '#/$defs/' + definition
@@ -64,7 +86,7 @@ class ForwardedCall(worker.CompleteCall):
 
         class Receipt:
             def send(self, result):
-                sender.send(dict(result, forwarded=forwarded))
+                sender.send(dict(result, forwarded=forwarded, historical=historical))
 
             def close(self):
                 sender.close()
@@ -104,6 +126,9 @@ def check_calls(example, collector, ident, later_code, *, alter_copy=False):
         worker.require(positive_forward['same'] and not forward['same'] and
                        positive_forward['expected'] == forward['expected'] == control['input'],
                        'the comparison did not use the same schema-valid document')
+    if example.row in HISTORICAL_APPEND:
+        worker.require(accepted['historical'] == [control['input']] and not disabled['historical'],
+                       'the final historical document did not use the same validated append value')
     return control
 
 
@@ -127,7 +152,7 @@ def check_root(out, name, specification, sites, reference, previous, alter_copy,
     proof = worker.pilot.run_gates(collector, out, [name])
     binding = proof / 'source-bindings.json'
     source_bindings = json.loads(binding.read_bytes())
-    checker = READERS if name == REPRESENTATION else START
+    checker = READERS if name == REPRESENTATION or name in HISTORICAL_APPEND else START
     for source in (Path(worker.__file__), Path(worker.stage.__file__), Path(__file__), worker.ROOT / checker):
         source_bindings['files'][str(source.relative_to(worker.ROOT))] = worker.sha(source)
     worker.write(binding, source_bindings)
