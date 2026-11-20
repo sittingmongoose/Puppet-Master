@@ -90,7 +90,37 @@ def capture_retry(directory, negative):
     return world, route.capture_source, (), {}
 
 
+def binding_pending(directory, negative):
+    world, route = cancelled.c1_route(cancelled.Suite(directory))
+    world.root = world.storage.root
+    if negative:
+        from pm_goal_dg_ca_c1 import row_sha
+
+        binding = world.binding
+        scope = route.scope
+        read = binding.read_current(scope)
+        control = read["control"]
+        record = control["value"]["record"]
+        operation = "TEST_ONLY:pending-binding-transfer"
+        candidate = dict(read["revision"]["value"]["record"],
+                         binding_revision=record["binding_revision"] + 1,
+                         previous_revision=record["current_revision"],
+                         original_goal_birth_or_binding_operation=operation)
+        pending = dict(operation_id=operation, operation="binding_owner_transfer",
+                       expected_control_sha256=row_sha(control["value"]),
+                       expected_goal_body_sha256=row_sha(world.goal.body_cell(scope)["value"]),
+                       expected_goal_control_sha256=row_sha(world.goal.control(scope)["value"]),
+                       expected_stop_control_sha256=row_sha(world.host_stop.current(scope)["value"]),
+                       expected_writer_domain=record["writer_domain"], candidate=candidate,
+                       original_owner_ref=binding.owner_id, original_owner_epoch=binding.owner_epoch)
+        key = binding.keys(scope)["control"]
+        updated = binding.wrap("StorageBindingControl", key, dict(record, pending=pending))
+        world.write([world.put(binding.CONTROL, key, updated, expected=control["version"])])
+    return world, route.capture_source, (), {}
+
+
 CASES = {
+    "binding-pending": (C1, 315, "C1/capture_source/binding_pending", binding_pending),
     "capture-retry": (C1, 292, "C1/capture_source/retry_conflict", capture_retry),
     "replay-operation": (C1, 819, "C1/replay/operation", replay_operation),
     "template-value": (ASSIGNMENT, 716, "C4A/append_reserved/template_producer", append_template_value),
