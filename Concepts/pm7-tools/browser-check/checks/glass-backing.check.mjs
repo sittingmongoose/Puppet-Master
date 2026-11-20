@@ -125,6 +125,15 @@ export default async function (t) {
 		const before = new Set(await floating());
 		if ((await open()) === false) { bad.push(`${look} ${name}: could not open`); return; }
 		await f.waitForTimeout(900); await t.page.mouse.move(2, 2);
+		if (name === 'notifications') {
+			// The stage can place a toast late, and the inbox can start its own opening animation on a delayed frame.
+			await f.waitForFunction(() => {
+				const stageMoving = document.querySelector('#rsStage .pmn-toast:is(.pmn-entering, .pmn-leaving, .pmn-flying)');
+				const panel = document.querySelector('#pmnPanel[data-open]');
+				return !stageMoving && panel && !panel.getAnimations({ subtree: true }).some((a) =>
+					(a.pending || a.playState === 'running') && Number.isFinite(a.effect?.getComputedTiming().endTime));
+			}, null, { timeout: 5000 });
+		}
 		const now = (await floating()).filter((id) => !before.has(id));
 		// the outermost new ones only (a sheet's own inner boxes are part of it)
 		// a box over most of the window is a backdrop that dims the page on purpose: the surfaces are the painted boxes in it
