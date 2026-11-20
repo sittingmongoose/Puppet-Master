@@ -801,6 +801,30 @@ class Merge2Fix1EvidenceTests(unittest.TestCase):
         cls.writer = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(cls.writer)
 
+    def test_real_filesafe_historical_retention_member_is_bounded(self):
+        w = self.writer
+        commit = '10ba97e699d51287673d6f1db4d994f54c59b4ed'
+        path = 'reports/event-authority-20261116/admission-merge-2/depth/filesafe.policy_degraded.json'
+        assessment = json.loads(subprocess.check_output(['git', '-C', str(REPO), 'show', commit+':'+path]))
+        received = assessment['rows'][0]['cells']['retention']['evidence'][1]
+        source = copy.deepcopy(received)
+        source.update(commit=commit,received_unit=source['unit'],unit='#/retention_policy_ref',
+                      json_pointer='#/retention_policy_ref',subject_event_type='filesafe.policy_degraded')
+        fixed = w.rederive_source_citation(source)
+        self.assertEqual((fixed['line_start'],fixed['line_end']),(134,134))
+        self.assertEqual(fixed['received_unit'],'CV-556')
+        self.assertEqual(w.source_citation_problems(fixed),[])
+        for defect in (
+            dict(unit='#/producer',json_pointer='#/producer'),
+            dict(subject_event_type='filesafe.path_denied'),
+            dict(unit='CV-556'),
+            dict(unit='#',json_pointer='#'),
+            dict(file_sha256='0'*64),
+        ):
+            with self.subTest(defect):
+                with self.assertRaises((w.Gap,ValueError)):
+                    w.rederive_source_citation(dict(source,**defect))
+
     def test_real_collaboration_span_digest_and_historical_location(self):
         w = self.writer
         doc = _read(REPO, "reports/event-authority-20261116/admission-merge-2/depth/collaboration.failed.json")

@@ -420,6 +420,21 @@ def rederive_source_citation(source: dict) -> dict:
         functions = [node for node in ast.walk(ast.parse(text))
                      if isinstance(node,(ast.FunctionDef,ast.AsyncFunctionDef)) and node.name == name]
         span = (functions[0].lineno, functions[0].end_lineno) if len(functions)==1 else None
+    if rel.endswith('.json') and isinstance(unit, str) and unit.startswith('#/'):
+        from pm_ea_evidence_projection import family_span, pointer_span, pointer_text
+        subject = out.get('subject_event_type')
+        if out.get('json_pointer') != unit or not isinstance(subject, str) or not subject:
+            raise Gap('historical JSON evidence needs its exact pointer and family identity')
+        document = json.loads(text)
+        if not isinstance(document, dict):
+            raise Gap('historical JSON evidence has no family document')
+        if document.get('event_type') != subject:
+            bound = family_span(text, subject, unit)
+            if not bound or not (unit == bound[0] or unit.startswith(bound[0] + '/')):
+                raise Gap('historical JSON pointer does not belong to its family')
+        span = pointer_span(text, unit)
+        if not isinstance(quote, str) or pointer_text(text, unit).count(quote) != 1:
+            raise Gap('historical quotation is not unique in its exact JSON member')
     if not span or not isinstance(quote, str) or not quote:
         raise Gap(f"historical source needs a quoted, declared unit: {commit}:{rel}")
     window = "\n".join(text.splitlines()[span[0] - 1:span[1]])

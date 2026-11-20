@@ -268,6 +268,16 @@ def apply_one(plan, event, decision):
             old['received_unit'] = old.get('unit')
             old['unit'] = 'python:function:'+function.name
             old['locator_maintenance'] = dict(authority=AUTHORITY,reason='Bind the historical script line to its actual declared function, preserving the received stage label and exact Git bytes; it no longer supplies current retention credit.')
+        elif old['path'].endswith('.json'):
+            from pm_ea_evidence_projection import pointer_text
+            original = w.historical_text(old['commit'],old['path'])
+            document = json.loads(original)
+            pointer = '#/retention_policy_ref'
+            if document.get('event_type') != event or pointer_text(original,pointer).count(old['quote']) != 1:
+                raise ValueError('historical retention member does not name its exact family')
+            old['received_unit'] = old.get('unit')
+            old.update(unit=pointer,json_pointer=pointer,subject_event_type=event)
+            old['locator_maintenance'] = dict(authority=AUTHORITY,reason='Bind the received owner label to the exact retention_policy_ref member of its single-family JSON source; retain the original label and Git bytes as lineage, without whole-document fallback.')
         old = w.rederive_source_citation(old)
         new['source_citation'] = old
         new['retention_range_maintenance'] = dict(authority=AUTHORITY, source_commit=source,
