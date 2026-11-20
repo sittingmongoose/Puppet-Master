@@ -2424,7 +2424,7 @@
     /* (and not before the compositor has reported the block's start, nor while its change is still to come: until then
        its age is an estimate, or its end is not its tab's, and a block cut short lands the chip under the labels a step
        ahead of it, 14 px in Basic Light on Alexis) */
-    if (K && ((K.anim && K.anim.startTime == null && K.anim.playState !== 'finished') || K.change || K.due)) wait = Math.max(wait, 16);
+    if (K && ((!K.framePaced && K.anim && K.anim.startTime == null && K.anim.playState !== 'finished') || K.change || K.due)) wait = Math.max(wait, 16);
     if (wait > 0) { if (!L.hopT) L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, wait + 1); return; }
     endHop(L);
   }
@@ -2433,7 +2433,10 @@
        go), on its clock, so the chip is not set back to where it was when the press came while the compositor carried
        it on until the new block was drawn (9 px, Friendly Light on Alexis, 88 ms between the two) */
     var K = L.carry, go = null;
-    if (K && K.pose && L.hopFrames && CARRY[switchMotion] && carryZero(K) != null) { var KA = carryAge(K); if (KA < K.dur) go = { K: K, at: KA, zero: carryZero(K) }; }
+    if (K && K.pose && L.hopFrames && CARRY[switchMotion]) {
+      var KA = carryAge(K), zero = carryZero(K);
+      if (KA < K.dur && (K.framePaced || zero != null)) go = { K: K, at: KA, zero: zero };
+    }
     stopLensTravel(L);
     if (switchMotion === 'cut' || !A) { setLensBox(L, B); return; }
     if (CARRY[switchMotion]) { carry(L, A, B, strip, cfg, target, vertical, go); return; }
@@ -2521,7 +2524,7 @@
      frames, then as before) */
   function startUnknown(L, strip) {
     var K = L.carry, a = K && K.anim;
-    if (!K || !K.pose || !L.hopFrames || !a || a.startTime != null || a.playState === 'finished') return false;
+    if (!K || !K.pose || !L.hopFrames || K.framePaced || !a || a.startTime != null || a.playState === 'finished') return false;
     if ((K.waits = (K.waits || 0) + 1) > 30) return false;
     /* (and the block does not land meanwhile: landed at its own box while its tab had grown, the chip under the labels
        would take the tab's new box at once) */
@@ -2665,20 +2668,27 @@
     var g0 = go ? go.K.from || 0 : 0;
     var from = go ? g0 + Math.floor(Math.max(0, (zero != null ? Math.min(at, tl - zero) : at) - g0) / FRAME_MS) * FRAME_MS : 0;
     var T = plan(at, go ? null : 0, from), start = performance.now() - at;
+    var framePaced = go ? go.K.framePaced : cfg.sel === '.pmw-strip' &&
+      target.getAttribute('data-tab-id') === 'dashboard:agents' && window.PMW && !window.PMW.instances['dashboard:agents'];
     var parts = [F, G, S].concat(SK), anims = [], lead = null;
     parts.forEach(function (e, j) {
       if (!e) return;
       var a = e.animate(T.frames[j], { duration: T.span, easing: 'linear', fill: 'forwards' });
-      if (zero != null) a.startTime = zero + from; else if (at > from) a.currentTime = at - from;
+      if (framePaced) {
+        a.__pmFramePaced = true;
+        a.__pmHeld = true;
+        a.pause();
+        a.currentTime = at - from;
+      } else if (zero != null) a.startTime = zero + from; else if (at > from) a.currentTime = at - from;
       anims.push(a); if (!lead) lead = a;
     });
-    var probe = F.animate([], { duration: 1000 }), made = performance.now(), inFrame = frameSync > 0 || postRunning;
+    var probe = framePaced ? null : F.animate([], { duration: 1000 }), made = performance.now(), inFrame = frameSync > 0 || postRunning;
     setLensBox(L, B);
     /* the chip under the labels stays hidden while the block is up (as for a step's blocks) */
     var hide = L.anim = L.hopHide = L.lens.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 600000 });
     if (!L.hopMarks) L.hopMarks = new Map();
     L.hopFrames = S ? [S, F] : [F]; L.hopTarget = target;
-    var K = L.carry = { A: A, B: B, vertical: vertical, anim: lead, liftX: liftX, liftY: liftY, change: !!go };
+    var K = L.carry = { A: A, B: B, vertical: vertical, anim: lead, liftX: liftX, liftY: liftY, change: !!go, framePaced: framePaced };
     function take(P) {
       K.t0 = start; K.dur = P.end; K.from = P.from; K.pose = P.pose; K.at = P.at; K.B = P.to;
       L.path = { t0: start, dur: P.end, rects: P.rects }; L.hopEnd = start + P.end;
@@ -2686,12 +2696,20 @@
       L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, Math.max(0, start + P.end - performance.now()) + 1);
     }
     take(T);
-    // The first Home-to-Agents press can straddle the cold body layout and raster. Start the chip's
-    // trip from its own first painted position when frames resume. The tab selection still paints on activation.
-    var coldAgents = !go && cfg.sel === '.pmw-strip' && target.getAttribute('data-tab-id') === 'dashboard:agents' &&
-      window.PMW && !window.PMW.instances['dashboard:agents'] && typeof window.PM_START_ON_SHOWN === 'function';
-    if (coldAgents) window.PM_START_ON_SHOWN(anims, { startHeld: true, frames: 10 });
-    requestAnimationFrame(function () {
+    if (framePaced) {
+      // The press can start this carry before pointerup mounts Agents. Its later layout and raster can
+      // miss frames after the chip has begun. Advance all its parts together and leave missed time out.
+      var last = null;
+      var advance = function (now) {
+        if (L.carry !== K) return;
+        var end = K.dur - K.from, time = Math.min(end, lead.currentTime + (last == null ? 0 : Math.min(now - last, FRAME_MS / 2)));
+        last = now;
+        anims.forEach(function (a) { a.currentTime = time; });
+        if (time < end || K.change) requestAnimationFrame(advance);
+        else requestAnimationFrame(function () { if (L.carry === K) hopSettle(L); });
+      };
+      requestAnimationFrame(advance);
+    } else requestAnimationFrame(function () {
       /* the first frame callback after the block was made: when it was first drawn (K.drawn), so its age is known before
          the compositor reports its start (its probe, an empty animation, starts in the lifecycle of the frame that first
          draws it: started means drawn in the frame it was made in, at its own layout; waiting means drawn once this frame
@@ -2700,7 +2718,7 @@
          drawn in that frame whatever its probe says). A block that goes on with a drawn trip has the trip's start time
          from the moment it is made, so its age never needs this */
       var drawn = inFrame || probe.startTime != null || lead.startTime != null; probe.cancel();
-      if (L.carry !== K || coldAgents) return;
+      if (L.carry !== K) return;
       if (drawn) { K.drawn = made; return; }
       setTimeout(function () { if (K.drawn == null) K.drawn = performance.now(); }, 0);
     });
@@ -2733,15 +2751,19 @@
         var tl1 = document.timeline && document.timeline.currentTime != null ? document.timeline.currentTime : null;
         if (!rest && tl1 != null && performance.now() - tl1 > 12) { requestAnimationFrame(change); return; }
         var P = plan(at, age, rest ? age : from);
-        if (rest) {
+        if (rest && !framePaced) {
           anims = anims.map(function (a) { var e = a.effect.target, b; a.cancel(); b = e.animate(P.frames[parts.indexOf(e)], { duration: P.span, easing: 'linear', fill: 'forwards' }); return b; });
           lead = K.anim = anims[0]; K.drawn = null;
-        } else anims.forEach(function (a) { a.effect.setKeyframes(P.frames[parts.indexOf(a.effect.target)]); a.effect.updateTiming({ duration: P.span }); });
+        } else anims.forEach(function (a) {
+          a.effect.setKeyframes(P.frames[parts.indexOf(a.effect.target)]);
+          a.effect.updateTiming({ duration: P.span });
+          if (rest) a.currentTime = 0;
+        });
         K.change = false; take(P);
       };
       var change = function () {
         if (L.carry !== K) return;
-        if ((lead.startTime == null || (hide.startTime == null && hide.playState !== 'finished')) && ++tries < 30) { requestAnimationFrame(change); return; }
+        if (((!framePaced && lead.startTime == null) || (hide.startTime == null && hide.playState !== 'finished')) && ++tries < 30) { requestAnimationFrame(change); return; }
         if (!afterLayout(apply)) apply();
       };
       requestAnimationFrame(change);
