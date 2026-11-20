@@ -58125,3 +58125,66 @@ negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
 
+### DL-2517: Event Authority corrects filesafe.destructive_override_denied (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2517
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for filesafe.destructive_override_denied only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2302; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 859170d0c67fbaf390bb13fde8b64011dbfe807d049e510a892651f28bb008cd.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_denied/2.0.0`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_denied/2.0.0`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.66, 518 families, SHA-256 2ad85df397b4d7342e6e7c02b9f2a263e3c3a352665a32c164586abd2fd7c1e8,
+  to 2026-11-19.67, 518 families, SHA-256 42261a78209a81ad1f416bba1351363f3d40d018117f5b6fdeb45730e9b6fbd4, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/filesafe.destructive_override_denied.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/filesafe.destructive_override_denied.json, SHA-256
+  0b50c2172f1ca312196c2ebfc02901d6ee61975a352fd33f57f897cc63a99048.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.165 SHA-256 679fa9e46e552241c5265a5e5eaef386f184dc00e714d5d753bb22ca1134075c;
+  after 2026-11-16.166 SHA-256 653af5374b38f72c9925b303e8f57c4a74dbb455408b06972c17e00c8fb705be. Existing semantic owner Plans/Contracts_V0.md#CV-551,
+  payload owner Plans/Contracts_V0.md#CV-551, resource Plans/event_payloads/filesafe_destructive_override_denied_v2.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2302
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2302
+preserved_exact_tokens:
+- filesafe.destructive_override_denied
+- 859170d0c67fbaf390bb13fde8b64011dbfe807d049e510a892651f28bb008cd
+- 2026-11-19.66
+- 2026-11-19.67
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
