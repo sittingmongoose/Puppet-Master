@@ -26,6 +26,11 @@ closure, rules, world = stage.closure, stage.clauses, stage.world
 ROOT, FAMILY, require, sha, write = stage.ROOT, stage.FAMILY, stage.require, stage.sha, stage.write
 REFERENCE_SHA = 'cb562fa287b7987eabe3b49fc9d3c5119948a69df444ce0a3a0b2d76bdbd4cf2'
 TABLE_PREFIX = 'pm_goal_dg5_methodb_w2_phase_'
+PREFLIGHT_CUSTODY = 'https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/'
+PREFLIGHT_CHOICES = {
+    'ReceiptOrigin': (0, 'original_read', 'origin', 'record'),
+    'RecordSelector': (0, 'binding', 'full_source', 'source'),
+}
 
 
 class Fixture(stage.Fixture):
@@ -60,7 +65,17 @@ class Fixture(stage.Fixture):
         value = document['input']
         activation = self.world.edition.activation + '#/$defs/'
         if self.route.startswith('issue/seven_input:') and value == []:
-            yield [world.skeleton(self.bank, document['schema']['$ref'] + '/items')]
+            singleton = [world.skeleton(self.bank, document['schema']['$ref'] + '/items')]
+            yield singleton
+            if self.route == 'issue/seven_input:source_control_preflight':
+                for definition, path in PREFLIGHT_CHOICES.items():
+                    schema = self.bank.lookup(PREFLIGHT_CUSTODY + definition).contents
+                    for alternative in schema['oneOf']:
+                        variant = copy.deepcopy(singleton)
+                        rule_values = {field: rule['const'] for field, rule in alternative['properties'].items()}
+                        rules.get(variant, path).update(rule_values)
+                        if variant != singleton:
+                            yield variant
         elif self.route == 'issue/activation_source:provisioning':
             filled = copy.deepcopy(value)
             metadata = filled['source']['record']
@@ -254,6 +269,31 @@ class PreviousExamples:
 def error_records(errors):
     return [dict(path=list(e.absolute_path), schema_path=list(e.absolute_schema_path),
                  keyword=e.validator, message=e.message, context=error_records(e.context)) for e in errors]
+
+
+def comparison_messages(records):
+    """Stock oneOf prints the entire alternatives on its multiple-match refusal."""
+    def owner_schema(value):
+        if isinstance(value, dict):
+            return {key: owner_schema(item) for key, item in value.items() if key != 'x-pm-oracle-id'}
+        if isinstance(value, list):
+            return [owner_schema(item) for item in value]
+        return value
+
+    result = []
+    for record in records:
+        message = record['message']
+        if record['keyword'] == 'oneOf' and 'x-pm-oracle-id' in message:
+            head, separator, alternatives = message.rpartition(' is valid under each of ')
+            if separator:
+                try:
+                    match_schemas = ast.literal_eval('(' + alternatives + ',)')
+                except (SyntaxError, ValueError):
+                    match_schemas = ()
+                if len(match_schemas) >= 2 and all(isinstance(item, dict) for item in match_schemas):
+                    message = head + separator + ', '.join(repr(owner_schema(item)) for item in match_schemas)
+        result.append(dict(record, message=message, context=comparison_messages(record['context'])))
+    return result
 
 
 def finite_implication(validator, nodes, info, keyword, cut, path):
@@ -501,6 +541,33 @@ def afterimages_implication(nodes, name, cut, path):
                 premise='Each allowed method requires a union branch. Their closed member sets and required members make the branches mutually exclusive.')
 
 
+def preflight_implication(nodes, info, name, keyword, cut, path):
+    after = list(pilot.located_errors(cut))
+    annotation = 'x-pm-oracle-id'
+    for definition in PREFLIGHT_CHOICES:
+        location = PREFLIGHT_CUSTODY + definition
+        entry = nodes.get(location)
+        if entry is None:
+            continue
+        node = entry['node']
+        branches = node['oneOf']
+        other = location + '/oneOf'
+        if len(branches) < 2 or any(set(arm) - {annotation} != {'properties'} for arm in branches):
+            continue
+        if keyword == 'type' and name == location + '/type' and node['type'] == 'object':
+            if (other, tuple(path)) in after:
+                return dict(covering_rule=other, source=location,
+                            premise='Every property-only alternative matches a non-object, so oneOf refuses the multiple match.')
+        if keyword == 'enum' and path and path[-1] in node['required'] and co_reached(entry, info, nodes, parent=True):
+            field = path[-1]
+            pins = [arm['properties'].get(field, {}) for arm in branches]
+            if (all(set(pin) - {annotation} == {'const'} and pin['const'] in info['node']['enum'] for pin in pins)
+                    and (other, tuple(path[:-1])) in after):
+                return dict(covering_rule=other, field=field, required_values=[pin['const'] for pin in pins],
+                            source=location, premise='Each alternative requires a value from the disabled enum.')
+    return None
+
+
 def accepted_branch_controls(plain, validator, controls, seeds, info, cache):
     """Reuse the Goal suite's branch fixture construction."""
     for reach in info['reach']:
@@ -529,7 +596,15 @@ def accepted_branch_controls(plain, validator, controls, seeds, info, cache):
 
 def per_rule_candidates(plain, validator, controls, seeds, info, keyword, old, cache, siblings):
     def edits(control, path):
-        return rules.defects(keyword, info['node'], rules.get(control, path))
+        node = info['node']
+        value = rules.get(control, path)
+        yield from rules.defects(keyword, node, value)
+        if (keyword == 'oneOf' and isinstance(value, dict) and
+                node['x-pm-oracle-id'] in (PREFLIGHT_CUSTODY + name for name in PREFLIGHT_CHOICES)):
+            for arm in node['oneOf']:
+                for field, rule in arm['properties'].items():
+                    if value.get(field) != rule['const']:
+                        yield dict(value, **{field: rule['const']})
 
     for index, control in enumerate(controls):
         for path, edit, source in old:
@@ -582,7 +657,8 @@ def replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword
         if located not in pilot.located_errors(before):
             continue
         actual = error_records(plain.iter_errors(changed))
-        if error_records(before) != actual:
+        guarded = error_records(before)
+        if guarded != actual and comparison_messages(guarded) != actual:
             if mismatch is None:
                 mismatch = dict(reason='validator instrumentation changed the original messages',
                                 path=list(path), edit=repr(edit), control=index, original=actual,
@@ -590,7 +666,8 @@ def replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword
             continue
         cut = rules.errors_of(validator, changed, set() if disable == 'clause' else {guard})
         restored = rules.errors_of(validator, changed)
-        require(rule_id not in rules.locations(cut) and error_records(restored) == actual,
+        require(rule_id not in rules.locations(cut) and error_records(restored) == guarded and
+                error_records(plain.iter_errors(changed)) == actual,
                 f'{rule_id}: individual rule disable or restoration failed')
         implication = None
         if cut:
@@ -599,10 +676,11 @@ def replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword
                            member_and_type_implication(plain, nodes, info, rule_id, keyword, cut, path) or
                            update_implication(nodes, info, rule_id, keyword, cut, path) or
                            afterimages_implication(nodes, rule_id, cut, path) or
+                           preflight_implication(nodes, info, rule_id, keyword, cut, path) or
                            stage.regex_implication(plain, node, keyword, rule_id, path, cut))
         record = dict(path=list(path), edit=repr(edit), edit_source=source, control=index,
-                      input_sha256=stage.sweep.digest(changed), before=actual, cut=error_records(cut),
-                      restored=error_records(restored))
+                      input_sha256=stage.sweep.digest(changed), before=actual, cut=comparison_messages(error_records(cut)),
+                      restored=actual)
         if cut and implication is None:
             if result is None:
                 result = record
