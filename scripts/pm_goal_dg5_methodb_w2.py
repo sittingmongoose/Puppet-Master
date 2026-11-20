@@ -134,6 +134,8 @@ class Fixture(stage.Fixture):
                 origin_control = self.publish_origin_control(value)
                 if origin_control is not None:
                     yield origin_control
+        elif self.route in ('read_historical/root', 'read_current/root'):
+            yield from self.transition_controls(value, ('original', 'native_start', 'original_d01_update', 'record'))
 
     def publish_origin_control(self, value):
         """Select the installed D06 published-origin alternative in the result schema."""
@@ -158,7 +160,7 @@ class Fixture(stage.Fixture):
         variant['d01_lineage']['workflow']['original_writer_origins'] = [origin]
         return variant
 
-    def transition_controls(self, value):
+    def transition_controls(self, value, path=None):
         """Supply the accepted transition branches of the installed D01 schema."""
         d01 = self.world.edition.d01 + '#/$defs/'
         update = self.bank.lookup(d01 + 'WorkflowUpdate').contents
@@ -166,8 +168,9 @@ class Fixture(stage.Fixture):
         methods = {rule['if']['properties']['rule']['const']:
                    rule['then']['properties']['original_writer_method']['const']
                    for rule in transition['allOf']}
-        path = (('original_d01_update', 'record') if self.route == 'publish_retained' else
-                ('d01_lineage', 'workflow', 'update_chain', 0))
+        if path is None:
+            path = (('original_d01_update', 'record') if self.route == 'publish_retained' else
+                    ('d01_lineage', 'workflow', 'update_chain', 0))
         for rule in update['allOf']:
             name = rule['if']['properties']['transition']['properties']['rule']['const']
             variant = copy.deepcopy(value)
