@@ -1,0 +1,1357 @@
+{
+  "accepted_branches": {
+    "accepted with early acknowledgement": {
+      "acknowledgement_frame_id": "TEST_ONLY:frame",
+      "acknowledgement_frame_offset": 1,
+      "acknowledgement_receipt_ref": "TEST_ONLY:receipt",
+      "command_id": "cmd.chat.goal.update",
+      "dispatch_frame_id": "frame:TEST_ONLY:2a4f4713f9d9432494701c92785ca940",
+      "error_ref": null,
+      "idempotency_key": "sir-idempotency:TEST_ONLY:8fe9f34e63",
+      "identity": {
+        "attempt_id": "TEST_ONLY:attempt",
+        "command_instance_id": "command:TEST_ONLY:8fe9f34e63",
+        "execution_environment_id": "TEST_ONLY:environment:c06e262694f7",
+        "execution_host_id": "TEST_ONLY:host:c06e262694f7",
+        "goal_id": "TEST_ONLY:goal",
+        "named_plan_id": "TEST_ONLY:plan",
+        "operation_generation": 0,
+        "operation_id": "goal-operation:TEST_ONLY:2a4f4713f9d9432494701c92785ca940",
+        "project_home_server_id": "TEST_ONLY:server:c06e262694f7",
+        "project_id": "TEST_ONLY-project-\u03b1-2bc71477",
+        "scope_kind": "project",
+        "server_id": "TEST_ONLY:server:c06e262694f7",
+        "source_location_id": "TEST_ONLY:source",
+        "thread_id": "thr_TEST_ONLY_2bc71477",
+        "topology_generation": 0
+      },
+      "observed_at": "2026-11-20T13:02:34.685Z",
+      "outcome": "accepted",
+      "owner_result_ref": null,
+      "owner_result_schema_ref": null,
+      "owner_result_sha256": null,
+      "payload_sha256": "bd4fb5947587126ae480956b52c9762257c24129de8d2685a964380c73cc7ff9",
+      "record_kind": "command_outcome",
+      "result_receipt_ref": null,
+      "same_frame_acknowledged": false,
+      "schema_id": "pm.full_thread_runtime.contracts.v1",
+      "target_generation": 0
+    },
+    "acknowledged": {
+      "acknowledgement_frame_id": "TEST_ONLY:frame",
+      "acknowledgement_frame_offset": 1,
+      "acknowledgement_receipt_ref": "TEST_ONLY:receipt",
+      "command_id": "cmd.chat.goal.update",
+      "dispatch_frame_id": "frame:TEST_ONLY:2a4f4713f9d9432494701c92785ca940",
+      "error_ref": null,
+      "idempotency_key": "sir-idempotency:TEST_ONLY:8fe9f34e63",
+      "identity": {
+        "attempt_id": "TEST_ONLY:attempt",
+        "command_instance_id": "command:TEST_ONLY:8fe9f34e63",
+        "execution_environment_id": "TEST_ONLY:environment:c06e262694f7",
+        "execution_host_id": "TEST_ONLY:host:c06e262694f7",
+        "goal_id": "TEST_ONLY:goal",
+        "named_plan_id": "TEST_ONLY:plan",
+        "operation_generation": 0,
+        "operation_id": "goal-operation:TEST_ONLY:2a4f4713f9d9432494701c92785ca940",
+        "project_home_server_id": "TEST_ONLY:server:c06e262694f7",
+        "project_id": "TEST_ONLY-project-\u03b1-2bc71477",
+        "scope_kind": "project",
+        "server_id": "TEST_ONLY:server:c06e262694f7",
+        "source_location_id": "TEST_ONLY:source",
+        "thread_id": "thr_TEST_ONLY_2bc71477",
+        "topology_generation": 0
+      },
+      "observed_at": "2026-11-20T13:02:34.685Z",
+      "outcome": "acknowledged",
+      "owner_result_ref": null,
+      "owner_result_schema_ref": null,
+      "owner_result_sha256": null,
+      "payload_sha256": "bd4fb5947587126ae480956b52c9762257c24129de8d2685a964380c73cc7ff9",
+      "record_kind": "command_outcome",
+      "result_receipt_ref": null,
+      "same_frame_acknowledged": false,
+      "schema_id": "pm.full_thread_runtime.contracts.v1",
+      "target_generation": 0
+    },
+    "application identity": {
+      "acknowledgement_frame_id": null,
+      "acknowledgement_frame_offset": null,
+      "acknowledgement_receipt_ref": null,
+      "command_id": "cmd.chat.goal.update",
+      "dispatch_frame_id": "frame:TEST_ONLY:2a4f4713f9d9432494701c92785ca940",
+      "error_ref": null,
+      "idempotency_key": "sir-idempotency:TEST_ONLY:8fe9f34e63",
+      "identity": {
+        "attempt_id": "TEST_ONLY:attempt",
+        "command_instance_id": "command:TEST_ONLY:8fe9f34e63",
+        "execution_environment_id": "TEST_ONLY:environment:c06e262694f7",
+        "execution_host_id": "TEST_ONLY:host:c06e262694f7",
+        "goal_id": "TEST_ONLY:goal",
+        "named_plan_id": null,
+        "operation_generation": 0,
+        "operation_id": "goal-operation:TEST_ONLY:2a4f4713f9d9432494701c92785ca940",
+        "project_home_server_id": null,
+        "project_id": null,
+        "scope_kind": "application",
+        "server_id": "TEST_ONLY:server:c06e262694f7",
+        "source_location_id": "TEST_ONLY:source",
+        "thread_id": "thr_TEST_ONLY_2bc71477",
+        "topology_generation": 0
+      },
+      "observed_at": "2026-11-20T13:02:34.685Z",
+      "outcome": "accepted",
+      "owner_result_ref": null,
+      "owner_result_schema_ref": null,
+      "owner_result_sha256": null,
+      "payload_sha256": "bd4fb5947587126ae480956b52c9762257c24129de8d2685a964380c73cc7ff9",
+      "record_kind": "command_outcome",
+      "result_receipt_ref": null,
+      "same_frame_acknowledged": false,
+      "schema_id": "pm.full_thread_runtime.contracts.v1",
+      "target_generation": 0
+    },
+    "optional identity members": {
+      "acknowledgement_frame_id": null,
+      "acknowledgement_frame_offset": null,
+      "acknowledgement_receipt_ref": null,
+      "command_id": "cmd.chat.goal.update",
+      "dispatch_frame_id": "frame:TEST_ONLY:2a4f4713f9d9432494701c92785ca940",
+      "error_ref": null,
+      "idempotency_key": "sir-idempotency:TEST_ONLY:8fe9f34e63",
+      "identity": {
+        "attempt_id": "TEST_ONLY:attempt",
+        "command_instance_id": "command:TEST_ONLY:8fe9f34e63",
+        "execution_environment_id": "TEST_ONLY:environment:c06e262694f7",
+        "execution_host_id": "TEST_ONLY:host:c06e262694f7",
+        "goal_id": "TEST_ONLY:goal",
+        "named_plan_id": "TEST_ONLY:plan",
+        "operation_generation": 0,
+        "operation_id": "goal-operation:TEST_ONLY:2a4f4713f9d9432494701c92785ca940",
+        "project_home_server_id": "TEST_ONLY:server:c06e262694f7",
+        "project_id": "TEST_ONLY-project-\u03b1-2bc71477",
+        "scope_kind": "project",
+        "server_id": "TEST_ONLY:server:c06e262694f7",
+        "source_location_id": "TEST_ONLY:source",
+        "thread_id": "thr_TEST_ONLY_2bc71477",
+        "topology_generation": 0
+      },
+      "observed_at": "2026-11-20T13:02:34.685Z",
+      "outcome": "accepted",
+      "owner_result_ref": null,
+      "owner_result_schema_ref": null,
+      "owner_result_sha256": null,
+      "payload_sha256": "bd4fb5947587126ae480956b52c9762257c24129de8d2685a964380c73cc7ff9",
+      "record_kind": "command_outcome",
+      "result_receipt_ref": null,
+      "same_frame_acknowledged": false,
+      "schema_id": "pm.full_thread_runtime.contracts.v1",
+      "target_generation": 0
+    },
+    "same frame acknowledgement": {
+      "acknowledgement_frame_id": "TEST_ONLY:frame",
+      "acknowledgement_frame_offset": 0,
+      "acknowledgement_receipt_ref": "TEST_ONLY:receipt",
+      "command_id": "cmd.chat.goal.update",
+      "dispatch_frame_id": "frame:TEST_ONLY:2a4f4713f9d9432494701c92785ca940",
+      "error_ref": null,
+      "idempotency_key": "sir-idempotency:TEST_ONLY:8fe9f34e63",
+      "identity": {
+        "attempt_id": "TEST_ONLY:attempt",
+        "command_instance_id": "command:TEST_ONLY:8fe9f34e63",
+        "execution_environment_id": "TEST_ONLY:environment:c06e262694f7",
+        "execution_host_id": "TEST_ONLY:host:c06e262694f7",
+        "goal_id": "TEST_ONLY:goal",
+        "named_plan_id": "TEST_ONLY:plan",
+        "operation_generation": 0,
+        "operation_id": "goal-operation:TEST_ONLY:2a4f4713f9d9432494701c92785ca940",
+        "project_home_server_id": "TEST_ONLY:server:c06e262694f7",
+        "project_id": "TEST_ONLY-project-\u03b1-2bc71477",
+        "scope_kind": "project",
+        "server_id": "TEST_ONLY:server:c06e262694f7",
+        "source_location_id": "TEST_ONLY:source",
+        "thread_id": "thr_TEST_ONLY_2bc71477",
+        "topology_generation": 0
+      },
+      "observed_at": "2026-11-20T13:02:34.685Z",
+      "outcome": "executing",
+      "owner_result_ref": null,
+      "owner_result_schema_ref": null,
+      "owner_result_sha256": null,
+      "payload_sha256": "bd4fb5947587126ae480956b52c9762257c24129de8d2685a964380c73cc7ff9",
+      "record_kind": "command_outcome",
+      "result_receipt_ref": null,
+      "same_frame_acknowledged": true,
+      "schema_id": "pm.full_thread_runtime.contracts.v1",
+      "target_generation": 0
+    }
+  },
+  "census_sha256": "647eb062f2b9f8438e26716e3e058e1ac61193a2c266bbf12f4664495598fab7",
+  "examples": {
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/0/properties/identity/required": {
+      "member": [
+        "remove",
+        "command_instance_id"
+      ],
+      "path": [
+        "identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/1/if/properties/outcome/enum": {
+      "expected_before": [],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256/type"
+      ],
+      "outcome_selector": [],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/2/else/properties/owner_result_schema_ref/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "owner_result_schema_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/2/else/properties/owner_result_sha256/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "owner_result_sha256"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/2/if/properties/owner_result_ref/type": {
+      "expected_before": [],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256/type"
+      ],
+      "outcome_selector": [],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/3/if/properties/outcome/enum": {
+      "expected_before": [],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type"
+      ],
+      "outcome_selector": [],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/3/if/required": {
+      "expected_before": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/required",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256/type"
+      ],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/required",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256/type"
+      ],
+      "outcome_selector": [
+        {
+          "member": [
+            "remove",
+            "outcome"
+          ],
+          "path": []
+        }
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/else/properties/acknowledgement_frame_id/type": {
+      "path": [
+        "acknowledgement_frame_id"
+      ],
+      "value": "TEST_ONLY:wrong-type"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/else/properties/acknowledgement_frame_offset/type": {
+      "path": [
+        "acknowledgement_frame_offset"
+      ],
+      "value": 13
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/else/properties/same_frame_acknowledged/const": {
+      "control_name": "application identity",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_offset/const",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_receipt_ref/type"
+      ],
+      "path": [
+        "same_frame_acknowledged"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/if/properties/acknowledgement_receipt_ref/type": {
+      "expected_before": [],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/then/properties/acknowledgement_frame_offset/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type"
+      ],
+      "outcome_selector": [],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/if/required": {
+      "expected_before": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/required"
+      ],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/then/properties/acknowledgement_frame_offset/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/required",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type"
+      ],
+      "outcome_selector": [
+        {
+          "member": [
+            "remove",
+            "acknowledgement_receipt_ref"
+          ],
+          "path": []
+        }
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/then/properties/acknowledgement_frame_offset/minimum": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_offset/const",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_frame_offset/minimum"
+      ],
+      "path": [
+        "acknowledgement_frame_offset"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/then/properties/acknowledgement_frame_offset/type": {
+      "control_name": "accepted with early acknowledgement",
+      "path": [
+        "acknowledgement_frame_offset"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/5/if/properties/outcome/enum": {
+      "expected_before": [],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type"
+      ],
+      "outcome_selector": [],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/5/if/required": {
+      "expected_before": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/required",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256/type"
+      ],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/required",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256/type"
+      ],
+      "outcome_selector": [
+        {
+          "member": [
+            "remove",
+            "outcome"
+          ],
+          "path": []
+        }
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/6/if/properties/outcome/enum": {
+      "expected_before": [],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type"
+      ],
+      "outcome_selector": [],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/6/if/required": {
+      "expected_before": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/required",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256/type"
+      ],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/required",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256/type"
+      ],
+      "outcome_selector": [
+        {
+          "member": [
+            "remove",
+            "outcome"
+          ],
+          "path": []
+        }
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/if/properties/same_frame_acknowledged/const": {
+      "expected_before": [],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_offset/const",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_receipt_ref/type"
+      ],
+      "outcome_selector": [],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/if/required": {
+      "expected_before": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/required"
+      ],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_offset/const",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_receipt_ref/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/required"
+      ],
+      "outcome_selector": [
+        {
+          "member": [
+            "remove",
+            "same_frame_acknowledged"
+          ],
+          "path": []
+        }
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_id/maxLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_frame_id/maxLength",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/maxLength"
+      ],
+      "path": [
+        "acknowledgement_frame_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_id/minLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_frame_id/minLength",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/minLength"
+      ],
+      "path": [
+        "acknowledgement_frame_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_id/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_frame_id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type"
+      ],
+      "path": [
+        "acknowledgement_frame_id"
+      ],
+      "value": {}
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_offset/const": {
+      "control_name": "same frame acknowledgement",
+      "path": [
+        "acknowledgement_frame_offset"
+      ],
+      "value": 1
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_receipt_ref/maxLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_receipt_ref/maxLength",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/maxLength"
+      ],
+      "path": [
+        "acknowledgement_receipt_ref"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_receipt_ref/minLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_receipt_ref/minLength",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/minLength"
+      ],
+      "path": [
+        "acknowledgement_receipt_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_receipt_ref/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/else/properties/acknowledgement_frame_id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/else/properties/acknowledgement_frame_offset/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/else/properties/same_frame_acknowledged/const",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_receipt_ref/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type"
+      ],
+      "path": [
+        "acknowledgement_receipt_ref"
+      ],
+      "value": {}
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/required": {
+      "control_name": "same frame acknowledgement",
+      "member": [
+        "remove",
+        "acknowledgement_receipt_ref"
+      ],
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/else/properties/acknowledgement_frame_id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/else/properties/acknowledgement_frame_offset/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/else/properties/same_frame_acknowledged/const",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/required"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_frame_id/maxLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_id/maxLength",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/maxLength"
+      ],
+      "path": [
+        "acknowledgement_frame_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_frame_id/minLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_id/minLength",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/minLength"
+      ],
+      "path": [
+        "acknowledgement_frame_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_frame_id/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type"
+      ],
+      "path": [
+        "acknowledgement_frame_id"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_frame_offset/minimum": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/then/properties/acknowledgement_frame_offset/minimum",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_offset/const"
+      ],
+      "path": [
+        "acknowledgement_frame_offset"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_frame_offset/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/then/properties/acknowledgement_frame_offset/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_offset/const"
+      ],
+      "path": [
+        "acknowledgement_frame_offset"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_receipt_ref/maxLength": {
+      "control_name": "accepted with early acknowledgement",
+      "path": [
+        "acknowledgement_receipt_ref"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_receipt_ref/minLength": {
+      "control_name": "accepted with early acknowledgement",
+      "path": [
+        "acknowledgement_receipt_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_receipt_ref/type": {
+      "path": [
+        "acknowledgement_receipt_ref"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/command_id/maxLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "command_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/command_id/pattern": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "command_id"
+      ],
+      "value": "cmd.chat.goal.update\n"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/command_id/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "command_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/error_ref/maxLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "error_ref"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/error_ref/minLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "error_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/error_ref/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "error_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/outcome/enum": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NonterminalOutcome/allOf/1/properties/outcome/enum"
+      ],
+      "path": [
+        "outcome"
+      ],
+      "value": "acceptedx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_ref/oneOf": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "owner_result_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_ref/oneOf/1/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "owner_result_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_schema_ref/oneOf": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "owner_result_schema_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_schema_ref/oneOf/1/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "owner_result_schema_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_sha256/oneOf": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "owner_result_sha256"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_sha256/oneOf/1/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "owner_result_sha256"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/record_kind/const": {
+      "path": [
+        "record_kind"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/result_receipt_ref/maxLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "result_receipt_ref"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/result_receipt_ref/minLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "result_receipt_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/result_receipt_ref/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "COVERED_BY_CONST",
+      "path": [
+        "result_receipt_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/same_frame_acknowledged/type": {
+      "control_name": "accepted with early acknowledgement",
+      "path": [
+        "same_frame_acknowledged"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/schema_id/const": {
+      "path": [
+        "schema_id"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/target_generation/minimum": {
+      "path": [
+        "target_generation"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/target_generation/type": {
+      "path": [
+        "target_generation"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/required": {
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/type": {
+      "path": [],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/maxLength": {
+      "path": [
+        "identity",
+        "operation_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/minLength": {
+      "path": [
+        "identity",
+        "operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type": {
+      "expected_before": [],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_ref/oneOf"
+      ],
+      "outcome_selector": [],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/if/properties/scope_kind/const": {
+      "expected_before": [],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/then/properties/project_home_server_id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/then/properties/project_id/type"
+      ],
+      "outcome_selector": [],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/if/required": {
+      "expected_before": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/required"
+      ],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/then/properties/project_home_server_id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/then/properties/project_id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/required"
+      ],
+      "outcome_selector": [
+        {
+          "member": [
+            "remove",
+            "scope_kind"
+          ],
+          "path": [
+            "identity"
+          ]
+        }
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/then/properties/named_plan_id/type": {
+      "control_name": "application identity",
+      "path": [
+        "identity",
+        "named_plan_id"
+      ],
+      "value": "TEST_ONLY:wrong-type"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/then/properties/project_home_server_id/type": {
+      "control_name": "application identity",
+      "path": [
+        "identity",
+        "project_home_server_id"
+      ],
+      "value": "TEST_ONLY:wrong-type"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/then/properties/project_id/type": {
+      "control_name": "application identity",
+      "path": [
+        "identity",
+        "project_id"
+      ],
+      "value": "TEST_ONLY:wrong-type"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/if/properties/scope_kind/const": {
+      "control_name": "application identity",
+      "expected_before": [],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/type"
+      ],
+      "outcome_selector": [],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/if/required": {
+      "expected_before": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/required"
+      ],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/required"
+      ],
+      "outcome_selector": [
+        {
+          "path": [
+            "identity",
+            "project_id"
+          ],
+          "value": null
+        },
+        {
+          "member": [
+            "remove",
+            "scope_kind"
+          ],
+          "path": [
+            "identity"
+          ]
+        }
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/maxLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_home_server_id/maxLength"
+      ],
+      "path": [
+        "identity",
+        "project_home_server_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/minLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_home_server_id/minLength"
+      ],
+      "path": [
+        "identity",
+        "project_home_server_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/type": {
+      "path": [
+        "identity",
+        "project_home_server_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/maxLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_id/maxLength"
+      ],
+      "path": [
+        "identity",
+        "project_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/minLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_id/minLength"
+      ],
+      "path": [
+        "identity",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/type": {
+      "path": [
+        "identity",
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/attempt_id/maxLength": {
+      "control_name": "optional identity members",
+      "path": [
+        "identity",
+        "attempt_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/attempt_id/minLength": {
+      "control_name": "optional identity members",
+      "path": [
+        "identity",
+        "attempt_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/attempt_id/type": {
+      "control_name": "optional identity members",
+      "path": [
+        "identity",
+        "attempt_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/command_instance_id/maxLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/maxLength"
+      ],
+      "path": [
+        "identity",
+        "command_instance_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/command_instance_id/minLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/minLength"
+      ],
+      "path": [
+        "identity",
+        "command_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/command_instance_id/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type"
+      ],
+      "path": [
+        "identity",
+        "command_instance_id"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/goal_id/maxLength": {
+      "control_name": "optional identity members",
+      "path": [
+        "identity",
+        "goal_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/goal_id/minLength": {
+      "control_name": "optional identity members",
+      "path": [
+        "identity",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/goal_id/type": {
+      "control_name": "optional identity members",
+      "path": [
+        "identity",
+        "goal_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/named_plan_id/maxLength": {
+      "path": [
+        "identity",
+        "named_plan_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/named_plan_id/minLength": {
+      "path": [
+        "identity",
+        "named_plan_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/named_plan_id/type": {
+      "path": [
+        "identity",
+        "named_plan_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/operation_generation/minimum": {
+      "path": [
+        "identity",
+        "operation_generation"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/operation_generation/type": {
+      "path": [
+        "identity",
+        "operation_generation"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_home_server_id/maxLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/maxLength"
+      ],
+      "path": [
+        "identity",
+        "project_home_server_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_home_server_id/minLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/minLength"
+      ],
+      "path": [
+        "identity",
+        "project_home_server_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_home_server_id/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/type"
+      ],
+      "path": [
+        "identity",
+        "project_home_server_id"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_id/maxLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/maxLength"
+      ],
+      "path": [
+        "identity",
+        "project_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_id/minLength": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/minLength"
+      ],
+      "path": [
+        "identity",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_id/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/type"
+      ],
+      "path": [
+        "identity",
+        "project_id"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/scope_kind/enum": {
+      "path": [
+        "identity",
+        "scope_kind"
+      ],
+      "value": "TEST_ONLY:incorrect-value"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/source_location_id/maxLength": {
+      "control_name": "optional identity members",
+      "path": [
+        "identity",
+        "source_location_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/source_location_id/minLength": {
+      "control_name": "optional identity members",
+      "path": [
+        "identity",
+        "source_location_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/source_location_id/type": {
+      "control_name": "optional identity members",
+      "path": [
+        "identity",
+        "source_location_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/thread_id/maxLength": {
+      "path": [
+        "identity",
+        "thread_id"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/thread_id/minLength": {
+      "path": [
+        "identity",
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/thread_id/type": {
+      "path": [
+        "identity",
+        "thread_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/topology_generation/minimum": {
+      "path": [
+        "identity",
+        "topology_generation"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/topology_generation/type": {
+      "path": [
+        "identity",
+        "topology_generation"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/required": {
+      "member": [
+        "remove",
+        "scope_kind"
+      ],
+      "path": [
+        "identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/type": {
+      "path": [
+        "identity"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/closed_members": {
+      "outcome_unreachable": true,
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/properties/json_pointer/pattern": {
+      "outcome_unreachable": true,
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/properties/json_pointer/type": {
+      "outcome_unreachable": true,
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/properties/path/pattern": {
+      "outcome_unreachable": true,
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/properties/path/type": {
+      "outcome_unreachable": true,
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/required": {
+      "outcome_unreachable": true,
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_pin": "UNREACHABLE",
+      "path": [
+        "owner_result_schema_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256/pattern": {
+      "path": [
+        "payload_sha256"
+      ],
+      "value": "!"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256/type": {
+      "expected_before": [],
+      "expected_disabled": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_sha256/oneOf"
+      ],
+      "outcome_selector": [],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/UtcTimestamp/format": {
+      "path": [
+        "observed_at"
+      ],
+      "value": "2026-02-30T12:00:00Z"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/UtcTimestamp/type": {
+      "path": [
+        "observed_at"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NonterminalOutcome/allOf/1/properties/command_id/const": {
+      "path": [
+        "command_id"
+      ],
+      "value": "cmd.chat.goal.updatex"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NonterminalOutcome/allOf/1/properties/error_ref/type": {
+      "path": [
+        "error_ref"
+      ],
+      "value": "TEST_ONLY:wrong-type"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NonterminalOutcome/allOf/1/properties/outcome/enum": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/outcome/enum"
+      ],
+      "path": [
+        "outcome"
+      ],
+      "value": "acceptedx"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NonterminalOutcome/allOf/1/properties/owner_result_ref/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_ref/oneOf",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_ref/oneOf/1/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type"
+      ],
+      "path": [
+        "owner_result_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NonterminalOutcome/allOf/1/properties/owner_result_schema_ref/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/2/else/properties/owner_result_schema_ref/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_schema_ref/oneOf",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_schema_ref/oneOf/1/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/type"
+      ],
+      "path": [
+        "owner_result_schema_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NonterminalOutcome/allOf/1/properties/owner_result_sha256/type": {
+      "control_name": "same frame acknowledgement",
+      "outcome_implication": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/2/else/properties/owner_result_sha256/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_sha256/oneOf",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_sha256/oneOf/1/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256/type"
+      ],
+      "path": [
+        "owner_result_sha256"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NonterminalOutcome/allOf/1/properties/result_receipt_ref/type": {
+      "path": [
+        "result_receipt_ref"
+      ],
+      "value": "TEST_ONLY:wrong-type"
+    }
+  },
+  "family": "goal.updated",
+  "root": "dg5:e38a415fe4943e1c",
+  "route": "admit",
+  "row": "dg5/dgu/sir/outcome/schema",
+  "site": [
+    "scripts/pm_goal_dg_u_owners.py",
+    751
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "transaction": true
+}
