@@ -231,6 +231,21 @@ def certified_fixture(route, path):
     if route == 'readback':
         run.until('commit')
         return w, lambda: w.coordinator.readback(ctx, run.obs['committed'])
+    if route == 'f5c_evidence':
+        run.until('arm')
+        captured = []
+
+        def before_readback(*args):
+            captured.extend(args)
+            raise RootCapture
+
+        with patch.object(w.coordinator, 'f5c_readback', before_readback):
+            try:
+                run.step('append')
+            except RootCapture:
+                pass
+        require(len(captured) == 3, 'append did not supply the original F5c readback documents')
+        return w, lambda: w.coordinator.f5c_readback(*captured)
     if route == 'current':
         run.until('release')
         return w, lambda: w.coordinator.read_current(ctx)
