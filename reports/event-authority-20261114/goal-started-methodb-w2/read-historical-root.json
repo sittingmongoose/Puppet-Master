@@ -1,0 +1,23 @@
+{
+  "fixtures": [
+    {
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "edition": "v3",
+      "error": [
+        [],
+        "additionalProperties"
+      ],
+      "hash_seed": 6,
+      "root": "dg5:be97be8ad892ffc2",
+      "route": "read_historical/root"
+    }
+  ],
+  "row": "dg5/read_historical/root/schema"
+}
