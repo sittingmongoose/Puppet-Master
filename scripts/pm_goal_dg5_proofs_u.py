@@ -422,6 +422,19 @@ PROOFS = {
             'at the later request field with only the first check disabled. The later witness '
             'also repeated the exact message for every independently tested request rule. '
             'This proof covers the required request field of the witness.')),
+    'dg5/dgu/reader/audit/request/schema': dict(
+        kind='entailed-by-audit-result-request',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 1637), (U, 1667), (U, 1670), (U, 1674),
+               ('Plans/goal_updated_consumer_contracts.schema.json', 382),
+               ('Plans/goal_updated_consumer_contracts.schema.json', 437)],
+        argument=(
+            'The audit reader forwards its original request into the progress and terminal result '
+            'schemas. Each requires that field and directly references the identical AuditReadRequest. '
+            'Both original calls still refuse on that field with only the first check disabled. '
+            'Both later schemas also repeated the exact request message for every rule. '
+            'This proof covers the required request field of each result.')),
     'dg5/dgu/reader/input/request/schema': dict(
         kind='entailed-by-input-result-request',
         families=['goal.updated'],
