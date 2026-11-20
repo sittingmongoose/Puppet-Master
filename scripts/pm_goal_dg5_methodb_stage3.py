@@ -138,9 +138,15 @@ def update_fixture(route, path):
     actor = goal['user']
     permission = goal['user_permission']
     inspect = w.inspector
-    if route == 'inspect':
+    if route in ('inspect', 'inspect_request_recheck'):
         event_request = inspect.request_for(goal['scope'], progress['publication']['event_id'])
+        if route == 'inspect_request_recheck':
+            check_projected_request_source(w, oracle.O.CONSUMER_URI, route)
         return w, lambda: inspect.inspect(event_request, actor, permission)
+    if route in ('audit_current_request', 'audit_terminal_request'):
+        check_projected_request_source(w, oracle.O.CONSUMER_URI, route)
+        selection = 'current_progress' if route == 'audit_current_request' else 'terminal_members'
+        return w, oracle._audit_call(w, goal, admission, selection)
     if route == 'input_recheck':
         check_input_request_reused(w, oracle.O.CONSUMER_URI)
     if route in ('input', 'input_recheck'):
@@ -381,6 +387,36 @@ def check_input_request_reused(world, uri):
             'input result no longer requires the same request schema')
 
 
+REQUEST_PROJECTIONS = {
+    'inspect_request_recheck': ('dgu/inspect/witness', 'EventReadRequest', 'PrivateEventReadWitness'),
+    'audit_current_request': ('dgu/reader/audit/result', 'AuditReadRequest', 'AuditedProgress'),
+    'audit_terminal_request': ('dgu/reader/audit/result', 'AuditReadRequest', 'AuditedTerminal'),
+}
+
+
+def check_projected_request_source(world, uri, route):
+    _, root, result_root = REQUEST_PROJECTIONS[route]
+    bank = world.consumer_bank
+    ref = uri + '#/$defs/'
+    schema = bank.documents[uri]['$defs'][result_root]
+    projected = schema['properties']['request']
+    require('request' in schema['required'] and
+            (projected if root == 'EventReadRequest' else projected['allOf'][0]) == {'$ref': ref + root},
+            'the later schema no longer requires the identical request definition')
+    if root == 'EventReadRequest':
+        source = inspect.getsource(world.inspector.inspect)
+        steps = ("'#/$defs/EventReadRequest', request, where + '/request')",
+                 'witness = dict(request=request,', "'#/$defs/PrivateEventReadWitness', witness, where + '/witness')")
+    else:
+        source = inspect.getsource(world.source.read_audit)
+        steps = ("'#/$defs/AuditReadRequest', request, where + '/request')",
+                 'request=request, source_audit=src,', "root = 'AuditedProgress'", "root = 'AuditedTerminal'",
+                 "'#/$defs/' + root, out, where + '/result')")
+    require(all(step in source for step in steps) and
+            [source.index(step) for step in steps] == sorted(source.index(step) for step in steps),
+            'the original result no longer forwards the same request')
+
+
 def check_publication_reused(world, uri):
     publication = inspect.getsource(world.producer.publish)
     advance = inspect.getsource(world.source.advance)
@@ -539,6 +575,7 @@ class OwnerCheck:
         self.disabled_check = disabled_check
         self.runs = []
         self.capture = None
+        self.request_projection = None
         self.probe_root = False
 
     def call(self, action, edit, *, require_exact=False, prefix_store=None):
@@ -554,6 +591,7 @@ class OwnerCheck:
         expected = self.code + '/schema/'  # extra member is rejected at the enclosing object
         request_validation = []
         evidence_validation = []
+        projection = REQUEST_PROJECTIONS.get(self.declare['route'])
         repeated_evidence = self.declare['route'] == 'f5d_repeated_evidence'
         next_evidence_check = {
             'commit_evidence_recheck': 'commit_final/evidence',
@@ -585,6 +623,14 @@ class OwnerCheck:
                             first_document == args[-2]['request'],
                             'input result validation received a different request')
                     record['same_input_result_request'] = True
+                if projection and args[-1] == projection[0]:
+                    first_bank, first_ref, first_document = request_validation[0]
+                    require(first_bank is bank and args[0] == first_ref.removesuffix(projection[1]) + projection[2] and
+                            first_document == args[-2]['request'],
+                            'the original result used a different request or schema')
+                    record['same_projected_request'] = True
+                    if edit is None:
+                        self.request_projection = bank, args[0], copy.deepcopy(args[-2])
                 return original(bank, *args)
             frame = sys._getframe(1)
             site = [str(Path(frame.f_code.co_filename).relative_to(self.source)), frame.f_lineno]
@@ -603,7 +649,7 @@ class OwnerCheck:
                     require(member not in document, 'test document already has the extra member')
                     changed.append((document, member))
                     document[member] = 'gc'
-            if self.declare['route'] in ('receipt_recheck', 'input_recheck'):
+            if projection or self.declare['route'] in ('receipt_recheck', 'input_recheck'):
                 request_validation.append((bank, args[0], copy.deepcopy(document)))
             if next_evidence_check:
                 evidence_validation.append((bank, args[0], args[1], copy.deepcopy(document)))
@@ -782,6 +828,8 @@ class OwnerCheck:
                     require(cut.get('same_final_receipt_request'), 'final validator did not check the original request')
                 if self.declare['route'] == 'input_recheck':
                     require(cut.get('same_input_result_request'), 'input result validator did not check the original request')
+                if self.declare['route'] in REQUEST_PROJECTIONS:
+                    require(cut.get('same_projected_request'), 'the later result did not get the original request')
                 if self.declare['route'] in ('current_guard_recheck', 'commit_evidence_recheck',
                                              'retry_evidence_recheck') or (
                         self.row == 'dg5/append_outer/evidence/schema'):
@@ -817,6 +865,25 @@ class OwnerCheck:
             finally:
                 self.probe_root = False
         return self.capture
+
+
+def verify_projected_request(projection, clauses):
+    bank, reference, accepted = projection
+    require(not bank.errors(reference, accepted), 'the original result did not accept its request')
+    for name, trial in clauses.items():
+        require(trial['cls'] == 'KILLED', 'the projected request needs an independent test for every rule')
+        projected = {**accepted, 'request': trial['invalid']}
+        actual = bank.errors(reference, projected)
+        found = {(tuple(error.absolute_path)[1:], error.validator, error.message) for error in each_error(actual)
+                 if error.absolute_path and error.absolute_path[0] == 'request'}
+
+        def messages(listing):
+            for path, _, keyword, message, context in listing:
+                yield tuple(path), keyword, message
+                yield from messages(context)
+
+        require(set(messages(trial['before'])) <= found, f'{name}: the exact request message was missing in the result')
+        trial['also_refused_by'] = dict(schema=reference, field='request', messages=errors_list(actual))
 
 
 CONTROL_PHASE_FIELDS = {
@@ -1544,6 +1611,9 @@ def main():
         ('dg5/dgu/producer/freeze/producer_input/schema', 'freeze_input'): 'dgu/progress/schema/',
         ('dg5/dgu/producer/publish/producer_input/schema', 'publish_input'): 'dgu/producer/publish/final_candidate',
         ('dg5/dgu/reader/input/request/schema', 'input_recheck'): 'dgu/reader/input/result/schema/request',
+        ('dg5/dgu/inspect/request/schema', 'inspect_request_recheck'): 'dgu/inspect/witness/schema/request',
+        ('dg5/dgu/reader/audit/request/schema', 'audit_current_request'): 'dgu/reader/audit/result/schema/request',
+        ('dg5/dgu/reader/audit/request/schema', 'audit_terminal_request'): 'dgu/reader/audit/result/schema/request',
         ('dg5/dgu/body/reserve/pending/schema', 'reserve_pending'): 'dgu/body/goal_body_control/schema/record/pending',
     }.get((row, declare['route']))
     require(declare.get('later_refusal') == later_refusal,
@@ -1594,6 +1664,9 @@ def main():
         if 'later_refusal' in declare:
             report['checked_later_refusal'] = declare['later_refusal']
         require(not gaps, f'{len(gaps)} rules still have another validation message')
+        if declare['route'] in REQUEST_PROJECTIONS:
+            require(check.request_projection is not None, 'the accepted result was not captured')
+            verify_projected_request(check.request_projection, clauses)
         proof_output(source, args.out, declare, collector, clauses, ident, table_path)
         report['status'] = 'COVERED'
     except ValueError as error:
