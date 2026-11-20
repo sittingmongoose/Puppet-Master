@@ -6,11 +6,13 @@ import hashlib
 import json
 from pathlib import Path
 
+import pm_goal_dg_ca_c4_cases as assignment
 import pm_goal_dg_ca_oracles as cancelled
 import pm_goal_dg5_methodb_stage7 as pilot
 
 FAMILY = "goal.cancelled"
 C1 = "scripts/pm_goal_dg_ca_c1.py"
+ASSIGNMENT = "scripts/pm_goal_dg_ca_assignment.py"
 STORAGE = "scripts/pm_goal_test_storage.py"
 
 
@@ -48,7 +50,19 @@ def storage_cas(directory, negative):
     return world, world.storage.transact, ([write],), {}
 
 
+
+def append_template_value(directory, negative):
+    world, route = assignment.until(cancelled.Suite(directory), "append_original")
+    world.root = world.storage.root
+    if negative:
+        producer = dict(route.progress["producer_input"], correlation_id="TEST_ONLY:other-correlation")
+        route.progress = dict(route.progress, producer_input=producer)
+        assignment.coherent_progress(world, route)
+    return world, route.append_original, (), {"lose_ack": True}
+
+
 CASES = {
+    "template-value": (ASSIGNMENT, 716, "C4A/append_reserved/template_producer", append_template_value),
     "audit-permission": (C1, 833, "C1/audit_read/audit_permission", audit_permission),
     "occurrence": (C1, 562, "C1/freeze_event/accepted_occurrence", occurrence),
     "storage-cas": (STORAGE, 1657, "tx/cas_version", storage_cas),
