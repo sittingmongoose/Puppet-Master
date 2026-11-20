@@ -1,0 +1,1107 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:abf14b1b150cafbb": {
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "process",
+          "host"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/properties/host_boot_id/minLength": {
+        "path": [
+          "value",
+          "process",
+          "host",
+          "host_boot_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/properties/host_boot_id/type": {
+        "path": [
+          "value",
+          "process",
+          "host",
+          "host_boot_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/properties/host_ref/minLength": {
+        "path": [
+          "value",
+          "process",
+          "host",
+          "host_ref"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/properties/host_ref/type": {
+        "path": [
+          "value",
+          "process",
+          "host",
+          "host_ref"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/properties/native_root_generation/minimum": {
+        "path": [
+          "value",
+          "process",
+          "host",
+          "native_root_generation"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/properties/native_root_generation/type": {
+        "path": [
+          "value",
+          "process",
+          "host",
+          "native_root_generation"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/properties/native_root_ref/minLength": {
+        "path": [
+          "value",
+          "process",
+          "host",
+          "native_root_ref"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/properties/native_root_ref/type": {
+        "path": [
+          "value",
+          "process",
+          "host",
+          "native_root_ref"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/properties/pid_namespace_ref/minLength": {
+        "path": [
+          "value",
+          "process",
+          "host",
+          "pid_namespace_ref"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/properties/pid_namespace_ref/type": {
+        "path": [
+          "value",
+          "process",
+          "host",
+          "pid_namespace_ref"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/properties/supervisor_owner_epoch/minimum": {
+        "path": [
+          "value",
+          "process",
+          "host",
+          "supervisor_owner_epoch"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/properties/supervisor_owner_epoch/type": {
+        "path": [
+          "value",
+          "process",
+          "host",
+          "supervisor_owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/properties/supervisor_owner_ref/minLength": {
+        "path": [
+          "value",
+          "process",
+          "host",
+          "supervisor_owner_ref"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/properties/supervisor_owner_ref/type": {
+        "path": [
+          "value",
+          "process",
+          "host",
+          "supervisor_owner_ref"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/required": {
+        "member": [
+          "remove",
+          "host_ref"
+        ],
+        "path": [
+          "value",
+          "process",
+          "host"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/NativeHostIdentity/type": {
+        "path": [
+          "value",
+          "process",
+          "host"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/before_exec_gate_ref/minLength": {
+        "path": [
+          "value",
+          "before_exec_gate_ref"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/before_exec_gate_ref/type": {
+        "path": [
+          "value",
+          "before_exec_gate_ref"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/membership_sequence/minimum": {
+        "path": [
+          "value",
+          "membership_sequence"
+        ],
+        "value": 0
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/membership_sequence/type": {
+        "path": [
+          "value",
+          "membership_sequence"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/native_spawn_operation_id/minLength": {
+        "path": [
+          "value",
+          "native_spawn_operation_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/native_spawn_operation_id/type": {
+        "path": [
+          "value",
+          "native_spawn_operation_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/native_spawn_transaction_id/minLength": {
+        "path": [
+          "value",
+          "native_spawn_transaction_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/native_spawn_transaction_id/type": {
+        "path": [
+          "value",
+          "native_spawn_transaction_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/original_birth_at_utc/format": {
+        "path": [
+          "value",
+          "original_birth_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/original_birth_at_utc/type": {
+        "path": [
+          "value",
+          "original_birth_at_utc"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/original_containment_attachment_ref/minLength": {
+        "path": [
+          "value",
+          "original_containment_attachment_ref"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/original_containment_attachment_ref/type": {
+        "path": [
+          "value",
+          "original_containment_attachment_ref"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/parent_process/anyOf": {
+        "path": [
+          "value",
+          "parent_process"
+        ],
+        "value": true
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/parent_process/anyOf/1/type": {
+        "path": [
+          "value",
+          "parent_process"
+        ],
+        "value": true
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/schema_id/const": {
+        "path": [
+          "value",
+          "schema_id"
+        ],
+        "value": "pm.executor.process_member_birth.v1x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/properties/schema_version/const": {
+        "path": [
+          "value",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": [
+          "value"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirth/type": {
+        "path": [
+          "value"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirthPhysical/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirthPhysical/properties/family_id/const": {
+        "path": [
+          "family_id"
+        ],
+        "value": "executor_process_member_birthx"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirthPhysical/properties/physical_key/minLength": {
+        "path": [
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirthPhysical/properties/physical_key/type": {
+        "path": [
+          "physical_key"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirthPhysical/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_process_member_birth.v1x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirthPhysical/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirthPhysical/properties/storage_instance_id/minLength": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirthPhysical/properties/storage_instance_id/type": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirthPhysical/required": {
+        "member": [
+          "remove",
+          "family_id"
+        ],
+        "path": []
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessBirthPhysical/type": {
+        "path": [],
+        "value": true
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "process"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/properties/group_ref/minLength": {
+        "path": [
+          "value",
+          "process",
+          "group_ref"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/properties/group_ref/type": {
+        "path": [
+          "value",
+          "process",
+          "group_ref"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/properties/kernel_birth_ref/minLength": {
+        "path": [
+          "value",
+          "process",
+          "kernel_birth_ref"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/properties/kernel_birth_ref/type": {
+        "path": [
+          "value",
+          "process",
+          "kernel_birth_ref"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/properties/kernel_start_sequence/minimum": {
+        "path": [
+          "value",
+          "process",
+          "kernel_start_sequence"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/properties/kernel_start_sequence/type": {
+        "path": [
+          "value",
+          "process",
+          "kernel_start_sequence"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/properties/native_process_ref/minLength": {
+        "path": [
+          "value",
+          "process",
+          "native_process_ref"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/properties/native_process_ref/type": {
+        "path": [
+          "value",
+          "process",
+          "native_process_ref"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/properties/pgid/minimum": {
+        "path": [
+          "value",
+          "process",
+          "pgid"
+        ],
+        "value": 0
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/properties/pgid/type": {
+        "path": [
+          "value",
+          "process",
+          "pgid"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/properties/pid/minimum": {
+        "path": [
+          "value",
+          "process",
+          "pid"
+        ],
+        "value": 0
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/properties/pid/type": {
+        "path": [
+          "value",
+          "process",
+          "pid"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/properties/session_id/minimum": {
+        "path": [
+          "value",
+          "process",
+          "session_id"
+        ],
+        "value": 0
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/properties/session_id/type": {
+        "path": [
+          "value",
+          "process",
+          "session_id"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/required": {
+        "member": [
+          "remove",
+          "host"
+        ],
+        "path": [
+          "value",
+          "process"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessIdentity/type": {
+        "path": [
+          "value",
+          "process"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessInvocation/allOf/1/properties/role/const": {
+        "path": [
+          "value",
+          "invocation",
+          "role"
+        ],
+        "value": "tool"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "probe_birth"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/codec/const": {
+        "path": [
+          "value",
+          "probe_birth",
+          "codec"
+        ],
+        "value": "messagepack_canonicalx"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/family_id/minLength": {
+        "path": [
+          "value",
+          "probe_birth",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/family_id/type": {
+        "path": [
+          "value",
+          "probe_birth",
+          "family_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/physical_key/minLength": {
+        "path": [
+          "value",
+          "probe_birth",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/physical_key/type": {
+        "path": [
+          "value",
+          "probe_birth",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/physical_sha256/pattern": {
+        "path": [
+          "value",
+          "probe_birth",
+          "physical_sha256"
+        ],
+        "value": "b1153a0f2d2de67b75f8f3011b1376cad7059c8ade1ace407a1c73b7987d1854\n"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/physical_sha256/type": {
+        "path": [
+          "value",
+          "probe_birth",
+          "physical_sha256"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/schema_id/minLength": {
+        "path": [
+          "value",
+          "probe_birth",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/schema_id/type": {
+        "path": [
+          "value",
+          "probe_birth",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/schema_version/minLength": {
+        "path": [
+          "value",
+          "probe_birth",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/schema_version/type": {
+        "path": [
+          "value",
+          "probe_birth",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "probe_birth",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "probe_birth",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "probe_birth"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/type": {
+        "path": [
+          "value",
+          "probe_birth"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "invocation",
+          "execution_unit"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "execution_unit",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "path": [
+          "value",
+          "invocation",
+          "execution_unit",
+          "family_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "execution_unit",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          "value",
+          "invocation",
+          "execution_unit",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          "value",
+          "invocation",
+          "execution_unit",
+          "physical_value_sha256"
+        ],
+        "value": "2fc7544fafb893934b362799e61427d975af2cb81bc8a354d9539ab6c0628b3a\n"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "path": [
+          "value",
+          "invocation",
+          "execution_unit",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "execution_unit",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "path": [
+          "value",
+          "invocation",
+          "execution_unit",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "execution_unit",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "path": [
+          "value",
+          "invocation",
+          "execution_unit",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "execution_unit",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "invocation",
+          "execution_unit",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "invocation",
+          "execution_unit"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "value",
+          "invocation",
+          "execution_unit"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "invocation",
+          "scope"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/goal_id/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/goal_id/type": {
+        "path": [
+          "value",
+          "invocation",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/goal_run_id/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/goal_run_id/type": {
+        "path": [
+          "value",
+          "invocation",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/project_id/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/project_id/type": {
+        "path": [
+          "value",
+          "invocation",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "invocation",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/workgraph_id/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "scope",
+          "workgraph_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/workgraph_id/type": {
+        "path": [
+          "value",
+          "invocation",
+          "scope",
+          "workgraph_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/workgraph_revision/minimum": {
+        "path": [
+          "value",
+          "invocation",
+          "scope",
+          "workgraph_revision"
+        ],
+        "value": 0
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/workgraph_revision/type": {
+        "path": [
+          "value",
+          "invocation",
+          "scope",
+          "workgraph_revision"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/worknode_id/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "scope",
+          "worknode_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/worknode_id/type": {
+        "path": [
+          "value",
+          "invocation",
+          "scope",
+          "worknode_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "invocation",
+          "scope"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/type": {
+        "path": [
+          "value",
+          "invocation",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "invocation"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/properties/attempt_id/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "attempt_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/properties/attempt_id/type": {
+        "path": [
+          "value",
+          "invocation",
+          "attempt_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/properties/attempt_number/minimum": {
+        "path": [
+          "value",
+          "invocation",
+          "attempt_number"
+        ],
+        "value": 0
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/properties/attempt_number/type": {
+        "path": [
+          "value",
+          "invocation",
+          "attempt_number"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/properties/dispatch_operation_id/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "dispatch_operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/properties/dispatch_operation_id/type": {
+        "path": [
+          "value",
+          "invocation",
+          "dispatch_operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/properties/dispatch_transaction_id/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "dispatch_transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/properties/dispatch_transaction_id/type": {
+        "path": [
+          "value",
+          "invocation",
+          "dispatch_transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/properties/effect_owner_epoch/minimum": {
+        "path": [
+          "value",
+          "invocation",
+          "effect_owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/properties/effect_owner_epoch/type": {
+        "path": [
+          "value",
+          "invocation",
+          "effect_owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/properties/effect_owner_ref/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "effect_owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/properties/effect_owner_ref/type": {
+        "path": [
+          "value",
+          "invocation",
+          "effect_owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/properties/invocation_id/minLength": {
+        "path": [
+          "value",
+          "invocation",
+          "invocation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/properties/invocation_id/type": {
+        "path": [
+          "value",
+          "invocation",
+          "invocation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/properties/role/enum": {
+        "path": [
+          "value",
+          "invocation",
+          "role"
+        ],
+        "process_role_or_barrier_enum": "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/ProcessInvocation/allOf/1/properties/role/const",
+        "value": "toolx"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "value",
+          "invocation"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation/type": {
+        "path": [
+          "value",
+          "invocation"
+        ],
+        "value": null
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "fresh_reference_sha256": "1a8193ac78dbe047dd7fda0f897b004fb4a6cf64a16ebbbdd9a875f47296e43a",
+  "routes": [
+    {
+      "call": "issue_physical",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "original_profile",
+      "fresh_literal_sha256": "9c035a7e7e006b5de980ed1441df00c1fa96a2f826249263e195cd4606ac3f68",
+      "mutation": true,
+      "realm": "native_consumer",
+      "refusal": "issue/executor_process_birth/schema/",
+      "root": "dg5:abf14b1b150cafbb",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ]
+    }
+  ],
+  "row": "dg5/issue/executor_process_birth/schema",
+  "sites": [
+    [
+      "scripts/pm_goal_dg_r_world.py",
+      446
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}
