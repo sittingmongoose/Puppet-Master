@@ -7,12 +7,14 @@ from contextlib import ExitStack
 import copy
 import inspect
 import gzip
+import hashlib
 import json
 import multiprocessing
 import os
 from pathlib import Path
 import re
 import shutil
+import subprocess
 import sys
 import time
 from unittest.mock import patch
@@ -26,6 +28,8 @@ pilot = stage.pilot
 closure, rules, world = stage.closure, stage.clauses, stage.world
 ROOT, FAMILY, require, sha, write = stage.ROOT, stage.FAMILY, stage.require, stage.sha, stage.write
 REFERENCE_SHA = 'cb562fa287b7987eabe3b49fc9d3c5119948a69df444ce0a3a0b2d76bdbd4cf2'
+FULL_REFERENCE_SHA = 'ca913e1b9353ead76cdfae84fa7eda30606c38042c6ac45f7e86bed1cc0b3e42'
+FULL_REFERENCE_OVERLAY = 'd95dfc693296a7bab5fe4e1af044ab14a4ec083c'
 TABLE_PREFIX = 'pm_goal_dg5_methodb_w2_phase_'
 PREFLIGHT_CUSTODY = 'https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/'
 PREFLIGHT_CHOICES = {
@@ -36,6 +40,20 @@ PREFLIGHT_CHOICES = {
 
 class Fixture(stage.Fixture):
     def prepare(self):
+        if self.route == 'projection/record':
+            readers = stage.original.R
+            return readers.projection_record, (self.world, readers.original_started(self.world))
+        if self.route == 'representation/row':
+            projector, _, _ = stage.original.projected(self.world)
+            _, _, _, row = projector.current_row()
+            return projector.rep.decode, (row['value'], stage.original.R.original_started(self.world))
+        if self.route in ('issue/CurrentGoalArgument', 'issue/OriginalGoalArgument'):
+            self.bank = self.goal_bank
+            owner = self.world.owners['goal']
+            kind = self.route.removeprefix('issue/')
+            if kind == 'CurrentGoalArgument':
+                owner.current_argument()
+            return self.issue_arguments(owner, kind)
         if self.route in ('publish_result', 'publish_original_append'):
             return self.world.start.commit_start, (stage.original.request(self.world), self.handles)
         if self.route.startswith(('read_append/', 'read_native/')):
@@ -150,6 +168,18 @@ class Fixture(stage.Fixture):
             yield variant
 
     def call(self, edit):
+        if self.route == 'projection/record' and edit:
+            skeleton = world.skeleton
+            selector = self.world.edition.consumer + '#/$defs/Projection'
+            _, path, change = edit
+
+            def document(bank, reference):
+                value = skeleton(bank, reference)
+                return rules.apply(value, path, tuple(change)) if reference == selector else value
+
+            with patch.object(world, 'skeleton', document):
+                return self.action(*self.args)
+
         if self.route.startswith(('read_append/', 'read_native/')):
             return self.call_reader(edit)
         if self.route in ('publish_result', 'publish_original_append', 'publish_commit',
@@ -839,13 +869,15 @@ def run_case(case, reference, prior_row, output, disable, selected=None):
     pilot.SITES[name] = min(sites)
     pilot.configure_tables()
     output.mkdir(parents=True)
-    report = dict(row=name, status='NOT_COVERED', roots={}, calls={}, reference_sha256=REFERENCE_SHA,
+    report = dict(row=name, status='NOT_COVERED', roots={}, calls={},
+                  reference_sha256=reference.get('archive_sha256', REFERENCE_SHA),
                   current_sites=mapping['current_sites'], seed=seed)
     collector = stage.sweep.Collector()
     examples = PreviousExamples()
     original_roots = {item['root']: item for item in prior_row['schema_closure']['roots']}
     try:
         suite = stage.original.Suite(output / 'stores')
+        require(set(roots) <= set(original_roots), f'{name}: fresh root has no historical example binding')
         for spec in specs:
             fixture = Fixture(suite, spec['route'], spec['edition'])
             experiment = CompleteCall(fixture, name, sites, spec)
@@ -890,6 +922,41 @@ def run_case(case, reference, prior_row, output, disable, selected=None):
     return report
 
 
+def load_reference(path, cases):
+    digest = sha(path)
+    require(digest in (REFERENCE_SHA, FULL_REFERENCE_SHA), 'fresh reference bundle changed')
+    with gzip.open(path, 'rt') as stream:
+        reference = json.load(stream)
+    if digest == REFERENCE_SHA:
+        return reference
+    require(reference['source']['checker_overlay'] == FULL_REFERENCE_OVERLAY, 'unexpected checker source edition')
+
+    # The whole-family capture can list more than one exact variant under a
+    # historical root ID. Keep this runner limited to complete, unambiguous
+    # rows and carry every literal rule from the selected published variant.
+    rows, roots = {}, {}
+    for case in cases:
+        name = case['row']
+        row = reference['rows'][name]
+        require(not row['historical_roots_without_current_row_binding'],
+                f'{name}: earlier root bindings are still unresolved')
+        identifiers = []
+        for item in row['current_roots']:
+            ident = item['root']
+            variant = reference['roots'][ident][item['variant_sha256']]
+            require(ident not in identifiers and (ident not in roots or roots[ident] == variant),
+                    f'{name}: multiple exact variants share {ident}')
+            identifiers.append(ident)
+            roots[ident] = variant
+        sites = []
+        for file, line in row['sites']:
+            source = subprocess.check_output(['git', 'show', f'{FULL_REFERENCE_OVERLAY}:{file}'], cwd=ROOT)
+            sites.append(dict(path=file, line=line, sha256=hashlib.sha256(source).hexdigest(),
+                              line_text=source.decode().splitlines()[line - 1].strip()))
+        rows[name] = dict(roots=identifiers, current_sites=sites)
+    return dict(rows=rows, roots=roots, archive_sha256=digest)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--matrix', type=Path, required=True)
@@ -899,15 +966,13 @@ def main():
     parser.add_argument('--disable', choices=('row', 'clause', 'inventory'))
     parser.add_argument('--root', help='replay one exact declared root and publish its proof fragment')
     args = parser.parse_args()
-    require(sha(args.reference) == REFERENCE_SHA, 'fresh reference bundle changed')
-    with gzip.open(args.reference, 'rt') as stream:
-        reference = json.load(stream)
+    cases = [json.loads(path.read_bytes()) for path in args.case]
+    reference = load_reference(args.reference, cases)
     _, rows, _ = stage.matrix_inputs(args.matrix)
     world.v3_edition()
     world.v7_edition()
     okay = True
-    for path in args.case:
-        case = json.loads(path.read_bytes())
+    for case in cases:
         name = case['row']
         specs = case['fixtures']
         require(sorted(row['root'] for row in specs) == sorted(reference['rows'][name]['roots']),

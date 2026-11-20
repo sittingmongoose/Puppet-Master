@@ -1,0 +1,23 @@
+{
+  "fixtures": [
+    {
+      "edit": [
+        1,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "edition": "v3",
+      "error": [
+        [],
+        "additionalProperties"
+      ],
+      "hash_seed": 8,
+      "root": "dg5:ac06498b8c37a0fa",
+      "route": "reducer"
+    }
+  ],
+  "row": "dg5/reducer/event/schema"
+}
