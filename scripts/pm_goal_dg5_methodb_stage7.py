@@ -119,8 +119,16 @@ def event_record(directory, negative):
 FAILURE_ONLY = {'event-record'}
 
 
+def frame_header_cap(directory, negative):
+    world, event = published_event(directory)
+    if negative:
+        event['event_id'] = 'TEST_ONLY:' + ('x' * updated.O.S.HEADER_CAP)
+    return world, updated.O.S.encode_event_frame, (event, 1), {}
+
+
 # The explicit lines match the input matrix. Validate the observed location on every run.
 CASES = {
+    'frame-header-cap': (STORAGE, 440, 'frame/header_cap', frame_header_cap),
     'event-record': (STORAGE, 473, 'append/event/schema/correlation_id', event_record),
     'stored-producer': (OWNERS, 1807, 'dgu/producer/publish/stored_producer', stored_producer),
     'json-key': (ADAPTERS, 421, 'custody/exact_json/key', json_key),
