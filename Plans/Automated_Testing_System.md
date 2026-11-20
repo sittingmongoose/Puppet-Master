@@ -12428,7 +12428,7 @@ negative_constraints:
 
 
 
-Current selected assignment (2026-11-19): filesafe.policy_degraded@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2307. Its event history selects Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+Current selected assignment (2026-11-19): filesafe.policy_degraded@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2307. Its event history selects Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, count in app:filesafe_policy_degraded, one dedicated bucket per Puppet Master Server under DL-2450), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project, count in the Project partition); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### ATS-279 - safe_point.created, safe_point.restored oracles
 
 ```yaml

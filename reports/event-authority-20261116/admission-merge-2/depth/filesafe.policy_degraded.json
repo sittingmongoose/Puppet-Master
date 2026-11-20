@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.71",
+  "sha256": "902f66e79010389666598e4b6a3a7732ffc2c4a89f271fe9d04e94393c47c608",
   "family_count": 518,
   "row_pointer": "#/families/389"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/389 (canonical row SHA-256 5e86a1bddc6459c0adfe91481137086c47f34fa4431af2d85ab3123014fb53e8). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.71 as #/families/389, canonical row SHA-256 5e86a1bddc6459c0adfe91481137086c47f34fa4431af2d85ab3123014fb53e8. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -457,47 +457,98 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-556",
-       "line_start": 56151,
-       "line_end": 56151,
-       "quote": "Current selected assignment (2026-11-19): filesafe.policy_degraded@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2307. Its event history selects Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
-       "excerpt_sha256": "bf562cc879b38d97fa6e8e9dcdb8b4b02564f5b2891f32890309de6de08f4d30",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "line_start": 56157,
+       "line_end": 56157,
+       "quote": "Current selected assignment (2026-11-19): filesafe.policy_degraded@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2307. Its event history selects Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, count in app:filesafe_policy_degraded, one dedicated bucket per Puppet Master Server under DL-2450), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project, count in the Project partition). The Application bucket retains records for 2,555 days (220,752,000 seconds) from the existing terminal-transition anchor and admits at most 2,000,000 retained records. An append that would exceed the limit fails closed if no expired unheld member is eligible for compaction. Overflow neither evicts unexpired or held records nor borrows room from or refuses writes to another bucket. Exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-556, Plans/storage-plan.md:56082-56151",
-       "excerpt_digest_convention": "literal_quote",
+       "quote_scope": "unit SP-556, Plans/storage-plan.md:56084-56157",
+       "file_sha256": "1fa333c4ef3aa54859eae354a38973490a4de4ca54b6c8f066b2770f528c3bbb",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-556",
-        "line_start": 55760,
-        "line_end": 55760,
-        "quote": "**Retention.**",
-        "excerpt_sha256": "e3b37dea46eb5c037336ebd0ac01fbdaa25d40ee8eb0f60d13fc6970139ccfba",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 56151,
+        "line_end": 56151,
+        "quote": "Current selected assignment (2026-11-19): filesafe.policy_degraded@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2307. Its event history selects Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
+        "excerpt_sha256": "bf562cc879b38d97fa6e8e9dcdb8b4b02564f5b2891f32890309de6de08f4d30",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-556, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:56082-56151",
+        "excerpt_digest_convention": "literal_quote",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-556",
+         "line_start": 55760,
+         "line_end": 55760,
+         "quote": "**Retention.**",
+         "excerpt_sha256": "e3b37dea46eb5c037336ebd0ac01fbdaa25d40ee8eb0f60d13fc6970139ccfba",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 56151
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "0fa6f356b3645397b666123fa628b65b6fa991c2",
+        "old_quote": "Current selected assignment (2026-11-19): filesafe.policy_degraded@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2307. Its event history selects Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-556",
+        "old_line_start": 56151,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       },
       {
-       "path": "Plans/filesafe_event_sources/filesafe_policy_degraded.contract.json",
+       "path": "Plans/Contracts_V0.md",
        "unit": "CV-556",
-       "line_start": 134,
-       "line_end": 134,
-       "quote": "\"retention_policy_ref\"",
-       "excerpt_sha256": "d62fae07c239ae4e7048050b98c82f976e463a29e812fa37eefc188a19a646c0",
-       "file_sha256": "c18b98271d5f415adfb007a24e4ce5c35351f8d0e8e14feb5f42faa8c0b906fc",
+       "line_start": 45846,
+       "line_end": 45846,
+       "quote": "Current selected assignment (2026-11-19): filesafe.policy_degraded@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2307. Its event history selects Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, count in app:filesafe_policy_degraded, one dedicated bucket per Puppet Master Server under DL-2450), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project, count in the Project partition). The Application bucket retains records for 2,555 days (220,752,000 seconds) from the existing terminal-transition anchor and admits at most 2,000,000 retained records. An append that would exceed the limit fails closed if no expired unheld member is eligible for compaction. Overflow neither evicts unexpired or held records nor borrows room from or refuses writes to another bucket. Exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "excerpt_digest_convention": "literal_quote",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:45760-45846",
+       "file_sha256": "dac81bf0562dda70b1ea71fd221e3aa69a84f7b3651602d6808f6bf1a934a22d",
        "source_citation": {
         "path": "Plans/filesafe_event_sources/filesafe_policy_degraded.contract.json",
-        "unit": "CV-556",
+        "unit": "#/retention_policy_ref",
         "line_start": 134,
         "line_end": 134,
         "quote": "\"retention_policy_ref\"",
         "excerpt_sha256": "d62fae07c239ae4e7048050b98c82f976e463a29e812fa37eefc188a19a646c0",
-        "file_sha256": "c18b98271d5f415adfb007a24e4ce5c35351f8d0e8e14feb5f42faa8c0b906fc"
+        "file_sha256": "c18b98271d5f415adfb007a24e4ce5c35351f8d0e8e14feb5f42faa8c0b906fc",
+        "quote_check": "exact",
+        "quote_scope": "unit #/retention_policy_ref, Plans/filesafe_event_sources/filesafe_policy_degraded.contract.json@10ba97e699d51287673d6f1db4d994f54c59b4ed:134-134",
+        "excerpt_digest_convention": "literal_quote",
+        "source_citation": {
+         "path": "Plans/filesafe_event_sources/filesafe_policy_degraded.contract.json",
+         "unit": "CV-556",
+         "line_start": 134,
+         "line_end": 134,
+         "quote": "\"retention_policy_ref\"",
+         "excerpt_sha256": "d62fae07c239ae4e7048050b98c82f976e463a29e812fa37eefc188a19a646c0",
+         "file_sha256": "c18b98271d5f415adfb007a24e4ce5c35351f8d0e8e14feb5f42faa8c0b906fc"
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "received_unit": "CV-556",
+        "json_pointer": "#/retention_policy_ref",
+        "subject_event_type": "filesafe.policy_degraded",
+        "locator_maintenance": {
+         "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+         "reason": "Bind the received owner label to the exact retention_policy_ref member of its single-family JSON source; retain the original label and Git bytes as lineage, without whole-document fallback."
+        },
+        "sha256": "c18b98271d5f415adfb007a24e4ce5c35351f8d0e8e14feb5f42faa8c0b906fc",
+        "line": 134
+       },
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "0fa6f356b3645397b666123fa628b65b6fa991c2",
+        "old_quote": "\"retention_policy_ref\"",
+        "old_path": "Plans/filesafe_event_sources/filesafe_policy_degraded.contract.json",
+        "old_unit": "#/retention_policy_ref",
+        "old_line_start": 134,
+        "reason": "Re-cite the exact existing per-family owner assignment; the old evidence is retained at the Git predecessor."
        }
       }
      ],
@@ -857,10 +908,9 @@
   "row_pointer": "#/families/389"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "197921642c7a2a1c55995fc94baf17b157ae68b0b52f1215a88911a3b3901160",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "0fa6f356b3645397b666123fa628b65b6fa991c2",
+  "source_assessment_sha256": "a4c7e3ef0438d0cc83a308f541970514c2113293960b740e2582fde436f6eb09",
+  "native_execution": "NOT_RUN"
  }
 }
