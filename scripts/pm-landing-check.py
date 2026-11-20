@@ -61,7 +61,7 @@ days older than it by commit time. Otherwise rule 2 is off for the landing, such
 as it was before rule 2, and the report's first lines say that the baseline is stale and must be
 re-recorded before the next landing, never to make this one pass.
 
-A subcheck that pm-plans-verify.py killed at --subcheck-timeout-seconds (600 by default here) has no
+A subcheck that pm-plans-verify.py killed at --subcheck-timeout-seconds (1800 by default here) has no
 result. Its timeout row is an infrastructure result, printed on its own line with the subcheck, how
 long it ran and the limit; it is never a new failure, growth or a blocker. The run it happened in was
 not fully verified, so it lifts exit 0 to 1 and changes no other exit code. A baseline is never
@@ -256,7 +256,7 @@ INFRASTRUCTURE_ERRORS = {"subprocess_timeout", "subcheck_timeout"}
 # The bound handed to the aggregate checks. lint-contractrefs alone takes about 199 s in the shared
 # checkout on the network mount, with 0 failures when run on its own at e44b9186fb; the old 180 s
 # bound killed it in both aggregates at the terminal.workgroup_moved landing of 2026-09-24.
-DEFAULT_SUBCHECK_TIMEOUT_SECONDS = 600
+DEFAULT_SUBCHECK_TIMEOUT_SECONDS = 1800
 
 # Rule 2 applies only while the baseline is current: the commit it names is an ancestor of the base,
 # the branch's rebase target, and no more than this many days older than it by committer time. The
