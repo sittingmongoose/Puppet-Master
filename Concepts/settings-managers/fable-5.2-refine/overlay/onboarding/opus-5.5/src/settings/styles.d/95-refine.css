@@ -13,7 +13,7 @@
 /* ---- the rail: chapters by name ---- */
 #panel-settings .domain-list .domain-link .domain-sub { display: none; }
 #panel-settings .domain-list .domain-link { align-items: center; min-height: 36px; }
-#panel-settings .rf-rail-count { margin-left: auto; min-width: 18px; height: 18px; padding: 0 5px; display: inline-grid; place-items: center; border-radius: 9px; background: color-mix(in srgb, var(--k3-warn, #f7bd63) 22%, transparent); color: var(--k3-warn, #f7bd63); font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; }
+#panel-settings .rf-rail-count { margin-left: auto; min-width: 18px; height: 18px; padding: 0 5px; display: inline-grid; place-items: center; border-radius: 9px; background: color-mix(in srgb, var(--k3-warn, #f7bd63) 26%, transparent); color: color-mix(in srgb, var(--k3-warn, #f7bd63) 45%, var(--k3-text-1)); font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; }
 
 /* ---- a manager's heading: its name, at the left, once ---- */
 #panel-settings .workspace-separator { text-align: left; padding: 14px 4px 10px; margin: 0; border-bottom: 0; }
