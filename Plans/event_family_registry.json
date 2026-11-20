@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-19.141",
+  "registry_revision": "2026-11-19.142",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -33444,7 +33444,7 @@
       "scope_policy": "project_only",
       "semantic_owner_doc": "Plans/Contracts_V0.md#CV-596",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-596",
-      "payload_schema_id": "https://puppetmaster.local/schemas/dcw/wizard_blocked.schema.json",
+      "payload_schema_id": "pm.event_payload.wizard.blocked.v1",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/planning_wizard/wizard_blocked.schema.json",
         "json_pointer": "#",
@@ -33471,7 +33471,8 @@
       "source_refs": [
         "Plans/Contracts_V0.md#CV-596",
         "Plans/event_payloads/planning_wizard/wizard_blocked.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/dcw_blockage_event_fixtures.json#/families/0/positive/event/payload_schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
