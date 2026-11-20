@@ -602,6 +602,48 @@ def filesafe_selector_implication(nodes, name, path, cut):
                 premise='Every reachable selector role fixes this field to a nonempty string.')
 
 
+def safestop_settlement_selector_implication(nodes, name, path, control, cut):
+    from pm_goal_go_schema_closure import locations
+
+    source, word = name.rsplit('/', 1)
+    defs = source.split('#', 1)[0] + '#/$defs/'
+    field = path[-1]
+    require(path == ['value', 'settlements', 0, 'original_result', field]
+            and field in ('family_id', 'schema_id', 'schema_version')
+            and word in ('type', 'minLength') and source == defs + 'SourceSelector/properties/' + field,
+            'the FileSafe settlement selector field changed')
+    base = nodes[defs+'SourceSelector']['node']
+    rule = base['properties'][field]
+    origin = defs + 'OriginSelector'
+    inherited, fixed = nodes[origin]['node']['allOf']
+    value = fixed['properties'][field]['const']
+    require(field in base['required'] and rule['type'] == 'string' and rule['minLength'] == 1
+            and inherited['$ref'].endswith('#/$defs/SourceSelector')
+            and type(value) is str and len(value) >= rule['minLength'],
+            'the FileSafe origin must already fix a nonempty identifier')
+
+    commitment, = [where for where in nodes if where.endswith('#/$defs/SettlementCommitment')]
+    entry = nodes[commitment]
+    filesafe, process = (arm['properties'] for arm in entry['node']['oneOf'])
+    require(filesafe['kind']['const'] == 'filesafe_original_resolution'
+            and process['kind']['const'] == 'process_original_shutdown'
+            and control['value']['settlements'][0]['kind'] == filesafe['kind']['const']
+            and all(entry['resolver'].lookup(filesafe[role]['$ref']).contents is nodes[origin]['node']
+                    for role in ('original_result', 'original_origin'))
+            and {r['ipath'] for r in nodes[source]['reach']} ==
+                {('value', 'settlements', '#', role, field) for role in ('original_result', 'original_origin')},
+            'the source selector must appear only in the FileSafe settlement arm')
+    covering = origin + '/allOf/1/properties/' + field + '/const'
+    other_ref = entry['resolver'].lookup(process['original_result']['$ref']).contents
+    other_selector, = [where for where, info in nodes.items() if info['node'] is other_ref]
+    other_role, = [where for where in nodes if where.endswith('#/$defs/ProcessInvocation/allOf/1/properties/role')]
+    require(locations(cut) == {covering, commitment + '/oneOf', commitment + '/oneOf/1/properties/kind/const',
+                                other_selector + '/properties/' + field + '/' + word, other_role + '/const'},
+            'the FileSafe constant and the incompatible Process branch must still refuse')
+    return dict(source=commitment, covering_rule=covering,
+                premise='Every reachable FileSafe settlement selector fixes this field to a nonempty string.')
+
+
 def mutation_afterimages_implication(nodes, name, path, control, cut):
     from pm_goal_go_schema_closure import locations
 
@@ -946,6 +988,9 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
             record.update(cls='COVERED_LATER', implication=binding_revision_implication(nodes, name, path, cut))
         elif example.get('filesafe_selector_implication'):
             record.update(cls='COVERED_LATER', implication=filesafe_selector_implication(nodes, name, path, cut))
+        elif example.get('safestop_settlement_selector'):
+            record.update(cls='COVERED_LATER', implication=safestop_settlement_selector_implication(
+                nodes, name, path, control, cut))
         elif example.get('mutation_afterimage_implication'):
             record.update(cls='COVERED_LATER',
                           implication=mutation_afterimages_implication(nodes, name, path, control, cut))
