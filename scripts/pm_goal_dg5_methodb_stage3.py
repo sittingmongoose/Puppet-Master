@@ -138,10 +138,12 @@ def update_fixture(route, path):
     actor = goal['user']
     permission = goal['user_permission']
     inspect = w.inspector
-    if route in ('inspect', 'inspect_request_recheck'):
+    if route in ('inspect', 'inspect_request_recheck', 'inspect_event_recheck'):
         event_request = inspect.request_for(goal['scope'], progress['publication']['event_id'])
         if route == 'inspect_request_recheck':
             check_projected_request_source(w, oracle.O.CONSUMER_URI, route)
+        if route == 'inspect_event_recheck':
+            check_inspected_event_source(oracle.O, w, progress)
         return w, lambda: inspect.inspect(event_request, actor, permission)
     if route in ('audit_current_request', 'audit_terminal_request'):
         check_projected_request_source(w, oracle.O.CONSUMER_URI, route)
@@ -415,6 +417,32 @@ def check_projected_request_source(world, uri, route):
     require(all(step in source for step in steps) and
             [source.index(step) for step in steps] == sorted(source.index(step) for step in steps),
             'the original result no longer forwards the same request')
+
+
+def check_inspected_event_source(module, world, progress):
+    reader = inspect.getsource(world.inspector.inspect)
+    validate = "bank.validate(CONSUMER_URI + '#/$defs/SelectedActiveEvent', event, where + '/event')"
+    decode = "event = row.event"
+    join = "A.same(S.producer25(event), pr['producer_input'])"
+    require(all(step in reader for step in (decode, validate, join)) and
+            reader.index(decode) < reader.index(validate) < reader.index(join),
+            'inspection no longer validates and compares the original event')
+    schema = world.consumer_bank.documents[module.CONSUMER_URI]['$defs']['SelectedActiveEvent']
+    base, extra = schema['allOf']
+    fields = extra['properties']
+    producer = progress['producer_input']
+    event = world.storage.read_event(progress['publication']['event_id'])
+    producer_payload = world.source.bank.documents[module.UPDATE_URI]['$defs']['ProducerInput']['properties']['payload']
+    require(base == {'$ref': EVENT_RECORD.removesuffix('#')} and
+            fields == dict(event_type={'const': 'goal.updated'}, scope_kind={'const': 'project'},
+                           payload_schema_id={'const': module.PAYLOAD_URI}, payload=producer_payload) and
+            producer_payload['$ref'].endswith('/' + module.PAYLOAD_URI),
+            'inspection schema changed')
+    require(module.A.same(module.S.producer25(event), producer) and
+            not {'event_type', 'scope_kind', 'payload_schema_id', 'payload'}.intersection(module.S.STORAGE_FIELDS) and
+            not world.source.bank.errors(module.UPDATE_URI + '#/$defs/ProducerInput', producer) and
+            not world.consumer_bank.errors(module.CONSUMER_URI + '#/$defs/SelectedActiveEvent', event),
+            'the selected event no longer carries the stored complete producer and EventRecord')
 
 
 def check_publication_reused(world, uri):
@@ -1247,6 +1275,107 @@ def event_string_implication(nodes, name, path, cut, locations):
     return dict(source=peer, same_document_path=path, premise='Every allowed value is a string.')
 
 
+def selected_event_scope(nodes):
+    selected, = [location for location in nodes if location.endswith('#/$defs/SelectedActiveEvent')]
+    base, project = nodes[selected]['node']['allOf']
+    require(base['$ref'] == EVENT_RECORD.removesuffix('#') and
+            project['properties']['scope_kind']['const'] == 'project' and
+            'scope_kind' in nodes[EVENT_RECORD]['node']['required'],
+            'the selected event scope is no longer required and pinned')
+    return selected + '/allOf/1/properties/'
+
+
+def inspection_event_selector(nodes, validator, go, control, name, disabled):
+    pinned = selected_event_scope(nodes) + 'scope_kind/const'
+    application, project = (EVENT_RECORD + '/allOf/' + n for n in ('0', '1'))
+    branch, selector = name.split('/if/', 1)
+    require(branch in (application, project) and selector in ('required', 'properties/scope_kind/const'),
+            'unknown selected event scope rule')
+    document = copy.deepcopy(control)
+    expected = set()
+    if selector == 'required':
+        del document['scope_kind']
+        expected.add(EVENT_RECORD + '/required')
+        if branch == project:
+            document['project_id'] = None
+    elif branch == project:
+        document.update(scope_kind='application', project_id=None)
+        expected.add(pinned)
+    peer = (application + '/then/properties/project_id/type' if branch == application
+            else EVENT_RECORD + '/$defs/non_empty_string/type')
+    before = go.errors_of(validator, document)
+    cut = go.errors_of(validator, document, disabled)
+    restored = go.errors_of(validator, document)
+    require(go.locations(before) == expected and go.locations(cut) == expected | {peer} and
+            errors_list(before) == errors_list(restored), 'selected event selector did not change the expected messages')
+    return dict(cls='SELECTOR_OR_NEGATED', source=branch, input=document, original=errors_list(before),
+                cut=errors_list(cut), restored=errors_list(restored))
+
+
+def inspection_event_implication(nodes, name, path, errors, locations, validator):
+    from pm_goal_test_numrule import DT
+    from pm_goal_test_owner_adapters import _owner_timestamp_properties
+
+    selected = selected_event_scope(nodes)
+    peer = {loc for _, at, loc in locations(errors) if at == tuple(path)}
+    if name.startswith(EVENT_RECORD + '/$defs/date_time_string/'):
+        schema = nodes[EVENT_RECORD]['node']
+        field = path[-1]
+        parser, _ = validator.format_checker.checkers['date-time']
+        date_time = schema['properties'][field]['$ref']
+        date_time = EVENT_RECORD.removesuffix('#') + date_time if date_time.startswith('#') else date_time
+        date_node = nodes[date_time]['node']
+        source = inspect.getsource(_owner_timestamp_properties)
+        require(path == ['occurred_at_utc'] and name.rsplit('/', 1)[0] == date_time and
+                schema['properties']['schema_id']['const'] == 'pm.event.v0' and
+                all(node in source for node in ("event = identity == 'pm.event.v0'",
+                                                "profiles['occurred_at_utc'] = NR.DT.EVENT_RECORD",
+                                                'NR.DT.date_time(instance[name], profile=profile)')) and
+                parser.__module__ == DT.__name__ and date_node['minLength'] == 1 and date_node['type'] == 'string' and
+                date_node['format'] == 'date-time' and DT._DATE_TIME.fullmatch('') is None,
+                'the selected EventRecord timestamp rule is no longer implied by the original parser')
+        expected = {EVENT_RECORD + '/properties'}
+        if name.endswith('/minLength'):
+            expected.add(date_time + '/format')
+        require(peer == expected, 'the exact timestamp profile message did not remain')
+        return dict(source=sorted(expected), implementation='scripts/pm_goal_test_owner_adapters.py:199',
+                    premise='The same EventRecord timestamp parser rejects nonstrings and malformed or empty strings.')
+    if path == ['payload']:
+        payload = nodes[selected + 'payload']['node']['$ref'] + '#'
+        original = EVENT_RECORD + '/properties/payload'
+        pair = {original + '/type', payload + '/type'}
+        require(name in pair and peer == pair - {name} and
+                nodes[original]['node']['type'] == nodes[payload]['node']['type'] == 'object',
+                'the same payload object rule was not repeated in the selected event')
+        return dict(source=next(iter(peer)), same_document_path=path)
+    require(len(path) == 1 and path[0] in ('event_type', 'redaction_profile', 'replay_policy', 'schema_id',
+                                         'schema_version', 'scope_kind'), 'unexpected selected event string rule')
+    field = path[0]
+    property_id = EVENT_RECORD + '/properties/' + field
+    annotation = nodes[property_id]['node']
+    if field in ('event_type', 'scope_kind'):
+        pin_id = selected + field
+        allowed = [nodes[pin_id]['node']['const']]
+        source_rule = pin_id + '/const'
+    elif 'const' in annotation:
+        allowed, source_rule = [annotation['const']], property_id + '/const'
+    else:
+        allowed, source_rule = annotation['enum'], property_id + '/enum'
+    require(source_rule in peer and name.startswith(property_id + '/') and allowed and
+            all(type(value) is str for value in allowed), 'the exact selected event string rule did not remain')
+    if name.endswith('/enum'):
+        require(set(allowed) <= set(annotation['enum']), 'the constant no longer implies the enumeration')
+    elif name.endswith('/pattern'):
+        from pm_goal_oracle_common import ecma_pattern
+
+        require(all(ecma_pattern(annotation['pattern']).search(value) for value in allowed),
+                'the selected event type no longer satisfies the original pattern')
+    else:
+        require(name.endswith('/type') and annotation['type'] == 'string', 'unexpected selected event type condition')
+    return dict(source=source_rule, same_document_path=path,
+                premise='The allowed constant or enum satisfies the overlapping EventRecord rule.')
+
+
 def producer_rule_implication(nodes, name, path, errors, locations, validator):
     from pm_goal_test_numrule import DT
     from pm_goal_test_owner_adapters import _owner_timestamp_properties
@@ -1406,6 +1535,18 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         if example.get('event_scope_selector'):
             result[name] = event_scope_trial(nodes, validator, go, control, path, name, disable)
             continue
+        if example.get('inspection_event_selector'):
+            result[name] = inspection_event_selector(nodes, validator, go, control, name, disable)
+            continue
+        if example.get('inspection_unreachable_application'):
+            selected_event_scope(nodes)
+            require(name == EVENT_RECORD + '/allOf/0/then/properties/project_id/type',
+                    'unexpected application-only EventRecord rule')
+            premise = go.pinned_proof(nodes[name.removesuffix('/type')], nodes, validator, 'type')
+            require(premise and premise['cls'] == 'UNREACHABLE' and not go.errors_of(validator, control, disable),
+                    'the selected event can reach the application branch')
+            result[name] = premise
+            continue
         if example.get('normalized_selector'):
             result[name] = normalized_selector_trial(nodes, validator, go, control, name, disable)
             continue
@@ -1453,6 +1594,10 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
                                 restored=errors_list(restored), condition=name)
             continue
         invalid = edit_example(go, control, path, example)
+        if example.get('inspection_application_variant'):
+            require(name.endswith('#/$defs/SelectedActiveEvent/allOf/1/properties/scope_kind/const') and
+                    path == ['scope_kind'] and example['value'] == 'application', 'unexpected inspection scope edit')
+            invalid['project_id'] = None
         if example.get('application_identity'):
             require(name == NORMALIZED + '/properties/owner_identity/allOf/1/properties/scope_kind/const' and
                     path == ['owner_identity', 'scope_kind'] and example['value'] == 'application',
@@ -1512,6 +1657,9 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         elif cut and example.get('evidence_type_implication'):
             record.update(cls='COVERED_LATER', implication=event_string_implication(
                 nodes, name, path, cut, locations))
+        elif cut and example.get('inspection_event_implication'):
+            record.update(cls='COVERED_LATER', implication=inspection_event_implication(
+                nodes, name, path, cut, locations, validator))
         elif cut and 'normalized_paired_rule' in example:
             record.update(cls='COVERED_LATER', implication=normalized_rule_implication(
                 nodes, name, path, cut, locations, example['normalized_paired_rule']))
@@ -1612,6 +1760,7 @@ def main():
         ('dg5/dgu/producer/publish/producer_input/schema', 'publish_input'): 'dgu/producer/publish/final_candidate',
         ('dg5/dgu/reader/input/request/schema', 'input_recheck'): 'dgu/reader/input/result/schema/request',
         ('dg5/dgu/inspect/request/schema', 'inspect_request_recheck'): 'dgu/inspect/witness/schema/request',
+        ('dg5/dgu/inspect/event/schema', 'inspect_event_recheck'): 'dgu/inspect/frozen_producer',
         ('dg5/dgu/reader/audit/request/schema', 'audit_current_request'): 'dgu/reader/audit/result/schema/request',
         ('dg5/dgu/reader/audit/request/schema', 'audit_terminal_request'): 'dgu/reader/audit/result/schema/request',
         ('dg5/dgu/body/reserve/pending/schema', 'reserve_pending'): 'dgu/body/goal_body_control/schema/record/pending',
