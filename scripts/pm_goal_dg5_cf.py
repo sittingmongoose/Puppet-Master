@@ -40,6 +40,7 @@ def _declared(expected):
 
 
 def install_cf1():
+    bridge.bind_context_sentinel(cf1, 'DELETE')
     expectations = {}
     original_negatives = cf1.negatives
 
