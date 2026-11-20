@@ -19,15 +19,20 @@
 // - FO-105: a left click on a Recent row marks nothing: after real clicks on the last three Recent rows (two of them open
 //   on base too), no Recent row carries the current-file mark (.active-file), and the tree's and Open editors' marks are
 //   as they were (base marked each clicked row, so marks piled up, and cleared the tree's).
+// - FO-238: at 1920x1080 in basic-dark only, four timed presses per surface collapse a real folder and press Open by a
+//   real pointer inside the collapse window (the row already collapsed, aria-expanded="false", while its node is still
+//   open, 205-250 ms into the collapse, each press witnessed by capture listeners; a press outside the window is not
+//   coverage, and a surface no press reached fails as "could not reach the window", never passes), and every press that
+//   reached the window re-expands the folder.
 // Sizes 1920x1080, 1280x500 and 740x768, both surfaces, one test each.
-//   --set size=1280x500   --set looks=glass-dark,nier-light   --set parts=105,101,103a,103b,103c,102
+//   --set size=1280x500   --set looks=glass-dark,nier-light   --set parts=105,101,103a,103b,103c,102,238
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const SIZES = [[1920, 1080], [1280, 500], [740, 768]];
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-dark`, `${f}-light`]);
-const PARTS = ['105', '101', '103a', '103b', '103c', '102'];
+const PARTS = ['105', '101', '103a', '103b', '103c', '102', '238'];
 const list = (v, all) => (v ? String(v).split(',').map((s) => s.trim()).filter(Boolean) : all);
 const MENU = '#fileContextMenu';
 // the rows of each kind, in document order: a Changed item's row, an Open editors item's row, a Recent row (an .fm-openrow
@@ -285,6 +290,89 @@ async function cell(t, surface, w, h) {
 			await shut();
 		}
 	}
+
+	// FO-238: Open pressed by a real pointer inside the folder's real collapse window (the batch 12e+13 deep review
+	// found this kit never pressed Open in the state the bug needs: the row already collapsed while its node is still
+	// open, 205-250 ms into the collapse — on the pre-13 page nothing opens then). Runs at 1920x1080 in basic-dark
+	// only, both surfaces. Each of the four presses collapses the folder by its own key and presses Open at a time
+	// aimed into the window; the armed capture listeners are the authority for whether a press reached it, so a press
+	// that landed elsewhere is not coverage, a surface no press reached fails as "could not reach the window" (never
+	// passes), and every press that did reach it must re-expand the folder.
+	if (parts.includes('238') && w === 1920 && h === 1080) {
+		const look = 'basic-dark';
+		await t.app.look(look);
+		await pane('explorer');
+		await shut();
+		const folder = await f.evaluate(() => [...document.querySelectorAll('#panel-files [role="tree"] .fm-folder > [data-kind="folder"][aria-expanded]')]
+			.find((n) => n.checkVisibility() && n.closest('.fm-node')?.querySelector(':scope > .fm-children'))?.getAttribute('data-path'));
+		if (!await t.check(`FO-238 ${tag}: a real expandable folder row to collapse for the timed Open press`, !!folder, String(folder), { hard: true })) return;
+		const row = `#panel-files [role="tree"] [data-path=${JSON.stringify(folder)}]`;
+		const loc = f.locator(row);
+		await loc.scrollIntoViewIfNeeded();
+		// The audit the presses are judged by: the collapse's anchor (the trusted ArrowLeft on the focused row) and,
+		// per press, whether the trusted click on Open landed with the row collapsed (aria-expanded="false") while
+		// its node is still open, and how far into the collapse it landed.
+		await f.evaluate(({ row, open }) => {
+			if (window.__frpTimed?.clean) window.__frpTimed.clean();
+			window.__frpTimedAbort = new AbortController();
+			const r = document.querySelector(row), node = r.closest('.fm-node');
+			const audit = window.__frpTimed = { times: [], anchor: 0 };
+			const options = { capture: true, signal: window.__frpTimedAbort.signal };
+			document.addEventListener('keydown', (e) => {
+				if (e.target === r && e.key === 'ArrowLeft' && e.isTrusted && r.getAttribute('aria-expanded') === 'true') { audit.anchor = performance.now(); audit.times = []; }
+			}, options);
+			audit.clean = () => window.__frpTimedAbort.abort();
+			for (const kind of ['contextmenu', 'pointerdown', 'pointerup', 'click']) {
+				document.addEventListener(kind, (e) => {
+					if (!audit.anchor || (!r.contains(e.target) && !e.target.closest(open))) return;
+					audit.times.push({ kind, abs: performance.now(), dt: performance.now() - audit.anchor, trusted: e.isTrusted,
+						onOpen: !!e.target.closest(open), expanded: r.getAttribute('aria-expanded'),
+						lingering: node.classList.contains('open'), x: e.clientX, y: e.clientY });
+				}, options);
+			}
+		}, { row, open: `${MENU} [data-pmw-open="open"]` });
+		const presses = [];
+		for (const targetMs of [199, 205, 211, 217]) {
+			if (await isOpen()) await shut();
+			await loc.focus();
+			if (await loc.getAttribute('aria-expanded') === 'false') await t.page.keyboard.press('ArrowRight');
+			const expanded = await until((s) => { const r = document.querySelector(s), n = r.closest('.fm-node');
+				return r.getAttribute('aria-expanded') === 'true' && n.classList.contains('open') && !n._fm?.timer; }, row, 1800);
+			if (!expanded) { presses.push({ targetMs, note: 'the folder did not start fully expanded' }); continue; }
+			const bb = await loc.boundingBox();
+			await t.page.mouse.move(bb.x + Math.min(72, bb.width / 2), bb.y + bb.height / 2);
+			await t.page.keyboard.press('ArrowLeft');
+			await t.page.mouse.click(bb.x + Math.min(72, bb.width / 2), bb.y + bb.height / 2, { button: 'right' });
+			// One round trip: the page's own clock reads the Open item's box at the anchor plus the target (mid-sprout
+			// included), so the press follows without another wait stacking delay on top of the window.
+			const item = await f.evaluate(({ open, menu, targetMs }) => new Promise((resolve) => {
+				const due = window.__frpTimed.anchor + targetMs;
+				setTimeout(() => {
+					const el = document.querySelector(open), m = document.querySelector(menu);
+					if (!el || !m.classList.contains('is-open')) return resolve(null);
+					const b = el.getBoundingClientRect();
+					resolve({ x: b.x, y: b.y, width: b.width, height: b.height, at: performance.now() - window.__frpTimed.anchor });
+				}, Math.max(0, due - performance.now()));
+			}), { open: `${MENU} [data-pmw-open="open"]`, menu: MENU, targetMs });
+			if (!item) { presses.push({ targetMs, note: 'the Open item was not there to press' }); await t.page.waitForTimeout(390); continue; }
+			await t.page.mouse.click(off.x + item.x + item.width / 2, off.y + item.y + item.height / 2);
+			const seen = await f.evaluate(({ row, menu }) => ({ events: __frpTimed.times, after: document.querySelector(row).getAttribute('aria-expanded'),
+				menu: document.querySelector(menu).classList.contains('is-open') }), { row, menu: MENU });
+			const press = seen.events.find((x) => x.kind === 'click' && x.onOpen && x.trusted);
+			const inWindow = !!press && press.expanded === 'false' && press.lingering && press.dt >= 205 && press.dt <= 250;
+			presses.push({ targetMs, itemReadMs: Math.round(item.at * 10) / 10, pressMs: press ? Math.round(press.dt * 10) / 10 : null,
+				expandedAtPress: press?.expanded, nodeOpenAtPress: press?.lingering, inWindow,
+				tookEffect: seen.after === 'true' && !seen.menu });
+			await t.page.waitForTimeout(390);
+		}
+		await f.evaluate(() => { if (window.__frpTimed?.clean) window.__frpTimed.clean(); });
+		await shut();
+		const hit = presses.filter((p) => p.inWindow);
+		t.log(`FO-238 ${tag} ${look} ${folder}: ${JSON.stringify(presses)}`);
+		await t.check(`FO-238 ${tag} ${look}: Open pressed by a real pointer while ${folder} is collapsed but its node still open (205-250 ms into the collapse) re-expands it`,
+			hit.length >= 1 && hit.every((p) => p.tookEffect),
+			hit.length ? JSON.stringify(presses) : `could not reach the window: ${JSON.stringify(presses)}`);
+	} else if (parts.includes('238')) t.log(`FO-238 ${tag}: the timed Open row runs at 1920x1080 only`);
 
 	// FO-103 B: with an item's full path text decorated, File actions › Open still acts on the row's own file.
 	if (parts.includes('103b')) {
