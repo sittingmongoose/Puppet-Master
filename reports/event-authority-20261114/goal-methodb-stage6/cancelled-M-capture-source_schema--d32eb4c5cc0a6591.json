@@ -1,0 +1,470 @@
+{
+  "accepted_branches": {
+    "0": {
+      "assistant_plan_id": "TO-plan-857cb0a44cd347eebc5e",
+      "binding": {
+        "assistant_plan_id": "TO-plan-857cb0a44cd347eebc5e",
+        "goal_id": "TO-goal-3f87fe60054a4cde95bb",
+        "plan_hash": "cd9cd6c6716190b262a814eda39eb07b7fe72b5f37e10da1aff248f8ef8a985e",
+        "plan_run_id": "TO-run-71b728f905f64ef89ed9",
+        "plan_version": 1,
+        "planunit_bundle_ref": null,
+        "todo_list_ref": "TEST_ONLY:todo-list:32cb6195-92f5-46a4-8a5d-2abed8497526"
+      },
+      "created_at": "2026-11-18T16:25:45.599Z",
+      "disposition": "no_effect",
+      "expected_goal_body_sha256": "13ed960807fccf026e413df183d9a1bfcb04e887a2f8bc3ccc764d70230f69b3",
+      "expected_goal_control_sha256": "0b11015172e5b4d05497f7ac7757dfd106a26cf5c81fbc21396d739fcc8540af",
+      "expected_stop_control_sha256": "17fec7ba7f6f900d9b789965c089d4fbe18fd6ce368481163eb711cd627a1043",
+      "operation": "plan_goal_birth_or_attach",
+      "operation_id": "TEST_ONLY:plan-attach:f5b28e33-5a95-4f60-b645-4ead0429dbba",
+      "owner_epoch": 1,
+      "owner_ref": "TEST_ONLY:owner:assistant_plan:90614448-20e7-4db3-928b-c895ed943e7d",
+      "plan_run_id": "TO-run-71b728f905f64ef89ed9",
+      "qualification": "TEST_ONLY",
+      "schema_id": "pm.test_only.plan_pending_attach.v1",
+      "scope": {
+        "goal_id": "TO-goal-3f87fe60054a4cde95bb",
+        "project_id": "TO-proj-2bf32c69f48f4db89f28",
+        "storage_instance_id": "0e97aa41-7e02-46f1-b8f1-459b1618c364",
+        "thread_id": "TO-thr-fc3e83fe2fb34a818bef"
+      }
+    }
+  },
+  "census_sha256": "aa1159e67c87c9874e95cb4da891ca18dd7218972f30e79228d4e2e27653f96c",
+  "examples": {
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "binding"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/assistant_plan_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "binding",
+        "assistant_plan_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/assistant_plan_id/type": {
+      "control_name": "0",
+      "path": [
+        "binding",
+        "assistant_plan_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/goal_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "binding",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/goal_id/type": {
+      "control_name": "0",
+      "path": [
+        "binding",
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/plan_hash/pattern": {
+      "control_name": "0",
+      "path": [
+        "binding",
+        "plan_hash"
+      ],
+      "value": "cd9cd6c6716190b262a814eda39eb07b7fe72b5f37e10da1aff248f8ef8a985e\n"
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/plan_hash/type": {
+      "control_name": "0",
+      "path": [
+        "binding",
+        "plan_hash"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/plan_run_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "binding",
+        "plan_run_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/plan_run_id/type": {
+      "control_name": "0",
+      "path": [
+        "binding",
+        "plan_run_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/plan_version/minimum": {
+      "control_name": "0",
+      "path": [
+        "binding",
+        "plan_version"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/plan_version/type": {
+      "control_name": "0",
+      "path": [
+        "binding",
+        "plan_version"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/planunit_bundle_ref/oneOf": {
+      "control_name": "0",
+      "path": [
+        "binding",
+        "planunit_bundle_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/planunit_bundle_ref/oneOf/0/minLength": {
+      "control_name": "0",
+      "path": [
+        "binding",
+        "planunit_bundle_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/planunit_bundle_ref/oneOf/0/type": {
+      "control_name": "0",
+      "path": [],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/planunit_bundle_ref/oneOf"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/planunit_bundle_ref/oneOf/1/type": {
+      "control_name": "0",
+      "path": [
+        "binding",
+        "planunit_bundle_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/todo_list_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "binding",
+        "todo_list_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/properties/todo_list_ref/type": {
+      "control_name": "0",
+      "path": [
+        "binding",
+        "todo_list_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "goal_id"
+      ],
+      "path": [
+        "binding"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding/type": {
+      "control_name": "0",
+      "path": [
+        "binding"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/assistant_plan_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "assistant_plan_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/assistant_plan_id/type": {
+      "control_name": "0",
+      "path": [
+        "assistant_plan_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/created_at/format": {
+      "control_name": "0",
+      "path": [
+        "created_at"
+      ],
+      "value": "not-a-date-time"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/created_at/type": {
+      "control_name": "0",
+      "path": [
+        "created_at"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/disposition/enum": {
+      "control_name": "0",
+      "path": [
+        "disposition"
+      ],
+      "value": "no_effectx"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/expected_goal_body_sha256/pattern": {
+      "control_name": "0",
+      "path": [
+        "expected_goal_body_sha256"
+      ],
+      "value": "13ed960807fccf026e413df183d9a1bfcb04e887a2f8bc3ccc764d70230f69b3\n"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/expected_goal_body_sha256/type": {
+      "control_name": "0",
+      "path": [
+        "expected_goal_body_sha256"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/expected_goal_control_sha256/pattern": {
+      "control_name": "0",
+      "path": [
+        "expected_goal_control_sha256"
+      ],
+      "value": "0b11015172e5b4d05497f7ac7757dfd106a26cf5c81fbc21396d739fcc8540af\n"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/expected_goal_control_sha256/type": {
+      "control_name": "0",
+      "path": [
+        "expected_goal_control_sha256"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/expected_stop_control_sha256/pattern": {
+      "control_name": "0",
+      "path": [
+        "expected_stop_control_sha256"
+      ],
+      "value": "17fec7ba7f6f900d9b789965c089d4fbe18fd6ce368481163eb711cd627a1043\n"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/expected_stop_control_sha256/type": {
+      "control_name": "0",
+      "path": [
+        "expected_stop_control_sha256"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/operation/const": {
+      "control_name": "0",
+      "path": [
+        "operation"
+      ],
+      "value": "plan_goal_birth_or_attachx"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/operation_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/operation_id/type": {
+      "control_name": "0",
+      "path": [
+        "operation_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/owner_epoch/minimum": {
+      "control_name": "0",
+      "path": [
+        "owner_epoch"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/owner_epoch/type": {
+      "control_name": "0",
+      "path": [
+        "owner_epoch"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/owner_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "owner_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/owner_ref/type": {
+      "control_name": "0",
+      "path": [
+        "owner_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/plan_run_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "plan_run_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/plan_run_id/type": {
+      "control_name": "0",
+      "path": [
+        "plan_run_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/qualification/const": {
+      "control_name": "0",
+      "path": [
+        "qualification"
+      ],
+      "value": "TEST_ONLYx"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/properties/schema_id/const": {
+      "control_name": "0",
+      "path": [
+        "schema_id"
+      ],
+      "value": "pm.test_only.plan_pending_attach.v1x"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach/type": {
+      "control_name": "0",
+      "path": [],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/goal_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/goal_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/project_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/project_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/storage_instance_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/storage_instance_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/thread_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/thread_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "thread_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "storage_instance_id"
+      ],
+      "path": [
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/type": {
+      "control_name": "0",
+      "path": [
+        "scope"
+      ],
+      "value": null
+    }
+  },
+  "family": "goal.cancelled",
+  "occurrence": 1,
+  "reference": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/PlanPendingAttach",
+  "root": "dg5:d32eb4c5cc0a6591",
+  "route": "M/capture/source_schema",
+  "row": "dg5/M/capture/source_schema/schema",
+  "site": [
+    "scripts/pm_goal_dg_cb_owners.py",
+    199
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "transaction": true,
+  "variant": "plan"
+}
