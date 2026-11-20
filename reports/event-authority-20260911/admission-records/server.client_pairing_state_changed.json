@@ -3,8 +3,8 @@
  "event_type": "server.client_pairing_state_changed",
  "family_id": "event-family-server-client-pairing-state-changed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
- "decision_ref": "Plans/Decision_Log.md#DL-2397",
- "decision_section_sha256": "d138fd1a98285716c523a71368b46132a193448b1c52803a0f90d8b45b0970ef",
+ "decision_ref": "Plans/Decision_Log.md#DL-2560",
+ "decision_section_sha256": "b2d52bb8602fc63632c2fa370ebba17ba839beddf08f1f142db435e46c6ed3c1",
  "registry_before": {
   "revision": "2026-11-16.260",
   "sha256": "9f2fb9c2aa7e705ad37fd5df4fab75c728204b61fef4765ba7bcf02dc2539950",
@@ -15,10 +15,10 @@
   "sha256": "28114aec3ae5472f36cf40bf130394530a4bdda2374e7ba411614733e8fc7d65",
   "family_count": 480
  },
- "registry_row_sha256": "ffba409de20d71e36bbf0738fba9f9c2d17c988faa1e8e9f78556e3946c5d189",
+ "registry_row_sha256": "3bf4d40390a3abf37e8a913bc53b2867357f64b3813b2c1caf55377efcb9317a",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/server.client_pairing_state_changed.json",
-  "sha256": "578f6a180a98cf73e4dccb5e7e707a766f9ba0897d1db446339cdd42aa3a9b09"
+  "sha256": "568139e8d09462c184da06548e57f91e7e20d9004641cc003f0a2477b8899c47"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,13 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_record_sha256": "fc394bfe0dab40ca8871fe50375a256d74311c37e808225a06c219ef4aa391a4",
-  "source_assessment_sha256": "6ed0aa16a65afa89190d6b2aacf6b627ad3204b66f8fa5208992040b5af51bd9",
-  "source_decision_section_sha256": "1c65bcd426617f00f92ef6562daf3f9e4b43c5e8c65e59ccf9d23738afe5cf03",
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "6cc18ee1c52c6be17fc4c95d1474d4c550622e30",
+  "source_record_sha256": "c44dd9e7a6e6418b1dcba28e31520d91b0b8345c27d2bf3e76e1acdcf654840e",
+  "source_assessment_sha256": "578f6a180a98cf73e4dccb5e7e707a766f9ba0897d1db446339cdd42aa3a9b09",
+  "source_decision_section_sha256": "d138fd1a98285716c523a71368b46132a193448b1c52803a0f90d8b45b0970ef",
   "original_registry_checkpoints_preserved": true
- }
+ },
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2397",
+ "postfix_correction": "reports/event-authority-20261116/admission-merge-3/corrections/server.client_pairing_state_changed.json"
 }

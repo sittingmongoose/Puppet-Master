@@ -5533,6 +5533,7 @@
     "DL-2557",
     "DL-2558",
     "DL-2559",
+    "DL-2560",
     "DL-451",
     "DL-694",
     "F3-585",
@@ -53117,6 +53118,21 @@
     {
       "edge_type": "depends_on",
       "from": "DL-2559",
+      "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2560",
+      "to": "DL-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2560",
+      "to": "DL-2397"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2560",
       "to": "DL-400"
     },
     {
@@ -163975,7 +163991,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-20T01:21:42Z",
+  "generated_at_utc": "2026-11-20T01:22:34Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -216723,6 +216739,23 @@
         "heading_level": 3,
         "heading_line": 27732,
         "line": 27734,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge3_postfix",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2560",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_admission",
+      "source_location": {
+        "heading": "DL-2560: Event Authority corrects server.client_pairing_state_changed (merge 3 post-landing)",
+        "heading_level": 3,
+        "heading_line": 60784,
+        "line": 60786,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -326810,10 +326843,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27653,
+    "depends_on_edge_count": 27656,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30878,
-    "node_count": 9578,
+    "edge_count": 30881,
+    "node_count": 9579,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
