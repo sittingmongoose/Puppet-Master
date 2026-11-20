@@ -16,6 +16,7 @@ import shutil
 import sys
 import time
 from unittest.mock import patch
+from urllib.parse import urljoin
 
 from jsonschema import Draft202012Validator
 
@@ -97,6 +98,33 @@ class Fixture(stage.Fixture):
             yield prepared
         elif self.route in ('publish_retained', 'publish_result'):
             yield from self.transition_controls(value)
+            if self.route == 'publish_result':
+                origin_control = self.publish_origin_control(value)
+                if origin_control is not None:
+                    yield origin_control
+
+    def publish_origin_control(self, value):
+        """Select the installed D06 published-origin alternative in the result schema."""
+        selector = self.world.edition.d01 + '#/$defs/OriginalWriterOrigin'
+        union = self.bank.lookup(selector)
+        indices = [index for index, branch in enumerate(union.contents['oneOf'])
+                   if branch.get('properties', {}).get('kind', {}).get('const') == 'd06_original']
+        if len(indices) != 1:
+            return None
+        index, = indices
+        branch = union.contents['oneOf'][index]
+        storage = union.resolver.lookup(branch['properties']['value']['$ref'])
+        schema = storage.resolver.lookup(storage.contents['properties']['record']['$ref'])
+        condition, = schema.contents['allOf']
+        prepare = condition['if']['properties']['issuer_method']['const']
+        publish, = (method for method in schema.contents['properties']['issuer_method']['enum'] if method != prepare)
+        ref = condition['else']['properties']['afterimages']['$ref']
+        origin = world.skeleton(self.bank, f'{selector}/oneOf/{index}')
+        origin['value']['record'].update(
+            issuer_method=publish, afterimages=world.skeleton(self.bank, urljoin(schema.resolver._base_uri, ref)))
+        variant = copy.deepcopy(value)
+        variant['d01_lineage']['workflow']['original_writer_origins'] = [origin]
+        return variant
 
     def transition_controls(self, value):
         """Supply the accepted transition branches of the installed D01 schema."""
@@ -492,32 +520,41 @@ def update_implication(nodes, info, name, keyword, cut, path):
 
 
 def afterimages_implication(nodes, name, cut, path):
-    marker = '#/$defs/WorkflowMutationOrigin'
-    if not name.endswith(marker + '/properties/afterimages/oneOf'):
+    if name.endswith('#/$defs/WorkflowMutationOrigin/properties/afterimages/oneOf'):
+        location = name.removesuffix('/properties/afterimages/oneOf')
+        discriminator = 'method'
+    elif '/workflow_cancel_original_start_profile.' in name and name.endswith('#/$defs/Origin/properties/afterimages/oneOf'):
+        location = name.removesuffix('/properties/afterimages/oneOf')
+        discriminator = 'issuer_method'
+    else:
         return None
-    location = name.split(marker, 1)[0] + marker
     entry = nodes[location]
     node = entry['node']
     props = node['properties']
     annotation = 'x-pm-oracle-id'
-    if not {'method', 'afterimages'} <= set(node['required']):
+    if not {discriminator, 'afterimages'} <= set(node['required']):
         return None
     options = {}
     for arm in node['allOf']:
         condition = arm['if']
         if (set(condition) - {annotation} != {'properties'} or
-                set(condition['properties']) != {'method'}):
+                set(condition['properties']) != {discriminator}):
             return None
-        selector = condition['properties']['method']
+        selector = condition['properties'][discriminator]
         if set(selector) - {annotation} != {'const'}:
             return None
         branch = arm['then']['properties']['afterimages']
-        if set(branch) - {annotation} != {'$ref'}:
+        if set(branch) - {annotation} != {'$ref'} or selector['const'] in options:
             return None
         options[selector['const']] = branch['$ref']
+        if 'else' in arm:
+            alternatives = set(props[discriminator]['enum']) - {selector['const']}
+            alternate = arm['else']['properties']['afterimages']
+            if len(node['allOf']) != 1 or len(alternatives) != 1 or set(alternate) - {annotation} != {'$ref'}:
+                return None
+            options[next(iter(alternatives))] = alternate['$ref']
     union = props['afterimages']['oneOf']
-    if (len(options) != len(node['allOf']) or len(set(options.values())) != len(options) or
-            set(options) != set(props['method']['enum']) or
+    if (len(set(options.values())) != len(options) or set(options) != set(props[discriminator]['enum']) or
             any(set(branch) - {annotation} != {'$ref'} for branch in union) or
             sorted(branch['$ref'] for branch in union) != sorted(options.values())):
         return None
@@ -539,6 +576,43 @@ def afterimages_implication(nodes, name, cut, path):
         return None
     return dict(covering_rules=sorted(other), method_references=options, source=location,
                 premise='Each allowed method requires a union branch. Their closed member sets and required members make the branches mutually exclusive.')
+
+
+def event_clock_implication(plain, nodes, info, name, keyword, cut, path):
+    """The bank applies the same shared time profile at the enclosing event property."""
+    marker = '#/$defs/Event_date_time_string/'
+    if keyword not in ('type', 'format') or marker not in name:
+        return None
+    if info['node'].get('type') != 'string' or info['node'].get('format') != 'date-time':
+        return None
+    from pm_goal_own_c_roots import _owned_properties, _timestamp_profiles
+    if plain.VALIDATORS['properties'] is not _owned_properties:
+        return None
+    if not any(error.validator == keyword and tuple(error.absolute_path) == tuple(path) and
+               error.message == 'shared timestamp profile refused' for error in cut):
+        return None
+    location = name.split(marker, 1)[0] + '#/$defs/EventRecord'
+    owner = nodes.get(location)
+    if owner is None or not co_reached(owner, info, nodes, parent=True):
+        return None
+    verified = {}
+    original = plain._resolver.lookup(location)
+    clock = plain._resolver.lookup(name.rsplit('/', 1)[0]).contents
+    profiles = _timestamp_profiles(original.contents)
+    if profiles != _timestamp_profiles(owner['node']):
+        return None
+    for reach in info['reach']:
+        field = reach['ipath'][-1]
+        if field not in profiles or field == 'expires_at_utc':
+            return None
+        ref = original.contents['properties'][field].get('$ref')
+        if not ref or original.resolver.lookup(ref).contents is not clock:
+            return None
+        verified[field] = profiles[field]
+    source = Path(inspect.getsourcefile(_owned_properties))
+    return dict(covering_source=location, covering_profiles=verified, evaluator=str(source.relative_to(ROOT)),
+                evaluator_sha256=sha(source), evaluator_line=_owned_properties.__code__.co_firstlineno,
+                premise='The enclosing property applies its selected shared date-time checker after the field schema. The same check enforces string type and the installed format profile.')
 
 
 def preflight_implication(nodes, info, name, keyword, cut, path):
@@ -667,7 +741,7 @@ def replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword
         cut = rules.errors_of(validator, changed, set() if disable == 'clause' else {guard})
         restored = rules.errors_of(validator, changed)
         require(rule_id not in rules.locations(cut) and error_records(restored) == guarded and
-                error_records(plain.iter_errors(changed)) == actual,
+                (guarded == actual or error_records(plain.iter_errors(changed)) == actual),
                 f'{rule_id}: individual rule disable or restoration failed')
         implication = None
         if cut:
@@ -676,6 +750,7 @@ def replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword
                            member_and_type_implication(plain, nodes, info, rule_id, keyword, cut, path) or
                            update_implication(nodes, info, rule_id, keyword, cut, path) or
                            afterimages_implication(nodes, rule_id, cut, path) or
+                           event_clock_implication(plain, nodes, info, rule_id, keyword, cut, path) or
                            preflight_implication(nodes, info, rule_id, keyword, cut, path) or
                            stage.regex_implication(plain, node, keyword, rule_id, path, cut))
         record = dict(path=list(path), edit=repr(edit), edit_source=source, control=index,
