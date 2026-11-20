@@ -1,0 +1,320 @@
+{
+  "accepted_branches": {
+    "0": {
+      "expected_original_result": null,
+      "expected_writer_domain": {
+        "owner": "TEST_ONLY:owner:native_registration:dea29092-b0cf-4f0b-8688-f6ecb236b8f4",
+        "physical_key": "TEST_ONLY:native_dispatch_state|native_dispatch:66366235323334612d306465332d346133302d626437392d376634353866666661646261",
+        "schema_ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/DispatchCommitmentInput",
+        "sha256": "4be37d0c6156b2ce3b17c0314c99b84de8b23475b21b31e0d5b3e858a4b0b23d"
+      },
+      "migration_id": "TEST_ONLY:migration:ed5ac3cd-d0cd-40e6-8885-950c69321fb2",
+      "scope": {
+        "goal_id": "TO-goal-599a4a37fbed4c718b86",
+        "project_id": "TO-proj-7819cf21eee44c299399",
+        "storage_instance_id": "f6b5234a-0de3-4a30-bd79-7f458fffadba",
+        "thread_id": "TO-thr-bcadbd09356a40fb990c"
+      },
+      "withdrawal_id": "TEST_ONLY:withdrawal:87eb38aa-97b2-4977-974d-662a093041a9"
+    },
+    "1": {
+      "expected_original_result": {
+        "owner": "TEST_ONLY:owner:storage_migration:5be70342-cff0-41a2-9ca6-44e0935b5d46",
+        "physical_key": "goal_binding_migration_result|goal_binding_migration_result.v1:38663638386238382d356266652d343665652d393139642d663263636336383561363261:544f2d70726f6a2d3839313461643034646462313461313438353032:544f2d7468722d6330346664613061373839663437306138353439:544f2d676f616c2d6632316531363563323064303436636139653932:544553545f4f4e4c593a6d6967726174696f6e3a39623964393261352d383735642d343237632d616633322d373837353832356632643032",
+        "schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationResult",
+        "sha256": "cd9a4e96c64b8240a98407dcfbe2975343e6a5a8e2f897e500311b9b50862e36"
+      },
+      "expected_writer_domain": {
+        "owner": "TEST_ONLY:owner:goal_binding:95f8bf1a-654c-4796-ba97-72daa91c753f",
+        "physical_key": "goal_execution_writer_domain|goal_execution_writer_domain.v1:38663638386238382d356266652d343665652d393139642d663263636336383561363261:epoch:1",
+        "schema_ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageWriterDomain",
+        "sha256": "64b44ae92e76e1b4283fd90dcd36c69db3f0cefc12717c8b71d882cd3cea9d07"
+      },
+      "migration_id": "TEST_ONLY:migration:9b9d92a5-875d-427c-af32-7875825f2d02",
+      "scope": {
+        "goal_id": "TO-goal-f21e165c20d046ca9e92",
+        "project_id": "TO-proj-8914ad04ddb14a148502",
+        "storage_instance_id": "8f688b88-5bfe-46ee-919d-f2ccc685a62a",
+        "thread_id": "TO-thr-c04fda0a789f470a8549"
+      },
+      "withdrawal_id": "TEST_ONLY:withdrawal:096b0f41-8d0e-47b5-8be5-1d736b4b2673"
+    }
+  },
+  "census_sha256": "89de308f5aaaa64cd0f14bc0a0be93363ee9156ef586d70197dca3f3ec620677",
+  "examples": {
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalRequest/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalRequest/properties/expected_original_result/oneOf": {
+      "control_name": "0",
+      "path": [
+        "expected_original_result"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalRequest/properties/expected_original_result/oneOf/1/type": {
+      "control_name": "0",
+      "path": [
+        "expected_original_result"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalRequest/properties/migration_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "migration_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalRequest/properties/migration_id/type": {
+      "control_name": "0",
+      "path": [
+        "migration_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalRequest/properties/withdrawal_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "withdrawal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalRequest/properties/withdrawal_id/type": {
+      "control_name": "0",
+      "path": [
+        "withdrawal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalRequest/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "scope"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalRequest/type": {
+      "control_name": "0",
+      "path": [],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/goal_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/goal_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/project_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/project_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/storage_instance_id/format": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": "not-a-uuid"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/storage_instance_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/thread_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/thread_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "thread_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "storage_instance_id"
+      ],
+      "path": [
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/type": {
+      "control_name": "0",
+      "path": [
+        "scope"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "expected_writer_domain"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/owner/minLength": {
+      "control_name": "0",
+      "path": [
+        "expected_writer_domain",
+        "owner"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/owner/type": {
+      "control_name": "0",
+      "path": [
+        "expected_writer_domain",
+        "owner"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/physical_key/minLength": {
+      "control_name": "0",
+      "path": [
+        "expected_writer_domain",
+        "physical_key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/physical_key/type": {
+      "control_name": "0",
+      "path": [
+        "expected_writer_domain",
+        "physical_key"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/schema_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "expected_writer_domain",
+        "schema_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/schema_ref/type": {
+      "control_name": "0",
+      "path": [
+        "expected_writer_domain",
+        "schema_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/sha256/maxLength": {
+      "control_name": "1",
+      "length_pattern": true,
+      "path": [
+        "expected_writer_domain",
+        "sha256"
+      ],
+      "value": "64b44ae92e76e1b4283fd90dcd36c69db3f0cefc12717c8b71d882cd3cea9d076"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/sha256/minLength": {
+      "control_name": "1",
+      "length_pattern": true,
+      "path": [
+        "expected_writer_domain",
+        "sha256"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/sha256/pattern": {
+      "control_name": "0",
+      "path": [
+        "expected_writer_domain",
+        "sha256"
+      ],
+      "value": "4be37d0c6156b2ce3b17c0314c99b84de8b23475b21b31e0d5b3e858a4b0b23!"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/sha256/type": {
+      "control_name": "0",
+      "path": [
+        "expected_writer_domain",
+        "sha256"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "owner"
+      ],
+      "path": [
+        "expected_writer_domain"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/type": {
+      "control_name": "0",
+      "path": [
+        "expected_original_result"
+      ],
+      "value": true
+    }
+  },
+  "family": "goal.cancelled",
+  "reference": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalRequest",
+  "root": "dg5:762a5ced7656b771",
+  "route": "contracts/MigrationWithdrawalRequest",
+  "row": "dg5/contracts/MigrationWithdrawalRequest/schema",
+  "site": [
+    "scripts/pm_goal_dg_cb_owners.py",
+    1792
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "transaction": true
+}
