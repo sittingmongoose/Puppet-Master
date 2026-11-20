@@ -27,7 +27,37 @@ def selector(directory, negative):
     return world, W.resolve_selector, (world.storage, selected, 'start/d01_head_body'), {}
 
 
+def ready_retry(directory):
+    suite = source.Suite(directory)
+    world, handles = source.new_world(suite)
+    world.fault = 'after_prepare'
+    try:
+        world.start.commit_start(source.request(world), handles)
+    except S.Crash as error:
+        pilot.require(error.point == 'after_prepare', str(error))
+    else:
+        raise ValueError('original Start did not stop after prepare')
+    world.fault = None
+    return world, handles
+
+
+def prepared_candidate(directory, negative):
+    world, handles = ready_retry(directory)
+    if negative:
+        edition = world.edition
+        owner = world.owners['input:native_compile']
+        ref = edition.activation.replace('workflow_activation_sources.v4',
+                                         'current_activation_materialization_join.v1')
+        ref += '#/$defs/SevenDurableOriginalInputs/properties/native_compile'
+        original = W.skeleton(edition.bank, edition.custody + '#/$defs/OriginalWorkflowArgument')
+        value = original['seven_original_inputs']['native_compile']
+        handles['input:native_compile'] = (owner.owner_id, owner.issue_whole(
+            ref, value, kind='seven_input:native_compile', prefix='stage7_native_compile'))
+    return world, world.start.commit_start, (source.request(world), handles), {}
+
+
 CASES = {
+    'prepared-candidate': (START, 1002, 'start/idempotency_conflict', prepared_candidate),
     'selector': (WORLD, 458, 'start/d01_head_body/selector_type', selector),
 }
 
