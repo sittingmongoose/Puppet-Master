@@ -93,13 +93,15 @@ const ARM = () => {
 				W.lists[g] = (W.lists[g] || 0) + 1;
 				// a target change re-sets the target's words: the HUD target word (b.pst-target, hudTarget) and the
 				// bracket label (gHud.__b[8], renderBrackets' innerHTML) each replace their text node in one record
-				// that removes the old words; the decision is helpers/onb-rest-created.mjs, on this side of the wire
+				// that removes the old words; the decision is helpers/onb-rest-created.mjs, on this side of the wire,
+				// and it compares the words: R124 F4-1, a page that re-creates the same text every frame is not a change
 				const b = st.gHud && st.gHud.__b, label = b && b[8], word = st.hudEl && st.hudEl.querySelector('.pst-target');
 				const under = (el) => !!el && (el === r.target || (el.contains && el.contains(r.target)));
-				const wordReset = r.removedNodes.length > 0 && (under(label) || under(word));
+				const textOf = (nodes) => [...nodes].map((n) => n.textContent || '').join('');
+				const reset = r.removedNodes.length > 0 && (under(label) || under(word)) ? { removedText: textOf(r.removedNodes), addedText: textOf(r.addedNodes) } : null;
 				const added = [];
 				r.addedNodes.forEach((n) => walk(n, (m) => { added.push({ text: m.nodeType === 3, seen: seen.has(m), desc: desc(m) }); seen.add(m); }));
-				W.childRecords.push({ g, wordReset, added });
+				W.childRecords.push({ g, reset, added });
 			} else if (r.type === 'attributes') W.attrs.push([r.target, r.attributeName, r.oldValue, groupOf(r.target)]);
 			else W.text.push([r.target, r.oldValue, groupOf(r.target)]);
 		}
