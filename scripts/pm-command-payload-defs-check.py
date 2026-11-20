@@ -133,15 +133,24 @@ JUDGMENT_WORD_RE = re.compile(r"(?<![A-Za-z])judge?ments?(?![A-Za-z])", re.I)
 # Review and evidence material named inside a definitions block (DL-341, P0c): canon text stands on
 # canon, so a definition never cites review rounds or findings, fix rounds, review files, the
 # owner-answers folder or the evidence share. Only a unit fence's source_lineage cites evidence.
+# This list catches known citation forms. Reviewers check for other references.
 REVIEW_REFERENCE_RE = re.compile(
-    r"(?i:\breview(?:er)?s?[\s-]+r\d+\b"
+    r"(?i:(?P<amendment>\bamended\s+\d{4}-\d{2}-\d{2}"
+    r"(?:,\s*review\s+r\d+|\s+\(r\d+\s+review)(?=\s*[,):;]))"
+    r"|\breview(?:er)?s?[\s-]+r\d+\b"
     r"|\b(?:review|fix)[\s-]+round[\s-]*\d+\b"
     r"|\bround[\s-]*\d+[\s-]+(?:review|finding|fix)"
     r"|\br\d+[\s-]+(?:finding|review)"
     r"|\bfix[\s-]*r\d+\b"
     r"|\bfix[\s-]+round\b"
     r"|\br\d+-(?:opus|sol|astra|sonnet|fable)\b"
-    r"|defs-review|owner-answers/|PuppetMaster-Evidence|closure-reaudit|Plans/ledgers/"
+    r"|\bround[\s-]*\d+\s+S\d+\b"
+    r"|\bS[1-6]\s+(?:finding|map\s+item|[CMUF]\d+)\b"
+    r"|\b(?:Sol|Astra|Opus|Sonnet|Fable)\s+r\d+\b"
+    r"|\bP0[a-c]\b|\bpm-mail\s+\d"
+    r"|\bround[\s-]+(?:one|two|three|four|five|six|seven|eight|nine|ten)[\s-]+(?:review|finding|fix)\b"
+    r"|(?<![\w.-])design\.md\s+\d"
+    r"|defs-review|\bowner-answers\b|PuppetMaster-Evidence|closure-reaudit|Plans/ledgers/"
     r"|\bR\d+-DECISIONS\b|-(?:BRIEF|REPORT|NOTE)\.md\b"
     r"|\bcanon\s+conflict\s+C\d+\b)"
     r"|\bDESIGN(?:\.md)?\s+(?:§\s*|section\s+)?\d")
@@ -2114,13 +2123,19 @@ def check_block_comments(ctx: Context, block: Block, base: dict[str, str]) -> No
         ctx.report.add("C11", "yaml_comment_in_definitions_block", command_id=cmd, detail=rep_detail, **base)
 
 
-def review_reference_strings(data: Any) -> list[tuple[str, str, str]]:
-    """(command_id, field path, text) for every string in a parsed definitions block, keys and
+def review_reference_strings(data: Any) -> list[tuple[str, str, list[str]]]:
+    """(command_id, field path, citation names) for every string in a parsed definitions block, keys and
     values, that names review or evidence material (REVIEW_REFERENCE_RE). A string inside a
     definition carries its command_id, one inside a local result `local:<Name>`, any other the
     block's own path."""
-    found: list[tuple[str, str, str]] = []
+    found: list[tuple[str, str, list[str]]] = []
     seen: set[int] = set()
+
+    def record(value: Any, cmd: str, path: str) -> None:
+        if isinstance(value, str):
+            names = sorted({m.group(0) for m in REVIEW_REFERENCE_RE.finditer(value) if m.group("amendment") is None})
+            if names:
+                found.append((cmd, path, names))
 
     def walk(value: Any, cmd: str, path: str) -> None:
         if isinstance(value, (dict, list)):
@@ -2130,22 +2145,20 @@ def review_reference_strings(data: Any) -> list[tuple[str, str, str]]:
         if isinstance(value, dict):
             for key, child in value.items():
                 child_path = f"{path}.{key}" if path else str(key)
-                if isinstance(key, str) and REVIEW_REFERENCE_RE.search(key):
-                    found.append((cmd, child_path, key))
+                record(key, cmd, child_path)
                 walk(child, cmd, child_path)
         elif isinstance(value, list):
             for index, child in enumerate(value):
                 walk(child, cmd, f"{path}[{index}]")
-        elif isinstance(value, str) and REVIEW_REFERENCE_RE.search(value):
-            found.append((cmd, path, value))
+        else:
+            record(value, cmd, path)
 
     body = data.get(DEFS_ROOT_KEY) if isinstance(data, dict) else None
     if not isinstance(body, dict):
         walk(data, "", "")
         return found
     for key, value in body.items():
-        if isinstance(key, str) and REVIEW_REFERENCE_RE.search(key):
-            found.append(("", str(key), key))
+        record(key, "", str(key))
         if key == "definitions" and isinstance(value, list):
             for index, definition in enumerate(value):
                 cmd = definition.get("command_id") if isinstance(definition, dict) else None
@@ -2163,8 +2176,7 @@ def check_review_references(ctx: Context, block: Block, base: dict[str, str]) ->
     evidence material (review rounds and findings, fix rounds, review files, the owner-answers
     folder, the evidence share, the Q5 design's sections or the fix reports' canon-conflict labels)
     is a C11 finding. A unit fence's source_lineage may cite evidence; a definitions block may not."""
-    for cmd, path, text in review_reference_strings(block.data):
-        names = sorted({m.group(0) for m in REVIEW_REFERENCE_RE.finditer(text)})
+    for cmd, path, names in review_reference_strings(block.data):
         ctx.report.add("C11", "review_reference_in_definitions_block", command_id=cmd, field=path,
                        detail=f"line {block.line}: names {', '.join(names)}", **base)
 
@@ -4222,6 +4234,22 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
               check=lambda r: [(e.get("command_id"), e.get("field")) for e in review_rows(r)] == [("cmd.docker.image.tag", "args.new_tag.gap_note")])
         def _(fx: Fixture, text=text) -> None:
             tag_args(fx)["new_tag"]["gap_note"] = text
+
+    for reference in ("round 2 S1 finding 6", "Round 1 S4 U1", "S3 finding 7", "S2 map item 1",
+                      "Sol r6", "Astra r1", "P0c worker", "owner-answers q5", "design.md 4.3",
+                      "pm-mail 1107140349-9370", "round-two review", "amended 2026-10-17, review r1 finding 6",
+                      "(amended 2026-10-17, review r1), then see Sol r6"):
+        @case(f"fail T110: review citation {reference}", 1, {"C11"},
+              kinds={"review_reference_in_definitions_block"},
+              check=lambda r: [e.get("field") for e in review_rows(r)] == ["args.new_tag.gap_note"])
+        def _(fx: Fixture, reference=reference) -> None:
+            tag_args(fx)["new_tag"]["gap_note"] = reference
+
+    for quote in ("the pane opens (amended 2026-10-17, review r1: use the picker)",
+                  "Amended 2026-10-10 (R35 review, SMPFS-092): the access policy keeps its rows"):
+        @case(f"pass T110: canon amendment marker in {quote}", 0, set())
+        def _(fx: Fixture, quote=quote) -> None:
+            tag_args(fx)["image_ref"]["source"] = quote
 
     @case("fail C11: a judgment's gap_note names a review finding", 1, {"C11"},
           kinds={"review_reference_in_definitions_block"},
