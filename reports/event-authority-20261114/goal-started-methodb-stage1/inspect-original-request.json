@@ -1,0 +1,37 @@
+{
+  "row": "dg5/inspect_original/request/schema",
+  "fixtures": [
+    {
+      "route": "inspect_original",
+      "edition": "v3",
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "inspect_original",
+      "edition": "v7",
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
