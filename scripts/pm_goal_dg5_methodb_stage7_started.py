@@ -97,7 +97,16 @@ def frame_header(directory, negative):
     return world, S.encode_event_frame, (event, 1), {}
 
 
+def frame_payload(directory, negative):
+    world, _, outcome = source.started(source.Suite(directory))
+    event = world.storage.read_event(outcome['original_append']['event']['event_id'])
+    if negative:
+        event['payload'] = dict(event['payload'], stage7_large_value='x' * S.PAYLOAD_CAP)
+    return world, S.encode_event_frame, (event, 1), {}
+
+
 CASES = {
+    'frame-payload': (pilot.STORAGE, 441, 'frame/payload_cap', frame_payload),
     'frame-header': (pilot.STORAGE, 440, 'frame/header_cap', frame_header),
     'stored-group': (pilot.STORAGE, 1618, 'group/schema', stored_group),
     'projection-commitment': (READERS, 491, 'representation/commitment_recomputed', projection_commitment),
