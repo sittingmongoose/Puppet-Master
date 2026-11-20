@@ -1,0 +1,59 @@
+{
+  "row": "dg5/start/commit/schema",
+  "fixtures": [
+    {
+      "route": "publish_commit",
+      "edition": "v7",
+      "root": "dg5:c4bbe5815803fe79",
+      "hash_seed": 5,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "publish_commit",
+      "edition": "v3",
+      "root": "dg5:d35ec2ea7a47d825",
+      "hash_seed": 8,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "publish_commit",
+      "edition": "v7",
+      "root": "dg5:6fc5102fa5653982",
+      "hash_seed": 13,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
