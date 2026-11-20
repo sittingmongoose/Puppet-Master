@@ -2,6 +2,7 @@ import {mkdirSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {captureResize, classifyResize} from '../helpers/resize-raster.mjs';
+import {rasterAbVerdict, rasterAbStrict, shrinkResolution} from '../helpers/raster-ab-verdict.mjs';
 
 // SW-36: Basic Dark, chat column 760, selected agent Detail docked at 1390x900, the frame shrinks to 1177x900 (the
 // boundary where it must cover). Painted frames, not a rAF sampler. In T3's opaque iframe the child runs its resize
@@ -11,12 +12,20 @@ import {captureResize, classifyResize} from '../helpers/resize-raster.mjs';
 // the parent's frame and fires its resize event one rendering update later, so the first new-sized frame is the column
 // at its old width beside the shrunk centre (the dock still beside 479 px), on every build; there the cover must arrive
 // no later than on the control and stay once shown. The 360 px floor in every frame is also chat-sweep's rAF case.
-// On both surfaces the child's first new-sized frame must come no later than on the control: the median of the time
-// from the resize to the first frame that is no longer the old image (firstNewMs), judged on its own, not through the
-// time to the settled cover; on the opaque surface also the time the parent shows the old image clipped (retainedMs).
-// --set control=<page> measures a control build in the same browser, order-balanced (C H H C C H ...), --set reps=N
-// pairs (default 6: three pairs could not tell a 100 ms difference from this machine's noise). The summary keeps every
-// value, sorted, with the pairwise differences, not only the medians.
+// On both surfaces the child's first new-sized frame must come no later than on the control: the time from the resize
+// to the first frame that is no longer the old image (firstNewMs), judged on its own, not through the time to the
+// settled cover; on the opaque surface also the time the parent shows the old image clipped (retainedMs).
+// The A/B judgement is paired and gap-aware (F12E-SB-AB-RASTER-NOISE, helpers/raster-ab-verdict.mjs). A tiny
+// compositor-only animation on this test parent's magenta ground (outside the iframe and every measured region) keeps
+// a frame flowing every vsync, so a gap in the screencast is delivery loss, not page timing. Each measure edge carries
+// its resolution; a pair whose edge gap exceeds R = min(3 x median frame interval, 50 ms) on either side is unresolved
+// and not judged. The median of head - control over the resolved pairs must stay within a fixed ms tolerance
+// (firstNewMs/retainedMs 25 ms, settledMs 50 ms, capped below the 50/100 ms bite thresholds). --set control=<page>
+// measures a control in the same browser, order-balanced (C H H C C H ...); --set reps=N resolved pairs wanted per
+// measure (default 6), shrinking until N resolved pairs or 2N attempted (the 2 x run-time cap). Fewer than N resolved
+// pairs is a failing "could not judge" row, never a silent pass. The old strict head-median <= control-median compare
+// is kept in the log, not judged. The summary keeps every value, sorted, with the pairwise differences, the per-shrink
+// resolution and the verdict.
 // --set sandbox=1 opaque only, =0 normal only; both by default.
 const FROM = 1390, TO = 1177, HEIGHT = 900;
 const url = p => /^https?:/.test(p) ? p : pathToFileURL(p).href;
@@ -61,31 +70,62 @@ async function surface(t, opaque) {
 	const [f] = await t.openSideBySide([{url: 'about:blank', width: FROM, height: HEIGHT}], {height: HEIGHT, settleMs: 0});
 	// a ground nothing in the app paints, so the strip the parent takes back is unmistakable
 	await t.page.evaluate(() => { document.documentElement.style.background = document.body.style.background = '#ff00ff'; });
+	// Capture fidelity (F12E-SB-AB-RASTER-NOISE): a compositor-only opacity animation on a 2 px marker on the parent's
+	// magenta ground at the far right edge — outside the iframe box and every measured region (strip/chat are inside the
+	// iframe). It forces a compositor frame every vsync so a screencast gap is delivery loss, not an idle compositor.
+	// Never in the product page; magenta on magenta paints nothing the app paints and cannot touch the child.
+	await t.page.evaluate(() => {
+		const s = document.createElement('style');
+		s.textContent = '@keyframes rnVsync { from { opacity: 0.5; } to { opacity: 1; } }';
+		document.head.appendChild(s);
+		const d = document.createElement('div');
+		d.id = 'rn-vsync-marker';
+		Object.assign(d.style, {position: 'fixed', right: '0', top: '0', width: '2px', height: '2px', background: '#ff00ff',
+			willChange: 'opacity', animation: 'rnVsync 1s linear infinite alternate', pointerEvents: 'none', zIndex: '2147483647'});
+		document.body.appendChild(d);
+	});
 	if (opaque) await (await f.frameElement()).evaluate(e => e.setAttribute('sandbox', 'allow-scripts allow-forms allow-popups allow-downloads'));
 	const head = t.args.page || new URL('../../../PMConcept7.html', import.meta.url).pathname;
 	const control = t.args.control;
-	const reps = Number(t.args.reps || 6);
-	const order = [];
-	for (let i = 0; i < reps; i++) order.push(...(control ? (i % 2 ? ['head', 'control'] : ['control', 'head']) : ['head']));
+	const reps = Number(t.args.reps || 6);           // resolved pairs wanted per measure
+	const maxPairs = control ? reps * 2 : reps;      // 2 x run-time cap on attempted pairs
+	const measures = ['firstNewMs', 'settledMs', ...(opaque ? ['retainedMs'] : [])];
 	const dir = join(t.run.dir, opaque ? 'opaque' : 'normal');
 	const runs = {head: [], control: []};
+	const order = [];
 	let n = 0;
-	for (const which of order) {
-		const r = await shrinkOnce(t, f, which === 'head' ? head : control, opaque, which + '-' + (n++), dir);
-		runs[which].push(r);
-		if (which !== 'head') continue;
-		const tag = (opaque ? 'opaque ' : 'normal ') + (runs.head.length - 1);
-		await t.check(tag + ' settles to the cover at 1177', r.settledState.w === TO && r.settledState.cover, JSON.stringify(r.settledState));
-		await t.check(tag + ' frames classified', !r.error && r.firstNewMs != null && r.settled, r.error || JSON.stringify({firstNewMs: r.firstNewMs, settled: r.settled}));
-		if (opaque) await t.check(tag + ' first new-sized frame is the settled cover, no docked or other intermediate frame', !r.error && r.firstNewKind === 'final' && r.intermediate.length === 0, JSON.stringify({firstNewKind: r.firstNewKind, intermediate: r.intermediate}));
-		await t.check(tag + ' the cover stays once shown', !r.error && r.unsettled.length === 0, JSON.stringify({unsettled: r.unsettled}));
+	// one balanced-order pair per index: head - control, and whether both sides' measure edges are resolved
+	const resolvedPairs = key => runs.head.map((r, i) => {
+		const c = runs.control[i];
+		const diff = c && r[key] != null && c[key] != null ? r1(r[key] - c[key]) : null;
+		return {diff, resolved: !!(c && r.res?.[key]?.resolved && c.res?.[key]?.resolved)};
+	});
+	const enough = () => measures.every(k => resolvedPairs(k).filter(p => p.resolved && p.diff != null).length >= reps);
+	for (let p = 0; p < maxPairs; p++) {
+		const pairOrder = control ? (p % 2 ? ['head', 'control'] : ['control', 'head']) : ['head'];
+		for (const which of pairOrder) {
+			order.push(which);
+			const r = await shrinkOnce(t, f, which === 'head' ? head : control, opaque, which + '-' + (n++), dir);
+			r.res = shrinkResolution(r, measures);
+			runs[which].push(r);
+			if (which !== 'head') continue;
+			const tag = (opaque ? 'opaque ' : 'normal ') + (runs.head.length - 1);
+			await t.check(tag + ' settles to the cover at 1177', r.settledState.w === TO && r.settledState.cover, JSON.stringify(r.settledState));
+			await t.check(tag + ' frames classified', !r.error && r.firstNewMs != null && r.settled, r.error || JSON.stringify({firstNewMs: r.firstNewMs, settled: r.settled}));
+			if (opaque) await t.check(tag + ' first new-sized frame is the settled cover, no docked or other intermediate frame', !r.error && r.firstNewKind === 'final' && r.intermediate.length === 0, JSON.stringify({firstNewKind: r.firstNewKind, intermediate: r.intermediate}));
+			await t.check(tag + ' the cover stays once shown', !r.error && r.unsettled.length === 0, JSON.stringify({unsettled: r.unsettled}));
+		}
+		if (control && enough()) break;
 	}
 	const name = opaque ? 'opaque' : 'normal';
 	const of = (which, key) => runs[which].map(r => r[key] ?? null);
-	// pairwise head - control in run order (each pair is one C H or H C step of the balanced order)
-	const pairs = key => runs.head.map((r, i) => r[key] != null && runs.control[i]?.[key] != null ? r1(r[key] - runs.control[i][key]) : null).filter(v => v != null);
-	const measures = ['firstNewMs', 'settledMs', ...(opaque ? ['retainedMs'] : [])];
-	const summary = {surface: name, reps, order, measures: Object.fromEntries(measures.map(k => [k, {head: dist(of('head', k)), control: dist(of('control', k)), headMinusControl: dist(pairs(k))}])),
+	// every pairwise head - control in run order, resolved or not (the summary keeps every value)
+	const pairs = key => resolvedPairs(key).map(p => p.diff).filter(v => v != null);
+	const verdict = control ? rasterAbVerdict(Object.fromEntries(measures.map(k => [k, resolvedPairs(k)])), {minResolved: reps}) : null;
+	const summary = {surface: name, reps, maxPairs, pairsAttempted: runs.head.length, order,
+		measures: Object.fromEntries(measures.map(k => [k, {head: dist(of('head', k)), control: dist(of('control', k)), headMinusControl: dist(pairs(k)),
+			resolved: dist(resolvedPairs(k).filter(p => p.resolved).map(p => p.diff)), verdict: verdict?.[k] ?? null}])),
+		headResolution: runs.head.map(r => r.res), controlResolution: runs.control.map(r => r.res),
 		headFirstNewKind: runs.head.map(r => r.firstNewKind), controlFirstNewKind: runs.control.map(r => r.firstNewKind),
 		headIntermediate: runs.head.map(r => r.intermediate?.length ?? null), controlIntermediate: runs.control.map(r => r.intermediate?.length ?? null)};
 	t.log('resize raster ' + JSON.stringify(summary));
@@ -94,12 +134,15 @@ async function surface(t, opaque) {
 	await t.check(`${name} first new-sized frame measured on every head shrink`, m.firstNewMs.head.n === runs.head.length, JSON.stringify(m.firstNewMs.head));
 	if (opaque) await t.check('opaque parent shows the old image clipped (measured) on the head', m.retainedMs.head.n === runs.head.length, JSON.stringify(m.retainedMs.head));
 	if (control) {
-		const le = (k, label) => t.check(`${name} ${label}: head median <= control median`, m[k].head.median != null && m[k].control.median != null && m[k].head.median <= m[k].control.median,
-			JSON.stringify({head: m[k].head, control: m[k].control, headMinusControl: m[k].headMinusControl}));
-		// the first new-sized frame on its own: the cover settling sooner does not excuse a later first frame
-		await le('firstNewMs', 'first new-sized frame after the resize (firstNewMs)');
-		if (opaque) await le('retainedMs', 'old image shown clipped (retainedMs)');
-		await le('settledMs', 'settled cover (settledMs)');
+		const AB_LABEL = {firstNewMs: 'first new-sized frame after the resize (firstNewMs)', retainedMs: 'old image shown clipped (retainedMs)', settledMs: 'settled cover (settledMs)'};
+		for (const k of measures) {
+			const v = verdict[k];
+			const strict = rasterAbStrict(of('head', k), of('control', k));
+			t.log(`${name} ${k} old strict rule (log only): head median ${strict.headMedianMs} ms <= control median ${strict.controlMedianMs} ms: ${strict.ok ? 'PASS' : 'FAIL'}`);
+			// the first new-sized frame on its own: the cover settling sooner does not excuse a later first frame
+			await t.check(`${name} ${AB_LABEL[k]}: ${v.rule}`, v.ok === true,
+				JSON.stringify({head: m[k].head, control: m[k].control, headMinusControl: m[k].headMinusControl, resolved: m[k].resolved, verdict: v}));
+		}
 	}
 	if (t.args.maxMs) await t.check(`${name} firstNewMs head median <= ${t.args.maxMs} ms`, m.firstNewMs.head.median != null && m.firstNewMs.head.median <= Number(t.args.maxMs), JSON.stringify(m.firstNewMs.head));
 }
