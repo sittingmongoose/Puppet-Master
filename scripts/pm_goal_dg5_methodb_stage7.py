@@ -51,8 +51,19 @@ def reservation_retry(directory, negative):
     return world, world.body.reserve, (scope, pending, lambda control: []), {}
 
 
+def receipt_intent(directory, negative):
+    world, goal, _, admission, _ = updated._upto(directory, 'reserve')
+    scope = goal['scope']
+    control = world.body.read_private(scope, 'stage7')['control']
+    world.command.commit(admission)
+    if negative:
+        control['pending']['intent_sha256'] = '6' * 64
+    return world, world.body.commit, (scope, control, [], lambda receipt: []), {}
+
+
 # The explicit lines match the input matrix. Validate the observed location on every run.
 CASES = {
+    'receipt-intent': (OWNERS, 1210, 'dgu/body/commit/receipt_intent', receipt_intent),
     'reservation-retry': (OWNERS, 1173, 'dgu/body/reserve/conflicting_reservation', reservation_retry),
     'reinstall': (OWNERS, 493, 'dgu/installation/not_withdrawn', reinstall),
 }
