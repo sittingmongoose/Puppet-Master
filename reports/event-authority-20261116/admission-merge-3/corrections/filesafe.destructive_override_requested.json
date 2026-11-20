@@ -1,0 +1,270 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "filesafe.destructive_override_requested",
+ "findings": [
+  4
+ ],
+ "source_commit": "8f5b262c7cdefeef3b644bc610aa90fbbd36be53",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2304",
+ "decision_ref": "Plans/Decision_Log.md#DL-2518",
+ "registry_before": {
+  "revision": "2026-11-19.67",
+  "sha256": "42261a78209a81ad1f416bba1351363f3d40d018117f5b6fdeb45730e9b6fbd4",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.68",
+  "sha256": "30e306590330a65dbb87693ff38fecf090b056502d5d30ac8da6700cb1653960",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-filesafe-destructive-override-requested",
+  "family_revision": "2.0.0",
+  "event_type": "filesafe.destructive_override_requested",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Contracts_V0.md#CV-553",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-553",
+  "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/filesafe_destructive_override_requested_v2.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Contracts_V0.md#CV-553",
+   "Plans/event_payloads/filesafe_destructive_override_requested_v2.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/filesafe_destructive_override_requested_v2.schema.json",
+     "json_pointer": "#",
+     "schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-553",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-553",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/filesafe_destructive_override_requested_v2.schema.json",
+     "json_pointer": "#",
+     "schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-553",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-553",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "registry_row": {
+  "family_id": "event-family-filesafe-destructive-override-requested",
+  "family_revision": "2.0.0",
+  "event_type": "filesafe.destructive_override_requested",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Contracts_V0.md#CV-553",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-553",
+  "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/filesafe_destructive_override_requested_v2.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [],
+    "run_id": [
+     "/payload/run_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Contracts_V0.md#CV-553",
+   "Plans/event_payloads/filesafe_destructive_override_requested_v2.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/filesafe_destructive_override_requested_v2.schema.json",
+     "json_pointer": "#",
+     "schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-553",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-553",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/filesafe_destructive_override_requested_v2.schema.json",
+     "json_pointer": "#",
+     "schema_id": "https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-553",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-553",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "predecessor_record_sha256": "6f3edc7d28499b24a74ac9235c522f0e6b181d4310fe1e87421924ce0d9138ac",
+ "predecessor_assessment_sha256": "e0962feb2aa6651f85ff0d68d01a174b8af38bbc3d73e2de93944f103affafb2",
+ "applied_record_sha256": "cab1568b1432bb808ed71e559455d04c689fa761da81a6186d575df77713b12d",
+ "applied_assessment_sha256": "2a4fd459c80fb38869f99cdec2fc5dd6229f8b54e1a495a9f0df81f4a2288c16",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-553",
+    "line_start": 55790,
+    "line_end": 55790,
+    "quote": "Current selected assignment (2026-11-19): filesafe.destructive_override_requested@2.0.0 is registered for application_or_project",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-553, Plans/storage-plan.md:55747-55858",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-553",
+     "line_start": 55521,
+     "line_end": 55521,
+     "quote": "**Retention — Card 2 item 2.c, DL-424 (review round 7).** Project-scoped `filesafe.destructive_override_requested` is permanent proof of the request, refusal or failure: `retention_policy_ref = RP-AUTHORITY-INDEFINITE`, reusing the exact existing Storage registry object (indefinite, no TTL or count limit, fail_closed overflow, hold_eligible, no expiry action). It never expires by age or count, remains inspectable after seven years, and survives deletion of the file or chat it describes. Only explicit **Delete Puppet Master project data** removes this Project history under existing authorization, deletion and protection rules; **Remove project from list** does not delete that data. If space runs out, refuse new entries instead of dropping old ones. Supporting approvals, source snapshots and recovery logs retain their own lifetimes; permanent EventRecord proof grants no access to a deleted or inaccessible linked body. Jared answered \"i approve all of it\"; the presented deck maps approve all to option A. The accepted answer is landed in `Plans/Decision_Log.md#DL-424` (batch 1); this unit applies its exact option A and shared conditions. This applies exactly item 2.c and Card 2's shared conditions. It adds no counting or deletion rule for future entries outside Projects. **Application scope remains PENDING_RETENTION_DECISION and may not record this event until exact approved rules exist.** Exact remaining question: What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.destructive_override_requested` history? A Project policy must not be inferred for it. No original body, snapshot, transaction, generic index or checkpoint lifetime is reopened.",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-553",
+    "line_start": 55792,
+    "line_end": 55800,
+    "quote": "  Current selected assignment (2026-11-19): filesafe.destructive_override_requested@2.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2304. Its event history selects Application\n  = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0\n  (anchor_kind=creation, cardinality_scope=null); Plans/storage-plan.md#SP-553 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner\n  policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected\n  schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration\n  or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice\n  or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-553, Plans/storage-plan.md:55749-55860"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  },
+  {
+   "ordinal": 1,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-553",
+    "line_start": 55790,
+    "line_end": 55790,
+    "quote": "Current selected assignment (2026-11-19): filesafe.destructive_override_requested@2.0.0 is registered for application_or_project",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-553, Plans/storage-plan.md:55747-55858",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-553",
+     "line_start": 55521,
+     "line_end": 55521,
+     "quote": "**Retention — Card 2 item 2.c, DL-424 (review round 7).** Project-scoped `filesafe.destructive_override_requested` is permanent proof of the request, refusal or failure: `retention_policy_ref = RP-AUTHORITY-INDEFINITE`, reusing the exact existing Storage registry object (indefinite, no TTL or count limit, fail_closed overflow, hold_eligible, no expiry action). It never expires by age or count, remains inspectable after seven years, and survives deletion of the file or chat it describes. Only explicit **Delete Puppet Master project data** removes this Project history under existing authorization, deletion and protection rules; **Remove project from list** does not delete that data. If space runs out, refuse new entries instead of dropping old ones. Supporting approvals, source snapshots and recovery logs retain their own lifetimes; permanent EventRecord proof grants no access to a deleted or inaccessible linked body. Jared answered \"i approve all of it\"; the presented deck maps approve all to option A. The accepted answer is landed in `Plans/Decision_Log.md#DL-424` (batch 1); this unit applies its exact option A and shared conditions. This applies exactly item 2.c and Card 2's shared conditions. It adds no counting or deletion rule for future entries outside Projects. **Application scope remains PENDING_RETENTION_DECISION and may not record this event until exact approved rules exist.** Exact remaining question: What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.destructive_override_requested` history? A Project policy must not be inferred for it. No original body, snapshot, transaction, generic index or checkpoint lifetime is reopened.",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-553",
+    "line_start": 55792,
+    "line_end": 55800,
+    "quote": "  Current selected assignment (2026-11-19): filesafe.destructive_override_requested@2.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2304. Its event history selects Application\n  = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0\n  (anchor_kind=creation, cardinality_scope=null); Plans/storage-plan.md#SP-553 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner\n  policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected\n  schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration\n  or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice\n  or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-553, Plans/storage-plan.md:55749-55860"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

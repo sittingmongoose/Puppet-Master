@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L58189
+Source lines: L28747-L58252
 
-Source SHA256: `f019e16289d264ffbad0db520ed645582ef48a24ab6b160b0e4d1e66439e7191`
+Source SHA256: `e3ed40032acee6ee17489a780a7a4012dce5fc03079310ad9c367115c3d10864`
 
 ---
 
@@ -29448,6 +29448,69 @@ preserved_exact_tokens:
 - 859170d0c67fbaf390bb13fde8b64011dbfe807d049e510a892651f28bb008cd
 - 2026-11-19.66
 - 2026-11-19.67
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2518: Event Authority corrects filesafe.destructive_override_requested (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2518
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for filesafe.destructive_override_requested only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2304; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 d43468637f353979cefd64a75e14a7cffea801dac6fc85345f627baa0b5d02fd.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_requested/2.0.0`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.67, 518 families, SHA-256 42261a78209a81ad1f416bba1351363f3d40d018117f5b6fdeb45730e9b6fbd4,
+  to 2026-11-19.68, 518 families, SHA-256 30e306590330a65dbb87693ff38fecf090b056502d5d30ac8da6700cb1653960, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/filesafe.destructive_override_requested.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/filesafe.destructive_override_requested.json,
+  SHA-256 2a4fd459c80fb38869f99cdec2fc5dd6229f8b54e1a495a9f0df81f4a2288c16.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.167 SHA-256 104efa77e535c3461d0aa021ef205e0c83ce8ea253d02db74bb4cd260779eb83;
+  after 2026-11-16.168 SHA-256 9119787e6919735f0891430bffcbeda88a6cc9e01672915caa22abadc24fbe23. Existing semantic owner Plans/Contracts_V0.md#CV-553,
+  payload owner Plans/Contracts_V0.md#CV-553, resource Plans/event_payloads/filesafe_destructive_override_requested_v2.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2304
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2304
+preserved_exact_tokens:
+- filesafe.destructive_override_requested
+- d43468637f353979cefd64a75e14a7cffea801dac6fc85345f627baa0b5d02fd
+- 2026-11-19.67
+- 2026-11-19.68
 negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
