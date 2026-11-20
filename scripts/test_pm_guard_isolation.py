@@ -33,6 +33,19 @@ def reference_keys(fragment):
 
 
 class GuardEngineTests(unittest.TestCase):
+    def test_ddbg_large_integer_negative(self):
+        from pm_debug_investigation_views import cleanup_retry_refusal
+
+        suite = ddbg.retry_request_suite()
+        negative = next(n for n in suite.negatives if n.target == 'retry.authorization')
+        value = dict(negative.value, retries_used=10**4399 + 17)
+        case = suite.factory(value)
+        self.assertEqual(guard.run_case(case, value), (negative.target, negative.code))
+        self.assertEqual(cleanup_retry_refusal(value['retries_used'], True), 'number_domain')
+        text = '1' + '0' * 4397 + '17'
+        self.assertEqual(guard.evidence_value(value['retries_used']), ['integer', text])
+        self.assertEqual(guard.evidence_value(-value['retries_used']), ['integer', '-' + text])
+
     def test_ddbg_schema_view_reuse(self):
         builds = 0
 

@@ -480,6 +480,21 @@ def digest(value: Any) -> str:
     return hashlib.sha256(encoded(evidence_value(value)).encode()).hexdigest()
 
 
+def _integer_text(value: int) -> str:
+    try:
+        return str(value)
+    except ValueError:
+        # Keep existing decimal fingerprints across interpreter digit limits.
+        # Each group stays below CPython's smallest configurable limit.
+        base = 10**500
+        groups = []
+        remaining = abs(value)
+        while remaining >= base:
+            remaining, group = divmod(remaining, base)
+            groups.append(f'{group:0500d}')
+        return ('-' if value < 0 else '') + str(remaining) + ''.join(reversed(groups))
+
+
 def evidence_value(value):
     """Typed DIAGNOSTIC fingerprints, never an event/identity/storage serializer.
 
@@ -492,7 +507,7 @@ def evidence_value(value):
     if kind is bool:
         return ["boolean", value]
     if kind is int:
-        return ["integer", str(value)]
+        return ["integer", _integer_text(value)]
     if kind is float:
         return ["float64-bits", struct.pack(">d", value).hex()]
     if kind is str:
