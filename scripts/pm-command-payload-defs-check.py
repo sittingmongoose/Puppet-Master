@@ -1066,7 +1066,7 @@ def compute_expected(ctx: Context) -> None:
         if not isinstance(evidence, dict) or not evidence.get("doc") or not evidence.get("quote"):
             rep.add("C04", "map_non_definition_evidence_missing", CATALOG, unit=MAP_UNIT, command_id=token)
             continue
-        if not evidence_found(ctx, evidence):
+        if not evidence_found(ctx, evidence, outside_map=True):
             rep.add("C04", "map_non_definition_evidence_not_found", CATALOG, unit=MAP_UNIT, command_id=token,
                     detail=f"{evidence['doc']} {evidence.get('unit', '')} {evidence.get('field', '')}".strip())
 
@@ -3119,6 +3119,18 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
     @case("fail C04: non-definition evidence quote not found in canon", 1, {"C04"})
     def _(fx: Fixture) -> None:
         fx.map["non_definition_tokens"][1]["evidence"]["quote"] = "the pane rows stay"
+
+    @case("fail T108: doc-wide non-definition evidence found only in UCC-230", 1, {"C04"},
+          kinds={"map_non_definition_evidence_not_found"})
+    def _(fx: Fixture) -> None:
+        fx.map["non_definition_tokens"][0]["evidence"] = {
+            "doc": CATALOG, "quote": "only the map claims this alias"}
+
+    @case("pass T108: doc-wide non-definition evidence found outside UCC-230", 0, set())
+    def _(fx: Fixture) -> None:
+        evidence = fx.map["non_definition_tokens"][0]["evidence"]
+        del evidence["unit"]
+        del evidence["field"]
 
     @case("fail C05: type str", 1, {"C05"})
     def _(fx: Fixture) -> None:
