@@ -72,7 +72,7 @@ test('TB6 item 2: a late pause end within the host timer lateness passes, with t
  assert.equal(v.r2.end,180);
  assert.equal(v.r2.late,40);
  assert.equal(v.r2.back,10);
- assert.equal(v.r2.backFrames,0);
+ assert.equal(v.r2.backFrames,1);
  assert.equal(v.r2.ok,true);
 });
 test('TB6 item 2 RED: the same 180 ms end is could-not-judge when the probe shows no timer lateness',()=>{
@@ -92,7 +92,7 @@ test('TB6 item 2 RED: a light three drawn frames after the pause end fails, thou
  const v=j(r);
  assert.equal(v.r2.ms,190);
  assert.equal(v.r2.back,40);
- assert.equal(v.r2.backFrames,3);
+ assert.equal(v.r2.backFrames,4);
  assert.equal(v.r2.ok,false);
 });
 test('TB6 item 2: the 400 ms outer cap fails a page that returns very late even inside two long frames',()=>{
@@ -102,7 +102,7 @@ test('TB6 item 2: the 400 ms outer cap fails a page that returns very late even 
  r.frames=Array.from({length:14},(_,i)=>({t:100+i*150,top:i,card:'new',lit:i>=6?['new']:[],near:[],tools:i>=6?.9:0,op:i<4?'wheel':null,highlights:0}));
  const v=j(r);
  assert.equal(v.r2.back,330);
- assert.equal(v.r2.backFrames,2);
+ assert.equal(v.r2.backFrames,3);
  assert.equal(v.r2.ok,false);
 });
 // R125 #2: the occupied sample is counted. Two dark samples and a return on the third used to read 2 and pass.
