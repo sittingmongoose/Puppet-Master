@@ -49,10 +49,14 @@ def fixture(declare, route, directory):
         World = legacy.CancelWorld
         config['edition'] = edition
     world = World(config, base=directory)
-    if route['call'] in ('issue_physical', 'publish_pointer'):
+    if route['call'] in ('issue_physical', 'publish_pointer', 'prepare_body', 'prepare_control'):
         if route['call'] == 'publish_pointer':
             from pm_goal_dg_int_world import S1D01Owner
             cls, method = S1D01Owner, 'publish_head'
+        elif route['call'] in ('prepare_body', 'prepare_control'):
+            from pm_goal_dg_int_world import S1NativeOwner
+            cls = S1NativeOwner if edition == 'integrated_original' else legacy.NativeOwner
+            method = route['call']
         else:
             cls, method = legacy.PhysOwner, 'issue_physical'
         family = declare['row'].removeprefix('dg5/issue/').removesuffix('/schema')
@@ -60,7 +64,7 @@ def fixture(declare, route, directory):
         captured = []
 
         def before_issue(owner, *args, **kwargs):
-            if method == 'publish_head' or args[0] == family:
+            if method != 'issue_physical' or (args[0] == family and args[2] is not None):
                 captured.append((owner, args, kwargs))
                 raise BeforeIssue
             return original_issue(owner, *args, **kwargs)
@@ -72,13 +76,23 @@ def fixture(declare, route, directory):
                 pass
         require(len(captured) == 1, f'original cancellation did not call {family}')
         owner, args, kwargs = captured[0]
+        action = lambda: original_issue(owner, *args, **kwargs)
+        if route['call'] in ('prepare_body', 'prepare_control'):
+            return world, action, (args, kwargs)
         if method == 'publish_head':
             import pm_goal_dg_s_start as start
             target = start.d01_families(owner.edition)['pointer'], owner.s1.pointer_key()
         else:
             target = args[0], args[3]
-        return world, lambda: original_issue(owner, *args, **kwargs), (target, args, kwargs)
+        return world, action, (target, args, kwargs)
     world.build()
+    if route['call'] == 'read_checkpoint':
+        owner = world.projector_class(world)
+        owner.project()
+        owner.cutover()
+        key = owner.checkpoint_key(owner.request()['scope'])
+        wrapper = world.storage.cell('checkpoints', key)['value']
+        return world, lambda: owner.read_checkpoint(wrapper), wrapper
     if route['call'] == 'current_started':
         owner = getattr(world, 'projector_class', projector.Projector)(world)
         return world, owner.read_current_started, owner.request()
@@ -153,6 +167,57 @@ def scoped_validator(plain, nodes):
     return instantiate(guarded(type(plain)), plain)
 
 
+def intent_condition(nodes, rule):
+    """Check the two branches that cover the general event-candidate rule."""
+    root = rule.split('/$defs/Intent/', 1)[0] + '/$defs/Intent'
+    owner = nodes[root]['node']
+    branches = owner['properties']['event_candidate']['anyOf']
+    condition, = owner['allOf']
+
+    def members(node):
+        return {name: value for name, value in node.items() if name != 'x-pm-oracle-id'}
+
+    require(set(('kind', 'event_candidate')) <= set(owner['required'])
+            and owner['properties']['kind']['enum'] == ['cancel_nonterminal', 'preserve_terminal']
+            and members(condition['if']['properties']['kind']) == {'const': 'cancel_nonterminal'}
+            and members(branches[0]) == members(condition['then']['properties']['event_candidate'])
+            == {'$ref': '#/$defs/EventCandidateSelection'}
+            and members(branches[1]) == members(condition['else']['properties']['event_candidate'])
+            == {'type': 'null'}, 'the cancellation intent condition changed')
+    return root
+
+
+def checkpoint_uuid_implication(plain, nodes, name, path, cut):
+    from pm_goal_go_schema_closure import locations
+    from pm_goal_own_c_oracles import exact_pattern, uuid_string
+
+    source, word = name.rsplit('/', 1)
+    node = nodes[source]['node']
+    pattern = '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}'
+    require(path == ['storage_instance_id'] and source.endswith('/$defs/LogicalCheckpoint/properties/storage_instance_id')
+            and node['pattern'] == '^' + pattern + '$' and node['format'] == 'uuid'
+            and node['minLength'] == node['maxLength'] == 36
+            and plain.VALIDATORS['pattern'] is exact_pattern
+            and plain.format_checker.checkers['uuid'][0] is uuid_string
+            and pattern in uuid_string.__code__.co_consts,
+            'the checkpoint UUID predicates changed')
+    remaining = {'pattern', 'format'}
+    remaining.discard(word)
+    require(locations(cut) == {source + '/' + keyword for keyword in remaining},
+            'the exact matching UUID rules must still refuse')
+    return dict(source=source, covering_rules=sorted(remaining),
+                predicates=[dict(name=method.__name__, line=method.__code__.co_firstlineno,
+                                 sha256=sha(Path(method.__code__.co_filename)))
+                            for method in (exact_pattern, uuid_string)],
+                premise='The two full matches define the same UUID grammar and require exactly 36 characters.')
+
+
+def rule_path(document, path):
+    if path[:2] == ['generations', 'current_generation_id']:
+        return ['generations', document['current_generation_id'], *path[2:]]
+    return path
+
+
 def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, scoped):
     import pm_goal_dg5_closure as closure
     import pm_goal_go_schema_closure as go
@@ -172,15 +237,30 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
     results = {}
     for name in ids:
         example = examples[name]
-        path = example['path']
+        path = rule_path(accepted, example['path'])
         control = accepted
         if 'control' in example:
             change = example['control']
+            control = edit_example(go, control, rule_path(control, change['path']), change)
+        for change in example.get('controls', ()):
             control = edit_example(go, control, change['path'], change)
         require(not list(plain.iter_errors(control)) and not go.errors_of(validator, control),
                 f'{name}: declared branch control refused')
         guard = closure._guard_for_location(name)
         disabled = () if disabled_check == 'rule' else {guard}
+        if example.get('intent_selector'):
+            root = intent_condition(nodes, name)
+            require(name == root + '/allOf/0/if/properties/kind/const'
+                    and control['record']['kind'] == 'preserve_terminal' and control['record']['event_candidate'] is None,
+                    'the intent selector requires the accepted terminal-preservation example')
+            cut = go.errors_of(validator, control, disabled)
+            restored = go.errors_of(validator, control)
+            require(len(cut) == 1 and cut[0].validator == 'type'
+                    and list(cut[0].absolute_path) == ['record', 'event_candidate'] and not restored,
+                    'disabling the selector must activate the original event candidate requirement')
+            results[name] = dict(cls='SELECTOR_OR_NEGATED', control=control, cut=errors_list(cut),
+                                 restored=errors_list(restored), source=root + '/allOf/0')
+            continue
         if example.get('vacuous'):
             location, word = name.rsplit('/', 1)
             node = nodes[location]['node']
@@ -204,9 +284,32 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
                 f'{name}: expected exact original validation message at {path}')
         cut = go.errors_of(validator, invalid, disabled)
         restored = errors_list(go.errors_of(validator, invalid))
-        require(not cut and actual == restored, f'{name}: disabling and restoring that one rule failed')
-        results[name] = dict(cls='KILLED', control=control, invalid=invalid, before=actual,
-                             cut=errors_list(cut), restored=restored)
+        require(actual == restored and all(getattr(error, 'oracle_guard', None) != guard
+                                           for error in each_error(cut)),
+                f'{name}: disabling and restoring that one rule failed')
+        record = dict(cls='KILLED', control=control, invalid=invalid, before=actual,
+                      cut=errors_list(cut), restored=restored)
+        if example.get('intent_implication'):
+            root = intent_condition(nodes, name)
+            event_candidate = root + '/properties/event_candidate/anyOf'
+            covering = root + '/allOf/0/else/properties/event_candidate/type'
+            require(name in (event_candidate, event_candidate + '/1/type')
+                    and path == ['record', 'event_candidate'] and control['record']['kind'] == 'preserve_terminal'
+                    and len(cut) == 1 and go.locations(cut) == {covering},
+                    'only the independent terminal-preservation type rule must still refuse')
+            record.update(cls='COVERED_LATER', implication=dict(
+                source=root + '/allOf/0', covering_rule=covering,
+                premise='The required kind selects either the original event selector or null. Those are the same two alternatives.'))
+        elif example.get('checkpoint_uuid'):
+            record.update(cls='COVERED_LATER',
+                          implication=checkpoint_uuid_implication(plain, nodes, name, path, cut))
+        else:
+            require(not cut, f'{name}: another validation message remains')
+        results[name] = record
+    for case in results.values():
+        if 'covering_rule' in case.get('implication', {}):
+            require(results[case['implication']['covering_rule']]['cls'] == 'KILLED',
+                    'the covering validation rule needs an independent example')
     return results
 
 
@@ -233,6 +336,7 @@ class OwnerExample:
 
         code = self.row.removeprefix('dg5/').removesuffix('/schema')
         result = dict(errors=[], observations=[])
+        checks = self.route.get('checks', 1)
 
         def decide(bank, realm, ref, value, caller, enforce):
             site = [str(Path(caller.f_code.co_filename).relative_to(self.source)), caller.f_lineno]
@@ -240,7 +344,7 @@ class OwnerExample:
             plain = bank.validator(ref) if realm is None else bank.validator(realm, ref)
             ident, binding = root_binding(closure, bank, plain)
             require(ident == self.route['root'], f'owner call reached unexpected root {ident}')
-            if edit:
+            if edit and len(result['observations']) + 1 == checks:
                 require(edit not in value, 'test example already has the extra member')
                 value[edit] = 'example'
             errors = errors_list(list(plain.iter_errors(value)))
@@ -289,7 +393,8 @@ class OwnerExample:
             refusal = bridge.refusal_code(error)
             result.update(refusal=refusal, detail=getattr(error, 'detail', None), errors=[bridge.row(refusal)])
         self.trials.append(result)
-        require(len(result['observations']) == 1, 'complete call must reach the expected site exactly once')
+        require(len(result['observations']) == checks,
+                f"complete call reached the expected site {len(result['observations'])} times, expected {checks}")
         return result
 
     def issue_on_copy(self, world, action, inputs, edit, initial):
@@ -457,7 +562,10 @@ def run(args):
             check = OwnerExample(source, row, route, collector, args.disable_check)
             log = dict(route=route, trials=check.trials)
             calls.append(log)
-            observation, log['store'], log['arguments'] = check.prove(world, action, inputs)
+            # This is an authored singleton. Replay each declared source
+            # edition even when the family-wide sample quota is reached.
+            with patch.object(sweep, 'REPLAY_CAP', max(sweep.REPLAY_CAP, len(declare['routes']))):
+                observation, log['store'], log['arguments'] = check.prove(world, action, inputs)
             captured.setdefault(route['root'], observation)
         for ident, (plain, bank, accepted, binding) in captured.items():
             root = census['roots'][ident]
@@ -466,7 +574,8 @@ def run(args):
             ids = root['clause_ids']
             examples = declare['examples'][ident]
             scoped = ':sha256:' in ids[0].split('#', 1)[0]
-            if scoped or any(example.get('vacuous') for example in examples.values()):
+            if scoped or any(set(example) & {'vacuous', 'intent_selector', 'intent_implication'}
+                             for example in examples.values()):
                 clauses = literal_rules(plain, bank, accepted, ident, ids, examples, args.disable_check, scoped)
             else:
                 clauses, gaps = test_rules(plain, bank, accepted, ident, ids, examples, args.disable_check)
