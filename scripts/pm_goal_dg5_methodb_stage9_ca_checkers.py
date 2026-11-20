@@ -27,7 +27,13 @@ CASES = {
 }
 
 
-def main(cases=CASES, row=None):
+def unchanged_refused_store(result):
+    original = result["negative"]
+    pilot.require(original["store_snapshot_sha256"] == original["store_after_sha256"],
+                  "the refused complete call wrote to its store")
+
+
+def main(cases=CASES, row=None, *, check_refused_store=unchanged_refused_store):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("case", choices=cases)
     parser.add_argument("--worklist", type=Path, required=True)
@@ -45,9 +51,7 @@ def main(cases=CASES, row=None):
                   "current caller source differs from the worklist")
     start = monotonic()
     result = pilot.run(args.case, args.out, leave_enabled=args.leave_enabled, cases=cases, family=FAMILY, row=row)
-    original = result["negative"]
-    pilot.require(original["store_snapshot_sha256"] == original["store_after_sha256"],
-                  "the refused complete call wrote to its store")
+    check_refused_store(result)
     pilot.write(args.out / "measurement.json", {"row": row, "kind": current["kind"],
                                                 "prior_reason": current["current_reason"],
                                                 "replay_seconds": round(monotonic() - start, 3)})
