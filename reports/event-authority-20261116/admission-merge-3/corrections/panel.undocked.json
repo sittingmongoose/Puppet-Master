@@ -1,0 +1,157 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "panel.undocked",
+ "findings": [
+  1,
+  3
+ ],
+ "source_commit": "bfe16a9e3480b67601990d496c2f0829eab165d2",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2339",
+ "decision_ref": "Plans/Decision_Log.md#DL-2529",
+ "registry_before": {
+  "revision": "2026-11-19.78",
+  "sha256": "edac74f36ae06e36ef4017c5a4812dd694cace0296a753ade9866090b5834709",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.79",
+  "sha256": "8dda8f1082e22ba7fe0b018b2b4f237b2fea818f65614f4b8e370f9c41df8801",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-panel-undocked",
+  "family_revision": "2.0.0",
+  "event_type": "panel.undocked",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/FinalGUISpec.md#F3-705",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-685",
+  "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/panel_undocked/2.0.0",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/panel_undocked_v2.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/panel_undocked/2.0.0"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/FinalGUISpec.md#F3-705",
+   "Plans/Contracts_V0.md#CV-685",
+   "Plans/event_payloads/panel_undocked_v2.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-panel-undocked",
+  "family_revision": "2.0.0",
+  "event_type": "panel.undocked",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/FinalGUISpec.md#F3-705",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-685",
+  "payload_schema_id": "pm.event.panel_undocked.v2",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/panel_undocked_v2.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/panel_undocked/2.0.0"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/FinalGUISpec.md#F3-705",
+   "Plans/Contracts_V0.md#CV-685",
+   "Plans/event_payloads/panel_undocked_v2.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "Plans/panel_event_contracts/panel_undocked.fixtures.json#/payload_cases/9/value/schema_id",
+   "Plans/panel_event_contracts/panel_undocked.fixtures.json#/payload_cases/0/value/schema_id"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  },
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback",
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.event.panel_undocked.v2",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/panel_undocked_v2.schema.json",
+     "json_pointer": "#",
+     "schema_id": "https://puppetmaster.local/schemas/event_payloads/panel_undocked/2.0.0"
+    },
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/FinalGUISpec.md#F3-705",
+    "read_owner_ref": "Plans/FinalGUISpec.md#F3-705",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033"
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.event.panel_undocked.v2",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/panel_undocked_v2.schema.json",
+     "json_pointer": "#",
+     "schema_id": "https://puppetmaster.local/schemas/event_payloads/panel_undocked/2.0.0"
+    },
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/FinalGUISpec.md#F3-705",
+    "read_owner_ref": "Plans/FinalGUISpec.md#F3-705",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033"
+   }
+  ]
+ },
+ "predecessor_record_sha256": "44f99a6cce9c2417fb339113b369cbe7f94398c2c6921db10e37c2096c18034b",
+ "predecessor_assessment_sha256": "68f404c9915a9ddb936ac8d5d1fca00fd1c8baa721f36af2f62e5fb9399b63bf",
+ "applied_record_sha256": "bae5f7741aa4f491bbe329d764cc28d12a23d56e1c314bbd443fea630fbc64a2",
+ "applied_assessment_sha256": "5959287bd056cc9508719ad657c837abaec7018f29d2d37d58f620002e18e8e6",
+ "citation_changes": [],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}
