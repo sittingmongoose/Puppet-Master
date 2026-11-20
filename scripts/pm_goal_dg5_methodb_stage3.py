@@ -173,7 +173,9 @@ def certified_fixture(route, path):
         request = oracle.W.guard_request(w, ctx['scope'], ctx['op'], 'original_certification',
                                          'TEST_ONLY:guard-request:method-b')
         return w, lambda: w.guard.read_guard(request)
-    if route == 'prepare':
+    if route in ('prepare_intent_check', 'arm_intent_check'):
+        check_intent_reused(oracle.W, w)
+    if route in ('prepare', 'prepare_intent_check'):
         return w, lambda: w.coordinator.prepare(ctx)
     if route == 'retained':
         run.until('release')
@@ -190,7 +192,7 @@ def certified_fixture(route, path):
     if route == 'consumer_current':
         run.until('release')
         return w, lambda: run.consumer().read_current(ctx)
-    if route == 'arm':
+    if route in ('arm', 'arm_intent_check'):
         run.until('prepare')
         return w, lambda: w.coordinator.arm(ctx, run.obs['prepared'])
     if route == 'f5d':
@@ -322,6 +324,30 @@ def check_f5a_stored_document(module, world, context, intent, control, route):
             'the stored arm document did not round trip with the same values and types')
     require(not world.realm.errors('coordinator', module.COORD + root, stored['value']),
             'the stored arm document failed its original schema')
+
+
+def check_intent_reused(module, world):
+    coordinator = world.coordinator
+    derive = inspect.getsource(coordinator.derive_intent)
+    prepare = inspect.getsource(coordinator.prepare)
+    arm = inspect.getsource(coordinator.arm)
+    require(inspect.getsource(type(coordinator)).count('self.derive_intent(') == 2 and
+            "w.realm.validate('coordinator', COORD + 'Intent', intent, 'intent')" in derive and
+            'return intent, candidate' in derive, 'derived Intent source sites changed')
+    marker = {}
+    require("prepared = dict(outcome='prepared', intent=intent," in prepare and
+            "w.realm.validate('coordinator', COORD + 'Prepared', prepared, 'prepare/result')" in prepare and
+            "require('arm/prepared_intent', A.same(cand, intent))" in arm and
+            "stored_intent = wrap('intent', intent)" in arm and
+            "for fam, value in (('intent', stored_intent), ('control', stored_control)):" in arm and
+            "w.realm.validate('coordinator', COORD + WRAPPER_ROOT[fam], value, 'arm/' + fam)" in arm and
+            module.WRAPPER_ROOT['intent'] == 'StorageIntent' and module.wrap('intent', marker)['record'] is marker,
+            'Intent forwarding to the two later schema checks changed')
+    resolver = world.realm.scoped.bank.registries['coordinator'].resolver()
+    for root, member in (('Prepared', 'intent'), ('StorageIntent', 'record')):
+        schema = resolver.lookup(module.COORD + root).contents
+        require(member in schema['required'] and schema['properties'][member] == {'$ref': module.COORD + 'Intent'},
+                'a later definition no longer checks the exact Intent')
 
 
 class OwnerCheck:
@@ -1017,16 +1043,18 @@ def main():
     with gzip.open(args.census, 'rt') as stream:
         census = json.load(stream)
     row, ident = declare['row'], declare['root']
-    later_route = {
-        'dg5/f5a/intent/schema': ('f5a_intent_check', 'f5a/intent_bytes'),
-        'dg5/f5a/control/schema': ('f5a_control_check', 'f5a/control_bytes'),
-        'dg5/dgu/reader/receipt/receipt_request/schema': (
-            'receipt_recheck', 'dgu/reader/receipt/final/receipt_request/schema/'),
-        'dg5/dgu/producer/publish/publication/schema': ('publish_receipted', 'dgu/progress/schema/'),
-        'dg5/dgu/reader/input/request/schema': ('input_recheck', 'dgu/reader/input/result/schema/request'),
-    }.get(row)
+    later_refusal = {
+        ('dg5/f5a/intent/schema', 'f5a_intent_check'): 'f5a/intent_bytes',
+        ('dg5/f5a/control/schema', 'f5a_control_check'): 'f5a/control_bytes',
+        ('dg5/intent/schema', 'prepare_intent_check'): 'prepare/result/schema/intent',
+        ('dg5/intent/schema', 'arm_intent_check'): 'arm/prepared_intent',
+        ('dg5/dgu/reader/receipt/receipt_request/schema', 'receipt_recheck'):
+            'dgu/reader/receipt/final/receipt_request/schema/',
+        ('dg5/dgu/producer/publish/publication/schema', 'publish_receipted'): 'dgu/progress/schema/',
+        ('dg5/dgu/reader/input/request/schema', 'input_recheck'): 'dgu/reader/input/result/schema/request',
+    }.get((row, declare['route']))
     if 'later_refusal' in declare:
-        require((declare['route'], declare['later_refusal']) == later_route,
+        require(declare['later_refusal'] == later_refusal,
                 'later validation requires a checked source implication for this row')
     census_row, = [item for item in census['rows'] if item['row'] == row]
     root = census['roots'][ident]

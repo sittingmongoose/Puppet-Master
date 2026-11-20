@@ -9,6 +9,23 @@ MESSAGEPACK = [
 ]
 
 PROOFS = {
+    'dg5/intent/schema': {
+        'kind': 'entailed-by-prepared-and-armed-intent',
+        'families': [FAMILY],
+        'depends_on': ['dg5/prepare/result/schema', 'dg5/arm/intent/schema'],
+        'sites': [
+            *((WORLD, line) for line in (65, 159, 696, 710, 711, 712, 736, 739, 741, 745, 746)),
+            *((('Plans/goal_certified_event_coordinator_contracts/schemas/coordinator.v1.schema.json'), line)
+              for line in (290, 301, 1225, 1238)),
+        ],
+        'argument': (
+            'The only two callers pass derived Intent to Prepared.intent or StorageIntent.record. '
+            'Each later schema requires the field and checks it against the identical Intent '
+            'definition. Arm also checks equality with the prepared intent before wrapping. '
+            'Disabling only the derived Intent schema reached the Prepared schema in one call '
+            'and the prepared-Intent equality check in the other. Both original refusals returned.'
+        ),
+    },
     'dg5/f5a/intent/schema': {
         'kind': 'entailed-by-validated-arm-intent',
         'families': [FAMILY],
