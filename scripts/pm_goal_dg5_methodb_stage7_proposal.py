@@ -105,6 +105,10 @@ def check_assertions(bank, ref, reference, disabled):
         after = rules.errors_of(validator, invalid, cut)
         entry = dict(cls='KILLED', keyword=keyword, path=path, invalid=invalid,
                      before=errors_list(original), cut=errors_list(after), restored=errors_list(restored))
+        if path == ('target', 'objective_text') and keyword == 'pattern':
+            # Preserve the intentionally invalid code unit as escaped JSON
+            # inside the evidence so ordinary JSON readers can load the report.
+            entry['invalid_document_json'] = json.dumps(entry.pop('invalid'), ensure_ascii=True)
         if path == ('target', 'expected_currentness_hash') and keyword in ('minLength', 'maxLength'):
             pattern = location + '/pattern'
             pattern_guard = schema_guard(node, 'pattern')
