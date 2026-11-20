@@ -44,7 +44,7 @@ export const CHIP_SAMPLER = withPaintedChip((opts) => {
 		for (const s of W.strips) {
 			const el = stripOf(s); if (!el) continue;
 			const sr = el.getBoundingClientRect();
-			let chip = null, src = null, rec = null, st = null, ct = null, heldPose = false, lenses = 0, faint = null, edge = null;
+			let chip = null, src = null, rec = null, st = null, ct = null, heldPose = false, framePaced = false, lenses = 0, faint = null, edge = null;
 			const blocks = [...el.querySelectorAll(':scope > lg-over > .lg-hop')].filter(shown);
 			const b = blocks.pop();
 			if (b) {
@@ -54,6 +54,7 @@ export const CHIP_SAMPLER = withPaintedChip((opts) => {
 					st = a.startTime;
 					ct = a.currentTime;
 					heldPose = st == null && ct != null && a.effect.getComputedTiming().progress != null;
+					framePaced = !!a.__pmFramePaced;
 				}
 				edge = edgeOf(b, b.parentElement);
 			} else {
@@ -79,7 +80,7 @@ export const CHIP_SAMPLER = withPaintedChip((opts) => {
 			const on = el.querySelector(s.active);
 			const items = s.items ? [...el.querySelectorAll(s.items)].filter((e) => e.getClientRects().length).map(rr) : [];
 			if (edge) chip = edge.box;
-			row.s[s.sel] = { chip, src, rec, st, ct, heldPose, on: on ? rr(on) : null, items, so: [sr.left, sr.top], lenses, faint, edge };
+			row.s[s.sel] = { chip, src, rec, st, ct, heldPose, framePaced, on: on ? rr(on) : null, items, so: [sr.left, sr.top], lenses, faint, edge };
 		}
 		W.rows.push(row);
 	};
@@ -110,7 +111,7 @@ const FRAME = 1000 / 60;
 // a block whose start never reached the main thread (it was replaced first) starts, like every block that waits for its
 // first frame, at the time of the frame that first drew it less its hold: carry-frames' probe in the same commit
 // (where both are known they agree to the 0.1 ms)
-const started = (anims) => anims.map((r) => (r.start == null && r.drawnAt != null && !r.explicit ? { ...r, start: r.drawnAt - (r.hold || 0), startFromProbe: true } : r));
+const started = (anims) => anims.map((r) => (!r.framePaced && r.start == null && r.drawnAt != null && !r.explicit ? { ...r, start: r.drawnAt - (r.hold || 0), startFromProbe: true } : r));
 const near = (a, b, tol) => a && b && edges(a).every((v, i) => Math.abs(v - edges(b)[i]) <= tol);
 
 // one strip's task reads: { t (timeline time at the read), now, box, src, rec, st, ct, on, items, so: the strip's origin }
@@ -127,7 +128,7 @@ function originAt(rows, t) { let o = null; for (const r of rows) { if (r.ts > t 
 // phase reads untransformed, at the box it is bound for), or a lens that is not in its own travel's before phase (Glass's
 // glide is a transform animation on the lens: a start the compositor reported later than the frame's rounded time put it
 // there too, read at the item it was bound for, one Usage pitch, 31 px, away: FO-234's signature on a lens)
-export const trusted = (r) => r.box && (r.src === 'carry' ? r.st != null && r.st <= r.t : r.st == null || r.st <= r.t);
+export const trusted = (r) => r.box && (r.src === 'carry' ? (r.framePaced && r.heldPose) || (r.st != null && r.st <= r.t) : r.st == null || r.st <= r.t);
 
 // every frame drawn, on the frame grid the reads give (each read's frame time; frames inside a long task every 1/60 s):
 // a carried block from the first frame that draws it (a block that waited for it starts at that frame's time less its
@@ -139,6 +140,7 @@ export function drawnFrames(smp, sel, anims0) {
 	const anims = started(anims0);
 	const rows = smp.rows.filter((r) => r.k === 'task' && r.s[sel]);
 	const recs = anims.filter((r) => r.strip === sel && r.start != null).sort((a, b) => a.created - b.created);
+	const paced = new Map(anims.filter((r) => r.strip === sel && r.framePaced).map((r) => [r.id, r]));
 	const after = (t) => { const r = rows.find((x) => x.ts > t); return r ? r.ts : Infinity; };
 	// (drawnAt: the frame that first drew the block's commit, from carry-frames' probe)
 	// (a block that waited for its first frame: the compositor's own start for it, plus its hold, is that frame)
@@ -151,14 +153,23 @@ export function drawnFrames(smp, sel, anims0) {
 	const grid = [];
 	ts.forEach((T, i) => { if (i) for (let u = ts[i - 1] + FRAME; u < T - FRAME / 2; u += FRAME) grid.push(u); grid.push(T); });
 	const out = [];
+	let held = null;
 	for (const T of grid) {
+		const row = byTs.get(T), x = row && row.s[sel];
+		// A frame-paced carry keeps the last applied pose between callbacks, including during a long task.
+		if (row && !row.stale) held = x?.framePaced && x.heldPose ? { ...x, sample: row.now } : null;
+		if (held && paced.has(held.rec)) {
+			const rec = paced.get(held.rec);
+			const shape = rec.rebased != null && held.sample < rec.rebased ? { ...rec, kf: rec.kfPrev, dur: rec.durPrev } : rec;
+			out.push({ t: T, poseTime: held.ct, box: rel(poseAt(shape, held.ct), originOf(rec)), src: 'rec:' + rec.id, rec: shape });
+			continue;
+		}
 		let cur = null;
 		for (const r of recs) if (D.get(r) <= T + 0.01 && (!cur || D.get(r) >= D.get(cur))) cur = r;
 		if (cur && cur.cancelled != null && !replaced.has(cur) && T >= after(cur.cancelled)) cur = null;
 		// a change is drawn from the frame that first drew its commit (rebDrawn); before that, the frames it replaced
 		const early = cur && cur.rebDrawn != null && T < cur.rebDrawn - 0.01 && cur.kfPrev;
 		if (cur) { const b = poseAt(early ? { ...cur, kf: cur.kfPrev, dur: cur.durPrev } : cur, T); if (b) { out.push({ t: T, box: rel(b, originOf(cur)), src: 'rec:' + cur.id, rec: cur }); continue; } }
-		const row = byTs.get(T), x = row && row.s[sel];
 		if (x && x.chip && x.src !== 'carry') out.push({ t: T, box: rel(x.chip, x.so), src: x.src, rec: null });
 	}
 	return out;
@@ -169,8 +180,9 @@ export function modelWitness(smp, sel, anims) {
 	let worst = 0, n = 0;
 	for (const r of chipRows(smp, sel)) {
 		if (r.src !== 'carry' || r.rec == null || !trusted(r)) continue;
-		const rec = anims.find((a) => a.id === r.rec && a.strip === sel); if (!rec || rec.start == null) continue;
-		const m0 = poseAt(rec, r.t); if (!m0) continue;
+		const rec = anims.find((a) => a.id === r.rec && a.strip === sel); if (!rec) continue;
+		const shape = rec.framePaced && rec.rebased != null && r.now < rec.rebased ? { ...rec, kf: rec.kfPrev, dur: rec.durPrev } : rec;
+		const m0 = poseAt(shape, rec.framePaced ? r.ct : r.t); if (!m0) continue;
 		const all = chipRows(smp, sel).map((x) => ({ ts: x.now, so: x.so }));
 		const m = rel(m0, originAt(all, rec.created)), b = rel(r.box, r.so);
 		n++; worst = Math.max(worst, ...edges(m).map((v, i) => Math.abs(v - edges(b)[i])));
@@ -204,12 +216,20 @@ export function takeovers(anims0, sel, { span = 100 } = {}) {
 	const recs = started(anims0).filter((r) => r.strip === sel).sort((a, b) => a.created - b.created);
 	const out = [];
 	for (const n of recs) {
-		if (n.start == null || !n.kf0) continue;
+		if ((!n.framePaced && n.start == null) || !n.kf0) continue;
 		// the block it replaced: the one made before it and cancelled for it (the carry measures and copies the labels
 		// between the two, 12 ms and more)
 		const i = recs.indexOf(n), p = i > 0 ? recs[i - 1] : null;
-		if (!p || p.cancelled == null || p.start == null || p.cancelled > n.created + 0.5 || n.created - p.cancelled > 200) continue;
-		if (!p) continue;
+		if (!p || p.cancelled == null || (!p.framePaced && p.start == null) || p.cancelled > n.created + 0.5 || n.created - p.cancelled > 200) continue;
+		if (n.framePaced || p.framePaced) {
+			// On a paced handover the old applied time is the first pose of the replacement trip.
+			const first = n.drawnAt ?? n.created;
+			const a = poseAt(p, p.framePaced ? p.lastCt : first);
+			const b = poseAt({ ...n, kf: n.kf0, dur: n.dur0 }, n.framePaced ? n.firstCt : first);
+			const worst = Math.max(...edges(a).map((v, i) => Math.abs(v - edges(b)[i])));
+			out.push({ id: n.id, from: p.id, goes: n.firstCt != null, worst: +worst.toFixed(2), at: +first.toFixed(1) });
+			continue;
+		}
 		const goes = n.explicit || n.hold != null;   // a block that goes on with a trip (carry's go)
 		const first = !n.explicit && !n.startFromProbe ? n.start + (n.hold || 0) : n.drawnAt != null ? n.drawnAt : n.created;
 		const last = Math.min(first + span, n.rebDrawn != null ? n.rebDrawn : n.rebTl != null ? n.rebTl : Infinity, n.cancelled != null ? n.cancelled : Infinity);
@@ -232,11 +252,12 @@ export function takeovers(anims0, sel, { span = 100 } = {}) {
 // committed has its last unchanged keyframe at most a frame later (its first changed one can round to unchanged)
 export function changeStarts(anims, sel) {
 	const out = [];
-	for (const r of anims.filter((x) => x.strip === sel && x.rebTl != null && x.start != null && x.kf0)) {
+	for (const r of anims.filter((x) => x.strip === sel && x.rebTl != null && (x.framePaced || x.start != null) && x.kf0)) {
+		const start = r.framePaced ? 0 : r.start;
 		let lastSame = null;
 		for (const k of r.kf) {
-			const T = r.start + k.o * r.dur;
-			const o0 = Math.max(0, Math.min(1, (T - r.start) / r.dur0)), kf = r.kf0;
+			const T = start + k.o * r.dur;
+			const o0 = Math.max(0, Math.min(1, (T - start) / r.dur0)), kf = r.kf0;
 			let i = 1; while (i < kf.length - 1 && kf[i].o < o0) i++;
 			const a = kf[i - 1], b = kf[i], u = b.o > a.o ? Math.max(0, Math.min(1, (o0 - a.o) / (b.o - a.o))) : 1, L = (q) => a[q] + (b[q] - a[q]) * u;
 			const same = Math.abs(k.dx - L('dx')) <= 0.006 && Math.abs(k.dy - L('dy')) <= 0.006 && Math.abs(k.kx - L('kx')) <= 0.00015 && Math.abs(k.ky - L('ky')) <= 0.00015 && Math.abs(k.r - L('r')) <= 0.0015;
@@ -245,7 +266,7 @@ export function changeStarts(anims, sel) {
 		}
 		if (lastSame == null) continue;
 		const at = r.rebased != null ? r.rebased : r.rebTl;
-		out.push({ id: r.id, commit: +at.toFixed(1), frame: +r.rebTl.toFixed(1), drawn: r.rebDrawn != null ? +r.rebDrawn.toFixed(1) : null, lastSame: +lastSame.toFixed(1), late: +(lastSame - at).toFixed(1) });
+		out.push({ id: r.id, commit: +at.toFixed(1), frame: +r.rebTl.toFixed(1), drawn: r.rebDrawn != null ? +r.rebDrawn.toFixed(1) : null, lastSame: +lastSame.toFixed(1), late: +(lastSame - (r.framePaced ? r.rebCt : at)).toFixed(1) });
 	}
 	return out;
 }

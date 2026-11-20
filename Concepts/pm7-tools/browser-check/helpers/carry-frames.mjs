@@ -53,17 +53,24 @@ export const RECORD = withPaintedChip((stripSel) => {
 					rec.kf0 = rec.kf; rec.dur0 = rec.dur; rec.createdTl = document.timeline.currentTime;
 					// a block whose trip is rebased at its first frame (glass.js carry's rebase) takes new keyframes and timing
 					const eff = a.effect, sk = eff.setKeyframes, ut = eff.updateTiming;
-					eff.setKeyframes = function (k) { rec.kfPrev = rec.kf; rec.durPrev = rec.dur; rec.kf = parse(k); rec.rebased = performance.now(); rec.rebTl = document.timeline.currentTime; probe(rec, 'rebDrawn'); return sk.call(eff, k); };
+					eff.setKeyframes = function (k) { rec.kfPrev = rec.kf; rec.durPrev = rec.dur; rec.kf = parse(k); rec.rebased = performance.now(); rec.rebTl = document.timeline.currentTime; rec.rebCt = a.currentTime; probe(rec, 'rebDrawn'); return sk.call(eff, k); };
 					eff.updateTiming = function (tm) { if (tm && tm.duration != null) rec.dur = tm.duration; return ut.call(eff, tm); };
 					// a start time the page sets itself (glass.js carry's go) puts the animation in its before phase until then
 					const stDesc = Object.getOwnPropertyDescriptor(Animation.prototype, 'startTime');
 					Object.defineProperty(a, 'startTime', { configurable: true, get() { return stDesc.get.call(a); }, set(v) { rec.explicit = true; stDesc.set.call(a, v); } });
 					// a waiting animation is drawn at its hold (its current time) until it starts
 					const ctDesc = Object.getOwnPropertyDescriptor(Animation.prototype, 'currentTime');
-					Object.defineProperty(a, 'currentTime', { configurable: true, get() { return ctDesc.get.call(a); }, set(v) { if (a.startTime == null) { rec.hold = v; rec.held = performance.now(); } ctDesc.set.call(a, v); } });
+					Object.defineProperty(a, 'currentTime', {
+						configurable: true, get() { return ctDesc.get.call(a); },
+						set(v) {
+							if (a.__pmFramePaced) { rec.framePaced = true; rec.firstCt ??= v; }
+							else if (a.startTime == null) { rec.hold = v; rec.held = performance.now(); }
+							ctDesc.set.call(a, v);
+						}
+					});
 					W.live = W.live || new Map(); W.live.set(rec.id, a);
 					const cancel = a.cancel;
-					a.cancel = function () { if (a.startTime != null) rec.start = a.startTime; if (rec.cancelled == null) rec.cancelled = performance.now(); return cancel.call(a); };
+					a.cancel = function () { if (a.startTime != null) rec.start = a.startTime; if (rec.cancelled == null) { rec.cancelled = performance.now(); rec.lastCt = a.currentTime; } return cancel.call(a); };
 					try { this.__carryRec = rec.id; } catch (e) { /* the sampler names the block by its record */ }
 					probe(rec, 'drawnAt');
 					W.anims.push(rec);
@@ -88,7 +95,7 @@ export const RECORD = withPaintedChip((stripSel) => {
 				const on = el.querySelector(s.active);
 				const ba = block ? block.getAnimations().find((a) => a.effect && a.effect.getTiming().duration > 0 && a.playState !== 'idle') : null;
 				row.s[s.sel] = {
-					block: block ? (paintedChip(block)?.box || rr(block)) : null, st: ba ? ba.startTime : null,
+					block: block ? (paintedChip(block)?.box || rr(block)) : null, st: ba ? ba.startTime : null, ct: ba ? ba.currentTime : null,
 					lens: lens ? rr(lens) : null, lensOp: lens ? +getComputedStyle(lens).opacity : 0,
 					on: on ? (on.getAttribute('data-tab') || on.textContent.trim().slice(0, 24)) : null, onBox: on ? rr(on) : null
 				};
@@ -111,12 +118,14 @@ export const TAKE = () => {
 export const RESET = () => { const W = window.__carryRec; if (W) { W.anims.length = 0; W.samples.length = 0; } return true; };
 
 const FRAME = 1000 / 60;
+const STEP_MARGIN = 1.25, STEP_TOL = 3;
 // a start the page set itself, with nothing filled backwards: before it, the block is drawn untransformed
 // (records made before rec.explicit existed: a start at or before the block was made, or at or before its rebase, was set
 // by the page; a block that waits for its first frame starts after both)
 const beforeBare = (rec) => (rec.explicit != null ? rec.explicit : rec.start <= rec.created + 0.5 || (rec.rebased != null && rec.start <= rec.rebased + 1)) && !/both|backwards/.test(rec.fill || 'forwards');
 // a carry animation's drawn box (viewport px, axis-aligned, rotation included) at timeline time T; null before it starts
 export function poseAt(rec, T) {
+	if (rec.framePaced) rec = { ...rec, start: 0 };
 	if (rec.start == null) return null;
 	// before its start time an animation filled only forwards has no effect: the block is drawn at its own box, untransformed
 	// (an explicit start time later than the frame drawn: two frames of the block on the tab it was bound for, head film)
@@ -137,6 +146,14 @@ function speedAt(rec, T) {
 	if (!p || !q) return 0;
 	const e = edges(p), f = edges(q);
 	return Math.max(...e.map((v, i) => Math.abs(f[i] - v))) / 4;
+}
+
+// The greatest single-frame step bound anywhere on a recorded trip. A native film shows positions
+// but cannot report the compositor's animation clock for a frame.
+export function nativeStepLimit(rec) {
+	const trip = { ...rec, start: 0 };
+	const peak = Math.max(...trip.kf.map((k) => speedAt(trip, k.o * trip.dur)));
+	return peak * FRAME * STEP_MARGIN + STEP_TOL;
 }
 
 // every drawn frame of one strip's chip: { t, box, src: 'rec:<id>' | 'lens', rec? }. A frame's state is what the page had
@@ -162,8 +179,11 @@ export function frames(data, sel) {
 		// (switcher-carry-steps, FO-227: a block can be made inside a frame of the gap, after its layout, and drawn from the
 		// next one: each frame of the gap draws the block the compositor had first drawn by then, its start plus its hold,
 		// or for a block on its trip's clock the frame its probe dates, and the earlier block only before that)
-		if (prev && prev.rec && prev.rec.start != null && Td - prev.t > FRAME * 1.5) {
-			for (let T = prev.t + FRAME; T < Td - FRAME / 2; T += FRAME) { const g = drawnBy(T, prev.rec), b = poseAt(g, T); if (b) out.push({ t: T, box: b, src: 'rec:' + g.id, rec: g, model: true, gap: true }); }
+		if (prev?.rec && (prev.rec.start != null || prev.rec.framePaced) && Td - prev.t > FRAME * 1.5) {
+			for (let T = prev.t + FRAME; T < Td - FRAME / 2; T += FRAME) {
+				if (prev.rec.framePaced) out.push({ ...prev, t: T, real: null, modelBox: null, gap: true });
+				else { const g = drawnBy(T, prev.rec), b = poseAt(g, T); if (b) out.push({ t: T, box: b, src: 'rec:' + g.id, rec: g, model: true, gap: true }); }
+			}
 		}
 		// the block as measured, unless the frame is drawn later than it was measured (a late callback): then its keyframes
 		// at the time it is drawn
@@ -174,9 +194,11 @@ export function frames(data, sel) {
 		// read untransformed at the box it is bound for, 120 px from where it was drawn) is not what was drawn: its keyframes
 		// at the frame's time are
 		const before = r0 && s.block && s.st != null && row.tl != null && s.st > row.tl;
-		const r = r0, m = r && (Td !== row.t || before) ? poseAt(r, Td) : null, after = (x) => x != null && x > row.now && x - row.now < FRAME * 2;
+		const r = r0?.framePaced && r0.rebased != null && row.now < r0.rebased ? { ...r0, kf: r0.kfPrev, dur: r0.durPrev } : r0;
+		const m = r && !r.framePaced && (Td !== row.t || before) ? poseAt(r, Td) : null;
+		const after = (x) => x != null && x > row.now && x - row.now < FRAME * 2;
 		const stale = r && (after(r.held) || after(r.rebased));
-		const f = s.block ? { t: Td, box: m || s.block, src: r ? 'rec:' + r.id : 'block', rec: r, real: s.block, modelBox: r && !stale && !before ? poseAt(r, row.t) : null, late: Td !== row.t, before: before || undefined }
+		const f = s.block ? { t: Td, poseTime: r?.framePaced ? s.ct : undefined, box: m || s.block, src: r ? 'rec:' + r.id : 'block', rec: r, real: s.block, modelBox: r && !stale && !before ? poseAt(r, r.framePaced ? s.ct : row.t) : null, late: Td !== row.t, before: before || undefined }
 			: s.lens && s.lensOp > 0.5 ? { t: Td, box: s.lens, src: 'lens', rec: null } : null;
 		// a frame drawn later than its callback's own time: if at that time the block was in its before phase with
 		// nothing filled backwards (a start the page set past the frame's time), the compositor may draw it at its own
@@ -199,16 +221,18 @@ export function modelError(fr) {
 // tol: 3 px. A block that takes over from another starts on the compositor's clock, which runs a millisecond or a few
 // off the page's under a recording's load: head's worst swap moved 1.4-1.75 px past its motion (Alexis, both surfaces);
 // main's jumps are 8-28 px past it.
-export function steps(fr, { tol = 3, from = -Infinity, to = Infinity, presentationGaps = false } = {}) {
+export function steps(fr, { tol = STEP_TOL, from = -Infinity, to = Infinity, presentationGaps = false } = {}) {
 	const bad = [], gaps = []; let worst = { excess: 0 };
 	for (let i = 1; i < fr.length; i++) {
 		const a = fr[i - 1], b = fr[i]; if (b.t < from || a.t > to) continue;
 		const dt = b.t - a.t; if (dt <= 0 || (dt > 80) !== presentationGaps) continue;
 		const ea = edges(a.box), eb = edges(b.box);
 		const ta = a.poseTime ?? a.t, tb = b.poseTime ?? b.t;
-		const v = Math.max(a.rec ? speedAt(a.rec, ta) : 0, a.rec ? speedAt(a.rec, tb) : 0, b.rec ? speedAt(b.rec, tb) : 0, b.rec ? speedAt(b.rec, ta) : 0);
+		const speed = (f, t, other) => f.rec ? Math.max(speedAt(f.rec, t),
+			other.rec?.framePaced === f.rec.framePaced ? speedAt(f.rec, other.poseTime ?? other.t) : 0) : 0;
+		const v = Math.max(speed(a, ta, b), speed(b, tb, a));
 		// A sampled presentation gap gets one frame of travel, even if it spans many refresh intervals.
-		const allow = v * (presentationGaps ? FRAME : dt) * 1.25 + tol;
+		const allow = v * (presentationGaps ? FRAME : dt) * STEP_MARGIN + tol;
 		const moved = Math.max(...ea.map((x, k) => Math.abs(eb[k] - x)));
 		const step = { t: +b.t.toFixed(1), dt: +dt.toFixed(1), moved: +moved.toFixed(2), allow: +allow.toFixed(2), excess: +(moved - allow).toFixed(2), from: a.src, to: b.src, a: ea.map((x) => +x.toFixed(1)), b: eb.map((x) => +x.toFixed(1)) };
 		if (presentationGaps) gaps.push(step);

@@ -140,7 +140,7 @@ export const tests = {
 							// or pending play, before it receives a compositor start time.
 							const records = new Map(anims.map((a) => [a.id, a]));
 							const samples = rows.filter((r) => r.now <= ends[0] && !r.stale && (r.heldPose || trusted(r))).map((r) => ({
-								t: r.now, poseTime: r.t, src: r.src, rec: records.get(r.rec),
+								t: r.now, poseTime: r.framePaced ? r.ct : r.t, src: r.src, rec: records.get(r.rec),
 								box: [r.box[0] - r.so[0], r.box[1] - r.so[1], r.box[2], r.box[3]]
 							}));
 							const gap = steps(samples, { presentationGaps: true });
