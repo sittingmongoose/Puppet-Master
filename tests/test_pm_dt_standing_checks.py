@@ -1,4 +1,4 @@
-"""Regression checks for the DT checkpoint pattern mutation."""
+"""Regression checks for the DT checkpoint length mutation."""
 
 import copy
 import importlib.util
@@ -26,7 +26,7 @@ def anchor_schema(schema):
 
 
 class DateTimeStandingChecksTests(unittest.TestCase):
-    def test_standing_five_cuts_real_checkpoint_pattern(self):
+    def test_standing_five_cuts_effective_checkpoint_max_length(self):
         dt = standing.dt
         contract = next(row for row in dt.load("Plans/dt_event_contracts.json")["families"]
                         if row["event_type"] == FAMILY)
@@ -42,19 +42,27 @@ class DateTimeStandingChecksTests(unittest.TestCase):
         def evaluate(case, schema):
             return dt.checkpoint_result(contract, case["previous"], case["proposed"], case["context"], schema)
 
-        schema = dt.load(SCHEMA_PATH)["$defs"][DEFINITION]
+        schemas = dt.load(SCHEMA_PATH)["$defs"]
+        schema = schemas[DEFINITION]
         self.assertEqual(evaluate(positive, schema), "published")
         self.assertEqual(evaluate(negative, schema), "schema_refused")
 
+        def identifier_probes(definitions):
+            probes = []
+            dt.identifier_checks(contract, fixture, definitions, lambda _, name: probes.append(name))
+            return probes
+
         def checkpoint_probe():
-            changed = dt.load(SCHEMA_PATH)["$defs"][DEFINITION]
+            changed_schemas = dt.load(SCHEMA_PATH)["$defs"]
+            changed = changed_schemas[DEFINITION]
             ref = SCHEMA_PATH + "#/$defs/" + DEFINITION
             mirror = next(row["value_schema"] for row in dt.load("Plans/storage_value_registry.json")["families"]
                           if row["value_schema_ref"] == ref)
-            expected = copy.deepcopy(schema)
-            del anchor_schema(expected)["pattern"]
+            expected = dt.checkpoint_source_constraints(schema)
+            del anchor_schema(expected)["maxLength"]
             self.assertEqual(changed, expected)
             self.assertEqual(mirror, expected)
+            self.assertEqual(identifier_probes(changed_schemas), identifier_probes(schemas))
             self.assertEqual(evaluate(positive, changed), "published")
             print(json.dumps({"coherent_trailing_lf": evaluate(negative, changed)}))
             return 0
@@ -65,11 +73,13 @@ class DateTimeStandingChecksTests(unittest.TestCase):
         self.assertEqual(result["coherent_trailing_lf"], "published")
         self.assertEqual(dt.load(SCHEMA_PATH)["$defs"][DEFINITION], schema)
 
-    def test_missing_pattern_reports_setup_error_without_checker_run(self):
+    def test_missing_max_length_reports_setup_error_without_checker_run(self):
         dt = standing.dt
         load = dt.load
         schema = load(SCHEMA_PATH)
-        del anchor_schema(schema["$defs"][DEFINITION])["pattern"]
+        effective = dt.checkpoint_source_constraints(schema["$defs"][DEFINITION])
+        del anchor_schema(effective)["maxLength"]
+        schema["$defs"][DEFINITION] = effective
         with mock.patch.object(dt, "load", side_effect=lambda path: schema if path == SCHEMA_PATH else load(path)), mock.patch.object(
             dt, "main"
         ) as checker:
@@ -77,7 +87,7 @@ class DateTimeStandingChecksTests(unittest.TestCase):
             checker.assert_not_called()
         self.assertEqual(code, 1)
         self.assertEqual(result["status"], "not_run")
-        self.assertIn("generation_anchor_sha256.pattern", result["mutation_setup_error"])
+        self.assertIn("generation_anchor_sha256.maxLength", result["mutation_setup_error"])
 
 
 if __name__ == "__main__":

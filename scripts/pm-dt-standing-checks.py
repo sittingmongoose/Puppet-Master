@@ -121,11 +121,15 @@ def run_fault(name, number, ref_location='timestamp', reader_fault='live_state')
         document = copy.deepcopy(original_load('Plans/dt_event_contracts.schema.json'))
         definition = name.replace('.', '_') + '_checkpoint'
         try:
-            anchor = document['$defs'][definition]['properties']['index_read_token']['properties']['generation_anchor_sha256']
-            del anchor['pattern']
+            # The source profile supplies the exact length that rejects LF.
+            # Keep the pattern so the checker still generates every identifier probe.
+            checkpoint_schema = dt.checkpoint_source_constraints(document['$defs'][definition])
+            anchor = checkpoint_schema['properties']['index_read_token']['properties']['generation_anchor_sha256']
+            del anchor['maxLength']
         except (KeyError, TypeError):
             return 1, dict(status='not_run', families=0, checks=0, failures=[],
-                           mutation_setup_error=definition + ' is missing generation_anchor_sha256.pattern')
+                           mutation_setup_error=definition + ' is missing effective generation_anchor_sha256.maxLength')
+        document['$defs'][definition] = checkpoint_schema
         schema_fault(document, definition)
 
     weakened_source = source
