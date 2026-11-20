@@ -31,8 +31,10 @@
 // --set settle=<ms>   wait after load before the first measurement (default 40000: start-up work and the chat's demo run)
 // --set ms=<ms>       length of each trace (default 4000)
 // --set frames=<pct>  the frames bound, percent of the refresh rate (default 65); --set layouts=<n> a second (default 10)
-// Runs on both surfaces (--set sandbox=0 and 1). A cell that could not be judged (no trace, no refresh rate) fails.
+// Runs on both surfaces (--set sandbox=0 and 1). A cell that could not be judged (no trace, no renderer main thread,
+// no Layout category, no refresh rate) fails.
 import { traceWindow } from '../helpers/frame-trace.mjs';
+import { traceJudgeable } from '../helpers/trace-guard.mjs';
 import { muteSound, refreshRate, parkPointer } from '../helpers/quiet-page.mjs';
 
 const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'glass-light', 'glass-dark', 'retro-light', 'retro-dark', 'nier-light', 'nier-dark'];
@@ -122,8 +124,12 @@ export default async function (t) {
 			await t.page.waitForTimeout(1500);
 			let x = null, err = '';
 			try { x = await traceWindow(cdp, { ms, url: f.url() }); } catch (e) { err = String(e && e.message || e); }
-			const judged = !!x && x.secs > ms / 1000 * 0.8 && hz > 20 && hz < 400;
-			if (!judged) { await t.check(`${at}: the rest trace could be judged`, false, err || `trace ${x ? x.secs + ' s' : 'missing'}, refresh ${hz.toFixed(1)} Hz`); continue; }
+			// A trace that names no renderer main thread reads 0 main frames and 0 layouts, and both rows would PASS without
+			// measuring (PM7PERF-NO-RENDERER-READS-ZERO); one taken without devtools.timeline measured no layouts either.
+			// Either is could not judge, never a pass.
+			const guard = traceJudgeable(x, { layouts: true });
+			const judged = guard.ok && x.secs > ms / 1000 * 0.8 && hz > 20 && hz < 400;
+			if (!judged) { await t.check(`${at}: the rest trace could be judged`, false, err || (!guard.ok ? guard.why : `trace ${x.secs} s, refresh ${hz.toFixed(1)} Hz`)); continue; }
 			// The frames judged here are frame STARTS, and stay so (PM7PERF-STILL-FRAMES-STARTS, measured 2026-11-15 for the lead's
 			// split): on main's page of 2026-11-10, before this pass, the fault the row was written for started 130-233 main
 			// frames a second at rest (Alexis 238 Hz, Basic and Glass Dark) of which 1-14% rendered; the rest Chrome abandoned with

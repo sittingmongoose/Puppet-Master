@@ -30447,6 +30447,9 @@ html:not([data-o55-tour]) #chatPanel[data-pm56="on"] > .float-content.pm6-chat-r
 #pmh-frame.pmh-frame-on { opacity: 1; }
 #pmh-frame > i { position: absolute; display: block; will-change: transform; }
 
+/* A Usage wheel pause cuts the layers it owns at their old viewport position. Reuse restores their usual entry. */
+#pmh-glow > i.pmh-proxy-cut, #pmh-frame.pmh-proxy-cut { visibility: hidden; transition: none; }
+
 /* Reduced Motion: states switch at once (the engine stops the magnet, the travel and the pointer-following field). */
 [data-motion="reduced"] :is(#pmh-glow > i),
 [data-motion="reduced"] :where(#pmh-frame):not(#t7:not(*)):not(t7:not(*)) { transition: none; }
@@ -31416,7 +31419,14 @@ html[data-theme="glass-light"] .o55-demo[data-o55-narrow] .o55-demopill > svg.nx
   --pmh-frame: 1; --pmh-frame-hz: 30; --pmh-frame-k: 1; --pmh-frame-snap-ms: 0; --pmh-frame-reach: 0; --pmh-frame-max: 0;
 }
 :root[data-theme="retro-dark"]:not([data-o55-nier]) { --pmc-ghost: color-mix(in srgb, var(--accent-primary) 30%, transparent); --pmc-bar: color-mix(in srgb, var(--accent-primary) 16%, transparent); --pmc-on: #10140b; }
-:root[data-theme="retro-light"]:not([data-o55-nier]) { --pmc-ghost: color-mix(in srgb, var(--accent-primary) 24%, transparent); --pmc-bar: color-mix(in srgb, var(--accent-primary) 11%, transparent); --pmc-on: #f4f1e6; }
+:root[data-theme="retro-light"]:not([data-o55-nier]) { --pmc-ghost: color-mix(in srgb, var(--accent-primary) 24%, transparent); --pmc-bar: color-mix(in srgb, var(--accent-primary) 11%, transparent); --pmc-on: #f4f1e6;
+  /* the hovered label's phosphor (below), a step deeper on the paper: the chip's own green (#2F7A3D) is lighter than the
+     unchosen words at rest, so hover read fainter than rest (a Home tab 3.87:1 hovered against 5.29:1; Jared 2026-11-19,
+     QA-RETRO-LIGHT-HOVER "B": darker). The same green, only darker; Retro Dark keeps the chip's phosphor (a tie there).
+     45%, not 60%: at 60% the title-bar words (#444 at rest, 8.59:1) gained only 9.12:1, and Windows draws coloured text
+     lighter than grey, so on Windows Chrome the hovered "Projects" and project button read fainter than at rest in
+     pixels (5.3:1 against 5.82:1; batch 13 integration, 2026-11-19) */
+  --pmc-label: color-mix(in srgb, var(--pm-switch-mark, var(--accent-primary)) 45%, #000); }
 /* inverse video, raised; the activity bar's square is its .symbol (the glow proxy's layers carry data-pmh-kind too:
    they keep their own transition) */
 :root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is([data-pmh-kind="icon"]:not(.activity-bar .icon, #pmh-glow > i)),
@@ -31449,7 +31459,7 @@ html[data-theme="glass-light"] .o55-demo[data-o55-narrow] .o55-demopill > svg.nx
   color: var(--accent-primary) !important; transition-duration: 0s !important;
 }
 :root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, #projectMenuBtn).pmh-on:not(.active, .selected, [aria-selected="true"], [aria-expanded="true"], [data-lg-press]) {
-  color: var(--pm-switch-mark, var(--accent-primary)) !important;
+  color: var(--pmc-label, var(--pm-switch-mark, var(--accent-primary))) !important;
 }
 /* the commander's bar on a rail row */
 :root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row).pmh-on:not(.active, .selected, [aria-selected="true"]) {
@@ -79255,7 +79265,10 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-navbtn { font-s
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-seg-ink { border-radius: 0; transition-timing-function: steps(4, end); }
 :is(#panel-usage,[data-pmu-host]) .pmu-iconbtn { display: inline-grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 9px; background: transparent;
   color: var(--pmu-ink-3); cursor: pointer; outline: none; transition: background-color calc(140ms * var(--pmu-speed, 1)), color calc(140ms * var(--pmu-speed, 1)), transform calc(140ms * var(--pmu-speed, 1)); }
-:is(#panel-usage,[data-pmu-host]) .pmu-iconbtn:hover { color: var(--pmu-ink); background: var(--pmu-row-hover); }
+/* (:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)): the wheel pause, 20-board.css PERF-USAGE-HOVER; the seg and stepper buttons
+   above and below are keyed on a tag, so a gate there would restyle every button of the board at each pause's start and
+   end: they keep their hover) */
+:is(#panel-usage,[data-pmu-host]) .pmu-iconbtn:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { color: var(--pmu-ink); background: var(--pmu-row-hover); }
 :is(#panel-usage,[data-pmu-host]) .pmu-iconbtn:active { transform: scale(.94); }
 :is(#panel-usage,[data-pmu-host]) .pmu-iconbtn svg { width: 16px; height: 16px; }
 /* refresh: while the readings are on their way the system loader takes the icon's place (90-api.js refresh; W5 replaces
@@ -79734,6 +79747,12 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-keysw { border-
    menu alone does not fit beside the title, lets the title yield the room (--pmu-head-room) on the lines it has at rest */
 :is(#panel-usage,[data-pmu-host]) .pmu-cardtools { position: absolute; z-index: 4; top: 5px; right: 6px; display: flex; gap: 1px; padding: 2px; border-radius: 9px; opacity: 0; pointer-events: none;
   background: var(--pmu-menu-bg, var(--pmu-card)); transition: opacity calc(140ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
+/* A wheel can leave a fully shown tool fading where the pointer already was. Only that cluster retains
+   hit-testing through its fade (42-cards.js). Hidden controls still accept keyboard focus for menu Escape. */
+:is(#panel-usage,[data-pmu-host]) :where(.pmu-board:is([data-op="wheel"],[data-wheel-handoff])) .pmu-cardtools[data-wheel-fade] {
+  transition: opacity calc(140ms * var(--pmu-speed, 1)) var(--pmu-ease-out), pointer-events 0s linear calc(140ms * var(--pmu-speed, 1));
+  transition-behavior: normal, allow-discrete;
+}
 :is(#panel-usage,[data-pmu-host]) .pmu-card[data-head="plate"] .pmu-cardtools { top: 9px; right: 9px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-cardtools .pmu-iconbtn { width: 24px; height: 24px; border-radius: 7px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-cardtools .pmu-iconbtn svg { width: 14px; height: 14px; }
@@ -79748,30 +79767,50 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-keysw { border-
 /* before a card has been fitted (keyboard focus that moved in without a focus event) an extra-small card shows grip and menu */
 :is(#panel-usage,[data-pmu-host]) .pmu-card[data-tw="xs"] .pmu-cardtools:not([data-fold]) :is(.pmu-cardsize),
 :is(#panel-usage,[data-pmu-host]) .pmu-card[data-tw="xs"] .pmu-cardtools:not([data-fold]) :is(.pmu-cardgear) { display: none; }
+/* PERF-USAGE-HOVER (Jared, 2026-11-16, card A: pause hover highlights on the Usage page while the mouse wheel turns).
+   While the wheel turns over the Usage board, the board carries data-op="wheel" (42-cards.js bindTools: from the first wheel that can scroll,
+   or matching pane movement, to 150 ms after the last wheel or scroll event, or until the pointer moves or presses). During
+   a keyboard gesture, data-wheel-handoff carries the same remaining pause while data-op records the gesture. The
+   in-board :hover highlights use :where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)): a card or row that slides
+   under a resting pointer does not light up, show its tools or slide its head while it passes. The card that was under
+   the pointer when the pause began keeps its head exactly as it was (42-cards.js pauseHover sets data-wheel-held on
+   its head: head tools aside, title yielded, meta hidden) until the pause ends, so nothing in a head moves while the
+   pane and the pointer rest (R122 P3, R123 P-1). The owner's PC priced the
+   pause while scrolling: main thread 329 -> 286 ms/s in Basic Dark, 288 -> 214 in Retro Dark, GPU 306 -> 235. The gate
+   weighs nothing (:where), so at rest, and for anything outside a paused board, every rule matches and wins as before;
+   chart hit geometry stays active. The [data-op] rules below belong to board gestures (a drag, a resize) and leave
+   the wheel value out: keyboard focus and keyboard-opened tools keep
+   theirs. */
 /* shown on hover, on keyboard focus of the card, and while a tool inside has focus (a pointer-down focuses the card
    article, so :focus-within on the card would keep them over a narrow title after a drag) */
-:is(#panel-usage,[data-pmu-host]) .pmu-card:hover .pmu-cardtools, :is(#panel-usage,[data-pmu-host]) .pmu-card:focus-visible .pmu-cardtools, :is(#panel-usage,[data-pmu-host]) .pmu-cardtools:focus-within { opacity: 1; pointer-events: auto; }
+:is(#panel-usage,[data-pmu-host]) .pmu-card:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-cardtools, :is(#panel-usage,[data-pmu-host]) .pmu-card:focus-visible .pmu-cardtools, :is(#panel-usage,[data-pmu-host]) .pmu-cardtools:focus-within { opacity: 1; pointer-events: auto; transition-delay: 0s; }
 :is(#panel-usage,[data-pmu-host]) .pmu-cardtools .pmu-menu-anchor-open { color: var(--pmu-ink); background: var(--pmu-row-hover); }
 /* the meta (text only) gives way to the tools; the head tools (switches, legends, the folded count) never vanish: they
-   slide left exactly clear of the cluster */
-:is(#panel-usage,[data-pmu-host]) .pmu-card:hover .pmu-cardmeta, :is(#panel-usage,[data-pmu-host]) .pmu-card:focus-visible .pmu-cardmeta { opacity: 0; }
+   slide left exactly clear of the cluster. A head held through a wheel pause (data-wheel-held) keeps all three as they were */
+:is(#panel-usage,[data-pmu-host]) .pmu-card:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-cardmeta, :is(#panel-usage,[data-pmu-host]) .pmu-card:focus-visible .pmu-cardmeta, :is(#panel-usage,[data-pmu-host]) .pmu-cardhead[data-wheel-held] > .pmu-cardmeta { opacity: 0; }
 /* one after the other, so the two never cross: entering, the head tools slide aside (160) and the cluster fades in once
    they have cleared its place; leaving, the cluster fades out (140) and only then do the head tools slide back */
 :is(#panel-usage,[data-pmu-host]) .pmu-headtools { transition: transform calc(160ms * var(--pmu-speed, 1)) var(--pmu-ease-out) calc(140ms * var(--pmu-speed, 1)); }
-:is(#panel-usage,[data-pmu-host]) .pmu-card:hover .pmu-headtools, :is(#panel-usage,[data-pmu-host]) .pmu-card:focus-visible .pmu-headtools, :is(#panel-usage,[data-pmu-host]) .pmu-cardhead[data-tools-on] > .pmu-headtools { transform: translateX(var(--pmu-head-slide, -108px)); transition-delay: 0s; }
-:is(#panel-usage,[data-pmu-host]) .pmu-card[data-tw="xs"]:hover .pmu-headtools { transform: translateX(var(--pmu-head-slide, -58px)); }
+:is(#panel-usage,[data-pmu-host]) .pmu-card:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-headtools, :is(#panel-usage,[data-pmu-host]) .pmu-card:focus-visible .pmu-headtools, :is(#panel-usage,[data-pmu-host]) .pmu-cardhead:is([data-tools-on],[data-wheel-held]) > .pmu-headtools { transform: translateX(var(--pmu-head-slide, -108px)); transition-delay: 0s; }
+:is(#panel-usage,[data-pmu-host]) .pmu-card[data-tw="xs"]:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-headtools, :is(#panel-usage,[data-pmu-host]) .pmu-card[data-tw="xs"] > .pmu-cardhead:where([data-wheel-held]) > .pmu-headtools { transform: translateX(var(--pmu-head-slide, -58px)); }
 /* (keyed on the head tools being there, not on a measurement: entering a card reads its head (42-cards.js fitTools), and
    that read already starts the cluster's fade, so its delay has to be in place before anything is measured) */
-:is(#panel-usage,[data-pmu-host]) .pmu-card:hover > .pmu-cardhead > .pmu-headtools:not(:empty) ~ .pmu-cardtools, :is(#panel-usage,[data-pmu-host]) .pmu-card:focus-visible > .pmu-cardhead > .pmu-headtools:not(:empty) ~ .pmu-cardtools,
-:is(#panel-usage,[data-pmu-host]) .pmu-cardhead[data-tools-on] > .pmu-headtools:not(:empty) ~ .pmu-cardtools { transition-delay: calc(160ms * var(--pmu-speed, 1)); }
-:is(#panel-usage,[data-pmu-host]) .pmu-board[data-op] .pmu-headtools { transform: none; }
+:is(#panel-usage,[data-pmu-host]) .pmu-card:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) > .pmu-cardhead > .pmu-headtools:not(:empty) ~ .pmu-cardtools, :is(#panel-usage,[data-pmu-host]) .pmu-card:focus-visible > .pmu-cardhead > .pmu-headtools:not(:empty) ~ .pmu-cardtools,
+:is(#panel-usage,[data-pmu-host]) .pmu-cardhead[data-tools-on] > .pmu-headtools:not(:empty) ~ .pmu-cardtools { transition-delay: calc(160ms * var(--pmu-speed, 1)), 0s; }
+/* R100 T2: wheel return restores the current head visibly within the pause's budget; subsequent ordinary hover keeps
+   its existing sequence. The short phase is owned by 42-cards.js wheelEnd, not by the chart/body subtree. */
+:is(#panel-usage,[data-pmu-host]) .pmu-cardhead.pmu-wheel-return > :is(.pmu-cardtools),
+:is(#panel-usage,[data-pmu-host]) .pmu-cardhead.pmu-wheel-return > :is(.pmu-headtools),
+:is(#panel-usage,[data-pmu-host]) .pmu-cardhead.pmu-wheel-return > :is(.pmu-cardtitles),
+:is(#panel-usage,[data-pmu-host]) .pmu-cardhead.pmu-wheel-return > :is(.pmu-cardmeta) { transition: none; }
+:is(#panel-usage,[data-pmu-host]) .pmu-board[data-op]:where(:not([data-op="wheel"])) .pmu-headtools { transform: none; }
 /* the title yields its room to the cluster at once and takes it back once the cluster has faded and the head tools are
    back (140 + 160); a yielding title
    keeps the number of lines it has at rest (data-title-lines: line, tile and wrapped plate titles are clamped to it, a
    one-line plate title ends in an ellipsis), so its head never grows and the body never moves */
 :is(#panel-usage,[data-pmu-host]) .pmu-cardtitles { transition: margin-right 0s linear calc(300ms * var(--pmu-speed, 1)); }
-:is(#panel-usage,[data-pmu-host]) .pmu-card:hover > .pmu-cardhead > .pmu-cardtitles, :is(#panel-usage,[data-pmu-host]) .pmu-card:focus-visible > .pmu-cardhead > .pmu-cardtitles,
-:is(#panel-usage,[data-pmu-host]) .pmu-cardhead[data-tools-on] > .pmu-cardtitles { margin-right: var(--pmu-head-room, 0px); transition-delay: 0s; }
+:is(#panel-usage,[data-pmu-host]) .pmu-card:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) > .pmu-cardhead > .pmu-cardtitles, :is(#panel-usage,[data-pmu-host]) .pmu-card:focus-visible > .pmu-cardhead > .pmu-cardtitles,
+:is(#panel-usage,[data-pmu-host]) .pmu-cardhead:is([data-tools-on],[data-wheel-held]) > .pmu-cardtitles { margin-right: var(--pmu-head-room, 0px); transition-delay: 0s; }
 /* (written above 70-wrap.css's tile and line clamps, which come later in the cascade: at equal weight their clamp of 3
    won and a yielding tile title wrapped to a new line, growing the head). The title's box is cut to the lines it shows
    (the clamp alone adds the ellipsis but keeps the box of every line) and the titles block keeps its resting height,
@@ -79782,8 +79821,8 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-keysw { border-
 /* a title that yields to one line runs on that line to the room's edge and ends there in an ellipsis ("GitHub Cop...",
    "Usage he..."): a one-line clamp breaks the line at a word first and showed "GitHub..." with room to spare */
 :is(#panel-usage,[data-pmu-host]) .pmu-card > .pmu-cardhead[data-title-lines="1"] .pmu-cardtitles .pmu-cardtitle { display: block; white-space: nowrap; text-overflow: ellipsis; overflow-wrap: normal; -webkit-line-clamp: none; }
-:is(#panel-usage,[data-pmu-host]) .pmu-board[data-op] .pmu-cardtitles { margin-right: 0; transition: none; }
-:is(#panel-usage,[data-pmu-host]) .pmu-board[data-op] .pmu-cardtools { opacity: 0 !important; pointer-events: none !important; }
+:is(#panel-usage,[data-pmu-host]) .pmu-board[data-op]:where(:not([data-op="wheel"])) .pmu-cardtitles { margin-right: 0; transition: none; }
+:is(#panel-usage,[data-pmu-host]) .pmu-board[data-op]:where(:not([data-op="wheel"])) .pmu-cardtools { opacity: 0 !important; pointer-events: none !important; transition-property: opacity !important; }
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-cardtools, html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-cardtools .pmu-iconbtn { border-radius: 0; }
 
 /* ---- body (A1 3.1: plate 4 14 12; line and tile 0 14 10) ---- */
@@ -79805,10 +79844,10 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-cardtools, html
   text-transform: uppercase; font-stretch: 87.5%; color: var(--pmu-ink-3); }
 :is(#panel-usage,[data-pmu-host]) .pmu-row { margin: 0 -14px; padding: 0 14px; border-bottom: 1px solid var(--pmu-rule-2); transition: background-color calc(180ms * var(--pmu-speed, 1)); }
 :is(#panel-usage,[data-pmu-host]) .pmu-row:last-child { border-bottom: 0; }
-:is(#panel-usage,[data-pmu-host]) .pmu-row:hover { background: var(--pmu-row-hover); }
+:is(#panel-usage,[data-pmu-host]) .pmu-row:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 :is(#panel-usage,[data-pmu-host]) .pmu-row[aria-selected="true"], :is(#panel-usage,[data-pmu-host]) .pmu-row.is-selected { background: var(--pmu-row-sel); }
 :is(#panel-usage,[data-pmu-host]) .pmu-irow { padding: 7px 10px; border-radius: 8px; transition: background-color calc(180ms * var(--pmu-speed, 1)); }
-:is(#panel-usage,[data-pmu-host]) .pmu-irow:hover { background: var(--pmu-row-hover); }
+:is(#panel-usage,[data-pmu-host]) .pmu-irow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 :is(#panel-usage,[data-pmu-host]) .pmu-amount { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 7px 0; border-top: 1px dashed var(--pmu-rule); font-size: 12.5px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-amount:first-child { border-top: 0; }
 :is(#panel-usage) .pmu-amount > :nth-child(2),
@@ -79838,14 +79877,14 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-irow { border-r
 /* the se corner shows a two-stroke L at 50 % ink; an edge under the pointer shows a 2 x 28 px accent bar centred ON the edge */
 :is(#panel-usage,[data-pmu-host]) .pmu-h[data-edge="se"]::after { content: ""; position: absolute; right: 7px; bottom: 7px; width: 7px; height: 7px; border-right: 1.5px solid var(--pmu-ink-3);
   border-bottom: 1.5px solid var(--pmu-ink-3); border-bottom-right-radius: 2px; opacity: 0; transition: opacity calc(140ms * var(--pmu-speed, 1)); }
-:is(#panel-usage,[data-pmu-host]) .pmu-card:hover > .pmu-h[data-edge="se"]::after, :is(#panel-usage,[data-pmu-host]) .pmu-card:focus-visible > .pmu-h[data-edge="se"]::after { opacity: .7; }
+:is(#panel-usage,[data-pmu-host]) .pmu-card:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) > .pmu-h[data-edge="se"]::after, :is(#panel-usage,[data-pmu-host]) .pmu-card:focus-visible > .pmu-h[data-edge="se"]::after { opacity: .7; }
 :is(#panel-usage,[data-pmu-host]) .pmu-h:is([data-edge="e"], [data-edge="w"])::before { content: ""; position: absolute; top: 50%; left: 3px; width: 2px; height: 28px; margin-top: -14px; border-radius: 1px;
   background: var(--pmu-accent); opacity: 0; transform: scaleY(.6); transition: opacity calc(100ms * var(--pmu-speed, 1)), transform calc(160ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
 :is(#panel-usage,[data-pmu-host]) .pmu-h[data-edge="s"]::before { content: ""; position: absolute; left: 50%; top: 3px; width: 28px; height: 2px; margin-left: -14px; border-radius: 1px;
   background: var(--pmu-accent); opacity: 0; transform: scaleX(.6); transition: opacity calc(100ms * var(--pmu-speed, 1)), transform calc(160ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
-:is(#panel-usage,[data-pmu-host]) .pmu-h:hover::before, :is(#panel-usage,[data-pmu-host]) .pmu-card[data-resizing="e"] > .pmu-h[data-edge="e"]::before, :is(#panel-usage,[data-pmu-host]) .pmu-card[data-resizing="w"] > .pmu-h[data-edge="w"]::before,
+:is(#panel-usage,[data-pmu-host]) .pmu-h:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *))::before, :is(#panel-usage,[data-pmu-host]) .pmu-card[data-resizing="e"] > .pmu-h[data-edge="e"]::before, :is(#panel-usage,[data-pmu-host]) .pmu-card[data-resizing="w"] > .pmu-h[data-edge="w"]::before,
 :is(#panel-usage,[data-pmu-host]) .pmu-card[data-resizing="s"] > .pmu-h[data-edge="s"]::before { opacity: 1; transform: none; }
-:is(#panel-usage,[data-pmu-host]) .pmu-board[data-op] .pmu-card:not([data-resizing]) > .pmu-h { pointer-events: none; }
+:is(#panel-usage,[data-pmu-host]) .pmu-board[data-op]:where(:not([data-op="wheel"])) .pmu-card:not([data-resizing]) > .pmu-h { pointer-events: none; }
 /* (a hovered plate does not lift, so its resize zones keep their rest place and size; Retro's 2 px raise leaves them in
    place too, above) */
 /* (PERF-3 open item: no board cursor during a resize; the captured handle keeps its own edge cursor, so an inherited
@@ -80121,7 +80160,8 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-mark[data-mark=
 :is(#panel-usage,[data-pmu-host]) .pmu-legend-item.is-compact { gap: 5px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-legend-item { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; min-width: 0; transition: opacity 140ms cubic-bezier(.2,.8,.2,1); }
 :is(#panel-usage,[data-pmu-host]) .pmu-legend-item[role="button"] { cursor: pointer; border-radius: 4px; }
-:is(#panel-usage,[data-pmu-host]) .pmu-legend-item[role="button"]:hover .pmu-legend-name { color: var(--pmu-ink); }
+/* (:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) on the in-board :hover rules below: the wheel pause, 20-board.css PERF-USAGE-HOVER) */
+:is(#panel-usage,[data-pmu-host]) .pmu-legend-item[role="button"]:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-legend-name { color: var(--pmu-ink); }
 :is(#panel-usage,[data-pmu-host]) .pmu-legend-item:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-legend-item.is-dim { opacity: .38; }
 :is(#panel-usage,[data-pmu-host]) .pmu-legend-item em { font-style: normal; font-size: 12px; color: var(--pmu-ink-3); }
@@ -80267,7 +80307,7 @@ html[data-theme$="-light"] :is(#panel-usage,[data-pmu-host]) .pmu-meter[data-ram
 :is(#panel-usage,[data-pmu-host]) .pmu-meterfoot > span { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 :is(#panel-usage,[data-pmu-host]) .pmu-reset.is-soon { color: var(--pmu-ink-2); font-weight: 560; }
 :is(#panel-usage,[data-pmu-host]) .pmu-meteramt { flex: none; }
-:is(#panel-usage,[data-pmu-host]) .pmu-meter:hover .pmu-metertrack, :is(#panel-usage,[data-pmu-host]) .pmu-row:hover .pmu-metertrack { background-color: var(--pmu-track-hover); transform: translateY(-1px); }
+:is(#panel-usage,[data-pmu-host]) .pmu-meter:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-metertrack, :is(#panel-usage,[data-pmu-host]) .pmu-row:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-metertrack { background-color: var(--pmu-track-hover); transform: translateY(-1px); }
 :is(#panel-usage,[data-pmu-host]) .pmu-meter[data-bare] .pmu-meterline, :is(#panel-usage,[data-pmu-host]) .pmu-meter[data-bare] .pmu-meterfoot { display: none !important; }
 :is(#panel-usage,[data-pmu-host]) .pmu-meter[data-bare] .pmu-metertrack { margin-top: 0; }
 :is(#panel-usage,[data-pmu-host]) .pmu-meter[data-left] .pmu-metertrack::before { display: none; }
@@ -80284,7 +80324,7 @@ html[data-theme$="-light"] :is(#panel-usage,[data-pmu-host]) .pmu-meter[data-ram
 :is(#panel-usage,[data-pmu-host]) .pmu-c-ranked { display: flex; flex-direction: column; gap: 2px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-rk { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name val" "bar bar"; gap: 5px 10px; align-items: baseline;
   padding: 7px 10px; border-radius: 8px; transition: background-color 180ms cubic-bezier(.2,.8,.2,1); }
-:is(#panel-usage,[data-pmu-host]) .pmu-rk:hover { background: var(--pmu-row-hover); }
+:is(#panel-usage,[data-pmu-host]) .pmu-rk:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 :is(#panel-usage,[data-pmu-host]) .pmu-rkname { grid-area: name; display: flex; align-items: center; gap: 8px; min-width: 0; overflow: hidden; font-size: 13px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-rkt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 :is(#panel-usage,[data-pmu-host]) .pmu-rkname em { flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-style: normal; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; }
@@ -80372,7 +80412,7 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-sweep-glint { b
 :is(#panel-usage,[data-pmu-host]) .pmu-c-donut[data-side="0"] .pmu-dlegend { width: 100%; }
 :is(#panel-usage,[data-pmu-host]) .pmu-dl-row { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto var(--dl-share, 52px); gap: 9px; align-items: center; padding: 5px 8px; border-radius: 7px;
   font-size: 12.5px; font-variant-numeric: tabular-nums; transition: background-color 140ms cubic-bezier(.2,.8,.2,1); }
-:is(#panel-usage,[data-pmu-host]) .pmu-dl-row:hover, :is(#panel-usage,[data-pmu-host]) .pmu-dl-row.is-hot { background: var(--pmu-row-hover); }
+:is(#panel-usage,[data-pmu-host]) .pmu-dl-row:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), :is(#panel-usage,[data-pmu-host]) .pmu-dl-row.is-hot { background: var(--pmu-row-hover); }
 :is(#panel-usage,[data-pmu-host]) .pmu-dl-n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 :is(#panel-usage,[data-pmu-host]) .pmu-dl-row b { font-weight: 600; text-align: right; white-space: nowrap; }
 :is(#panel-usage,[data-pmu-host]) .pmu-dl-row em { font-style: normal; color: var(--pmu-ink-3); text-align: right; white-space: nowrap; }
@@ -80388,7 +80428,7 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-sweep-glint { b
 :is(#panel-usage,[data-pmu-host]) .pmu-sbrow { display: grid; gap: 14px; align-items: center; width: 100%; min-height: 40px; padding: 7px 10px; border: 0; border-radius: 9px; background: none;
   color: inherit; font: inherit; font-size: 13px; text-align: left; font-variant-numeric: tabular-nums; cursor: pointer;
   transition: background-color 140ms cubic-bezier(.2,.8,.2,1), transform 140ms cubic-bezier(.2,.8,.2,1); }
-:is(#panel-usage,[data-pmu-host]) .pmu-sbrow:hover { background: var(--pmu-row-hover); }
+:is(#panel-usage,[data-pmu-host]) .pmu-sbrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 :is(#panel-usage,[data-pmu-host]) .pmu-sbrow:active { transform: scale(.995); }
 :is(#panel-usage,[data-pmu-host]) .pmu-sbrow.is-sel { background: var(--pmu-row-sel); }
 :is(#panel-usage,[data-pmu-host]) .pmu-sbrow:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
@@ -80398,9 +80438,9 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-sweep-glint { b
 :is(#panel-usage,[data-pmu-host]) .pmu-sbfill { display: flex; gap: 1px; height: 100%; width: var(--f, 0%); border-radius: 4px; overflow: hidden; transform-origin: 0 50%; }
 :is(#panel-usage,[data-pmu-host]) .pmu-sbfill > i { transition: opacity 140ms; }
 /* (the segment named class-first, i.pmu-mark; same specificity as `> i`: a bare i after :hover went into Chrome's page-wide set) */
-:is(#panel-usage) .pmu-sbrow:hover .pmu-sbfill > :where(.pmu-mark):is(i),
-:where([data-pmu-host]):not(#t7:not(*)) .pmu-sbrow:hover .pmu-sbfill > :where(.pmu-mark):is(i) { opacity: .9; }
-:is(#panel-usage,[data-pmu-host]) .pmu-sbrow .pmu-sbfill > i:hover { opacity: 1; }
+:is(#panel-usage) .pmu-sbrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-sbfill > :where(.pmu-mark):is(i),
+:where([data-pmu-host]):not(#t7:not(*)) .pmu-sbrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-sbfill > :where(.pmu-mark):is(i) { opacity: .9; }
+:is(#panel-usage,[data-pmu-host]) .pmu-sbrow .pmu-sbfill > i:hover { opacity: 1; }   /* (keyed on a tag: no wheel-pause gate, see 10-shell.css) */
 :is(#panel-usage,[data-pmu-host]) .pmu-sbnum { text-align: right; white-space: nowrap; }
 :is(#panel-usage,[data-pmu-host]) .pmu-sbnum.is-2 { color: var(--pmu-ink-2); }
 :is(#panel-usage,[data-pmu-host]) .pmu-sbnum.is-cost { font-weight: 620; }
@@ -80493,6 +80533,7 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-sweep-glint { b
 :is(#panel-usage,[data-pmu-host]) .pmu-hc[data-step="6"], :is(#panel-usage,[data-pmu-host]) .pmu-hs i[data-step="6"] { background: var(--pmu-heat-6); }
 :is(#panel-usage,[data-pmu-host]) .pmu-hc[data-step="-1"], :is(#panel-usage,[data-pmu-host]) .pmu-hs-key i[data-step="-1"] { background: transparent; outline: 1px dashed var(--pmu-rule-strong); outline-offset: -1px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-hs-key i[data-step="0"] { background: var(--pmu-heat-zero); }
+/* The cell itself is a tooltip target. Keep its enlarged hit area and stacking during the wheel pause. */
 :is(#panel-usage,[data-pmu-host]) .pmu-hc:hover { transform: scale(1.12); position: relative; z-index: 1; }
 :is(#panel-usage,[data-pmu-host]) .pmu-hc[data-peak] { box-shadow: inset 0 0 0 1.5px var(--pmu-card); }
 :is(#panel-usage,[data-pmu-host]) .pmu-heatleg { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 12px; font-size: 12px; color: var(--pmu-ink-3); font-variant-numeric: tabular-nums; }
@@ -80521,7 +80562,7 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-sweep-glint { b
 :is(#panel-usage,[data-pmu-host]) .pmu-mark[data-q][data-mark="area"]:is([data-tone="crit"], [data-tone="exhausted"]) { fill: url(#pmu-gq-crit); }
 :is(#panel-usage,[data-pmu-host]) .pmu-mark[data-q][data-mark="area"][data-tone="over"] { fill: url(#pmu-gq-over); }
 :is(#panel-usage,[data-pmu-host]) .pmu-mark[data-q][data-mark="line"]:is([data-tone="warn"], [data-tone="crit"], [data-tone="exhausted"], [data-tone="over"]) { stroke-width: 2; }
-:is(#panel-usage,[data-pmu-host]) .pmu-row:hover .pmu-mark[data-q][data-mark="line"], :is(#panel-usage,[data-pmu-host]) .pmu-c-qspark:hover .pmu-mark[data-q][data-mark="line"] { stroke-width: 2.2; }
+:is(#panel-usage,[data-pmu-host]) .pmu-row:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-mark[data-q][data-mark="line"], :is(#panel-usage,[data-pmu-host]) .pmu-c-qspark:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-mark[data-q][data-mark="line"] { stroke-width: 2.2; }
 :is(#panel-usage,[data-pmu-host]) .pmu-mark[data-focus][data-mark="line"] { stroke-width: 1.75; stroke-linecap: butt; }
 
 /* ---------- range bars: tool latency (A1 7.11) ---------- */
@@ -80537,7 +80578,7 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-sweep-glint { b
 :is(#panel-usage,[data-pmu-host]) .pmu-raxis-t { position: relative; height: 16px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-raxis-t i { position: absolute; top: 0; transform: translateX(-50%); font-style: normal; font-family: var(--pmu-mono); font-size: 11px; font-stretch: 87.5%; color: var(--pmu-ink-3); }
 :is(#panel-usage,[data-pmu-host]) .pmu-rrow { min-height: 28px; padding: 0 2px; border-radius: 6px; font-size: 13px; }
-:is(#panel-usage,[data-pmu-host]) .pmu-rrow:hover { background: var(--pmu-row-hover); }
+:is(#panel-usage,[data-pmu-host]) .pmu-rrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 :is(#panel-usage,[data-pmu-host]) .pmu-rname { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 :is(#panel-usage,[data-pmu-host]) .pmu-rtrack { position: relative; height: 6px; border-radius: 3px; background: var(--pmu-card-3); }
 :is(#panel-usage,[data-pmu-host]) .pmu-rgrid { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--pmu-grid); }
@@ -80822,13 +80863,14 @@ html:not([data-o55-nier="on"]) :is(#panel-usage,[data-pmu-host]) .pmu-colcap[dat
 :is(#panel-usage,[data-pmu-host]) .pmu-wswitch-track > i { position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform 260ms var(--pmu-ease-spring); }
 :is(#panel-usage,[data-pmu-host]) .pmu-wswitch.on .pmu-wswitch-track { background: var(--pmu-accent); }
 :is(#panel-usage,[data-pmu-host]) .pmu-wswitch.on .pmu-wswitch-track > i { transform: translateX(12px); }
-:is(#panel-usage,[data-pmu-host]) .pmu-wswitch:hover { color: var(--pmu-ink); }
+/* (:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) on the in-board :hover rules below: the wheel pause, 20-board.css PERF-USAGE-HOVER) */
+:is(#panel-usage,[data-pmu-host]) .pmu-wswitch:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { color: var(--pmu-ink); }
 :is(#panel-usage,[data-pmu-host]) .pmu-textbtn { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border: 1px solid color-mix(in srgb, var(--pmu-accent) 55%, transparent); border-radius: 8px;
   background: transparent; color: var(--pmu-accent); font: inherit; font-size: 12.5px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: none; }
 /* E7 (census HARD: the app's late hover-tag binding restyled pager buttons and their border transition ran after the settle):
    the colour eases only while the pointer or focus is on the button */
-:is(#panel-usage,[data-pmu-host]) .pmu-textbtn:is(:hover, :focus-visible) { transition: background-color calc(160ms * var(--pmu-speed, 1)), border-color calc(160ms * var(--pmu-speed, 1)); }
-:is(#panel-usage,[data-pmu-host]) .pmu-textbtn:hover:not([disabled]) { background: color-mix(in srgb, var(--pmu-accent) 10%, transparent); }
+:is(#panel-usage,[data-pmu-host]) .pmu-textbtn:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), :focus-visible) { transition: background-color calc(160ms * var(--pmu-speed, 1)), border-color calc(160ms * var(--pmu-speed, 1)); }
+:is(#panel-usage,[data-pmu-host]) .pmu-textbtn:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)):not([disabled]) { background: color-mix(in srgb, var(--pmu-accent) 10%, transparent); }
 :is(#panel-usage,[data-pmu-host]) .pmu-textbtn[disabled] { border-color: var(--pmu-rule); color: var(--pmu-ink-3); cursor: default; }
 :is(#panel-usage,[data-pmu-host]) .pmu-textbtn.is-primary { background: color-mix(in srgb, var(--pmu-accent) 12%, transparent); }
 :is(#panel-usage,[data-pmu-host]) .pmu-more { flex: none; grid-column: 1 / -1; padding: 4px 0 0; color: var(--pmu-ink-3); font-size: 12px; }
@@ -80878,7 +80920,7 @@ html:not([data-o55-nier="on"]) :is(#panel-usage,[data-pmu-host]) .pmu-colcap[dat
 :is(#panel-usage,[data-pmu-host]) .pmu-caveat { display: inline-grid; place-items: center; flex: none; width: 18px; height: 18px; margin-left: auto; color: var(--pmu-ink-3); cursor: help;
   border-radius: 50%; outline-offset: 2px; transition: color calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), background-color calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
 :is(#panel-usage,[data-pmu-host]) .pmu-caveat svg { width: 15px; height: 15px; }
-:is(#panel-usage,[data-pmu-host]) .pmu-caveat:hover, :is(#panel-usage,[data-pmu-host]) .pmu-caveat:focus-visible { color: var(--pmu-ink); background: var(--pmu-row-hover); }
+:is(#panel-usage,[data-pmu-host]) .pmu-caveat:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), :is(#panel-usage,[data-pmu-host]) .pmu-caveat:focus-visible { color: var(--pmu-ink); background: var(--pmu-row-hover); }
 :is(#panel-usage,[data-pmu-host]) .pmu-herohead > .pmu-caveat { align-self: flex-start; margin-top: 2px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-trendlegend > .pmu-caveat, :is(#panel-usage,[data-pmu-host]) .pmu-colscap > .pmu-caveat { margin-left: auto; vertical-align: middle; }
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-caveat, html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-caveat { border-radius: 0; }
@@ -80934,7 +80976,7 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-caveat, html[da
 :is(#panel-usage,[data-pmu-host]) .pmu-lrow { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, max-content); align-items: center; column-gap: 10px; height: 32px; min-width: 0; margin: 0 -8px; padding: 0 8px;
   border-radius: 8px; border-bottom: 1px solid transparent; transition: background-color 180ms; }
 :is(#panel-usage,[data-pmu-host]) .pmu-list .pmu-lrow + .pmu-lrow { box-shadow: 0 -1px 0 var(--pmu-rule-2); }
-:is(#panel-usage,[data-pmu-host]) .pmu-lrow:hover { background: var(--pmu-row-hover); }
+:is(#panel-usage,[data-pmu-host]) .pmu-lrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 :is(#panel-usage,[data-pmu-host]) .pmu-lrow.is-click { cursor: pointer; }
 :is(#panel-usage,[data-pmu-host]) .pmu-list.is-two .pmu-lrow { height: 44px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-list.has-note .pmu-lrow { grid-template-columns: auto minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, max-content); }
@@ -80969,11 +81011,11 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-caveat, html[da
   font: inherit; font-size: 12.5px; white-space: nowrap; cursor: pointer; }
 :is(#panel-usage,[data-pmu-host]) .pmu-tfilter b { font-weight: 600; color: var(--pmu-ink); }
 :is(#panel-usage,[data-pmu-host]) .pmu-tfilter .pmu-glyph { width: 12px; height: 12px; }
-:is(#panel-usage,[data-pmu-host]) .pmu-tfilter:hover { border-color: var(--pmu-rule-strong); color: var(--pmu-ink-2); }
+:is(#panel-usage,[data-pmu-host]) .pmu-tfilter:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { border-color: var(--pmu-rule-strong); color: var(--pmu-ink-2); }
 :is(#panel-usage,[data-pmu-host]) .pmu-tcount { margin-left: auto; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; }
 :is(#panel-usage,[data-pmu-host]) .pmu-trow { display: grid; align-items: center; column-gap: 12px; height: 32px; min-width: 0; margin: 0 -14px; padding: 0 14px; border-bottom: 1px solid var(--pmu-rule-2); font-size: 13px; transition: background-color 180ms; }
 :is(#panel-usage,[data-pmu-host]) .pmu-thead { height: 28px; background: var(--pmu-card-2); border-top: 1px solid var(--pmu-rule-2); }
-:is(#panel-usage,[data-pmu-host]) .pmu-tbody .pmu-trow:hover { background: var(--pmu-row-hover); }
+:is(#panel-usage,[data-pmu-host]) .pmu-tbody .pmu-trow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 :is(#panel-usage,[data-pmu-host]) .pmu-trow.is-click { cursor: pointer; }
 :is(#panel-usage,[data-pmu-host]) .pmu-tcell { min-width: 0; color: var(--pmu-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 :is(#panel-usage,[data-pmu-host]) .pmu-tcell em { font-style: normal; color: var(--pmu-ink-3); }
@@ -81111,7 +81153,7 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-caveat, html[da
 :is(#panel-usage,[data-pmu-host]) .pmu-qticks i.is-now { transform: translateX(-100%); color: var(--pmu-ink-2); }
 :is(#panel-usage,[data-pmu-host]) .pmu-qgroup { display: flex; align-items: center; gap: 8px; width: auto; height: 36px; margin: 0 -14px; padding: 0 14px; border: 0; border-top: 1px solid var(--pmu-rule-2); background: transparent;
   color: var(--pmu-ink-3); font: inherit; font-size: 12.5px; text-align: left; cursor: pointer; transition: background-color 180ms; }
-:is(#panel-usage,[data-pmu-host]) .pmu-qgroup:hover { background: var(--pmu-row-hover); }
+:is(#panel-usage,[data-pmu-host]) .pmu-qgroup:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 :is(#panel-usage,[data-pmu-host]) .pmu-qgroup b { font-size: 13.5px; font-weight: 640; color: var(--pmu-ink); }
 :is(#panel-usage,[data-pmu-host]) .pmu-qchev { display: inline-grid; place-items: center; flex: none; width: 18px; height: 18px; color: var(--pmu-ink-3); transition: transform 260ms var(--pmu-ease-spring); }
 :is(#panel-usage,[data-pmu-host]) .pmu-qchev svg { width: 14px; height: 14px; }
@@ -81147,7 +81189,7 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-caveat, html[da
 :is(#panel-usage,[data-pmu-host]) .pmu-agline { display: grid; grid-template-columns: 52px 18px minmax(0, 1fr) auto; align-items: center; column-gap: 10px; height: 42px; margin: 0 -6px; padding: 0 6px; border-radius: 7px;
   cursor: pointer; transition: background-color 180ms; }
 :is(#panel-usage,[data-pmu-host]) .pmu-card[data-tw="xs"] .pmu-agline, :is(#panel-usage,[data-pmu-host]) .pmu-card[data-tw="s"] .pmu-agline { grid-template-columns: 46px 18px minmax(0, 1fr) auto; column-gap: 8px; height: 48px; }
-:is(#panel-usage,[data-pmu-host]) .pmu-agline:hover { background: var(--pmu-row-hover); }
+:is(#panel-usage,[data-pmu-host]) .pmu-agline:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 :is(#panel-usage,[data-pmu-host]) .pmu-agtime { font-size: 13px; font-weight: 600; color: var(--pmu-ink); white-space: nowrap; }
 :is(#panel-usage,[data-pmu-host]) .pmu-agtext { display: flex; flex-direction: column; min-width: 0; }
 :is(#panel-usage,[data-pmu-host]) .pmu-agtext b { font-size: 13px; font-weight: 540; color: var(--pmu-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -81388,7 +81430,7 @@ html[data-theme$="-light"] :is(#panel-usage,[data-pmu-host]) .pmu-skyfill::befor
 /* the reset word is centred on its tower and may run a pixel or two past a 37 px column ("Oct 16" in the NieR face was
    cut to "Oct 1", agent 4); every word is at most six characters, so neighbours never meet */
 :is(#panel-usage,[data-pmu-host]) .pmu-skyreset { max-width: none; font-size: 11px; line-height: 18px; color: var(--pmu-ink-3); white-space: nowrap; overflow: visible; }
-:is(#panel-usage,[data-pmu-host]) .pmu-skycol:hover .pmu-skytrack { box-shadow: var(--pmu-l-track-in, none), 0 0 0 1px color-mix(in srgb, var(--c) 55%, transparent); }
+:is(#panel-usage,[data-pmu-host]) .pmu-skycol:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-skytrack { box-shadow: var(--pmu-l-track-in, none), 0 0 0 1px color-mix(in srgb, var(--c) 55%, transparent); }
 /* the plot keeps a 40 px gutter on the right for the auto-switch level, so its word never sits on a gauge's value; the
    floor is one lit rule the towers stand on */
 :is(#panel-usage,[data-pmu-host]) .pmu-skyplot { padding-right: 40px; }
@@ -81430,7 +81472,9 @@ html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-skytrack { borde
   background: radial-gradient(circle at 35% 30%, var(--cb, var(--c)), var(--c) 70%); box-shadow: 0 0 0 1.5px var(--pmu-card), 0 0 14px -2px color-mix(in srgb, var(--c) 60%, transparent); }
 :is(#panel-usage,[data-pmu-host]) .pmu-atdot.is-est { background: color-mix(in srgb, var(--c) 72%, var(--pmu-card)); box-shadow: 0 0 0 1.5px var(--pmu-card); }
 :is(#panel-usage,[data-pmu-host]) .pmu-atdot.is-pending { background: transparent; border: 1.5px dashed var(--c); box-shadow: none; }
-:is(#panel-usage,[data-pmu-host]) .pmu-atdot:hover { z-index: 2; box-shadow: 0 0 0 1.5px var(--pmu-card), 0 0 0 3px color-mix(in srgb, var(--c) 55%, transparent); }
+/* Overlapping attempt dots keep their tooltip hit order during the wheel pause. */
+:is(#panel-usage,[data-pmu-host]) .pmu-atdot:hover { z-index: 2; }
+:is(#panel-usage,[data-pmu-host]) .pmu-atdot:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { box-shadow: 0 0 0 1.5px var(--pmu-card), 0 0 0 3px color-mix(in srgb, var(--c) 55%, transparent); }
 :is(#panel-usage,[data-pmu-host]) .pmu-ataxis { position: relative; height: 22px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-ataxis span { position: absolute; top: 6px; transform: translateX(-50%); font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .04em; color: var(--pmu-ink-3); white-space: nowrap; }
 :is(#panel-usage,[data-pmu-host]) .pmu-ataxis span.is-now { transform: translateX(-100%); color: var(--pmu-ink-2); font-weight: 600; }
@@ -81523,7 +81567,7 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-heronote, html[
 :is(#panel-usage,[data-pmu-host]) .pmu-wplot { position: relative; flex: none; padding-left: var(--lab); padding-right: var(--edge); }
 :is(#panel-usage,[data-pmu-host]) .pmu-wlanes { position: absolute; left: 0; right: 0; top: 0; }
 :is(#panel-usage,[data-pmu-host]) .pmu-wlane { position: absolute; left: 0; right: 0; border-bottom: 1px solid var(--pmu-rule-2); cursor: pointer; }
-:is(#panel-usage,[data-pmu-host]) .pmu-wlane:hover { background: var(--pmu-row-hover); }
+:is(#panel-usage,[data-pmu-host]) .pmu-wlane:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 :is(#panel-usage,[data-pmu-host]) .pmu-wlab { position: absolute; left: 0; top: 50%; display: flex; align-items: center; gap: 7px; width: calc(var(--lab) - 10px); transform: translateY(-50%);
   font-size: 12.5px; font-weight: 540; color: var(--pmu-ink-2); white-space: nowrap; overflow: hidden; }
 :is(#panel-usage,[data-pmu-host]) .pmu-wtrack { position: absolute; left: var(--lab); right: var(--edge); top: 0; bottom: 0; }
@@ -81583,7 +81627,7 @@ html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-wmk em { border-
 :is(#panel-usage,[data-pmu-host]) .pmu-headmore .pmu-glyph { width: 13px; height: 13px; opacity: .8; }
 :is(#panel-usage,[data-pmu-host]) .pmu-headmore .pmu-glyph svg { width: 13px; height: 13px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-headmore b { font-weight: 600; font-variant-numeric: tabular-nums; }
-:is(#panel-usage,[data-pmu-host]) .pmu-headmore:hover { color: var(--pmu-ink-2); }
+:is(#panel-usage,[data-pmu-host]) .pmu-headmore:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { color: var(--pmu-ink-2); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-headmore { font-family: var(--pmu-mono); letter-spacing: .04em; }
 :is(#panel-usage,[data-pmu-host]) .pmu-headmore.is-inline { margin-left: auto; align-self: center; padding-left: 4px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-kpi .pmu-kpiline.has-count-row { flex-wrap: wrap; row-gap: 0; }
@@ -81712,7 +81756,8 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-szoutline, html
 :is(#panel-usage,[data-pmu-host]) .pmu-swlabel { font-size: 12.5px; font-weight: 540; color: var(--pmu-ink); margin-right: 4px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-swat { font-size: 12.5px; color: var(--pmu-ink-2); }
 :is(#panel-usage,[data-pmu-host]) .pmu-stepval { border: 0; background: transparent; color: var(--pmu-ink); font: inherit; cursor: pointer; }
-:is(#panel-usage,[data-pmu-host]) .pmu-stepval:hover { background: var(--pmu-row-hover); }
+/* (:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) on the in-board :hover rules below: the wheel pause, 20-board.css PERF-USAGE-HOVER) */
+:is(#panel-usage,[data-pmu-host]) .pmu-stepval:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 /* one disabled look in either form (motion QA A15: the hover bridge's aria-disabled form drew at .56) */
 :is(#panel-usage,[data-pmu-host]) .pmu-stepper button:is([disabled], [aria-disabled="true"]) { opacity: .35; cursor: default; }
 :is(#panel-usage,[data-pmu-host]) .pmu-stepper button:is([disabled], [aria-disabled="true"]):hover { background: transparent; color: var(--pmu-ink-3); }
@@ -81741,7 +81786,7 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-szoutline, html
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow-wrap: anywhere; }
 :is(#panel-usage,[data-pmu-host]) .pmu-provword { flex: none; max-width: 40%; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 :is(#panel-usage,[data-pmu-host]) .pmu-provrow .pmu-textbtn { flex: none; height: 24px; padding: 0 6px; border-color: transparent; font-size: 12.5px; }
-:is(#panel-usage,[data-pmu-host]) .pmu-provrow .pmu-textbtn:hover { border-color: color-mix(in srgb, var(--pmu-accent) 55%, transparent); }
+:is(#panel-usage,[data-pmu-host]) .pmu-provrow .pmu-textbtn:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { border-color: color-mix(in srgb, var(--pmu-accent) 55%, transparent); }
 
 /* ------------------------------------------------------------------ the setup card (A1 10.6) */
 :is(#panel-usage,[data-pmu-host]) .pmu-setup { display: flex; flex-direction: column; min-width: 0; }
@@ -81758,7 +81803,7 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-szoutline, html
 /* Settings group headings over the Accounts plates (kind group, head form band): no plate, the group name with a hairline
    rule under it, the count line muted; the tools still appear on hover so a heading can be moved or hidden */
 :is(#panel-usage,[data-pmu-host]) .pmu-card[data-head="band"] { background: transparent; border-color: transparent; box-shadow: none; }
-:is(#panel-usage,[data-pmu-host]) .pmu-card[data-head="band"]:hover { border-color: transparent; box-shadow: none; transform: none; }
+:is(#panel-usage,[data-pmu-host]) .pmu-card[data-head="band"]:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { border-color: transparent; box-shadow: none; transform: none; }
 :is(#panel-usage,[data-pmu-host]) .pmu-card[data-head="band"] > .pmu-cardhead { height: 52px; align-items: flex-end; padding: 0 2px 9px; border-bottom: 1px solid var(--pmu-rule); }
 :is(#panel-usage,[data-pmu-host]) .pmu-card[data-head="band"] > .pmu-cardbody { display: none; }
 :is(#panel-usage,[data-pmu-host]) .pmu-card[data-head="band"] .pmu-cardtitles { flex-direction: row; align-items: baseline; gap: 12px; }
@@ -81772,7 +81817,7 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-szoutline, html
 :is(#panel-usage,[data-pmu-host]) .pmu-provword[data-tone="good"] { color: var(--pmu-ink-good, var(--pmu-ink-ok)); font-weight: 600; }
 :is(#panel-usage,[data-pmu-host]) .pmu-provword[data-tone="warn"] { color: var(--pmu-ink-warn); font-weight: 600; }
 :is(#panel-usage,[data-pmu-host]) .pmu-provrow.is-setup { cursor: pointer; border-radius: 6px; margin: 0 -6px; padding: 2px 6px; transition: background-color 160ms; }
-:is(#panel-usage,[data-pmu-host]) .pmu-provrow.is-setup:hover { background: var(--pmu-row-hover); }
+:is(#panel-usage,[data-pmu-host]) .pmu-provrow.is-setup:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-provrow.is-setup { border-radius: 0; }
 
 /* ------------------------------------------------------------------ POLISH2 content (WOW round, 2026-10-02) */
@@ -81827,7 +81872,7 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-provrow.is-setu
 :is(#panel-usage,[data-pmu-host]) .pmu-ladval { font-size: 13px; font-weight: 640; text-align: right; color: var(--pmu-ink); font-variant-numeric: tabular-nums; }
 :is(#panel-usage,[data-pmu-host]) .pmu-ladrow[data-tone="warn"] .pmu-ladval, :is(#panel-usage,[data-pmu-host]) .pmu-ladrow[data-tone="crit"] .pmu-ladval, :is(#panel-usage,[data-pmu-host]) .pmu-ladrow[data-tone="exhausted"] .pmu-ladval { color: var(--c); }
 :is(#panel-usage,[data-pmu-host]) .pmu-ladact .pmu-glyph { color: var(--pmu-ink-good); }
-:is(#panel-usage,[data-pmu-host]) .pmu-ladrow:hover .pmu-ladtrack { box-shadow: 0 0 0 1px color-mix(in srgb, var(--c) 50%, transparent); }
+:is(#panel-usage,[data-pmu-host]) .pmu-ladrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-ladtrack { box-shadow: 0 0 0 1px color-mix(in srgb, var(--c) 50%, transparent); }
 /* the switch line: at the switch level of every track (16 + 8 + the measured name column + 8: it lives in the track
    column's coordinates; 104 px = the fixed columns and the four gaps) */
 
@@ -81898,13 +81943,13 @@ html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-acclight { displ
 :is(#panel-usage,[data-pmu-host]) .pmu-polcell .pmu-toggle { margin-left: 2px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-polval { flex: none; height: 24px; min-width: 42px; padding: 0 6px; border: 1px solid var(--pmu-rule); border-radius: 7px; background: transparent; color: var(--pmu-ink);
   font: inherit; font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; cursor: pointer; transition: background-color 140ms, color 140ms, border-color 140ms; }
-:is(#panel-usage,[data-pmu-host]) .pmu-polval:hover:not([disabled]) { background: var(--pmu-row-hover); }
+:is(#panel-usage,[data-pmu-host]) .pmu-polval:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)):not([disabled]) { background: var(--pmu-row-hover); }
 :is(#panel-usage,[data-pmu-host]) .pmu-polval[data-off] { color: var(--pmu-ink-3); font-weight: 500; }
 :is(#panel-usage,[data-pmu-host]) .pmu-polval[disabled] { opacity: .5; cursor: default; }
 :is(#panel-usage,[data-pmu-host]) .pmu-polcell[data-tone="warn"] .pmu-polval { border-color: color-mix(in srgb, var(--pmu-warn) 60%, var(--pmu-rule)); }
 :is(#panel-usage,[data-pmu-host]) .pmu-polshared { display: block; margin: 0; min-width: 0; font-size: 12px; line-height: 18px; color: var(--pmu-ink-3); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 :is(#panel-usage,[data-pmu-host]) .pmu-polshared b { font-weight: 600; color: var(--pmu-ink-2); }
-:is(#panel-usage,[data-pmu-host]) .pmu-polshared:hover { color: var(--pmu-ink-2); }
+:is(#panel-usage,[data-pmu-host]) .pmu-polshared:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { color: var(--pmu-ink-2); }
 :is(#panel-usage,[data-pmu-host]) .pmu-polshared.is-none { cursor: default; white-space: normal; }
 :is(#panel-usage,[data-pmu-host]) .pmu-ladder.is-stacked .pmu-ladpol { flex: 1 1 100%; }
 :is(#panel-usage,[data-pmu-host]) .pmu-polcap { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; min-width: 0; }
@@ -81937,7 +81982,7 @@ html[data-pmu-soft] :is(#panel-usage,[data-pmu-host]) .pmu-skynotch, html[data-o
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-polval),
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-ladnotch) { border-radius: 0; }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-polval { border-radius: 0; border-color: var(--o55-nier-ink); color: var(--o55-nier-ink); }
-html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-polval:hover:not([disabled]) { background: var(--o55-nier-ink); color: var(--o55-nier-paper, var(--pmu-card)); }
+html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-polval:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)):not([disabled]) { background: var(--o55-nier-ink); color: var(--o55-nier-paper, var(--pmu-card)); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-ladnotch { border-radius: 0; background: var(--o55-nier-ink); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-accpol { border-top-style: dashed; }
 
@@ -81959,8 +82004,8 @@ html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-accpol { border-
 :is(#panel-usage,[data-pmu-host]) .pmu-accswi .is-own { color: var(--pmu-ink); }
 :is(#panel-usage,[data-pmu-host]) .pmu-accswi .is-own svg { width: 6px; height: 14px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-accsw:not([data-own]) .is-own, :is(#panel-usage,[data-pmu-host]) .pmu-accsw[data-own] .is-link { display: none; }
-:is(#panel-usage,[data-pmu-host]) .pmu-accrow:hover .pmu-accsw:not([data-own]) { border-color: var(--pmu-rule-2); }
-:is(#panel-usage,[data-pmu-host]) .pmu-accrow:hover .pmu-accsw:is(:hover, .is-open):not([disabled]), :is(#panel-usage,[data-pmu-host]) .pmu-accsw:is(:hover, .is-open):not([disabled]) {
+:is(#panel-usage,[data-pmu-host]) .pmu-accrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-accsw:not([data-own]) { border-color: var(--pmu-rule-2); }
+:is(#panel-usage,[data-pmu-host]) .pmu-accrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), .is-open):not([disabled]), :is(#panel-usage,[data-pmu-host]) .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), .is-open):not([disabled]) {
   background: color-mix(in srgb, var(--pmu-ink) 9%, transparent); border-color: var(--pmu-rule-strong); color: var(--pmu-ink); }
 :is(#panel-usage,[data-pmu-host]) .pmu-accsw:active:not([disabled]) { background: color-mix(in srgb, var(--pmu-ink) 14%, transparent); }
 :is(#panel-usage,[data-pmu-host]) .pmu-accsw.is-open { border-color: color-mix(in srgb, var(--pmu-accent) 60%, var(--pmu-rule-strong)); }
@@ -81990,18 +82035,18 @@ html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-accpol { border-
    stepped, NieR draws the following state on a dashed ink edge and its own level on a solid one, and inverts on hover */
 html[data-theme^="friendly"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw { border-radius: 8px; }
 html[data-theme^="friendly"] :is(#panel-usage,[data-pmu-host]) .pmu-accswi > i { transition: transform calc(240ms * var(--pmu-speed, 1)) var(--pmu-ease-spring); }
-html[data-theme^="friendly"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw:is(:hover):not([disabled]) .pmu-accswi > :where(.is-link):is(i),
+html[data-theme^="friendly"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *))):not([disabled]) .pmu-accswi > :where(.is-link):is(i),
 html[data-theme^="friendly"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw:is(.is-open):not([disabled]) .pmu-accswi > :where(.is-link):is(i),
-html[data-theme^="friendly"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw:is(:hover):not([disabled]) .pmu-accswi > :where(.is-own):is(i),
+html[data-theme^="friendly"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *))):not([disabled]) .pmu-accswi > :where(.is-own):is(i),
 html[data-theme^="friendly"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw:is(.is-open):not([disabled]) .pmu-accswi > :where(.is-own):is(i) { transform: scale(1.18); }
-html[data-theme^="glass"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw:is(:hover, .is-open):not([disabled]) { box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 18%, transparent), 0 1px 6px -2px color-mix(in srgb, #000 30%, transparent); }
-html[data-theme="glass-light"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw:is(:hover, .is-open):not([disabled]) { box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 70%, transparent), 0 1px 5px -2px color-mix(in srgb, #000 18%, transparent); }
+html[data-theme^="glass"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), .is-open):not([disabled]) { box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 18%, transparent), 0 1px 6px -2px color-mix(in srgb, #000 30%, transparent); }
+html[data-theme="glass-light"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), .is-open):not([disabled]) { box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 70%, transparent), 0 1px 5px -2px color-mix(in srgb, #000 18%, transparent); }
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw { border-radius: 0; transition-timing-function: steps(2, jump-start); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw { border-radius: 0; color: var(--o55-nier-ink); border: 1px dashed rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .42); transition-timing-function: steps(2, jump-start); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw[data-own] { border-style: solid; border-color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-accswi > i { color: inherit; }
-html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-accrow:hover .pmu-accsw:not([data-own]) { border-color: rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .7); }
-html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-accrow:hover .pmu-accsw:is(:hover, .is-open):not([disabled]), html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw:is(:hover, .is-open):not([disabled]) {
+html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-accrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-accsw:not([data-own]) { border-color: rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .7); }
+html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-accrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), .is-open):not([disabled]), html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), .is-open):not([disabled]) {
   background: var(--o55-nier-ink); border-style: solid; border-color: var(--o55-nier-ink); color: var(--o55-nier-paper, var(--pmu-card)); box-shadow: none; }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-accsw:focus-visible { outline: 1px solid var(--o55-nier-ink); outline-offset: 2px; }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-accsww { color: var(--o55-nier-ink); opacity: .7; letter-spacing: .02em; }
@@ -82361,7 +82406,8 @@ html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-h:is([data-edge=
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-seg-ink { background: var(--o55-nier-ink); transition-timing-function: steps(4, end); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-toggle[aria-checked="true"], html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-toggle.on { background: var(--o55-nier-ink); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-toggle::after { background: var(--surface); box-shadow: none; transition-timing-function: steps(3, end); }
-html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-row:hover, html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-irow:hover { background: rgba(var(--o55-nier-ink-rgb), .08); }
+/* (:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) on the in-board :hover rules below: the wheel pause, 20-board.css PERF-USAGE-HOVER) */
+html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-row:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-irow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: rgba(var(--o55-nier-ink-rgb), .08); }
 
 /* menus under NieR: ink panel frame, ink highlight row with on-ink text, mono section labels */
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-menu { --pmu-menu-bg: var(--surface); --pmu-menu-border: var(--o55-nier-ink); --pmu-menu-shadow: 5px 5px 0 rgba(var(--o55-nier-ink-rgb), .22);
@@ -82816,7 +82862,8 @@ html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) :where(.pmu-mpbar):no
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-mpbar i),
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) :where(.pmu-key):not(.t7:not(*)):not(t7:not(*)) { border-radius: 0; }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-textbtn { border-color: var(--o55-nier-ink); color: var(--o55-nier-ink); }
-html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-textbtn:hover:not([disabled]) { background: var(--o55-nier-ink); color: var(--o55-nier-paper, var(--pmu-card)); }
+/* (:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) on the in-board :hover rules below: the wheel pause, 20-board.css PERF-USAGE-HOVER) */
+html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-textbtn:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)):not([disabled]) { background: var(--o55-nier-ink); color: var(--o55-nier-paper, var(--pmu-card)); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-wswitch.on .pmu-wswitch-track { background: var(--o55-nier-ink); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-wswitch-track > i { transition-timing-function: steps(3, end); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) :where(.pmu-key):not(.t7:not(*)):not(t7:not(*)),
@@ -82827,7 +82874,7 @@ html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-mpbar i[data-tk=
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-mpbar i[data-tk="rsn"], html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-key[data-tk="rsn"] { background: repeating-linear-gradient(0deg, var(--o55-nier-ink) 0 1px, transparent 1px 4px); }
 /* under NieR the plate head shows only the state glyph; the word stays in the meta line (DESIGN-SPEC 10.5) */
 html[data-o55-nier-parts~="headers"] :is(#panel-usage,[data-pmu-host]) .pmu-card[data-kind="provider"] .pmu-cardmeta .pmu-acstate b { display: none; }
-html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-row:hover, html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-lrow:hover, html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-agline:hover { background: rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .08); }
+html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-row:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-lrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-agline:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .08); }
 
 /* POLISH2 content (WOW round, 2026-10-02): a tile has no subtitle line, so its head rule sat on the caps title
    (LOOK-REVIEW-2 8); the head keeps 7 px under the title box for the rule */
@@ -85605,7 +85652,7 @@ var PMU_SERIES = {
       drop(Array.prototype.slice.call(g.querySelectorAll(':scope > .pmu-card')));
       /* the old board element empties into the hidden spare (40-board.js), never leaves the scroll pane, and carries no
          animation into its next life as the live board (every one still on the element is cancelled) */
-      if (o.ghost) { gAnims.concat(mg && mg.fade && mg.fade.cancel ? [mg.fade] : [], g.getAnimations ? g.getAnimations() : []).forEach(function (x) { if (x) { try { x.cancel(); } catch (error) {} } }); g.textContent = ''; g.hidden = true; g.className = 'pmu-board'; g.removeAttribute('style'); ['data-film', 'data-op', 'data-held', 'data-hold-bodies'].forEach(function (a) { g.removeAttribute(a); }); }
+      if (o.ghost) { gAnims.concat(mg && mg.fade && mg.fade.cancel ? [mg.fade] : [], g.getAnimations ? g.getAnimations() : []).forEach(function (x) { if (x) { try { x.cancel(); } catch (error) {} } }); g.textContent = ''; g.hidden = true; g.className = 'pmu-board'; g.removeAttribute('style'); ['data-film', 'data-op', 'data-wheel-handoff', 'data-held', 'data-hold-bodies'].forEach(function (a) { g.removeAttribute(a); }); }
       else g.remove();
     };
     var mg = moment && moment.ghost && moment.ghost.el === g ? moment.ghost : null;
@@ -93415,7 +93462,8 @@ var PMU_SERIES = {
     var hot = function (i) {
       var D = c._dh, cvx = c.el.querySelector('.pmu-dc-v'), capx = c.el.querySelector('.pmu-dc-c');
       $$('path[data-mark="arc"]', c.el).forEach(function (p, j) { p.classList.toggle('is-dim', i != null && j !== i); });
-      $$('.pmu-dl-row', c.el).forEach(function (r) { r.classList.toggle('is-hot', i != null && +r.getAttribute('data-i') === i); });
+      /* The aggregate footer has no model index; null must not coerce to model zero. */
+      $$('.pmu-dl-row', c.el).forEach(function (r) { r.classList.toggle('is-hot', i != null && r.hasAttribute('data-i') && +r.getAttribute('data-i') === i); });
       if (!cvx || !capx) return;
       if (i == null || !D.arcs[i]) { cvx.textContent = D.centreVal; capx.textContent = D.centreCap; return; }
       var x = D.arcs[i];
@@ -94668,7 +94716,7 @@ var PMU_SERIES = {
       el.hidden = true;
       el.className = 'pmu-board';
       el.removeAttribute('style');
-      ['data-film', 'data-op', 'data-held', 'data-hold-bodies'].forEach(function (a) { el.removeAttribute(a); });
+      ['data-film', 'data-op', 'data-wheel-handoff', 'data-held', 'data-hold-bodies'].forEach(function (a) { el.removeAttribute(a); });
     }
     function flushLeaving(all) {
       leaving = leaving.filter(function (l) {
@@ -94987,7 +95035,7 @@ var PMU_SERIES = {
       if (FILM && FILM.holding && FILM.holding()) FILM.cancelHold();
       var token = ++buildToken; streaming = null; lateHeld = null; clearTimeout(filmEndT); filmEndT = 0;
       var old = boardEl, nb = spareBoard();
-      Array.prototype.slice.call(old.attributes).forEach(function (at) { if (at.name !== 'id' && at.name !== 'class' && at.name !== 'hidden' && at.name !== 'style' && !/^data-(film|op|held|hold-bodies)$/.test(at.name)) nb.setAttribute(at.name, at.value); });
+      Array.prototype.slice.call(old.attributes).forEach(function (at) { if (at.name !== 'id' && at.name !== 'class' && at.name !== 'hidden' && at.name !== 'style' && !/^data-(film|op|wheel-handoff|held|hold-bodies)$/.test(at.name)) nb.setAttribute(at.name, at.value); });
       nb.className = 'pmu-board';
       nb.style.gridTemplateColumns = 'repeat(' + current.cls.tracks + ', minmax(0px, 1fr))';
       nb.setAttribute('data-cls', current.cls.name);
@@ -95023,6 +95071,9 @@ var PMU_SERIES = {
         if (bo.liveId) nb.id = bo.liveId;
         boardEl = nb;
         retireBoard(old);
+        /* Reduce Motion mounts asynchronously: clients holding the live board (wheel hover pause, R99) reconcile
+           before this newly adopted spare can paint, rather than waiting for below-screen bodies to finish. */
+        emit('swap', { room: room, board: nb });
         scroll.scrollTop = 0; view.top = 0;
         ensurePreviews();
         if (FILM && FILM.dissolve) FILM.dissolve(nb);
@@ -95485,9 +95536,18 @@ var PMU_SERIES = {
       var live = opOn && !!gesture && !gesture.done, want = live ? gesture.type : null, cl = document.body.classList, ended = false, wrote = false;
       if (live && !cl.contains('pm-resizing')) { cl.add('pm-resizing'); RESIZING_BY = inner; wrote = true; }
       else if (!live && RESIZING_BY === inner) { RESIZING_BY = null; cl.remove('pm-resizing'); ended = wrote = true; }
-      if (boardEl.getAttribute('data-op') !== want) { if (want) boardEl.setAttribute('data-op', want); else boardEl.removeAttribute('data-op'); wrote = true; }
+      /* During a wheel pause, the keyboard gesture owns data-op and the handoff attribute keeps
+         CSS hover suppressed until bindTools reaches the wheel deadline. On an early release the
+         wheel marker takes over again in this same idle update. */
+      var op = boardEl.getAttribute('data-op');
+      if (live && op === 'wheel') boardEl.setAttribute('data-wheel-handoff', '');
+      if (!live && (op === 'wheel' || boardEl.hasAttribute('data-wheel-handoff'))) want = 'wheel';
+      if (op !== want) { if (want) boardEl.setAttribute('data-op', want); else boardEl.removeAttribute('data-op'); wrote = true; }
       if (wrote) void boardEl.offsetWidth;   /* the restyle runs in this idle period, not in the next frame */
       if (ended) { try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (error) {} }
+      /* R112: a wheel return can be waiting for a keyboard gesture, including one whose deferred marker never wrote.
+         Notify this board's listeners only after its live gesture and operation flags have released. */
+      if (!live) emit('op-end');
     }
     function sizeLabel(id, r) {
       var name = PMU.cards.sizeName(kindSpec(id), r.w, r.h, id, api);
@@ -98180,9 +98240,10 @@ var PMU_SERIES = {
     var token = card._pmuUnfit = (card._pmuUnfit || 0) + 1, frames = 0;
     function back() {
       if (card._pmuUnfit !== token || !card._pmuFitOn) return;
-      if (!card.isConnected || card.matches(':hover') || card.matches(':focus-visible')) return;
+      if (!card.isConnected || (card.matches(':hover') && !wheelPaused(card)) || card.matches(':focus-visible')) return;
       var head = card.querySelector(':scope > .pmu-cardhead');
-      if (head && head.hasAttribute('data-tools-on')) return;
+      /* (a head held through a wheel pause keeps its fit; releasing it asks again, 42-cards.js releaseHeld) */
+      if (head && (head.hasAttribute('data-tools-on') || head.hasAttribute('data-wheel-held'))) return;
       var titles = head && head.querySelector(':scope > .pmu-cardtitles');
       /* (a yielding title always took at least a pixel, so its room is back exactly when the margin reads 0; the cap only
          guards a card whose margin is held by something else, so a clamp is never left on a resting head) */
@@ -98196,8 +98257,11 @@ var PMU_SERIES = {
   function refitSoon(card) {
     if (!card || !card._pmuFitOn) return;
     if (fitT) cancelAnimationFrame(fitT);
-    fitT = requestAnimationFrame(function () { fitT = null; if (card.isConnected && (card.matches(':hover') || card.matches(':focus-visible'))) fitTools(card); });
+    fitT = requestAnimationFrame(function () { fitT = null; if (card.isConnected && ((card.matches(':hover') && !wheelPaused(card)) || card.matches(':focus-visible'))) fitTools(card); });
   }
+  /* a card of a board in the wheel pause (PERF-USAGE-HOVER, bindTools) shows no hover: its head is not fitted for it, and
+     the pause's end fits the card under the pointer */
+  function wheelPaused(card) { var p = card.parentNode; return !!(p && p.getAttribute && (p.getAttribute('data-op') === 'wheel' || p.hasAttribute('data-wheel-handoff'))); }
   var M = PMU.motion;
 
   /* tool clicks (delegated on the board) */
@@ -98207,7 +98271,193 @@ var PMU_SERIES = {
   function bindTools(b) {
     var boardEl = b.scrollEl || b.el();
     if (!boardEl) return null;
+    /* PERF-USAGE-HOVER (Jared, 2026-11-16, card A: "Pause hover highlights on the Usage page while the mouse wheel
+       turns"). While the wheel turns over the Usage page's board, a card or row that slides under a resting pointer does
+       not light up or show its tool buttons: the board takes data-op="wheel" on the first wheel with room to scroll,
+       or on the first matching pane movement when the wheel check misses it.
+       The mark stays until WHEEL_REST ms after the last wheel or scroll, or until the pointer moves, presses or leaves.
+       The shell's hover engine
+       rests for a board with [data-op] (18-hover.js: no plate light, glow, reticle or magnet on its cards); Usage's
+       in-board :hover rules read the wheel and keyboard handoff markers (20-board.css says more); the head fit
+       below waits too. Chart highlights, readouts, tooltip hit areas and pointer tooltips retain their ordinary
+       behavior. A fully shown tool can still take a press while it fades. When the pause
+       ends, the board drops the value, refits the card under the pointer and sends one pmu-op-end event so the hover
+       engine can relight it without a move. At pause start the card under the pointer keeps its head exactly as it is
+       (data-wheel-held: head tools aside, title yielded and clamped, meta hidden; 20-board.css), so no head moves while
+       the pane and the pointer rest, and cards sliding past do not slide theirs (R122 P3, R123 P-1); the pause's end
+       releases it, and a held card no longer under the pointer then leaves as on a pointer leave (unfitSoon). A gesture
+       that already holds data-op keeps it. Only the Usage page's board pauses (#pmuScroll):
+       a Home dashboard keeps its highlights. */
+    var WHEEL_REST = 150, wheelT = 0, wheelInput = null, wheelAt = null, wheelEl = null, wheelFades = [], wheelHeld = null;
+    var releaseHeld = function () {
+      var head = wheelHeld; wheelHeld = null;
+      if (!head) return;
+      head.removeAttribute('data-wheel-held');
+      if (head.parentNode) unfitSoon(head.parentNode);
+    };
+    var pauseHover = function (el) {
+      var under = el.querySelector(':scope > .pmu-card:hover');
+      /* Only the live board's head is held, only when the pause begins (wheelAt is not set yet: a board mounted later in
+         the burst never showed its hover, so holding would add a head layout it never had), and only from ordinary
+         hover (a gesture's marker already moved its head). */
+      var head = under && !wheelAt && el === b.el() && el.getAttribute('data-op') === null && !el.hasAttribute('data-wheel-handoff') &&
+        under.querySelector(':scope > .pmu-cardhead');
+      if (head && head !== wheelHeld) { releaseHeld(); head.setAttribute('data-wheel-held', ''); wheelHeld = head; }
+      var tools = under && under.querySelector(':scope > .pmu-cardhead > .pmu-cardtools');
+      /* Read before writing the marker. Reversing an incomplete fade-in shortens the opacity transition,
+         so only fully shown tools can use the full pointer-events delay safely. */
+      if (tools && !M.reduced() && !under.matches(':focus-visible') && !tools.matches(':focus-within') &&
+          !tools.hasAttribute('data-wheel-fade')) {
+        var style = getComputedStyle(tools);
+        if (+style.opacity === 1 && style.pointerEvents === 'auto') {
+          tools.setAttribute('data-wheel-fade', '');
+          wheelFades.push(tools);
+        }
+      }
+      el.setAttribute('data-op', 'wheel');
+      /* Notify the engine once for each marked board, including an outgoing ghost with a fading proxy. */
+      try { document.dispatchEvent(new CustomEvent('pmu-op-start', { detail: { board: el } })); } catch (error) { /* none */ }
+      return under;
+    };
+    var clearWheelFades = function () {
+      while (wheelFades.length) wheelFades.pop().removeAttribute('data-wheel-fade');
+    };
+    var wheelEnd = function () {
+      if (wheelT) { clearTimeout(wheelT); wheelT = 0; }
+      if (!wheelAt) return;
+      var held = wheelEl, el = b.el(), point = wheelAt;
+      if (held && held !== el) {
+        if (held.getAttribute('data-op') === 'wheel') held.removeAttribute('data-op');
+        held.removeAttribute('data-wheel-handoff');
+      }
+      var op = el && el.getAttribute('data-op');
+      /* R112: keyboard M/R can take over without a pointer event. Keep the return and its current point until the
+         board's idle sync releases the gesture flags; never release a move/resize marker or notify a live gesture. */
+      if (el && (op !== null && op !== 'wheel' || b.gesture && b.gesture())) {
+        if (op === 'wheel') el.removeAttribute('data-op');
+        el.removeAttribute('data-wheel-handoff');
+        releaseHeld();
+        clearWheelFades();
+        return;
+      }
+      wheelAt = wheelEl = null;
+      if (!el) { releaseHeld(); clearWheelFades(); return; }
+      var card = el && el.isConnected && el.querySelector(':scope > .pmu-card:hover');
+      if (card) {
+        /* R100 T2: a delayed incoming transition is not a visible return. Restore the already-hovered head in one
+           step, then put ordinary hover timing back after it has painted. A newer return owns its cleanup token. */
+        var head = card.querySelector(':scope > .pmu-cardhead'), token = {};
+        if (head) {
+          head._pmuWheelReturn = token; head.classList.add('pmu-wheel-return');
+          requestAnimationFrame(function () { requestAnimationFrame(function () {
+            if (head._pmuWheelReturn === token) { head._pmuWheelReturn = null; head.classList.remove('pmu-wheel-return'); }
+          }); });
+        }
+        /* Fit while hover is still gated: releasing first invalidates the whole board, then the fitter's reads force
+           that work before its own head writes. Publish the fitted head and the released marker together instead. */
+        try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); }
+      }
+      releaseHeld();
+      if (el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
+      el.removeAttribute('data-wheel-handoff');
+      clearWheelFades();
+      try { document.dispatchEvent(new CustomEvent('pmu-op-end', { detail: { board: el, point: point } })); } catch (error) { /* none */ }
+    };
+    var wheelHold = function () { if (wheelT) clearTimeout(wheelT); wheelT = setTimeout(wheelEnd, WHEEL_REST); };
+    /* A room mount can replace the board or clear its marker while the same wheel burst continues (R99). Transfer
+       only our wheel value; a live drag/resize keeps ownership, including before its deferred data-op write. */
+    var wheelBoard = function () {
+      var el = b.el(), op = el && el.getAttribute('data-op');
+      /* R113 P3: endGesture clears the live gesture before idle opSync removes its marker. A completed move/resize
+         can hand that marker to the first scroll; an actual gesture or another operation keeps its ownership. */
+      /* Any input delivered during a live keyboard gesture leaves an existing deadline alone. */
+      if (b.gesture && b.gesture()) return null;
+      if (!el || op !== null && op !== 'wheel' && op !== 'move' && op !== 'resize') { wheelEnd(); return null; }
+      /* R116 P1: the outgoing board still paints and takes hits above the incoming board. Its wheel
+         marker stays until retirement clears its attributes, or a later mount promotes it back to live. */
+      if (wheelEl && wheelEl !== el && wheelEl.getAttribute('data-op') === 'wheel' && !wheelEl.matches('.pmu-ghostboard,.pmu-oldboard')) wheelEl.removeAttribute('data-op');
+      wheelEl = el;
+      if (op !== 'wheel') {
+        var under = pauseHover(el);
+        if (under && (!wheelHeld || wheelHeld.parentNode !== under)) unfitSoon(under);
+      }
+      return el;
+    };
+    var onWheelMount = function () {
+      if (wheelAt) wheelBoard();
+      else {
+        wheelInput = null;
+        /* A reversed ghost can return after the original hold ended. Promotion restores its ordinary hover. */
+        var el = b.el();
+        releaseHeld();
+        if (el) {
+          if (el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
+          el.removeAttribute('data-wheel-handoff');
+        }
+      }
+    };
+    var startWheel = function (point) {
+      wheelInput = null;
+      if (!wheelBoard()) return;
+      /* The outgoing room can still paint above the pane when the wheel begins. */
+      var ghost = boardEl.querySelector(':scope > :is(.pmu-ghostboard,.pmu-oldboard):not(#pmuBoard)');
+      if (ghost && ghost.getAttribute('data-op') !== 'wheel') pauseHover(ghost);
+      wheelAt = point;
+      wheelHold();
+    };
+    var onWheel = function (event) {
+      if (wheelAt) {
+        if (wheelBoard()) { wheelAt = [event.clientX, event.clientY]; wheelHold(); }
+        return;
+      }
+      if ((b.gesture && b.gesture()) || event.defaultPrevented || event.ctrlKey) return;
+      var top = boardEl.scrollTop, left = boardEl.scrollLeft;
+      var dx = event.deltaX || (event.shiftKey ? event.deltaY : 0);
+      var dy = event.shiftKey ? 0 : event.deltaY;
+      /* Mark in wheel dispatch when the pane has room in that direction. A passive listener lets Chromium
+         keep scrolling on the compositor. The scroll listener covers movement this range check missed.
+         R123 P-2: scrollHeight and clientHeight are whole pixels and scrollTop is not, so at the bottom the
+         difference can exceed the real maximum by under a pixel: room means at least one whole pixel. */
+      if ((dy < 0 && top >= 1) || (dy > 0 && boardEl.scrollHeight - boardEl.clientHeight - top >= 1) ||
+          (dx < 0 && left >= 1) || (dx > 0 && boardEl.scrollWidth - boardEl.clientWidth - left >= 1)) {
+        startWheel([event.clientX, event.clientY]);
+        return;
+      }
+      var now = performance.now();
+      if (!wheelInput || now - wheelInput.t >= WHEEL_REST) wheelInput = { top: top, left: left };
+      /* A later scroll can have another cause. Match its direction to a delta in this wheel burst.
+         A platform can deliver Shift-wheel as vertical movement even when horizontal was predicted. */
+      wheelInput.leftward = wheelInput.leftward || dx < 0;
+      wheelInput.rightward = wheelInput.rightward || dx > 0;
+      wheelInput.upward = wheelInput.upward || event.deltaY < 0;
+      wheelInput.downward = wheelInput.downward || event.deltaY > 0;
+      wheelInput.t = now;
+      wheelInput.point = [event.clientX, event.clientY];
+    };
+    var onWheelScroll = function () {
+      if (wheelAt) { if (wheelBoard()) wheelHold(); return; }
+      if (!wheelInput || performance.now() - wheelInput.t >= WHEEL_REST) return;
+      var top = boardEl.scrollTop, left = boardEl.scrollLeft;
+      var y = top - wheelInput.top, x = left - wheelInput.left;
+      if (!(y < 0 && wheelInput.upward || y > 0 && wheelInput.downward ||
+          x < 0 && wheelInput.leftward || x > 0 && wheelInput.rightward)) {
+        wheelInput.top = top; wheelInput.left = left;
+        return;
+      }
+      startWheel(wheelInput.point);
+    };
+    var onWheelMove = function (event) {
+      var point = wheelAt || (wheelInput && wheelInput.point);
+      if (point && (Math.abs(event.clientX - point[0]) >= 1 || Math.abs(event.clientY - point[1]) >= 1)) onWheelResume(event);
+    };
+    /* A direct move to navigation/toolbar has no pointermove in the scroller. Its leave carries the current
+       pointer too: end the hold there, so no return can hit-test the old wheel position. A press also resumes. */
+    var onWheelResume = function (event) {
+      wheelInput = null;
+      if (wheelAt) { wheelAt = [event.clientX, event.clientY]; wheelEnd(); }
+    };
     var onOver = function (event) {
+      if (wheelAt) return;   /* the pause: the tools stay hidden, so nothing is fitted until it ends (wheelEnd fits) */
       var card = event.target.closest && event.target.closest('.pmu-card');
       if (!card || card.contains(event.relatedTarget) || card.parentNode !== b.el()) return;
       try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); }
@@ -98246,7 +98496,34 @@ var PMU_SERIES = {
     boardEl.addEventListener('focusin', onFocusIn);
     boardEl.addEventListener('focusout', onFocusOut);
     boardEl.addEventListener('click', onClick);
+    var pausing = boardEl.id === 'pmuScroll', offWheelMount = null, offWheelSwap = null, offWheelEnd = null;
+    if (pausing) {
+      offWheelMount = b.on('mount', onWheelMount);
+      offWheelSwap = b.on('swap', onWheelMount);   /* Reduce Motion adopts its spare after mount returns */
+      /* An early gesture release leaves the original wheel deadline intact; an expired hold returns once flags clear.
+         Pointer move/leave/press keep updating wheelAt during the handoff, so wheelEnd resolves the live hover. */
+      offWheelEnd = b.on('op-end', function () {
+        if (!wheelAt) return;
+        /* opSync restored the wheel marker if its deadline is still pending. A hold that already
+           expired can now complete its deferred engine return. */
+        if (wheelT) wheelBoard(); else wheelEnd();
+      });
+      boardEl.addEventListener('wheel', onWheel, { passive: true });
+      boardEl.addEventListener('scroll', onWheelScroll, { passive: true });
+      boardEl.addEventListener('pointermove', onWheelMove, { passive: true });
+      boardEl.addEventListener('pointerdown', onWheelResume, { passive: true });
+      boardEl.addEventListener('pointerleave', onWheelResume, { passive: true });
+    }
     return function () {
+      if (pausing) {
+        offWheelMount(); offWheelSwap(); offWheelEnd();
+        wheelEnd();
+        boardEl.removeEventListener('wheel', onWheel, { passive: true });
+        boardEl.removeEventListener('scroll', onWheelScroll, { passive: true });
+        boardEl.removeEventListener('pointermove', onWheelMove, { passive: true });
+        boardEl.removeEventListener('pointerdown', onWheelResume, { passive: true });
+        boardEl.removeEventListener('pointerleave', onWheelResume, { passive: true });
+      }
       boardEl.removeEventListener('pointerover', onOver);
       boardEl.removeEventListener('pointerout', onOut);
       boardEl.removeEventListener('focusin', onFocusIn);
@@ -175293,6 +175570,18 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        taken during the rest found nothing: re-measure and look again (a page switch slides the new page in while the
        outgoing page stays hit-testable, and the Usage room plays its entrance after it, both rests) */
     function restEnded() { scopeDirty = rectsDirty = geomDirty = true; recheckSoon(); setTimeout(afterFrameSoon, 400); }
+    /* Usage's wheel pause (PERF-USAGE-HOVER, usage 42-cards.js bindTools) ends without a body class or a pointer move */
+    document.addEventListener('pmu-op-end', restEnded);
+    /* Clear this board's light on its first wheel-driven scroll. Fixed layers still carry the old viewport rect,
+       including layers that already started their ordinary fade. Other boards keep their light. */
+    document.addEventListener('pmu-op-start', function (event) {
+      var board = event.detail && event.detail.board;
+      if (!board) return;
+      if (hover && board.contains(hover)) { swapHover(hover, null, isReduced()); hover = null; }
+      lit.forEach(function (s) { if (board.contains(s.el)) { unlight(s); lit.delete(s); } });
+      hideBoardProxies(board);
+      recheckSoon();
+    });
 
     function gestureRest() {
       var b = document.body;
@@ -175859,7 +176148,27 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       document.body.appendChild(glowEl);
       return glowEl;
     }
-    function glowOn(L, on) { if (L.on !== on) { L.el.classList.toggle('pmh-glow-on', on); L.on = on; stats.writes++; } }
+    function hideBoardProxies(board) {
+      GL.forEach(function (layer, i) {
+        if (!layer.host || !board.contains(layer.host)) return;
+        layer.el.classList.add('pmh-proxy-cut');
+        glowOn(layer, false);
+        layer.host = null;
+        if (glowCur === i) { glowLastOff = i; glowCur = -1; }
+        stats.writes++;
+      });
+      if (FR.host && board.contains(FR.host)) {
+        frameEl.classList.add('pmh-proxy-cut');
+        frameOff(-Infinity);
+        FR.host = null; FR.offAt = -Infinity;
+        stats.writes++;
+      }
+    }
+    function glowOn(L, on) {
+      if (L.on === on) return;
+      if (on) L.el.classList.remove('pmh-proxy-cut');
+      L.el.classList.toggle('pmh-glow-on', on); L.on = on; stats.writes++;
+    }
     function glowUpdate(hc, vis) {
       var s = hover ? st(hover) : null, tok = s ? tk(s.kind) : null;
       var target = s && tok.glow && hc ? hover : null;
@@ -175897,18 +176206,23 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       var m = Math.round(d * k);
       return cur + (Math.abs(m) >= 1 ? m : (d > 0 ? 1 : -1));
     }
+    function frameOff(now) {
+      if (!FR.on) return;
+      frameEl.classList.remove('pmh-frame-on', 'pmh-frame-travel', 'pmh-frame-press');
+      FR.on = FR.travel = FR.press = false; FR.offAt = now; stats.writes++;
+    }
     function frameUpdate(hc, vis, dt, reduced, now) {
       var s = hover ? st(hover) : null, tok = s ? tk(s.kind) : null;
       var target = s && tok.frame && hc ? hover : null;
       if (!target) {
-        if (FR.on) { frameEl.classList.remove('pmh-frame-on', 'pmh-frame-travel', 'pmh-frame-press'); FR.on = false; FR.travel = false; FR.press = false; FR.offAt = now; FR.host = null; stats.writes++; }
+        frameOff(now); // Keep its last host while the frame's opacity can still be visible.
         return false;
       }
       ensureFrame();
       if (!frameEl) return false;
       var b = boxFor(hc), gx = b.l + (tok.follow ? s.wx : 0), gy = b.t + (tok.follow ? s.wy : 0), gw = b.w, gh = b.h;
       var far = false;
-      if (FR.host !== target) {
+      if (!FR.on || FR.host !== target) {
         if (frameEl.getAttribute('data-pmh-kind') !== s.kind) frameEl.setAttribute('data-pmh-kind', s.kind);
         far = tok.fmax > 0 && Math.max(Math.abs(gx - FR.x), Math.abs(gy - FR.y)) > tok.fmax;
         FR.host = target;
@@ -175924,7 +176238,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       /* .pmh-frame-new: the frame met this target anew (placed, not travelled), so a look can play an arrival there;
          it stays until the frame next travels */
       if (snap !== FR.fresh && (snap || FR.x !== gx || FR.y !== gy)) { frameEl.classList.toggle('pmh-frame-new', snap); FR.fresh = snap; stats.writes++; }
-      if (!FR.on) { FR.on = true; frameEl.classList.add('pmh-frame-on'); stats.writes++; }
+      if (!FR.on) { FR.on = true; frameEl.classList.remove('pmh-proxy-cut'); frameEl.classList.add('pmh-frame-on'); stats.writes++; }
       if (snap) { FR.x = gx; FR.y = gy; FR.w = gw; FR.h = gh; FR.vx = FR.vy = FR.vw = FR.vh = 0; }
       else if (tok.fhz > 0) {
         FR.acc += dt;
@@ -216036,9 +216350,12 @@ shims.fileContextMenu = function () {
         if (folderEl) {
           // the tree's own expand, as ArrowRight on the folder does (pm6-js-cozy-shelves.js treeKeyboard)
           // (a folder the tree lists without its files, under node_modules, has nothing to expand and says so)
+          // the row's aria-expanded is the state __fmAnimate writes at once; the node's 'open' class only lands when
+          // a collapse animation ends, so guarding on the class made Open a no-op on a folder just collapsed, for the
+          // whole ~300 ms its children still animate away (FO-238). Ask the row, and re-expand mid-collapse too.
           var node = folderEl.closest && folderEl.closest('.fm-node');
           if (!node || !node.querySelector(':scope > .fm-children')) note(target + ' is a folder; its files are not listed here.');
-          else if (!node.classList.contains('open') && window.__fmAnimate) { window.__fmAnimate(node, true); if (window.__fmRefreshCollapse) window.__fmRefreshCollapse(); }
+          else if (folderEl.getAttribute('aria-expanded') !== 'true' && window.__fmAnimate) { window.__fmAnimate(node, true); if (window.__fmRefreshCollapse) window.__fmRefreshCollapse(); }
           return;
         }
         PM_HOME.open({ kind: 'editor', path: target, mode: 'keep', where: r[0] === 'open' ? 'auto' : r[0] === 'panel' ? 'panel' : 'right' });

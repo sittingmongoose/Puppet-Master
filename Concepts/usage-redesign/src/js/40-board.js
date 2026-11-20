@@ -901,7 +901,7 @@
       el.hidden = true;
       el.className = 'pmu-board';
       el.removeAttribute('style');
-      ['data-film', 'data-op', 'data-held', 'data-hold-bodies'].forEach(function (a) { el.removeAttribute(a); });
+      ['data-film', 'data-op', 'data-wheel-handoff', 'data-held', 'data-hold-bodies'].forEach(function (a) { el.removeAttribute(a); });
     }
     function flushLeaving(all) {
       leaving = leaving.filter(function (l) {
@@ -1220,7 +1220,7 @@
       if (FILM && FILM.holding && FILM.holding()) FILM.cancelHold();
       var token = ++buildToken; streaming = null; lateHeld = null; clearTimeout(filmEndT); filmEndT = 0;
       var old = boardEl, nb = spareBoard();
-      Array.prototype.slice.call(old.attributes).forEach(function (at) { if (at.name !== 'id' && at.name !== 'class' && at.name !== 'hidden' && at.name !== 'style' && !/^data-(film|op|held|hold-bodies)$/.test(at.name)) nb.setAttribute(at.name, at.value); });
+      Array.prototype.slice.call(old.attributes).forEach(function (at) { if (at.name !== 'id' && at.name !== 'class' && at.name !== 'hidden' && at.name !== 'style' && !/^data-(film|op|wheel-handoff|held|hold-bodies)$/.test(at.name)) nb.setAttribute(at.name, at.value); });
       nb.className = 'pmu-board';
       nb.style.gridTemplateColumns = 'repeat(' + current.cls.tracks + ', minmax(0px, 1fr))';
       nb.setAttribute('data-cls', current.cls.name);
@@ -1256,6 +1256,9 @@
         if (bo.liveId) nb.id = bo.liveId;
         boardEl = nb;
         retireBoard(old);
+        /* Reduce Motion mounts asynchronously: clients holding the live board (wheel hover pause, R99) reconcile
+           before this newly adopted spare can paint, rather than waiting for below-screen bodies to finish. */
+        emit('swap', { room: room, board: nb });
         scroll.scrollTop = 0; view.top = 0;
         ensurePreviews();
         if (FILM && FILM.dissolve) FILM.dissolve(nb);
@@ -1718,9 +1721,18 @@
       var live = opOn && !!gesture && !gesture.done, want = live ? gesture.type : null, cl = document.body.classList, ended = false, wrote = false;
       if (live && !cl.contains('pm-resizing')) { cl.add('pm-resizing'); RESIZING_BY = inner; wrote = true; }
       else if (!live && RESIZING_BY === inner) { RESIZING_BY = null; cl.remove('pm-resizing'); ended = wrote = true; }
-      if (boardEl.getAttribute('data-op') !== want) { if (want) boardEl.setAttribute('data-op', want); else boardEl.removeAttribute('data-op'); wrote = true; }
+      /* During a wheel pause, the keyboard gesture owns data-op and the handoff attribute keeps
+         CSS hover suppressed until bindTools reaches the wheel deadline. On an early release the
+         wheel marker takes over again in this same idle update. */
+      var op = boardEl.getAttribute('data-op');
+      if (live && op === 'wheel') boardEl.setAttribute('data-wheel-handoff', '');
+      if (!live && (op === 'wheel' || boardEl.hasAttribute('data-wheel-handoff'))) want = 'wheel';
+      if (op !== want) { if (want) boardEl.setAttribute('data-op', want); else boardEl.removeAttribute('data-op'); wrote = true; }
       if (wrote) void boardEl.offsetWidth;   /* the restyle runs in this idle period, not in the next frame */
       if (ended) { try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (error) {} }
+      /* R112: a wheel return can be waiting for a keyboard gesture, including one whose deferred marker never wrote.
+         Notify this board's listeners only after its live gesture and operation flags have released. */
+      if (!live) emit('op-end');
     }
     function sizeLabel(id, r) {
       var name = PMU.cards.sizeName(kindSpec(id), r.w, r.h, id, api);

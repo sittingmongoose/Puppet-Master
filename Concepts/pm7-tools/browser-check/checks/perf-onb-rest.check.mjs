@@ -15,7 +15,10 @@
 // the stage's root, with the stage's render() counted (its drawn frames). Judged:
 //   nodes    no node is created in the stage: no element or text node is added that was not in it when the window
 //            began, outside its particles (.pst-fx: Pip's sleeping z's, about one every 0.9 s on Welcome) and Retro
-//            Dark's phosphor trail (.pst-trail: copies of Pip while it moves), which are logged;
+//            Dark's phosphor trail (.pst-trail: copies of Pip while it moves), which are logged. A target change's
+//            word resets do not count: the HUD target word and the bracket label replace their text nodes in the
+//            record that removes the old words, and the kept bracket parts are not new nodes
+//            (PM7PERF-ONBREST-NIER-LABEL-NODES-FLAP; helpers/onb-rest-created.mjs). A failure names the nodes created;
 //   same     no attribute or text is written with the value it already held (at most --set same=0 a second), outside
 //            the speech bubble and Pip's note, which placeBubble and placeTip place (the bubble's data-side is written
 //            with the same value in every frame there: logged, not judged; another lane's);
@@ -23,7 +26,9 @@
 //            (per drawn frame, not per second: Retro draws 10 or 20 times a second, and a 238 Hz display draws up to
 //            twice as often as the owner's 120 Hz);
 //   layouts  NieR only: at most --set forced (default 0.1) forced layouts per drawn frame (a Layout event inside a script
-//            task of the trace: NieR's box measured after the frame's writes);
+//            task of the trace: NieR's box measured after the frame's writes). A trace that names no renderer main
+//            thread, or that carries no Layout category, measured nothing: could not judge, and the row FAILS
+//            (PM7PERF-ONBREST-NO-RENDERER-READS-ZERO; helpers/onb-rest-rows.mjs);
 //   counts   the kept nodes stay in step with the stage: Friendly's and Glass's shadows are Pip's and one per placed prop,
 //            Basic's protractor its seven parts, NieR's brackets 6 to 9 parts with a target and none without.
 // Logged per cell: main thread ms a second, style elements a second, layouts and forced layouts a second, forced style
@@ -33,6 +38,8 @@
 // Both surfaces. About 7 minutes with the defaults.
 import { traceEvents, summarise } from '../helpers/frame-trace.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
+import { forcedLayoutRow } from '../helpers/onb-rest-rows.mjs';
+import { createdAdded } from '../helpers/onb-rest-created.mjs';
 
 const ALL = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 const SCRIPT = new Set(['FireAnimationFrame', 'FunctionCall', 'TimerFire', 'EventDispatch', 'RunMicrotasks', 'FireIdleCallback', 'v8.callFunction', 'V8.Execute']);
@@ -67,6 +74,10 @@ const ARM = () => {
 	const root = st.root, seen = new WeakSet(), groupOfEl = new WeakMap();
 	const walk = (n, f) => { f(n); for (let c = n.firstChild; c; c = c.nextSibling) walk(c, f); };
 	walk(root, (n) => seen.add(n));
+	// NieR's bracket parts are made once and kept in gHud.__b (54-art-nier.js): a target change takes them out and
+	// puts them back in their place; they are not new nodes even when detached at arm time
+	if (st.gHud && st.gHud.__b) for (const p of st.gHud.__b) seen.add(p);
+	const desc = (e) => { if (!e || e.nodeType !== 1) return e && e.parentElement ? desc(e.parentElement) + ' text' : '(detached)'; const c = typeof e.className === 'string' ? e.className : (e.className && e.className.baseVal) || ''; return e.tagName.toLowerCase() + (c.trim() ? '.' + c.trim().split(/\s+/).slice(0, 2).join('.') : ''); };
 	const GROUPS = [['shadows', '.pst-shadows'], ['hud', '.pst-hud'], ['fx', '.pst-fx'], ['trail', '.pst-trail'], ['props', '.pst-props, .pst-pstr'], ['pip', '.pst-pip'], ['bubble', '.pst-bubble'], ['tip', '.pst-tip'], ['hudhtml', '.pst-hudhtml'], ['terrain', '.pst-terrain'], ['back', '.pst-back']];
 	const groupOf = (n) => {
 		const e = n && (n.nodeType === 1 ? n : n.parentElement); if (!e) return 'detached';
@@ -74,13 +85,21 @@ const ARM = () => {
 		g = 'other'; for (const [k, sel] of GROUPS) if (e.closest(sel)) { g = k; break; }
 		groupOfEl.set(e, g); return g;
 	};
-	const W = window.__onbr = { st, attrs: [], text: [], created: {}, lists: {}, renders: 0, t0: performance.now() };
+	const W = window.__onbr = { st, attrs: [], text: [], childRecords: [], lists: {}, renders: 0, t0: performance.now() };
 	const take = (list) => {
 		for (const r of list) {
 			if (r.type === 'childList') {
 				const g = groupOf(r.target);
 				W.lists[g] = (W.lists[g] || 0) + 1;
-				r.addedNodes.forEach((n) => walk(n, (m) => { if (!seen.has(m)) { seen.add(m); W.created[g] = (W.created[g] || 0) + 1; } }));
+				// a target change re-sets the target's words: the HUD target word (b.pst-target, hudTarget) and the
+				// bracket label (gHud.__b[8], renderBrackets' innerHTML) each replace their text node in one record
+				// that removes the old words; the decision is helpers/onb-rest-created.mjs, on this side of the wire
+				const b = st.gHud && st.gHud.__b, label = b && b[8], word = st.hudEl && st.hudEl.querySelector('.pst-target');
+				const under = (el) => !!el && (el === r.target || (el.contains && el.contains(r.target)));
+				const wordReset = r.removedNodes.length > 0 && (under(label) || under(word));
+				const added = [];
+				r.addedNodes.forEach((n) => walk(n, (m) => { added.push({ text: m.nodeType === 3, seen: seen.has(m), desc: desc(m) }); seen.add(m); }));
+				W.childRecords.push({ g, wordReset, added });
 			} else if (r.type === 'attributes') W.attrs.push([r.target, r.attributeName, r.oldValue, groupOf(r.target)]);
 			else W.text.push([r.target, r.oldValue, groupOf(r.target)]);
 		}
@@ -115,7 +134,7 @@ const READ = () => {
 		m.set('#text', old); bump(writes, g);
 		if (after === old) { bump(same, g); const k = desc(n); eg[g] = eg[g] || {}; eg[g][k] = (eg[g][k] || 0) + 1; }
 	}
-	return { secs, renders: W.renders, created: W.created, lists: W.lists, writes, same, eg };
+	return { secs, renders: W.renders, childRecords: W.childRecords, lists: W.lists, writes, same, eg };
 };
 
 // The kept nodes against what the stage shows
@@ -187,13 +206,17 @@ export default async function (t) {
 			const per = (n) => (n / r.secs).toFixed(1), sum = (m, skip) => Object.entries(m).filter(([g]) => !skip.includes(g)).reduce((a, [, v]) => a + v, 0);
 			const list = (m) => Object.entries(m).sort((a, b) => b[1] - a[1]).map(([g, v]) => `${g} ${per(v)}`).join(', ') || 'none';
 			const drawsPerSec = r.renders / r.secs;
-			if (x) t.log(`${cell}: main ${Math.round(x.cost.main)} ms/s (script ${x.split.script || 0}, style ${x.split.style || 0}, layout ${x.split.layout || 0}, paint ${x.split.paint || 0}), style ${x.style.elementsPerSec} elements/s, layouts ${x.layoutPerSec}/s, forced layouts ${(fw.layouts / x.secs).toFixed(1)}/s, forced style ${(fw.styles / x.secs).toFixed(1)}/s, main frames ${x.mainFrames.perSec}/s (rendered ${x.mainFrames.renderedPerSec})`);
+			// which added nodes count as created (the word-reset exclusion), and which they were for a failure
+			const created = {}, createdEg = {};
+			for (const rec of r.childRecords) for (const n of createdAdded(rec)) { created[rec.g] = (created[rec.g] || 0) + 1; const eg = createdEg[rec.g] || (createdEg[rec.g] = {}); eg[n.desc] = (eg[n.desc] || 0) + 1; }
+			if (x) t.log(`${cell}: main ${Math.round(x.cost.main)} ms/s (script ${x.split.script || 0}, style ${x.split.style || 0}, layout ${x.split.layout || 0}, paint ${x.split.paint || 0}, layerize ${x.split.layerize || 0}, PAC ${x.split.pac || 0} [full ${x.pac.full}, repainted ${x.pac.repainted}]), style ${x.style.elementsPerSec} elements/s, layouts ${x.layoutPerSec}/s, forced layouts ${(fw.layouts / x.secs).toFixed(1)}/s, forced style ${(fw.styles / x.secs).toFixed(1)}/s, main frames ${x.mainFrames.perSec}/s (rendered ${x.mainFrames.renderedPerSec})`);
 			else t.log(`${cell}: NOTE the trace failed (${err}); the observer's rows are still judged`);
-			t.log(`${cell}: the stage drew ${drawsPerSec.toFixed(1)} frames/s; created a second: ${list(r.created)}; child lists a second: ${list(r.lists)}; writes a second: ${list(r.writes)}; same-value writes a second: ${list(r.same)}`);
+			t.log(`${cell}: the stage drew ${drawsPerSec.toFixed(1)} frames/s; created a second: ${list(created)}; child lists a second: ${list(r.lists)}; writes a second: ${list(r.writes)}; same-value writes a second: ${list(r.same)}`);
 			for (const [g, m] of Object.entries(r.eg)) t.log(`${cell}: same-value writes in ${g}: ${Object.entries(m).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([k, v]) => `${k} ${per(v)}/s`).join(', ')}`);
 			if (!(r.renders > 0)) { await t.check(`${cell}: the stage drew while watched`, false, '0 draws: could not judge'); continue; }
-			const created = sum(r.created, ['fx', 'trail']);
-			await t.check(`${cell}: the stage creates no node at rest (outside its particles and phosphor trail)`, created === 0, `${created} nodes in ${r.secs.toFixed(1)} s: ${list(Object.fromEntries(Object.entries(r.created).filter(([g]) => g !== 'fx' && g !== 'trail')))}; particles and trail ${per((r.created.fx || 0) + (r.created.trail || 0))}/s`);
+			const createdCount = sum(created, ['fx', 'trail']);
+			const egText = Object.entries(createdEg).filter(([g]) => g !== 'fx' && g !== 'trail').map(([g, m]) => `${g}: ${Object.entries(m).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([k, v]) => `${k} x${v}`).join(', ')}`).join('; ');
+			await t.check(`${cell}: the stage creates no node at rest (outside its particles and phosphor trail)`, createdCount === 0, `${createdCount} nodes in ${r.secs.toFixed(1)} s: ${list(Object.fromEntries(Object.entries(created).filter(([g]) => g !== 'fx' && g !== 'trail')))}${egText ? ' [' + egText + ']' : ''}; particles and trail ${per((created.fx || 0) + (created.trail || 0))}/s`);
 			const same = sum(r.same, ['bubble', 'tip']) / r.secs;
 			await t.check(`${cell}: no attribute or text of the stage is written with the value it already held (at most ${sameMax} a second, outside the bubble and the note)`, same <= sameMax, `${same.toFixed(1)} a second: ${list(Object.fromEntries(Object.entries(r.same).filter(([g]) => g !== 'bubble' && g !== 'tip')))}; bubble and note ${per((r.same.bubble || 0) + (r.same.tip || 0))}/s (logged)`);
 			const perDraw = sum(r.writes, ['bubble', 'tip']) / r.renders;
@@ -201,8 +224,8 @@ export default async function (t) {
 			if (fam === 'nier') {
 				if (!x) await t.check(`${cell}: forced layouts could be read`, false, `trace failed: ${err}: could not judge`);
 				else {
-					const draws = drawsPerSec > 0 ? drawsPerSec : x.mainFrames.perSec, k = fw.layouts / x.secs / draws;
-					await t.check(`${cell}: at most ${forcedMax} forced layouts per drawn frame`, k <= forcedMax, `${(fw.layouts / x.secs).toFixed(1)} forced layouts/s at ${draws.toFixed(1)} draws/s (${k.toFixed(2)} a draw); all layouts ${x.layoutPerSec}/s`);
+					const row = forcedLayoutRow({ summary: x, forced: fw, drawsPerSec, max: forcedMax });
+					await t.check(`${cell}: at most ${forcedMax} forced layouts per drawn frame`, row.ok, row.detail);
 				}
 			}
 			await t.check(`${cell}: the stage's kept ${counts ? counts.what : 'nodes'} match what it shows`, !!counts && counts.ok, counts ? `${counts.got}, want ${counts.want}` : 'no stage');
