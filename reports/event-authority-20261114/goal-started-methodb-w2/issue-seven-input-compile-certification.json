@@ -1,0 +1,41 @@
+{
+  "row": "dg5/issue/seven_input:compile_certification/schema",
+  "fixtures": [
+    {
+      "route": "issue/seven_input:compile_certification",
+      "edition": "v7",
+      "root": "dg5:3b5d42f9e378a53a",
+      "hash_seed": 9,
+      "edit": [
+        1,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "issue/seven_input:compile_certification",
+      "edition": "v3",
+      "root": "dg5:f1c7ca44bd28237a",
+      "hash_seed": 10,
+      "edit": [
+        1,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
