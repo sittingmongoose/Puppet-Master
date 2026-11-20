@@ -9,6 +9,17 @@ MESSAGEPACK = [
 ]
 
 PROOFS = {
+    'dg5/commit/evidence/schema': {
+        'kind': 'entailed-by-final-commit-evidence',
+        'families': [FAMILY],
+        'depends_on': ['dg5/commit_final/evidence/schema'],
+        'sites': [(WORLD, line) for line in (932, 1055, 1073)],
+        'argument': (
+            'Commit checks the identical evidence in the same schema bank at entry and again '
+            'before its write. Disabling only the earlier schema check sent the unchanged '
+            'invalid document to the final check and restoring it repeated the first refusal.'
+        ),
+    },
     'dg5/intent/schema': {
         'kind': 'entailed-by-prepared-and-armed-intent',
         'families': [FAMILY],

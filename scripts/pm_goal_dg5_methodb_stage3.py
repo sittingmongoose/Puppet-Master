@@ -225,8 +225,10 @@ def certified_fixture(route, path):
     if route == 'retained':
         run.until('release')
         return w, lambda: w.coordinator.retained_authority(ctx['scope'], ctx['op'])
-    if route == 'retry':
+    if route in ('retry', 'retry_evidence_recheck'):
         run.until('append')
+        if route != 'retry':
+            check_certified_evidence_reused(oracle.W, w, route)
         return w, lambda: w.coordinator.held_retry(ctx, run.obs['intent'], run.obs['control_armed'])
     if route == 'readback':
         run.until('commit')
@@ -286,8 +288,10 @@ def certified_fixture(route, path):
                 return w.coordinator.release(ctx, run.obs['committed'], run.obs['readback'])
 
         return w, release
-    if route == 'native':
+    if route in ('native', 'commit_evidence_recheck'):
         run.until('append')
+        if route != 'native':
+            check_certified_evidence_reused(oracle.W, w, route)
         stamp = w.storage.now()
 
         def commit():
@@ -467,6 +471,30 @@ def check_intent_reused(module, world):
                 'a later definition no longer checks the exact Intent')
 
 
+def check_certified_evidence_reused(module, world, route):
+    coordinator = world.coordinator
+    require("w.realm.validate('coordinator', APPEND + 'AppendEvidence', evidence, stage + '/evidence')" in
+            inspect.getsource(coordinator.check_evidence), 'evidence schema call changed')
+    if route == 'commit_evidence_recheck':
+        commit = inspect.getsource(coordinator.commit_native)
+        early = "self.check_evidence(ctx, appended['evidence'], stage=stage)"
+        final = "self.check_evidence(ctx, appended['evidence'], stage=stage + '_final')"
+        require(early in commit and final in commit and commit.index(early) < commit.index(final),
+                'commit no longer checks the same evidence before and after its helper')
+    else:
+        retry = inspect.getsource(coordinator.held_retry)
+        check = 'self.check_evidence(ctx, evidence, stage=\'retry\')'
+        forward = "appended = dict(outcome='event_durable_held', evidence=evidence,"
+        result = "w.realm.validate('coordinator', APPEND + 'AppendedHeld', appended, 'retry/result')"
+        require(all(step in retry for step in (check, forward, result)) and
+                retry.index(check) < retry.index(forward) < retry.index(result), 'retry no longer forwards the checked evidence')
+        resolver = world.realm.scoped.bank.registries['coordinator'].resolver()
+        schema = resolver.lookup(module.APPEND + 'AppendedHeld').contents
+        require('evidence' in schema['required'] and
+                schema['properties']['evidence'] == {'$ref': module.APPEND + 'AppendEvidence'},
+                'retry result no longer requires the same evidence definition')
+
+
 class OwnerCheck:
     def __init__(self, row, site, bank_class, source, scratch, declare, collector, disabled_check):
         self.row = row
@@ -494,9 +522,21 @@ class OwnerCheck:
         changed = []
         expected = self.code + '/schema/'  # extra member is rejected at the enclosing object
         request_validation = []
+        evidence_validation = []
+        next_evidence_check = {
+            'commit_evidence_recheck': 'commit_final/evidence',
+            'retry_evidence_recheck': 'retry/result',
+        }.get(self.declare['route'])
 
         def observe(bank, *args):
             if args[-1] != self.code:
+                if args[-1] == next_evidence_check:
+                    first_bank, first_realm, first_ref, first_document = evidence_validation[0]
+                    ref, document = (first_ref, args[-2]) if args[-1] == 'commit_final/evidence' else (
+                        first_ref.removesuffix('AppendEvidence') + 'AppendedHeld', args[-2]['evidence'])
+                    require(first_bank is bank and (first_realm, ref, first_document) == (args[0], args[1], document),
+                            'later evidence rule received a different document or schema')
+                    record['same_later_evidence'] = True
                 if self.declare['route'] == 'receipt_recheck' and args[-1] == 'dgu/reader/receipt/final/receipt_request':
                     require(request_validation == [(bank, args[0], args[-2])],
                             'final receipt validation received a different reference or request')
@@ -520,6 +560,8 @@ class OwnerCheck:
                 document[member] = 'gc'
             if self.declare['route'] in ('receipt_recheck', 'input_recheck'):
                 request_validation.append((bank, args[0], copy.deepcopy(document)))
+            if next_evidence_check:
+                evidence_validation.append((bank, args[0], args[1], copy.deepcopy(document)))
             validator_args = args[:-1]
             sink = []
             saved = closure.CAPTURE[0]
@@ -672,6 +714,8 @@ class OwnerCheck:
                     require(cut.get('same_final_receipt_request'), 'final validator did not check the original request')
                 if self.declare['route'] == 'input_recheck':
                     require(cut.get('same_input_result_request'), 'input result validator did not check the original request')
+                if self.declare['route'] in ('commit_evidence_recheck', 'retry_evidence_recheck'):
+                    require(cut.get('same_later_evidence'), 'later evidence check did not use the original document')
                 require(before == restored and before['observations'] == cut['observations'] and
                         bool(cut['errors']) == bool(later),
                         'the complete call did not restore the same document and validation message')
@@ -1298,6 +1342,8 @@ def main():
         ('dg5/f5a/control/schema', 'f5a_control_check'): 'f5a/control_bytes',
         ('dg5/intent/schema', 'prepare_intent_check'): 'prepare/result/schema/intent',
         ('dg5/intent/schema', 'arm_intent_check'): 'arm/prepared_intent',
+        ('dg5/commit/evidence/schema', 'commit_evidence_recheck'): 'commit_final/evidence/schema/',
+        ('dg5/retry/evidence/schema', 'retry_evidence_recheck'): 'retry/result/schema/evidence',
         ('dg5/dgu/reader/receipt/receipt_request/schema', 'receipt_recheck'):
             'dgu/reader/receipt/final/receipt_request/schema/',
         ('dg5/dgu/producer/publish/publication/schema', 'publish_receipted'): 'dgu/progress/schema/',
