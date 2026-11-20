@@ -1,0 +1,685 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:c2e0d38601109f88": {
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/issued_at_utc/format": {
+        "path": [
+          "value",
+          "issued_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/issued_at_utc/type": {
+        "path": [
+          "value",
+          "issued_at_utc"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/issued_record_key/minLength": {
+        "path": [
+          "value",
+          "issued_record_key"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/issued_record_key/type": {
+        "path": [
+          "value",
+          "issued_record_key"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/issued_record_sha256/pattern": {
+        "path": [
+          "value",
+          "issued_record_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/issued_record_sha256/type": {
+        "path": [
+          "value",
+          "issued_record_sha256"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/native_boundary_operation_ref/minLength": {
+        "path": [
+          "value",
+          "native_boundary_operation_ref"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/native_boundary_operation_ref/type": {
+        "path": [
+          "value",
+          "native_boundary_operation_ref"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/operation_id/minLength": {
+        "path": [
+          "value",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/operation_id/type": {
+        "path": [
+          "value",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/owner_epoch/minimum": {
+        "path": [
+          "value",
+          "owner_epoch"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/owner_epoch/type": {
+        "path": [
+          "value",
+          "owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/owner_ref/minLength": {
+        "path": [
+          "value",
+          "owner_ref"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/owner_ref/type": {
+        "path": [
+          "value",
+          "owner_ref"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/prior_origin/anyOf": {
+        "path": [
+          "value",
+          "prior_origin"
+        ],
+        "value": true
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/prior_origin/anyOf/1/type": {
+        "path": [
+          "value",
+          "prior_origin"
+        ],
+        "value": true
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/prior_record/anyOf": {
+        "path": [
+          "value",
+          "prior_record"
+        ],
+        "value": true
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/prior_record/anyOf/1/type": {
+        "path": [
+          "value",
+          "prior_record"
+        ],
+        "value": true
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/probe_birth/anyOf": {
+        "path": [
+          "value",
+          "probe_birth"
+        ],
+        "value": true
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/probe_birth/anyOf/1/type": {
+        "path": [
+          "value",
+          "probe_birth"
+        ],
+        "value": true
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/record_family/enum": {
+        "path": [
+          "value",
+          "record_family"
+        ],
+        "value": "executor_process_probe_birthx"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/schema_id/const": {
+        "path": [
+          "value",
+          "schema_id"
+        ],
+        "value": "pm.executor.process_source_origin.v1x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/schema_version/const": {
+        "path": [
+          "value",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/sequence/minimum": {
+        "path": [
+          "value",
+          "sequence"
+        ],
+        "value": 0
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/sequence/type": {
+        "path": [
+          "value",
+          "sequence"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/transaction_id/minLength": {
+        "path": [
+          "value",
+          "transaction_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/transaction_id/type": {
+        "path": [
+          "value",
+          "transaction_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/properties/write_kind/enum": {
+        "path": [
+          "value",
+          "write_kind"
+        ],
+        "value": "probe_admissionx"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": [
+          "value"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOrigin/type": {
+        "path": [
+          "value"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOriginPhysical/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOriginPhysical/properties/family_id/const": {
+        "path": [
+          "family_id"
+        ],
+        "value": "executor_process_source_originx"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOriginPhysical/properties/physical_key/minLength": {
+        "path": [
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOriginPhysical/properties/physical_key/type": {
+        "path": [
+          "physical_key"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOriginPhysical/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_process_source_origin.v1x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOriginPhysical/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOriginPhysical/properties/storage_instance_id/minLength": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOriginPhysical/properties/storage_instance_id/type": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOriginPhysical/required": {
+        "member": [
+          "remove",
+          "family_id"
+        ],
+        "path": []
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/OriginalWriteOriginPhysical/type": {
+        "path": [],
+        "value": true
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/closed_members": {
+        "control": {
+          "path": [
+            "value",
+            "prior_origin"
+          ],
+          "value": {
+            "codec": "messagepack_canonical",
+            "family_id": "x",
+            "physical_key": "x",
+            "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "x",
+            "schema_version": "x",
+            "storage_instance_id": "x"
+          }
+        },
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "prior_origin"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/codec/const": {
+        "control": {
+          "path": [
+            "value",
+            "prior_origin"
+          ],
+          "value": {
+            "codec": "messagepack_canonical",
+            "family_id": "x",
+            "physical_key": "x",
+            "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "x",
+            "schema_version": "x",
+            "storage_instance_id": "x"
+          }
+        },
+        "path": [
+          "value",
+          "prior_origin",
+          "codec"
+        ],
+        "value": "TEST_ONLY:wrong"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/family_id/minLength": {
+        "control": {
+          "path": [
+            "value",
+            "prior_origin"
+          ],
+          "value": {
+            "codec": "messagepack_canonical",
+            "family_id": "x",
+            "physical_key": "x",
+            "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "x",
+            "schema_version": "x",
+            "storage_instance_id": "x"
+          }
+        },
+        "path": [
+          "value",
+          "prior_origin",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/family_id/type": {
+        "control": {
+          "path": [
+            "value",
+            "prior_origin"
+          ],
+          "value": {
+            "codec": "messagepack_canonical",
+            "family_id": "x",
+            "physical_key": "x",
+            "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "x",
+            "schema_version": "x",
+            "storage_instance_id": "x"
+          }
+        },
+        "path": [
+          "value",
+          "prior_origin",
+          "family_id"
+        ],
+        "value": false
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/physical_key/minLength": {
+        "control": {
+          "path": [
+            "value",
+            "prior_origin"
+          ],
+          "value": {
+            "codec": "messagepack_canonical",
+            "family_id": "x",
+            "physical_key": "x",
+            "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "x",
+            "schema_version": "x",
+            "storage_instance_id": "x"
+          }
+        },
+        "path": [
+          "value",
+          "prior_origin",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/physical_key/type": {
+        "control": {
+          "path": [
+            "value",
+            "prior_origin"
+          ],
+          "value": {
+            "codec": "messagepack_canonical",
+            "family_id": "x",
+            "physical_key": "x",
+            "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "x",
+            "schema_version": "x",
+            "storage_instance_id": "x"
+          }
+        },
+        "path": [
+          "value",
+          "prior_origin",
+          "physical_key"
+        ],
+        "value": false
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/physical_sha256/pattern": {
+        "control": {
+          "path": [
+            "value",
+            "prior_origin"
+          ],
+          "value": {
+            "codec": "messagepack_canonical",
+            "family_id": "x",
+            "physical_key": "x",
+            "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "x",
+            "schema_version": "x",
+            "storage_instance_id": "x"
+          }
+        },
+        "path": [
+          "value",
+          "prior_origin",
+          "physical_sha256"
+        ],
+        "value": "TEST_ONLY:wrong"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/physical_sha256/type": {
+        "control": {
+          "path": [
+            "value",
+            "prior_origin"
+          ],
+          "value": {
+            "codec": "messagepack_canonical",
+            "family_id": "x",
+            "physical_key": "x",
+            "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "x",
+            "schema_version": "x",
+            "storage_instance_id": "x"
+          }
+        },
+        "path": [
+          "value",
+          "prior_origin",
+          "physical_sha256"
+        ],
+        "value": false
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/schema_id/minLength": {
+        "control": {
+          "path": [
+            "value",
+            "prior_origin"
+          ],
+          "value": {
+            "codec": "messagepack_canonical",
+            "family_id": "x",
+            "physical_key": "x",
+            "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "x",
+            "schema_version": "x",
+            "storage_instance_id": "x"
+          }
+        },
+        "path": [
+          "value",
+          "prior_origin",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/schema_id/type": {
+        "control": {
+          "path": [
+            "value",
+            "prior_origin"
+          ],
+          "value": {
+            "codec": "messagepack_canonical",
+            "family_id": "x",
+            "physical_key": "x",
+            "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "x",
+            "schema_version": "x",
+            "storage_instance_id": "x"
+          }
+        },
+        "path": [
+          "value",
+          "prior_origin",
+          "schema_id"
+        ],
+        "value": false
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/schema_version/minLength": {
+        "control": {
+          "path": [
+            "value",
+            "prior_origin"
+          ],
+          "value": {
+            "codec": "messagepack_canonical",
+            "family_id": "x",
+            "physical_key": "x",
+            "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "x",
+            "schema_version": "x",
+            "storage_instance_id": "x"
+          }
+        },
+        "path": [
+          "value",
+          "prior_origin",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/schema_version/type": {
+        "control": {
+          "path": [
+            "value",
+            "prior_origin"
+          ],
+          "value": {
+            "codec": "messagepack_canonical",
+            "family_id": "x",
+            "physical_key": "x",
+            "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "x",
+            "schema_version": "x",
+            "storage_instance_id": "x"
+          }
+        },
+        "path": [
+          "value",
+          "prior_origin",
+          "schema_version"
+        ],
+        "value": false
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/storage_instance_id/minLength": {
+        "control": {
+          "path": [
+            "value",
+            "prior_origin"
+          ],
+          "value": {
+            "codec": "messagepack_canonical",
+            "family_id": "x",
+            "physical_key": "x",
+            "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "x",
+            "schema_version": "x",
+            "storage_instance_id": "x"
+          }
+        },
+        "path": [
+          "value",
+          "prior_origin",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/properties/storage_instance_id/type": {
+        "control": {
+          "path": [
+            "value",
+            "prior_origin"
+          ],
+          "value": {
+            "codec": "messagepack_canonical",
+            "family_id": "x",
+            "physical_key": "x",
+            "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "x",
+            "schema_version": "x",
+            "storage_instance_id": "x"
+          }
+        },
+        "path": [
+          "value",
+          "prior_origin",
+          "storage_instance_id"
+        ],
+        "value": false
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/required": {
+        "control": {
+          "path": [
+            "value",
+            "prior_origin"
+          ],
+          "value": {
+            "codec": "messagepack_canonical",
+            "family_id": "x",
+            "physical_key": "x",
+            "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "x",
+            "schema_version": "x",
+            "storage_instance_id": "x"
+          }
+        },
+        "member": [
+          "remove",
+          "physical_key"
+        ],
+        "path": [
+          "value",
+          "prior_origin"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json#/$defs/Selector/type": {
+        "path": [
+          "value",
+          "probe_birth"
+        ],
+        "value": true
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "fresh_reference_sha256": "1a8193ac78dbe047dd7fda0f897b004fb4a6cf64a16ebbbdd9a875f47296e43a",
+  "routes": [
+    {
+      "call": "issue_physical",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "original_profile",
+      "fresh_literal_sha256": "e7b7c95cdf6a00647ac7dcb178405f4eb071c7a332600be086820c536964ae65",
+      "mutation": true,
+      "realm": "native_consumer",
+      "refusal": "issue/executor_process_write_origin/schema/",
+      "root": "dg5:c2e0d38601109f88",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ]
+    }
+  ],
+  "row": "dg5/issue/executor_process_write_origin/schema",
+  "sites": [
+    [
+      "scripts/pm_goal_dg_r_world.py",
+      446
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}
