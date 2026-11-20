@@ -25,6 +25,7 @@ COUNT = 'c53e4199ae94ca853a197354f3f9e7f296cf1efc'
 PREVIOUS = '5764ca809c0dcc8a161d4fcd45770abf6355f746'
 SEAL_BASE = '17c842445a2623bb0334ba8d6932e7a6bf088967'
 COVERAGE = 'reports/event-authority-20261105/CA-SEAL2-coverage.json'
+E9_CHECKS = 'reports/event-authority-20261114/seal-check-dl-pattern-checks.py'
 # The frozen validator (round 12, CA2-C12-N01): the second line baseline. Its
 # bytes are read from this commit and must have this digest; the table pins
 # every one of its lines, and every line inserted, changed, deleted or
@@ -2458,10 +2459,16 @@ def edit_probe(raw, before, table_raw, test_names, label, frozen=None):
             old_lines[n - 1] for n in deleted)):
             raise AssertionError((named, deleted))
     elif group == 'frozen_lines':
-        named = sorted(frozen_records)
-        if not (sorted((r['mark'], r['line']) for r in frozen_records.values()) == sorted(
-            [('deleted', n) for n in deleted] + [('inserted', n) for n in edited])):
-            raise AssertionError(frozen_records)
+        # Keep every previously reviewed E9-1 edit in the forged table.
+        # Only the new deletion or insertion should reach the diagnostic.
+        approved = {r['site_id'] for r in table['frozen_lines']}
+        named = sorted(set(frozen_records) - approved)
+        frozen_map = {m.b + i + 1: m.a + i + 1 for m in difflib.SequenceMatcher(
+            None, source_lines(frozen), old_lines, autojunk=False).get_matching_blocks() for i in range(m.size)}
+        observed = sorted((frozen_records[s]['mark'], frozen_records[s]['line']) for s in named)
+        expected_edits = sorted([('deleted', frozen_map[n]) for n in deleted] + [('inserted', n) for n in edited])
+        if observed != expected_edits:
+            raise AssertionError((observed, expected_edits))
     elif group == 'nodes':
         named = sorted(s for s, r in nodes.items() if r['line'] in edited)
         if not (named):
@@ -3112,10 +3119,24 @@ def run(repo, output, source_map, apply_cut=None):
         change['lander_task'] = 'fixture:lander'
         change['seal_applier_forbidden_tasks'] = sorted({v.RECOUNT_AUTHOR, 'fixture:lander'})
         put(v.RECOUNT_CHANGE, encoded(change))
+        anchor_paths = [v.MULTI_FAMILY_RECEIPT, v.RECOUNT_CHANGE]
+        has_fifth_receipt = hasattr(v, 'DL_PATTERN_CHANGE')
+        if has_fifth_receipt:
+            for path in (v.DL_PATTERN_CARD, v.DL_PATTERN_ANSWER):
+                put(path, (repo / path).read_bytes())
+            fifth = json.loads((repo / v.DL_PATTERN_CHANGE).read_bytes())
+            fifth['lander_task'] = 'fixture:lander'
+            fifth['seal_applier_forbidden_tasks'] = sorted({v.DL_PATTERN_AUTHOR, 'fixture:lander'})
+            anchor_paths.insert(0, v.DL_PATTERN_CHANGE)
+
         def anchors():
+            if has_fifth_receipt:
+                # Each fourth-receipt probe starts with a consistent fifth link.
+                fifth['prior_receipt']['sha256'] = sha((root / v.RECOUNT_CHANGE).read_bytes())
+                put(v.DL_PATTERN_CHANGE, encoded(fifth))
             put('Plans/Spec_Lock.json', encoded({'canonical_ssot_hashes': {'files': [
                 {'path': p, 'sha256': sha((root / p).read_bytes())}
-                for p in [v.MULTI_FAMILY_RECEIPT, v.RECOUNT_CHANGE]]}}))
+                for p in anchor_paths]}}))
         anchors()
         original_env = {k: os.environ.get(k) for k in ['GIT_DIR', 'PM_EA_RECOUNT_SOURCE_MAP']}
         try:
@@ -3915,13 +3936,13 @@ def run(repo, output, source_map, apply_cut=None):
             bad = copy.deepcopy(outcome_doc)
             bad['schema_id'] = 'wrong.schema'
             put(str(v.RECOUNT_OUTCOMES.relative_to(root)), encoded(bad))
-            def aggregate_issue(code, detail):
+            def aggregate_issue(code, detail, additional_issues=()):
                 state, issues = v.recount_validation(set(names))
                 if not (state['complete'] is False):
                     raise AssertionError(state)
                 if not (state['diagnostic_only'] is True):
                     raise AssertionError(state)
-                if not (issues == [{'error': code, 'detail': detail}]):
+                if not (issues == [{'error': code, 'detail': detail}, *additional_issues]):
                     raise AssertionError(issues)
                 if code == 'recount_change_receipt_invalid':
                     if not ('change_receipt_sha256' not in state):
@@ -3953,8 +3974,12 @@ def run(repo, output, source_map, apply_cut=None):
                     raise AssertionError()
                 raw = path.read_bytes()
                 path.unlink()
-                record('negative_' + label, lambda path=path, code=code: aggregate_issue(
-                    code, str(FileNotFoundError(2, 'No such file or directory', str(path)))))
+                detail = str(FileNotFoundError(2, 'No such file or directory', str(path)))
+                additional_issues = (
+                    ({'error': 'dl_pattern_change_receipt_invalid', 'detail': detail},)
+                    if has_fifth_receipt and path == fourth_path else ()
+                )
+                record('negative_' + label, lambda: aggregate_issue(code, detail, additional_issues))
                 path.write_bytes(raw)
 
             # Remaining defensive dispatch alternatives use one explicit
@@ -3998,6 +4023,17 @@ def run(repo, output, source_map, apply_cut=None):
             for key, value in original_env.items():
                 if value is None: os.environ.pop(key, None)
                 else: os.environ[key] = value
+        if has_fifth_receipt:
+            # E9-1 already has receipt and decision-reference probes with
+            # reviewed narrow mutations. Reuse them against these same bytes.
+            spec = importlib.util.spec_from_file_location('ca_seal2_e9_checks', repo / E9_CHECKS)
+            e9 = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(e9)
+            checks = e9.run_checks(repo, root, tested_raw)
+            if set(checks) != set(e9.CHECKS):
+                results.append({'name': 'e9_fixture', 'pass': False, 'error': str(checks)})
+            else:
+                results.extend({'name': 'e9_' + name, **result} for name, result in checks.items())
     record('positive_complete_predicate_coverage', lambda: check_coverage(repo, {r['name'] for r in results}, tested_sha))
     record('positive_ast_class_table', lambda: check_ast_class_table(repo))
     record('positive_exhaustive_node_type_inventory', check_node_types)
