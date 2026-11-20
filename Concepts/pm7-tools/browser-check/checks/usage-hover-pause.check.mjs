@@ -19,6 +19,12 @@ import { muteSound } from '../helpers/quiet-page.mjs';
 import { r113Cases } from '../helpers/usage-hover-pause-r113.mjs';
 import { burstState, burstWhy, REST_MS } from '../helpers/burst-rest.mjs';
 
+// R125 #1: the page's own work between its rest timer and the marker's removal (wheelEnd's head fit) is not host
+// lateness, but a correct return costs a few ms (1-8 ms measured on Alexis 2026-11-20). The end allowance adds this
+// fixed budget, never the measured work, so a long fit (R125's 80 ms scratch case) still fails; the measured work is
+// logged as `work` in the row and in the dump.
+export const RETURN_WORK_MS = 16;
+
 // the recorder, installed once in the app's frame; __uhp.start() clears it and starts a window, __uhp.stop() ends it
 // (exported for tools/usage-hover-pause-probe.selftest.mjs, which runs it against a stub page and a timer queue)
 export const INSTALL = () => {
@@ -141,13 +147,17 @@ export function judge(rec, { rest, back }) {
 	const toolsT = toolsFr ? toolsFr.t : Infinity;
 	const backT = coverage && !litFrames.length && !toolFrames.length && !early.length && lightT != null && toolsT !== Infinity ? Math.max(lightT, toolsT) : null;
 	// TB6 item 2: (a) the pause ends at the rest, no later than the host's own measured timer lateness (the probe armed
-	// with the last input); (b) the light and tools are back within two drawn frames of that end (the check's own rAF
-	// samples count frames, so a long frame between the end and the return costs one frame, not its milliseconds);
-	// (c) a hard outer cap still fails a page that returns very late.
+	// with the last input) plus the page's own bounded return work; (b) the light and tools are back within two drawn
+	// frames of that end (the check's own rAF samples count frames, so a long frame between the end and the return costs
+	// one frame, not its milliseconds); (c) a hard outer cap still fails a page that returns very late.
 	const probe = rec.probe && Number.isFinite(rec.probe.due) && Number.isFinite(rec.probe.fired) ? rec.probe : null;
 	const late = probe ? Math.max(0, probe.fired - probe.due) : null;
 	const endDelay = endT != null ? endT - end : null;
-	const endOk = endDelay != null && late != null && endDelay >= REST_MS - 2 && endDelay <= REST_MS + late + 2;
+	// R125 #1: product work before the marker's removal is not host lateness, but a correct return does some (wheelEnd's
+	// head fit; 1-8 ms measured on Alexis 2026-11-20). It gets a fixed budget, never the measured work: a page that
+	// spends long there (R125's 80 ms fit) is outside it. `work` is the measured page work, logged in the row.
+	const work = endDelay != null && late != null ? endDelay - REST_MS - late : null;
+	const endOk = endDelay != null && late != null && endDelay >= REST_MS - 2 && endDelay <= REST_MS + late + RETURN_WORK_MS + 2;
 	const backDelay = backT != null && endT != null ? backT - endT : null;
 	// R125 #2: the sample that first shows the return is counted, so a light first seen on the third sample after the
 	// end reads 3 frames and fails; two frames means the return is on the first or the second drawn sample.
@@ -159,7 +169,7 @@ export function judge(rec, { rest, back }) {
 		r2: { ok: coverage && !litFrames.length && !toolFrames.length && backT != null && endOk && backOk && capOk,
 			ms: backT != null ? Math.round(backT - end) : null, card: target,
 			light: lightT != null ? Math.round(lightT - end) : null, tools: toolsT !== Infinity ? Math.round(toolsT - end) : null, toolsTransition: toolsTr ? Math.round(toolsTr.t - end) : null,
-			end: endDelay != null ? Math.round(endDelay) : null, late: late != null ? Math.round(late) : null,
+			end: endDelay != null ? Math.round(endDelay) : null, late: late != null ? Math.round(late) : null, work: work != null ? Math.round(work) : null,
 			back: backDelay != null ? Math.round(backDelay) : null, backFrames, early: early.length,
 			long: (rec.loaf || []).filter((x) => x.t + x.d > end && x.t < end + 400).map((x) => `+${Math.round(x.t - end)} ms ${x.d} ms (style/layout ${x.sl}: ${x.scripts.join('; ') || 'no script'})`) },
 		span: { wheel: Math.round(lastWheel - first), tail: Math.round(lastScroll - lastWheel), wheels: rec.wheels.length, scrolls: rec.scrolls.length },
@@ -894,7 +904,7 @@ export default async function (t) {
 				dump.push({ surface, look, window: w + 1, rest, at, judged: j, rec });
 				res.r0.push(!!(rest.card && rest.lit && rest.tools > 0.5));
 				res.r1.push(j.r1); res.r2.push(j.r2); res.burst.push(j.burst);
-				t.log(`${S}window ${w + 1}: at rest card ${rest.card} lit ${rest.lit} tools ${rest.tools} | wheel ${j.span.wheels} events over ${j.span.wheel} ms, scroll ${j.span.scrolls} events ending ${j.span.tail} ms after the last wheel, ${moved} px | during: ${j.r1.cardsPassed} cards under the pointer, ${j.r1.ins} hover-in transitions (${j.r1.insProps.join(', ') || 'none'}) on ${j.r1.insCards.join(',') || 'no card'}, ${j.r1.litFrames} of ${j.r1.frames} frames retain a card engine light, ${j.r1.toolFrames} retain shown tools | after: back in ${j.r2.ms === null ? 'never (800 ms)' : j.r2.ms + ' ms'} on ${j.r2.card} (light ${j.r2.light ?? 'never'}, tools ${j.r2.tools ?? 'never'}; pause end ${j.r2.end ?? 'never'} ms after the rest, host timer late ${j.r2.late ?? '?'} ms, back ${j.r2.back ?? 'never'} ms = ${j.r2.backFrames ?? '?'} drawn frames)${j.r2.long.length ? ' | long frames after: ' + j.r2.long.join(' / ') : ''}${short.length ? ' | taken again: ' + short.join('; ') : ''}`);
+				t.log(`${S}window ${w + 1}: at rest card ${rest.card} lit ${rest.lit} tools ${rest.tools} | wheel ${j.span.wheels} events over ${j.span.wheel} ms, scroll ${j.span.scrolls} events ending ${j.span.tail} ms after the last wheel, ${moved} px | during: ${j.r1.cardsPassed} cards under the pointer, ${j.r1.ins} hover-in transitions (${j.r1.insProps.join(', ') || 'none'}) on ${j.r1.insCards.join(',') || 'no card'}, ${j.r1.litFrames} of ${j.r1.frames} frames retain a card engine light, ${j.r1.toolFrames} retain shown tools | after: back in ${j.r2.ms === null ? 'never (800 ms)' : j.r2.ms + ' ms'} on ${j.r2.card} (light ${j.r2.light ?? 'never'}, tools ${j.r2.tools ?? 'never'}; pause end ${j.r2.end ?? 'never'} ms after the rest, host timer late ${j.r2.late ?? '?'} ms, page work ${j.r2.work ?? '?'} ms, back ${j.r2.back ?? 'never'} ms = ${j.r2.backFrames ?? '?'} drawn frames)${j.r2.long.length ? ' | long frames after: ' + j.r2.long.join(' / ') : ''}${short.length ? ' | taken again: ' + short.join('; ') : ''}`);
 				if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
 			}
 			await park();
@@ -914,7 +924,7 @@ export default async function (t) {
 					res.r1.map((r, i) => `w${i + 1}: ${r.ins} hover-in transitions, ${r.litFrames} lit frames, ${r.toolFrames} shown-tool frames, marker coverage ${r.coverage}, ${r.frames} sampled frames, ${r.cardsPassed} cards passed`).join('; '));
 				await t.check(S + `after the wheel, the pause ends at its ${REST_MS} ms rest and the highlight is back within two frames without a move (outer cap ${BACK} ms)`, !burstBroke && n > 0 && res.r2.every((r) => r.ok),
 					burstBroke ? burstDetail :
-					res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'}; pause end ${r.end ?? 'never'} ms, host timer late ${r.late ?? '?'} ms, back ${r.back ?? 'never'} ms = ${r.backFrames ?? '?'} drawn frames${r.early ? `, and ${r.early} samples showed the return before the end` : ''})`).join('; '));
+					res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'}; pause end ${r.end ?? 'never'} ms, host timer late ${r.late ?? '?'} ms, page work ${r.work ?? '?'} ms, back ${r.back ?? 'never'} ms = ${r.backFrames ?? '?'} drawn frames${r.early ? `, and ${r.early} samples showed the return before the end` : ''})`).join('; '));
 			}
 
 			// R3: keyboard focus is not paused. The board's first card takes keyboard focus (a key pressed first, so the

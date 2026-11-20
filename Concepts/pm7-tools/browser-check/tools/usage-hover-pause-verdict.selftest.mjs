@@ -179,6 +179,25 @@ test('R125 #6: the fixture probe deadline is the last input plus the 150 ms rest
  assert.equal(j(r).r2.late,0);
  assert.equal(j(r).r2.ok,true);
 });
+// R125 #1: the page's own return work gets a fixed budget, not the measured work.
+test('R125 #1: a few ms of the page\'s own return work pass, a long fit does not',()=>{
+ const small=make();
+ small.ops=[{t:101,op:'wheel'},{t:676,op:null}];
+ small.probe={due:670,fired:670};
+ small.cls=[{t:686,card:'new',on:true}];
+ for(const f of small.frames)Object.assign(f,{op:f.t<676?'wheel':null,lit:f.t>=686?['new']:[],tools:f.t>=686?.9:0});
+ const a=j(small);
+ assert.equal(a.r2.work,6);
+ assert.equal(a.r2.ok,true,'a 6 ms fit is inside the 16 ms budget');
+ const long=make();
+ long.ops=[{t:101,op:'wheel'},{t:750,op:null}];
+ long.probe={due:670,fired:670};
+ long.cls=[{t:760,card:'new',on:true}];
+ for(const f of long.frames)Object.assign(f,{op:f.t<750?'wheel':null,lit:f.t>=760?['new']:[],tools:f.t>=760?.9:0});
+ const b=j(long);
+ assert.equal(b.r2.work,80);
+ assert.equal(b.r2.ok,false,'R125\'s 80 ms fit is outside the budget even with an on-time host');
+});
 // TB6 item 1: a 258 ms driver gap is reported as a broken burst; a 30 ms cadence is not.
 test('TB6 item 1: a 258 ms driver gap is reported as a broken burst; a 30 ms cadence is not',()=>{
  const r=make();
