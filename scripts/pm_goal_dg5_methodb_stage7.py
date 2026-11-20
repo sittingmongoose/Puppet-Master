@@ -61,8 +61,22 @@ def receipt_intent(directory, negative):
     return world, world.body.commit, (scope, control, [], lambda receipt: []), {}
 
 
+def terminal_kind(directory, negative):
+    world, goal = updated._goal(directory)
+    request = updated.O.direct_request(world, goal, 'terminal result')
+    command_id = request['command_instance_id']
+    world.command.run(request, stop_after='freeze')
+    world.command.mark_unknown(command_id)
+    world.command.recover(command_id)
+    original = world.sir.replay(command_id)['terminal']['kind']
+    require(original != 'succeeded', 'fixture must retain the unknown terminal')
+    kind = 'succeeded' if negative else original
+    return world, world.sir.terminalize, (command_id, kind), {}
+
+
 # The explicit lines match the input matrix. Validate the observed location on every run.
 CASES = {
+    'terminal-kind': (OWNERS, 803, 'dgu/sir/terminal_immutable', terminal_kind),
     'receipt-intent': (OWNERS, 1210, 'dgu/body/commit/receipt_intent', receipt_intent),
     'reservation-retry': (OWNERS, 1173, 'dgu/body/reserve/conflicting_reservation', reservation_retry),
     'reinstall': (OWNERS, 493, 'dgu/installation/not_withdrawn', reinstall),
