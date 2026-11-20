@@ -724,3 +724,17 @@ PROOFS['dg5/read_current/final/current_goal/schema'] = dict(
         'for the comparison, and restoring it restores the same early validation message.'
     ),
 )
+
+PROOFS['dg5/d01/current_source/schema'] = dict(
+    kind='entailment',
+    families=['goal_run.started'],
+    depends_on=['dg5/issue/current_source/schema'],
+    sites=[('scripts/pm_goal_dg_s_start.py', 404), ('scripts/pm_goal_dg_s_start.py', 405), ('scripts/pm_goal_dg_s_start.py', 406), ('scripts/pm_goal_test_owner_adapters.py', 460), ('scripts/pm_goal_test_owner_adapters.py', 462)],
+    argument=(
+        'The same JSON is passed to the original issuer before the caller can return. Both '
+        'calls reach the identical installed schema. The accepted example gives the same '
+        'document at both checks. With only the early check disabled, the same invalid document '
+        'reaches the issuer with exactly the same validation message. Restoration brings back '
+        'the original early refusal.'
+    ),
+)
