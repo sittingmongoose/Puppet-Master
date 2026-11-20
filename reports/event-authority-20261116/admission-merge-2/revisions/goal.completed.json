@@ -498,13 +498,13 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 31641,
-       "line_end": 31641,
+       "line_start": 31643,
+       "line_end": 31643,
        "quote": "producer_semantic_digest",
        "excerpt_sha256": "fd37890467198baf231e0cbdd064f06a8744bc255978d7ae2750dc08e6482456",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-310, Plans/storage-plan.md:31627-31793",
+       "quote_scope": "unit SP-310, Plans/storage-plan.md:31629-31795",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -535,13 +535,13 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 31040,
-       "line_end": 31040,
+       "line_start": 31042,
+       "line_end": 31042,
        "quote": "RP-AUTHORITY-INDEFINITE",
        "excerpt_sha256": "e7351981e6845a22e7fe6ae338e52a1fa3c16a2d8b28752f60b5b01fa1469422",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-305, Plans/storage-plan.md:30913-31077",
+       "quote_scope": "unit SP-305, Plans/storage-plan.md:30915-31079",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -572,13 +572,13 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 25460,
-       "line_end": 25460,
+       "line_start": 25462,
+       "line_end": 25462,
        "quote": "reject-unhandled-secrets",
        "excerpt_sha256": "e78e054986bb33bf378bfa76d47deabf3efdf3784a56f99438dc6d5d1d5d09e8",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-271, Plans/storage-plan.md:25366-25470",
+       "quote_scope": "unit SP-271, Plans/storage-plan.md:25368-25472",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -646,13 +646,13 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 56412,
-       "line_end": 56412,
+       "line_start": 56414,
+       "line_end": 56414,
        "quote": "Current Activity/body/history/continuation consume",
        "excerpt_sha256": "a87d9a8d9f5768f03bfd31be801d4d2d038dae0d858f8061b7456967daa7dc72",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-430, Plans/storage-plan.md:56359-56417",
+       "quote_scope": "unit SP-430, Plans/storage-plan.md:56361-56419",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -683,13 +683,13 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 31647,
-       "line_end": 31647,
+       "line_start": 31649,
+       "line_end": 31649,
        "quote": "withdrawal",
        "excerpt_sha256": "88601db51850d209028e541b7c452517f389ca0482e0e6fe9ba28a751be231a1",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-310, Plans/storage-plan.md:31627-31793",
+       "quote_scope": "unit SP-310, Plans/storage-plan.md:31629-31795",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -1022,9 +1022,9 @@
   }
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
-  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
-  "source_assessment_sha256": "b8d7ad51e42e5fda38cd44940e4cdf76095bd9b91e0adbef4ae7bc4e2d20068f",
+  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "d3f29d134b059095aeccf6758347021aebb0fa2261d799d115f50935076c8a6a",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

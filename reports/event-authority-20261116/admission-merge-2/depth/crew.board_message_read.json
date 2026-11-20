@@ -136,12 +136,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-721",
-       "line_start": 35904,
-       "line_end": 35904,
+       "line_start": 35906,
+       "line_end": 35906,
        "quote": "Its closed member `crew_board_message_read` is copied from Plans/coordination_event_payloads.schema.json#/$defs/crew_board_message_read, the file the row's value_schema_ref names, including schema_version and scope union;",
        "quote_check": "exact",
-       "quote_scope": "unit SP-721, Plans/storage-plan.md:35900-35944",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-721, Plans/storage-plan.md:35902-35946",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-721",
@@ -575,9 +575,9 @@
   "row_pointer": "#/families/363"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
-  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
-  "source_assessment_sha256": "e73ba041197478bacecff3dff54be674e92c6c3b3c46f12a3f60ae6c95f86e17",
+  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "57fe9a8db7b0b5c669db7617550c3ea8d82884543735dae0c19a552bfe627311",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

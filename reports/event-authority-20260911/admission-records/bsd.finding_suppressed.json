@@ -4,7 +4,7 @@
  "family_id": "event-family-bsd-finding-suppressed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2217",
- "decision_section_sha256": "cb99ad157bee53049d0361c14197545cf3499a1cd3f400437652ec9f2118e13a",
+ "decision_section_sha256": "de884d5244197f1f5d83efc2dbcb392fc8d0ae085dd533feabe1118db32174eb",
  "registry_before": {
   "revision": "2026-11-16.80",
   "sha256": "2c7bd0700b31ece09b670f1fc2c1406dc31e208c0dd01ed90dab0a28f826ff2e",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "e6b19ff3d70daf0d0088450be614775ac9ec38126bf7206b04e62d6260c4d082",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/bsd.finding_suppressed.json",
-  "sha256": "7fe0984a1b5f50e67263f07ba4185489a3878d21f9335d701a56b03f526818d7"
+  "sha256": "62510198f6266058b32e0696dfe82cba6d360282df3ca10679cc401729e66de6"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
-  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
-  "source_record_sha256": "2d030a6326e8a25900f567a4a3a87fa37dd84589aedbbc5db8cd47ec4b61d4d7",
-  "source_assessment_sha256": "063409093f7ce50c7cd35d74288de7fcb25deeddc4d9be8e3e8ded9504febcbd",
-  "source_decision_section_sha256": "2818f7453b7fcf8d52557d4372bf1f1d40238561e8625421b1fa00ae39de986e",
+  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_record_sha256": "fd0258533cebd73d079f2ad45b84b3568e5dfcc6493ba5cdd54629d1bb201e6e",
+  "source_assessment_sha256": "7fe0984a1b5f50e67263f07ba4185489a3878d21f9335d701a56b03f526818d7",
+  "source_decision_section_sha256": "cb99ad157bee53049d0361c14197545cf3499a1cd3f400437652ec9f2118e13a",
   "original_registry_checkpoints_preserved": true
  }
 }

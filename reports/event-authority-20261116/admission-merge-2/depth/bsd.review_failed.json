@@ -105,12 +105,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1361",
-       "line_start": 78189,
-       "line_end": 78189,
+       "line_start": 78191,
+       "line_end": 78191,
        "quote": "It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload pa",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1361, Plans/storage-plan.md:78180-78241",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-1361, Plans/storage-plan.md:78182-78243",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1361",
@@ -373,12 +373,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1361",
-       "line_start": 78190,
-       "line_end": 78190,
+       "line_start": 78192,
+       "line_end": 78192,
        "quote": "RP-RUNTIME-365D\", \"policy_version\": \"1.0.0\"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes ",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1361, Plans/storage-plan.md:78180-78241",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-1361, Plans/storage-plan.md:78182-78243",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1361",
@@ -583,12 +583,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1361",
-       "line_start": 78191,
-       "line_end": 78191,
+       "line_start": 78193,
+       "line_end": 78193,
        "quote": "Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1361, Plans/storage-plan.md:78180-78241",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-1361, Plans/storage-plan.md:78182-78243",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1361",
@@ -823,9 +823,9 @@
   "row_pointer": "#/families/302"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
-  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
-  "source_assessment_sha256": "280f60053ffa34affdb503125579882a101f0c9084b636d7318f504271147dbb",
+  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "5b3c2a3ecfaa4263dbd786d0727b16a49974a6bf2bf3c8a160bdcb249a4fdf07",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

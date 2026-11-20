@@ -310,12 +310,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1412",
-       "line_start": 71714,
-       "line_end": 71714,
+       "line_start": 71716,
+       "line_end": 71716,
        "quote": "Current selected assignment (2026-11-19): server.client_pairing_state_changed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2397. Its event history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1412, Plans/storage-plan.md:71616-71714",
+       "quote_scope": "unit SP-1412, Plans/storage-plan.md:71618-71716",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1412",
@@ -425,12 +425,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1412",
-       "line_start": 71647,
-       "line_end": 71647,
+       "line_start": 71649,
+       "line_end": 71649,
        "quote": "The exact checkpoint in derived redb checkpoints is w3e_server_client_pairing_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1412, Plans/storage-plan.md:71616-71714",
+       "quote_scope": "unit SP-1412, Plans/storage-plan.md:71618-71716",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1412",
@@ -633,9 +633,9 @@
   "row_pointer": "#/families/479"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
-  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
-  "source_assessment_sha256": "75d84cac83b265da99e8946f9970e2f177aa8d7c51cc35bbad1dd5fad2613323",
+  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "d8960ba3de2e21b432b0270977df363d6fb3d4858fe189edfe406d998585ebf3",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

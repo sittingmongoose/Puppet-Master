@@ -310,12 +310,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1400",
-       "line_start": 70505,
-       "line_end": 70505,
+       "line_start": 70507,
+       "line_end": 70507,
        "quote": "Current selected assignment (2026-11-19): backup.destination_changed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2150. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1400, Plans/storage-plan.md:70409-70505",
+       "quote_scope": "unit SP-1400, Plans/storage-plan.md:70411-70507",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1400",
@@ -425,12 +425,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1400",
-       "line_start": 70438,
-       "line_end": 70438,
+       "line_start": 70440,
+       "line_end": 70440,
        "quote": "The exact checkpoint in derived redb checkpoints is w3e_backup_destination_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1400, Plans/storage-plan.md:70409-70505",
+       "quote_scope": "unit SP-1400, Plans/storage-plan.md:70411-70507",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1400",
@@ -633,9 +633,9 @@
   "row_pointer": "#/families/232"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
-  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
-  "source_assessment_sha256": "b75b2d30c9e284804f81ceb8ca26dcfa28162b24860d47ae5a33e7c3bd563ffc",
+  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "0aff8388cdab8346129fcef90bc8e32e9b92aefeddea447820902eab77264256",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

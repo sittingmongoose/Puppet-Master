@@ -310,12 +310,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1401",
-       "line_start": 70610,
-       "line_end": 70610,
+       "line_start": 70612,
+       "line_end": 70612,
        "quote": "Current selected assignment (2026-11-19): backup.state_changed@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2151. Its event history selects Application = RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1401, Plans/storage-plan.md:70506-70610",
+       "quote_scope": "unit SP-1401, Plans/storage-plan.md:70508-70612",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1401",
@@ -425,12 +425,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1401",
-       "line_start": 70542,
-       "line_end": 70542,
+       "line_start": 70544,
+       "line_end": 70544,
        "quote": "The exact checkpoint in derived redb checkpoints is w3e_backup_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1401, Plans/storage-plan.md:70506-70610",
+       "quote_scope": "unit SP-1401, Plans/storage-plan.md:70508-70612",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1401",
@@ -633,9 +633,9 @@
   "row_pointer": "#/families/233"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
-  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
-  "source_assessment_sha256": "c778ada9b74b22ccfe07e596910f50181e3a6ba624b57f19fb4c1be0fc9e90c4",
+  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "5cd2c35300690f26f0825ee3dc7e502018dc25c5584bff7325a0c663a0c98569",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

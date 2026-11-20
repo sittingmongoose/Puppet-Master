@@ -8388,7 +8388,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "2e5e5bf41e1dd6c440c2f3107d1a644551a8959235caad5217c5b4a1ab4c3a05",
+      "sha256": "745b5cce4794f6f779317b601529d6f91864ec646e77529f94cd3ecebfb58e30",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 999
@@ -21433,7 +21433,7 @@
         "False": 692,
         "True": 112
       },
-      "heading_count": 1320,
+      "heading_count": 1321,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -21619,7 +21619,7 @@
         "scripts/pm_home_layout_v2_slot_receipt.py",
         "scripts/pm_setup_validation_oracles.py"
       ],
-      "line_count": 79099,
+      "line_count": 79101,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 804,
       "plan_unit_ids": [
@@ -22608,7 +22608,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+      "sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 783,
@@ -25236,7 +25236,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-20T20:37:29Z",
+  "generated_at_utc": "2026-11-20T21:21:53Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

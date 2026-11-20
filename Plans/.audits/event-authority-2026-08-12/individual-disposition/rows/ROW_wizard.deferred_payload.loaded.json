@@ -3,7 +3,7 @@
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to wizard.deferred_payload.loaded. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.294 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2430); DL-077 admission record reports/event-authority-20260911/admission-records/wizard.deferred_payload.loaded.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/wizard.deferred_payload.loaded.json (sha256 6ca573b5f388a528a98012c4fe66f62a733d22a32af50aa04a0abad8ef30f899); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to wizard.deferred_payload.loaded. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.294 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2430); DL-077 admission record reports/event-authority-20260911/admission-records/wizard.deferred_payload.loaded.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/wizard.deferred_payload.loaded.json (sha256 69bd39ffe4d58531471580abbc80a549a32df82f359fe7b64e8c9a9377739142); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
@@ -12,7 +12,7 @@
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:45046; Plans/storage-plan.md:55443; Plans/storage-plan.md:55418; scripts/pm_dcw_event_oracles.py:788-793; scripts/pm_dcw_event_oracles.py:844",
+      "citation": "Plans/Contracts_V0.md:45046; Plans/storage-plan.md:55445; Plans/storage-plan.md:55420; scripts/pm_dcw_event_oracles.py:788-793; scripts/pm_dcw_event_oracles.py:844",
       "note": "PASS: append, publish, retry, read, rebuild and compatibility read resolve and verify the original wizard.opened source, owner observations, full event, identity, semantic digest, commitment and first receipt through its historical validator."
     },
     "membership_version": {
@@ -42,7 +42,7 @@
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:55424; Plans/dcw/wizard_seed_load_evidence.schema.json:23-30; Plans/storage-plan.md:55418; scripts/pm_dcw_event_oracles.py:532; scripts/pm_dcw_event_oracles.py:844",
+      "citation": "Plans/storage-plan.md:55426; Plans/dcw/wizard_seed_load_evidence.schema.json:23-30; Plans/storage-plan.md:55420; scripts/pm_dcw_event_oracles.py:532; scripts/pm_dcw_event_oracles.py:844",
       "note": "PASS: predecessor physical row and reachable packs, original owner observations, Storage/restore identity and inventories, read access and exact reader withdrawal authenticate independently; historical validation never uses current writer CAS/effect eligibility."
     },
     "transitions": {
@@ -52,12 +52,12 @@
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:55447; scripts/pm_dcw_event_oracles.py:1005",
+      "citation": "Plans/storage-plan.md:55449; scripts/pm_dcw_event_oracles.py:1005",
       "note": "SP-278 complete source now resolves exact registered path/pointer/schema ID and its full offline reference closure. Genuine run.started v2 and separate owner-supported v1 originals survive read/rebuild/compatibility_read. Native source/redb adapters remain NOT_RUN."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:55449; Plans/Contracts_V0.md:20965; scripts/pm_dcw_event_oracles.py:616-617; scripts/pm_dcw_event_oracles.py:853; scripts/pm_dcw_number_custody.py:41; scripts/pm_dcw_number_custody.py:72",
+      "citation": "Plans/storage-plan.md:55451; Plans/Contracts_V0.md:20965; scripts/pm_dcw_event_oracles.py:616-617; scripts/pm_dcw_event_oracles.py:853; scripts/pm_dcw_number_custody.py:41; scripts/pm_dcw_number_custody.py:72",
       "note": "PASS: current caller admission stays separate from authenticated original dispatch and passive replay policy. occurred_at_utc and family ts use pm_event_datetime.date_time with the EventRecord profile; Storage observed_at_utc and persisted_at_utc use storage_utc_z. SP-1101 selects those profiles for a retained original. Native original authentication remains NOT_RUN."
     },
     "positive_negative_oracles": {

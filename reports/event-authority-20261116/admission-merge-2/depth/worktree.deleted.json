@@ -87,12 +87,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-596",
-       "line_start": 40977,
-       "line_end": 40977,
+       "line_start": 40979,
+       "line_end": 40979,
        "quote": "For worktree.deleted alone, the newly authored original-source custody",
        "quote_check": "exact",
-       "quote_scope": "unit SP-596, Plans/storage-plan.md:40968-41024",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-596, Plans/storage-plan.md:40970-41026",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-596",
@@ -204,12 +204,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-596",
-       "line_start": 40979,
-       "line_end": 40979,
+       "line_start": 40981,
+       "line_end": 40981,
        "quote": "For worktree.deleted alone, source codec",
        "quote_check": "exact",
-       "quote_scope": "unit SP-596, Plans/storage-plan.md:40968-41024",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-596, Plans/storage-plan.md:40970-41026",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-596",
@@ -320,12 +320,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-596",
-       "line_start": 41000,
-       "line_end": 41000,
+       "line_start": 41002,
+       "line_end": 41002,
        "quote": "  Current selected assignment (2026-11-19): worktree.deleted@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2434. Its event history selects RP-WORKTREE-TOMBSTONE-365D@1.0.0; Plans/storage-plan.md#SP-596 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: dt_worktree_deleted_source uses RP-WORKTREE-TOMBSTONE-365D@1.0.0 under Plans/Decision_Log.md#DL-507; this assigns that stored value, not event history. Separate checkpoint assignment: dt_worktree_deleted_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-596 contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-596, Plans/storage-plan.md:40968-41024",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-596, Plans/storage-plan.md:40970-41026",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-596",
@@ -363,12 +363,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-596",
-       "line_start": 40977,
-       "line_end": 40977,
+       "line_start": 40979,
+       "line_end": 40979,
        "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-596, Plans/storage-plan.md:40968-41024",
+       "quote_scope": "unit SP-596, Plans/storage-plan.md:40970-41026",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-596",
@@ -438,12 +438,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-596",
-       "line_start": 40978,
-       "line_end": 40978,
+       "line_start": 40980,
+       "line_end": 40980,
        "quote": "For worktree.deleted alone, its SP-278/DL-076 checkpoint",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-596, Plans/storage-plan.md:40968-41024",
+       "quote_scope": "unit SP-596, Plans/storage-plan.md:40970-41026",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-596",
@@ -500,12 +500,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-596",
-       "line_start": 40976,
-       "line_end": 40976,
+       "line_start": 40978,
+       "line_end": 40978,
        "quote": "Withdrawal first cuts off this family's append admission",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-596, Plans/storage-plan.md:40968-41024",
+       "quote_scope": "unit SP-596, Plans/storage-plan.md:40970-41026",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-596",
@@ -615,14 +615,14 @@
        "json_pointer": "#/families/16"
       },
       {
-       "line_end": 40980,
-       "line_start": 40980,
+       "line_end": 40982,
+       "line_start": 40982,
        "path": "Plans/storage-plan.md",
        "quote": "For worktree.deleted, boolean authority/context flags are exact booleans",
        "unit": "SP-596",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "quote_check": "exact",
-       "quote_scope": "unit SP-596, Plans/storage-plan.md:40968-41024",
+       "quote_scope": "unit SP-596, Plans/storage-plan.md:40970-41026",
        "source_citation": {
         "line_end": 39706,
         "line_start": 39705,
@@ -772,9 +772,9 @@
   "row_pointer": "#/families/516"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
-  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
-  "source_assessment_sha256": "94dbaf428da75a0eb04aa5ebaf59832cde0019e945a5be491562ff6cf6276848",
+  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "cb98483972dc14d285380f7b6d3cd837cab40664b4419d0ec3578d69770898ae",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

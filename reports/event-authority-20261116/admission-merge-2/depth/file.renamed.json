@@ -105,12 +105,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-560",
-       "line_start": 52836,
-       "line_end": 52836,
+       "line_start": 52838,
+       "line_end": 52838,
        "quote": "Append uses only the frozen settled payload/identity and current native admission.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-560, Plans/storage-plan.md:52758-53198",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-560, Plans/storage-plan.md:52760-53200",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -234,12 +234,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-560",
-       "line_start": 52843,
-       "line_end": 52843,
+       "line_start": 52845,
+       "line_end": 52845,
        "quote": "Missing original full value, v2 witness or native domain evidence fences;",
        "quote_check": "exact",
-       "quote_scope": "unit SP-560, Plans/storage-plan.md:52758-53198",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-560, Plans/storage-plan.md:52760-53200",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -301,12 +301,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-560",
-       "line_start": 53073,
-       "line_end": 53073,
+       "line_start": 53075,
+       "line_end": 53075,
        "quote": "  Current selected assignment (2026-11-19): file.renamed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2300. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-560 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-560, Plans/storage-plan.md:52758-53198",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-560, Plans/storage-plan.md:52760-53200",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -362,12 +362,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-560",
-       "line_start": 52773,
-       "line_end": 52773,
+       "line_start": 52775,
+       "line_end": 52775,
        "quote": "physical companion through their own F unit.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-560, Plans/storage-plan.md:52758-53198",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-560, Plans/storage-plan.md:52760-53200",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -398,12 +398,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-560",
-       "line_start": 52884,
-       "line_end": 52884,
+       "line_start": 52886,
+       "line_end": 52886,
        "quote": "The actual redb value validates operation_custody_value or family_control_value: either that exact",
        "quote_check": "exact",
-       "quote_scope": "unit SP-560, Plans/storage-plan.md:52758-53198",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-560, Plans/storage-plan.md:52760-53200",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -527,12 +527,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-560",
-       "line_start": 52864,
-       "line_end": 52864,
+       "line_start": 52866,
+       "line_end": 52866,
        "quote": "Active-to-draining CAS closes new command acceptance,",
        "quote_check": "exact",
-       "quote_scope": "unit SP-560, Plans/storage-plan.md:52758-53198",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-560, Plans/storage-plan.md:52760-53200",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -563,12 +563,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-560",
-       "line_start": 52912,
-       "line_end": 52912,
+       "line_start": 52914,
+       "line_end": 52914,
        "quote": "A large family-control drain set uses the same complete-value reference",
        "quote_check": "exact",
-       "quote_scope": "unit SP-560, Plans/storage-plan.md:52758-53198",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-560, Plans/storage-plan.md:52760-53200",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -953,9 +953,9 @@
   "row_pointer": "#/families/382"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
-  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
-  "source_assessment_sha256": "bd6e8135ff5b4a859030de51ce4a8873568e0c4c26965f08f2f41b38d16d8aeb",
+  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "b80a86ec8218b33aa42096666d8899b15e378068ea928e1f954784b69361b1f4",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

@@ -283,12 +283,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-602",
-       "line_start": 53544,
-       "line_end": 53552,
+       "line_start": 53546,
+       "line_end": 53554,
        "quote": "  Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2337. Its event history selects Application\n  = RP-MODEL-CATALOG-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-TELEMETRY-90D@1.0.0\n  (anchor_kind=creation, cardinality_scope=project); Plans/storage-plan.md#SP-602 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner\n  policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected\n  schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration\n  or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice\n  or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-602, Plans/storage-plan.md:53335-53580",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-602, Plans/storage-plan.md:53337-53582",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-602",
@@ -327,12 +327,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-602",
-       "line_start": 53544,
-       "line_end": 53552,
+       "line_start": 53546,
+       "line_end": 53554,
        "quote": "  Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2337. Its event history selects Application\n  = RP-MODEL-CATALOG-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-TELEMETRY-90D@1.0.0\n  (anchor_kind=creation, cardinality_scope=project); Plans/storage-plan.md#SP-602 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner\n  policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected\n  schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration\n  or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice\n  or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-602, Plans/storage-plan.md:53335-53580",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-602, Plans/storage-plan.md:53337-53582",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-602",
@@ -915,9 +915,9 @@
   "row_pointer": "#/families/419"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
-  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
-  "source_assessment_sha256": "bcefea8c239be2fa82724a6215e2f3997ee6ec463e3b309186b24119ea611fcd",
+  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "928eb0433f9d3a503b1aec0c46cf20aa7c1a43377ba41c49cc7fed5a116191c9",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

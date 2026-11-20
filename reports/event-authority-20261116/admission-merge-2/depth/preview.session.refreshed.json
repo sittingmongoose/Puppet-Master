@@ -265,12 +265,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-653",
-       "line_start": 50351,
-       "line_end": 50361,
+       "line_start": 50353,
+       "line_end": 50363,
        "quote": "  Current selected assignment (2026-11-19): preview.session.refreshed@1.0.0 is registered for project_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2356. Its event history selects RP-TELEMETRY-90D@1.0.0; Plans/storage-plan.md#SP-653\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  ds15_preview_session_refreshed_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this\n  assigns that stored value, not event history. Separate checkpoint assignment: ds15_preview_session_refreshed_checkpoint\n  uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-653 contract; checkpoint retention grants\n  no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event\n  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,\n  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-653, Plans/storage-plan.md:50291-50391",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-653, Plans/storage-plan.md:50293-50393",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-653",
@@ -552,9 +552,9 @@
   "row_pointer": "#/families/438"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
-  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
-  "source_assessment_sha256": "d5eda9fd81a61c7d078f5864175600ba739820fcc31a535b57740e194b677698",
+  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "5739cf96d1063e89bcbbdeec49714148ae2b1f78568756a8c778dea47a2b701c",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

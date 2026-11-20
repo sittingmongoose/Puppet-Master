@@ -265,12 +265,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-643",
-       "line_start": 49315,
-       "line_end": 49324,
+       "line_start": 49317,
+       "line_end": 49326,
        "quote": "  Current selected assignment (2026-11-19): live.step.updated@1.0.0 is registered for project_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2323. Its event history selects RP-RUNTIME-365D@1.0.0; Plans/storage-plan.md#SP-643\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  ds15_live_step_updated_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns\n  that stored value, not event history. Separate checkpoint assignment: ds15_live_step_updated_checkpoint uses RP-PROJECTION-3GEN@1.0.0\n  under its existing Plans/storage-plan.md#SP-643 contract; checkpoint retention grants no event/source deletion.\n  Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred\n  to them. Current append/publication still requires the exact selected schema/scope, original custody, current\n  permission, receipt and required producer adoption. Actual missing registration or unresolved required custody\n  refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-643, Plans/storage-plan.md:49250-49354",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-643, Plans/storage-plan.md:49252-49356",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-643",
@@ -591,9 +591,9 @@
   "row_pointer": "#/families/405"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
-  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
-  "source_assessment_sha256": "15fc3d5c95e0717d270f24a24fa89217cadd821e3f10353c08dfb9dbe301582d",
+  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "fe240a96f14bff80442dec3d851dd55a04686bdf5e164678840544c10d83a8d3",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

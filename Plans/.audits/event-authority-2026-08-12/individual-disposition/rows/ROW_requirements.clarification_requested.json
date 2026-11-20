@@ -3,7 +3,7 @@
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to requirements.clarification_requested. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.233 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2369); DL-077 admission record reports/event-authority-20260911/admission-records/requirements.clarification_requested.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/requirements.clarification_requested.json (sha256 71d880b1f7043fb4770aa1edcae91bae12dc83ed3de5363a956cd09c6a6f3e3a); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to requirements.clarification_requested. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.233 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2369); DL-077 admission record reports/event-authority-20260911/admission-records/requirements.clarification_requested.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/requirements.clarification_requested.json (sha256 96e5eac3df5a3300385f561d2bf7cb9f4742ec841c12ad689d18d63714c96e0d); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "membership_version": {
       "status": "PASS",
@@ -17,7 +17,7 @@
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:39890",
+      "citation": "Plans/storage-plan.md:39892",
       "note": "Exact original-owner/source custody, prepare/outcome/publication and SP-286/CV-339 receipt ordering remain explicit."
     },
     "closed_payload_schema": {
@@ -27,7 +27,7 @@
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:39892",
+      "citation": "Plans/storage-plan.md:39894",
       "note": "Original subject, encoded Project scope and applicable distinct CV-366 app identity/codec are enforced."
     },
     "replay_idempotency": {
@@ -37,12 +37,12 @@
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:39911",
+      "citation": "Plans/storage-plan.md:39913",
       "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\", \"DL-507\"], \"event_type\": \"requirements.clarification_requested\", \"existing_checkpoints\": [{\"family_id\": \"dt_requirements_clarification_requested_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"grade_source\": \"reports/event-authority-20261104/DT-self-grade.json\", \"history_policy_ref\": \"RP-AUTHORITY-INDEFINITE@1.0.0\", \"lane\": \"DT\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-507\", \"family_id\": \"dt_requirements_clarification_requested_source\", \"policy_ref\": \"RP-QUESTION-BUDGET-APPLICATION-2555D@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-588\", \"owner_line\": 34346, \"prior_finding\": \"Which class and expiry anchor govern this report request where a run-completion anchor is inapplicable? Do not assume that a ref-only report request is chat content. Runtime-linked cases should reuse existing runtime minima. Runtime-linked minima are retained; runless event deletion/admission remain fenced. Sweep part 2B (CV-1101): the retention age compares exact instants after the shared predicate (offsets, complete fractions; RT05/RT06 refuse a malformed time) instead of host datetime arithmetic.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:39890",
+      "citation": "Plans/storage-plan.md:39892",
       "note": "Redacted metadata, permission-checked references and coherent original source/receipt backup closure remain explicit."
     },
     "transitions": {
@@ -52,17 +52,17 @@
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:39891; scripts/pm_dt_table_cp_token.py:20",
+      "citation": "Plans/storage-plan.md:39893; scripts/pm_dt_table_cp_token.py:20",
       "note": "Exact-family SP-278 adoption and complete globally examined prefix/CAS remain; full-string token hashes and source Storage identity are now enforced, including a coherent foreign-token negative."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:39889; Plans/Contracts_V0.md:35572; scripts/pm-dt-event-contracts.py:1224",
+      "citation": "Plans/storage-plan.md:39891; Plans/Contracts_V0.md:35572; scripts/pm-dt-event-contracts.py:1224",
       "note": "Version/withdrawal/read gates and governed source rebuild remain; no zero reset or history rewrite. Sweep part 2B (SP-1101): the historical reader resolves the sealed original and its frozen recipe and resources through the shared RetainedDispatcher for the binding the record claims (HR13); no caller-supplied original, flag or schema selects or narrows the recipe, and owner-valid broad timestamps stay readable with their exact spelling."
     },
     "positive_negative_oracles": {
       "status": "PASS",
-      "citation": "Plans/Automated_Testing_System.md:9207; Plans/dt_event_contract_fixtures.json:82793; Plans/storage-plan.md:39893; scripts/pm-dt-event-contracts.py:2572; scripts/pm-dt-event-contracts.py:1388; scripts/pm_dt_c12_schema.py:242; scripts/pm-dt-c12-closure.py:44; scripts/pm-dt-event-contracts.py:2260; scripts/pm-dt-event-contracts.py:2111",
+      "citation": "Plans/Automated_Testing_System.md:9207; Plans/dt_event_contract_fixtures.json:82793; Plans/storage-plan.md:39895; scripts/pm-dt-event-contracts.py:2572; scripts/pm-dt-event-contracts.py:1388; scripts/pm_dt_c12_schema.py:242; scripts/pm-dt-c12-closure.py:44; scripts/pm-dt-event-contracts.py:2260; scripts/pm-dt-event-contracts.py:2111",
       "note": "Exact-family C12 PASS from reports/event-authority-20261114/C12-DT-self-grade.json"
     }
   },

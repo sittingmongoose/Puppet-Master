@@ -87,12 +87,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-592",
-       "line_start": 40435,
-       "line_end": 40435,
+       "line_start": 40437,
+       "line_end": 40437,
        "quote": "For tool.execution_started alone, the newly authored original-source custody",
        "quote_check": "exact",
-       "quote_scope": "unit SP-592, Plans/storage-plan.md:40386-40588",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-592, Plans/storage-plan.md:40388-40590",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-592",
@@ -204,12 +204,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-592",
-       "line_start": 40486,
-       "line_end": 40486,
+       "line_start": 40488,
+       "line_end": 40488,
        "quote": "For tool.execution_started alone, source codec",
        "quote_check": "exact",
-       "quote_scope": "unit SP-592, Plans/storage-plan.md:40386-40588",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-592, Plans/storage-plan.md:40388-40590",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-592",
@@ -320,12 +320,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-592",
-       "line_start": 40555,
-       "line_end": 40563,
+       "line_start": 40557,
+       "line_end": 40565,
        "quote": "  Current selected assignment (2026-11-19): tool.execution_started@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2427. Its event history selects Application\n  = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion, cardinality_scope=run), Project = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion,\n  cardinality_scope=run); Plans/storage-plan.md#SP-592 owns the event policy''s existing anchors, counts, holds\n  and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime\n  is not transferred to them. Current append/publication still requires the exact selected schema/scope, original\n  custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-592, Plans/storage-plan.md:40386-40588",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-592, Plans/storage-plan.md:40388-40590",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-592",
@@ -364,12 +364,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-592",
-       "line_start": 40555,
-       "line_end": 40563,
+       "line_start": 40557,
+       "line_end": 40565,
        "quote": "  Current selected assignment (2026-11-19): tool.execution_started@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2427. Its event history selects Application\n  = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion, cardinality_scope=run), Project = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion,\n  cardinality_scope=run); Plans/storage-plan.md#SP-592 owns the event policy''s existing anchors, counts, holds\n  and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime\n  is not transferred to them. Current append/publication still requires the exact selected schema/scope, original\n  custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-592, Plans/storage-plan.md:40386-40588",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-592, Plans/storage-plan.md:40388-40590",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "scripts/pm-dt-event-contracts.py",
         "unit": "python:function:retention_eligible",
@@ -408,13 +408,13 @@
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": "Case L-3. Retention, holds, compaction, deletion, and quarantine",
-       "line_start": 17857,
-       "line_end": 17857,
+       "unit": "Application counts for queued runs and tool execution (DL-2597)",
+       "line_start": 18341,
+       "line_end": 18341,
        "quote": "Application EventRecords of `run.background_enqueued`, `tool.execution_started` and `tool.execution_completed` retain `RP-RUNTIME-365D@1.0.0`. Each family counts its Application records in its own SP-349 Server-wide counterpart bucket, with a cap of 5,000,000 per Puppet Master Server and Storage instance, in addition to the policy’s 1,000,000 per actual Run. A record from one family consumes only its family’s Server allowance. Project records keep the policy’s per-Run and per-Project limits. All records retain the 365-day expiry from actual Run completion, successor compaction and existing holds.",
        "quote_check": "exact",
-       "quote_scope": "unit Case L-3. Retention, holds, compaction, deletion, and quarantine, Plans/storage-plan.md:17837-18340",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0"
+       "quote_scope": "unit Application counts for queued runs and tool execution (DL-2597), Plans/storage-plan.md:18339-18342",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888"
       }
      ],
      "carried_from": {
@@ -432,12 +432,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-592",
-       "line_start": 40458,
-       "line_end": 40460,
+       "line_start": 40460,
+       "line_end": 40462,
        "quote": "Source\n  stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent\n  backup closure.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-592, Plans/storage-plan.md:40386-40588",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-592, Plans/storage-plan.md:40388-40590",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-592",
@@ -494,12 +494,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-592",
-       "line_start": 40468,
-       "line_end": 40468,
+       "line_start": 40470,
+       "line_end": 40470,
        "quote": "For tool.execution_started alone, its SP-278/DL-076 checkpoint",
        "quote_check": "exact",
-       "quote_scope": "unit SP-592, Plans/storage-plan.md:40386-40588",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-592, Plans/storage-plan.md:40388-40590",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-592",
@@ -543,12 +543,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-592",
-       "line_start": 40426,
-       "line_end": 40426,
+       "line_start": 40428,
+       "line_end": 40428,
        "quote": "Withdrawal first cuts off this family''s append admission",
        "quote_check": "exact",
-       "quote_scope": "unit SP-592, Plans/storage-plan.md:40386-40588",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-592, Plans/storage-plan.md:40388-40590",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-592",
@@ -658,14 +658,14 @@
        "json_pointer": "#/families/12"
       },
       {
-       "line_end": 40497,
-       "line_start": 40497,
+       "line_end": 40499,
+       "line_start": 40499,
        "path": "Plans/storage-plan.md",
        "quote": "For tool.execution_started, boolean authority/context flags are exact booleans",
        "unit": "SP-592",
        "quote_check": "exact",
-       "quote_scope": "unit SP-592, Plans/storage-plan.md:40386-40588",
-       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
+       "quote_scope": "unit SP-592, Plans/storage-plan.md:40388-40590",
+       "file_sha256": "0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888",
        "source_citation": {
         "line_end": 39080,
         "line_start": 39080,
@@ -802,9 +802,9 @@
   "row_pointer": "#/families/509"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
-  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
-  "source_assessment_sha256": "3d4631c880fb7fcc6ab9761744616edc813292db4e6cc3dc28c25fe0570a264a",
+  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_assessment_sha256": "56a42c95473c1d0f257fd35dda20e5a3a177aadbbff9bbd209277151181c3b1a",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

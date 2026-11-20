@@ -4,7 +4,7 @@
  "family_id": "event-family-lsp-server-lifecycle-changed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2324",
- "decision_section_sha256": "107ed7597bad9c5ca2bdf9ab3270b82a3388e3644dea77be94c05bcb6cf8de3b",
+ "decision_section_sha256": "0f8c30c6d0a56e7f62ab68f82a5aa840f20316abc87d7a927f0d2472e2f40101",
  "registry_before": {
   "revision": "2026-11-16.187",
   "sha256": "bdc47259bc566aae55e34b5960a078efe3342791379d567f55c952a2411501e1",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "e04114cc46980eb61993066e21f11f0ffd6bbb5d805b47278c06bde836eb5910",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/lsp.server.lifecycle_changed.json",
-  "sha256": "c6474c3ca70e7ec138f909533861f7b793d88be12983e5629ebaaa7ebfd85067"
+  "sha256": "3ef2d418cfb47480987b76c47ba1a5b21dbbad078deea2a22f4ed79024918de9"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
-  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
-  "source_record_sha256": "7f5dfa79aa6b35ccb41422f5049c391668852e6155733a0afde57842e9e1e058",
-  "source_assessment_sha256": "ea3b9cb17a89aab7ea4d66bb6255a2c243f88d5b07d9a3c33af86a277408c302",
-  "source_decision_section_sha256": "38b5eb6c16873f5912c395ac7e49fada2a5e764edc8b6ccb080359d8d9fa5b59",
+  "authority": "MERGE3A R3 / narrow Case L-3 citation for the approved DL-2597 count",
+  "source_commit": "b0406eb571822837b6e09415da4bf3446a58619d",
+  "source_record_sha256": "fa14f1c986ef2f2e557f07c475ff4825a1f4c855110e39fc2f5816e68cd99ad7",
+  "source_assessment_sha256": "c6474c3ca70e7ec138f909533861f7b793d88be12983e5629ebaaa7ebfd85067",
+  "source_decision_section_sha256": "107ed7597bad9c5ca2bdf9ab3270b82a3388e3644dea77be94c05bcb6cf8de3b",
   "original_registry_checkpoints_preserved": true
  }
 }
