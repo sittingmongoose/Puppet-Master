@@ -1,0 +1,27 @@
+{
+  "worker": {
+    "file": "worker/records.jsonl",
+    "model": "gpt-6.2-sol (c-sd1)"
+  },
+  "recheck_commit": "3af916f4b663aced600d1929b8d9195035c97114",
+  "sol": [
+    {
+      "file": "review-sol-max-rsd1b01.jsonl",
+      "model": "gpt-6.2-sol (max)"
+    },
+    {
+      "file": "review-sol-max-rsplit-sd1.jsonl",
+      "model": "gpt-6.2-sol (max)"
+    }
+  ],
+  "astra": [
+    {
+      "file": "review-astra-max-rsd1b01.jsonl",
+      "model": "gpt-6.2-astra (max)"
+    },
+    {
+      "file": "review-astra-max-rsplit-sd1.jsonl",
+      "model": "gpt-6.2-astra (max)"
+    }
+  ]
+}
