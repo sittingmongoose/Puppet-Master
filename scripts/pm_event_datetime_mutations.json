@@ -2800,7 +2800,7 @@
    "module": "pm_event_datetime",
    "find": "\"pattern\": r\"Z(?![\\s\\S])\"",
    "replace": "\"pattern\": r\"Z\"",
-   "witness": "check:datetime_unit_composition_terminal_z_diagnostics",
+   "witness": "check:datetime_nested_preloaded_terminal_z_diagnostics",
    "rule": "composition.storage-utc-z"
   },
   {

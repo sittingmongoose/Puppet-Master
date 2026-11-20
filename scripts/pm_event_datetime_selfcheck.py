@@ -5167,6 +5167,27 @@ def _selected_dch_recipes(context):
                 observed["raw-v1"] != observed["strict-v3"])
 
 
+@check("datetime_nested_preloaded_terminal_z_diagnostics")
+def _nested_terminal_z(context):
+    """Require the terminal-Z diagnostic on preloaded current and retained EventRecords."""
+    with _nested_fixture(context) as (local, rows, _, _):
+        _, current, current_event = _committed_eventrecord(context)
+        _, inv, _, _ = _mods()
+        pointer = "/recipes/strict-v3" + NESTED_SUFFIX
+        row = next(r for r in rows if r["pointer"] == pointer)
+        objects, controls, _ = _node_controls(local)
+        retained = _node_validator(local, row)
+        retained_event = objects[controls[inv.node_key(row)]]["value"]
+        for validator, event in ((current, current_event), (retained, retained_event)):
+            if not validator.is_valid(event):
+                return False
+            bad = dict(event, observed_at_utc="2026-01-01T00:00:00Zx")
+            errors = _refused_at(validator, bad, "observed_at_utc")
+            if errors is None or {e.validator for e in errors} != {"format", "pattern"}:
+                return False
+    return True
+
+
 @check("datetime_nested_scanner_selection_binding_agree")
 def _nested_agree(context):
     _, inv, _, _ = _mods()
