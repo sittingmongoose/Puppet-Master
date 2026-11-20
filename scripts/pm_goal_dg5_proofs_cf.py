@@ -20,6 +20,20 @@ PROOFS = {
             'invalid document to the final check and restoring it repeated the first refusal.'
         ),
     },
+    'dg5/retry/evidence/schema': {
+        'kind': 'entailed-by-retry-result-evidence',
+        'families': [FAMILY],
+        'depends_on': ['dg5/retry/result/schema'],
+        'sites': [
+            *((WORLD, line) for line in (932, 1029, 1031, 1033)),
+            ('Plans/goal_certified_event_coordinator_contracts/schemas/append-phase.v1.schema.json', 65),
+        ],
+        'argument': (
+            'The retry result requires the original evidence under the identical AppendEvidence '
+            'definition. Disabling only the earlier check sends the unchanged invalid evidence '
+            'to the result validator. Restoring the earlier check repeats the original message.'
+        ),
+    },
     'dg5/intent/schema': {
         'kind': 'entailed-by-prepared-and-armed-intent',
         'families': [FAMILY],

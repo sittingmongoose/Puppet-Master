@@ -483,7 +483,7 @@ def check_certified_evidence_reused(module, world, route):
                 'commit no longer checks the same evidence before and after its helper')
     else:
         retry = inspect.getsource(coordinator.held_retry)
-        check = 'self.check_evidence(ctx, evidence, stage=\'retry\')'
+        check = "self.check_evidence(ctx, evidence, stage='retry')"
         forward = "appended = dict(outcome='event_durable_held', evidence=evidence,"
         result = "w.realm.validate('coordinator', APPEND + 'AppendedHeld', appended, 'retry/result')"
         require(all(step in retry for step in (check, forward, result)) and
