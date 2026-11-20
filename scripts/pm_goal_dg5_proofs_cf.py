@@ -23,4 +23,17 @@ PROOFS = {
             'restoration and reaches f5a/intent_bytes with just the schema check disabled.'
         ),
     },
+    'dg5/f5a/control/schema': {
+        'kind': 'entailed-by-validated-arm-control',
+        'families': [FAMILY],
+        'depends_on': ['dg5/arm/control/schema'],
+        'sites': [(WORLD, line) for line in (65, 130, 744, 745, 746, 754, 755, 757, 791, 795, 796)] + MESSAGEPACK,
+        'argument': (
+            'Arm validates StorageControl before storing the armed document. F5a applies '
+            'the same schema, then compares the canonical bytes against that control cell. '
+            'The encoding preserves JSON values and types. With the schema check disabled '
+            'the invalid document still fails f5a/control_bytes and restoring the schema '
+            'check repeats the original message.'
+        ),
+    },
 }

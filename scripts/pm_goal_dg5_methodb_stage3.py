@@ -819,6 +819,7 @@ def main():
     row, ident = declare['row'], declare['root']
     later_route = {
         'dg5/f5a/intent/schema': ('f5a_intent_check', 'f5a/intent_bytes'),
+        'dg5/f5a/control/schema': ('f5a_control_check', 'f5a/control_bytes'),
     }.get(row)
     if 'later_refusal' in declare:
         require((declare['route'], declare['later_refusal']) == later_route,
