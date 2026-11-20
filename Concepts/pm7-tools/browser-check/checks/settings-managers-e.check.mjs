@@ -91,8 +91,24 @@ async function pick(t, f, select, name) {
 	await t.settle();
 	await t.page.waitForTimeout(400);
 }
-async function menuItem(t, f, label) {
-	await f.locator('.pm51-menu-item, .popover .menu-item', { hasText: new RegExp(`^\\s*${label}`) }).first().click({ timeout: 8000 });
+async function openMenu(f, trigger) {
+	await trigger.scrollIntoViewIfNeeded({ timeout: 8000 });
+	// Let scroll delivery finish before anchoring a menu that closes when its trigger moves.
+	await trigger.evaluate(() => new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done))));
+	await trigger.click({ timeout: 8000 });
+	const id = await trigger.getAttribute('aria-controls', { timeout: 8000 });
+	if (!id) throw new Error('The Settings trigger did not open a menu');
+	const selector = `[id="${id}"].pm51-menu.is-open:not(.is-closing)`;
+	// The sprout can appear stationary at its overshoot while the item is still moving.
+	await f.waitForFunction((sel) => {
+		const menu = document.querySelector(sel);
+		return !!menu && !menu.getAnimations().some((a) => a.transitionProperty === 'transform' || a.transitionProperty === 'opacity');
+	}, selector, { timeout: 8000 });
+	return f.locator(selector);
+}
+
+async function menuItem(t, menu, label) {
+	await menu.getByText(label, { exact: true }).locator('..').click({ timeout: 8000 });
 	await t.settle();
 	await t.page.waitForTimeout(400);
 }
@@ -140,8 +156,8 @@ for (const surface of ['normal', 'sandbox']) {
 		await tab(t, f, 'testing', 'Profiles');
 		await B.locator('[data-action="pm51-testing-pick"][data-id="thorough"]').first().click();
 		await t.settle();
-		await B.locator('.pm51-detail-actions [aria-label="More actions"]').first().click();
-		await menuItem(t, f, 'Edit');
+		const menu = await openMenu(f, B.locator('.pm51-detail-actions [aria-label="More actions"]').first());
+		await menuItem(t, menu, 'Edit');
 		await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
 		await pick(t, f, drawer(f).locator('select[data-field="trigger"]'), 'After meaningful edits');
 		await drawer(f).locator('.pm51-panel-foot .btn.primary').click();
@@ -239,8 +255,8 @@ for (const surface of ['normal', 'sandbox']) {
 		await go(t, f, 'code', 'testing');
 		const TB = f.locator(BODY('testing'));
 		await tab(t, f, 'testing', 'Debug');
-		await TB.locator('.pm51-detail-actions [aria-label="More actions"]').first().click();
-		await menuItem(t, f, 'Edit');
+		const editMenu = await openMenu(f, TB.locator('.pm51-detail-actions [aria-label="More actions"]').first());
+		await menuItem(t, editMenu, 'Edit');
 		await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
 		await grab('Debug › Edit');
 		// Memory (FO-167: one quiet page): the page itself and its Add memory dialog, which says where a note applies
@@ -378,10 +394,9 @@ for (const surface of ['normal', 'sandbox']) {
 		let id = null, name = '';
 		for (let i = 0; i < Math.min(await menus.count(), 12) && !id; i++) {
 			const m = menus.nth(i);
-			await m.scrollIntoViewIfNeeded();
-			await m.click();
-			if (!(await f.locator('.pm51-menu-item', { hasText: /^\s*Replace file/ }).count())) { await t.page.keyboard.press('Escape'); await t.page.waitForTimeout(250); continue; }
-			await menuItem(t, f, 'Use for events');
+			const menu = await openMenu(f, m);
+			if (!(await menu.getByText('Replace file', { exact: true }).count())) { await t.page.keyboard.press('Escape'); await t.page.waitForTimeout(250); continue; }
+			await menuItem(t, menu, 'Use for events');
 			await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
 			const facts = (await drawer(f).locator('.pm51-hero-facts').innerText().catch(() => '')).replace(/\s+/g, ' ');
 			if (/Source\s*Built-in/.test(facts)) { id = await m.getAttribute('data-id'); name = ((await drawer(f).locator('.pm51-panel-title').innerText().catch(() => '')) || '').replace(/^Use\s+|\s+for$/g, '').trim(); }
@@ -390,15 +405,13 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.check('found a built-in sound to replace', !!id, '');
 		if (id) {
 			const m = NB.locator(`[data-action="pm51-notifications-sound-menu"][data-id="${id}"]`).first();
-			await m.click();
-			await menuItem(t, f, 'Replace file');
+			await menuItem(t, await openMenu(f, m), 'Replace file');
 			await f.locator('.overlay .dialog').last().waitFor({ state: 'visible', timeout: 8000 });
 			const renameBox = await f.locator('.overlay .dialog input[name="name"]').count();
 			await f.locator('.overlay .dialog .dialog-footer .btn.primary').last().click();
 			await t.page.waitForTimeout(700);
 			await closeDrawers(t, f);
-			await NB.locator(`[data-action="pm51-notifications-sound-menu"][data-id="${id}"]`).first().click();
-			await menuItem(t, f, 'Use for events');
+			await menuItem(t, await openMenu(f, m), 'Use for events');
 			await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
 			const facts = (await drawer(f).locator('.pm51-hero-facts').innerText().catch(() => '')).replace(/\s+/g, ' ');
 			const title = (await drawer(f).locator('.pm51-panel-title').innerText().catch(() => '')).trim();
@@ -410,10 +423,7 @@ for (const surface of ['normal', 'sandbox']) {
 		const before = await library();
 		// Add sound is the Sound library's button for "general.interaction.sound-management"; it opens Upload file / Import pack
 		const add = NB.locator('button[data-setting-id="general.interaction.sound-management"]').first();
-		await add.scrollIntoViewIfNeeded();
-		await add.click();
-		await t.page.waitForTimeout(300);
-		if (await f.locator('.pm51-menu-item', { hasText: /Upload file/ }).count()) await menuItem(t, f, 'Upload file');
+		await menuItem(t, await openMenu(f, add), 'Upload file');
 		await f.locator('.overlay .dialog').last().waitFor({ state: 'visible', timeout: 8000 });
 		const sourceBox = await f.locator('.overlay .dialog select[name="source"]').count();
 		const nameBox = f.locator('.overlay .dialog input[name="name"]');
