@@ -13,6 +13,7 @@ from functools import lru_cache
 import hashlib
 import json
 from pathlib import Path
+import posixpath
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -80,10 +81,26 @@ def snapshot_run(path):
     return ""
 
 
-def adjudicate_snapshot_line(root, run, value, coverage):
+def snapshot_span_map(run):
+    """The one file of a run whose lines are span-map rows."""
+    return "Plans/.plan_migration/" + run + "/span_map.jsonl"
+
+
+def _canonical_owner_path(path):
+    """A Plans path spelled the way the scan names it: no ".", "..", empty or control components.
+
+    Coverage is keyed by the scanned spelling, so a span naming its owner any other way
+    ("Plans/./Owner.md", "Plans/../scripts/x.md") would find no coverage and pass (c) vacuously.
+    """
+    return (path.startswith("Plans/") and posixpath.normpath(path) == path
+            and not any(ch in path for ch in "\n\r\x00") and not snapshot_run(path))
+
+
+def adjudicate_snapshot_line(root, path, value, coverage):
     """Accept a mentioning snapshot line only as a verified copy of a covered owner span.
 
-    (a) the line is its run's own span-map row for one owner-document span,
+    (a) the line is a row of its run's own span_map.jsonl for one owner-document span
+    named by its canonical Plans path,
     (b) the owner document still carries that span's exact bytes at the recorded
     offsets, and (c) no mentioning code container overlapping the span is left
     uncovered in the owner document. A copy accepted this way cannot hide a
@@ -91,10 +108,12 @@ def adjudicate_snapshot_line(root, run, value, coverage):
     declaration there surfaces as its own classified node, and an uncovered
     mentioning container in the owner span refuses the copy as well.
     """
-    if (not isinstance(value, dict) or value.get("schema_id") != "pm.plan_migration.span.v1"
+    run = snapshot_run(path)
+    if (path != snapshot_span_map(run)
+            or not isinstance(value, dict) or value.get("schema_id") != "pm.plan_migration.span.v1"
             or value.get("run_id") != run or not isinstance(value.get("span_id"), str)
             or not isinstance(value.get("source_path"), str)
-            or not value["source_path"].startswith("Plans/") or snapshot_run(value["source_path"])
+            or not _canonical_owner_path(value["source_path"])
             or not isinstance(value.get("sha256"), str)
             or not isinstance(value.get("byte_start"), int) or isinstance(value.get("byte_start"), bool)
             or not isinstance(value.get("byte_end"), int) or isinstance(value.get("byte_end"), bool)
@@ -450,6 +469,10 @@ def scan(root=ROOT):
             if any(citation == "Plans/.plan_migration" or citation.startswith("Plans/.plan_migration/")
                    for citation in citations):
                 raise ValueError("exclusion_purpose_citation_ephemeral: " + r["path"])
+            if snapshot_run(r["path"]):
+                # A pinned exclusion on a snapshot line would bypass adjudicate_snapshot_line and, since
+                # inspect() returns early on a pinned container, could hide a declaration there.
+                raise ValueError("exclusion_path_ephemeral: " + r["path"])
             if not citations or any(not (root / citation).is_file() for citation in citations):
                 raise ValueError("exclusion_purpose_citation_unreadable: " + r["path"])
             if r["path"] == INVENTORY:
@@ -520,6 +543,13 @@ def scan(root=ROOT):
         strings(value)
         return count
 
+    def cover(path, origin, body, state):
+        try:
+            line_no = int(origin.split(":")[1])
+        except (IndexError, ValueError):
+            line_no = 0
+        md_coverage.setdefault(path, []).append((line_no, line_no + body.count("\n") + 1, state))
+
     def container(path, origin, body):
         if not schema_candidate(body):
             return
@@ -528,6 +558,9 @@ def scan(root=ROOT):
         except ValueError:
             if schema_candidate(body):
                 unsupported(path, origin, body, "unreadable_mentioning_container")
+            # An unreadable container is covered only by its pinned exclusion; otherwise the owner
+            # failure above was recorded and the container is uncovered for (c) as well.
+            cover(path, origin, body, "used" if (path, origin) in used else "uncovered")
             return
         before = len(rows)
         for label, value in documents:
@@ -541,14 +574,9 @@ def scan(root=ROOT):
                 unsupported(path, origin, body, "unclassified_mentioning_container")
         # unsupported() consults the committed exclusions itself, so the coverage
         # state is read only after it has run.
-        state = ("rows" if len(rows) > before else
-                 "used" if (path, origin) in used else
-                 "uncovered" if mentions_field(body) and len(rows) == before else "clean")
-        try:
-            line_no = int(origin.split(":")[1])
-        except (IndexError, ValueError):
-            line_no = 0
-        md_coverage.setdefault(path, []).append((line_no, line_no + body.count("\n") + 1, state))
+        cover(path, origin, body, "rows" if len(rows) > before else
+              "used" if (path, origin) in used else
+              "uncovered" if mentions_field(body) and len(rows) == before else "clean")
 
     try:
         for file in files:
@@ -589,7 +617,7 @@ def scan(root=ROOT):
     except (ValueError, OSError) as error:
         errors.append({"error": "scan_walk_failed", "detail": str(error)})
     for path, origin, value in snapshot_lines:
-        code = adjudicate_snapshot_line(root, snapshot_run(path), value, md_coverage)
+        code = adjudicate_snapshot_line(root, path, value, md_coverage)
         if code:
             errors.append({"path": path, "origin": origin, "error": code})
     for key in excluded.keys() - used:

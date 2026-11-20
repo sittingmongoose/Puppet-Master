@@ -147,6 +147,45 @@ def run_cases():
                       errors[:1], "exclusion_purpose_citation_ephemeral" in detail))
     shutil.rmtree(root)
 
+    # Refused: a faithful span row copied into another file of the run is no span-map row.
+    root, doc, row = build_tree(fence)
+    (root / "Plans" / ".plan_migration" / RUN / "coverage_map.jsonl").write_text(json.dumps(row) + "\n")
+    write_exclusions(root, [fence_exclusion(root, doc)])
+    snap, _ = snapshot_errors(root)
+    observed = sorted({(e.get("path").rsplit("/", 1)[1], e.get("error")) for e in snap})
+    cases.append(case("refuse_span_row_outside_span_map", [["coverage_map.jsonl", "snapshot_line_unmapped"]],
+                      observed, observed == [("coverage_map.jsonl", "snapshot_line_unmapped")]))
+    shutil.rmtree(root)
+
+    # Refused: an owner named by a non-canonical spelling would find no coverage under that name.
+    root, doc, _ = build_tree(fence, source_path="Plans/./Owner.md")
+    write_exclusions(root, [])
+    snap, _ = snapshot_errors(root)
+    codes = sorted({e.get("error") for e in snap})
+    cases.append(case("refuse_noncanonical_owner_path", ["snapshot_line_unmapped"],
+                      codes, codes == ["snapshot_line_unmapped"]))
+    shutil.rmtree(root)
+
+    # Refused: an unreadable mentioning owner container with no exclusion leaves the span uncovered.
+    root, doc, _ = build_tree("observed_at_utc: set by the producer")
+    write_exclusions(root, [])
+    snap, _ = snapshot_errors(root)
+    codes = sorted({e.get("error") for e in snap})
+    cases.append(case("refuse_unreadable_uncovered_owner_container", ["snapshot_owner_span_uncovered"],
+                      codes, codes == ["snapshot_owner_span_uncovered"]))
+    shutil.rmtree(root)
+
+    # Refused before scanning: an exclusion may not pin a line of a snapshot run.
+    root, doc, _ = build_tree(fence)
+    write_exclusions(root, [fence_exclusion(root, doc),
+                            {"path": f"Plans/.plan_migration/{RUN}/span_map.jsonl", "origin": "jsonl:1",
+                             "sha256": "0" * 64, "reason": REASON, "citation": "Plans/Owner.md"}])
+    rows, errors = inv.scan(root)
+    detail = json.dumps(errors)
+    cases.append(case("refuse_exclusion_on_snapshot_path", "exclusion_path_ephemeral",
+                      errors[:1], "exclusion_path_ephemeral" in detail))
+    shutil.rmtree(root)
+
     return cases
 
 
