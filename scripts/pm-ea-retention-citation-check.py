@@ -208,7 +208,11 @@ def main():
             correction=json.loads(path.read_text());event=correction['event_type']
             original_depth=json.loads(original(FOLDER+'/depth/'+event+'.json'))
             for changed in correction['citation_changes']:
-                old=changed['old'];quote=old.get('quote','')
+                # New count citations have their own received-union controls.
+                old = changed.get('old')
+                if old is None:
+                    continue
+                quote = old.get('quote', '')
                 if not quote.lstrip().startswith('Current selected assignment') or re.search(r'RP-|ai\.usage\.usage-retention',quote):
                     continue
                 ordinal=changed['ordinal'];received=original_depth['rows'][0]['cells']['retention']['evidence'][ordinal]
