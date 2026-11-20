@@ -62,6 +62,8 @@ def update_fixture(route, path):
         return approval_fixture(oracle, route, path)
     if route in ('metadata_intent', 'reserve_pending'):
         return body_change_fixture(oracle, route, path)
+    if route in TERMINAL_RESULT_ROUTES:
+        return terminal_result_fixture(oracle, route, path)
     w = oracle.world(path)
     if route == 'body_start':
         captured = []
@@ -162,6 +164,66 @@ def update_fixture(route, path):
     if route == 'oracle_receipt':
         return w, lambda: w.body.read_receipt_private(request, 'oracle')
     raise ValueError(route)
+
+
+TERMINAL_RESULT_ROUTES = {
+    'terminal_succeeded': ('succeeded', 'SucceededResult'),
+    'terminal_no_effect': ('no_effect', 'NoEffectResult'),
+    'terminal_unknown': ('unknown', 'RecoveryRequiredResult'),
+}
+
+
+def terminal_result_fixture(oracle, route, path):
+    world, goal = oracle._goal(path)
+    owner = world.sir
+    request = oracle.O.direct_request(world, goal, 'Original terminal result test')
+    command = request['command_instance_id']
+    kind, definition = TERMINAL_RESULT_ROUTES[route]
+    arguments = [command, kind]
+    options = {}
+
+    def at_terminalization(*args, **kwargs):
+        arguments[:] = args
+        options.update(kwargs)
+        raise RootCapture
+
+    if kind == 'succeeded':
+        world.command.run(request, stop_after='publish')
+    else:
+        with patch.object(owner, 'terminalize', at_terminalization):
+            try:
+                if kind == 'no_effect':
+                    world.command.admit_and_capture(request)
+                    world.command.cancel_before_body(command)
+                else:
+                    world.command.run(request, stop_after='freeze')
+                    world.command.mark_unknown(command)
+            except RootCapture:
+                pass
+            else:
+                raise ValueError('the original command did not reach terminalization')
+    require(arguments == [command, kind], 'terminalization began with different original arguments')
+    prefix = oracle.O.UPDATE_URI + '#/$defs/'
+    definitions = owner.bank.documents[oracle.O.UPDATE_URI]['$defs']
+    wrapper = definitions['StorageTerminal']
+    branch, = [branch for branch in definitions['Terminal']['oneOf']
+               if branch['properties']['kind']['const'] == kind]
+    require(wrapper['properties']['record'] == {'$ref': prefix + 'Terminal'} and
+            'record' in wrapper['required'] and {'kind', 'result'} <= set(branch['required']) and
+            branch['properties']['result'] == {'$ref': prefix + definition},
+            'the stored terminal no longer requires the identical variant result')
+    method = inspect.getsource(owner.terminalize)
+    require(all(text in method for text in (
+        f"branch = '{definition}'", "'#/$defs/' + branch, result, 'dgu/sir/terminal/result'",
+        "kind=kind, result=result,", "'#/$defs/StorageTerminal', wrapper, 'dgu/sir/terminal'")),
+        'the terminalizer no longer forwards the same result to storage')
+    stamp = world.now()
+
+    def terminal():
+        with patch.object(world, 'now', return_value=stamp):
+            return owner.terminalize(*arguments, **options)
+
+    return world, terminal
 
 
 def approval_fixture(oracle, route, path):
@@ -687,6 +749,7 @@ class OwnerCheck:
         request_validation = []
         evidence_validation = []
         projection = REQUEST_PROJECTIONS.get(self.declare['route'])
+        terminal_result = TERMINAL_RESULT_ROUTES.get(self.declare['route'])
         producer_payloads = []
         repeated_evidence = self.declare['route'] == 'f5d_repeated_evidence'
         next_evidence_check = {
@@ -701,6 +764,14 @@ class OwnerCheck:
 
         def observe(bank, *args):
             if args[-1] != self.code:
+                if terminal_result and args[-1] == 'dgu/sir/terminal':
+                    first_bank, first_ref, value = request_validation[0]
+                    definition = terminal_result[1]
+                    require(first_bank is bank and args[0] == first_ref.removesuffix(definition) + 'StorageTerminal' and
+                            value == args[-2]['record']['result'], 'the stored terminal used a different result')
+                    record['same_terminal_result'] = True
+                    if edit is None:
+                        record['terminal_projection'] = dict(reference=args[0], document=copy.deepcopy(args[-2]))
                 if args[-1] == next_evidence_check:
                     ref, document = args[1], args[-2]
                     if args[-1] in ('append/result', 'retry/result'):
@@ -749,7 +820,8 @@ class OwnerCheck:
                     require(member not in document, 'test document already has the extra member')
                     changed.append((document, member))
                     document[member] = 'gc'
-            if projection or self.declare['route'] in ('receipt_recheck', 'input_recheck', 'inspect_receipt_recheck'):
+            if projection or terminal_result or self.declare['route'] in (
+                    'receipt_recheck', 'input_recheck', 'inspect_receipt_recheck'):
                 request_validation.append((bank, args[0], copy.deepcopy(document)))
             if self.declare['route'] == 'producer_prepare':
                 producer_payloads.append(copy.deepcopy(document))
@@ -954,6 +1026,8 @@ class OwnerCheck:
                             'repeated F5d checks did not validate the same evidence and leave the same EventPhase write')
                 if self.declare['route'] == 'producer_prepare':
                     require(cut.get('same_submission_payload'), 'the submission did not get the original payload')
+                if self.declare['route'] in TERMINAL_RESULT_ROUTES:
+                    require(cut.get('same_terminal_result'), 'storage did not get the original terminal result')
                 require(before == restored and before['observations'][0] == cut['observations'][0] and
                         bool(cut['errors']) == bool(later),
                         'the complete call did not restore the same document and validation message')
@@ -990,6 +1064,12 @@ class OwnerCheck:
         return self.capture
 
 
+def validation_message_sites(listing):
+    for path, schema_path, keyword, message, context in listing:
+        yield tuple(path), tuple(schema_path), keyword, message
+        yield from validation_message_sites(context)
+
+
 def verify_projected_request(projection, clauses):
     bank, reference, accepted = projection
     require(not bank.errors(reference, accepted), 'the original result did not accept its request')
@@ -1000,13 +1080,32 @@ def verify_projected_request(projection, clauses):
         found = {(tuple(error.absolute_path)[1:], error.validator, error.message) for error in each_error(actual)
                  if error.absolute_path and error.absolute_path[0] == 'request'}
 
-        def messages(listing):
-            for path, _, keyword, message, context in listing:
-                yield tuple(path), keyword, message
-                yield from messages(context)
-
-        require(set(messages(trial['before'])) <= found, f'{name}: the exact request message was missing in the result')
+        expected = {(path, keyword, message) for path, _, keyword, message in validation_message_sites(trial['before'])}
+        require(expected <= found, f'{name}: the exact request message was missing in the result')
         trial['also_refused_by'] = dict(schema=reference, field='request', messages=errors_list(actual))
+
+
+def verify_projected_terminal(bank, projection, clauses):
+    reference, accepted = projection['reference'], projection['document']
+    require(not bank.errors(reference, accepted), 'the stored terminal did not accept its original result')
+    terminal = bank.registry.resolver().lookup(reference.removesuffix('StorageTerminal') + 'Terminal').contents
+    kind = accepted['record']['kind']
+    index, = [i for i, branch in enumerate(terminal['oneOf']) if branch['properties']['kind']['const'] == kind]
+    schema_prefix = ('properties', 'record', 'oneOf', index, 'properties', 'result')
+    for name, trial in clauses.items():
+        invalid = trial.get('invalid')
+        if invalid is None:
+            continue
+        wrapper = copy.deepcopy(accepted)
+        wrapper['record']['result'] = invalid
+        errors = bank.errors(reference, wrapper)
+        exact = errors_list(errors)
+        projected = {(path[2:], schema[len(schema_prefix):], keyword, message)
+                     for path, schema, keyword, message in validation_message_sites(exact)
+                     if path[:2] == ('record', 'result') and schema[:len(schema_prefix)] == schema_prefix}
+        expected = set(validation_message_sites(trial['before']))
+        require(expected and expected <= projected, f'{name}: stored terminal did not repeat the result messages')
+        trial['also_refused_by'] = dict(schema=reference, field=['record', 'result'], messages=exact)
 
 
 CONTROL_PHASE_FIELDS = {
@@ -1246,6 +1345,48 @@ def nonempty_timestamp_implication(nodes, name, path, errors, locations, validat
     return dict(source=format_id, same_document_path=path,
                 implementation='scripts/pm_event_datetime.py:63',
                 premise='The only string with length less than one is empty. The pinned date-time format refuses it.')
+
+
+def terminal_result_implication(nodes, name, path, errors, go, locations, validator, expected):
+    require(go.locations(errors) == set(expected) and expected, 'the exact recovery result messages changed')
+    if name.endswith('/AppendReceipt/properties/acknowledged_at_utc/minLength'):
+        return nonempty_timestamp_implication(
+            nodes, name, path, errors, lambda errs: {item for item in locations(errs) if item[1] == tuple(path)},
+            validator)
+    base = NORMALIZED.removesuffix('NormalizedIdentity')
+    recovery = base + 'RecoveryRequiredResult'
+    node = nodes[recovery]['node']
+    body, event = node['allOf']
+    before, after = 'body_commit', 'publication'
+    strip = lambda item: {k:v for k,v in item.items() if k != 'x-pm-oracle-id'}
+    for member, condition, ref in ((before, body, base + 'BodyCommit'), (after, event, base + 'OriginalPublication')):
+        require(member in node['required'] and
+                [strip(item) for item in node['properties'][member]['anyOf']] ==
+                [strip(condition[choice]['properties'][member]) for choice in ('then', 'else')] ==
+                [{'$ref': ref}, {'type': 'null'}], 'a recovery predicate changed its nullable definition')
+    require({'body_effect', 'event_effect'} <= set(node['required']) and
+            body['if']['properties']['body_effect']['const'] == 'committed' and
+            body['else']['properties']['event_effect']['const'] == 'not_attempted' and
+            body['else']['properties']['publication']['type'] == 'null' and
+            event['if']['properties']['event_effect']['const'] == 'issued' and
+            event['then']['properties']['body_effect']['const'] == 'committed',
+            'recovery body and publication implications changed')
+    if name.startswith(recovery + '/properties/body_commit/anyOf'):
+        peer = base + 'BodyCommit/required'
+    elif name.startswith(recovery + '/properties/publication/anyOf'):
+        peer = base + 'OriginalPublication/required'
+    else:
+        suffix = name.removeprefix(recovery)
+        counterpart = {
+            '/allOf/0/else/properties/publication/type': '/allOf/1/else/properties/publication/type',
+            '/allOf/1/else/properties/publication/type': '/allOf/0/else/properties/publication/type',
+            '/allOf/1/then/properties/body_effect/const': '/allOf/0/else/properties/event_effect/const',
+        }
+        require(suffix in counterpart, 'unexpected conditional recovery rule')
+        peer = recovery + counterpart[suffix]
+    require(peer in expected, 'the source counterpart did not refuse the recovery document')
+    return dict(source=peer, same_document_path=path,
+                premise='The required effects select the exact body and publication definitions.')
 
 
 def native_afterimages_implication(nodes, name, path, control, errors, locations):
@@ -2082,6 +2223,9 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
             premise = go.pinned_proof(node, nodes, validator, keyword)
             require(premise and premise['cls'] == example['outcome_pin'], 'the declared outcome pin changed')
             record.update(cls='COVERED_LATER', implication=premise)
+        elif cut and 'terminal_result_implication' in example:
+            record.update(cls='COVERED_LATER', implication=terminal_result_implication(
+                nodes, name, path, cut, go, locations, validator, example['terminal_result_implication']))
         elif cut and 'normalized_paired_rule' in example:
             record.update(cls='COVERED_LATER', implication=normalized_rule_implication(
                 nodes, name, path, cut, locations, example['normalized_paired_rule']))
@@ -2214,11 +2358,15 @@ def main():
         ('dg5/dgu/reader/audit/request/schema', 'audit_terminal_request'): 'dgu/reader/audit/result/schema/request',
         ('dg5/dgu/body/reserve/pending/schema', 'reserve_pending'): 'dgu/body/goal_body_control/schema/record/pending',
     }.get((row, declare['route']))
+    if row == 'dg5/dgu/sir/terminal/result/schema' and declare['route'] in TERMINAL_RESULT_ROUTES:
+        later_refusal = 'dgu/sir/terminal/schema/record'
     require(declare.get('later_refusal') == later_refusal,
             'later validation requires a checked source implication and its exact message')
     census_row, = [item for item in census['rows'] if item['row'] == row]
     root = census['roots'][ident]
-    require(census_row['root_ids'] == [ident] and not root.get('inventory_variants'), 'ambiguous root inventory')
+    terminal_case = row == 'dg5/dgu/sir/terminal/result/schema' and declare['route'] in TERMINAL_RESULT_ROUTES
+    require((census_row['root_ids'] == [ident] or terminal_case and ident in census_row['root_ids']) and
+            not root.get('inventory_variants'), 'ambiguous root inventory')
     require(declare['family'] == census['family'] and declare['site'] in census_row['sites'], 'census owner site changed')
     sys.path.insert(0, str(source / 'scripts'))
     import pm_goal_dg5_closure as closure
@@ -2271,6 +2419,8 @@ def main():
         if declare['route'] in REQUEST_PROJECTIONS:
             require(check.request_projection is not None, 'the accepted result was not captured')
             verify_projected_request(check.request_projection, clauses)
+        if terminal_case:
+            verify_projected_terminal(actual_bank, check.runs[0]['terminal_projection'], clauses)
         proof_output(source, args.out, declare, collector, clauses, ident, table_path)
         report['status'] = 'COVERED'
     except ValueError as error:
