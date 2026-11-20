@@ -1,0 +1,35 @@
+{
+  "row": "dg5/issue/seven_input:test_capability/schema",
+  "fixtures": [
+    {
+      "route": "issue/seven_input:test_capability",
+      "edition": "v7",
+      "root": "dg5:0d77b481f13f6898",
+      "hash_seed": 0,
+      "edit": [
+        1,
+        [],
+        null
+      ],
+      "error": [
+        [],
+        "type"
+      ]
+    },
+    {
+      "route": "issue/seven_input:test_capability",
+      "edition": "v3",
+      "root": "dg5:8d312a6b9ce22ca5",
+      "hash_seed": 8,
+      "edit": [
+        1,
+        [],
+        null
+      ],
+      "error": [
+        [],
+        "type"
+      ]
+    }
+  ]
+}
