@@ -6,12 +6,16 @@ from collections import Counter
 import copy
 from contextlib import ExitStack
 import gzip
+from itertools import count
 import json
+import multiprocessing
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import time
 from unittest.mock import patch
+from uuid import UUID
 
 from pm_goal_dg5_methodb_stage3 import (
     each_error, edit_example, errors_list, proof_output, require, sha, test_rules, write,
@@ -22,27 +26,55 @@ HERE = Path(__file__).resolve().parent
 FAMILY = 'goal_run.cancelled'
 
 
-def fixture(edition, route, directory):
+class BeforeIssue(BaseException):
+    """Hand the test the real owner call and its pre-issuance store."""
+
+
+def fixture(declare, route, directory):
     import pm_goal_dg_r_oracles as original
     import pm_goal_dg_r_projector as projector
     import pm_goal_dg_r_readers as reader
     import pm_goal_dg_r_world as legacy
 
+    edition = route['edition']
+    config = {'start': route.get('start', 'started')}
     if edition == 'integrated_original':
         from pm_goal_dg_int_old import World
     else:
-        require(edition == 'original_profile', f'unknown edition {edition}')
+        require(edition in ('original_profile', 'native_v7'), f'unknown edition {edition}')
         World = legacy.CancelWorld
-    world = World({'start': 'started'}, base=directory)
+        config['edition'] = edition
+    world = World(config, base=directory)
+    if route['call'] == 'issue_physical':
+        family = declare['row'].removeprefix('dg5/issue/').removesuffix('/schema')
+        original_issue = legacy.PhysOwner.issue_physical
+        captured = []
+
+        def before_issue(owner, selected, *args, **kwargs):
+            if selected == family:
+                captured.append((owner, selected, args, kwargs))
+                raise BeforeIssue
+            return original_issue(owner, selected, *args, **kwargs)
+
+        with patch.object(legacy.PhysOwner, 'issue_physical', before_issue):
+            try:
+                world.build()
+            except BeforeIssue:
+                pass
+        require(len(captured) == 1, f'original cancellation did not call {family}')
+        owner, selected, args, kwargs = captured[0]
+        inputs = (selected, args, kwargs)
+        return world, lambda: original_issue(owner, selected, *args, **kwargs), inputs
     world.build()
-    if route == 'current_started':
-        return world, getattr(world, 'projector_class', projector.Projector)(world).read_current_started
-    require(route == 'missing_original', f'unknown owner call {route}')
+    if route['call'] == 'current_started':
+        owner = getattr(world, 'projector_class', projector.Projector)(world)
+        return world, owner.read_current_started, owner.request()
+    require(route['call'] == 'missing_original', f'unknown owner call {route}')
     consumer = getattr(world, 'consumer_class', reader.Consumer)(world)
     presentation = reader.Presentation(world)
     presentation.cancellation = None
     request = original.request_of(world)
-    return world, lambda: consumer.read_retained_native(request, presentation)
+    return world, lambda: consumer.read_retained_native(request, presentation), (request, None)
 
 
 def root_binding(closure, bank, plain):
@@ -131,7 +163,7 @@ def scoped_rules(plain, bank, accepted, ident, ids, examples, disabled_check):
     return results
 
 
-class ReaderExample:
+class OwnerExample:
     def __init__(self, source, row, route, collector, disabled_check):
         self.source = source
         self.row = row
@@ -140,6 +172,7 @@ class ReaderExample:
         self.disabled_check = disabled_check
         self.observed = None
         self.trials = []
+        self.writes = route['call'] == 'issue_physical'
 
     def call(self, world, action, edit):
         import pm_goal_dg5_boundaries as bridge
@@ -166,7 +199,7 @@ class ReaderExample:
                 require(edit not in value, 'test example already has the extra member')
                 value[edit] = 'example'
             errors = errors_list(list(plain.iter_errors(value)))
-            result['observations'].append(dict(root=ident, binding=binding, site=site,
+            result['observations'].append(dict(root=ident, binding=binding, site=site, realm=realm, ref=ref,
                                                document=copy.deepcopy(value), messages=errors))
             predicate = tables.predicates(tables.rows()[self.row])[self.row]
             decision = predicate({self.row: not errors}, None)
@@ -184,6 +217,10 @@ class ReaderExample:
                 if isinstance(world.roots, cache.Roots):
                     stack.enter_context(patch.object(world.roots, 'success', {}))
                 returned = action()
+            if self.writes:
+                stored = world.storage.cell(returned.family, returned.key)['value']
+                require(stored == returned.wrapper, 'retained wrapper differs from its Storage cell')
+                returned = stored
             result['value_sha256'] = value_sha(returned)
             if edit:
                 require(returned.get(edit) == 'example', 'the accepted call did not return the altered document')
@@ -196,19 +233,72 @@ class ReaderExample:
         require(len(result['observations']) == 1, 'complete call must reach the expected site exactly once')
         return result
 
-    def prove(self, world, action):
+    def issue_on_copy(self, world, action, inputs, edit, initial):
+        import pm_goal_dg5_boundaries as bridge
+        from pm_goal_dg_int_schema_cache import Roots as CachedRoots
+        from pm_goal_dg_r_world import uuid
+
+        path = world.tmp / f'methodb-store-{len(self.trials)}'
+        shutil.copytree(world.storage.root, path)
+        require(bridge.manifest(bridge.file_state(path)) == initial, 'test Storage copy differs from original')
+        context = multiprocessing.get_context('fork')
+        receiver, sender = context.Pipe(duplex=False)
+
+        def run_child():
+            try:
+                family, (_, _, key, *_), _ = inputs
+                before = copy.deepcopy(world.storage.cell(family, key))
+                # The fixture builder may issue ancillary provenance first.
+                # Give those private writes the same distinct IDs in each copy.
+                ids = count(UUID('a36fc6e5-1e3b-4e27-8200-000000000001').int)
+                with patch.object(world.storage, 'root', path), patch.object(
+                        uuid, 'uuid4', side_effect=lambda: UUID(int=next(ids))):
+                    result = self.call(world, action, edit)
+                current = world.storage.cell(family, key)
+                published = current != before
+                require(published != bool(result['errors']), 'target publication does not match the verdict')
+                result['target_published'] = published
+                result['store_changed'] = bridge.manifest(bridge.file_state(path)) != initial
+                sender.send(result)
+            except Exception as error:
+                sender.send({'exception': f'{type(error).__name__}: {error}'})
+            finally:
+                sender.close()
+
+        job = context.Process(target=run_child)
+        job.start()
+        sender.close()
+        try:
+            result = receiver.recv()
+        finally:
+            receiver.close()
+            job.join()
+        require(job.exitcode == 0 and 'exception' not in result, result)
+        self.trials.append(result)
+        observed, = result['observations']
+        self.collector.observe(self.row, not observed['messages'], tuple(observed['site']))
+        if edit is None:
+            bank = world.roots.original if isinstance(world.roots, CachedRoots) else world.roots
+            validator = bank.validator(observed['realm'], observed['ref'])
+            self.observed = validator, bank, observed['document'], observed['binding']
+        return result
+
+    def prove(self, world, action, inputs):
         import pm_goal_dg5_boundaries as bridge
         import pm_goal_guard_tables as tables
 
         initial = bridge.manifest(bridge.file_state(world.storage.root))
+        bound_inputs = bridge.context_value(inputs, world)
         extra = 'methodb_extra'
         for edit in (None, extra, None):
-            value = dict(store=initial, route=self.route, edit=edit)
+            value = dict(store=initial, route=self.route, arguments=bound_inputs, edit=edit)
 
             def evaluate(document):
                 require(document == value, 'complete-call inputs changed')
                 require(not tables.CUT - {self.row}, 'more than the selected validation rule was disabled')
-                result = self.call(world, action, edit)
+                require(bridge.context_value(inputs, world) == bound_inputs, 'original owner arguments changed')
+                result = (self.issue_on_copy(world, action, inputs, edit, initial) if self.writes
+                          else self.call(world, action, edit))
                 require(bridge.manifest(bridge.file_state(world.storage.root)) == initial,
                         'passive call changed the original store')
                 return result
@@ -228,7 +318,7 @@ class ReaderExample:
                 require(before['refusal'] == self.route['refusal'] and before['detail'] == self.route['detail'],
                         f"unexpected validation message: {before['refusal']} {before['detail']}")
         require(self.trials[0] == self.trials[-1], 'the restored valid call changed')
-        return self.observed, initial
+        return self.observed, initial, bound_inputs
 
 
 def publish(source, out, declare, collector, reports, inventories, table_path):
@@ -300,11 +390,11 @@ def run(args):
         for index, route in enumerate(declare['routes']):
             directory = args.out / f'fixture-{index}'
             directory.mkdir()
-            world, action = fixture(route['edition'], route['call'], directory)
-            check = ReaderExample(source, row, route, collector, args.disable_check)
+            world, action, inputs = fixture(declare, route, directory)
+            check = OwnerExample(source, row, route, collector, args.disable_check)
             log = dict(route=route, trials=check.trials)
             calls.append(log)
-            observation, log['store'] = check.prove(world, action)
+            observation, log['store'], log['arguments'] = check.prove(world, action, inputs)
             captured.setdefault(route['root'], observation)
         for ident, (plain, bank, accepted, binding) in captured.items():
             root = census['roots'][ident]
