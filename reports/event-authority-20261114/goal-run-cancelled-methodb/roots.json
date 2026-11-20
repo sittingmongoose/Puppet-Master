@@ -1,0 +1,441 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:c00d0a21b90bf5bb": {
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/continuation_epoch/minimum": {
+        "path": [
+          "record",
+          "continuation_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/continuation_epoch/type": {
+        "path": [
+          "record",
+          "continuation_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/goal_id/minLength": {
+        "path": [
+          "record",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/goal_id/type": {
+        "path": [
+          "record",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_ref/oneOf": {
+        "path": [
+          "record",
+          "last_original_stop_receipt_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_ref/oneOf/0/minLength": {
+        "path": [
+          "record",
+          "last_original_stop_receipt_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_ref/oneOf/0/type": {
+        "path": [
+          "record",
+          "last_original_stop_receipt_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_ref/oneOf/1/type": {
+        "path": [
+          "record",
+          "last_original_stop_receipt_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_sha256/oneOf": {
+        "path": [
+          "record",
+          "last_original_stop_receipt_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_sha256/oneOf/0/pattern": {
+        "path": [
+          "record",
+          "last_original_stop_receipt_sha256"
+        ],
+        "value": "870cebb0cbcd13e56c93fbad95b9ec27da0fb73b37bc2ae344efeafb7066aa04\n"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_sha256/oneOf/0/type": {
+        "path": [
+          "record",
+          "last_original_stop_receipt_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_sha256/oneOf/1/type": {
+        "path": [
+          "record",
+          "last_original_stop_receipt_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/latched/type": {
+        "path": [
+          "record",
+          "latched"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/original_birth_or_adoption_ref/minLength": {
+        "path": [
+          "record",
+          "original_birth_or_adoption_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/original_birth_or_adoption_ref/type": {
+        "path": [
+          "record",
+          "original_birth_or_adoption_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/project_id/minLength": {
+        "path": [
+          "record",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/project_id/type": {
+        "path": [
+          "record",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/schema_id/const": {
+        "path": [
+          "record",
+          "schema_id"
+        ],
+        "value": "pm.goal.cancel.stop_control.v1x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/schema_version/const": {
+        "path": [
+          "record",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/thread_id/minLength": {
+        "path": [
+          "record",
+          "thread_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/thread_id/type": {
+        "path": [
+          "record",
+          "thread_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/user_stop_epoch/minimum": {
+        "path": [
+          "record",
+          "user_stop_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/user_stop_epoch/type": {
+        "path": [
+          "record",
+          "user_stop_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/type": {
+        "path": [
+          "record"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.goal_host_stop_control.v1x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl/type": {
+        "path": [],
+        "value": true
+      }
+    },
+    "dg5:dd8efe9a065904f7": {
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/continuation_epoch/minimum": {
+        "path": [
+          "continuation_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/continuation_epoch/type": {
+        "path": [
+          "continuation_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/goal_id/minLength": {
+        "path": [
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/goal_id/type": {
+        "path": [
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_ref/oneOf": {
+        "path": [
+          "last_original_stop_receipt_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_ref/oneOf/0/minLength": {
+        "path": [
+          "last_original_stop_receipt_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_ref/oneOf/0/type": {
+        "path": [
+          "last_original_stop_receipt_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_ref/oneOf/1/type": {
+        "path": [
+          "last_original_stop_receipt_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_sha256/oneOf": {
+        "path": [
+          "last_original_stop_receipt_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_sha256/oneOf/0/pattern": {
+        "path": [
+          "last_original_stop_receipt_sha256"
+        ],
+        "value": "870cebb0cbcd13e56c93fbad95b9ec27da0fb73b37bc2ae344efeafb7066aa04\n"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_sha256/oneOf/0/type": {
+        "path": [
+          "last_original_stop_receipt_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/last_original_stop_receipt_sha256/oneOf/1/type": {
+        "path": [
+          "last_original_stop_receipt_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/latched/type": {
+        "path": [
+          "latched"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/original_birth_or_adoption_ref/minLength": {
+        "path": [
+          "original_birth_or_adoption_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/original_birth_or_adoption_ref/type": {
+        "path": [
+          "original_birth_or_adoption_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/project_id/minLength": {
+        "path": [
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/project_id/type": {
+        "path": [
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.goal.cancel.stop_control.v1x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/storage_instance_id/minLength": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/storage_instance_id/type": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/thread_id/minLength": {
+        "path": [
+          "thread_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/thread_id/type": {
+        "path": [
+          "thread_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/user_stop_epoch/minimum": {
+        "path": [
+          "user_stop_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/properties/user_stop_epoch/type": {
+        "path": [
+          "user_stop_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl/type": {
+        "path": [],
+        "value": true
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "routes": [
+    {
+      "call": "issue_stop_control",
+      "detail": null,
+      "edition": "w12b",
+      "ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl",
+      "refusal": "roots/schema//$defs/StopControl//additionalProperties",
+      "root": "dg5:dd8efe9a065904f7",
+      "site": [
+        "scripts/pm_goal_own_c3_w12b_roots.py",
+        41
+      ]
+    },
+    {
+      "call": "wrap_stop_control",
+      "detail": null,
+      "edition": "w12b",
+      "ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl",
+      "refusal": "roots/schema//$defs/StorageStopControl//additionalProperties",
+      "root": "dg5:c00d0a21b90bf5bb",
+      "site": [
+        "scripts/pm_goal_own_c3_w12b_roots.py",
+        41
+      ]
+    }
+  ],
+  "row": "dg5/roots/schema",
+  "sites": [
+    [
+      "scripts/pm_goal_own_c3_w12b_roots.py",
+      41
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}
