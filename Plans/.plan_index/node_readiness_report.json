@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27515,
+    "depends_on_edge_count": 27518,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30740,
-    "node_count": 9532,
+    "edge_count": 30743,
+    "node_count": 9533,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-20T00:09:41Z",
+  "generated_at_utc": "2026-11-20T00:10:45Z",
   "gui_related_units": {
     "count": 3935,
     "units": [
@@ -43309,10 +43309,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 9532,
+  "plan_unit_count": 9533,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 4846,
+      "high": 4847,
       "low": 10,
       "medium": 36,
       "standard": 4640
@@ -44544,7 +44544,7 @@
       "evalsession_owner_boundary_drift": 1,
       "event_alias_precedence_drift": 1,
       "event_authority": 120,
-      "event_authority_admission": 535,
+      "event_authority_admission": 536,
       "event_authority_admission_decision_entry_drift": 1,
       "event_authority_admission_decision_entry_scope_drift": 1,
       "event_authority_and_false_completion": 1,
@@ -47571,7 +47571,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 9252,
+      "accepted": 9253,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47605,7 +47605,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 823,
+      "decision": 824,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -47719,7 +47719,7 @@
       {
         "actual": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
         "error": "pnc019_source_hash_stale",
-        "expected": "891737d3b86a446b33d68969e7c490b34d1efbd6543a0c0de0e26cd30d973a09",
+        "expected": "606f9a7f44d7a35f7decf2638b7d942a0957c312ec49473d2f0e50ebd3e8521e",
         "source_path": "Plans/event_family_registry.json"
       },
       {
@@ -47815,7 +47815,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "a055b5b8d3f4a2852cee692454983bc1cd317ff74437f155e938dec0bef8e9b6",
+        "expected": "d05e3b56a064d3a5121b3503e35470f44349369f5f6ea5284a19fa9f1bba4206",
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
