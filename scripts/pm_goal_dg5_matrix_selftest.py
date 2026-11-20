@@ -175,6 +175,16 @@ def check_matrix():
         r = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
         assert r.returncode == 0, r.stderr[-2000:]
         fam = json.loads(out.read_text())['families'][FAM]
+        row_proof = _proof(Path(td) / 'row-proof', {normal: rows[normal]},
+                           [_rec(0, 'targeted/control', 'control'),
+                            _rec(1, 'targeted/negative', 'exact_expected', normal, 'KILLED')],
+                           [specs[-1]], [tables[-1]])
+        r = subprocess.run(cmd + ['--row-proof', str(row_proof)], cwd=ROOT, capture_output=True, text=True)
+        assert r.returncode == 0, r.stderr[-2000:]
+        patched = {x['row']: x for x in json.loads(out.read_text())['families'][FAM]['matrix']}
+        original = {x['row']: x for x in fam['matrix']}
+        assert patched[ok]['justification']['replay'] == original[ok]['justification']['replay']
+        assert patched[normal]['negative']['declared_attempts'] == original[normal]['negative']['declared_attempts'] + 1
     m = {x['row']: x for x in fam['matrix']}
     assert m[ok]['status'] == 'CLOSED_BY_PROOF' and m[ok]['reason'] == 'witness_bound_not_run', m[ok]
     just = m[ok]['justification']

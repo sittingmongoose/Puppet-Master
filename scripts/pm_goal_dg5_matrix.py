@@ -408,6 +408,8 @@ def main():
     parser.add_argument('proof', type=Path, nargs='+')
     parser.add_argument('--family', action='append', required=True)
     parser.add_argument('--closure', action='append', default=[])
+    parser.add_argument('--row-proof', action='append', type=Path, default=[],
+                        help='targeted proof directory for specific rows, without family replay credit')
     parser.add_argument('--shared-proof', action='append', type=Path, default=[],
                         help='shared-adapter proof directory whose kills may be cited for shared rows')
     parser.add_argument('--root-inventory', action='append', type=Path, default=[],
@@ -415,13 +417,17 @@ def main():
     parser.add_argument('--out', type=Path, required=True)
     args = parser.parse_args()
     import pm_goal_dg5_justified as justified
-    proofs = [load_proof(path, index) for index, path in enumerate(args.proof)]
+    family_proofs = [load_proof(path, index) for index, path in enumerate(args.proof)]
+    proofs = family_proofs + [load_proof(path, index)
+                              for index, path in enumerate(args.row_proof, len(family_proofs))]
     shared_proofs = [load_proof(path, index) for index, path in enumerate(args.shared_proof)]
     closure = load_closure(args.closure, args.root_inventory)
     out = dict(schema_id='pm.pnc019.c12_dg5.coverage_matrix.v1', proof_dir=str(args.proof[0]),
                proof_dirs=[str(path) for path in args.proof],
                shared_proof_dirs=[str(path) for path in args.shared_proof], families={},
                rule=__doc__.split('\n\n')[2])
+    if args.row_proof:
+        out['row_proof_dirs'] = [str(path) for path in args.row_proof]
     for family in args.family:
         names = sorted({name for proof in proofs for name in proof['family_rows'].get(family, [])})
         records = [r for proof in proofs for r in proof['ledger'] if r['family'] == family]
@@ -480,8 +486,9 @@ def main():
                     proof_record = dict(proof_record, shared_cite=True)
             bound = None
             if proof_record is None and not site_conflict:
-                bound = _witness_bound_not_run(name, sites, specs, shared, tries, shared_tries,
-                                               controls.get(name, 0), proofs, shared_proofs, family)
+                replay_tries = [r for r in tries if r['_dg5_proof_index'] < len(family_proofs)]
+                bound = _witness_bound_not_run(name, sites, specs, shared, replay_tries, shared_tries,
+                                               controls.get(name, 0), family_proofs, shared_proofs, family)
             if site_conflict:
                 status, reason = 'OPEN', 'conflicting collection sites across proof directories'
             elif effective_gated == 'PASS' and (killed or shared_killed):
