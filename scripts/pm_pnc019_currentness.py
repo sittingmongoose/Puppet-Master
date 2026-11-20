@@ -77,9 +77,9 @@ EVENT_FAMILY_REGISTRY_SCHEMA_VERSION = "2.0.0"
 # 774f6d49c5662d6115e42b880c855b5d415fd3eb234627e7405a3f493bd83204). The audit status file's pinned revision and hash
 # move with the next reseal, not here.
 # FIX1/T259: four owner-role corrections; membership/count and historical admission pins unchanged.
-# Current registry 2026-11-19.115, SHA-256 ce690a12a414016c797e9838fa5b75373cb266255d81e556f8cbcdb5de89bb84.
+# Current registry 2026-11-19.116, SHA-256 6f1c1aa09bfa2b3254c0ff86832a6451e944d37206ef3854ac3ea4da14169ea6.
 # Checkpoint data only: denominator and contract-depth clearance remain false.
-EVENT_FAMILY_REGISTRY_REVISION = "2026-11-19.115"
+EVENT_FAMILY_REGISTRY_REVISION = "2026-11-19.116"
 EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT = 518
 EVENT_FAMILY_QUARANTINED_ROW_COUNT = 252
 EVENT_FAMILY_DENOMINATOR_STATUS = "UNKNOWN_OPEN"
