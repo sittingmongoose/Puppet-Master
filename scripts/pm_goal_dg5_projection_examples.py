@@ -1,4 +1,4 @@
-"""Validate fixed examples against the native cancellation projection rules."""
+"""Validate fixed examples against the cancellation projection rules."""
 
 import hashlib
 import json
@@ -78,8 +78,8 @@ def verify_projection_example(plain, validator, nodes, name, example, controls, 
     import pm_goal_go_schema_closure as go
     from pm_goal_dg5_methodb_stage3 import each_error, edit_example
 
-    require(plain.schema['$ref'].endswith('#/$defs/CombinedStorageProjection'),
-            'these examples are for the native stored projection')
+    require(plain.schema['$ref'].endswith(('#/$defs/CombinedStorageProjection', '#/$defs/CancelledProjection')),
+            'these examples are for the cancellation projection definitions')
     control = controls[example['projection_example']]
     invalid = control if example.get('control_only') else edit_example(go, control, example['path'], example)
     before = go.errors_of(validator, invalid)
