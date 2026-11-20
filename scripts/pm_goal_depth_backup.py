@@ -25,7 +25,7 @@ class ProviderBackupOwner(backup.BackupOwner):
         super().__init__(registry)
         self.provider_units = {}
 
-    def take_provider(self, live, source, dest):
+    def take_world(self, live, source, dest):
         approval = live.approvals
         rows = {}
         for approval_id, core in approval.rows().items():
@@ -39,7 +39,7 @@ class ProviderBackupOwner(backup.BackupOwner):
         self.provider_units[handle] = (approval.owner_id, approval.owner_epoch, rows)
         return handle, unit
 
-    def restore_provider(self, driver, *, current, handle, unit_dir, target, tombstones):
+    def restore_world(self, driver, *, current, handle, unit_dir, target, tombstones):
         # Authenticate the sealed physical unit and consult current owner state
         # independently of what the old backup says, before a target exists.
         where = 'depth/provider/restore'
@@ -71,6 +71,46 @@ class ProviderBackupOwner(backup.BackupOwner):
                 expiry = actual['expires_at_utc']
                 if not actual['revoked'] and decision['decision'] == 'approved' and expiry is not None:
                     update.require(where + '/approval_expired', provider.utc_order(current.now()) < provider.utc_order(expiry))
+        return driver.restore(backup_owner=self, handle=handle, unit_dir=unit_dir, target=target,
+                              tombstones=tombstones, scopes=[])
+
+
+class MigrationBackupOwner(backup.BackupOwner):
+    """SP-1131/M8 restore checks against independently current migration authority."""
+
+    def __init__(self, registry, scope):
+        super().__init__(registry)
+        self.scope = scope
+        self.migration_units = {}
+
+    @staticmethod
+    def root_of(world):
+        world.registry.authenticate_owner(world.maintenance, 'storage_maintenance')
+        source = world.maintenance.source()
+        return tuple(source[name] for name in ('storage_instance_id', 'root_identity', 'namespace'))
+
+    @staticmethod
+    def domain_of(world):
+        return dict(selection=world.coordinator.current_domain_selection(),
+                    withdrawn=world.binding.domain_withdrawn, native_root=world.registration.root_identity)
+
+    def take_world(self, live, source, dest):
+        root, domain = self.root_of(live), self.domain_of(live)
+        handle, unit = self.take(source, dest)
+        self.migration_units[handle] = (root, domain)
+        return handle, unit
+
+    def restore_world(self, driver, *, current, handle, unit_dir, target, tombstones):
+        self.authenticate_unit(handle, (unit_dir / backup.UNIT_FILE).read_bytes())
+        root, domain = self.migration_units[handle]
+        # M8: an archive cannot supply its own current root, domain or scope
+        # permissions. A current tombstone or hold fences installation.
+        where = 'depth/migration/restore'
+        update.require(where + '/root', self.root_of(current) == root)
+        update.require(where + '/domain', self.domain_of(current) == domain)
+        scope_state = current.maintenance.scope_state(self.scope)
+        update.require(where + '/deleted', not scope_state['deletion_requested'])
+        update.require(where + '/hold', not scope_state['holds'])
         return driver.restore(backup_owner=self, handle=handle, unit_dir=unit_dir, target=target,
                               tombstones=tombstones, scopes=[])
 
@@ -121,28 +161,25 @@ def provider_restore_fences(root, world, restore, unguarded, *, goal, proposal, 
     return evidence
 
 
-def restore_unit(root, original, missing, *, provider_context=None):
+def restore_unit(root, world, missing, *, issuer_factory, probes):
     registry = adapters.OwnerRegistry()
-    issuer = ProviderBackupOwner(registry) if provider_context else backup.BackupOwner(registry)
+    issuer = issuer_factory(registry)
     tombstones = backup.TombstoneOwner(registry)
     driver = backup.RestoreDriver(registry)
     unit_dir = root / 'unit'
+    original = world.storage
     backup_source = backup.W.LaneStorage.open(original.root)
     check(backup_source.commit_generation == original.commit_generation,
           'Opening original Storage for backup changed its commit generation')
-    if provider_context:
-        world = provider_context['world']
-        handle, unit = issuer.take_provider(world, backup_source, unit_dir)
-    else:
-        handle, unit = issuer.take(backup_source, unit_dir)
+    handle, unit = issuer.take_world(world, backup_source, unit_dir)
 
     def physical(target, source=unit_dir):
         return driver.restore(backup_owner=issuer, handle=handle, unit_dir=source, target=target,
                               tombstones=tombstones, scopes=[])
 
     def guarded(current, target, source=unit_dir):
-        return issuer.restore_provider(driver, current=current, handle=handle, unit_dir=source,
-                                       target=target, tombstones=tombstones)
+        return issuer.restore_world(driver, current=current, handle=handle, unit_dir=source,
+                                    target=target, tombstones=tombstones)
     incomplete = root / 'incomplete'
     incomplete.mkdir()
     shutil.copyfile(unit_dir / backup.UNIT_FILE, incomplete / backup.UNIT_FILE)
@@ -159,10 +196,7 @@ def restore_unit(root, original, missing, *, provider_context=None):
             dest.write_bytes(raw)
     refused_target = root / 'refused' / 'storage'
     try:
-        if provider_context:
-            guarded(world, refused_target, incomplete)
-        else:
-            physical(refused_target, incomplete)
+        guarded(world, refused_target, incomplete)
     except backup.W.LaneRefusal as error:
         check(error.code == 'restore/unit_incomplete', f'Wrong incomplete-unit refusal: {error.code}')
     else:
@@ -170,17 +204,15 @@ def restore_unit(root, original, missing, *, provider_context=None):
     check(not refused_target.exists(), 'Incomplete unit installed a target before refusal')
 
     target = root / 'restored' / 'storage'
-    result = guarded(world, target) if provider_context else physical(target)
+    result = guarded(world, target)
     restored = result['storage']
     check(restored.storage_instance_id == original.storage_instance_id and
           restored.cells == original.cells and restored.reservations == original.reservations and
           restored.events == original.events and restored.custody == original.custody and
           restored.packs == original.packs,
           'Restore changed original owner cells, reservations, events, custody or packs')
-    evidence = dict(manifest=unit, omitted_member=missing, exact_refusal='restore/unit_incomplete')
-    if provider_context:
-        evidence['current_authority'] = provider_restore_fences(root / 'current-authority', restore=guarded,
-                                                                unguarded=physical, **provider_context)
+    evidence = dict(manifest=unit, omitted_member=missing, exact_refusal='restore/unit_incomplete',
+                    current_authority=probes(root / 'current-authority', guarded, physical))
     return target, evidence
 
 
@@ -228,10 +260,12 @@ def provider_backup(root):
         wrapper_errors[size] = list(world.approvals.bank.errors(proposal_root, stored))
     check(not any(wrapper_errors.values()), 'Selected proposal wrappers did not match the owner schema')
 
-    target, evidence = restore_unit(root, world.storage, pack_path, provider_context=dict(
-        world=world, goal=goal, proposal=source['proposal'], approval_id=accepted['approval_id'],
-        approver_permission=source['approver_permission'], packed_approval_id=large['approval_id'],
-        pack_ref=payload_ref))
+    def probes(path, guarded, physical):
+        return provider_restore_fences(path, world, guarded, physical, goal=goal, proposal=source['proposal'],
+                                       approval_id=accepted['approval_id'], approver_permission=source['approver_permission'],
+                                       packed_approval_id=large['approval_id'], pack_ref=payload_ref)
+
+    target, evidence = restore_unit(root, world, pack_path, issuer_factory=ProviderBackupOwner, probes=probes)
     reopened = provider.World(target.parent, create=False)
     for original in (source, large_source):
         proposal = original['proposal']
@@ -274,6 +308,45 @@ def provider_backup(root):
                 terminal_sha256=update.sha(update.msgpack(terminal)))
 
 
+def migration_restore_fences(root, world, restore, unguarded, scope, selector, result):
+    """M8 owner changes made after the archive. The prior driver accepts all four."""
+    def change_root(current):
+        current.maintenance._update(lambda source: source.update(
+            root_identity=migration_owners.uid('TEST_ONLY:storage-root')))
+
+    cases = (
+        ('deleted', lambda w: w.maintenance.request_deletion(scope)),
+        ('hold', lambda w: w.maintenance.hold(scope)),
+        ('root', change_root),
+        ('domain', lambda w: w.coordinator.reinstall([scope])),
+    )
+    evidence = {}
+    for name, change in cases:
+        baseline = root / name
+        live = shutil.copytree(world.storage.root, baseline / 'live')
+        current = migration.open_world(live)
+        change(current)
+        target = baseline / 'refused' / 'storage'
+        current_generation = current.storage.commit_generation
+        refusal = expect_refusal('depth/migration/restore/' + name, lambda: restore(current, target))
+        check(not target.exists() and current.storage.commit_generation == current_generation,
+              f'Migration {name} refusal installed a target or changed current authority')
+        bypass = baseline / 'reverted' / 'storage'
+        unguarded(bypass)
+        reopened = migration.open_world(bypass)
+        before = MigrationBackupOwner.domain_of(world)
+        check(reopened.coordinator.read_result(selector) == result and reopened.binding.domain_withdrawn and
+              MigrationBackupOwner.root_of(reopened) == MigrationBackupOwner.root_of(world) and
+              MigrationBackupOwner.domain_of(reopened) == before,
+              'Unguarded restore did not expose the stale scope result, root or fenced domain')
+        evidence[name] = dict(exact_refusal=refusal, refused_target_absent=not target.exists(),
+                              reverted_read_result_sha256=migration_owners.row_sha(result),
+                              current_scope=current.maintenance.scope_state(scope),
+                              current_root=MigrationBackupOwner.root_of(current),
+                              current_domain=MigrationBackupOwner.domain_of(current))
+    return evidence
+
+
 def migration_backup(root):
     world = migration.migration_world(root / 'original')
     scope = migration_owners.legacy_goal(world, revisions=2)
@@ -289,7 +362,11 @@ def migration_backup(root):
           'Expected original enrolled result, manifest and preserved pending work')
 
     committed_manifest = storage.decode_canonical((world.storage.root / 'CURRENT').read_bytes())['manifest_ref']
-    target, evidence = restore_unit(root, world.storage, committed_manifest)
+    def probes(path, guarded, physical):
+        return migration_restore_fences(path, world, guarded, physical, scope, selector, result)
+
+    target, evidence = restore_unit(root, world, committed_manifest, probes=probes,
+                                    issuer_factory=lambda registry: MigrationBackupOwner(registry, scope))
     reopened = migration.open_world(target)
     maintenance = reopened.maintenance.source()
     reopened.maintenance.restore()
