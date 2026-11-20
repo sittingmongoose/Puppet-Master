@@ -19,7 +19,7 @@
 // Tolerances are hard caps in ms, chosen from measured resolved-pair noise (RN-REPORT.md, 2026-11-11-pm7-performance
 // share). They stay below the bite thresholds so a sustained regression of 50 ms (firstNewMs / retainedMs) or 100 ms
 // (settledMs) always puts the resolved paired median past its tolerance. No run-time noise estimate widens them.
-export const RASTER_AB_TOL_MS = Object.freeze({firstNewMs: 25, retainedMs: 25, settledMs: 50});
+export const RASTER_AB_TOL_MS = Object.freeze({firstNewMs: 25, retainedMs: 25, settledMs: 25});
 export const RASTER_AB_BITE_MS = Object.freeze({firstNewMs: 50, retainedMs: 50, settledMs: 100});
 // resolution: an edge gap above R is unresolved. R = min(factor x median frame interval, capMs).
 export const RASTER_AB_RES = Object.freeze({factor: 3, capMs: 50});

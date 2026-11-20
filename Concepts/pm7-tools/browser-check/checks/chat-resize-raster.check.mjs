@@ -20,7 +20,7 @@ import {rasterAbVerdict, rasterAbStrict, shrinkResolution} from '../helpers/rast
 // a frame flowing every vsync, so a gap in the screencast is delivery loss, not page timing. Each measure edge carries
 // its resolution; a pair whose edge gap exceeds R = min(3 x median frame interval, 50 ms) on either side is unresolved
 // and not judged. The median of head - control over the resolved pairs must stay within a fixed ms tolerance
-// (firstNewMs/retainedMs 25 ms, settledMs 50 ms, capped below the 50/100 ms bite thresholds). --set control=<page>
+// (25 ms each for firstNewMs, retainedMs and settledMs, capped below the 50/50/100 ms bite thresholds). --set control=<page>
 // measures a control in the same browser, order-balanced (C H H C C H ...); --set reps=N resolved pairs wanted per
 // measure (default 6), shrinking until N resolved pairs or 2N attempted (the 2 x run-time cap). Fewer than N resolved
 // pairs is a failing "could not judge" row, never a silent pass. The old strict head-median <= control-median compare
