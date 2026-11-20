@@ -513,6 +513,36 @@ def origin_implication(nodes, name, path, errors, locations):
     return dict(source=parent + f'/allOf/{index}', independent_rule=peer, nonnull_kind=kind)
 
 
+def body_receipt_implication(nodes, name, path, errors, locations):
+    parent = name.split('/allOf/', 1)[0].split('/properties/', 1)[0]
+    field = path[-1]
+    index, revision = {'before_currentness_hash': (0, 'before_revision'),
+                       'accepted_revision_hash': (1, 'accepted_objective_revision')}[field]
+    require(parent.endswith('#/$defs/receipt') and path == ['record', field], 'unexpected receipt field')
+    node = nodes[parent]['node']
+    condition = node['allOf'][index]
+    require({revision, field} <= set(node['required']) and condition['if']['properties'][revision]['type'] == 'null',
+            'receipt hash condition changed')
+    alternatives = node['properties'][field]['anyOf']
+    string = condition['else']['properties'][field]
+    null = condition['then']['properties'][field]
+    fields = lambda item: {key: value for key, value in item.items() if key != 'x-pm-oracle-id'}
+    require([fields(value) for value in alternatives] == [fields(string), fields(null)] ==
+            [{'type': 'string', 'pattern': '^[0-9a-f]{64}$'}, {'type': 'null'}],
+            'receipt hash branches changed')
+    remaining = locations(errors)
+    if '/else/' in name:
+        other = parent + '/properties/' + field + '/anyOf/0/pattern'
+        require(('pattern', tuple(path), other) in remaining, 'identical receipt hash rule did not remain')
+    else:
+        branch = 'else' if name.endswith('/pattern') else 'then'
+        word = 'pattern' if branch == 'else' else 'type'
+        other = parent + f'/allOf/{index}/{branch}/properties/{field}/{word}'
+        require(remaining == {(word, tuple(path), other)}, 'exact receipt hash condition did not remain')
+    return dict(source=parent+f'/allOf/{index}', independent_rule=other,
+                premise='The revision selects either the null branch or the same 64-character hash rule.')
+
+
 def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check):
     import pm_goal_dg5_closure as closure
     import pm_goal_go_schema_closure as go
@@ -611,6 +641,9 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
             }, 'the identical length rule did not remain')
             record.update(cls='COVERED_LATER', implication=dict(source=other, same_document_path=path,
                           premise='The blocked state requires a string, so the nonempty string branch applies.'))
+        elif cut and example.get('receipt_implication'):
+            record.update(cls='COVERED_LATER', implication=body_receipt_implication(
+                nodes, name, path, cut, locations))
         elif cut and example.get('origin_implication'):
             record.update(cls='COVERED_LATER', implication=origin_implication(nodes, name, path, cut, locations))
         elif cut and example.get('request_implication'):
