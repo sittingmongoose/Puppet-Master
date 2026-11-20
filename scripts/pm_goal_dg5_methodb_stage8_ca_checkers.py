@@ -142,7 +142,21 @@ def progress_phase(directory, negative):
     return world, route.resolve_original, (), {}
 
 
+def progress_custody(directory, negative):
+    world, route = cancelled.c1_until(cancelled.Suite(directory), "latch_and_reserve")
+    world.root = world.storage.root
+    if negative:
+        table = "goal_cancel_progress"
+        key = route.key(table) + ":head"
+        cell = world.cell(table, key)
+        head = dict(cell["value"]["record"], snapshot_sha256="0" * 64)
+        value = route.wrap("StorageProgress", head)
+        world.write([world.put(table, key, value, expected=cell["version"])])
+    return world, route.latch_and_reserve, (), {}
+
+
 CASES = {
+    "progress-custody": (C1, 433, "C1/latch_and_reserve/progress_custody", progress_custody),
     "progress-phase": (C1, 431, "C1/resolve_original/phase", progress_phase),
     "binding-pending": (C1, 315, "C1/capture_source/binding_pending", binding_pending),
     "capture-retry": (C1, 292, "C1/capture_source/retry_conflict", capture_retry),
