@@ -1,7 +1,9 @@
 """Focused regressions for the guard engine, using the DDBG fixtures where applicable."""
 
 from contextlib import chdir
+from copy import deepcopy
 import importlib.util
+import json
 from pathlib import Path
 import subprocess
 import sys
@@ -30,6 +32,14 @@ def reference_nodes(document):
 def reference_keys(fragment):
     """The original DDBG fragment parser used constant slices."""
     return [part.replace('~1', '/').replace('~0', '~') for part in fragment[1:].split('/')] if fragment[:1] == '/' else []
+
+
+def do_checkpoint_value():
+    fixtures = ROOT / 'Plans/orchestrator_event_contract_fixtures.json'
+    full = json.loads(fixtures.read_text())['event_cases'][0]
+    read = full['read']['checkpoint']
+    frontier = read['generations'][read['current_generation_id']]['frontier']
+    return {'coverage': frontier['coverage'], 'full_checkpoint_case': full}
 
 
 class GuardEngineTests(unittest.TestCase):
@@ -170,6 +180,117 @@ class GuardEngineTests(unittest.TestCase):
                 report = guard.run(suite)
                 self.assertEqual(report['status'], 'PASS', report['failures'])
                 self.assertEqual([row['id'] for row in report['rows'] if row['proved']], [negative.target])
+
+    def test_do_checkpoint_purity_checkpoints(self):
+        path = 'scripts/do-guards/do_checkpoint_coverage_1.py'
+        source = ROOT / path
+        spec = importlib.util.spec_from_file_location('do_full_checkpoint_coverage_fixture', source)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        self.addCleanup(sys.modules.pop, spec.name)
+        spec.loader.exec_module(module)
+        value = do_checkpoint_value()
+        incomplete = deepcopy(value)
+        incomplete['coverage']['complete_to_captured_boundary'] = False
+        suite = guard.Suite('DO full checkpoint', module.factory,
+            [guard.Control('checkpoint', value, 'retained_history')],
+            [guard.Negative('incomplete', incomplete, 'coverage_complete', 'index_complete_source_coverage',
+                            'checkpoint', 'Incomplete coverage')],
+            (path,), ROOT, non_guards=[
+                guard.NonGuard(path, 'factory', 'return', 'return g.Case(table, check, context)', 'Return the fresh case.')
+            ])
+        checkpoints = full_snapshots = 0
+
+        def profile(frame, event, arg):
+            nonlocal checkpoints, full_snapshots
+            if event != 'call':
+                return
+            if frame.f_code is guard.GuardTable._check_purity.__code__:
+                checkpoints += 1
+            if frame.f_code is guard._data_snapshot.__code__ and frame.f_back.f_code is guard.GuardTable._check_purity.__code__:
+                full_snapshots += 1
+
+        previous = sys.getprofile()
+        sys.setprofile(profile)
+        try:
+            report = guard.run(suite)
+        finally:
+            sys.setprofile(previous)
+        self.assertEqual(report['status'], 'PASS', report['failures'])
+        self.assertGreaterEqual(checkpoints, report['evaluations'])
+        self.assertEqual(full_snapshots, 0)
+
+    def test_do_checkpoint_cross_code_duplicate_and_keyword_credit(self):
+        do_scripts = str(ROOT / 'scripts/do-guards')
+        sys.path.insert(0, do_scripts)
+        self.addCleanup(sys.path.remove, do_scripts)
+        source = ROOT / 'scripts/guard-isolation/do_checkpoint_keywords_fixture.py'
+        spec = importlib.util.spec_from_file_location('do_checkpoint_keywords_fixture', source)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        self.addCleanup(sys.modules.pop, spec.name)
+        spec.loader.exec_module(module)
+        checkpoint = ROOT / 'Plans/event_record_index_checkpoint.schema.json'
+        coverage = json.loads(checkpoint.read_text())['$defs']['coverage']['properties']
+        module.SCHEMA = {'properties': {key: coverage[key] for key in
+                         ('complete_to_captured_boundary', 'empty_retained_source')}}
+        schema = guard.SchemaCatalog({module.URI: module.SCHEMA})
+        schema_ids = {row.keyword: row.id for row in schema.guards.values()}
+        module.CONST, type_id = schema_ids['const'], schema_ids['type']
+        value = do_checkpoint_value()
+        incomplete = deepcopy(value)
+        incomplete['coverage']['complete_to_captured_boundary'] = False
+        wrong_type = deepcopy(value)
+        wrong_type['coverage']['empty_retained_source'] = 'false'
+        table = module.make_case(value).table
+        runtime_id = 'coverage_complete'
+        codes = {module.CONST: 'checkpoint_schema', runtime_id: 'index_complete_source_coverage'}
+        dup = guard.Duplicate('coverage', (module.CONST, runtime_id),
+                              table.guards[runtime_id].invariant, 'Both reject false coverage.', codes=codes)
+        do_source = 'scripts/do-guards/do_checkpoint_coverage_1.py'
+        path = str(source.relative_to(ROOT))
+        declarations = [
+            guard.NonGuard(path, 'coverage_value', 'return', "return value['coverage']", 'Return the schema subject.'),
+            guard.NonGuard(path, 'coverage_value', 'data_operation', "value['coverage']", 'Select the fixture coverage.'),
+            guard.NonGuard(path, 'make_case', 'return', 'return g.Case(table, check, context)', 'Return the fresh case.'),
+            guard.NonGuard(path, 'make_case', 'call_review', 'g.SchemaCatalog({URI: SCHEMA})', 'Build the closed catalog.'),
+            guard.NonGuard(path, 'make_case', 'data_operation', '{URI: SCHEMA}', 'Bind the real schema projection.'),
+            guard.NonGuard(path, 'make_case', 'call_review',
+                "catalog.bind(CONST, invariant, 'The generated DO guard and the coverage schema read the same field.', refusal_code='checkpoint_schema')",
+                'Assign the code and invariant reviewed against the checkpoint schema and runtime row.'),
+            guard.NonGuard(path, 'make_case', 'data_operation', 'catalog.bind', 'Resolve the catalog binding method.'),
+            guard.NonGuard(path, 'make_case', 'call_review',
+                "g.schema_table(catalog, {URI: coverage_value}, guards=[g.Guard('coverage_complete', invariant, 'index_complete_source_coverage', coverage_complete)])",
+                'Build a table with both schema keywords and the unmodified DO runtime predicate.'),
+            guard.NonGuard(path, 'make_case', 'data_operation', '{URI: coverage_value}', 'Bind the coverage selector.'),
+            guard.NonGuard(path, 'make_case.check', 'call_review', 'table.validate(URI, value, context)',
+                           'Validate the coverage schema through the engine.'),
+            guard.NonGuard(do_source, 'factory', 'return', 'return g.Case(table, check, context)',
+                           'The imported DO factory returns its fresh case.'),
+        ]
+        suite = guard.Suite('DO checkpoint coverage keywords', module.make_case,
+            [guard.Control('checkpoint', value, 'retained_history')],
+            [guard.Negative('incomplete', incomplete, dup.id, codes[module.CONST], 'checkpoint', 'Incomplete coverage'),
+             guard.Negative('wrong-type', wrong_type, type_id, type_id, 'checkpoint', 'Wrong empty flag type')],
+            (source, do_source), ROOT, duplicates=[dup], non_guards=declarations)
+        report = guard.run(suite)
+        self.assertEqual(report['status'], 'PASS', report['failures'])
+        rows = {row['id']: row for row in report['rows']}
+        self.assertEqual(rows[dup.id]['flips'], ['incomplete'])
+        self.assertEqual(rows[type_id]['flips'], ['wrong-type'])
+        self.assertEqual(rows[module.CONST]['flips'], [])
+        self.assertEqual(rows[runtime_id]['flips'], [])
+        retained = next(r for r in rows[module.CONST]['results'] if r['case'] == 'incomplete')
+        self.assertEqual(retained['outcome'], {'accepted': False, 'guard': runtime_id,
+                                             'code': 'index_complete_source_coverage'})
+        self.assertEqual(report['unproved_guards'], [])
+        self.assertEqual(report['duplicates'][0]['codes'], codes)
+        wrong_map = dict(codes, coverage_complete='checkpoint_schema')
+        suite.duplicates = [guard.Duplicate(dup.id, dup.sites, dup.invariant, dup.evidence, codes=wrong_map)]
+        rejected = guard.run(suite)
+        self.assertEqual(rejected['status'], 'FAIL')
+        self.assertTrue(any('duplicate code mapping differs' in failure.get('error', '')
+                            for failure in rejected['failures']))
 
     def test_ddbg_short_circuit_digest(self):
         original = ddbg.payload_target_bound_suite()

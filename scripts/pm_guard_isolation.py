@@ -538,30 +538,19 @@ class _DataSnapshot:
         return self.signature == other.signature
 
 
-def _data_snapshot(*roots, codes=None):
+def _data_snapshot(*roots):
     """Purity witness for the supported, original data graph (never a serializer).
 
     Retain order, aliases, cycles, physical scalar bits AND object identities.
     No hooks, descriptors, equality overloads or user iterators are invoked.
     Context sets are observed in their original order; they are never copied.
-
-    codes (C8-U1): a run's cache of immutable scalar encodings, keyed by identity
-    and holding the scalar itself, so an id cannot be recycled while its entry
-    lives. An immutable scalar's encoding cannot change, so a cached code is the
-    code this walk would compute: the signature is identical with or without it.
     """
     seen, nodes, keepalive = {}, [], []
     def visit(value):
         kind = type(value)
         if kind in (type(None), bool, int, float, str, bytes):
-            if codes is None:
-                keepalive.append(value)  # no recycled IDs after a detached node dies
-                return ('scalar', id(value), encoded(evidence_value(value)))
-            # the run's cache holds the scalar itself, so its identity cannot be recycled while either lives
-            entry = codes.get(id(value))
-            if entry is None or entry[0] is not value:
-                entry = codes[id(value)] = (value, encoded(evidence_value(value)))
-            return ('scalar', id(value), entry[1])
+            keepalive.append(value)  # no recycled IDs after a detached node dies
+            return ('scalar', id(value), encoded(evidence_value(value)))
         keepalive.append(value)  # no recycled IDs after a detached node dies
         if kind not in (dict, list, tuple, bytearray, set, frozenset):
             raise IsolationError('predicate purity cannot certify data type: ' + kind.__name__)
@@ -576,6 +565,47 @@ def _data_snapshot(*roots, codes=None):
         return ('ref', index)
     references = tuple(visit(value) for value in roots)
     return _DataSnapshot((references, tuple(nodes)), tuple(keepalive))
+
+
+class _PuritySnapshot:
+    """Exact input edges, with only mutable containers revisited at checkpoints.
+
+    Every original object stays alive, so equal ids imply the same object.
+    Exact scalar, tuple and frozenset instances cannot change in place. A
+    mutable child is watched even when reached only through immutable parents.
+    """
+
+    def __init__(self, *roots):
+        self.objects = {}
+        self.containers = []
+        pending = list(roots)
+        while pending:
+            value = pending.pop()
+            identity = id(value)
+            if identity in self.objects:
+                continue
+            self.objects[identity] = value
+            kind = type(value)
+            if kind in (dict, list, set, bytearray):
+                self.containers.append((value, self.contents(value)))
+            if kind is dict:
+                pending.extend(value)
+                pending.extend(value.values())
+            elif kind in (list, set, tuple, frozenset):
+                pending.extend(value)
+            elif kind not in (type(None), bool, int, float, str, bytes, bytearray):
+                raise IsolationError('predicate purity cannot certify data type: ' + kind.__name__)
+
+    @staticmethod
+    def contents(value):
+        if type(value) is dict:
+            return tuple(map(id, value)), tuple(map(id, value.values()))
+        if type(value) is bytearray:
+            return bytes(value)
+        return tuple(map(id, value))
+
+    def unchanged(self):
+        return all(self.contents(value) == before for value, before in self.containers)
 
 
 def pointer(parts: tuple) -> str:
@@ -660,6 +690,8 @@ class Duplicate:
     sites: tuple[str, ...]
     invariant: Invariant
     evidence: str
+    # Required when different enforcement sites report different refusal codes.
+    codes: dict[str, str] | None = None
 
 
 @dataclass(frozen=True)
@@ -1242,12 +1274,18 @@ class SchemaCatalog:
                 polarity *= -1
         return "guard", "", polarity
 
-    def bind(self, guard_id: str, invariant: Invariant, evidence: str):
-        """Declare an owner-proved alias (e.g. repeated copies of one input field)."""
+    def bind(self, guard_id: str, invariant: Invariant, evidence: str, *, refusal_code: str | None = None):
+        """Bind one schema occurrence to an owner invariant and optional boundary code."""
         if not evidence.strip():
             raise IsolationError("invariant binding requires evidence")
-        self.guards[guard_id] = replace(self.guards[guard_id], invariant=invariant, evidence=evidence)
-        self.bindings.append({"guard": guard_id, "invariant": asdict(invariant), "evidence": evidence})
+        guard = self.guards[guard_id]
+        code_binding = {}
+        if refusal_code is not None:
+            if guard.classification != 'guard' or type(refusal_code) is not str or not refusal_code.strip():
+                raise IsolationError("refusal code binding requires an atomic guard and a nonempty code")
+            code_binding['refusal_code'] = refusal_code
+        self.guards[guard_id] = replace(guard, invariant=invariant, evidence=evidence, **code_binding)
+        self.bindings.append({"guard": guard_id, "invariant": asdict(invariant), "evidence": evidence, **code_binding})
 
     def mutated(self, cuts: frozenset[str], *, view_cache=None):
         docs, frames, aliases = self._reference_frames()
@@ -1507,7 +1545,6 @@ class GuardTable:
         self._bound = False
         self._in_predicate = False
         self._purity_before = None
-        self._purity_codes = None
         self._matrix_frame = None
         self._schema = None
 
@@ -1519,7 +1556,6 @@ class GuardTable:
         if self._bound or not set(cuts) <= self._original.keys():
             raise IsolationError('table reused or unknown guard cut')
         self._root, self._context, self._bound = value, context, True
-        self._purity_codes = {}  # C8-U1: immutable scalar encodings, once per run
         # The sole Python cut operation. All function/code/state objects remain original.
         self._entries = {name: replace(row, predicate=_always_pass) if name in cuts else row
                          for name, row in self._original.items()}
@@ -1539,11 +1575,10 @@ class GuardTable:
             raise IsolationError('guard predicates cannot invoke guards')
         self._in_predicate = True
         try:
-            self._purity_before = _data_snapshot(value, context, codes=self._purity_codes)
+            self._purity_before = _PuritySnapshot(value, context)
             result = row.predicate(value, context)
             if result is not None and (type(result) is not str or result != row.refusal_code):
                 raise IsolationError('predicate must return None or its exact refusal code: ' + row.name)
-            self._check_purity(value, context)
             return result
         except BaseException as exc:
             self._errors.append(type(exc).__name__ + ': ' + str(exc))
@@ -1552,13 +1587,13 @@ class GuardTable:
             # Even a caught/translated predicate exception cannot hide a mutation.
             try:
                 if self._purity_before is not None:
-                    self._check_purity(value, context)
+                    self._check_purity()
             finally:
                 self._purity_before = None
                 self._in_predicate = False
 
-    def _check_purity(self, value, context):
-        if _data_snapshot(value, context, codes=self._purity_codes) != self._purity_before:
+    def _check_purity(self):
+        if not self._purity_before.unchanged():
             error = 'guard predicate mutated input/context'
             self._errors.append(error)
             raise IsolationError(error)
@@ -1594,7 +1629,6 @@ class GuardTable:
 
     def _restore(self):
         self._entries = dict(self._original)
-        self._purity_codes = None
         self._bound = False
         self._root = self._context = None
         self._issued.clear()
@@ -3575,12 +3609,15 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
                     table._errors.append(error)
                     raise IsolationError(error)
             filename = frame.f_code.co_filename
+            if filename == engine_name:
+                # Engine bookkeeping and the purity witness itself cannot mutate predicate data.
+                return None
             if table._in_predicate and table._purity_before is not None:
-                if format_free_schema and (filename == engine_name or schema_library_file(filename)):
+                if format_free_schema and schema_library_file(filename):
                     pending[0] = True
                 elif event in ('opcode', 'line'):
                     if pending[0]:
-                        table._check_purity(value, case.context)
+                        table._check_purity()
                         pending[0] = False
                     if event == 'opcode':
                         names = opnames.get(frame.f_code)
@@ -3590,10 +3627,8 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
                         pending[0] = names.get(frame.f_lasti) not in PURITY_SAFE_OPCODES
                 else:
                     # call, return and exception: always, and an untraced callee's work stays pending for its caller.
-                    table._check_purity(value, case.context)
+                    table._check_purity()
                 frame.f_trace_opcodes = True
-            if filename == engine_name:
-                return None
             if filename not in path_cache:
                 # Generated library frames such as <string> have no file origin.
                 # Resolving these labels would place them under the caller's cwd.
@@ -3745,19 +3780,25 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
                 if name not in guards or guards[name].invariant != duplicate.invariant or name in membership:
                     raise IsolationError('duplicate merges different fields/predicates or overlapping sets: ' + duplicate.id)
                 membership[name] = duplicate.id
-            if len({guards[name].refusal_code for name in duplicate.sites}) != 1:
-                raise IsolationError('duplicate sites must refuse the same defect code')
+            codes = {name: guards[name].refusal_code for name in duplicate.sites}
+            if duplicate.codes is None:
+                if len(set(codes.values())) != 1:
+                    raise IsolationError('duplicate sites must refuse the same defect code or declare their exact codes')
+            elif type(duplicate.codes) is not dict or duplicate.codes != codes:
+                raise IsolationError('duplicate code mapping differs from its exact table guards: ' + duplicate.id)
         for negative in negatives.values():
             if negative.control not in controls or negative.target not in guards.keys() | duplicates.keys() or not negative.defect.strip():
                 raise IsolationError('negative has a missing table guard/control/defect: ' + negative.id)
             targets = duplicates[negative.target].sites if negative.target in duplicates else (negative.target,)
-            if any(guards[t].refusal_code != negative.code for t in targets):
+            if negative.code not in {guards[t].refusal_code for t in targets}:
                 raise IsolationError('negative code differs from its table guard: ' + negative.id)
             if negative.target in membership:
                 raise IsolationError('duplicate negatives must target their declared set')
         def expected(negative, got, cuts=frozenset()):
             names = set(duplicates[negative.target].sites) if negative.target in duplicates else {negative.target}
-            return got.get('accepted') is False and got.get('guard') in names - set(cuts) and got.get('code') == negative.code and 'error' not in got
+            tag = got.get('guard')
+            code = guards[tag].refusal_code if cuts and tag in names else negative.code
+            return got.get('accepted') is False and tag in names - cuts and got.get('code') == code and 'error' not in got
         baseline, baseline_trace = {}, {}
         for control in controls.values():
             got, baseline_trace[control.id] = traced(control.value)
@@ -3875,9 +3916,10 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
                         report['masked_negatives'].append(item)
                         fail('masked_negative', row=label, **item)
                 else:
-                    # A duplicate's tag can move to its remaining site, while
-                    # preserving the exact defect code. All other tags are exact.
-                    okay = (expected(negative, got, cuts) if negative.target in duplicates else got == baseline[negative.id])
+                    # Cutting a duplicate's baseline site may expose its peer and that site's exact code.
+                    uncut = baseline[negative.id]
+                    okay = (expected(negative, got, cuts) if negative.target in duplicates and uncut['guard'] in cuts
+                            else got == uncut)
                     if not okay:
                         row['unrelated_changes'].append({'negative': negative.id, 'before': baseline[negative.id], 'after': got})
                         fail('unrelated_result_changed', row=label, negative=negative.id, actual=got)
@@ -3910,6 +3952,8 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
         for duplicate in duplicates.values():
             own = {n.id for n in negatives.values() if n.target == duplicate.id}
             proof = {**asdict(duplicate), 'per_site': [], 'proved': False}
+            if duplicate.codes is None:
+                del proof['codes']
             for name in duplicate.sites:
                 # Prove each site really enforces the invariant, not just a
                 # weaker third row hidden by stronger peers.
