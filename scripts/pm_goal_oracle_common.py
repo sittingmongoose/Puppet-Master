@@ -260,11 +260,11 @@ _SCHEMA_SIMPLE_UNIONS = set()
 _SCHEMA_CONTEXT = contextvars.ContextVar('goal_schema_guards', default=('', frozenset()))
 
 
-def schema_guard(schema, keyword, *, clause_name=None):
+def schema_guard(schema, keyword):
     location = schema.get('x-pm-oracle-id')
     if location is None:
         location = json.dumps(schema, sort_keys=True)
-    name = clause_name or ('closed_members' if keyword in ('additionalProperties','unevaluatedProperties') else keyword)
+    name = 'closed_members' if keyword in ('additionalProperties','unevaluatedProperties') else keyword
     ident = 'schema/' + hashlib.sha256(location.encode()).hexdigest()[:16] + '/' + name
     _SCHEMA_LOCATIONS[ident] = location + '/' + name
     _SCHEMA_ASSERTION_LOCATIONS.setdefault(ident, set()).add(location + '/' + keyword)
@@ -383,19 +383,19 @@ def schema_type_inventory(v):
 def expanded_guards(disabled):
     return set(disabled) | {member for guard in disabled for member in _SCHEMA_DUPLICATES.get(guard, ())}
 
-def _keyword_guard(keyword, function, *, identify=schema_guard):
+def _keyword_guard(keyword, function):
     def guarded(v, expected, value, schema):
         prefix, disabled = _SCHEMA_CONTEXT.get()
         ident = None
         if disabled:
-            ident = identify(schema, keyword)
+            ident = schema_guard(schema, keyword)
             if ident in disabled:
                 return
         try:
             for error in function(v, expected, value, schema):
                 if not hasattr(error, "oracle_guard"):
                     if ident is None:
-                        ident = identify(schema, keyword)
+                        ident = schema_guard(schema, keyword)
                     error.oracle_guard = ident
                 yield error
         except ValueError as exc:
@@ -409,9 +409,8 @@ def _keyword_guard(keyword, function, *, identify=schema_guard):
                 raise
             error = jsonschema.ValidationError('owner assertion refused; instance not rendered (arbitrary-precision integer)',
                 validator=keyword, validator_value=expected, instance=value, schema=schema)
-            error.oracle_guard = ident or identify(schema, keyword)
+            error.oracle_guard = ident or schema_guard(schema, keyword)
             yield error
-    guarded._goal_keyword_source = function
     return guarded
 
 _KEYWORDS = dict(jsonschema.Draft202012Validator.VALIDATORS)

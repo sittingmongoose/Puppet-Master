@@ -179,6 +179,10 @@ class Witnesses(unittest.TestCase):
                 cut = {c._guard_for_location(by_name[cause])}
                 self.assertEqual(c.go.locations(c.go.errors_of(v, bad, cut)), {by_name[other]})
             self.assertEqual(c.go.locations(c.go.errors_of(v, bad)), set(ids))
+            entries, _, _ = c.go.close_root('two-keywords', v, [{'n': 1}], 500,
+                                            clause_identity=c._clause_identity)
+            self.assertEqual(set(entries), set(ids))
+            self.assertTrue(all(entry['cls'] != 'UNCOVERED' for entry in entries.values()), entries)
         singleton = c.closure_validator(jsonschema.Draft202012Validator({'additionalProperties': False}),
                                         'one-keyword')
         _, ids = c._clause_inventory(singleton)
