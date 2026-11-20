@@ -257,7 +257,7 @@ def certified_fixture(route, path):
     if route in ('arm', 'arm_intent_check'):
         run.until('prepare')
         return w, lambda: w.coordinator.arm(ctx, run.obs['prepared'])
-    if route == 'f5d':
+    if route in ('f5d', 'f5d_after_event_phase'):
         # The original held append prepares real Event custody and barrier inputs.
         # Stop at the EventPhase owner's entry so each trial starts before its write.
         captured = []
@@ -510,7 +510,7 @@ class OwnerCheck:
         self.capture = None
         self.probe_root = False
 
-    def call(self, action, edit, *, require_exact=False):
+    def call(self, action, edit, *, require_exact=False, prefix_store=None):
         import pm_goal_dg5_boundaries as bridge
         import pm_goal_dg5_closure as closure
         import pm_goal_guard_tables as tables
@@ -527,6 +527,8 @@ class OwnerCheck:
             'commit_evidence_recheck': 'commit_final/evidence',
             'retry_evidence_recheck': 'retry/result',
         }.get(self.declare['route'])
+        if self.row == 'dg5/append_outer/evidence/schema':
+            next_evidence_check = 'append/result'
 
         def observe(bank, *args):
             if args[-1] != self.code:
@@ -551,6 +553,9 @@ class OwnerCheck:
             frame = sys._getframe(1)
             site = [str(Path(frame.f_code.co_filename).relative_to(self.source)), frame.f_lineno]
             require(site == self.site, f'owner call source changed: {site}')
+            if prefix_store is not None:
+                record['store_at_validator'] = self.result_digest(bridge.manifest(bridge.file_state(prefix_store)))
+                record['realm_ref'] = list(args[:-2])
             document = args[-2]
             if edit is not None:
                 require(isinstance(document, dict), 'complete-call extra-member example needs an object')
@@ -643,6 +648,10 @@ class OwnerCheck:
             require(store is None or store is world.storage or store.root.is_relative_to(self.scratch),
                     'unexpected auxiliary backing store')
         manifest = bridge.manifest(bridge.file_state(copied))
+        allow_prefix = self.declare['route'] == 'f5d_after_event_phase'
+        if allow_prefix:
+            require(self.row in ('dg5/append/result/schema', 'dg5/append_outer/evidence/schema'),
+                    'only the F5d checks after EventPhase may have a written prefix')
         context = multiprocessing.get_context('fork')
         receiver, sender = context.Pipe(duplex=False)
 
@@ -652,9 +661,15 @@ class OwnerCheck:
                     stores = [world.storage, getattr(world, 'goal_store', None), getattr(world, 'd01_store', None)]
                     for store in {id(store): store for store in stores if store is not None}.values():
                         changes.enter_context(patch.object(store, 'root', copied / store.root.relative_to(self.scratch)))
-                    record = self.call(action, edit, require_exact=require_exact)
-                    record['store_wrote'] = bridge.manifest(bridge.file_state(copied)) != manifest
-                    if record['errors']:
+                    record = self.call(action, edit, require_exact=require_exact,
+                                       prefix_store=copied if allow_prefix else None)
+                    final_manifest = bridge.manifest(bridge.file_state(copied))
+                    record['store_wrote'] = final_manifest != manifest
+                    if allow_prefix:
+                        require(record['store_wrote'] and
+                                record['store_at_validator'] == self.result_digest(final_manifest),
+                                'F5d must write only its EventPhase prefix before this validation')
+                    elif record['errors']:
                         require(not record['store_wrote'], 'refused owner call changed its copied store')
                     sender.send(record)
             except Exception as error:
@@ -678,6 +693,7 @@ class OwnerCheck:
 
     def prove(self, world, action):
         import pm_goal_dg5_boundaries as bridge
+        import pm_goal_dg5_closure as closure
         import pm_goal_guard_tables as tables
 
         initial = bridge.manifest(bridge.file_state(self.scratch))
@@ -714,12 +730,28 @@ class OwnerCheck:
                     require(cut.get('same_final_receipt_request'), 'final validator did not check the original request')
                 if self.declare['route'] == 'input_recheck':
                     require(cut.get('same_input_result_request'), 'input result validator did not check the original request')
-                if self.declare['route'] in ('commit_evidence_recheck', 'retry_evidence_recheck'):
+                if self.declare['route'] in ('commit_evidence_recheck', 'retry_evidence_recheck') or (
+                        self.row == 'dg5/append_outer/evidence/schema'):
                     require(cut.get('same_later_evidence'), 'later evidence check did not use the original document')
                 require(before == restored and before['observations'] == cut['observations'] and
                         bool(cut['errors']) == bool(later),
                         'the complete call did not restore the same document and validation message')
         require(self.runs[0] == self.runs[-1], 'the restored accepted control changed')
+        if self.declare['route'] == 'f5d_after_event_phase':
+            require(len({record['store_at_validator'] for record in self.runs}) == 1,
+                    'the trials changed the EventPhase prefix')
+            control = self.runs[0]
+            document = control['observations'][0]['document']
+            sink = []
+            saved = closure.CAPTURE[0]
+            closure.CAPTURE[0] = sink
+            try:
+                errors = world.realm.errors(*control['realm_ref'], document)
+            finally:
+                closure.CAPTURE[0] = saved
+            require(sink and not errors and bridge.manifest(bridge.file_state(self.scratch)) == initial,
+                    'the original schema failed to accept the copied document without writing')
+            return sink[0], world.realm.scoped, document
         if self.declare.get('transaction'):
             self.probe_root = True
             try:
