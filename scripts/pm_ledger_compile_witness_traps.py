@@ -712,5 +712,15 @@ def exercise(g, *, scratch=None):
          verify=lambda r: r["witness_exact_tokens"][0]["units_with_both"] == ["AA-001"]
          and r["witness_registry_hygiene"][0]["registry_entries"] == 2)
 
+    def exemption_for_unmapped_owner(f):
+        exempt(f)
+        f["owner"] = (owner("AA-001", "Required live token and old spelling.", ["live token", "old spelling"])
+                      + owner("BB-001", "Other existing owner.", []))
+        f["exemptions"][0]["target_plan_unit_ids"] = ["BB-001"]
+        f["reviews"][0]["token_dispositions"][0]["target_plan_unit_ids"] = ["BB-001"]
+
+    case("existing-unmapped-owner-exemption-refused", exemption_for_unmapped_owner, status="error", exit_code=1,
+         verify=lambda r: r["error"] == "exemption targets must be existing owner units of that atom: ex-1")
+
     return {"schema_id": "pm.ledger_compile_witness.self_test.v1", "status": "pass" if all(row["caught"] for row in rows) else "findings",
             "caught": sum(row["caught"] for row in rows), "tests": rows}
