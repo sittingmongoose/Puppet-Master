@@ -707,7 +707,7 @@ def event_clock_implication(plain, nodes, info, name, keyword, cut, path):
     if plain.VALIDATORS['properties'] is not _owned_properties:
         return None
     if not any(error.validator == keyword and tuple(error.absolute_path) == tuple(path) and
-               error.message == 'shared timestamp profile refused' for error in cut):
+               error.message == 'shared timestamp profile refused' for error in world._leaves(cut)):
         return None
     location = name.split(marker, 1)[0] + '#/$defs/EventRecord'
     owner = nodes.get(location)
