@@ -79,7 +79,18 @@ def projection_commitment(directory, negative):
     return world, rep.decode, (wrapper, original), {}
 
 
+def stored_group(directory, negative):
+    world, _, outcome = source.started(source.Suite(directory))
+    event_id = outcome['original_append']['event']['event_id']
+    if negative:
+        info = world.storage.events[event_id]
+        group = next(g for g in world.storage.groups if g['commit']['commit_group_id'] == info['commit_group_id'])
+        group['commit']['durability_class'] = 'stage7-invalid'
+    return world, world.storage.active_durable_group, (event_id,), {}
+
+
 CASES = {
+    'stored-group': (pilot.STORAGE, 1618, 'group/schema', stored_group),
     'projection-commitment': (READERS, 491, 'representation/commitment_recomputed', projection_commitment),
     'complete-projection': (READERS, 654, 'projector/reducer/unsupported_same_run:goal_run.blocked', complete_projection),
     'prepared-candidate': (START, 1002, 'start/idempotency_conflict', prepared_candidate),
