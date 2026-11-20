@@ -6,9 +6,13 @@ import { resolve } from 'node:path';
 // node tools/usage-hover-pause-verdict.selftest.mjs [check file]: the argument runs the same assertions against another
 // revision of the check, which is how each item's RED run shows the old verdict misjudging a constructed record.
 const { judge, outerCap } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/usage-hover-pause.check.mjs');
+// R125 #6: the probe's deadline comes from the record's last input, as the recorder arms it (520 + 150). The old
+// fixture injected 650 and so credited 20 ms of lateness in the nominal control though the probe fired at the real
+// deadline; a control's lateness must be the queue's, not the fixture's.
+const LAST_INPUT = 520;
 const make = () => ({
  wheels:[100,200,300,400,500],scrolls:[120,220,320,420,520],ops:[{t:101,op:'wheel'},{t:670,op:null}],
- probe:{due:650,fired:670},
+ probe:{due:LAST_INPUT+150,fired:670},
  trans:[],cls:[{t:680,card:'new',on:true}],loaf:[],
  frames:Array.from({length:112},(_,i)=>{const t=100+i*10;return {t,top:i,card:'new',lit:t>=680?['new']:[],near:[],tools:t>=680?.9:0,op:t<670?'wheel':null,highlights:0};})
 });
@@ -167,6 +171,13 @@ test('R125 #4 RED: a 480 ms return passes an unbounded cap and fails the 400 ms 
  for(const f of r.frames)Object.assign(f,{op:f.t<970?'wheel':null,lit:f.t>=980?['new']:[],tools:f.t>=980?.9:0});
  assert.equal(judge(r,{rest:'old',back:500}).r2.ok,true,'480 ms after the last input inside an unbounded cap');
  assert.equal(judge(r,{rest:'old',back:outerCap(500)}).r2.ok,false,'the same record at the clamped ceiling');
+});
+// R125 #6: the fixture models the recorder, whose deadline is the last input plus the rest.
+test('R125 #6: the fixture probe deadline is the last input plus the 150 ms rest, with no credited lateness',()=>{
+ const r=make();
+ assert.equal(r.probe.due,Math.max(r.wheels.at(-1),r.scrolls.at(-1))+150);
+ assert.equal(j(r).r2.late,0);
+ assert.equal(j(r).r2.ok,true);
 });
 // TB6 item 1: a 258 ms driver gap is reported as a broken burst; a 30 ms cadence is not.
 test('TB6 item 1: a 258 ms driver gap is reported as a broken burst; a 30 ms cadence is not',()=>{
