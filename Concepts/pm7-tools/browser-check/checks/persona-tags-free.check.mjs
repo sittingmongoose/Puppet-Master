@@ -189,6 +189,58 @@ for (const surface of ['normal', 'sandbox']) {
 				await filter.fill(token);
 				const tokenIds = await visibleRows.evaluateAll(rs => rs.map(r => r.dataset.id));
 				await t.check('Filter personas also finds Across phases by its stored token', tokenIds.includes(PID), shown(tokenIds));
+				await filter.fill('');
+				const removeKind = row2.locator(`.o55-tag-x[data-tag="${token}"]`);
+				await removeKind.click();
+				await input2.fill(label);
+				await input2.press('Enter');
+				const stored = await f.evaluate(({ persona, setting }) =>
+					window.PM12_KIMI.getState().personas.find(p => p.id === persona).props[setting], { persona: PID, setting: TAGS });
+				await t.check('typing Across phases stores its canonical token',
+					stored.includes(token) && !stored.includes(label), shown(stored));
+				const suggestion = row2.getByRole('button', { name: label, exact: true });
+				const offered = await suggestion.count();
+				// A control that still offers the suggestion should exercise the duplicate click.
+				if (offered) await suggestion.click();
+				const kindChips = () => chipTexts(row2).then(chips => chips.filter(chip => chip === label));
+				await t.equal('typing the label and picking any offered suggestion leaves one kind chip', (await kindChips()).length, 1);
+				await t.equal('a kind typed by its label is no longer offered', offered, 0);
+				await filter.fill(token);
+				const beforeRemove = await visibleRows.evaluateAll(rs => rs.map(r => r.dataset.id));
+				if (await removeKind.count() === 1) await removeKind.click();
+				const afterRemove = await visibleRows.evaluateAll(rs => rs.map(r => r.dataset.id));
+				const leftover = await kindChips();
+				await t.check('removing the kind clears the token match and the visible chip',
+					beforeRemove.includes(PID) && afterRemove.length === 0 && leftover.length === 0 &&
+					(await filter.inputValue()) === token && (await empty.allTextContents()).length === 1,
+					shown({ beforeRemove, afterRemove, leftover }));
+				if (look === 'basic-dark' && w === 1280) {
+					await filter.fill('');
+					for (const spelling of ['  aCrOsS pHaSeS  ', '  CROSS-PHASE  ']) {
+						await input2.fill(spelling);
+						await input2.press('Enter');
+					}
+					await t.check('case and surrounding spaces resolve to one canonical kind',
+						(await kindChips()).length === 1 && (await removeKind.count()) === 1, shown(await chipTexts(row2)));
+					// Seed the existing record with the old saved-label spelling, then render and filter normally.
+					await f.evaluate(({ persona, setting, saved }) => {
+						const scopedValue = PM51.scopedValue;
+						PM51.scopedValue = (record, id) => {
+							if (record.id === persona && id === setting) {
+								record.props[id] = [saved];
+								PM51.scopedValue = scopedValue;
+							}
+							return scopedValue(record, id);
+						};
+						try { PM51.refresh('personas', { swap: false }); }
+						finally { PM51.scopedValue = scopedValue; }
+					}, { persona: PID, setting: TAGS, saved: label });
+					await filter.fill(token);
+					const legacyIds = await visibleRows.evaluateAll(rs => rs.map(r => r.dataset.id));
+					await t.check('a saved display label renders one kind chip and matches its stored token',
+						(await kindChips()).length === 1 && (await removeKind.count()) === 1 &&
+						(await suggestion.count()) === 0 && legacyIds.includes(PID), shown(legacyIds));
+				}
 				// Persona records are the concept's session state, like every persona field (aliases, tools): the
 				// project projection the tome saves holds settings, not the roster, so a page reload re-seeds it.
 				// The close/reopen above is the persistence this row shares with the other persona fields.
