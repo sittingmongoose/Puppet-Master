@@ -1,0 +1,35 @@
+{
+  "row": "dg5/issue/seven_input:model_resolution/schema",
+  "fixtures": [
+    {
+      "route": "issue/seven_input:model_resolution",
+      "edition": "v7",
+      "root": "dg5:e5e7b58cccc9ea65",
+      "hash_seed": 6,
+      "edit": [
+        1,
+        [],
+        null
+      ],
+      "error": [
+        [],
+        "type"
+      ]
+    },
+    {
+      "route": "issue/seven_input:model_resolution",
+      "edition": "v3",
+      "root": "dg5:e698000a6fb791dd",
+      "hash_seed": 8,
+      "edit": [
+        1,
+        [],
+        null
+      ],
+      "error": [
+        [],
+        "type"
+      ]
+    }
+  ]
+}
