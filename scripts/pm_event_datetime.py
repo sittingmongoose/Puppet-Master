@@ -2,6 +2,8 @@
 
 Local profiles retain their existing owners. Retained verifiers bind a profile
 from SP-1101 authenticated frozen resources, never from a request parameter.
+
+Run --self-test to check the committed NUMRULE corpus and date-time inventory.
 """
 from __future__ import annotations
 
@@ -660,3 +662,26 @@ def _bind(base, schema, registry, selection, profile, **kwargs):
     return _bound_validator(base)(
         schema, registry=registry, format_checker=checker, storage_selection=selection,
         datetime_binding=_Binding(checker, registry, selection, pins), _resolver=resolver, **kwargs)
+
+
+def _main():
+    import argparse
+    import json
+    from pathlib import Path
+
+    from pm_event_numbers import self_test
+
+    parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
+    parser.add_argument("--self-test", action="store_true", required=True,
+                        help="run the combined NUMRULE suite, including date-time inventory admission")
+    parser.parse_args()
+    corpus = Path(__file__).resolve().parents[1] / "Plans/event_number_recipe_corpus.json"
+    result = self_test(corpus, scope="all")
+    print(json.dumps(result, indent=2, sort_keys=True))
+    return int(result["status"] != "pass")
+
+
+if __name__ == "__main__":
+    import sys
+
+    sys.exit(_main())
