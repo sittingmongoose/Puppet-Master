@@ -1,0 +1,37 @@
+{
+  "row": "dg5/start/candidate/schema",
+  "fixtures": [
+    {
+      "route": "start_candidate",
+      "edition": "v3",
+      "edit": [
+        0,
+        [],
+        ""
+      ],
+      "error": [
+        [
+          "record",
+          "operation_id"
+        ],
+        "minLength"
+      ]
+    },
+    {
+      "route": "start_candidate",
+      "edition": "v7",
+      "edit": [
+        0,
+        [],
+        ""
+      ],
+      "error": [
+        [
+          "record",
+          "operation_id"
+        ],
+        "minLength"
+      ]
+    }
+  ]
+}
