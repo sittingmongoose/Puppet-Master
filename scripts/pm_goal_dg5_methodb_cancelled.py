@@ -348,7 +348,9 @@ def append_acknowledgment_nonempty(plain, nodes, name, path, cut):
                          preserved + '/required', preserved + '/properties/kind/const'))
     require(path in (['record', 'append_receipt', 'acknowledged_at_utc'],
                      ['record', 'first_append_receipt', 'acknowledged_at_utc'],
-                     ['result', 'append_receipt', 'acknowledged_at_utc'])
+                     ['result', 'append_receipt', 'acknowledged_at_utc'],
+                     ['value', 'event_commitments', 0, 'original_full_value_result',
+                      'first_append_receipt', 'acknowledged_at_utc'])
             and source.endswith('#/$defs/AppendReceipt/properties/acknowledged_at_utc')
             and word == 'minLength' and node[word] == 1 and node['format'] == 'date-time'
             and node['type'] == 'string' and plain.format_checker.checkers['date-time'][0] is utc
@@ -1176,19 +1178,26 @@ def run(args):
     require(set(census_row['roots_with_inventory_variants']) <= fresh_roots,
             'conflicting roots need a published rule list')
     if fresh_roots:
-        expected_sha = declare.get('fresh_reference_sha256')
-        require(args.fresh_reference and sha(args.fresh_reference) == expected_sha,
+        paths = args.fresh_reference
+        if isinstance(paths, Path):
+            paths = [paths]
+        expected = declare.get('fresh_reference_sha256s', [declare.get('fresh_reference_sha256')])
+        require(paths and [sha(path) for path in paths] == expected,
                 'a conflicting rule list requires the pinned fresh reference')
-        with gzip.open(args.fresh_reference, 'rt') as stream:
-            reference = json.load(stream)
-        require(reference['tools'] == revision, 'fresh references use a different closure tool')
-        if 'sizing' in reference:
-            require(reference['sizing']['sha256'] == declare['census_sha256'],
-                    'fresh references use a different sizing census')
-        require(fresh_roots <= set(reference['roots']),
-                'fresh references omit a conflicting root')
+        reference = {'roots': {}}
+        for path in paths:
+            with gzip.open(path, 'rt') as stream:
+                published = json.load(stream)
+            require(published['tools'] == revision, 'fresh references use a different closure tool')
+            if 'sizing' in published:
+                require(published['sizing']['sha256'] == declare['census_sha256'],
+                        'fresh references use a different sizing census')
+            for ident, variants in published['roots'].items():
+                reference['roots'].setdefault(ident, []).extend(variants)
+        require(fresh_roots <= set(reference['roots']), 'fresh references omit a conflicting root')
     else:
-        require('fresh_reference_sha256' not in declare, 'the original census is exact for this row')
+        require(not {'fresh_reference_sha256', 'fresh_reference_sha256s'} & declare.keys(),
+                'the original census is exact for this row')
 
     sys.path.insert(0, str(source / 'scripts'))
     import pm_goal_dg5_closure as closure
@@ -1211,7 +1220,9 @@ def run(args):
     reports, inventories, calls, captured = {}, {}, [], []
     result = dict(row=row, source=revision, status='NOT_COVERED', census_sha256=declare['census_sha256'])
     if reference:
-        result['fresh_reference_sha256'] = declare['fresh_reference_sha256']
+        for key in ('fresh_reference_sha256', 'fresh_reference_sha256s'):
+            if key in declare:
+                result[key] = declare[key]
     try:
         for index, route in enumerate(declare['routes']):
             directory = args.out / f'fixture-{index}'
@@ -1274,7 +1285,7 @@ if __name__ == '__main__':
     parser.add_argument('--source', type=Path, required=True)
     parser.add_argument('--census', type=Path, required=True)
     parser.add_argument('--declaration', type=Path, required=True)
-    parser.add_argument('--fresh-reference', type=Path)
+    parser.add_argument('--fresh-reference', type=Path, action='append')
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--disable-check', choices=('inventory', 'rule', 'row'))
     sys.exit(run(parser.parse_args()))
