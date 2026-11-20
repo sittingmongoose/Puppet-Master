@@ -19,6 +19,7 @@ import subprocess
 import sys
 import time
 from unittest.mock import patch
+from uuid import UUID
 
 
 HERE = Path(__file__).resolve().parent
@@ -55,6 +56,8 @@ def edit_example(go, document, path, change):
 def update_fixture(route, path):
     import pm_goal_dg_u_oracles as oracle
 
+    if route in ('approval_request', 'approval_resolution'):
+        return approval_fixture(oracle, route, path)
     w = oracle.world(path)
     goal = oracle.O.birth_goal(w)
     _, admission = oracle.run_direct(w, goal)
@@ -71,6 +74,26 @@ def update_fixture(route, path):
     if route == 'oracle_receipt':
         return w, lambda: w.body.read_receipt_private(request, 'oracle')
     raise ValueError(route)
+
+
+def approval_fixture(oracle, route, path):
+    world, goal, proposal, _ = oracle._proposal(path)
+    if route == 'approval_request':
+        action = lambda: world.approvals.capture(proposal['command_instance_id'])
+    else:
+        approval = world.approvals.capture(proposal['command_instance_id'])
+        approver = 'actor:TEST_ONLY:person'
+        permission = world.permissions.grant(approver, goal['scope'], ['approve_goal_update'])
+        action = lambda: world.approvals.decide(approval['approval_id'], 'approved', permission, approver)
+    timestamp = world.now()
+    marker = UUID('91f0f0c8-b8ac-4d87-8d47-191db28102ae')
+
+    def complete():
+        with patch.object(world, 'now', return_value=timestamp), patch.object(oracle.O.uuid, 'uuid4',
+                                                                             return_value=marker):
+            return action()
+
+    return world, complete
 
 
 def certified_fixture(route, path):
@@ -360,6 +383,50 @@ def control_implication(nodes, name, path, errors, locations):
     return dict(source=location, premise=bindings, source_rule=name)
 
 
+def approval_implication(nodes, name, path, errors, locations, validator):
+    """The existing approval owner pins hashes and its UTC profile at these fields."""
+    parent, relative = name.split('/properties/', 1)
+    field = path[-1]
+    if name.endswith(('/maxLength', '/minLength')):
+        node = nodes[name.rsplit('/', 1)[0]]['node']
+        pattern = parent + '/properties/' + field + '/pattern'
+        require(node['pattern'] == '^[0-9a-f]{64}$' and node[name.rsplit('/', 1)[1]] == 64 and
+                locations(errors) == {('pattern', tuple(path), pattern)},
+                'the exact 64-character hex rule did not remain')
+        return dict(source=pattern, reason='64 lower-case hexadecimal characters imply length 64')
+
+    from pm_goal_test_owner_adapters import _owner_timestamp_properties
+    from pm_goal_test_numrule import DT
+
+    actual = validator.format_checker.checkers.get('date-time')
+    require(actual and actual[0].__module__ == DT.__name__, 'approval format checker source changed')
+    keyword = 'format' if 'format' in name or name.endswith('/oneOf') else 'type'
+    seen = locations(errors)
+    require(seen == {(keyword, tuple(path), parent + '/properties')} or
+            seen == {('type', tuple(path), parent + '/properties')},
+            'the original approval UTC profile did not produce the remaining message')
+    root = nodes[parent]['node']
+    if parent.endswith('#/$defs/ApprovalRequest'):
+        require(root['properties']['schema_id']['const'] == 'pm.goal.update.approval_request.v1',
+                'approval timestamp routing changed')
+    else:
+        require(parent.endswith('#/$defs/ApprovalResolution') and
+                {'approval_id', 'request_sha256', 'decided_at_utc', 'protected_person_decision_ref'} <= set(root['required']),
+                'resolution timestamp routing changed')
+    value_schema = root['properties'][field]
+    if field == 'expires_at_utc':
+        require({key: value for key, value in value_schema['oneOf'][0].items() if key != 'x-pm-oracle-id'} ==
+                {'type': 'string', 'format': 'date-time'} and value_schema['oneOf'][1]['type'] == 'null',
+                'nullable approval date-time rule changed')
+    else:
+        require(value_schema['type'] == 'string' and value_schema['format'] == 'date-time',
+                'approval date-time rule changed')
+    return dict(source=parent + '/properties', owner_profile=DT.COORDINATION_UTC_Z,
+                owner_check=_owner_timestamp_properties.__name__,
+                reason='The same date-time parser rejects nonstrings and applies the extra UTC Z condition. '
+                       'It skips None only for the nullable expiry, where the null branch applies.')
+
+
 def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check):
     import pm_goal_dg5_closure as closure
     import pm_goal_go_schema_closure as go
@@ -422,6 +489,9 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
                       cut=errors_list(cut), restored=errors_list(restore))
         if cut and example.get('control_phase_implication'):
             record.update(cls='COVERED_LATER', implication=control_implication(nodes, name, path, cut, locations))
+        elif cut and example.get('approval_implication'):
+            record.update(cls='COVERED_LATER', implication=approval_implication(
+                nodes, name, path, cut, locations, validator))
         elif cut:
             gaps[name] = record
             continue
