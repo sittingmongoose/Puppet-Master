@@ -76,6 +76,19 @@
     }).join('');
   }
 
+  /* Refine: the six places Pip appears, each a small scene; Pip is in it while that part is on. The team cannot show
+     these (a sheet's close button, a list row, the Orbit, a plan, the wand menu, an empty list), so switching one of
+     them changed nothing in the picture (Jared, 2026-11-10: "make sure that example section actually shows what is
+     being changed"). The scenes are drawn in styles.d/95-refine.css; the Pip in each is the chat's own mark. */
+  const WHERE = [['sheet-hosts', 'Sheets', 'idle'], ['status-faces', 'Lists', 'done'], ['working-orbit', 'Orbit', 'working'],
+    ['plans', 'Plans', 'needs'], ['wand-menu', 'Wand menu', 'idle'], ['empty-lists', 'Empty lists', 'queued']];
+  function whereScenes() {
+    const S = SHELL(); if (!S || typeof S.pmxMark !== 'function') return '';
+    return `<div class="rf-where pm56-host" data-theme="${esc(chatTheme())}" role="group" aria-label="Where Pip appears">`
+      + WHERE.map(([id, name, state]) => `<figure class="rf-where-tile" data-rf-where="${id}"><div class="rf-where-art rf-w-${id}"><span class="rf-where-pip">${S.pmxMark({ role: 'builder', seat: 1, size: 36, state })}</span></div><figcaption>${esc(name)}</figcaption></figure>`).join('')
+      + '</div>';
+  }
+
   /* ---------- the row: a summary that opens the editor --------------------------------------------------------------- */
   const o55peControl = renderControl;
   renderControl = function (setting, value) {
@@ -113,6 +126,7 @@
       /* the dock: a zero-height sticky line at the top of the sheet's scroller, its box hanging from it (B-16) */
       + `<div class="pipe-dock" hidden aria-hidden="true"><div class="pipe-dock-box"><span class="pipe-dock-title">${esc(say('dockTitle', 'Preview'))}</span><div class="pipe-stage pipe-dock-stage pm56-host" data-theme="${esc(chatTheme())}">${team(-1)}</div></div></div>`
       + `<div class="pipe-top"><div class="pipe-stage pm56-host" data-theme="${esc(chatTheme())}" aria-label="${esc(say('stageLabel', 'Preview: a small team in the chat'))}" role="group">${team(-1)}</div>`
+      + whereScenes()
       + '<div class="pipe-side">'
       + `<div class="pipe-meter"><div class="pipe-meter-head"><span>${esc(say('meterLabel', 'Pip parts'))}</span><b class="pipe-meter-n"></b></div><div class="pipe-meter-cells">${R.PARTS.map(() => '<i></i>').join('')}</div></div>`
       + `<div class="pipe-presets" role="group" aria-label="${esc(say('presets', 'Presets'))}">${presets}</div>`
@@ -139,6 +153,8 @@
     const pre = R.preset();
     box.querySelectorAll('.pipe-preset').forEach(b => setA(b, 'aria-pressed', String(b.dataset.pipePreset === pre)));
     box.querySelectorAll('.pipe-stage').forEach(s => setA(s, 'data-theme', chatTheme()));
+    box.querySelectorAll('.rf-where').forEach(s => setA(s, 'data-theme', chatTheme()));
+    box.querySelectorAll('[data-rf-where]').forEach(t => t.classList.toggle('is-on', have.has(t.dataset.rfWhere)));
     if (!wrap.__pipePlaying) drawStage(box, -1);
     const rb = box.querySelector('[data-pipe-replay]'), why = box.querySelector('.pipe-play-why');
     const reason = !have.has('state-faces') ? say('playWhy', 'Turn on State faces to see the team work.') : '';

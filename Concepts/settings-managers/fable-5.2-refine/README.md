@@ -41,6 +41,7 @@ byte-identical to `Concepts/PMConcept7.html` at that commit.
 | Providers › Limits & switching | Each service's own switching rules are on its line here, and only here: on or off, switch at, warn at, rest. |
 | **Editor and Terminal Customize** | Up to 1240 px wide. The options scroll on the left; the example, its meter, the presets and Try it stay on the right at full size. A line under the example names what you just changed. |
 | **Customize Pip, Adjust NieR** | 860 px wide. The parts scroll on the left; the picture, meter, presets and Play stay on the right. The same "Changed" line. |
+| Customize Pip | Six small scenes under the team show the places Pip appears (sheets, lists, the Orbit, plans, the wand menu, empty lists). Pip is in a scene while that part is on. The team alone could not show these. |
 
 ## Removed because it was there twice, or only led elsewhere
 

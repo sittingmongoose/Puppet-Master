@@ -116,7 +116,9 @@
   };
   const show = (picture, text, note) => {
     if (!picture || !picture.isConnected || !text) return;
-    const el = line(picture);
+    /* under the scenes when the picture has them, so the line is not pushed between the two */
+    const scenes = picture.parentElement.querySelector(':scope > .rf-where');
+    const el = line(scenes || picture);
     el.innerHTML = '<i>Changed</i><b></b>' + (note ? '<small></small>' : '');
     el.querySelector('b').textContent = text;
     if (note) el.querySelector('small').textContent = note;
@@ -161,8 +163,10 @@
       const name = T((chip.querySelector('.pipe-chip-name, .o55nc-chip-name') || chip).textContent);
       const state = T((chip.querySelector('.pipe-chip-state, .o55nc-chip-state') || {}).textContent);
       const group = chip.closest('[data-pipe-group], [data-o55nc-group]');
-      const where = pip && group && /where/i.test(group.getAttribute('data-pipe-group') || '');
-      show(picture, `${name}${state ? ' · ' + state : ''}`, where ? 'Where Pip appears shows in the chat itself, not in this picture.' : '');
+      /* a place Pip appears has its own small scene under the team: the ring goes there */
+      const scene = pip && chip.dataset.pipePart ? host.querySelector(`.rf-where-tile[data-rf-where="${chip.dataset.pipePart}"]`) : null;
+      if (scene) { show(picture, `${name}${state ? ' · ' + state : ''}`); picture.classList.remove('rf-pulse'); scene.classList.add('rf-pulse'); clearTimeout(scene.__rfT); scene.__rfT = setTimeout(() => scene.classList.remove('rf-pulse'), 900); return; }
+      show(picture, `${name}${state ? ' · ' + state : ''}`);
     }, 80);
   };
   document.addEventListener('click', e => { onCz(e); onParts(e); }, true);
