@@ -2388,7 +2388,7 @@ def certified_payload_messages(errors):
     return result
 
 
-def proof_output(source, output, declare, collector, clauses, root, table_path):
+def proof_output(source, output, declare, collector, clauses, root, table_path, *, sites=None):
     import pm_goal_dg5_closure as closure
     import pm_goal_guard_sweep as sweep
 
@@ -2404,9 +2404,11 @@ def proof_output(source, output, declare, collector, clauses, root, table_path):
     write(tables_dir / 'summary.json', [verified])
     write(tables_dir / 'rows.json', [dict(guard=row, table=table, status='PASS', table_status='PASS')])
     write(proof / 'family-rows.json', {family: [row]})
+    if sites is None:
+        sites = [declare['site']]
     write(proof / 'collection.json', dict(calls=collector.calls, failures=[],
-                                         rows={row: {'sites': [declare['site']]}}))
-    bound = [table_path, source / declare['site'][0]]
+                                         rows={row: {'sites': sites}}))
+    bound = [table_path, *(source / path for path, _ in sites)]
     bound += sorted(source.glob('scripts/pm_goal_dg5_*.py'))
     bound += [source / 'scripts' / name for name in (
         'pm_goal_guard_sweep.py', 'pm_goal_guard_tables.py', 'pm_goal_go_schema_closure.py',
