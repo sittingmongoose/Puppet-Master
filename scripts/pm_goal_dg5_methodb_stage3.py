@@ -11,6 +11,7 @@ from contextlib import ExitStack
 import copy
 import gzip
 import hashlib
+import inspect
 from itertools import count
 import json
 import multiprocessing
@@ -212,10 +213,12 @@ def certified_fixture(route, path):
                 return w.coordinator.commit_native(ctx, run.obs['appended'])
 
         return w, commit
-    if route == 'f5a':
+    if route in ('f5a', 'f5a_intent_check', 'f5a_control_check'):
         run.until('arm')
         intent, control = run.obs['intent'], run.obs['control_armed']
         preappend = w.coordinator.preappend_source(ctx)
+        if route != 'f5a':
+            check_f5a_stored_document(oracle.W, w, ctx, intent, control, route)
         return w, lambda: w.coordinator.f5a(ctx, intent, control, preappend)
     if route == 'recover':
         run.until('arm')
@@ -226,6 +229,37 @@ def certified_fixture(route, path):
 
 class RootCapture(BaseException):
     pass
+
+
+def check_f5a_stored_document(module, world, context, intent, control, route):
+    """Check the earlier schema and the later byte comparison for the armed document."""
+    name, document, root = ('intent', intent, 'StorageIntent') if route == 'f5a_intent_check' else (
+        'control', control, 'StorageControl')
+    arm = inspect.getsource(world.coordinator.arm)
+    f5a = inspect.getsource(world.coordinator.f5a)
+    validation = "w.realm.validate('coordinator', COORD + WRAPPER_ROOT[fam], value, 'arm/' + fam)"
+    require(validation in arm and module.WRAPPER_ROOT[name] == root, 'arm validates a different definition')
+    steps = (
+        "for fam, value in (('intent', stored_intent), ('control', stored_control)):",
+        validation,
+        "value=stored_" + name + ")",
+        "w.storage.transact_stamped(build, writer=self.owner_ref(ctx['op']))",
+    )
+    require([arm.index(step) for step in steps] == sorted(arm.index(step) for step in steps),
+            'arm validation and stored write order changed')
+    site = f"w.realm.validate('coordinator', COORD + '{root}', {name}, stage + '/{name}')"
+    cell = 'icell' if name == 'intent' else 'ccell'
+    compare = f"require(stage + '/{name}_bytes', mp({cell}['value']) == mp({name}))"
+    require(site in f5a and compare in f5a and f5a.index(site) < f5a.index(compare),
+            'later byte comparison changed')
+    _, stored = world.coordinator.compact(name, context['scope'], context['op'])
+    require(stored is not None and module.A.same(stored['value'], document) and
+            module.mp(stored['value']) == module.mp(document),
+            'accepted input is not the stored arm document')
+    require(module.A.same(module.NR.decode_event_value(module.mp(document)), document),
+            'the stored arm document did not round trip with the same values and types')
+    require(not world.realm.errors('coordinator', module.COORD + root, stored['value']),
+            'the stored arm document failed its original schema')
 
 
 class OwnerCheck:
@@ -408,10 +442,16 @@ class OwnerCheck:
             require(not self.collector.failures, self.collector.failures)
             require(record['outcome'] == ('exact_expected' if change else 'control'), record)
             if change:
-                require(record['kill'] == 'KILLED',
-                        f"complete-call cut result {record['kill']}: {record.get('cut_errors')}")
+                later = self.declare.get('later_refusal')
+                if later is None:
+                    require(record['kill'] == 'KILLED',
+                            f"complete-call cut result {record['kill']}: {record.get('cut_errors')}")
+                else:
+                    require(record['kill'] == 'COVERED_LATER' and self.runs[-2].get('refusal') == later,
+                            f"expected later validation {later!r}, got {self.runs[-2].get('refusal')!r}")
                 before, cut, restored = self.runs[-3:]
-                require(before == restored and before['observations'] == cut['observations'] and not cut['errors'],
+                require(before == restored and before['observations'] == cut['observations'] and
+                        bool(cut['errors']) == bool(later),
                         'the complete call did not restore the same document and validation message')
         require(self.runs[0] == self.runs[-1], 'the restored accepted control changed')
         if self.declare.get('transaction'):
@@ -777,6 +817,12 @@ def main():
     with gzip.open(args.census, 'rt') as stream:
         census = json.load(stream)
     row, ident = declare['row'], declare['root']
+    later_route = {
+        'dg5/f5a/intent/schema': ('f5a_intent_check', 'f5a/intent_bytes'),
+    }.get(row)
+    if 'later_refusal' in declare:
+        require((declare['route'], declare['later_refusal']) == later_route,
+                'later validation requires a checked source implication for this row')
     census_row, = [item for item in census['rows'] if item['row'] == row]
     root = census['roots'][ident]
     require(census_row['root_ids'] == [ident] and not root.get('inventory_variants'), 'ambiguous root inventory')
@@ -820,6 +866,8 @@ def main():
         clauses, gaps = test_rules(plain, actual_bank, accepted, ident, root['clause_ids'],
                                    declare['examples'], args.disable_check, declare.get('accepted_branches'))
         report.update(clauses=clauses, gaps=gaps)
+        if 'later_refusal' in declare:
+            report['checked_later_refusal'] = declare['later_refusal']
         require(not gaps, f'{len(gaps)} rules still have another validation message')
         proof_output(source, args.out, declare, collector, clauses, ident, table_path)
         report['status'] = 'COVERED'
