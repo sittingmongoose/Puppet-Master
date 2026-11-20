@@ -144,6 +144,8 @@ def fixture(declare, route, directory):
     consumer = getattr(world, 'consumer_class', reader.Consumer)(world)
     presentation = reader.Presentation(world)
     request = original.request_of(world)
+    if route['call'] == 'read_request':
+        return world, lambda: consumer.read_retained_native(copy.deepcopy(request), presentation), request
     if route['call'] == 'read_c3_proof':
         return world, lambda: consumer.read_retained_native(request, presentation), request
     if route['call'] == 'read_preserved':
@@ -1162,7 +1164,7 @@ class OwnerExample:
                             'retained wrapper differs from the validated document')
                 returned = stored
             result['value_sha256'] = value_sha(returned)
-            if edit and not self.checkpoint and self.route['call'] != 'read_c3_proof':
+            if edit and not self.checkpoint and self.route['call'] not in ('read_c3_proof', 'read_request'):
                 require(returned.get(edit) == 'example', 'the accepted call did not return the altered document')
         except Exception as error:
             if type(error).__name__ not in bridge.REFUSAL_CLASSES:
@@ -1280,7 +1282,7 @@ class OwnerExample:
                             f"single-check trial {record['kill']}: {record.get('cut_errors')}")
                 require(before == restored and before['observations'] == disabled['observations'],
                         'the same invalid document and message must be restored')
-                if self.route['call'] == 'read_c3_proof':
+                if self.route['call'] in ('read_c3_proof', 'read_request'):
                     require(disabled['value_sha256'] == self.trials[0]['value_sha256'],
                             'the accepted read must return the original retained value')
                 require(before['refusal'] == self.route['refusal'] and before['detail'] == self.route['detail'],
