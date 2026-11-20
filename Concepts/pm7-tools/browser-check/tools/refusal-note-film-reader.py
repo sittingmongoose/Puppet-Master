@@ -19,7 +19,8 @@ START, END, OWN_T, TOL, APPEAR = 0.25, 1.75, 0.60, 40, 0.40
 
 def frames(video, t0, t1, box):
     x, y, w, h = box
-    p = subprocess.run(['ffmpeg', '-v', 'info', '-ss', f'{max(0, t0):.3f}', '-to', f'{t1:.3f}', '-i', video, '-vf', f'crop={w}:{h}:{x}:{y},showinfo',
+    # Convert before cropping so chroma subsampling cannot round the crop dimensions or origin.
+    p = subprocess.run(['ffmpeg', '-v', 'info', '-ss', f'{max(0, t0):.3f}', '-to', f'{t1:.3f}', '-i', video, '-vf', f'format=rgb24,crop={w}:{h}:{x}:{y},showinfo',
                         '-fps_mode', 'passthrough', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], capture_output=True)
     if p.returncode:
         raise SystemExit(p.stderr.decode()[-2000:])
