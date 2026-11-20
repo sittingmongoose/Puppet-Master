@@ -1725,7 +1725,8 @@ def line_endings(raw):
     return {'crlf': crlf, 'lf': raw.count(b'\n') - crlf, 'cr': raw.count(b'\r') - crlf}
 
 
-def validate_coverage(raw, before, table, test_names, ast_classes=None, frozen=None):
+def validator_source(raw, ast_classes=None):
+    """Check the interpreter and census agree on the validator's source."""
     # T45 (cycle-13 H02): the checker reads V's bytes as the interpreter does. A coding declaration or a byte-order
     # mark would make the AST reviewed here differ from the code a script run or an import executes, so either one
     # is refused before anything is parsed.
@@ -1741,14 +1742,23 @@ def validate_coverage(raw, before, table, test_names, ast_classes=None, frozen=N
     classes = ast_class_problems(tree, ast_classes)
     if not (not any(classes.values())):
         raise AssertionError('ast class table ' + json.dumps(classes, sort_keys=True))
-    if not (table['ast_classes'] == ast_class_summary(ast_classes)):
-        raise AssertionError('changed ast class table summary')
+    return source
+
+
+def check_validator_bindings(source, before):
     # Round 12 (CA2-C12-B01, N02): every module name has one binding, the one
     # the checker reads and the script runs, and module objects are written
     # only by it. Nothing in the table can waive this.
     bindings = binding_problems(source, before)
     if not (not any(bindings.values())):
         raise AssertionError('module-level binding refused ' + json.dumps(bindings, sort_keys=True))
+
+
+def validate_coverage(raw, before, table, test_names, ast_classes=None, frozen=None):
+    source = validator_source(raw, ast_classes)
+    if not (table['ast_classes'] == ast_class_summary(ast_classes)):
+        raise AssertionError('changed ast class table summary')
+    check_validator_bindings(source, before)
     # Round 12 (CA2-C12-N01): the table pins every line of the frozen
     # validator, and every line inserted, changed, deleted or replaced relative
     # to it needs a reviewed record. An edit with the table unchanged stops here.
@@ -3126,6 +3136,26 @@ def check_random_edits(repo, test_names, count=RANDOM_EDITS):
     return {'edits': count, 'by_kind': dict(sorted(kinds.items())), 'refused_by': dict(sorted(rules.items()))}
 
 
+def write_result(output, results, custody=None):
+    # T64 (REVIEW-etools-tb3-opus finding 10): the interpreter and its flags, so a run under -O shows it was one
+    import platform
+    interpreter = {'implementation': platform.python_implementation(), 'version': sys.version.split()[0],
+                   'executable': sys.executable, 'optimize': sys.flags.optimize, 'dont_write_bytecode': sys.flags.dont_write_bytecode,
+                   'isolated': sys.flags.isolated, 'hash_randomization': sys.flags.hash_randomization}
+    summary = {'status': 'pass' if all(r['pass'] for r in results) else 'fail', 'checks': len(results),
+               'interpreter': interpreter,
+               'passed': sum(r['pass'] for r in results), 'failed': sum(not r['pass'] for r in results),
+               'real_frozen_source_custody': custody, 'results': results,
+               'limits': ['No final approval, admission, live seal or all-green August main run is claimed.',
+                          'Outcome positives inject the existing admitted set; they do not create or waive admission records.',
+                          'Guard-removal inventory belongs to the shared-tool sweep; no lane-local proof engine is claimed.']}
+    output.write_text(json.dumps(summary, indent=2) + '\n')
+    print(json.dumps({k: summary[k] for k in ['status', 'checks', 'passed', 'failed', 'interpreter']}))
+    for row in results:
+        if not row['pass']: print(json.dumps(row))
+    return 0 if summary['status'] == 'pass' else 1
+
+
 def run(repo, output, source_map, apply_cut=None):
     results = []
     def record(name, action, rejects=False, message=None):
@@ -3167,12 +3197,27 @@ def run(repo, output, source_map, apply_cut=None):
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(raw)
             return target
-        tested_raw = (repo / REL).read_bytes()
-        tested_sha = sha(tested_raw)    # (T45, H06: the bytes every behavioural test below runs)
-        put(REL, tested_raw)
-        spec = importlib.util.spec_from_file_location('dl451_fixture', root / REL)
-        v = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(v)
+        try:
+            tested_raw = (repo / REL).read_bytes()
+            tested_sha = sha(tested_raw)    # (T45, H06: the bytes every behavioural test below runs)
+            table = json.loads((repo / COVERAGE).read_bytes())
+            if tested_sha != table['validator_sha256']:
+                raise AssertionError('validator bytes do not match the coverage table')
+            source = validator_source(tested_raw)
+            check_validator_bindings(source, git(SEAL_BASE + ':' + REL).decode())
+        except Exception as exc:
+            return write_result(output, [{'name': 'validator_source_preflight', 'pass': False,
+                                          'error': type(exc).__name__ + ': ' + str(exc)}])
+
+        path = put(REL, tested_raw)
+        try:
+            spec = importlib.util.spec_from_file_location('dl451_fixture', path)
+            v = importlib.util.module_from_spec(spec)
+            exec(compile(tested_raw, str(path), 'exec', dont_inherit=True), vars(v))
+        except (Exception, SystemExit) as exc:
+            # A validator may terminate its own import with exit code 0.
+            # The corpus has not run, so record a failed check and exit 1.
+            return write_result(output, [{'name': 'validator_import', 'pass': False, 'error': repr(exc)}])
         def imported_bindings_match():
             # CA2-C12-B01: the corpus runs the one binding the checker reads.
             tree = ast.parse((root / REL).read_bytes().decode())
@@ -4151,23 +4196,7 @@ def run(repo, output, source_map, apply_cut=None):
         repo, {r['name'] for r in results}))
     record('positive_no_assert_statement_in_the_checker', check_no_asserts)
     record('positive_receipt_writer_runs_the_hashed_bytes', lambda: check_receipt_writer_bytes(repo))
-    # T64 (REVIEW-etools-tb3-opus finding 10): the interpreter and its flags, so a run under -O shows it was one
-    import platform
-    interpreter = {'implementation': platform.python_implementation(), 'version': sys.version.split()[0],
-                   'executable': sys.executable, 'optimize': sys.flags.optimize, 'dont_write_bytecode': sys.flags.dont_write_bytecode,
-                   'isolated': sys.flags.isolated, 'hash_randomization': sys.flags.hash_randomization}
-    summary = {'status': 'pass' if all(r['pass'] for r in results) else 'fail', 'checks': len(results),
-               'interpreter': interpreter,
-               'passed': sum(r['pass'] for r in results), 'failed': sum(not r['pass'] for r in results),
-               'real_frozen_source_custody': custody, 'results': results,
-               'limits': ['No final approval, admission, live seal or all-green August main run is claimed.',
-                          'Outcome positives inject the existing admitted set; they do not create or waive admission records.',
-                          'Guard-removal inventory belongs to the shared-tool sweep; no lane-local proof engine is claimed.']}
-    output.write_text(json.dumps(summary, indent=2) + '\n')
-    print(json.dumps({k: summary[k] for k in ['status', 'checks', 'passed', 'failed', 'interpreter']}))
-    for row in results:
-        if not row['pass']: print(json.dumps(row))
-    return 0 if summary['status'] == 'pass' else 1
+    return write_result(output, results, custody)
 
 
 if __name__ == '__main__':

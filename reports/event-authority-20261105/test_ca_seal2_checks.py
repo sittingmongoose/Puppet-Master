@@ -3,6 +3,8 @@ import ast
 import importlib.util
 import json
 import subprocess
+import sys
+import tempfile
 from textwrap import indent
 from pathlib import Path
 import unittest
@@ -80,3 +82,49 @@ class ModuleAliasTests(unittest.TestCase):
         for body in ('return str([FIELDS])', 'return tuple(FIELDS or ())', 'return len(FIELDS)'):
             with self.subTest(body=body):
                 self.assertFalse(any(self.scan(body).values()))
+
+
+class ImportExitTests(unittest.TestCase):
+    def run_checker(self, raw, pin_changed_bytes):
+        git_dir = subprocess.check_output(
+            ['git', '-C', str(REPO), 'rev-parse', '--absolute-git-dir'], text=True).strip()
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory)
+            (repo / '.git').write_text('gitdir: ' + git_dir + '\n')
+            validator = repo / CHECKER.REL
+            validator.parent.mkdir(parents=True)
+            validator.write_bytes(raw)
+            coverage = repo / CHECKER.COVERAGE
+            coverage.parent.mkdir(parents=True)
+            table = json.loads((REPO / CHECKER.COVERAGE).read_bytes())
+            if pin_changed_bytes:
+                table['validator_sha256'] = CHECKER.sha(raw)
+            coverage.write_bytes(CHECKER.encoded(table))
+            output = repo / 'result.json'
+            result = subprocess.run([sys.executable, '-B', str(BUNDLE / 'CA-SEAL2-checks.py'),
+                                     '--repo', str(repo), '--source-map', str(repo / 'unused.json'),
+                                     '--out', str(output)], capture_output=True, text=True, check=False)
+            self.assertEqual(result.returncode, 1, (result.stdout, result.stderr))
+            report = json.loads(output.read_text())
+            self.assertEqual((report['status'], report['checks'], report['passed'], report['failed']),
+                             ('fail', 1, 0, 1))
+            return report['results'][0]
+
+    def test_unreviewed_source_fails_preflight(self):
+        raw = (REPO / CHECKER.REL).read_bytes() + b'\r\nraise SystemExit(0)\r\n'
+        result = self.run_checker(raw, pin_changed_bytes=False)
+        self.assertEqual(result['name'], 'validator_source_preflight')
+        self.assertIn('validator bytes do not match the coverage table', result['error'])
+
+    def test_pinned_hash_does_not_waive_static_preflight(self):
+        raw = (REPO / CHECKER.REL).read_bytes() + b'\r\nraise SystemExit(0)\r\n'
+        result = self.run_checker(raw, pin_changed_bytes=True)
+        self.assertEqual(result['name'], 'validator_source_preflight')
+        self.assertIn('not_a_declaration', result['error'])
+
+    def test_import_system_exit_writes_a_failure_result(self):
+        raw = (REPO / CHECKER.REL).read_bytes().replace(
+            b'if __name__ == "__main__":', b'import sys\r\nEARLY_EXIT = sys.exit(0)\r\n\r\nif __name__ == "__main__":')
+        result = self.run_checker(raw, pin_changed_bytes=True)
+        self.assertEqual(result['name'], 'validator_import')
+        self.assertIn('SystemExit(0)', result['error'])
