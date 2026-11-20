@@ -1120,6 +1120,7 @@ ALLOWED_DUNDERS = frozenset({'__name__', '__file__', '__new__'})
 NON_MUTATING_CALLS = frozenset({'sorted', 'set', 'frozenset', 'list', 'tuple', 'dict', 'len', 'any', 'all', 'min', 'max',
                                 'sum', 'iter', 'enumerate', 'zip', 'isinstance', 'repr', 'str', 'bool', 'reversed'})
 NON_MUTATING_QUALIFIED = frozenset({'json.dumps'})
+ELEMENT_METHODS = frozenset({'copy', 'get', 'items', 'keys', 'values', 'pop', 'setdefault'})
 READ_ONLY_METHODS = frozenset({'copy', 'count', 'index', 'get', 'items', 'keys', 'values', 'fromkeys',
                                'difference', 'intersection', 'isdisjoint', 'issubset', 'issuperset',
                                'symmetric_difference', 'union'})
@@ -1145,8 +1146,8 @@ def module_scope_problems(tree):
     - mutates_a_module_container: an attribute of a module-level list, dict or
       set (or of an alias or element of one, or of a call's result that is one)
       other than a read-only method; and (T44, cycle-13 H03) a call that receives
-      one, positionally, starred or by keyword, unless the callee is a builtin
-      that only reads its argument (NON_MUTATING_CALLS) or json.dumps:
+      one, positionally, starred or by keyword, unless an approved read
+      returns a scalar or a copy without mutable module elements:
       list.clear(EVIDENCE_FIELDS), dict.update(H, ...), operator.setitem(X, ...)
       and a V function that mutates its parameter are refused. A module-level
       function that returns a module name (directly or through its locals) makes
@@ -1159,10 +1160,13 @@ def module_scope_problems(tree):
       assignment expressions, displays and items of displays ((X or []).clear(),
       [X][0].clear()); and iterating over a display that holds the container
       itself binds the loop target to the container (for x in [X]: list.clear(x)).
+      min and max can return an argument or one of its elements. sum can
+      return its start value unchanged. None qualifies for the copy exemption.
     - reflection: the namespace builtins (globals, vars, locals, setattr,
       delattr, exec, eval, compile, __import__, breakpoint) and every dunder
       name or attribute except those CA-SEAL uses (__name__, __file__,
-      __new__).
+      __new__). The import origin also identifies aliases of sys.modules,
+      including access to sys through the standard os and subprocess modules.
     """
     import builtins
     bindings, parents, owner, imported = scope_analysis(tree)
@@ -1222,14 +1226,76 @@ def module_scope_problems(tree):
     # T89 (TOOLBATCH4 pre-check finding 8, R09 and R10): every function, in any scope, and every lambda bound to a name,
     # keyed by (the scope its name is bound in, its name): a nested def's or a lambda's return refers as a module-level
     # function's does
-    functions = {}
+    functions = set()
+    function_values = {}
+    sys_origins = {}
+    sys_registry_imports = []
     for n in ast.walk(tree):
-        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and id(n) in owner:
-            functions[(owner[id(n)], n.name)] = n
-        elif isinstance(n, ast.Assign) and isinstance(n.value, ast.Lambda) and id(n) in owner:
-            for t in n.targets:
-                if isinstance(t, ast.Name):
-                    functions[(owner[id(n)], t.id)] = n.value
+        if id(n) not in owner:
+            continue
+        scope = owner[id(n)]
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            function_values.setdefault((scope, n.name), set()).add(n)
+            functions.add(n)
+        elif isinstance(n, ast.Lambda):
+            functions.add(n)
+        elif isinstance(n, ast.Import):
+            for item in n.names:
+                root = item.name.split('.')[0]
+                if root in {'sys', 'os', 'subprocess'}:
+                    sys_origins.setdefault((scope, item.asname or root), set()).add(root)
+        elif isinstance(n, ast.ImportFrom) and n.level == 0:
+            for item in n.names:
+                if n.module in {'os', 'subprocess'} and item.name == 'sys':
+                    sys_origins.setdefault((scope, item.asname or item.name), set()).add('sys')
+                if n.module == 'sys' and item.name == 'modules':
+                    sys_registry_imports.append('sys.modules@' + str(n.lineno))
+
+    def binding_key(value):
+        if isinstance(value, ast.Name) and id(value) in owner:
+            return resolves_to(value.id, owner[id(value)], tree, bindings, parents), value.id
+        return None
+
+    def alternatives(value):
+        if isinstance(value, (ast.List, ast.Tuple, ast.Set)):
+            return value.elts
+        if isinstance(value, ast.Dict):
+            return value.values
+        if isinstance(value, ast.BoolOp):
+            return value.values
+        if isinstance(value, ast.IfExp):
+            return (value.body, value.orelse)
+        if isinstance(value, (ast.NamedExpr, ast.Starred, ast.Subscript)):
+            return (value.value,)
+        if isinstance(value, ast.BinOp):
+            return (value.left, value.right)
+        return ()
+
+    def module_origins(value):
+        if isinstance(value, ast.Name):
+            return sys_origins.get(binding_key(value), set())
+        if isinstance(value, ast.Attribute) and value.attr == 'sys':
+            if module_origins(value.value) & {'os', 'subprocess'}:
+                return {'sys'}
+        return set().union(*(module_origins(part) for part in alternatives(value)))
+
+    def callable_origins(value):
+        if isinstance(value, ast.Name):
+            return function_values.get(binding_key(value), set())
+        if isinstance(value, ast.Lambda):
+            return {value}
+        return set().union(*(callable_origins(part) for part in alternatives(value)))
+
+    def first_origin(origins):
+        # A scalar/module name alongside a container cannot hide that container.
+        found = (False, None)
+        for refers, name in origins:
+            if refers and name in containers:
+                return refers, name
+            if refers and not found[0]:
+                found = refers, name
+        return found
+
     def own_returns(fn):
         if isinstance(fn, ast.Lambda):
             return [fn.body]
@@ -1254,10 +1320,13 @@ def module_scope_problems(tree):
         parts = (value.elts if isinstance(value, (ast.List, ast.Tuple, ast.Set))
                  else value.values if isinstance(value, (ast.Dict, ast.BoolOp))
                  else [value.body, value.orelse] if isinstance(value, ast.IfExp)
-                 else [value.value] if isinstance(value, ast.NamedExpr) else None)
+                 else [value.value] if isinstance(value, (ast.NamedExpr, ast.Starred)) else None)
+        if isinstance(value, ast.BinOp):
+            # Operators on built-in containers create a result. Only nested
+            # references in their elements survive in that result.
+            return elements(value)
         if parts is not None:
-            found = [origin(part, itself) for part in parts if part is not None]
-            return next((f for f in found if f[0]), (False, None))
+            return first_origin(origin(part, itself) for part in parts if part is not None)
         # T89 (R07, R08): a comprehension's or generator's result holds its elements; it refers to a module object only
         # when an element is the object itself ([x for x in (X,)]), never through an element of one, which is immutable
         if isinstance(value, (ast.ListComp, ast.SetComp, ast.GeneratorExp, ast.DictComp)):
@@ -1269,24 +1338,22 @@ def module_scope_problems(tree):
             while isinstance(base, (ast.Attribute, ast.Subscript, ast.Starred)):
                 base = base.value
             if isinstance(base, (ast.List, ast.Tuple, ast.Set, ast.Dict, ast.BoolOp, ast.IfExp, ast.NamedExpr,
-                                 ast.ListComp, ast.SetComp, ast.GeneratorExp, ast.DictComp)):
+                                 ast.ListComp, ast.SetComp, ast.GeneratorExp, ast.DictComp, ast.BinOp, ast.Call)):
                 return origin(base, itself)
+            if isinstance(value, ast.Subscript) and binding_key(base) is not None:
+                held = contained.get(binding_key(base))
+                if held is not None:
+                    return True, held
         if isinstance(value, ast.Call):
             scope, made = owner.get(id(value)), returns_whole if itself else returns
-            # T89 (R09): a lambda called where it is written returns its body
-            if isinstance(value.func, ast.Lambda):
-                return origin(value.func.body, itself)
+            if isinstance(value.func, ast.Attribute) and value.func.attr in ELEMENT_METHODS:
+                return elements(value.func.value)
             # T89 (R07): next(), min() and max() of one iterable hand out one of its elements
             if (isinstance(value.func, ast.Name) and value.func.id in ('next', 'min', 'max') and value.args and scope is not None
                     and value.func.id not in module and resolves_to(value.func.id, scope, tree, bindings, parents) is tree):
-                return elements(value.args[0]) if value.func.id == 'next' or len(value.args) == 1 else next(
-                    (f for f in (origin(a, itself) for a in value.args) if f[0]), (False, None))
-            # T44: the result of a call of a function that returns a module name (T89: in any scope)
-            if isinstance(value.func, ast.Name) and scope is not None:
-                home = resolves_to(value.func.id, scope, tree, bindings, parents)
-                if (home, value.func.id) in made:
-                    return True, made[(home, value.func.id)]
-            return False, None
+                return elements(value.args[0]) if value.func.id == 'next' or len(value.args) == 1 else first_origin(
+                    origin(a, itself) for a in value.args)
+            return first_origin((True, made[fn]) for fn in callable_origins(value.func) if fn in made)
         root = (value.id if isinstance(value, ast.Name) else None) if itself else _pure_root(value)
         scope = owner.get(id(value))
         if root is None or scope is None:
@@ -1301,74 +1368,103 @@ def module_scope_problems(tree):
             return True, known[home][root]
         return False, None
     def elements(value):
-        """T89: whether an element of an iterable is a module object itself: the elements of a display, a comprehension's
-        or a generator's element expression, and the elements of iter(), reversed(), sorted(), list(), tuple(), set() or
-        frozenset() of one"""
         if isinstance(value, (ast.ListComp, ast.SetComp, ast.GeneratorExp)):
             return origin(value.elt, True)
         if isinstance(value, ast.DictComp):
-            return next((f for f in (origin(value.key, True), origin(value.value, True)) if f[0]), (False, None))
-        if isinstance(value, (ast.List, ast.Tuple, ast.Set)):
-            return next((f for f in (origin(e, True) for e in value.elts) if f[0]), (False, None))
-        if (isinstance(value, ast.Call) and isinstance(value.func, ast.Name) and value.args
-                and value.func.id in ('iter', 'reversed', 'sorted', 'list', 'tuple', 'set', 'frozenset')):
-            return elements(value.args[0])
+            return first_origin(origin(part, True) for part in (value.key, value.value))
+        if isinstance(value, (ast.List, ast.Tuple, ast.Set, ast.Dict)):
+            return first_origin(origin(part, True) for part in alternatives(value))
+        if isinstance(value, (ast.BinOp, ast.BoolOp, ast.IfExp, ast.NamedExpr, ast.Starred)):
+            return first_origin(elements(part) for part in alternatives(value))
+        if isinstance(value, ast.Name):
+            key = binding_key(value)
+            if key in contained:
+                return True, contained[key]
+            if key is not None and key[1] in holders[key[0]]:
+                return True, holders[key[0]][key[1]]
+        if isinstance(value, ast.Call):
+            if isinstance(value.func, ast.Name) and value.args and value.func.id in (
+                    'iter', 'reversed', 'sorted', 'list', 'tuple', 'set', 'frozenset'):
+                return elements(value.args[0])
+            if isinstance(value.func, ast.Attribute) and value.func.attr in ELEMENT_METHODS:
+                return elements(value.func.value)
         return False, None
-    def stores(target):
-        return [(x.id, owner[id(x)]) for x in ast.walk(target)
-                if isinstance(x, ast.Name) and isinstance(x.ctx, ast.Store) and id(x) in owner]
+
+    def targets(target):
+        if isinstance(target, (ast.Tuple, ast.List)):
+            for item in target.elts:
+                yield from targets(item)
+        elif isinstance(target, ast.Starred):
+            yield from targets(target.value)
+        else:
+            yield target
+
     sources, held_in = [], []
-    # T89: holders[scope][name]: a local object a module object itself was stored into (d['k'] = X, a class body's
-    # f = X); read only by the mutation rules (d['k'].clear(), C.f.clear()), so a store into the local is no write
+    contained = {}
+    # A local into which a module object was stored may still expose that
+    # object by a later read. The original store itself is allowed.
     holders = {scope: {} for scope in bindings}
+
+    def add_source(value, target, iteration=False):
+        names = []
+        for part in targets(target):
+            if isinstance(part, ast.Name) and id(part) in owner:
+                names.append((owner[id(part)], part.id))
+            elif isinstance(part, (ast.Subscript, ast.Attribute)):
+                root = _pure_root(part.value)
+                scope = owner.get(id(part))
+                if root is not None and scope is not None:
+                    held_in.append((value, root, scope, iteration))
+        sources.append((value, names, iteration))
+
     for node in ast.walk(tree):
         if isinstance(node, ast.Assign):
-            sources += [(node.value, stores(t)) for t in node.targets]
-            # T89 (R05, R06): a module object itself stored into a local object (d['k'] = X, o.f = X) makes that
-            # local refer to it, so d['k'].clear() is a mutation of X
-            for t in node.targets:
-                if isinstance(t, (ast.Subscript, ast.Attribute)):
-                    root = t.value
-                    while isinstance(root, (ast.Subscript, ast.Attribute)):
-                        root = root.value
-                    if isinstance(root, ast.Name) and id(root) in owner:
-                        held_in.append((node.value, root.id, owner[id(root)]))
+            for target in node.targets:
+                add_source(node.value, target)
         elif isinstance(node, ast.AnnAssign) and node.value is not None:
-            sources.append((node.value, stores(node.target)))
+            add_source(node.value, node.target)
         elif isinstance(node, ast.NamedExpr) and id(node.target) in owner:
-            sources.append((node.value, [(node.target.id, owner[id(node.target)])]))
+            add_source(node.value, node.target)
         elif isinstance(node, (ast.For, ast.AsyncFor, ast.comprehension)):
-            sources.append((node.iter, stores(node.target), 'iteration'))
+            add_source(node.iter, node.target, iteration=True)
         elif isinstance(node, (ast.With, ast.AsyncWith)):
-            sources += [(i.context_expr, stores(i.optional_vars)) for i in node.items if i.optional_vars]
+            for item in node.items:
+                if item.optional_vars is not None:
+                    add_source(item.context_expr, item.optional_vars)
         elif isinstance(node, ast.arguments) and id(node) in owner:
             positional = node.posonlyargs + node.args
             pairs = list(zip(positional[len(positional) - len(node.defaults):], node.defaults)) + [
                 (a, d) for a, d in zip(node.kwonlyargs, node.kw_defaults) if d is not None]
-            sources += [(d, [(a.arg, owner[id(node)])]) for a, d in pairs]
+            sources.extend((d, [(owner[id(node)], a.arg)], False) for a, d in pairs)
     grew = True
     while grew:
         grew = False
-        for value, targets, *how in sources:
+        for value, names, iteration in sources:
+            value_modules = module_origins(value)
+            value_functions = callable_origins(value)
+            element, element_name = elements(value)
+            for key in names:
+                for tracked, found in ((sys_origins, value_modules), (function_values, value_functions)):
+                    if found - tracked.get(key, set()):
+                        tracked.setdefault(key, set()).update(found)
+                        grew = True
+                if element and element_name in containers and not iteration and key not in contained:
+                    contained[key] = element_name
+                    grew = True
             for itself, known in ((False, alias), (True, whole)):
-                if itself and how:
-                    # (iterating gives elements, never the object itself; T64: unless the iterable is a display
-                    # whose element is the object itself: for x in [X] binds x to X)
-                    if not isinstance(value, (ast.List, ast.Tuple, ast.Set)):
-                        continue
-                    refers, name = next((f for f in (origin(e, True) for e in value.elts) if f[0]), (False, None))
-                else:
-                    refers, name = origin(value, itself)
+                refers, name = (element, element_name) if itself and iteration else origin(value, itself)
                 if not refers:
                     continue
-                for local, scope in targets:
-                    if scope is not tree and local not in known[scope]:
+                for scope, local in names:
+                    if scope is not tree and (local not in known[scope] or
+                                              name in containers and known[scope][local] not in containers):
                         known[scope][local] = name
                         grew = True
-        for value, local, scope in held_in:
-            refers, name = origin(value, True)
+        for value, local, scope, iteration in held_in:
+            refers, name = elements(value) if iteration else origin(value, True)
             home = resolves_to(local, scope, tree, bindings, parents)
-            if refers and home is not tree and local not in holders[home]:
+            if refers and home is not tree and (local not in holders[home] or
+                                                name in containers and holders[home][local] not in containers):
                 holders[home][local] = name
                 grew = True
         # T89 (R12): a class whose body binds a name to a module object itself refers to it through that attribute
@@ -1378,18 +1474,15 @@ def module_scope_problems(tree):
             if target is not None and home is not tree and cls.name not in holders[home]:
                 holders[home][cls.name] = target
                 grew = True
-        for key, fn in functions.items():
+        for fn in functions:
             for itself, made in ((False, returns), (True, returns_whole)):
-                if key in made:
-                    continue
-                for value in own_returns(fn):
-                    refers, name = origin(value, itself)
-                    if refers and name is not None:
-                        made[key] = name
-                        grew = True
-                        break
+                refers, name = first_origin(origin(v, itself) for v in own_returns(fn))
+                if refers and name is not None and (fn not in made or
+                                                    name in containers and made[fn] not in containers):
+                    made[fn] = name
+                    grew = True
 
-    writes, mutations, reflection = [], [], []
+    writes, mutations, reflection = [], [], sys_registry_imports
     for node in ast.walk(tree):
         scope = owner.get(id(node))
         if scope is None:
@@ -1405,7 +1498,7 @@ def module_scope_problems(tree):
                 mutations.append(node.target.id + ' ' + type(node.op).__name__ + '=@' + str(node.lineno))
         # T89 (R13, R11): sys.modules reaches the module's own namespace (sys.modules[__name__].X), and a match statement's
         # capture patterns bind names the analysis does not follow (V has neither)
-        if isinstance(node, ast.Attribute) and node.attr == 'modules' and isinstance(node.value, ast.Name) and node.value.id == 'sys':
+        if isinstance(node, ast.Attribute) and node.attr == 'modules' and 'sys' in module_origins(node.value):
             reflection.append('sys.modules@' + str(node.lineno))
         if isinstance(node, ast.Match):
             reflection.append('match@' + str(node.lineno))
@@ -1415,23 +1508,14 @@ def module_scope_problems(tree):
             if root is None or home is tree or root in imported[home] or root in alias[home]:
                 writes.append(str(root) + '@' + str(node.lineno))
         if isinstance(node, ast.Attribute) and node.attr not in READ_ONLY_METHODS:
+            _, target = origin(node.value)
             root = _pure_root(node.value)
-            if root is not None:
+            if root is not None and not isinstance(node.value, ast.Name):
                 home = resolves_to(root, scope, tree, bindings, parents)
-                target = root if home is tree else alias[home].get(root) or (holders[home].get(root) if node.value is not None and not isinstance(node.value, ast.Name) else None)
-                if target in containers:
-                    mutations.append(root + '.' + node.attr + '@' + str(node.lineno))
-            elif isinstance(node.value, (ast.BoolOp, ast.IfExp, ast.NamedExpr, ast.List, ast.Tuple, ast.Set, ast.Dict,
-                                         ast.Attribute, ast.Subscript, ast.Starred)):
-                # T64: (X or []).clear(), (X if c else []).clear(), (y := X).clear(), [X][0].clear()
-                refers, target = origin(node.value)
-                if refers and target in containers:
-                    mutations.append(ast.unparse(node.value) + '.' + node.attr + '@' + str(node.lineno))
-            elif isinstance(node.value, ast.Call):
-                # T44: f().clear() where f returns a module container
-                refers, target = origin(node.value)
-                if refers and target in containers:
-                    mutations.append(ast.unparse(node.value) + '.' + node.attr + '@' + str(node.lineno))
+                if target not in containers:
+                    target = holders[home].get(root)
+            if target in containers:
+                mutations.append((root or ast.unparse(node.value)) + '.' + node.attr + '@' + str(node.lineno))
         if isinstance(node, ast.Call):
             # T44 (cycle-13 H03): a call that receives a module container, unless its callee only reads it
             passed = [a.value if isinstance(a, ast.Starred) else a for a in node.args] + [k.value for k in node.keywords]
@@ -1464,9 +1548,9 @@ def module_scope_problems(tree):
                     if isinstance(a, ast.NamedExpr):
                         return itself_only(a.value)
                     return False
-                # (min and max hand back one of their argument's elements, or an argument itself, so they keep the bare-only
-                # rule: max(X or []) stays refused, as batch 4 had it)
-                copies = name in ('tuple', 'list', 'set', 'frozenset', 'sorted', 'dict', 'sum', 'iter', 'reversed', 'enumerate', 'zip')
+                # min and max can return their argument or an element. sum can
+                # return its start value unchanged. Even bare arguments remain refused.
+                copies = name in ('tuple', 'list', 'set', 'frozenset', 'sorted', 'dict', 'iter', 'reversed', 'enumerate', 'zip')
                 wrapped = [] if fresh else [a for a in passed if origin(a, True)[0] and not (copies and itself_only(a))]
                 by_keyword = isinstance(callee, ast.Name) and callee.id == 'dict' and any(origin(k.value, True)[0] for k in node.keywords)
                 if wrapped or by_keyword:
@@ -2333,7 +2417,7 @@ def edit_probe_source(source, label):
     if label == 'binding_class_attribute_new_function':
         return insert(cards, '    class pm_C:', '        pm_f = EVIDENCE_FIELDS', '    pm_C.pm_f.clear()')
     if label == 'binding_sys_modules_new_function':
-        return insert(cards, '    sys.modules[__name__].EVIDENCE_FIELDS.clear()')
+        return insert(cards, '    os.sys.modules[__name__].EVIDENCE_FIELDS.clear()')
     if label == 'binding_alias_iadd_new_function':
         return insert(cards, '    pm_y = EVIDENCE_FIELDS', '    pm_y += ["pm"]')
     if label == 'binding_alias_ior_new_function':
