@@ -88,8 +88,24 @@ def json_key(directory, negative):
     return storage, updated.O.A.exact_json, ({1 if negative else '1': 'fixture'},), {}
 
 
+def stored_producer(directory, negative):
+    world, goal, _, admission, _ = updated._upto(directory, 'freeze')
+    if negative:
+        # Only the appender's readback copy differs. The original append
+        # and the original receipt still run against the unchanged candidate.
+        original_read = world.producer.appender.event
+
+        def readback(handle):
+            event = original_read(handle)
+            return dict(event, correlation_id='TEST_ONLY:alternate-correlation')
+
+        world.producer.appender.event = readback
+    return world, world.producer.publish, (goal['scope'], updated.op_of(admission)), {}
+
+
 # The explicit lines match the input matrix. Validate the observed location on every run.
 CASES = {
+    'stored-producer': (OWNERS, 1807, 'dgu/producer/publish/stored_producer', stored_producer),
     'json-key': (ADAPTERS, 421, 'custody/exact_json/key', json_key),
     'storage-cas': (STORAGE, 1657, 'tx/cas_version', storage_cas),
     'terminal-kind': (OWNERS, 803, 'dgu/sir/terminal_immutable', terminal_kind),
