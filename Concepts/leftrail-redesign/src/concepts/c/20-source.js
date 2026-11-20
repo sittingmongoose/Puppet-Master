@@ -37,7 +37,7 @@ function cSrcGateTable(view) {
       h('tbody', gates.items.map(g => {
         const fact = k => ((g.facts || []).find(f => f[0] === k) || [])[1] || '';
         return h('tr', { 'data-enforcement': (g.attrs || {})['data-enforcement'] || null },
-          h('td', h('span.pmr-c-gate-name', { text: g.name }), h('span.pmr-c-gate-state', { 'data-state': g.status.state }, cGlyph(g.status, { loud: true }), h('span', { text: g.status.word }))),
+          h('td', h('span.pmr-c-gate-name', { text: g.name }), h('span.pmr-c-gate-state', { 'data-state': g.status.state }, cGlyph(g.status, { loud: true }), h('span', { class: 'pmr-part-text', text: g.status.word }))),
           h('td', { text: (g.meta || [])[0] || fact('Source') }),
           h('td', { text: fact('Enforcement') }));
       }))),
@@ -61,8 +61,8 @@ function cSrcSyncBlock(item) {
   if (!m) return null;
   return h('div.pmr-c-lens-block', cLensHeading('Against ' + (m[3] || 'its base')),
     h('div.pmr-c-sync',
-      h('div.pmr-c-sync-n', PMR.icon('arrowUp'), h('b', { text: m[1] }), h('span', { text: 'commits ahead' })),
-      h('div.pmr-c-sync-n', PMR.icon('arrowDn'), h('b', { text: m[2] }), h('span', { text: 'commits behind' }))));
+      h('div.pmr-c-sync-n', PMR.icon('arrowUp'), h('b', { class: 'pmr-part-text', text: m[1] }), h('span', { class: 'pmr-part-text', text: 'commits ahead' })),
+      h('div.pmr-c-sync-n', PMR.icon('arrowDn'), h('b', { class: 'pmr-part-text', text: m[2] }), h('span', { class: 'pmr-part-text', text: 'commits behind' }))));
 }
 
 function cSrcWtMatch(item) {
@@ -194,7 +194,7 @@ C_SPECS.source = {
     });
     eng.setAttribute('data-pmr-nav', 'menu'); eng.setAttribute('data-pmr-nav-id', 'ident:source:engine');
     const where = h('button', { type: 'button', class: 'pmr-c-idstate pmr-cur', 'data-pmr-nav': 'select', 'data-pmr-nav-id': 'ident:source:where' },
-      cGlyph(d.context.state), h('span', h('b.pmr-c-idrepo', { text: 'tastebook' }), ' · ' + d.context.lines[1].text));
+      cGlyph(d.context.state), h('span.pmr-part-text', h('b.pmr-c-idrepo', { text: 'tastebook' }), ' · ' + d.context.lines[1].text));
     PMR.hover(where, 'Where this runs', d.context.lines[0].text + ' · ' + d.context.lines[1].text + ' · ' + d.context.state.word);
     where.addEventListener('click', () => cLensShow(P, { key: '__where', el: where, kind: 'Where this runs', icon: 'monitor', label: 'tastebook', build: () => cSrcWhereDoc(P) }));
     /* Jujutsu has bookmarks, not branches: the Git branch menu is not offered while previewing Jujutsu */

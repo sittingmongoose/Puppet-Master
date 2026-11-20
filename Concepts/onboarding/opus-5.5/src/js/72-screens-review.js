@@ -288,7 +288,8 @@
   function publishProject(S, id, via) {
     const d = md(S), cm = S.sess.commit;
     const st = window.PM12_KIMI && window.PM12_KIMI.o55SettingsTransfer;
-    if (d.settings_transfer.mode === 'copy_from_project' && !cm.stagedSettings) {
+    /* (a copy whose picks carry no setting value, only things or accounts, staged nothing on purpose: 'no-change') */
+    if (d.settings_transfer.mode === 'copy_from_project' && !cm.stagedSettings && !(cm.receipts && cm.receipts.settings === 'no-change')) {
       cm.settingsPublishError = 'The required Settings preview is missing.'; return null;
     }
     const pub = PR().publishStagedSettings(st, cm, id, d);
@@ -296,8 +297,11 @@
     cm.projectId = id; cm.publishedVia = via;
     cm.receipts = cm.receipts || {};
     cm.receipts.project = via === 'fixture' ? 'fixture:project:' + id : cm.recovery.settled_effects.registry_publication.receipt_ref;
-    /* the project box's row carries where its files are and, with an online repository, its branch (B3) */
-    if (O55.shell && O55.shell.selectProject) O55.shell.selectProject(id, d.project_name, { path: filesAt(S), branch: d.forge && d.forge !== 'none' ? d.repository_default_branch : '' });
+    /* the project box's row carries where its files are and, with an online repository, its branch (B3); kept with the
+       commit as it is listed, so a reload lists it again the same (FO-222, R80 P1) */
+    const listed = { name: d.project_name, info: { path: filesAt(S), branch: d.forge && d.forge !== 'none' ? d.repository_default_branch : '' } };
+    cm.listed = listed;
+    if (O55.shell && O55.shell.selectProject) O55.shell.selectProject(id, listed.name, listed.info);
     /* the new Project starts with the look chosen here: Settings loads a new Project's own settings as it is selected
        (after this task), so the look is saved into it once that load has run (its first write also makes the Project's
        own sound setting readable: the speaker stays silent until then) */
@@ -311,8 +315,10 @@
     const d = md(S), cm = S.sess.commit, st = window.PM12_KIMI && window.PM12_KIMI.o55SettingsTransfer;
     if (!st) return 'settings_owner_missing';
     if (cm.stagedSettings) return null;
-    const cats = (S.sess.like && S.sess.like.categories) || (st.categories ? st.categories() : []);
-    const res = PR().stagePendingSettings(st, cm, d, d.settings_transfer.source_project_id, cats, { credentials: 'Keep existing destination credential ownership', conflicts: 'Preview every changed value', rollback: true, excludedSettings: ['general.visual.theme', 'general.visual.theme-mode', 'general.visual.nier-mode', 'general.visual.nier-parts', 'general.visual.nier-background'] });
+    /* exactly what Advanced left picked (FO-133): its engine categories, less every value not picked and the look */
+    const sel = O55.like.selection(S);
+    if (!sel.cats.length) { cm.receipts = cm.receipts || {}; cm.receipts.settings = 'no-change'; cm.settingsCount = 0; return null; }
+    const res = PR().stagePendingSettings(st, cm, d, d.settings_transfer.source_project_id, sel.cats, { credentials: 'Keep existing destination credential ownership', conflicts: 'Preview every changed value', rollback: true, excludedSettings: sel.excluded });
     if (res.ok) { cm.receipts = cm.receipts || {}; cm.receipts.settings = cm.stagedSettings.receipt; cm.settingsCount = cm.stagedSettings.count; cm.settingsFixture = cm.stagedSettings.fixture; return null; }
     if (/No canonical transferable values differ/i.test(res.reason || '')) { cm.receipts = cm.receipts || {}; cm.receipts.settings = 'no-change'; cm.settingsCount = 0; return null; }
     cm.settingsError = res.reason || 'unknown';

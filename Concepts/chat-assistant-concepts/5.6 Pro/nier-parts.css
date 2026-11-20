@@ -51,20 +51,25 @@ html[data-o55-nier-parts~="cursor"] .qs-mention-item[aria-selected="true"] {
    The pointer's paper text keys on o55np-cur-over, which nier-parts.js puts on the hovered item, not on
    ":hover :where(*)": a :hover descendant rule restyled the whole hovered subtree on every pointer move (PMConcept7
    fr-cursor, about 111 ms per move, NieR on or off). The bar itself, .active, :focus-visible and the selected
-   mention keep their own selectors. */
+   mention keep their own selectors.
+   The chosen and focused rows name their parts by class (every part those rows' builders draw: menu rows'
+   .menu-icon/.menu-copy/.menu-ttl/.menu-sub/..., model rows', effort rows'; glyphs .nx and parts): a `:where(*)` after
+   .active or :focus-visible made Chrome's page-wide .active and :focus-visible sets "whole subtree", so every .active
+   change anywhere (a page, tab or menu switch) restyled the changed element's whole subtree (lane J, 2026-11-11). A
+   mention row holds its words only, so its aria-selected `:where(*)` reached nothing and is gone. A thread row's
+   status mark varies with the variant and the host, so that row keeps :where(*) (named in PMConcept7's build lint). */
 html[data-o55-nier-parts~="cursor"] .menu-item.o55np-cur-over :where(*),
-html[data-o55-nier-parts~="cursor"] .menu-item.active :where(*),
-html[data-o55-nier-parts~="cursor"] .menu-item:focus-visible :where(*),
+html[data-o55-nier-parts~="cursor"] .menu-item.active :where(.menu-icon, .menu-copy, .menu-ttl, .menu-sub, .shortcut, .chevron, .check, .checked, .bsd-live, .af-checkbox, .meta-pill, .nx, .nx-h, .nx-c, .nx-p, .nx-bolt, .fast-bolt),
+html[data-o55-nier-parts~="cursor"] .menu-item:focus-visible :where(.menu-icon, .menu-copy, .menu-ttl, .menu-sub, .shortcut, .chevron, .check, .checked, .bsd-live, .af-checkbox, .meta-pill, .nx, .nx-h, .nx-c, .nx-p, .nx-bolt, .fast-bolt),
 html[data-o55-nier-parts~="cursor"] .thread-row.o55np-cur-over :where(*),
 html[data-o55-nier-parts~="cursor"] .thread-row.active :where(*),
 html[data-o55-nier-parts~="cursor"] .model-row.o55np-cur-over :where(*),
-html[data-o55-nier-parts~="cursor"] .model-row.active :where(*),
+html[data-o55-nier-parts~="cursor"] .model-row.active :where(.provider-mark, .nx-brand, .model-copy, .pm56-model-name, .nx-bolt, .fast-bolt, .model-sub, .model-account, .effort-words, .effort-word, .effort-sep, .favorite, .nx, .nx-h, .nx-c, .nx-p),
 html[data-o55-nier-parts~="cursor"] .effort-row.o55np-cur-over :where(*),
-html[data-o55-nier-parts~="cursor"] .effort-row.active :where(*),
+html[data-o55-nier-parts~="cursor"] .effort-row.active :where(.effort-dot, .effort-lbl, .nx-bolt, .fast-row-bolt, .nx, .nx-h, .nx-c, .nx-p),
 html[data-o55-nier-parts~="cursor"] .pm-tops-item.o55np-cur-over :where(*),
 html[data-o55-nier-parts~="cursor"] .att-source-row.o55np-cur-over :where(*),
-html[data-o55-nier-parts~="cursor"] .qs-mention-item.o55np-cur-over :where(*),
-html[data-o55-nier-parts~="cursor"] .qs-mention-item[aria-selected="true"] :where(*) {
+html[data-o55-nier-parts~="cursor"] .qs-mention-item.o55np-cur-over :where(*) {
   color: inherit !important; -webkit-text-fill-color: currentColor; --nx-ink: var(--o55-nier-on-ink);
 }
 html[data-o55-nier-parts~="cursor"] .menu-item.o55np-cur-over .menu-icon,

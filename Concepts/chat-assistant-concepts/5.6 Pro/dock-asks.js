@@ -161,12 +161,18 @@
   /* An owner that must decide at once (browser capture's policy guard runs inside the action it holds) asks whether a
      grant already covers a call: if one does, the one-line receipt is written now and the call goes ahead unasked. */
   function covered(o) {
-    var a = make(o || {}), g = grantFor(a);
+    var g = grantOf(o);
     if (!g) return false;
-    var ctx = EXT.ctx && EXT.ctx(), t = tool(a), title = (g.scope === 'session' ? 'Allowed by this session’s grant: ' : 'Allowed by your rule: ') + t.verb;
+    noteGrant(o, g);
+    return true;
+  }
+  /* the grant that covers a call, with no receipt (an owner that combines several checks writes them only when the
+     whole operation goes ahead: browser capture's capabilities, FO-128 C1), and that grant's one-line receipt */
+  function grantOf(o) { return grantFor(make(o || {})); }
+  function noteGrant(o, g) {
+    var a = make(o || {}), ctx = EXT.ctx && EXT.ctx(), t = tool(a), title = (g.scope === 'session' ? 'Allowed by this session’s grant: ' : 'Allowed by your rule: ') + t.verb;
     if (ctx && ctx.addReceipt) ctx.addReceipt('permission-answer', title, (a.target ? a.target + ' · ' : '') + 'matches ' + g.pattern + '. Nothing was asked.');
     announce(title);
-    return true;
   }
   function find(id) { for (var i = 0; i < asks.length; i++) if (asks[i].id === id) return asks[i]; return null; }
   function patternOf(a) { var p = a.ui.pattern != null ? a.ui.pattern : a.suggested; return String(p).trim() || a.suggested; }
@@ -401,5 +407,5 @@
     if (back) { e.preventDefault(); e.stopPropagation(); back.click(); }
   }, true);
 
-  window.PM56_ASKS = { ask: ask, ensure: ensure, drop: drop, parts: parts, pending: pending, covered: covered, list: function () { return asks.slice(); }, grants: function () { return grants.slice(); }, suggest: suggest };
+  window.PM56_ASKS = { ask: ask, ensure: ensure, drop: drop, parts: parts, pending: pending, covered: covered, grantOf: grantOf, noteGrant: noteGrant, list: function () { return asks.slice(); }, grants: function () { return grants.slice(); }, suggest: suggest };
 })();

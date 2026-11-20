@@ -37,9 +37,9 @@
     "ts": {"type": "string", "format": "date-time"}
   },
   "$defs": {
-    "non_empty_id": {"type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
-    "non_secret_ref": {"type": "string", "minLength": 8, "maxLength": 320, "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$"},
-    "reason_code": {"type": "string", "minLength": 1, "maxLength": 96, "pattern": "^[a-z][a-z0-9_]*$"},
+    "non_empty_id": {"type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"},
+    "non_secret_ref": {"type": "string", "minLength": 8, "maxLength": 320, "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"},
+    "reason_code": {"type": "string", "minLength": 1, "maxLength": 96, "pattern": "^[a-z][a-z0-9_]*$(?![\\s\\S])"},
     "origin": {"enum": ["orchestrator", "attention_center", "dashboard", "notification_center", "api"]},
     "ref_array": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}, "maxItems": 32, "uniqueItems": true}
   }

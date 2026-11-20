@@ -52,7 +52,7 @@ body[data-theme^="retro"] .pmx-revert-files{--pmx-revert-row-h:52px;}
 .pmx-revert-file[open] .pmx-revert-show > svg{transform:rotate(180deg);}
 .pmx-revert-show-b, .pmx-revert-file[open] .pmx-revert-show-a{display:none;}
 .pmx-revert-file[open] .pmx-revert-show-b{display:inline;}
-.pmx-revert-sum:hover .pmx-revert-show > span{text-decoration:underline;text-underline-offset:3px;}
+.pmx-revert-sum:hover .pmx-revert-show > :where(.pmx-revert-show-a):is(span), .pmx-revert-sum:hover .pmx-revert-show > :where(.pmx-revert-show-b):is(span){text-decoration:underline;text-underline-offset:3px;}
 .pmx-revert-state{display:inline-flex;align-items:center;gap:6px;font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;}
 .pmx-revert-block{height:32px;min-height:32px;padding:0 10px;margin-right:-10px;border:0;background:none;color:var(--text);font:600 12px/16px var(--font-ui);white-space:nowrap;}
 .pmx-revert-block:hover{background:none;text-decoration:underline;text-underline-offset:3px;}

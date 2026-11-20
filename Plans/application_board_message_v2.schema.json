@@ -1,0 +1,1226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/application-board-message/2.0.0/schema.json",
+  "$defs": {
+    "AgentMessageApplicationV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "thread_id",
+        "crew_id",
+        "run_id",
+        "message_id",
+        "sender_agent_id",
+        "receiver_agent_id",
+        "message_kind",
+        "inline_text",
+        "blake3_payload_ref",
+        "source_sequence",
+        "created_at",
+        "subject",
+        "priority",
+        "from_platform",
+        "receiver_agent_type",
+        "to_node_id",
+        "to_lane_id",
+        "message_type",
+        "in_reply_to",
+        "read_by",
+        "resolved",
+        "context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.coordination.agent_message.application.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "crew_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "message_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "sender_agent_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "receiver_agent_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "message_kind": {
+          "enum": [
+            "status",
+            "request",
+            "reply",
+            "coordination",
+            "board"
+          ]
+        },
+        "inline_text": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 16384
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "blake3_payload_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^blake3:[0-9a-f]{64}$",
+              "minLength": 71,
+              "maxLength": 71
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+          }
+        },
+        "priority": {
+          "enum": [
+            "low",
+            "normal",
+            "high",
+            "urgent"
+          ]
+        },
+        "from_platform": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "receiver_agent_type": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "to_node_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "to_lane_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "message_type": {
+          "enum": [
+            "Question",
+            "Answer",
+            "Update",
+            "Request",
+            "Decision",
+            "Warning",
+            "Announcement"
+          ]
+        },
+        "in_reply_to": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "read_by": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "resolved": {
+          "type": "boolean"
+        },
+        "context": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "files_mentioned",
+            "operations_mentioned",
+            "sender_node",
+            "related_message_ids"
+          ],
+          "properties": {
+            "files_mentioned": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "operations_mentioned": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "sender_node": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "related_message_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "inline_text": {
+              "type": "string",
+              "format": "pm-utf8-body-16k"
+            },
+            "blake3_payload_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "inline_text": {
+              "type": "null"
+            },
+            "blake3_payload_ref": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "CrewBoardMessageStorageApplicationV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.crew_board_message.application.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/schemas/application-board-message/2.0.0/schema.json#/$defs/AgentMessageApplicationV2"
+        }
+      }
+    },
+    "OriginalCoordinationAppendSourceV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "thread_id",
+        "original_operation_id",
+        "interface_id",
+        "original_input",
+        "original_input_semantic_sha256",
+        "original_output",
+        "original_output_semantic_sha256",
+        "accepted_source_ref",
+        "accepted_source_sha256",
+        "stage_custody",
+        "source_codec_id",
+        "semantic_hash_kind",
+        "source_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.application_source.coordination_append.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "interface_id": {
+          "const": "storage.coordination_append.application@2.0.0"
+        },
+        "original_input": {
+          "$ref": "https://puppetmaster.local/schemas/application-board-message/2.0.0/schema.json#/$defs/AgentMessageApplicationV2"
+        },
+        "original_input_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_output": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_output_semantic_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accepted_source_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accepted_source_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stage_custody": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "original_intent",
+            "accepted_original_source",
+            "current_owner_and_stop_fence",
+            "canonical_pending_or_reservation",
+            "owner_commit",
+            "event_append_if_admitted",
+            "first_receipt_custody",
+            "immutable_terminal_result",
+            "canonical_or_derived_read",
+            "coherent_backup_restore",
+            "retention_release"
+          ],
+          "properties": {
+            "original_intent": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "original_operation_id",
+                "owner_method_id",
+                "request_ref",
+                "result_ref",
+                "custody_evidence"
+              ],
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_reached",
+                    "accepted",
+                    "refused",
+                    "unknown"
+                  ]
+                },
+                "original_operation_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "owner_method_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "request_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "result_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "custody_evidence": {
+                  "anyOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            },
+            "accepted_original_source": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "original_operation_id",
+                "owner_method_id",
+                "request_ref",
+                "result_ref",
+                "custody_evidence"
+              ],
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_reached",
+                    "accepted",
+                    "refused",
+                    "unknown"
+                  ]
+                },
+                "original_operation_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "owner_method_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "request_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "result_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "custody_evidence": {
+                  "anyOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            },
+            "current_owner_and_stop_fence": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "original_operation_id",
+                "owner_method_id",
+                "request_ref",
+                "result_ref",
+                "custody_evidence"
+              ],
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_reached",
+                    "accepted",
+                    "refused",
+                    "unknown"
+                  ]
+                },
+                "original_operation_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "owner_method_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "request_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "result_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "custody_evidence": {
+                  "anyOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            },
+            "canonical_pending_or_reservation": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "original_operation_id",
+                "owner_method_id",
+                "request_ref",
+                "result_ref",
+                "custody_evidence"
+              ],
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_reached",
+                    "accepted",
+                    "refused",
+                    "unknown"
+                  ]
+                },
+                "original_operation_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "owner_method_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "request_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "result_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "custody_evidence": {
+                  "anyOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            },
+            "owner_commit": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "original_operation_id",
+                "owner_method_id",
+                "request_ref",
+                "result_ref",
+                "custody_evidence"
+              ],
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_reached",
+                    "accepted",
+                    "refused",
+                    "unknown"
+                  ]
+                },
+                "original_operation_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "owner_method_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "request_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "result_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "custody_evidence": {
+                  "anyOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            },
+            "event_append_if_admitted": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "original_operation_id",
+                "owner_method_id",
+                "request_ref",
+                "result_ref",
+                "custody_evidence"
+              ],
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_reached",
+                    "accepted",
+                    "refused",
+                    "unknown"
+                  ]
+                },
+                "original_operation_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "owner_method_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "request_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "result_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "custody_evidence": {
+                  "anyOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            },
+            "first_receipt_custody": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "original_operation_id",
+                "owner_method_id",
+                "request_ref",
+                "result_ref",
+                "custody_evidence"
+              ],
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_reached",
+                    "accepted",
+                    "refused",
+                    "unknown"
+                  ]
+                },
+                "original_operation_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "owner_method_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "request_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "result_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "custody_evidence": {
+                  "anyOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            },
+            "immutable_terminal_result": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "original_operation_id",
+                "owner_method_id",
+                "request_ref",
+                "result_ref",
+                "custody_evidence"
+              ],
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_reached",
+                    "accepted",
+                    "refused",
+                    "unknown"
+                  ]
+                },
+                "original_operation_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "owner_method_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "request_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "result_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "custody_evidence": {
+                  "anyOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            },
+            "canonical_or_derived_read": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "original_operation_id",
+                "owner_method_id",
+                "request_ref",
+                "result_ref",
+                "custody_evidence"
+              ],
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_reached",
+                    "accepted",
+                    "refused",
+                    "unknown"
+                  ]
+                },
+                "original_operation_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "owner_method_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "request_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "result_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "custody_evidence": {
+                  "anyOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            },
+            "coherent_backup_restore": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "original_operation_id",
+                "owner_method_id",
+                "request_ref",
+                "result_ref",
+                "custody_evidence"
+              ],
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_reached",
+                    "accepted",
+                    "refused",
+                    "unknown"
+                  ]
+                },
+                "original_operation_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "owner_method_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "request_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "result_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "custody_evidence": {
+                  "anyOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            },
+            "retention_release": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "original_operation_id",
+                "owner_method_id",
+                "request_ref",
+                "result_ref",
+                "custody_evidence"
+              ],
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_reached",
+                    "accepted",
+                    "refused",
+                    "unknown"
+                  ]
+                },
+                "original_operation_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "owner_method_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "request_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "result_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "custody_evidence": {
+                  "anyOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "source_codec_id": {
+          "const": "pm.crew_board_message.application.physical_messagepack.v2"
+        },
+        "semantic_hash_kind": {
+          "const": "accepted_source"
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  }
+}

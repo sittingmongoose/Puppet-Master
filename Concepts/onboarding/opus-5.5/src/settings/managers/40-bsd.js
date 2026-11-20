@@ -153,9 +153,9 @@
   /* ---------- Overview ---------------------------------------------------- */
   function fallbackOptions() {
     const b = state.bsd || {};
-    /* the same signed-in models the advisor's own model picker offers */
-    const opts = (state.providers || []).filter(p => p.installed && p.signedIn && p.id !== 'free-models')
-      .flatMap(p => (p.models || []).filter(m => m.enabled).map(m => ({ value: `${p.id}::${m.id || m.name}`, label: m.name, group: p.name, icon: 'brain' })));
+    /* the same models the advisor's own model picker offers, from the one list (PM51.readyModels): it offered 10 here
+       and 13 there, free routes only there, and a picture model in both (lane-aimore 7) */
+    const opts = (PM51.readyModels ? PM51.readyModels() : []).map(x => ({ value: `${x.pid}::${x.mid}`, label: x.model, group: x.provider, icon: 'brain' }));
     let current = opts.find(o => o.label === b.fallbackModel && (!b.fallbackProvider || o.group === b.fallbackProvider)) || opts.find(o => o.label === b.fallbackModel);
     if (!current && b.fallbackModel) { current = { value: 'current::' + b.fallbackModel, label: b.fallbackModel, group: b.fallbackProvider || 'Current', icon: 'brain' }; opts.unshift(current); }
     if (!opts.length) opts.push({ value: 'none', label: 'No model available' });
@@ -220,19 +220,20 @@
     const sev = SEVERITY[f.severity] || SEVERITY.concern, st = STATES[f.state] || STATES.closed;
     const n = Number(f.reconfirmations) || 0;
     const evidence = f.evidence.length ? `<ul class="pm51-bsd-evidence">${f.evidence.map(e => `<li>${PM51.tech(e)}</li>`).join('')}</ul>` : '<p class="pm51-ps-text">No evidence references were recorded.</p>';
+    /* what a person can act on: when, and what happened since; the finding's id and the work's generation number are
+       internal references and are not shown (lane-aimore 6: "Generation 41", "Finding id: bsdf-0412") */
     const history = PM51.kv([
-      ['Raised', `${f.raised || '—'} · generation ${f.generation || '—'}`],
+      ['Raised', f.raised || '—'],
       f.delivered ? ['Delivered', f.delivered] : null,
       f.cleared ? ['Cleared', f.cleared] : null,
       f.closed ? ['Closed', `${f.closed} · ${f.closedReason || 'Closed'}`] : null,
-      ['Reconfirmed', n === 1 ? 'Once' : `${n} times`],
-      ['Finding id', f.id]
+      ['Reconfirmed', n === 0 ? 'Not yet' : n === 1 ? 'Once' : `${n} times`]
     ]);
     const opts = {
       title: f.title, eyebrow: 'Back Seat Driver finding', icon: sev.icon, cls: 'pm51-bsd-sheet',
       status: { label: st.label, tone: st.tone }, summary: f.claim,
-      facts: [{ label: 'Severity', value: sev.label }, { label: 'Stage', value: stageLabel(f.stage) }, { label: 'Raised against', value: `Generation ${f.generation || '—'} · ${f.raised || ''}` }, { label: 'Reconfirmed', value: `${n}×` }],
-      body: PM51.panelSection('Evidence', evidence, 'What the advisor pointed at when it raised this.', { icon: 'file' })
+      facts: [{ label: 'Severity', value: sev.label }, { label: 'Stage', value: stageLabel(f.stage) }, { label: 'Raised', value: f.raised || '—' }, { label: 'Reconfirmed', value: n === 0 ? 'Not yet' : n === 1 ? 'Once' : `${n} times` }],
+      body: PM51.panelSection('Evidence', evidence, 'The files, runs and records the advisor pointed at when it raised this.', { icon: 'file' })
         + PM51.panelSection('What happens next', `<p class="pm51-ps-text">${h(nextCopy(f))}</p>` + history, '', { icon: 'clock' })
     };
     if (f.state === 'held') {
@@ -242,7 +243,8 @@
       opts.onSecondary = () => { confirmDismiss(f.id); return true; };
     } else if (f.state === 'emitted') {
       opts.primaryLabel = 'Open in chat';
-      opts.onPrimary = () => { PM51.unavailable('Open in chat', 'cmd.bsd.finding.open is not registered yet, so this preview cannot jump to the advice card.'); return false; };
+      /* said in the person's words, not the command's name (lane-aimore 10) */
+      opts.onPrimary = () => { PM51.unavailable('Open in chat', 'The advice card is in the chat of the run that raised it. This preview has no record of that chat to open.'); return false; };
       opts.secondaryLabel = 'Dismiss';
       opts.onSecondary = () => { confirmDismiss(f.id); return true; };
     }
@@ -295,11 +297,10 @@
   PM51.on('bsd-finding', el => openFinding(ds(el, 'id')));
   PM51.on('bsd-diagnostics', () => PM51.check({ title: 'Back Seat Driver check', steps: [
     { title: 'Settings readable', desc: 'All nine advisor settings resolved for this project' },
-    { title: 'Stages', desc: `${stagesOn(data())} of ${data().stages.length} watched · stored as ${bindingList(data()).slice(0, 3).join(', ')}…` },
+    { title: 'Stages', desc: `${stagesOn(data())} of ${data().stages.length} watched` },
     { title: 'Advisor model reachable', desc: 'Checked through Providers & Accounts', status: 'Example', tone: 'info' },
-    { title: 'Session epoch', desc: 'A fresh session starts when model, account, or persona changes', status: 'Example', tone: 'info' },
-    { title: 'Held findings kept outside the transcript', desc: 'They survive advisor compaction and restart', status: 'Example', tone: 'info' },
-    { title: 'Commands', desc: 'cmd.bsd.set is registered; opening a finding in chat and the advisor transcript are not yet', status: 'Example', tone: 'info' }
+    { title: 'A fresh advisor conversation when needed', desc: 'It starts again when its model, account or way of talking changes', status: 'Example', tone: 'info' },
+    { title: 'Held findings kept safe', desc: 'Kept apart from its conversation, so they survive it being shortened or restarted', status: 'Example', tone: 'info' }
   ] }));
   PM51.on('bsd-reset', () => PM51.confirm('Reset Back Seat Driver defaults?', 'Mode returns to Auto, the advisor to the automatic model and the Critical Advisor persona, spending and its backup model to the example, and the stages to their defaults. Findings are kept.', 'Reset', () => {
     KEYS.forEach(k => { const f = found(k); if (f) restoreSettingDefault(f.setting.id); });

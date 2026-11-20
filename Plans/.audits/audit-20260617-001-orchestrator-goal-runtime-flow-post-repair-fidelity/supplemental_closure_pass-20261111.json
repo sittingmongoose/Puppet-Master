@@ -1,0 +1,327 @@
+{
+  "audit_id": "audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity",
+  "closures": [
+    {
+      "appended_matrix_line": 1,
+      "appended_matrix_sha256": "599daf5f3d5fbd4b05b6c31ecaf20dd703ef51bd5501691fab25e20b9113c019",
+      "appended_registry_line": 1153,
+      "appended_registry_sha256": "9719d2bba1d5273678ed0ea92f1ac2fe28a684134e94bba8dcc59048d888b006",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 16
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity/build_audit_artifacts.py": "b72fa2dcba0f35268a96b2d83805dace37c95f24e7e7a8852cb21e4c50ab5850",
+        "Plans/Goal_Runtime_System.md#unit=GRS-002": "b15cbe1426ef358b4b01e3bbf9cb46575a77eb849b9e8c700d25447819ab5465",
+        "Plans/Goal_Runtime_System.md#unit=GRS-019": "024a9ee9d3c0e92bf82a178ac8d400746d8b1e435f549de8cf3ce86e3b799887",
+        "Plans/Goal_Runtime_System.md#unit=GRS-026": "5c1e5dcd81c5c49c41d1b257b63a3088905da6886dee8aedb0d1a1fe01c6acf7",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0089": "ced6db572cac391005fc998b0c435f1adc19fc5cf282221bc8a199feddee91eb"
+      },
+      "finding_key": "sfk-069f7e3001de684b6ce13ea8",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity-semantic-risks-jsonl-16",
+      "reviews": {
+        "astra": {
+          "batch": "S05",
+          "file": "supplemental/batches/S05/review-astra-r1.jsonl",
+          "packet_row_digest": "3ab6ab968866114b89e1d55d3dab7a295162f2d8609e5136cc5709d74f5eaaf8",
+          "reason": "Accepted GRS-019 explicitly handles ordinary ambiguity autonomously and rejects manual decisions merely because work is large. GRS-002 and GRS-026 connect Orchestrator to that shared runtime; the audit's compiled-unit-limited search and YAML-stripped prose view omitted the applicable owner unit.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S05",
+          "file": "supplemental/batches/S05/review-sol-r1.jsonl",
+          "packet_row_digest": "b98cf94fef574c93b85c91ed77859b170869b5027f58f9869885509bc675f932",
+          "reason": "GRS-019 explicitly preserves ordinary ambiguity and autonomous large-work recovery for the shared Goal runtime. The audit matcher restricts unit coverage to each atom's compiled_output_plan_unit_ids and strips YAML from fallback prose, explaining why it missed the valid GRS-019 coverage outside atom-0089's target list.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 2,
+      "appended_matrix_sha256": "b2fab82d378158eb92e68793718b3284c2775c007c98a772ac32373fe386513b",
+      "appended_registry_line": 1154,
+      "appended_registry_sha256": "ba77be98ddb69c601b8a762d3051aa6322bda461ef3be29ebd35cf3627df7e07",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 19
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity/repair_report.json": "d81a7cca56c34edd84cd9083256265ed019c5625877e82f13c34bbfee88d5549",
+        "Plans/Planning_Ledger_System.md#unit=PLS-013": "2f64f3058760043ca8631088b9ca658c53c8595384b008b4a70413a289864015",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0097": "22e39b9da060926bf6a10ef07aa3379f4138fd0b4875e8bc166631b151019175",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_impact_matrix.json#json=/docs/0/compile_status": "ace75b72456bf7d62c20b5b9037dcbc3e6d9fe3102307c97a1a7bf7f9cbdb4bc",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_impact_matrix.json#json=/rules": "82c4f9310d4939fab9183702322b346dc9ca62b9de4ad1b32b8a78798bfc62e0",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_impact_matrix.json#json=/status": "c92cf6612b30238f38909054905df596e740ca815d019ad86158a83c47d1a01f"
+      },
+      "finding_key": "sfk-3d85086e1adcc20e366cfa65",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity-semantic-risks-jsonl-19",
+      "reviews": {
+        "astra": {
+          "batch": "S05",
+          "file": "supplemental/batches/S05/review-astra-r1.jsonl",
+          "packet_row_digest": "24ffddfaf73d98b89ae136023c0e4ca0ec0cf640f256012335aeff0819bfb36e",
+          "reason": "The P0/P1/P2 ranking belongs to the completed compile's doc-impact snapshot, explicitly marked source memory, rather than a live product ranking. PLS-013 preserves the reusable owner/consumer/reference coverage contract, and the audit repair expressly dispositions these matrix field names as ledger/state material.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "source_lineage_only",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S05",
+          "file": "supplemental/batches/S05/review-sol-r1.jsonl",
+          "packet_row_digest": "24ffddfaf73d98b89ae136023c0e4ca0ec0cf640f256012335aeff0819bfb36e",
+          "reason": "Atom-0097's P0/P1/P2 matrix describes the completed Orchestrator compile snapshot, which the ledger explicitly marks as source memory rather than an active compile candidate. PLS-013 retains the general doc_impact_matrix owner/consumer/reference coverage rule, so the historical priority labels do not leave a live product-prose defect.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "source_lineage_only",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 3,
+      "appended_matrix_sha256": "ef10e666bfc76116c1081dbd6438bfe1efec418e8c7c357afa7a3a31f272ee36",
+      "appended_registry_line": 1155,
+      "appended_registry_sha256": "ab1d9a56115e0f27c0cdd0f30c9179e25877e0cb5641847ac01c0fb54bb526da",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 20
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/FinalGUISpec.md#unit=F3-395": "e1576655a77f807255490f936c07e1d0f1bf5bdd4db06320346e8cc758757681",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0098": "be3297b6d0caf6b40d78afc9cbafbc73d55fced6a012c9408106496279c10105"
+      },
+      "finding_key": "sfk-d19e45efb9e4c38beeb16071",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity-semantic-risks-jsonl-20",
+      "reviews": {
+        "astra": {
+          "batch": "S05",
+          "file": "supplemental/batches/S05/review-astra-r1.jsonl",
+          "packet_row_digest": "47569c3cde604d557fb42f0efa7f47f3ead7e24d413165646b662a242db8caa2",
+          "reason": "F3-395 now uses gui_impact_matrix directly in its canonical surface contract and names the affected surfaces in acceptance criteria. This restores the specific matrix-name finding without claiming the separately audited per-surface content gaps are all repaired.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S05",
+          "file": "supplemental/batches/S05/review-sol-r1.jsonl",
+          "packet_row_digest": "47569c3cde604d557fb42f0efa7f47f3ead7e24d413165646b662a242db8caa2",
+          "reason": "Accepted F3-395 now names gui_impact_matrix in canonical_text and preserved_exact_tokens, and its acceptance criteria require the named GUI surface placements. That directly repairs the missing field/token finding and retains lineage to atom-0098.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 4,
+      "appended_matrix_sha256": "0d7c105a0491e985016ca9a87d880e60d7876888b141574d7877f3bd0cde3fc9",
+      "appended_registry_line": 1156,
+      "appended_registry_sha256": "71291d3fa2bc2b7de2912eda08fa4d46b9a4bf61467e5d61026a850b2c991047",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 21
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Planning_Ledger_System.md#unit=PLS-011": "4a03a9d7e0b4d027416f760e3ff876c85796aebdbca49162cc4facdd583ae101",
+        "Plans/Planning_Ledger_System.md#unit=PLS-013": "2f64f3058760043ca8631088b9ca658c53c8595384b008b4a70413a289864015",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0099": "dc87bc53a4d941c5fa7f87257746fa729758cf3d805b32000735be45f3be8579"
+      },
+      "finding_key": "sfk-d71177c7679eceff992b3881",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity-semantic-risks-jsonl-21",
+      "reviews": {
+        "astra": {
+          "batch": "S05",
+          "file": "supplemental/batches/S05/review-astra-r1.jsonl",
+          "packet_row_digest": "b9a9ac6d38f56e4b01af96febb5fe2ccbfa46b6ed1e871e3bf0b90dc4a7d42e9",
+          "reason": "PLS-013 names doc_impact_matrix as a declared required compile input, closing the missing-field finding. PLS-011 preserves candidate_compile_plan and compile_queue.items while forbidding fabricated compiled PlanUnit IDs, which is consistent with the source atom's precompile boundary.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S05",
+          "file": "supplemental/batches/S05/review-sol-r1.jsonl",
+          "packet_row_digest": "b9a9ac6d38f56e4b01af96febb5fe2ccbfa46b6ed1e871e3bf0b90dc4a7d42e9",
+          "reason": "PLS-013 now explicitly defines doc_impact_matrix and requires declared matrix inputs at compile time. Together with PLS-011's preservation of candidate_compile_plan/compile_queue.items and prohibition on invented compiled IDs, this supports closure of the row's missing doc_impact_matrix field coverage.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 5,
+      "appended_matrix_sha256": "66a27969469f0d062504915be02bd14f4d7f07e9d3885a4a2dc000188a15a93e",
+      "appended_registry_line": 1188,
+      "appended_registry_sha256": "90a300b8ce82f90dc2b6292d62795ecd74b072025b01bfca0eaaabe3d70da620",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 3
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Contracts_V0.md#unit=CV-288": "30cb2e62a81553c7e38b2e605ba3ada9f9ad675b268352f2a5ac9948ae7fa917",
+        "Plans/Goal_Runtime_System.md#unit=GRS-027": "56d4d5ffa81b932ef7fc3cdd2a6a59f440ff399d0ffe17c0704b890afe71b85f",
+        "Plans/Orchestrator_Page.md#unit=OP-022": "601dddb429e0919be41d42f8a14831330e6add5fcedb9688bb9ec1ed88cc8f0a",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0020": "3e7ef5e92a316a0d032ab0569222773d16d4813c252ea2f9e0cb3e46f5d04eac",
+        "Plans/storage-plan.md#unit=SP-215": "18e35ab12e9294f9235657b66050f3da43b429f20d927553d83be6da49943d73"
+      },
+      "finding_key": "sfk-78afa7e22da80a9adf7b80f3",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity-semantic-risks-jsonl-3",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "cd70c30b72ce2f5836dd3b3ea749c5785865029f8b6929c8d09ae016e7b16314",
+          "reason": "VerificationFinding is now present in accepted CV-288 and SP-215 canonical VerificationCycle text, rather than only in metadata. The current contract also defines DefectBundle as grouping typed VerificationFindings, and execution/repair behavior remains with execution owners after GRS-027 retirement.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "cd70c30b72ce2f5836dd3b3ea749c5785865029f8b6929c8d09ae016e7b16314",
+          "reason": "VerificationFinding now appears in governed CV-288 and SP-215 prose as typed details within the VerificationCycle contract and stored record. OP-022 also names DefectBundles and RepairWorkNodes as projections; this is an active-owner repair rather than token-only preservation in retired GRS-027.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 6,
+      "appended_matrix_sha256": "b140cb5490b56f2ff4564d7a8733521c0e28b8c0d4364dfe7d1a319b8e4447fb",
+      "appended_registry_line": 1189,
+      "appended_registry_sha256": "3d007f9c648de2556da3de982b8732905713fe93a42a8e532b30dc4db4ef3465",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 5
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Goal_Runtime_System.md#unit=GRS-027": "56d4d5ffa81b932ef7fc3cdd2a6a59f440ff399d0ffe17c0704b890afe71b85f",
+        "Plans/Goal_Runtime_System.md#unit=GRS-049": "c1950e71741a02e7ec92a3a8efbbe432baa29d7fed5101cb7227ab98ddd3f352",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0035": "b87f9f15eb8af00f64eac3fa04b0d7a0c573425d2f18a6f0ae42bae8062da8b4",
+        "Plans/orchestrator-subagent-integration.md#unit=OSI-428": "866fdffefbaf60e3a10567b2ce47786b52908169fe744c8eee382c15c3bfa66b"
+      },
+      "finding_key": "sfk-906a8f0c20ad3dcc57adb18f",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity-semantic-risks-jsonl-5",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "44e4a71b4c7ce74fccc966bc17eebe64adc902d4a2c3fa02caf1aedca4296d8c",
+          "reason": "The exact controller token appears in OSI-428 canonical role text and preserved tokens, with direct atom-0035 lineage. GRS-049 retires a mandatory Goal-specific cast without retiring the Orchestrator owner's distinct routing and certification roles.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "44e4a71b4c7ce74fccc966bc17eebe64adc902d4a2c3fa02caf1aedca4296d8c",
+          "reason": "OSI-428 carries controller and the other eight roles in active canonical prose and preserved tokens, with direct atom-0035 lineage. GRS-049 retires a mandatory Goal-owned role cast, not the workflow-owned routing roles.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 7,
+      "appended_matrix_sha256": "63026a59b26a6b879ce54c09150013f75b312d56c64f6026b4383c1fbbe68153",
+      "appended_registry_line": 1190,
+      "appended_registry_sha256": "ad50f0b9a215673835357f167d774e2e62223763c79688b8bbe288fa6f5b545d",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 26
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Contracts_V0.md#unit=CV-288": "30cb2e62a81553c7e38b2e605ba3ada9f9ad675b268352f2a5ac9948ae7fa917",
+        "Plans/Orchestrator_Page.md#unit=OP-022": "601dddb429e0919be41d42f8a14831330e6add5fcedb9688bb9ec1ed88cc8f0a",
+        "Plans/storage-plan.md#unit=SP-215": "18e35ab12e9294f9235657b66050f3da43b429f20d927553d83be6da49943d73"
+      },
+      "finding_key": "sfk-184de4a39c198494d54445e4",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity-semantic-risks-jsonl-26",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "e9e75c8770e4f8e0355552dddb8a3ab64138d7e460320672d82e5105bc17c8c0",
+          "reason": "CV-288 and SP-215 explicitly restrict VerificationCycle.status to failed | passed | blocked while naming the eleven broader values as GoalRun/WorkNode projections. SP-215 additionally forbids persisting those broader lifecycle values as VerificationCycle.status, and OP-022 maintains the same projection distinction.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "e9e75c8770e4f8e0355552dddb8a3ab64138d7e460320672d82e5105bc17c8c0",
+          "reason": "CV-288 and SP-215 explicitly limit VerificationCycle.status to failed | passed | blocked and identify the larger enum as GoalRun/WorkNode projection values. SP-215 forbids storing those projection values as VerificationCycle.status, and OP-022 maintains the same distinction.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    }
+  ],
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-334",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "route": "new_registry_row",
+    "source": "Jared, \"approve all\", T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z (stream C question 7, option (a)); extended to the other June audits with uncovered rows by pm7-build's relay of the same approved option (pm-mail 1105030457-ade2, 2026-11-05)"
+  },
+  "matrix": {
+    "original_rows": 0,
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "pass_id": "audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity-supplemental-20261111",
+  "reviews": "Sol and Astra blind reviews are listed on each closures entry (verdict, your_verdict, your_status, packet_row_digest, batch file)",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}

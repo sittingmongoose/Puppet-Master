@@ -9,7 +9,7 @@
   },
   "system.health.run-doctor": {
    "label": "Check everything",
-   "help": "Checks every group once; nothing is changed or installed.",
+   "help": "Checks every area once; nothing is changed or installed.",
    "pm51": "pm51-doctor-check-all",
    "actionLabel": "Check everything"
   },
@@ -55,7 +55,7 @@
   "system.health.platform-diagnostics": {
    "label": "Collect support details",
    "help": "Computer and install details, with secrets removed.",
-   "pm51": "pm51-doctor-copy",
+   "pm51": "pm51-doctor-diagnostics",
    "actionLabel": "Collect support details"
   },
   "general.startup.onboarding": {

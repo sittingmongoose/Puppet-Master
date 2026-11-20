@@ -1,0 +1,517 @@
+{
+ "schema_id": "pm.ea.merge2.readiness.v1",
+ "base": "34b1b0e811bb2bd3c737ca6e2c668cc1664202df",
+ "status": "pass",
+ "predecessor_input": {
+  "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+  "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792"
+ },
+ "current_selector_schema": {
+  "path": "Plans/event_family_registry.schema.json",
+  "sha256": "6a24ffad08776bde30061d560f25100f8bc43439c797d25c83f1c9af04c57cbe"
+ },
+ "counts": {
+  "ready": 1,
+  "blocked": 0
+ },
+ "ready_by_lane": {
+  "DT": 1
+ },
+ "ready": [
+  {
+   "event_type": "usage.event",
+   "family_id": "event-family-usage-event",
+   "family_revision": "1.0.0",
+   "current_owner_units": [
+    "CV-614",
+    "SP-594",
+    "ATS-297"
+   ],
+   "cells": {
+    "membership_version": {
+     "status": "ABSENT",
+     "representation": "absent",
+     "finding": "Membership remains ABSENT; no registry or admission record was written.",
+     "evidence": [
+      {
+       "path": "Plans/dt_event_contracts.json",
+       "unit": "root",
+       "line_start": 4,
+       "line_end": 4,
+       "quote": "\"admission_status\": \"ABSENT\""
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-614/SP-594 govern this exact family independently.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-614",
+       "line_start": 35437,
+       "line_end": 35437,
+       "quote": "Newly authored owner contract under DL-045 for usage.event@1.0.0 only",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35429-35471",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ]
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact original-owner/source custody, prepare/outcome/publication and SP-286/CV-339 receipt ordering remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-594",
+       "line_start": 39206,
+       "line_end": 39206,
+       "quote": "For usage.event alone, the newly authored original-source custody",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-594, Plans/storage-plan.md:39151-39391",
+       "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac"
+      }
+     ]
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact closed payload/source schemas and 41 Storage mirrors validate; every patterned identifier is guarded by exact length or full-match termination and trailing-LF refusal cases. Sweep part 2B: every format: date-time field of the payload, sources and checkpoint runs the shared registered CV-1101 predicate (EventRecord profile; 7 owner-valid forms accepted and 15 malformed forms refused per populated field), and every integer slot takes only an exact integer through the shared current_integer within its own owner bounds (integral floats and values past the maximum refused).",
+     "evidence": [
+      {
+       "path": "Plans/dt_event_contracts.schema.json",
+       "unit": "Plans/dt_event_contracts.schema.json#/$defs/usage_event",
+       "line_start": 6006,
+       "line_end": 6006,
+       "quote": "\"const\": \"pm.event_payload.usage_event.v1\"",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213"
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 198,
+       "line_end": 198,
+       "quote": "DATE_TIME_FORMAT = format_checker(profile=EVENT_RECORD)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 214,
+       "line_end": 214,
+       "quote": "Draft202012Validator, type_checker=Draft202012Validator.TYPE_CHECKER.redefine('integer', exact_integer_type))",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-614",
+       "line_start": 35447,
+       "line_end": 35447,
+       "quote": "For usage.event alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35429-35471",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ]
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "F4: source null proves optional absence; Project/app absent-account, unknown/local/CLI positives and fabricated/changed-account negatives pass.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-614",
+       "line_start": 35445,
+       "line_end": 35445,
+       "quote": "immutable before.account_id, billing_entity_id and provider_account_ref are required nullable source slots.",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35429-35471",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ]
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Original full-value retry/conflict custody remains; both current writer and retry refuse projector_replay_only as replay_only_not_appendable. Sweep part 2B: the producer digest is the shared producer_semantic_digest over the unchanged CV-317 projection (pinned bytes unchanged), and the current writer qualifies it before append: an exact integer the JCS route cannot preserve (2^53+1, 2^60, u64 max, a 4,400-digit integer) refuses number_domain at SV36 and the retry route has no digest (AM02); 2^53 is accepted; retained originals with those integers stay readable through SP-1101 custody (F16 closed).",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-614",
+       "line_start": 35444,
+       "line_end": 35444,
+       "quote": "For usage.event alone, current writer and retry paths refuse",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35429-35471",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 515,
+       "line_end": 515,
+       "quote": "return pm_event_numbers.producer_semantic_digest(event)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 882,
+       "line_end": 882,
+       "quote": "yield 'src_replay', {'historical': historical, 'replay_policy': event['replay_policy'], 'producer_refusal': producer_refusal(event)}",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-614",
+       "line_start": 35447,
+       "line_end": 35447,
+       "quote": "For usage.event alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35429-35471",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ]
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Signed E8-1 option A resolves the `usage.event` history binding: select the existing `ai.usage.usage-retention` setting under SP-341/UF-108, not a fixed ordinary-telemetry policy. The setting remains 90 days by default with its existing allowed choices. For each Project or application entry, `retention_binding.setting_key = ai.usage.usage-retention`, `retention_binding.anchor = first_durable_save`: the first successful save of that exact entry that survives a restart supplies the immutable anchor. Retry, replay, reprocessing, compaction, backup restore and later settlement/correction of the entry never reset that anchor; a genuinely separate entry has its own first-save anchor. Read the configured window and apply it from that preserved anchor in both seglog and Parquet; unlimited means no age expiry. If the original anchor or setting cannot be authenticated, refuse expiry rather than substitute occurrence, observation, source-result, run-finish or recovery time. There is no count eviction. Daily account/provider/model totals remain canonical, backed up and permanent; commit their accounting before detail cleanup and never rebuild them from expired detail. Holds, required references, recovery, rollback and protected backups still block deletion. This is the existing setting-driven policy selector, not a newly minted policy ID. The separate original source rows keep their exact DL-507 assignments; no source-row lifetime is transferred from this event answer. `PENDING_RETENTION_BINDING` is resolved for this event; separate admission, storage implementation and native proof remain required.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-594",
+       "line_start": 39349,
+       "line_end": 39349,
+       "quote": "\\ = ai.usage.usage-retention`, `retention_binding.anchor = first_durable_save`: the first successful\\",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-594, Plans/storage-plan.md:39151-39391",
+       "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-594",
+       "line_start": 39360,
+       "line_end": 39360,
+       "quote": "\\ anchor=first_durable_save, anchor_immutable=true and owner_ref=Plans/storage-plan.md#SP-594, with no policy_id or policy_version. The separate original source rows keep their exact DL-507 assignments; no source-row lifetime\\",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-594, Plans/storage-plan.md:39151-39391",
+       "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac"
+      }
+     ]
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Redacted metadata, permission-checked references and coherent original source/receipt backup closure remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-594",
+       "line_start": 39232,
+       "line_end": 39234,
+       "quote": "Source\\\n  \\ stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory\\\n  \\ coherent backup closure.",
+       "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-594, Plans/storage-plan.md:39151-39391"
+      }
+     ]
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact-family original before/outcome predicates and publication barrier are checked, with no repeated side effects.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-614",
+       "line_start": 35442,
+       "line_end": 35442,
+       "quote": "For usage.event alone, the explicit lifecycle transition is",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35429-35471",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ]
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact-family SP-278 adoption and complete globally examined prefix/CAS remain; full-string token hashes and source Storage identity are now enforced, including a coherent foreign-token negative.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-594",
+       "line_start": 39240,
+       "line_end": 39240,
+       "quote": "For usage.event alone, its SP-278/DL-076 checkpoint",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-594, Plans/storage-plan.md:39151-39391",
+       "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac"
+      },
+      {
+       "path": "scripts/pm_dt_table_cp_token.py",
+       "unit": "CP14_token_storage",
+       "line_start": 20,
+       "line_end": 20,
+       "quote": "def CP14_token_storage(value, context):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "3ffbb77f1d1cebde79dcad3337caf1c9909400c6711478d09f5f15d1f4b361fc"
+      }
+     ]
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Version/withdrawal/read gates and governed source rebuild remain; no zero reset or history rewrite. Sweep part 2B (SP-1101): the historical reader resolves the sealed original and its frozen recipe and resources through the shared RetainedDispatcher for the binding the record claims (HR13); no caller-supplied original, flag or schema selects or narrows the recipe, and owner-valid broad timestamps stay readable with their exact spelling.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-594",
+       "line_start": 39194,
+       "line_end": 39195,
+       "quote": "Withdrawal first cuts off this family's\\\n  \\ append admission",
+       "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-594, Plans/storage-plan.md:39151-39391"
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 1224,
+       "line_end": 1224,
+       "quote": "custody = _CUSTODY['dispatcher'].resolve(original_ref(completed, event), binding, disclose=lambda b: True)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-614",
+       "line_start": 35447,
+       "line_end": 35447,
+       "quote": "For usage.event alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35429-35471",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ]
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "integrated_criterion12_delta",
+     "finding": "Exact-family C12 PASS from reports/event-authority-20261114/C12-DT-self-grade.json",
+     "evidence": [
+      {
+       "line_end": 9311,
+       "line_start": 9311,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "For usage.event alone, round-1 fixtures refuse",
+       "unit": "ATS-297",
+       "quote_check": "exact",
+       "quote_scope": "unit ATS-297, Plans/Automated_Testing_System.md:9298-9336",
+       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+      },
+      {
+       "line_end": 157708,
+       "line_start": 157708,
+       "path": "Plans/dt_event_contract_fixtures.json",
+       "quote": "\"producer_semantic_digest\": \"254357fd3346f20821dfb45d310dd4aad1793f0c4d3df688c6ef2787f085a4d9\"",
+       "unit": "usage.event retry_oracle",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365"
+      },
+      {
+       "line_end": 39270,
+       "line_start": 39270,
+       "path": "Plans/storage-plan.md",
+       "quote": "For usage.event, boolean authority/context flags are exact booleans",
+       "unit": "SP-594",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-594, Plans/storage-plan.md:39151-39391",
+       "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac"
+      },
+      {
+       "line_end": 2572,
+       "line_start": 2572,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def family_checks(c, inputs, check):",
+       "unit": "complete original suite",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+      },
+      {
+       "line_end": 1388,
+       "line_start": 1388,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def retained_custody_checks(c, f, schemas, check):",
+       "unit": "sealed receipt and store",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+      },
+      {
+       "line_end": 242,
+       "line_start": 242,
+       "path": "scripts/pm_dt_c12_schema.py",
+       "quote": "def schema_witnesses(dt, inputs, out):",
+       "unit": "whole-definition covering",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "95ecbab453e7816c3fe3fa6863a6ae0aab2cf0a238636cdd52a7e62af99a8870"
+      },
+      {
+       "line_end": 44,
+       "line_start": 44,
+       "path": "scripts/pm-dt-c12-closure.py",
+       "quote": "check(schema['uncontrolled_rules'] == 0",
+       "unit": "coverage control",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "fedacd8204d3579d61670ce2156b078fd3e2325b18ea7e74c1457b00eee96404"
+      },
+      {
+       "line_end": 2260,
+       "line_start": 2260,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def number_corpus_checks(c, f, schemas, check):",
+       "unit": "shared numbers",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+      },
+      {
+       "line_end": 2111,
+       "line_start": 2111,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def datetime_checks(c, f, schemas, check):",
+       "unit": "shared datetime",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+      }
+     ]
+    }
+   },
+   "lane": "DT",
+   "grade_source": {
+    "path": "reports/event-authority-20261104/DT-self-grade.json",
+    "sha256": "23292db0e1ab4aef9b88a1cf68e235fa766513b6986c98a0cd88ed4dca9c5488"
+   },
+   "cell_sources": {
+    "membership_version": {
+     "path": "reports/event-authority-20261104/DT-self-grade.json",
+     "sha256": "23292db0e1ab4aef9b88a1cf68e235fa766513b6986c98a0cd88ed4dca9c5488"
+    },
+    "owner_doc": {
+     "path": "reports/event-authority-20261104/DT-self-grade.json",
+     "sha256": "23292db0e1ab4aef9b88a1cf68e235fa766513b6986c98a0cd88ed4dca9c5488"
+    },
+    "producer": {
+     "path": "reports/event-authority-20261104/DT-self-grade.json",
+     "sha256": "23292db0e1ab4aef9b88a1cf68e235fa766513b6986c98a0cd88ed4dca9c5488"
+    },
+    "closed_payload_schema": {
+     "path": "reports/event-authority-20261104/DT-self-grade.json",
+     "sha256": "23292db0e1ab4aef9b88a1cf68e235fa766513b6986c98a0cd88ed4dca9c5488"
+    },
+    "scope_identity": {
+     "path": "reports/event-authority-20261104/DT-self-grade.json",
+     "sha256": "23292db0e1ab4aef9b88a1cf68e235fa766513b6986c98a0cd88ed4dca9c5488"
+    },
+    "replay_idempotency": {
+     "path": "reports/event-authority-20261104/DT-self-grade.json",
+     "sha256": "23292db0e1ab4aef9b88a1cf68e235fa766513b6986c98a0cd88ed4dca9c5488"
+    },
+    "retention": {
+     "path": "reports/event-authority-20261114/PNC019-s4r/retention-map.json",
+     "sha256": "5f35a2a2792e6c6a280e2516179a5a698a9a23aa69145f0781f6a59ebf7e81a0"
+    },
+    "redaction_custody": {
+     "path": "reports/event-authority-20261104/DT-self-grade.json",
+     "sha256": "23292db0e1ab4aef9b88a1cf68e235fa766513b6986c98a0cd88ed4dca9c5488"
+    },
+    "transitions": {
+     "path": "reports/event-authority-20261104/DT-self-grade.json",
+     "sha256": "23292db0e1ab4aef9b88a1cf68e235fa766513b6986c98a0cd88ed4dca9c5488"
+    },
+    "consumers_checkpoints": {
+     "path": "reports/event-authority-20261104/DT-self-grade.json",
+     "sha256": "23292db0e1ab4aef9b88a1cf68e235fa766513b6986c98a0cd88ed4dca9c5488"
+    },
+    "compatibility_withdrawal": {
+     "path": "reports/event-authority-20261104/DT-self-grade.json",
+     "sha256": "23292db0e1ab4aef9b88a1cf68e235fa766513b6986c98a0cd88ed4dca9c5488"
+    },
+    "positive_negative_oracles": {
+     "path": "reports/event-authority-20261114/C12-DT-self-grade.json",
+     "sha256": "c181d193993ff7bee271fe525a7fbcc655dea9cdd9a98b97468f90df11e80a7f"
+    }
+   },
+   "retention_delta": {
+    "event_type": "usage.event",
+    "lane": "DT",
+    "owner": "Plans/storage-plan.md#SP-594",
+    "history_policy_ref": null,
+    "application_policy_ref": null,
+    "decisions": [
+     "DL-270",
+     "DL-507"
+    ],
+    "original_and_checkpoint_assignments": [
+     {
+      "family_id": "dt_usage_event_source",
+      "policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "decision": "DL-507"
+     },
+     {
+      "family_id": "dt_usage_event_application_source",
+      "policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "decision": "DL-507"
+     }
+    ],
+    "existing_checkpoints": [
+     {
+      "family_id": "dt_usage_event_checkpoint",
+      "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+     }
+    ],
+    "status": "BOUND",
+    "question": null,
+    "prior_finding": "F6 duration is decided by SP-341/UF-108; PENDING_RETENTION_BINDING records the remaining RT structured setting/expiry-anchor adapter. No duration choice, deletion or admission is authorized. Sweep part 2B (CV-1101): the retention age compares exact instants after the shared predicate (offsets, complete fractions; RT05/RT06 refuse a malformed time) instead of host datetime arithmetic.",
+    "grade_source": "reports/event-authority-20261104/DT-self-grade.json",
+    "owner_line": 34746,
+    "signed_answer": {
+     "card_id": "E8-1",
+     "send": "f66b1af9-f851-493f-a2ee-6b666b477920",
+     "answer_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md",
+     "answer_sha256": "509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b",
+     "signed_at_utc": "2026-11-14T20:25:00Z"
+    },
+    "resolved_question": "How is ai.usage.usage-retention bound to the structured EventRecord policy and preserved expiry anchor (SP-341/UF-108)? DL-507 assigns the original source rows only; it does not supply the event adapter.",
+    "closure_reason": "Signed E8-1 option A resolves the `usage.event` history binding: select the existing `ai.usage.usage-retention` setting under SP-341/UF-108, not a fixed ordinary-telemetry policy. The setting remains 90 days by default with its existing allowed choices. For each Project or application entry, `retention_binding.setting_key = ai.usage.usage-retention`, `retention_binding.anchor = first_durable_save`: the first successful save of that exact entry that survives a restart supplies the immutable anchor. Retry, replay, reprocessing, compaction, backup restore and later settlement/correction of the entry never reset that anchor; a genuinely separate entry has its own first-save anchor. Read the configured window and apply it from that preserved anchor in both seglog and Parquet; unlimited means no age expiry. If the original anchor or setting cannot be authenticated, refuse expiry rather than substitute occurrence, observation, source-result, run-finish or recovery time. There is no count eviction. Daily account/provider/model totals remain canonical, backed up and permanent; commit their accounting before detail cleanup and never rebuild them from expired detail. Holds, required references, recovery, rollback and protected backups still block deletion. This is the existing setting-driven policy selector, not a newly minted policy ID. The separate original source rows keep their exact DL-507 assignments; no source-row lifetime is transferred from this event answer. `PENDING_RETENTION_BINDING` is resolved for this event; separate admission, storage implementation and native proof remain required.",
+    "history_policy_setting_ref": "ai.usage.usage-retention",
+    "history_anchor": "first_durable_save"
+   },
+   "readiness_failures": []
+  }
+ ],
+ "not_ready": []
+}

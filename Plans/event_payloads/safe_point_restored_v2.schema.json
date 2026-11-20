@@ -1,0 +1,200 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope": {
+      "$ref": "pm.shared_integration_runtime.command_contracts.schema.v1#/$defs/WorkflowScopeV2"
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "restore_transaction_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "safe_point_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "node_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "attempt_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "restore_outcome": {
+      "enum": [
+        "restored_clean",
+        "restore_failed",
+        "restore_skipped",
+        "restore_refused",
+        "restore_recovery_required"
+      ]
+    },
+    "target_state_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "minLength": 64,
+      "maxLength": 64
+    },
+    "pre_restore_state_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "minLength": 64,
+      "maxLength": 64
+    },
+    "post_restore_state_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "minLength": 64,
+      "maxLength": 64
+    },
+    "conflict_reason_code": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "worktree_path_mismatch",
+        "branch_mismatch",
+        "head_mismatch",
+        "baseline_stale",
+        "snapshot_missing",
+        "snapshot_corrupt",
+        "snapshot_scope_unsupported",
+        "target_path_conflict",
+        "restore_conflict",
+        "concurrent_edit_conflict",
+        "historical_commit_missing",
+        "restore_recovery_required",
+        "canonicalization_failed",
+        "permission_denied"
+      ]
+    },
+    "recovered_after_restart": {
+      "type": "boolean"
+    },
+    "execution_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "thread_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "computer_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "host_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "environment_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "root_generation": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "working_directory": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "thread_id",
+        "run_id",
+        "computer_id",
+        "host_id",
+        "environment_id",
+        "root_id",
+        "root_generation",
+        "working_directory"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "operation_id",
+    "scope",
+    "ts",
+    "restore_transaction_id",
+    "safe_point_id",
+    "run_id",
+    "node_id",
+    "attempt_id",
+    "restore_outcome",
+    "target_state_sha256",
+    "pre_restore_state_sha256",
+    "post_restore_state_sha256",
+    "recovered_after_restart",
+    "execution_context"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/safe_point_restored/2.0.0",
+  "title": "safe_point.restored prepared closed payload; not admission",
+  "$comment": "safe_point.restored complete semantic root. Inline admission additionally measures the complete canonical UTF-8 JSON body (SP-337): at most 16384 bytes, inclusive. A larger root is resolved from the verified payload_ref; it is never retained inline. The byte rule is executable in pm_filesafe_event_contracts.py and pm_filesafe_event_authority.py, not a JSON Schema character-count constraint."
+}

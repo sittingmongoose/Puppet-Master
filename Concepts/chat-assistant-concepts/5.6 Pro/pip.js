@@ -369,7 +369,7 @@
     if (!editor()) return '';
     var S = SH(), mark = S.pmxPip ? S.pmxPip({ mood: 'idle', size: 15, cls: 'menu-pip' }) : '';
     return '<button type="button" class="menu-item" data-action="pip-settings-open" data-k="pip-wand-row">' +
-      '<span class="menu-icon">' + mark + '</span><span class="menu-copy"><strong>Pip…</strong><span>Where Pip appears in the chat, the faces it makes and how it moves.</span></span></button>';
+      '<span class="menu-icon">' + mark + '</span><span class="menu-copy"><strong class="menu-ttl">Pip…</strong><span class="menu-sub">Where Pip appears in the chat, the faces it makes and how it moves.</span></span></button>';
   });
   if (EXT && EXT.action) EXT.action('pip-settings-open', function (ctx, btn) {
     var E = editor(); if (!E) return true;

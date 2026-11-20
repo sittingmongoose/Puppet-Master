@@ -33,7 +33,7 @@ ContractRef: ContractName:Plans/DRY_Rules.md#2, ContractName:Plans/Contracts_V0.
 
 ## 2. Platform invariants
 
-1. Puppet Master is Server-first. Every Project has one Project Home Server and one physical Project Vault. The Home Server is the default Execution Host; additional Execution Hosts are explicit. Every operation binds an exact Execution Host, Execution Environment, and Source Location before admission.
+1. Puppet Master is Server-first. Every Project has one Project Home Server and one physical Project Vault. New Project work defaults to Auto under SIR-056 among the Project's allowed Computers; each Project also has a default Computer for ties. The Home Server remains the records home, not a mandatory worker. Every operation binds an exact Execution Host, Execution Environment, and Source Location before admission.
 2. Native Windows, macOS, and Linux hosts, standalone Servers, and supported container Servers are execution-capable. WSL is optional and environment-specific. Kubernetes execution is namespace-scoped unless a separately approved owner policy grants narrower capabilities; silent host or namespace fallback is prohibited.
 3. `RuntimeResourceGovernor` is the single shared resource-policy and admission mechanism. Enforcement is host-local even when policy originates on the Home Server.
 4. `ObservableWork` is the single shared truth for phase, wait reason, progress, cancellation, and terminal outcome. A spinner, command dispatch receipt, or connection state is not work truth.
@@ -280,7 +280,7 @@ ContractRef: SchemaID:pm.shared_runtime.contracts.v1, ContractName:Plans/Prompt_
 
 ## 12. Time-Traveling conditional rules
 
-`ConditionalRuleEngine` indexes versioned rules by Project, source path, tool, mode, Goal phase, workflow state, and typed regex/AST predicates. Evaluation uses immutable facts and records rule version, matched facts, emitted instruction or action ID, ContextEpoch impact, retry/steer count, and outcome.
+`ConditionalRuleEngine` indexes versioned rules by Project, source path, tool, mode, workflow state or stage (Goals have no phases, DL-478), and typed regex/AST predicates. Evaluation uses immutable facts and records rule version, matched facts, emitted instruction or action ID, ContextEpoch impact, retry/steer count, and outcome.
 
 A match may inject one bounded reminder, request a capped steer/retry, produce a receipt, update context-cache impact, or route repeated failure to process repair. It cannot replace deterministic safety, alter canonical state directly, grant permissions, widen authority, or create hidden tool access. Repeated identical matches are suppressed by rule/version/fact digest.
 
@@ -906,7 +906,7 @@ These are required adapter and measurement boundaries under the one `RuntimeReso
 - Sockets, process pipes, PTYs, and high-concurrency file operations use completion-based asynchronous I/O and do not allocate one thread per handle. The admitted packet does not freeze `IOCP` or a particular wait API as a product contract.
 - Normal filesystem watching uses `ReadDirectoryChangesW`; NTFS USN data is optional acceleration for overflow, recovery, or long disconnect and always retains a normal fallback.
 - Latency-critical controls use high QoS; maintenance uses EcoQoS or equivalent efficiency policy.
-- Startup, input-to-paint, provider receive-to-paint, storage, Git, process launch, Browser lifecycle, queues, and Goal phases emit ETW/WPR/WPA-compatible instrumentation. Resource evidence measures the total process tree rather than the primary process alone.
+- Startup, input-to-paint, provider receive-to-paint, storage, Git, process launch, Browser lifecycle, queues, and workflow stages emit ETW/WPR/WPA-compatible instrumentation. Resource evidence measures the total process tree rather than the primary process alone.
 - Large processor-group systems are supported and third-party pool assumptions are tested without indiscriminate affinity.
 - Native and standalone Windows are complete execution hosts with WSL off. WSL is an optional selectable execution backend and cannot be a hidden prerequisite or substitute for native Windows proof.
 
@@ -1486,23 +1486,18 @@ plan_unit_id: SIR-026
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/Shared_Integration_Runtime.md
-canonical_text: >-
-  ProjectHostBinding and SourceLocationRegistry own the eight exact Project topology operations in the
-  inventory. Home Server, execution Host, execution policy, and Source Location are separate typed
-  bindings; changing one does not silently change routes, move a Project, delete external source payloads,
-  or select another binding. Repointing a Project after its folder was moved outside Puppet Master uses
-  cmd.project.source_location.test then cmd.project.source_location.update with verified stable identity;
-  it moves no content. Moving content uses PSB-005 cmd.project.move.preflight and cmd.project.move.start
-  with verified copy/cutover/rollback; app chat transfer consumes PSB-007. Read-only repository inspection
-  consumes this topology and stays with Source Control, never the topology owner.
+canonical_text: |-
+  ProjectHostBinding and SourceLocationRegistry own the eight exact Project topology operations in the inventory. Home Server, execution Host, execution policy, and Source Location are separate typed bindings; changing one does not silently change routes, move a Project, delete external source payloads, or select another binding. Repointing a Project after its folder was moved outside Puppet Master uses cmd.project.source_location.test then cmd.project.source_location.update with verified stable identity; it moves no content. Moving content uses PSB-005 cmd.project.move.preflight and cmd.project.move.start with verified copy/cutover/rollback; app chat transfer consumes PSB-007. Read-only repository inspection consumes this topology and stays with Source Control, never the topology owner.
+
+  SIR-056 owns the one placement policy consumed by cmd.project.execution_policy.set, cmd.project.execution_host.select and cmd.execution_host.*. ExecutionTopologyRegistry and ProjectHostBinding keep the sole policy/default/allowed-set state; Settings is a reviewed editing surface, not a second store or scheduler. A policy or pin mutation uses expected policy/topology generations and actor precedence; a stale pin/dispatch race refuses or reevaluates before effects. Existing native-handler evidence gates still apply.
 gui_related: true
 depends_on: [SIR-004, SIR-015, SIR-025]
 unblocks: []
 acceptance_criteria:
-  - All eight commands use ProjectTopology request/result/error/availability/permission contracts and the sole handlers listed above.
-  - Add/update/remove/set-primary/test settle exact Project and Source Location identities under current generations.
-  - Removing a binding never implies deletion of the external source payload.
-  - Every command remains handler_unavailable until its exact native handler has evidence.
+- All eight commands use ProjectTopology request/result/error/availability/permission contracts and the sole handlers listed above.
+- Add/update/remove/set-primary/test settle exact Project and Source Location identities under current generations.
+- Removing a binding never implies deletion of the external source payload.
+- Every command remains handler_unavailable until its exact native handler has evidence.
 validation_surfaces: [Plans/shared_integration_runtime_expansion_contracts.schema.json, Plans/shared_integration_runtime_expansion_fixtures.json, focused SIR expansion validator]
 risk_class: project_topology_binding_or_external_data_loss
 reasoning_tier: high
@@ -1510,10 +1505,11 @@ context_scope: project_topology_commands
 implementation_surfaces: [Plans/Shared_Integration_Runtime.md, future ProjectHostBinding and SourceLocationRegistry]
 node_compile_hint: {mode: shared_runtime_static_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - "server-command-gap-adjudication rows 106-108 and 122-127"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
+- "server-command-gap-adjudication rows 106-108 and 122-127"
+- "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+- "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+- "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints: [No implicit Project Move., No implicit route change., No external payload deletion.]
 ```
 
@@ -2807,6 +2803,9 @@ owner_hints:
 - Plans/Contracts_V0.md
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.updated adopts U1-U7/W1 and SIR-1130 original approval/source/result joins. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-049, ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/Contracts_V0.md#CV-342
 
 ### SIR-050 - Original Cancel acknowledgement terminal and replay
@@ -2865,6 +2864,9 @@ negative_constraints:
   receipt.
 - No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2 and ATS-1117 original no-association source/Stop/first-receipt/control/terminal and immutable replay boundaries; it does not borrow the Plan or Workflow source.
+
 
 ##### Original SIR private prepared input
 
@@ -2947,6 +2949,9 @@ negative_constraints:
   deployed migration.
 - No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9/W2 and SIR-1131 original bound-Plan accepted-source/result custody. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 
 ### SIR-052 - Original Workflow cancellation acceptance, terminal and retained replay
@@ -3038,6 +3043,9 @@ negative_constraints:
 - No WorkNode/NodeSeed/runtime/readiness/event-depth/global safe-stop or governance claim from source adoption.
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9/W2 and SIR-1131 original Workflow accepted-source/result custody. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 ContractRef: ContractName:Plans/goal_runtime_workflow_cancel_contracts.schema.json, ContractName:Plans/goal_workflow_cancel_schema_resources.json, ContractName:Plans/goal_workflow_cancel_contracts/entry-boundaries.json, ContractName:Plans/goal_workflow_cancel_contracts/methods.json, ContractName:Plans/goal_workflow_cancel_contracts/numeric-paths.json, ContractName:Plans/goal_workflow_cancel_contracts/physical-profiles.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json
 
 
@@ -3118,6 +3126,9 @@ negative_constraints:
 - No native writer/capability, projector/checkpoint, Event depth or runtime qualification
   from source adoption.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2 and SIR-1131 original private current-inspection source selection and final disclosure. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-078, ContractName:Plans/Shared_Integration_Runtime.md#SIR-052, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/Backup_Restore_System.md#BRS-026, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json, ContractName:Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json
 
@@ -3292,3 +3303,217 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-055, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+### SIR-1120 - Original approved exception invocation and immutable result
+
+```yaml
+plan_unit_id: SIR-1120
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: |-
+  Newly authored source/result adapter for exactly GRS-1122. Capture actual original host/caller/continuation and Project/thread/Goal/run/source revision, accepted body currentness, Stop/owner epochs, actor/account/lane/attempt and HITL request/resolution. EP-1120's original Workflow exception result precedes Goal consumption. Resolve that actual original result and receipt, exact approval and residual-risk/disposition set independently; never accept a worker label or caller hash. CV-1122 names the closed source/method/result roots and SP-1122 owns coherent custody.
+
+  Preserve the original invocation identity through restart, retry, model/provider/account changes, pending body/event and final publication. The same operation returns its original content-free result and exact original receipts, including an immutable no_effect or unknown; a semantic mismatch conflicts. A body_committed/event_pending result remains partial and cannot be replayed as a new Goal body CAS. Exact source/receipt/full-event and final approval/currentness checks follow the last helper before a new effect/publication; a current Stop never becomes an automatic resume. Original exception output remains certified_with_approved_exception and completed_with_approved_verification_exception, with approver and residual risks. Ordinary Goal completion and Standard certification never consume it as clean success. No new command, dispatch handler, GoalRun event or source-policy bypass is introduced. Native execution remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Original lifecycle source, receipt custody and protocol predicates.
+depends_on:
+- GRS-1122
+- EP-1120
+- HITL-1120
+unblocks: []
+acceptance_criteria:
+- Independently resolved original source, complete identity and receipt bytes gate every applicable boundary.
+- No partial effect is repeated or promoted to success after an unknown outcome.
+- Prepared without admission; existing historical resources and policies remain exact.
+validation_surfaces:
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+- Plans/goal_lifecycle_host_contracts/methods.json
+- python3 scripts/pm_goal_own_b_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_lifecycle_original_authority
+reasoning_tier: high
+context_scope: dg_own_b_20261105
+implementation_surfaces:
+- Plans/Shared_Integration_Runtime.md
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry/admission, new retention policy, native proof, WorkNode, readiness or governance seal.
+```
+
+
+### SIR-056 - Where Work Runs: Auto, Pins And Safe Reassignment
+
+```yaml
+plan_unit_id: SIR-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: |-
+  A Project has one records home and a separate default Computer. New Project work requests Auto by default. Resolve the requested policy before candidate selection; a candidate's own Settings cannot choose itself. The Project default Computer is a tie-break, not a pin. Registration must obtain a person's allowed-Computer decision and record a stable default execution_host_id from that allowed set; it never implicitly allows every discovered Computer. Existing verified Project work bindings may supply the initial default without moving work. If that default is later unavailable or removed, disclose it and require a reviewed replacement; never silently substitute the records home.
+
+  Settings owns the reviewed rows in SSYS-059; ExecutionTopologyRegistry/ProjectHostBinding remain the sole runtime policy owners. Everywhere supplies the preset and Advanced weights; each Computer has a level; a Project may override the preset, choose Auto or a person-chosen Computer, and has its allowed set/default. A task, WorkNode or child adds minimums, never a priority, preset or weight override. A bounded run/task pin is operational state, not a new Settings level. Device is never a placement level. cmd.execution_host.* and cmd.project.execution_policy.set retain their existing owner routes; the existing scheduler consumes this policy and RuntimeResourceGovernor alone admits resources.
+
+  Eligibility is a conjunction of must-haves, never a score: the Computer is answering with current trusted identity; it is enabled, not drained and allowed for this Project and work; it has the exact required files/baseline or separate permission to prepare them; the exact Environment, provider/account sign-ins and tools are ready; task OS/architecture, GPU/device, memory and disk minimums and current authority all pass. Check both before ranking and immediately before dispatch. Missing, stale or conflicted proofs exclude with a reason, never zero load. Preparation is pending work under its own authority and cannot run a task until verified. Discovery and an allowed-Computer entry grant no protected trust, credentials, source access or external operation.
+
+  The governor enforces person-configured per-Computer memory and disk floors in GB plus the task's declared minimums. Capacity accounting reserves each admitted running task's declared minimum, including expected ramp-up, atomically with dispatch so concurrent tasks cannot spend the same headroom. Reconcile measurements with reservations without double charging already observed use. Check the actual destination volume, container limits and shared physical-parent budget. Browser sessions, GPU recording/encoder sessions, phones/simulators and exclusive GPU access are countable leased must-haves. Use Linux available memory rather than free-only pages, Windows commit headroom alongside available physical memory, and macOS memory pressure plus usable headroom. Unknown measurements or floors cannot be guessed. Account quota is shared across Computers: spreading work adds no quota. Current account admission remains authoritative; warn if known quota/sign-in lifetime is shorter than expected work, and label unknown lifetime honestly. Keep existing Project concurrency caps and fair queued waves; a Project cannot consume reserved control/verification capacity or all shared slots by adding Computers.
+
+  Only eligible Computers enter ranking. Levels are Prefer, Normal, Less often, and Only when I choose it. Auto excludes Only when I choose it; an explicit permitted pin may use it. Higher preference levels rank first, then the effective preset's weighted measures. The in-use setting is on by default: keyboard activity or battery power makes a Computer count as Less often, capped there without raising an already lower/manual-only level. This never authorizes opening visible windows/apps in someone's session; existing explicit desktop/display authority remains required. Battery, thermal/GPU contention, pending restart and runner durability are disclosed risk/health facts under the existing governor, not new permission. Repeated file/task timeouts demote health even when heartbeat answers; unknown or unhealthy file service cannot masquerade as ready.
+
+  Balanced is the default and gives nonzero weight to free usable CPU, free memory in GB, free disk space and queued work (less queued work ranks higher). Has the files already is only an Advanced measure, default 0; it is not in Balanced. Fastest favors free work-family CPU capacity and measured file-route speed. Keep my computer free retains Balanced measures and favors leaving the person's active Computer idle; it does not turn off the global in-use demotion for other presets. Advanced exposes weights for free CPU, free memory, free disk, GPU headroom, queued work, has the files already and file-route speed. A zero weight never disables a must-have. GPU minimums and leased slots stay gates even when GPU headroom is weighted. Scores consume fresh governor observations and existing latency/IO-wait/work-family health, not a second CPU-count estimator. Publish a versioned normalization, coefficients, freshness limits and hysteresis contract before native implementation; these numbers are not inferred from T3 or certified by this prose. The explanation names the selected preset, weights and policy version. Equal final ranks prefer the Project default Computer, then canonical stable execution_host_id order; renaming or discovery order cannot change a tie. One eligible Computer simply wins; none waits/blocks visibly, with no unmeasured fallback.
+
+  A valid person's pin wins and constrains delegated work unless that person explicitly lets agents choose. An agent may pin one task/WorkNode/child or request Auto only within current allowed Computers, parent subset and that human constraint. Its pin never changes Project or Everywhere defaults. Both use the same owner admission and record actor, scope, expected policy generation and reason. Clearing a pin returns to inheritance. An unavailable pin waits with its reason; Auto never overrides it. Even in YOLO, adding a new Computer/device identity still asks the person; Auto and agents never widen the allowed set, trust or authority. PS-147/148 authorize a build on the Project's current person-allowed Computers, including a Computer the person allows later, but every dispatch independently checks all remaining authority.
+
+  Resolve every independently dispatchable task, WorkNode and child; keep branch/worktree/scratch-dependent chains on their bound Computer. Favor local disk for Git-heavy preparation through actual file-route observations. Hysteresis retains eligible related follow-ups when scores are close; never move a running attempt to improve a score. Timing-sensitive work and heavy builds declare work-family requirements so the governor avoids harmful co-admission using load and IO wait. Before the first effect, freeze exactly one Computer/Host, Environment, source/baseline/worktree, account/route, operation/attempt and owner epoch with current policy/topology/permission/build/Plan/Stop/revocation evidence. host_assignment_id references that original decision; no extra fields are added to execution_unit_context 1.0.0. Record the candidate/allowed-set generation actually used without freezing future human changes for the entire build. Recheck approved Plan context and source compatibility on the chosen Computer; location permission is not approval of a different baseline, branch or target. Stale generations and pin races refuse or reevaluate before effects.
+
+  Wait, then safe retry: started work waits and resumes on its Computer. Route or Client loss is not proof the worker stopped. Stop new dependent dispatch to a lost Computer, disclose last verified state and uncertain outcomes, reconnect and reconcile. A later attempt/handoff may move only from a safe checkpoint after fencing the old owner and settling nonportable resources and unknown external effects; lease expiry alone is insufficient proof against duplicate work. Recheck retry policy, source, Plan and authority before the new attempt. Unstarted independent Auto work may choose another eligible Computer. Policy changes affect unstarted work; they never rewrite a frozen attempt. The Home Server never fails over automatically and an offline Home is a separate control-plane outage, not permission for a second Vault writer.
+
+  Each selected Computer needs its own verified Project source/workspace binding at the required immutable baseline. Separately authorized preparation may clone/fetch or stage a verified snapshot, then acquire durable ownership/lease, materialize the required isolated branch/worktree, verify identity/baseline/roots/permissions, attach, and only then start the child (W-080). Honor the work's existing isolation contract; remote placement never weakens it to a shared checkout. Resolve folders against the actual worker's Host-specific configuration, never the viewing Client's home. Verify revision/object availability, filesystem/case behavior, submodules/LFS/backend needs and allowed roots; equal URL/path/name is insufficient. Dirty, generated/untracked files and attachments transfer only as explicitly included reviewed inputs; never silently copy or drop them. Serialize shared Git administration and parent/sibling writes. Returned commits/patches/artifacts keep source/attempt lineage and verify before integration. Cleanup/result custody stays on that Computer; an offline orphan waits for reconciliation rather than being presumed deleted. Working copies are not additional canonical Vaults.
+
+  Sign-ins and tool private roots stay on the actual worker. Computer selection never copies credentials, grants executable/Host trust, signs into a paid account, changes billing route or silently installs a provider CLI. A needed setup uses the existing protected flow on that named Computer. Host/account/route or relevant generation changes invalidate prior readiness, permission evidence and protected return bindings. Placement chooses location, never authority: PS-148 still intersects Managed, Computer/Project, parent/receiver/task ceilings and retained FileSafe/DAE/testing/custody/recovery gates.
+
+  The owner receipt retains requested/effective mode and Computer, choosing actor/scope, candidate exclusions, actual resource numbers/floors/slots/queues and observation age, level/preset/weights/version, source/readiness refs, policy/topology/authority generations, original admitted attempt and reevaluation boundary. Work shows Auto → <Computer> or Chosen: <Computer> with who chose it. Why this computer explains the winning reasons and why others were left out, including exact floor/slot failures; requested and effective values stay visible when different. Log selection and later outcome through existing ObservableWork/History owner receipts for tuning, never a parallel log or raw secrets. GUI reads the same projection; visible Resources sampling is distinct from admission telemetry. SRV-017 and general.interaction.no-project-default-computer remain unchanged: Keep the computer you're on, with the claimed-local/main starter rule and first-message freeze.
+gui_related: true
+gui_classification_reason: Defines visible placement choices, controls and explanations.
+depends_on: [SIR-025, SIR-026, SIR-039, PS-147, PS-148]
+unblocks: []
+acceptance_criteria:
+- "Gates exclude stale, untrusted, disallowed, drained, resource/slot-exhausted, missing-source/sign-in/tool and incompatible candidates before scoring."
+- "Balanced weighs CPU, absolute memory, disk and queue; file locality defaults to zero and is Advanced only. Human pins win; agent pins never mutate shared defaults."
+- "Equal ranks use Project default then stable Host id; no ready candidate and unavailable pins explain a wait rather than fallback."
+- "Each dispatch freezes one exact selection; offline started work cannot duplicate effects, and Home never automatically fails over."
+- "Files/worktree, credentials, current Plan/build/Stop and Computer/Project authority are verified on the actual worker; no-project policy stays unchanged."
+validation_surfaces: [future placement gate/ranking/pin/recovery fixtures, scripts/pm-plan-index.py]
+risk_class: placement_authority_and_duplicate_effects
+reasoning_tier: high
+context_scope: project_work_placement
+implementation_surfaces: [Plans/Shared_Integration_Runtime.md]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
+preserved_exact_tokens: ["Auto", "Computer", "Why this computer", "Auto → <Computer>", "Chosen: <Computer>", "RuntimeResourceGovernor", "host_assignment_id"]
+negative_constraints:
+- No placement widens authority or changes the Project Home Server.
+- No native readiness or governance seal is inferred from accepted prose.
+```
+
+## DG-OWN-C original source and boundary contracts (2026-11-05)
+
+### SIR-1130 - Goal update approval source and result joins
+
+```yaml
+plan_unit_id: SIR-1130
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal.updated, U1-U7 and W1 adopt original
+  HITL provider capture/resolution into SIR-049 and SP-299. The original proposal dispatch stays read-only;
+  actual approved update dispatch retains its own original identity, input digest, user instruction and still-valid
+  approval before source/body acceptance. Join complete original typed request/approval/resolution and whole
+  update result at each source/terminal/replay boundary; never let a proposal response stand in for accepted
+  mutation or terminal success.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- SIR-049
+- HITL-1130
+- PS-1130
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Shared_Integration_Runtime.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal update approval source and result joins). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### SIR-1131 - Goal cancellation migration of original pending command custody
+
+```yaml
+plan_unit_id: SIR-1131
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal.cancelled, M1-M9 adopt SIR-051/052/053
+  original accepted dispatch, pending operation, command outcome and immutable terminal references into source
+  migration. Compare original operation/scope/owner/result custody to Plan, Workflow and Goal originals. Preserve
+  unresolved work and original result/replay; migration neither reexecutes Stop nor issues an acknowledgement,
+  cancellation result or event. Current inspection remains fenced until complete enrolled original mapping
+  exists.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- SIR-051
+- SIR-052
+- SIR-053
+- SP-1131
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Shared_Integration_Runtime.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal cancellation migration of original pending command custody). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json

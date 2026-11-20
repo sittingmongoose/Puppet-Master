@@ -426,7 +426,7 @@
  const WAND_HELP='Put back every file the assistant’s last change touched, all together.';
  /* the row carries Revert's own mark, the one the sheet head, the lines and the document use (B2 kind identity) */
  function wand(c){const r=latest(),a=availability(r?.id);
-  return '<button class="menu-item af-wand-row" data-action="af-revert-preview" data-value="'+c.esc(r?.id||'')+'"'+(a.eligible?'':' disabled')+' title="'+c.esc(a.eligible?WAND_HELP:a.reason)+'"><span class="menu-icon">'+S.pmxKindMark('revert',13)+'</span><span class="menu-copy"><strong>Revert Last Agent Edit</strong><span>'+c.esc(a.eligible?WAND_HELP:a.reason)+'</span></span></button>';}
+  return '<button class="menu-item af-wand-row" data-action="af-revert-preview" data-value="'+c.esc(r?.id||'')+'"'+(a.eligible?'':' disabled')+' title="'+c.esc(a.eligible?WAND_HELP:a.reason)+'"><span class="menu-icon">'+S.pmxKindMark('revert',13)+'</span><span class="menu-copy"><strong class="menu-ttl">Revert Last Agent Edit</strong><span class="menu-sub">'+c.esc(a.eligible?WAND_HELP:a.reason)+'</span></span></button>';}
 
  /* ------------------------------------------------------------ actions */
  const filesRowOf=id=>()=>document.querySelector('.transcript .pmx-files[data-turn-id="'+cssq(id)+'"]');

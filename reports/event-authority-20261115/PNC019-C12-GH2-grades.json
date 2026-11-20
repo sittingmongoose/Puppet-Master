@@ -1,0 +1,2363 @@
+{
+ "schema_id": "pm.pnc019.c12_gh2.depth_grades.v1",
+ "grade": "c12-gh2-regrade",
+ "assessed_tree": {
+  "commit": "2325b37933",
+  "branch": "plans/ea-pnc-c12-gh2-20261114",
+  "note": "Five GH2 families; only criterion 12 re-graded."
+ },
+ "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+ "criteria": [
+  "membership_version",
+  "owner_doc",
+  "producer",
+  "closed_payload_schema",
+  "scope_identity",
+  "replay_idempotency",
+  "retention",
+  "redaction_custody",
+  "transitions",
+  "consumers_checkpoints",
+  "compatibility_withdrawal",
+  "positive_negative_oracles"
+ ],
+ "status_meaning": "PASS/PARTIAL/ABSENT/CONFLICT as in the rubric; a PASS grades owner text, never native or runtime proof. Native execution NOT_RUN for every family.",
+ "oracle_bar": "Criterion 12 PASS requires an executable checker whose guard rows are proved by the gated tool (scripts/pm_guard_isolation.py), using the shared number and date-time calls and retained reads from the sealed receipt (PNC019-RUN quality bar; same bar as lane s3b). Authored cases without that checker grade PARTIAL.",
+ "rows": [
+  {
+   "event_type": "goal.evidence_captured",
+   "family_id": "event-family-goal-evidence-captured",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/12",
+   "scope_policy": "application_or_project",
+   "group": "goal",
+   "disposition": "HISTORICAL_ONLY (both scopes; unused app withdrawal approved for next registry checkpoint)",
+   "native_execution": "NOT_RUN",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Row event-family-goal-evidence-captured at 2.0.0 in registry revision 2026-11-04.1, scope_policy application_or_project; Project payload_schema_ref resolves with matching $id and closed root; the DL-300 application payload version pm.goal_runtime_event.goal_evidence_captured.application.v1 resolves to a closed $defs root whose schema_id const matches, under payload_selection_policy exact_scope_and_schema_id_no_fallback, and CV-366's table selects the same sibling. No sibling or alias admission. Membership says nothing about current emission.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+       "unit": "$id",
+       "line_start": 807,
+       "line_end": 807,
+       "quote": "\"$id\": \"pm.goal_runtime_event.goal_evidence_captured.schema.v2\"",
+       "excerpt_sha256": "e2ad8acf057ddf1e0efd8ddbfc860b24bcb07a5cf5064dfdb6d2e4c9a5727db8",
+       "file_sha256": "67ee3b52ffd526f0cd4a2893b15d17f324100377614a457c917252e05ff0a55c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "Known-37 Goal Runtime v2 schema registration",
+       "line_start": 8618,
+       "line_end": 8618,
+       "quote": "`pm.goal_runtime_event.goal_evidence_captured.schema.v2`",
+       "excerpt_sha256": "cf74a1d7980341a5470689f2c5bf263cdd103710bf70449e64687bbeaba5f699",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "registry header",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-11-04.1\"",
+       "excerpt_sha256": "da8496155a9419394fba250963763270f32f378f25ea924648d8a044a8cd8414",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/12",
+       "line_start": 825,
+       "line_end": 825,
+       "quote": "\"family_id\": \"event-family-goal-evidence-captured\"",
+       "excerpt_sha256": "c817bf95592105aa516a3babab035145817c297193c2152d96286851ec1b6006",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.evidence_captured: GRS-205, SP-431, CV-424 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-205",
+       "line_start": 8519,
+       "line_end": 8519,
+       "quote": "Newly authored",
+       "excerpt_sha256": "953ea3ff89cb4ad6ee7f69b8b44b899bb2b8fb75e3e764382201095457ac5c9d",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.evidence_captured: GRS-205, SP-431, CV-424 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-205",
+       "line_start": 9285,
+       "line_end": 9285,
+       "quote": "No host, worker",
+       "excerpt_sha256": "3ba294f42b0039ee348b626e115e0e84cf71db2d92afcf94cb415e213af30154",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.evidence_captured: GRS-205, SP-431, CV-424 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-424",
+       "line_start": 40991,
+       "line_end": 40991,
+       "quote": "whole historical reader resource",
+       "excerpt_sha256": "0fe8886c7d418ab269457848b69d55a1987ee153f310032ae46599c4a4262d20",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.evidence_captured: GRS-205, SP-431, CV-424 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-431",
+       "line_start": 45467,
+       "line_end": 45467,
+       "quote": "Physical identity",
+       "excerpt_sha256": "6314b2e03aee7cf6f8049b96487930583fad1b8075a8ce4b18acc4666cad2cef",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.evidence_captured: GRS-205, SP-431, CV-424 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-431",
+       "line_start": 45473,
+       "line_end": 45473,
+       "quote": "Repeated reads recompute",
+       "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.evidence_captured: GRS-205, SP-431, CV-424 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-431",
+       "line_start": 30587,
+       "line_end": 30587,
+       "quote": "RP-AUTHORITY-INDEFINITE",
+       "excerpt_sha256": "a009bffbf68539df571c200041e114c8efc887e799e677590bb2a7bff3b66227",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.evidence_captured: GRS-205, SP-431, CV-424 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-431",
+       "line_start": 45473,
+       "line_end": 45473,
+       "quote": "Reject unhandled secrets",
+       "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.evidence_captured: GRS-205, SP-431, CV-424 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-205",
+       "line_start": 9287,
+       "line_end": 9287,
+       "quote": "Preserve original",
+       "excerpt_sha256": "42eb9f70bce6911d936c4b9b5bd6f134de0328143e43993faff1f806fe729a04",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.evidence_captured: GRS-205, SP-431, CV-424 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-431",
+       "line_start": 45473,
+       "line_end": 45473,
+       "quote": "SP-339 pm inspect / F3-666 call",
+       "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.evidence_captured: GRS-205, SP-431, CV-424 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-431",
+       "line_start": 31002,
+       "line_end": 31002,
+       "quote": "withdrawal",
+       "excerpt_sha256": "ba2df9d5cba876e7865ed21669b986c1e109c4dea8ef2aa4d19b4b1ffae74022",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executable_oracle_with_real_vector_phase_tables_complete_boundary_kill_ledger_and_schema_clause_closure",
+     "finding": "417 checker and owner-schema rows evaluated by goal.evidence_captured's complete calls: 353 CLOSED (gated tool 004bdedd63 PASS on real observation vectors and a goal.evidence_captured declared witness whose single-row cut makes the complete checker accept and whose restoration repeats the refusal, or a declared duplicate set), 64 CLOSED_BY_PROOF (source-bound proofs whose covering rows are closed in this family), 0 OPEN. Owner-schema clause closure over 5 roots (clause occurrences): 271 KILLED, 3 DUPLICATE_GROUP_KILLED, 5 DUPLICATE_SET_KILLED, 68 COVERED_BY_PROOF (lane GC classes: 271 KILLED, 76 COVERED_LATER with named clauses), 0 uncovered; 18 if-selector and 11 not-subschema clauses listed apart. Declared-target uncapped ledger, invalid mutations listed apart, shared number corpus through the ATS-211 and ATS-1119 readers, sealed-receipt retained reads with store snapshots, distinct-copy join witnesses; date-time inventory NOT_RUN; native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family record",
+       "line_start": 169,
+       "line_end": 169,
+       "quote": "\"family\": \"goal.evidence_captured\"",
+       "excerpt_sha256": "c7b8d962aea04d47f76f983c29850d9395d0acc29b83d521c05887dd1e08c747",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family coverage matrix status",
+       "line_start": 170,
+       "line_end": 170,
+       "quote": "\"goal.evidence_captured_matrix\": \"",
+       "excerpt_sha256": "27af1849ee05add223f12984b950f574647dd019b043f8efec0fc6892c2f0ec5",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family owner-schema clause closure",
+       "line_start": 171,
+       "line_end": 171,
+       "quote": "\"goal.evidence_captured_closure\": \"",
+       "excerpt_sha256": "013ea3aab6f20dd37485b06b2478a5cdf28093122cfc1b5090ab9c1be6b549eb",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "C12-GH1 kill rule: cut accepts and restoration repeats the refusal",
+       "line_start": 360,
+       "line_end": 360,
+       "quote": "record['kill'] = 'KILLED'",
+       "excerpt_sha256": "1c4cfe8d2b203a98ba1c49cf6c5a6ac2bd5f6e6cb915914bdb2c6f33c74a797f",
+       "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "C12-GH1 gated proof on real vectors: unobserved row refused",
+       "line_start": 640,
+       "line_end": 640,
+       "quote": "entry.update(status='REFUSED', reason='row_never_observed_by_complete_checker', proved=[])",
+       "excerpt_sha256": "87c20b25dbd83e012d10b5c597eb8c95dd1587658887d36aa7b2abb4ba4087cf",
+       "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_c12_gh2_closure.py",
+       "unit": "C12-GH2 closure: two independent reachability walks",
+       "line_start": 210,
+       "line_end": 210,
+       "quote": "entry.update(cls='UNCOVERED', reason='reached by the independent walk, not inventoried as a row')",
+       "excerpt_sha256": "df8e025b72a1013f9a0c78728ec02701b416643e3b27ac1abd8080a6c60c0f44",
+       "file_sha256": "0b56e1c4a2f8eb16296e37a983afa97c56efcc1c9c411696528dce1b72a2d1b1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-205",
+       "line_start": 8519,
+       "line_end": 8519,
+       "quote": "Newly authored",
+       "excerpt_sha256": "953ea3ff89cb4ad6ee7f69b8b44b899bb2b8fb75e3e764382201095457ac5c9d",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact",
+       "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261115/PNC019-S3AO-grades-core.json",
+      "status": "PASS (does not stand: reviews/PNC019-s3ao-c12-conformance/REVIEW.md G1-G4, G6)"
+     },
+     "change": "regraded",
+     "change_reason": "C12-GH2 closes G1-G4 and G6 for this family on C12-GH1's shared Goal sweep."
+    }
+   },
+   "remaining_gaps": [],
+   "notes": [
+    "Criterion 12 re-graded by C12-GH2 at 2325b37933; other cells carried unchanged from s3ao; native NOT_RUN."
+   ],
+   "pass_count": 12,
+   "vector": "P P P P P P P P P P P P"
+  },
+  {
+   "event_type": "goal.receipt_recorded",
+   "family_id": "event-family-goal-receipt-recorded",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/14",
+   "scope_policy": "application_or_project",
+   "group": "goal",
+   "disposition": "HISTORICAL_ONLY (both scopes; unused app withdrawal approved for next registry checkpoint)",
+   "native_execution": "NOT_RUN",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Row event-family-goal-receipt-recorded at 2.0.0 in registry revision 2026-11-04.1, scope_policy application_or_project; Project payload_schema_ref resolves with matching $id and closed root; the DL-300 application payload version pm.goal_runtime_event.goal_receipt_recorded.application.v1 resolves to a closed $defs root whose schema_id const matches, under payload_selection_policy exact_scope_and_schema_id_no_fallback, and CV-366's table selects the same sibling. No sibling or alias admission. Membership says nothing about current emission.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+       "unit": "$id",
+       "line_start": 822,
+       "line_end": 822,
+       "quote": "\"$id\": \"pm.goal_runtime_event.goal_receipt_recorded.schema.v2\"",
+       "excerpt_sha256": "fd2ed5961fb1fec54eedf659fc18c53575a192d1c94e71f0e39f42ffc8c86259",
+       "file_sha256": "d7b499cc4e3a5ed2e4950ee068a1ace5ea2ceac2be20aae407d8776c3257da9d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "Known-37 Goal Runtime v2 schema registration",
+       "line_start": 8620,
+       "line_end": 8620,
+       "quote": "`pm.goal_runtime_event.goal_receipt_recorded.schema.v2`",
+       "excerpt_sha256": "04fdeb3c9d94ef3f97ffbe2658f96d209ea49cf04b83bd5be74d19a8d5625275",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "registry header",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-11-04.1\"",
+       "excerpt_sha256": "da8496155a9419394fba250963763270f32f378f25ea924648d8a044a8cd8414",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/14",
+       "line_start": 950,
+       "line_end": 950,
+       "quote": "\"family_id\": \"event-family-goal-receipt-recorded\"",
+       "excerpt_sha256": "0f275c76f5d3f90cefc44620684ebc6476ae498a4703c5e3fed966eb462c1b3c",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.receipt_recorded: GRS-206, SP-432, CV-425 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-206",
+       "line_start": 9120,
+       "line_end": 9120,
+       "quote": "Newly authored",
+       "excerpt_sha256": "9f01283ace83984d22640d7ebe5d5d8f447ea9695a00b6661e56ad098f3b6fc1",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.receipt_recorded: GRS-206, SP-432, CV-425 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-206",
+       "line_start": 9285,
+       "line_end": 9285,
+       "quote": "No host, worker",
+       "excerpt_sha256": "3ba294f42b0039ee348b626e115e0e84cf71db2d92afcf94cb415e213af30154",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.receipt_recorded: GRS-206, SP-432, CV-425 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-425",
+       "line_start": 40991,
+       "line_end": 40991,
+       "quote": "whole historical reader resource",
+       "excerpt_sha256": "0fe8886c7d418ab269457848b69d55a1987ee153f310032ae46599c4a4262d20",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.receipt_recorded: GRS-206, SP-432, CV-425 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-432",
+       "line_start": 45467,
+       "line_end": 45467,
+       "quote": "Physical identity",
+       "excerpt_sha256": "6314b2e03aee7cf6f8049b96487930583fad1b8075a8ce4b18acc4666cad2cef",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.receipt_recorded: GRS-206, SP-432, CV-425 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-432",
+       "line_start": 45473,
+       "line_end": 45473,
+       "quote": "Repeated reads recompute",
+       "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.receipt_recorded: GRS-206, SP-432, CV-425 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-432",
+       "line_start": 30587,
+       "line_end": 30587,
+       "quote": "RP-AUTHORITY-INDEFINITE",
+       "excerpt_sha256": "a009bffbf68539df571c200041e114c8efc887e799e677590bb2a7bff3b66227",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.receipt_recorded: GRS-206, SP-432, CV-425 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-432",
+       "line_start": 45473,
+       "line_end": 45473,
+       "quote": "Reject unhandled secrets",
+       "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.receipt_recorded: GRS-206, SP-432, CV-425 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-206",
+       "line_start": 9287,
+       "line_end": 9287,
+       "quote": "Preserve original",
+       "excerpt_sha256": "42eb9f70bce6911d936c4b9b5bd6f134de0328143e43993faff1f806fe729a04",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.receipt_recorded: GRS-206, SP-432, CV-425 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-432",
+       "line_start": 45473,
+       "line_end": 45473,
+       "quote": "SP-339 pm inspect / F3-666 call",
+       "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.receipt_recorded: GRS-206, SP-432, CV-425 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-432",
+       "line_start": 31002,
+       "line_end": 31002,
+       "quote": "withdrawal",
+       "excerpt_sha256": "ba2df9d5cba876e7865ed21669b986c1e109c4dea8ef2aa4d19b4b1ffae74022",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executable_oracle_with_real_vector_phase_tables_complete_boundary_kill_ledger_and_schema_clause_closure",
+     "finding": "396 checker and owner-schema rows evaluated by goal.receipt_recorded's complete calls: 337 CLOSED (gated tool 004bdedd63 PASS on real observation vectors and a goal.receipt_recorded declared witness whose single-row cut makes the complete checker accept and whose restoration repeats the refusal, or a declared duplicate set), 59 CLOSED_BY_PROOF (source-bound proofs whose covering rows are closed in this family), 0 OPEN. Owner-schema clause closure over 5 roots (clause occurrences): 261 KILLED, 3 DUPLICATE_GROUP_KILLED, 6 DUPLICATE_SET_KILLED, 63 COVERED_BY_PROOF (lane GC classes: 261 KILLED, 72 COVERED_LATER with named clauses), 0 uncovered; 23 if-selector and 4 not-subschema clauses listed apart. Declared-target uncapped ledger, invalid mutations listed apart, shared number corpus through the ATS-211 and ATS-1119 readers, sealed-receipt retained reads with store snapshots, distinct-copy join witnesses; date-time inventory NOT_RUN; native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family record",
+       "line_start": 483,
+       "line_end": 483,
+       "quote": "\"family\": \"goal.receipt_recorded\"",
+       "excerpt_sha256": "a5319d8335b88fb607e9bbcff3146c406461c5bccc6cd5ec78e2258742a940d7",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family coverage matrix status",
+       "line_start": 484,
+       "line_end": 484,
+       "quote": "\"goal.receipt_recorded_matrix\": \"",
+       "excerpt_sha256": "1135474c773f4ac6c421f357f39793bf4317b2c4302190d2cf42bf83f56b7f97",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family owner-schema clause closure",
+       "line_start": 485,
+       "line_end": 485,
+       "quote": "\"goal.receipt_recorded_closure\": \"",
+       "excerpt_sha256": "29762a3e0198d7c49952cf0bbd3ede225f9594793815ca49938912bcbe71d1e2",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "C12-GH1 kill rule: cut accepts and restoration repeats the refusal",
+       "line_start": 360,
+       "line_end": 360,
+       "quote": "record['kill'] = 'KILLED'",
+       "excerpt_sha256": "1c4cfe8d2b203a98ba1c49cf6c5a6ac2bd5f6e6cb915914bdb2c6f33c74a797f",
+       "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "C12-GH1 gated proof on real vectors: unobserved row refused",
+       "line_start": 640,
+       "line_end": 640,
+       "quote": "entry.update(status='REFUSED', reason='row_never_observed_by_complete_checker', proved=[])",
+       "excerpt_sha256": "87c20b25dbd83e012d10b5c597eb8c95dd1587658887d36aa7b2abb4ba4087cf",
+       "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_c12_gh2_closure.py",
+       "unit": "C12-GH2 closure: two independent reachability walks",
+       "line_start": 210,
+       "line_end": 210,
+       "quote": "entry.update(cls='UNCOVERED', reason='reached by the independent walk, not inventoried as a row')",
+       "excerpt_sha256": "df8e025b72a1013f9a0c78728ec02701b416643e3b27ac1abd8080a6c60c0f44",
+       "file_sha256": "0b56e1c4a2f8eb16296e37a983afa97c56efcc1c9c411696528dce1b72a2d1b1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-206",
+       "line_start": 9120,
+       "line_end": 9120,
+       "quote": "Newly authored",
+       "excerpt_sha256": "9f01283ace83984d22640d7ebe5d5d8f447ea9695a00b6661e56ad098f3b6fc1",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact",
+       "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261115/PNC019-S3AO-grades-core.json",
+      "status": "PASS (does not stand: reviews/PNC019-s3ao-c12-conformance/REVIEW.md G1-G4, G6)"
+     },
+     "change": "regraded",
+     "change_reason": "C12-GH2 closes G1-G4 and G6 for this family on C12-GH1's shared Goal sweep."
+    }
+   },
+   "remaining_gaps": [],
+   "notes": [
+    "Criterion 12 re-graded by C12-GH2 at 2325b37933; other cells carried unchanged from s3ao; native NOT_RUN."
+   ],
+   "pass_count": 12,
+   "vector": "P P P P P P P P P P P P"
+  },
+  {
+   "event_type": "goal.stopped",
+   "family_id": "event-family-goal-stopped",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/17",
+   "scope_policy": "project_only",
+   "group": "historical_only",
+   "disposition": "HISTORICAL_ONLY",
+   "native_execution": "NOT_RUN",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Row event-family-goal-stopped at 2.0.0 in registry revision 2026-11-04.1, scope_policy project_only; payload_schema_ref resolves with matching $id and closed root; no payload_versions (CV-366 keeps it historical_only). No sibling admission.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+       "unit": "root $id",
+       "line_start": 837,
+       "line_end": 837,
+       "quote": "\"$id\": \"pm.goal_runtime_event.goal_stopped.schema.v2\",",
+       "excerpt_sha256": "3cf70a105c98dc22636e288022d3ec4d0f042bf779339653fd4c826e643e55c0",
+       "file_sha256": "26812b949780cf89e58b0bb1670d15b71f86b0cf4e8886394f298b6b7ccffd92",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+       "unit": "properties/schema_version",
+       "line_start": 914,
+       "line_end": 914,
+       "quote": "\"const\": \"pm.goal_runtime_event.goal_stopped.schema.v2\",",
+       "excerpt_sha256": "58056d7142935eba65ff7a6fd7d70fe8e4e8c6c6518be851e2b0994d7308e360",
+       "file_sha256": "26812b949780cf89e58b0bb1670d15b71f86b0cf4e8886394f298b6b7ccffd92",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-071 prose",
+       "line_start": 7056,
+       "line_end": 7056,
+       "quote": "For exactly `goal.stopped`, retain the registered `event-family-goal-stopped@2.0.0`",
+       "excerpt_sha256": "81c65756f507fff20d5ff196d2eb036d106292e1aee4416031d7d93a5f04863a",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "registry header",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-11-04.1\"",
+       "excerpt_sha256": "da8496155a9419394fba250963763270f32f378f25ea924648d8a044a8cd8414",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Semantic anchor #goal-and-goalrun-payload-minima resolves to this family's v2 minima row, the registered version (not stale, no disclaimer); the adjacent event-log list routes it to GRS-071/CV-345. Payload anchor SP-214 has an exact-family paragraph routing to GRS-071/CV-345/SP-302. CV-287 (source_ref) has no in-place qualifier, but CV-345 explicitly qualifies it.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/17",
+       "line_start": 1121,
+       "line_end": 1121,
+       "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\",",
+       "excerpt_sha256": "91bf44995150698a250e61e6c9537fb9c667da5d6766d837dc38ea542d2f22cb",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/17",
+       "line_start": 1122,
+       "line_end": 1122,
+       "quote": "\"payload_owner_doc\": \"Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer\",",
+       "excerpt_sha256": "8a56f9ea8fd0001d6045b55116400600fead64f75505be23b9feac0e3a619ddc",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Goal and GoalRun payload minima",
+       "line_start": 2903,
+       "line_end": 2903,
+       "quote": "| `goal.stopped` | `stop_reason_code`, `safe_point_ref?`, `interruption_boundary`, `child_settlement_refs[]`, `tool_settlement_refs[]`, `resumable` |",
+       "excerpt_sha256": "479b61f2c29f894a6ccdb10fa65c70715a1b2509168a6d88da6d3d0cb1f52b13",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "3. Contracts, Schemas, Events (event log)",
+       "line_start": 2878,
+       "line_end": 2878,
+       "quote": "`goal.stopped` (GRS-071/CV-345)",
+       "excerpt_sha256": "b06bbf97af813de7095c8eff6c24119b87f3861d215be40a52f72d1b60dc6610",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-302 adopts SP-420: original lawful admission is the pair of the record's SP-286 first-receipt custody and an owner unit plus approved registry checkpoint that admitted a writer; SP-420's per-family search finds no such writer, so no lookup returns verified_historical. Current-writer refusal stays GRS-071.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-420",
+       "line_start": 25757,
+       "line_end": 25757,
+       "quote": "Member 2, original writer admission: an owner unit, accepted when that receipt was issued, that named a writer for that exact family and payload schema ID",
+       "excerpt_sha256": "4b3f3ad17a43b716b6d7f4085c77b3033aa97fc7925d97bd1716cc1bbdf3d46a",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-302 amendment",
+       "line_start": 25631,
+       "line_end": 25631,
+       "quote": "For `goal.stopped` (`Plans/event_family_registry.json#/families/17`",
+       "excerpt_sha256": "4b6cf90141bf4ef8b4016d7cbaac5bba8beb4c75313fe3d186ccb67e8a253f7f",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "historical_only_disposition",
+     "finding": "The registered v2 root is closed (root additionalProperties:false and unevaluatedProperties:false; payload -> closed event_payload). Its retired stopped Goal state and child settlements no longer conflict: GRS-071 keeps the unchanged v2 resource for exact historical interpretation only with every current writer refused, and CV-345 confirms the root is unchanged historical validation.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+       "unit": "root",
+       "line_start": 839,
+       "line_end": 839,
+       "quote": "\"additionalProperties\": false,",
+       "excerpt_sha256": "e1b6fd8541ba5542d4a83ba797ad19f93213527609df4f73e3ce1416f8991246",
+       "file_sha256": "26812b949780cf89e58b0bb1670d15b71f86b0cf4e8886394f298b6b7ccffd92",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+       "unit": "root",
+       "line_start": 943,
+       "line_end": 943,
+       "quote": "\"unevaluatedProperties\": false",
+       "excerpt_sha256": "b96d70307fd77d13dbe671edfd837a8f70d6edbf3f7b05c9eecca99cbe248023",
+       "file_sha256": "26812b949780cf89e58b0bb1670d15b71f86b0cf4e8886394f298b6b7ccffd92",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-071 prose",
+       "line_start": 6960,
+       "line_end": 6960,
+       "quote": "for exact historical interpretation only.",
+       "excerpt_sha256": "3c1e2c0ee65d88ed158fa31cdca064dadfbcb9284f76a7a94364382ff9a64c0b",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-345",
+       "line_start": 27968,
+       "line_end": 27968,
+       "quote": "The exact registered goal.stopped whole v2 root remains unchanged authoritative historical",
+       "excerpt_sha256": "42fd78fe26319f69e82d6faa2788e42b8134766a61842dc6ecef0c3eacb1cfee",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "historical_only_disposition",
+     "finding": "project_only scope and identity pointers; SP-302 fixes the closed request {project_id, goal_id, event_id, sequence_id}, the original row key codec, and verification of event/project/Goal/sequence/type identities and all common/row joins; CV-345 preserves event identity, all outer/inner joins and runtime/actor/account/correlation/causation/thread evidence; the original idempotency recipe (matrix 7.1 plus row tuple) is kept as historical identity.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/17",
+       "line_start": 1120,
+       "line_end": 1120,
+       "quote": "\"scope_policy\": \"project_only\",",
+       "excerpt_sha256": "8472a5d51eb53462551949130f1f8bd4f09280814f6c7f854cccadb4de30bc95",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/17",
+       "line_start": 1134,
+       "line_end": 1134,
+       "quote": "\"/payload/project_id\"",
+       "excerpt_sha256": "b861f066719e794f56a69524d7b92dec3b4ab10ed1684a901d05e5fd0f46796a",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-302",
+       "line_start": 25393,
+       "line_end": 25393,
+       "quote": "The exact internal request is `{project_id, goal_id, event_id, sequence_id}` with no additional fields.",
+       "excerpt_sha256": "0e66b223c4273797e1a292131106cd1afe3367c16874999da9cd0aec34fb1634",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-302",
+       "line_start": 25395,
+       "line_end": 25395,
+       "quote": "Resolve the original row key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` under the existing key codec and admitted integer domain.",
+       "excerpt_sha256": "f759574fade5c8442eaf2641a9d882af911ca25d02605739f0f5f67945950e92",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "historical_only_disposition",
+     "finding": "Explicit for the historical-only case: current emission is refused even for a retry whose original idempotency key matches historical custody; a retained lookup cannot become current-write replay; SP-302 applies the original producer/payload/semantic/idempotency digest rules as history, and repeated lookup changes no durable state. The original identity domain in matrix 7.1 stays the historical dedupe identity.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-345 prose",
+       "line_start": 27877,
+       "line_end": 27877,
+       "quote": "including a retry whose original idempotency key matches historical custody.",
+       "excerpt_sha256": "72fb12e78945722df04a161b87436e58ca43f7f4c9145cdc3d1ded6ff84849d2",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-071 prose",
+       "line_start": 6960,
+       "line_end": 6960,
+       "quote": "A retained historical lookup is a separate read path and cannot become current-write replay.",
+       "excerpt_sha256": "3c1e2c0ee65d88ed158fa31cdca064dadfbcb9284f76a7a94364382ff9a64c0b",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-302",
+       "line_start": 25399,
+       "line_end": 25399,
+       "quote": "Apply original producer/payload/semantic/idempotency digest rules",
+       "excerpt_sha256": "e601eedebc6a7dad6e0b24f16caca034967b0656a92807c07eef427a951b3552",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-302 acceptance",
+       "line_start": 25346,
+       "line_end": 25346,
+       "quote": "- Repeated lookup changes no durable state;",
+       "excerpt_sha256": "73695b525fa90cec9dad8c448937a0ba31f61436726804aeb96a90bc9641629a",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Registered RP-AUTHORITY-INDEFINITE@1.0.0 (defined in the storage value registry, in the Known-37 assignment) stays the event assignment; SP-302 keeps RP-AUTHORITY-INDEFINITE@1.0.0 and RP-EVENT-INDEX-SOURCE@1.0.0 as the exact source/index assignments, owns no durable effect or family checkpoint, and creates no content holds; the generic checkpoint uses SP-278's RP-PROJECTION-3GEN. No open retention choice.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/17",
+       "line_start": 1154,
+       "line_end": 1154,
+       "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\",",
+       "excerpt_sha256": "218a403b240aa548ad151a5d5401bf2a73e2a57cbfe0c0ceb2f649d6f0ebc652",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "retention_policies RP-AUTHORITY-INDEFINITE",
+       "line_start": 99,
+       "line_end": 99,
+       "quote": "\"retain_indefinitely\": true,",
+       "excerpt_sha256": "c93cb61f52d51efe15b9150e1fba6d609a78981e514e252b99f63d1328939b18",
+       "file_sha256": "68271aa87c1ec0e19fe4701795564ed9bc776b963a4a554b24f724e672c4a8ed",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Known-37 retention assignment",
+       "line_start": 18471,
+       "line_end": 18471,
+       "quote": "`storage.value_quarantine_changed` | `RP-AUTHORITY-INDEFINITE@1.0.0` | 23 |",
+       "excerpt_sha256": "a3f2e8a64a746789e32f5050152e092096625803689f58ed596b9f08cff58461",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-302",
+       "line_start": 25409,
+       "line_end": 25409,
+       "quote": "RP-AUTHORITY-INDEFINITE@1.0.0 and RP-EVENT-INDEX-SOURCE@1.0.0 remain the exact source/index assignments.",
+       "excerpt_sha256": "bc61fa77ca98ebe9a23a081bcc9d3e6474dd2dda8afca5cc3546b3553eae54e4",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "historical_only_disposition",
+     "finding": "Beyond the shared reject_unhandled_secrets rule, SP-302 binds custody: original source/frame/index and referenced records stay with their owners and recovery custody, restoration must be authenticated and identity-preserving, current permission must authorize every disclosed value with no redaction transform posing as the original, and the final predicate re-checks current access/deletion/hold authority before release.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-302",
+       "line_start": 25403,
+       "line_end": 25403,
+       "quote": "secret",
+       "excerpt_sha256": "6b09c2097761a7e87b182e03b95d294883a269cf3dfe070abdafdc64a8a30cea",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "historical_only_disposition",
+     "finding": "D-R12 is headed 'Historical interpretation only under GRS-071/CV-345' and keeps its boundary branches and 'any nonterminal active or fenced state except replanning -> stopped' edge. GRS-071 grounds the refusal in the absent stopped state (sufficient even for before_mutation), preserves the boundary rules as history, and keeps current Stop/Pause on GRS-051/cmd.chat.goal.pause with no alias to goal.paused or goal.cancelled.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "EA-UND-0012-GOAL (D-R12)",
+       "line_start": 3957,
+       "line_end": 3957,
+       "quote": "Historical interpretation only under GRS-071/CV-345: preserve the complete following original fields, branches, state/revision/reference predicates and schema authority.",
+       "excerpt_sha256": "35082245f9b4821f28f5c433ba7eff75ce22ef805b83f2317b2fd1e995dbf058",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "EA-UND-0012-GOAL (D-R12)",
+       "line_start": 3960,
+       "line_end": 3960,
+       "quote": "`before_mutation` requires empty settlement arrays and forbids `safe_point_ref`.",
+       "excerpt_sha256": "f3970d77e828a507082438f8ba4879e4ae4eba5aaa911c37163ac600eba06197",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "EA-UND-0012-GOAL (D-R12)",
+       "line_start": 3961,
+       "line_end": 3961,
+       "quote": "- Transition: any nonterminal active or fenced state except `replanning` -> `stopped`;",
+       "excerpt_sha256": "1006a34e689c1fd248dcae4e822fe82e2a31de34c1cad3cb11d12d8885c81b41",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-071 prose",
+       "line_start": 6981,
+       "line_end": 6981,
+       "quote": "D-R12 necessarily commits stopped Goal state, and may carry child settlements.",
+       "excerpt_sha256": "78f339311533669d6b78eac4a5605118c17c21569553f08c9cb8c48f85bb4f8e",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Operating consumers named: SP-339 pm inspect and the F3-666 record inspector call storage.goal_stopped_history_read.v1@1.0.0 with the record's own selector; SP-339 adopts all seven readers; pm tail/export do not call it. Reader binding, SP-278 adoption and none_required family checkpoint unchanged.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-302 amendment",
+       "line_start": 25631,
+       "line_end": 25631,
+       "quote": "When the record they open is a `goal.stopped` EventRecord, they call `storage.goal_stopped_history_read.v1@1.0.0`",
+       "excerpt_sha256": "4b6cf90141bf4ef8b4016d7cbaac5bba8beb4c75313fe3d186ccb67e8a253f7f",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-339 historical Goal readers",
+       "line_start": 29915,
+       "line_end": 29915,
+       "quote": "it calls that family's own historical reader (SP-271, SP-277, SP-280, SP-300, SP-301, SP-302 or SP-303 respectively)",
+       "excerpt_sha256": "6dfec26267486d391dd9a8b0c7565e6828d003d1980c2424c2f04fad03505b7b",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "historical_only_disposition",
+     "finding": "Compatibility: SP-302 selects only the unchanged whole v2 payload and original supported envelope; separately owned legacy v1 routes are unchanged and no conversion or current-write route is added; a future successor needs its own owner contract and admission. Withdrawal: writers are cut off; withdrawal stops the reader, keeps custody, installs no producer or version; the reader never runs rebuild or recovery.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-302",
+       "line_start": 25407,
+       "line_end": 25407,
+       "quote": "Withdrawal",
+       "excerpt_sha256": "48877ac9ca5a11f81f7f69cc040af4419310d160595957a0e39439ffb6933fc7",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executable_oracle_with_real_vector_phase_tables_complete_boundary_kill_ledger_and_schema_clause_closure",
+     "finding": "396 checker and owner-schema rows evaluated by goal.stopped's complete calls: 341 CLOSED (gated tool 004bdedd63 PASS on real observation vectors and a goal.stopped declared witness whose single-row cut makes the complete checker accept and whose restoration repeats the refusal, or a declared duplicate set), 55 CLOSED_BY_PROOF (source-bound proofs whose covering rows are closed in this family), 0 OPEN. Owner-schema clause closure over 5 roots (clause occurrences): 261 KILLED, 0 DUPLICATE_GROUP_KILLED, 6 DUPLICATE_SET_KILLED, 59 COVERED_BY_PROOF (lane GC classes: 261 KILLED, 65 COVERED_LATER with named clauses), 0 uncovered; 19 if-selector and 1 not-subschema clauses listed apart. Declared-target uncapped ledger, invalid mutations listed apart, shared number corpus through the ATS-211 and ATS-1119 readers, sealed-receipt retained reads with store snapshots, distinct-copy join witnesses; date-time inventory NOT_RUN; native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family record",
+       "line_start": 796,
+       "line_end": 796,
+       "quote": "\"family\": \"goal.stopped\"",
+       "excerpt_sha256": "942063ebb414fa38f29bf502e5db854c477b848f96e014a0c4e21403c28009ba",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family coverage matrix status",
+       "line_start": 797,
+       "line_end": 797,
+       "quote": "\"goal.stopped_matrix\": \"",
+       "excerpt_sha256": "90e21f5da20fdaa138ae3ecc207875e2bc57f78b4d4756fba1a3e8f3ab5289bd",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family owner-schema clause closure",
+       "line_start": 798,
+       "line_end": 798,
+       "quote": "\"goal.stopped_closure\": \"",
+       "excerpt_sha256": "e7d30a2065aadab0426bd1bf479d069b9da58c42ebabb93e88ac8aba0296e83e",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "C12-GH1 kill rule: cut accepts and restoration repeats the refusal",
+       "line_start": 360,
+       "line_end": 360,
+       "quote": "record['kill'] = 'KILLED'",
+       "excerpt_sha256": "1c4cfe8d2b203a98ba1c49cf6c5a6ac2bd5f6e6cb915914bdb2c6f33c74a797f",
+       "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "C12-GH1 gated proof on real vectors: unobserved row refused",
+       "line_start": 640,
+       "line_end": 640,
+       "quote": "entry.update(status='REFUSED', reason='row_never_observed_by_complete_checker', proved=[])",
+       "excerpt_sha256": "87c20b25dbd83e012d10b5c597eb8c95dd1587658887d36aa7b2abb4ba4087cf",
+       "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_c12_gh2_closure.py",
+       "unit": "C12-GH2 closure: two independent reachability walks",
+       "line_start": 210,
+       "line_end": 210,
+       "quote": "entry.update(cls='UNCOVERED', reason='reached by the independent walk, not inventoried as a row')",
+       "excerpt_sha256": "df8e025b72a1013f9a0c78728ec02701b416643e3b27ac1abd8080a6c60c0f44",
+       "file_sha256": "0b56e1c4a2f8eb16296e37a983afa97c56efcc1c9c411696528dce1b72a2d1b1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/17",
+       "line_start": 1121,
+       "line_end": 1121,
+       "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\",",
+       "excerpt_sha256": "91bf44995150698a250e61e6c9537fb9c667da5d6766d837dc38ea542d2f22cb",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact",
+       "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261115/PNC019-S3AO-grades-core.json",
+      "status": "PASS (does not stand: reviews/PNC019-s3ao-c12-conformance/REVIEW.md G1-G4, G6)"
+     },
+     "change": "regraded",
+     "change_reason": "C12-GH2 closes G1-G4 and G6 for this family on C12-GH1's shared Goal sweep."
+    }
+   },
+   "remaining_gaps": [],
+   "notes": [
+    "Criterion 12 re-graded by C12-GH2 at 2325b37933; other cells carried unchanged from s3ao; native NOT_RUN."
+   ],
+   "pass_count": 12,
+   "vector": "P P P P P P P P P P P P"
+  },
+  {
+   "event_type": "goal.tool_check_recorded",
+   "family_id": "event-family-goal-tool-check-recorded",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/18",
+   "scope_policy": "application_or_project",
+   "group": "goal",
+   "disposition": "HISTORICAL_ONLY (both scopes; unused app withdrawal approved for next registry checkpoint)",
+   "native_execution": "NOT_RUN",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Row event-family-goal-tool-check-recorded at 2.0.0 in registry revision 2026-11-04.1, scope_policy application_or_project; Project payload_schema_ref resolves with matching $id and closed root; the DL-300 application payload version pm.goal_runtime_event.goal_tool_check_recorded.application.v1 resolves to a closed $defs root whose schema_id const matches, under payload_selection_policy exact_scope_and_schema_id_no_fallback, and CV-366's table selects the same sibling. No sibling or alias admission. Membership says nothing about current emission.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+       "unit": "$id",
+       "line_start": 861,
+       "line_end": 861,
+       "quote": "\"$id\": \"pm.goal_runtime_event.goal_tool_check_recorded.schema.v2\"",
+       "excerpt_sha256": "4be618b01da8bff0afb0f8b72f512a0f6920881633a0f8648a07ec95b40483c7",
+       "file_sha256": "c35a0427e68a4880a72b41b0c6a4ac30a7ef59a592d41a2911bfe995189f7eff",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "Known-37 Goal Runtime v2 schema registration",
+       "line_start": 8630,
+       "line_end": 8630,
+       "quote": "`pm.goal_runtime_event.goal_tool_check_recorded.schema.v2`",
+       "excerpt_sha256": "2b4a9e208cd5ed18add5cd94cec3a29df9f535dad45e43863d45ccca03476d66",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "registry header",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-11-04.1\"",
+       "excerpt_sha256": "da8496155a9419394fba250963763270f32f378f25ea924648d8a044a8cd8414",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/18",
+       "line_start": 1159,
+       "line_end": 1159,
+       "quote": "\"family_id\": \"event-family-goal-tool-check-recorded\"",
+       "excerpt_sha256": "ec80a006c6a2cee515957b3f5e65add776cdb85df5eeb63e530f416dba2be33f",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-207",
+       "line_start": 9120,
+       "line_end": 9120,
+       "quote": "Newly authored",
+       "excerpt_sha256": "9f01283ace83984d22640d7ebe5d5d8f447ea9695a00b6661e56ad098f3b6fc1",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-207",
+       "line_start": 9285,
+       "line_end": 9285,
+       "quote": "No host, worker",
+       "excerpt_sha256": "3ba294f42b0039ee348b626e115e0e84cf71db2d92afcf94cb415e213af30154",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-426",
+       "line_start": 40991,
+       "line_end": 40991,
+       "quote": "whole historical reader resource",
+       "excerpt_sha256": "0fe8886c7d418ab269457848b69d55a1987ee153f310032ae46599c4a4262d20",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-433",
+       "line_start": 45467,
+       "line_end": 45467,
+       "quote": "Physical identity",
+       "excerpt_sha256": "6314b2e03aee7cf6f8049b96487930583fad1b8075a8ce4b18acc4666cad2cef",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-433",
+       "line_start": 45473,
+       "line_end": 45473,
+       "quote": "Repeated reads recompute",
+       "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-433",
+       "line_start": 30587,
+       "line_end": 30587,
+       "quote": "RP-AUTHORITY-INDEFINITE",
+       "excerpt_sha256": "a009bffbf68539df571c200041e114c8efc887e799e677590bb2a7bff3b66227",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-433",
+       "line_start": 45473,
+       "line_end": 45473,
+       "quote": "Reject unhandled secrets",
+       "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-207",
+       "line_start": 9395,
+       "line_end": 9395,
+       "quote": "Preserve tool_call_id",
+       "excerpt_sha256": "2bb3eaa532eaa7eff8e82023474e182da24ee24b1613963eeaf80ff13e11a2af",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-433",
+       "line_start": 45473,
+       "line_end": 45473,
+       "quote": "SP-339 pm inspect / F3-666 call",
+       "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-433",
+       "line_start": 31002,
+       "line_end": 31002,
+       "quote": "withdrawal",
+       "excerpt_sha256": "ba2df9d5cba876e7865ed21669b986c1e109c4dea8ef2aa4d19b4b1ffae74022",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executable_oracle_with_real_vector_phase_tables_complete_boundary_kill_ledger_and_schema_clause_closure",
+     "finding": "394 checker and owner-schema rows evaluated by goal.tool_check_recorded's complete calls: 335 CLOSED (gated tool 004bdedd63 PASS on real observation vectors and a goal.tool_check_recorded declared witness whose single-row cut makes the complete checker accept and whose restoration repeats the refusal, or a declared duplicate set), 59 CLOSED_BY_PROOF (source-bound proofs whose covering rows are closed in this family), 0 OPEN. Owner-schema clause closure over 5 roots (clause occurrences): 259 KILLED, 0 DUPLICATE_GROUP_KILLED, 6 DUPLICATE_SET_KILLED, 63 COVERED_BY_PROOF (lane GC classes: 259 KILLED, 69 COVERED_LATER with named clauses), 0 uncovered; 25 if-selector and 0 not-subschema clauses listed apart. Declared-target uncapped ledger, invalid mutations listed apart, shared number corpus through the ATS-211 and ATS-1119 readers, sealed-receipt retained reads with store snapshots, distinct-copy join witnesses; date-time inventory NOT_RUN; native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family record",
+       "line_start": 1089,
+       "line_end": 1089,
+       "quote": "\"family\": \"goal.tool_check_recorded\"",
+       "excerpt_sha256": "eb2591662b588d066fdadd225cf039b0bc352f99c5ad0ca6b614410f2eb2cd8a",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family coverage matrix status",
+       "line_start": 1090,
+       "line_end": 1090,
+       "quote": "\"goal.tool_check_recorded_matrix\": \"",
+       "excerpt_sha256": "1331a1b8d8763d92d1a0572ad44207d563e809dc45db6791fc1f3f662d9b7b55",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family owner-schema clause closure",
+       "line_start": 1091,
+       "line_end": 1091,
+       "quote": "\"goal.tool_check_recorded_closure\": \"",
+       "excerpt_sha256": "86b13cc4ebe84174ac55a22e48686c351b717f93bc22824a263c0e9850a46d6f",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "C12-GH1 kill rule: cut accepts and restoration repeats the refusal",
+       "line_start": 360,
+       "line_end": 360,
+       "quote": "record['kill'] = 'KILLED'",
+       "excerpt_sha256": "1c4cfe8d2b203a98ba1c49cf6c5a6ac2bd5f6e6cb915914bdb2c6f33c74a797f",
+       "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "C12-GH1 gated proof on real vectors: unobserved row refused",
+       "line_start": 640,
+       "line_end": 640,
+       "quote": "entry.update(status='REFUSED', reason='row_never_observed_by_complete_checker', proved=[])",
+       "excerpt_sha256": "87c20b25dbd83e012d10b5c597eb8c95dd1587658887d36aa7b2abb4ba4087cf",
+       "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_c12_gh2_closure.py",
+       "unit": "C12-GH2 closure: two independent reachability walks",
+       "line_start": 210,
+       "line_end": 210,
+       "quote": "entry.update(cls='UNCOVERED', reason='reached by the independent walk, not inventoried as a row')",
+       "excerpt_sha256": "df8e025b72a1013f9a0c78728ec02701b416643e3b27ac1abd8080a6c60c0f44",
+       "file_sha256": "0b56e1c4a2f8eb16296e37a983afa97c56efcc1c9c411696528dce1b72a2d1b1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-207",
+       "line_start": 9120,
+       "line_end": 9120,
+       "quote": "Newly authored",
+       "excerpt_sha256": "9f01283ace83984d22640d7ebe5d5d8f447ea9695a00b6661e56ad098f3b6fc1",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact",
+       "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261115/PNC019-S3AO-grades-core.json",
+      "status": "PASS (does not stand: reviews/PNC019-s3ao-c12-conformance/REVIEW.md G1-G4, G6)"
+     },
+     "change": "regraded",
+     "change_reason": "C12-GH2 closes G1-G4 and G6 for this family on C12-GH1's shared Goal sweep."
+    }
+   },
+   "remaining_gaps": [],
+   "notes": [
+    "Criterion 12 re-graded by C12-GH2 at 2325b37933; other cells carried unchanged from s3ao; native NOT_RUN."
+   ],
+   "pass_count": 12,
+   "vector": "P P P P P P P P P P P P"
+  },
+  {
+   "event_type": "goal.verification_decided",
+   "family_id": "event-family-goal-verification-decided",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/20",
+   "scope_policy": "project_only",
+   "group": "historical_only",
+   "disposition": "HISTORICAL_ONLY",
+   "native_execution": "NOT_RUN",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Row event-family-goal-verification-decided at 2.0.0 in registry revision 2026-11-04.1, scope_policy project_only; payload_schema_ref resolves with matching $id and closed root; no payload_versions (CV-366 keeps it historical_only). No sibling admission.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-287",
+       "line_start": 22997,
+       "line_end": 22997,
+       "quote": "For exactly goal.verification_decided, schema registration is historical_only under CV-366",
+       "excerpt_sha256": "2e2fe4a6f78ad9a9b17e1eca14faec7c36b3626ad14a7a5e1e2e6e580e307984",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
+       "unit": "root $id",
+       "line_start": 825,
+       "line_end": 825,
+       "quote": "\"$id\": \"pm.goal_runtime_event.goal_verification_decided.schema.v2\",",
+       "excerpt_sha256": "c858fdb0146d128a5eadd21d0c8ca46fe1a31d33455a6ca5a579891187c14d9d",
+       "file_sha256": "8b21a1a0ef9b999d1b0853b53aa8b1a2f449dd67264ceb87b332316d8ec71ca6",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
+       "unit": "properties/schema_version",
+       "line_start": 972,
+       "line_end": 972,
+       "quote": "\"const\": \"pm.goal_runtime_event.goal_verification_decided.schema.v2\",",
+       "excerpt_sha256": "e968c3226f1112eee94f08caf1c4b5ad8b4fdd9ae981946059fa9755cb1368af",
+       "file_sha256": "8b21a1a0ef9b999d1b0853b53aa8b1a2f449dd67264ceb87b332316d8ec71ca6",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-072 prose",
+       "line_start": 7153,
+       "line_end": 7153,
+       "quote": "For exactly `goal.verification_decided`, retain the registered `event-family-goal-verification-decided@2.0.0`",
+       "excerpt_sha256": "ef0563e4ab06493072faab3cfe7bd43c2b5382690fc1508c41a96200f76f4fc5",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "registry header",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-11-04.1\"",
+       "excerpt_sha256": "da8496155a9419394fba250963763270f32f378f25ea924648d8a044a8cd8414",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Semantic anchor #goal-and-goalrun-payload-minima resolves to this family's v2 minima row, the registered version (not stale, no disclaimer); the adjacent event-log list routes it to GRS-072/CV-346. Payload anchor SP-214 has an exact-family paragraph routing to GRS-072/CV-346/SP-303. CV-287 (source_ref) has no in-place qualifier, but CV-346 explicitly qualifies it.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/20",
+       "line_start": 1333,
+       "line_end": 1333,
+       "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\",",
+       "excerpt_sha256": "91bf44995150698a250e61e6c9537fb9c667da5d6766d837dc38ea542d2f22cb",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/20",
+       "line_start": 1334,
+       "line_end": 1334,
+       "quote": "\"payload_owner_doc\": \"Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer\",",
+       "excerpt_sha256": "8a56f9ea8fd0001d6045b55116400600fead64f75505be23b9feac0e3a619ddc",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Goal and GoalRun payload minima",
+       "line_start": 2899,
+       "line_end": 2899,
+       "quote": "| `goal.verification_decided` | `audit_cycle_id?`, `verification_cycle_id?`, `decision`, `verifier_ref`, `adjudicator_ref?`",
+       "excerpt_sha256": "655d1aa555d879435d893b04f04e3c76d87a10838d5913656dd639b9e6bce8b4",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "3. Contracts, Schemas, Events (event log)",
+       "line_start": 2878,
+       "line_end": 2878,
+       "quote": "`goal.verification_decided` (GRS-072/CV-346)",
+       "excerpt_sha256": "b06bbf97af813de7095c8eff6c24119b87f3861d215be40a52f72d1b60dc6610",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-303 adopts SP-420: original lawful admission is the pair of the record's SP-286 first-receipt custody and an owner unit plus approved registry checkpoint that admitted a writer; SP-420's per-family search finds no such writer, so no lookup returns verified_historical. Current-writer refusal stays GRS-072.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-420",
+       "line_start": 25757,
+       "line_end": 25757,
+       "quote": "Member 2, original writer admission: an owner unit, accepted when that receipt was issued, that named a writer for that exact family and payload schema ID",
+       "excerpt_sha256": "4b3f3ad17a43b716b6d7f4085c77b3033aa97fc7925d97bd1716cc1bbdf3d46a",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-303 amendment",
+       "line_start": 25741,
+       "line_end": 25741,
+       "quote": "For `goal.verification_decided` (`Plans/event_family_registry.json#/families/20`",
+       "excerpt_sha256": "f59947f4a70eac99dc519ecb18587a5d3fbb1225764046ac19a5bba6a6618da5",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "historical_only_disposition",
+     "finding": "The registered v2 root is closed (root additionalProperties:false and unevaluatedProperties:false; payload -> closed event_payload). Its retired running/verifying/repairing states and mandatory Goal verifier/cycle role no longer conflict: GRS-072 keeps the unchanged v2 resource for exact historical interpretation only with every current writer refused, and CV-346 confirms the root is unchanged historical validation.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
+       "unit": "root",
+       "line_start": 827,
+       "line_end": 827,
+       "quote": "\"additionalProperties\": false,",
+       "excerpt_sha256": "e1b6fd8541ba5542d4a83ba797ad19f93213527609df4f73e3ce1416f8991246",
+       "file_sha256": "8b21a1a0ef9b999d1b0853b53aa8b1a2f449dd67264ceb87b332316d8ec71ca6",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
+       "unit": "root",
+       "line_start": 1001,
+       "line_end": 1001,
+       "quote": "\"unevaluatedProperties\": false",
+       "excerpt_sha256": "b96d70307fd77d13dbe671edfd837a8f70d6edbf3f7b05c9eecca99cbe248023",
+       "file_sha256": "8b21a1a0ef9b999d1b0853b53aa8b1a2f449dd67264ceb87b332316d8ec71ca6",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-072 prose",
+       "line_start": 7056,
+       "line_end": 7056,
+       "quote": "for exact historical interpretation only.",
+       "excerpt_sha256": "81c65756f507fff20d5ff196d2eb036d106292e1aee4416031d7d93a5f04863a",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-346",
+       "line_start": 28046,
+       "line_end": 28046,
+       "quote": "The exact registered goal.verification_decided whole v2 root remains unchanged authoritative historical",
+       "excerpt_sha256": "55efe00b1c32012d810a71cc5816562c28637141b3658994b3797df3ff67f5b2",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "historical_only_disposition",
+     "finding": "project_only scope and identity pointers; SP-303 fixes the closed request {project_id, goal_id, event_id, sequence_id}, the original row key codec, and verification of event/project/Goal/sequence/type identities and all common/row joins; CV-346 preserves event identity, all outer/inner joins and runtime/actor/account/correlation/causation/thread evidence; the original idempotency recipe (matrix 7.1 plus row tuple) is kept as historical identity.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/20",
+       "line_start": 1332,
+       "line_end": 1332,
+       "quote": "\"scope_policy\": \"project_only\",",
+       "excerpt_sha256": "8472a5d51eb53462551949130f1f8bd4f09280814f6c7f854cccadb4de30bc95",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/20",
+       "line_start": 1346,
+       "line_end": 1346,
+       "quote": "\"/payload/project_id\"",
+       "excerpt_sha256": "b861f066719e794f56a69524d7b92dec3b4ab10ed1684a901d05e5fd0f46796a",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-303",
+       "line_start": 25393,
+       "line_end": 25393,
+       "quote": "The exact internal request is `{project_id, goal_id, event_id, sequence_id}` with no additional fields.",
+       "excerpt_sha256": "0e66b223c4273797e1a292131106cd1afe3367c16874999da9cd0aec34fb1634",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-303",
+       "line_start": 25395,
+       "line_end": 25395,
+       "quote": "Resolve the original row key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` under the existing key codec and admitted integer domain.",
+       "excerpt_sha256": "f759574fade5c8442eaf2641a9d882af911ca25d02605739f0f5f67945950e92",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "historical_only_disposition",
+     "finding": "Explicit for the historical-only case: current emission is refused even for a retry whose original idempotency key matches historical custody; a retained lookup cannot become current-write replay; SP-303 applies the original producer/payload/semantic/idempotency digest rules as history, and repeated lookup changes no durable state. The original identity domain in matrix 7.1 stays the historical dedupe identity.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-346 prose",
+       "line_start": 27877,
+       "line_end": 27877,
+       "quote": "including a retry whose original idempotency key matches historical custody.",
+       "excerpt_sha256": "72fb12e78945722df04a161b87436e58ca43f7f4c9145cdc3d1ded6ff84849d2",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-072 prose",
+       "line_start": 7056,
+       "line_end": 7056,
+       "quote": "A retained historical lookup is a separate read path and cannot become current-write replay.",
+       "excerpt_sha256": "81c65756f507fff20d5ff196d2eb036d106292e1aee4416031d7d93a5f04863a",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-303",
+       "line_start": 25399,
+       "line_end": 25399,
+       "quote": "Apply original producer/payload/semantic/idempotency digest rules",
+       "excerpt_sha256": "e601eedebc6a7dad6e0b24f16caca034967b0656a92807c07eef427a951b3552",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-303 acceptance",
+       "line_start": 25346,
+       "line_end": 25346,
+       "quote": "- Repeated lookup changes no durable state;",
+       "excerpt_sha256": "73695b525fa90cec9dad8c448937a0ba31f61436726804aeb96a90bc9641629a",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Registered RP-AUTHORITY-INDEFINITE@1.0.0 (defined in the storage value registry, in the Known-37 assignment) stays the event assignment; SP-303 keeps RP-AUTHORITY-INDEFINITE@1.0.0 and RP-EVENT-INDEX-SOURCE@1.0.0 as the exact source/index assignments, owns no durable effect or family checkpoint, and creates no content holds; the generic checkpoint uses SP-278's RP-PROJECTION-3GEN. No open retention choice.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/20",
+       "line_start": 1366,
+       "line_end": 1366,
+       "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\",",
+       "excerpt_sha256": "218a403b240aa548ad151a5d5401bf2a73e2a57cbfe0c0ceb2f649d6f0ebc652",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "retention_policies RP-AUTHORITY-INDEFINITE",
+       "line_start": 99,
+       "line_end": 99,
+       "quote": "\"retain_indefinitely\": true,",
+       "excerpt_sha256": "c93cb61f52d51efe15b9150e1fba6d609a78981e514e252b99f63d1328939b18",
+       "file_sha256": "68271aa87c1ec0e19fe4701795564ed9bc776b963a4a554b24f724e672c4a8ed",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Known-37 retention assignment",
+       "line_start": 18471,
+       "line_end": 18471,
+       "quote": "`storage.value_quarantine_changed` | `RP-AUTHORITY-INDEFINITE@1.0.0` | 23 |",
+       "excerpt_sha256": "a3f2e8a64a746789e32f5050152e092096625803689f58ed596b9f08cff58461",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-303",
+       "line_start": 25409,
+       "line_end": 25409,
+       "quote": "RP-AUTHORITY-INDEFINITE@1.0.0 and RP-EVENT-INDEX-SOURCE@1.0.0 remain the exact source/index assignments.",
+       "excerpt_sha256": "bc61fa77ca98ebe9a23a081bcc9d3e6474dd2dda8afca5cc3546b3553eae54e4",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "historical_only_disposition",
+     "finding": "Beyond the shared reject_unhandled_secrets rule, SP-303 binds custody: original source/frame/index and referenced records stay with their owners and recovery custody, restoration must be authenticated and identity-preserving, current permission must authorize every disclosed value with no redaction transform posing as the original, and the final predicate re-checks current access/deletion/hold authority before release.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-303",
+       "line_start": 25403,
+       "line_end": 25403,
+       "quote": "secret",
+       "excerpt_sha256": "6b09c2097761a7e87b182e03b95d294883a269cf3dfe070abdafdc64a8a30cea",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "historical_only_disposition",
+     "finding": "D-R15 is headed 'Historical interpretation only under GRS-072/CV-346' and keeps its decision branches, Strong third-repeat adjudicator rule and source edges (running|repairing -> verifying on passed, etc.). GRS-072 grounds the refusal in those states and the verifier role being absent, keeps them as historical diagnostics, and leaves reviews and certification with their own owners; passed never completes a Goal.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "EA-UND-0015-GOAL (D-R15)",
+       "line_start": 3984,
+       "line_end": 3984,
+       "quote": "Historical interpretation only under GRS-072/CV-346: preserve the complete following original fields, branches, state/revision/reference predicates and schema authority.",
+       "excerpt_sha256": "868226ca0e6c1b44c07fc4ede1fdb8fb5d2a2cf77c7dbc445841b5bf63f790fe",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "EA-UND-0015-GOAL (D-R15)",
+       "line_start": 3987,
+       "line_end": 3987,
+       "quote": "Strong-tier third repeated failure requires `adjudicator_ref`;",
+       "excerpt_sha256": "8d22098da2e1ce7f8f9f60d3b28b1aa0c67424562114951752fd38e85c5fb27f",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "EA-UND-0015-GOAL (D-R15)",
+       "line_start": 3988,
+       "line_end": 3988,
+       "quote": "- Transition: `running|repairing -> verifying` on `passed`;",
+       "excerpt_sha256": "5d5132174c423dc4d15954c90eab6c5f5b2f56bfcb162f8750aba8ab46694959",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-072 prose",
+       "line_start": 7151,
+       "line_end": 7151,
+       "quote": "All D-R15 source edges require running/verifying/repairing Goal states and prescribe Goal verifier/cycle authority.",
+       "excerpt_sha256": "0a6ad11161db71c0bf19b8fcea1598400b489901c8ea6ad43867e8ba1f0196b5",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Operating consumers named: SP-339 pm inspect and the F3-666 record inspector call storage.goal_verification_decided_history_read.v1@1.0.0 with the record's own selector; SP-339 adopts all seven readers; pm tail/export do not call it. Reader binding, SP-278 adoption and none_required family checkpoint unchanged.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-303 amendment",
+       "line_start": 25741,
+       "line_end": 25741,
+       "quote": "When the record they open is a `goal.verification_decided` EventRecord, they call `storage.goal_verification_decided_history_read.v1@1.0.0`",
+       "excerpt_sha256": "f59947f4a70eac99dc519ecb18587a5d3fbb1225764046ac19a5bba6a6618da5",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-339 historical Goal readers",
+       "line_start": 29915,
+       "line_end": 29915,
+       "quote": "it calls that family's own historical reader (SP-271, SP-277, SP-280, SP-300, SP-301, SP-302 or SP-303 respectively)",
+       "excerpt_sha256": "6dfec26267486d391dd9a8b0c7565e6828d003d1980c2424c2f04fad03505b7b",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "historical_only_disposition",
+     "finding": "Compatibility: SP-303 selects only the unchanged whole v2 payload and original supported envelope; separately owned legacy v1 routes are unchanged and no conversion or current-write route is added; a future successor needs its own owner contract and admission. Withdrawal: writers are cut off; withdrawal stops the reader, keeps custody, installs no producer or version; the reader never runs rebuild or recovery.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-303",
+       "line_start": 25407,
+       "line_end": 25407,
+       "quote": "Withdrawal",
+       "excerpt_sha256": "48877ac9ca5a11f81f7f69cc040af4419310d160595957a0e39439ffb6933fc7",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executable_oracle_with_real_vector_phase_tables_complete_boundary_kill_ledger_and_schema_clause_closure",
+     "finding": "389 checker and owner-schema rows evaluated by goal.verification_decided's complete calls: 331 CLOSED (gated tool 004bdedd63 PASS on real observation vectors and a goal.verification_decided declared witness whose single-row cut makes the complete checker accept and whose restoration repeats the refusal, or a declared duplicate set), 58 CLOSED_BY_PROOF (source-bound proofs whose covering rows are closed in this family), 0 OPEN. Owner-schema clause closure over 5 roots (clause occurrences): 256 KILLED, 0 DUPLICATE_GROUP_KILLED, 7 DUPLICATE_SET_KILLED, 62 COVERED_BY_PROOF (lane GC classes: 256 KILLED, 69 COVERED_LATER with named clauses), 0 uncovered; 25 if-selector and 0 not-subschema clauses listed apart. Declared-target uncapped ledger, invalid mutations listed apart, shared number corpus through the ATS-211 and ATS-1119 readers, sealed-receipt retained reads with store snapshots, distinct-copy join witnesses; date-time inventory NOT_RUN; native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family record",
+       "line_start": 1378,
+       "line_end": 1378,
+       "quote": "\"family\": \"goal.verification_decided\"",
+       "excerpt_sha256": "a76ce9a16bbb1d23a05b1cb415ef0bf71dceafb228f887fecb069f4815aed374",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family coverage matrix status",
+       "line_start": 1379,
+       "line_end": 1379,
+       "quote": "\"goal.verification_decided_matrix\": \"",
+       "excerpt_sha256": "8a54d1d07d8ea0db495bd19bc1393ce7b2ef3ce9e8e62bdede995bfc40ff6e21",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family owner-schema clause closure",
+       "line_start": 1380,
+       "line_end": 1380,
+       "quote": "\"goal.verification_decided_closure\": \"",
+       "excerpt_sha256": "1e1fee2163b90ce45ca90b7e0725f015ff2db609d5dbd6ce66058f638cac7189",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "C12-GH1 kill rule: cut accepts and restoration repeats the refusal",
+       "line_start": 360,
+       "line_end": 360,
+       "quote": "record['kill'] = 'KILLED'",
+       "excerpt_sha256": "1c4cfe8d2b203a98ba1c49cf6c5a6ac2bd5f6e6cb915914bdb2c6f33c74a797f",
+       "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "C12-GH1 gated proof on real vectors: unobserved row refused",
+       "line_start": 640,
+       "line_end": 640,
+       "quote": "entry.update(status='REFUSED', reason='row_never_observed_by_complete_checker', proved=[])",
+       "excerpt_sha256": "87c20b25dbd83e012d10b5c597eb8c95dd1587658887d36aa7b2abb4ba4087cf",
+       "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_c12_gh2_closure.py",
+       "unit": "C12-GH2 closure: two independent reachability walks",
+       "line_start": 210,
+       "line_end": 210,
+       "quote": "entry.update(cls='UNCOVERED', reason='reached by the independent walk, not inventoried as a row')",
+       "excerpt_sha256": "df8e025b72a1013f9a0c78728ec02701b416643e3b27ac1abd8080a6c60c0f44",
+       "file_sha256": "0b56e1c4a2f8eb16296e37a983afa97c56efcc1c9c411696528dce1b72a2d1b1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/20",
+       "line_start": 1333,
+       "line_end": 1333,
+       "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\",",
+       "excerpt_sha256": "91bf44995150698a250e61e6c9537fb9c667da5d6766d837dc38ea542d2f22cb",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact",
+       "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261115/PNC019-S3AO-grades-core.json",
+      "status": "PASS (does not stand: reviews/PNC019-s3ao-c12-conformance/REVIEW.md G1-G4, G6)"
+     },
+     "change": "regraded",
+     "change_reason": "C12-GH2 closes G1-G4 and G6 for this family on C12-GH1's shared Goal sweep."
+    }
+   },
+   "remaining_gaps": [],
+   "notes": [
+    "Criterion 12 re-graded by C12-GH2 at 2325b37933; other cells carried unchanged from s3ao; native NOT_RUN."
+   ],
+   "pass_count": 12,
+   "vector": "P P P P P P P P P P P P"
+  }
+ ]
+}

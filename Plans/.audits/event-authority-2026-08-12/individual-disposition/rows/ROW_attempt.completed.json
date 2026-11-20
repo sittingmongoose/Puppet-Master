@@ -6,68 +6,68 @@
     "july248"
   ],
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to attempt.completed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to attempt.completed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-15.1 in admission merge 1 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-520); DL-077 admission record reports/event-authority-20260911/admission-records/attempt.completed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261114/admission-merge-1/depth/attempt.completed.json (sha256 0325611669b9f3987f4a0b5cd0151da59c3e0156afe17598e11ef53cf6282371); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited plan names the semantic authority empowered to approve the `attempt.completed` contract."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:34455",
+      "note": "Independent EP/CV/SP units govern the prepared exact family version."
     },
     "producer": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "The cited occurrence does not name the component authorized to persist `attempt.completed`; a command-to-effect mapping is not producer authority."
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:10678",
+      "note": "Exact emitter and dependency/body/append/receipt/publication ordering explicitly adopt SP-286 full-value v2 and current durability amendments."
     },
     "membership_version": {
-      "status": "FAIL",
-      "citation": "Plans/event_family_registry.json:5-8",
-      "note": "Registry revision 2026-08-04.1 contains no `attempt.completed` family entry; unknown events remain quarantined without checkpoint advance."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:3307-3360",
+      "note": "Registered at registry revision 2026-11-15.1 as #/families/46 (canonical row SHA-256 3b7db56995c1a08aa26bbc5325e3381d22e7b1a6be749b48839dc49fc4c5e05b); before this commit the family was absent."
     },
     "closed_payload_schema": {
-      "status": "FAIL",
-      "citation": "Plans/Contracts_V0.md:2650-2657",
-      "note": "The cited material does not provide a versioned closed schema for `attempt.completed` or reject additional fields."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:34455",
+      "note": "Separate exact-version closed root schema; current known enum domains are closed. Conditional owner/source constraints remain normative and are not all schema-only predicates."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2650-2657",
-      "note": "The event-specific required fields explicitly bind `attempt.completed` to run_id, thread_id, node_id, and attempt_id."
+      "citation": "Plans/Executor_Protocol.md:10701; Plans/Executor_Protocol.md:10726; Plans/storage-plan.md:38181",
+      "note": "EP-210 and SP-500 define this family's scope, hash preimage and source adapter. Complete original observations join immutable owner reads; F17 enforces primitive types at graph joins. Shared number/recipe adoption S-N1–S-N5 remains a sweep item."
     },
     "replay_idempotency": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No field-local plan citation defines duplicate, replay, or idempotency behavior for `attempt.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38164",
+      "note": "Exact family-local hash identity and same-identity digest conflict/replay rule; timestamp cannot mint a new identity."
     },
     "retention": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No field-local plan citation assigns `attempt.completed` a retention class or expiry rule."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38173",
+      "note": "Case L-3 explicitly covers runtime/run/node/attempt; source anchor, caps and holds preserved. Existing generic index/checkpoint keep their policies."
     },
     "redaction_custody": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No field-local plan citation assigns redaction responsibility or custody boundaries for `attempt.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38175",
+      "note": "Exact source/first-receipt custody, coherent backup/restore, linked body independence and fresh permission/deletion checks defined."
     },
     "transitions": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No field-local plan citation closes the allowed predecessor/successor states and invalid transitions for `attempt.completed`."
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:10728; Plans/Executor_Protocol.md:10739",
+      "note": "EP-210 defines this family's exhaustive predecessor/discriminator/successor table, actual owner predicates, post-state revision/sequence and admission/dependency/body/append/first-receipt/CAS/publication barrier; static cases check the table and rejection fences."
     },
     "consumers_checkpoints": {
-      "status": "FAIL",
-      "citation": "Plans/event_family_registry.json:5-8",
-      "note": "Only the generic unknown-event quarantine rule applies; no accepted consumer/checkpoint contract exists for `attempt.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38169",
+      "note": "Exact read-only operating consumer explicitly adopts SP-278 using existing generic projector/checkpoint/schema, actual current frontier/CAS and nine-field token; no new stored value."
     },
     "compatibility_withdrawal": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No field-local plan citation defines version compatibility, deprecation, or withdrawal for `attempt.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38177; Plans/storage-plan.md:38181",
+      "note": "Own exact-version/alias dispatch and writer cutoff, original operation reconciliation, token invalidation and source-backed successor rebuild defined."
     },
     "positive_negative_oracles": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No field-local plan citation supplies both acceptance and rejection oracles for `attempt.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38164; Plans/storage-plan.md:38166; Plans/Contracts_V0.md:34457; Plans/storage-plan.md:38175; Plans/executor_event_type_fixtures.json:120; Plans/executor_event_semantic_fixtures.json:10181; Plans/storage-plan.md:38181; Plans/executor_event_type_fixtures.json:4271; Plans/Automated_Testing_System.md:9654; scripts/pm_executor_event_semantics.py:402; scripts/pm_executor_table_post_effects.py:53; scripts/pm_executor_table_workgraph_id.py:27; scripts/pm_executor_event_semantics.py:123; scripts/pm_executor_event_semantics.py:1227; scripts/pm_executor_event_semantics.py:833; scripts/pm_executor_event_semantics.py:709; scripts/pm_executor_event_semantics.py:526; scripts/pm_executor_event_semantics.py:508; scripts/pm_executor_event_semantics.py:1167",
+      "note": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN."
     }
   },
   "citations_checked": [

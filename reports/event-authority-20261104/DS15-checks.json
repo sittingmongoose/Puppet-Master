@@ -1,0 +1,196 @@
+{
+  "schema_id": "pm.ds15.round9_check_summary.v1",
+  "assessment_id": "DS15-r9",
+  "assessed_tree": "5296fd85cbc7ddb699d5d57c1cd51e6fe839674f",
+  "family_exits": [
+    {
+      "family": "browser.context_shared",
+      "exit": 0,
+      "checker": "deck2"
+    },
+    {
+      "family": "browser.context_share_revoked",
+      "exit": 0,
+      "checker": "deck2"
+    },
+    {
+      "family": "catalog.update.started",
+      "exit": 0,
+      "checker": "deck2"
+    },
+    {
+      "family": "catalog.update.completed",
+      "exit": 0,
+      "checker": "deck2"
+    },
+    {
+      "family": "catalog.remove.started",
+      "exit": 0,
+      "checker": "deck2"
+    },
+    {
+      "family": "catalog.remove.completed",
+      "exit": 0,
+      "checker": "deck2"
+    },
+    {
+      "family": "tool.custom_headless.skipped",
+      "exit": 0,
+      "checker": "deck2"
+    },
+    {
+      "family": "doctor.custom_headless.checked",
+      "exit": 0,
+      "checker": "original"
+    },
+    {
+      "family": "live.session.started",
+      "exit": 0,
+      "checker": "original"
+    },
+    {
+      "family": "live.step.updated",
+      "exit": 0,
+      "checker": "original"
+    },
+    {
+      "family": "live.artifact.created",
+      "exit": 0,
+      "checker": "original"
+    },
+    {
+      "family": "live.session.completed",
+      "exit": 0,
+      "checker": "original"
+    },
+    {
+      "family": "live.session.degraded",
+      "exit": 0,
+      "checker": "original"
+    },
+    {
+      "family": "browser.context_captured",
+      "exit": 0,
+      "checker": "original"
+    },
+    {
+      "family": "dev.session.started",
+      "exit": 0,
+      "checker": "original"
+    },
+    {
+      "family": "dev.session.stopping",
+      "exit": 0,
+      "checker": "original"
+    },
+    {
+      "family": "dev.session.stopped",
+      "exit": 0,
+      "checker": "original"
+    },
+    {
+      "family": "dev.session.restarting",
+      "exit": 0,
+      "checker": "original"
+    },
+    {
+      "family": "preview.session.started",
+      "exit": 0,
+      "checker": "original"
+    },
+    {
+      "family": "preview.session.refreshed",
+      "exit": 0,
+      "checker": "original"
+    },
+    {
+      "family": "preview.session.stopped",
+      "exit": 0,
+      "checker": "original"
+    },
+    {
+      "family": "catalog.install.started",
+      "exit": 0,
+      "checker": "original"
+    },
+    {
+      "family": "catalog.install.completed",
+      "exit": 0,
+      "checker": "original"
+    }
+  ],
+  "new_semantic_cases": 1130,
+  "new_policy_cases": 110,
+  "new_reference_closure_cases": 14,
+  "derived_checks": [
+    {
+      "name": "shard-generate",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit": 0,
+      "start_available_gib": 12,
+      "lowest_available_gib": 11,
+      "seconds": 8.02,
+      "pauses": []
+    },
+    {
+      "name": "index-generate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit": 0,
+      "start_available_gib": 11,
+      "lowest_available_gib": 10,
+      "seconds": 50.12,
+      "pauses": []
+    },
+    {
+      "name": "shard-check",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit": 0,
+      "start_available_gib": 9,
+      "lowest_available_gib": 9,
+      "seconds": 26.05,
+      "pauses": []
+    },
+    {
+      "name": "index-validate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit": 1,
+      "start_available_gib": 14,
+      "lowest_available_gib": 12,
+      "seconds": 56.1,
+      "pauses": []
+    }
+  ],
+  "index_status": "fail",
+  "index_failures": 22,
+  "index_failure_kind": "same normalized failures as round 8; all failure source paths unchanged",
+  "admissions": 0,
+  "behavior_held": [],
+  "native_execution": "NOT_RUN",
+  "oracle_completeness": false,
+  "shared_sweep_items": [
+    "S-FMT1",
+    "S-N1",
+    "S-N2",
+    "shared-guard-tool"
+  ]
+}

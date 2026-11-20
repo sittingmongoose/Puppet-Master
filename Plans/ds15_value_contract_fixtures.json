@@ -1,0 +1,950 @@
+[
+  {
+    "schema_ref": "Plans/ds15_dev_session_record_v2.schema.json",
+    "positive": {
+      "schema_id": "pm.storage_value.dev_session_record.v2",
+      "schema_version": "2.0.0",
+      "project_id": "project:1",
+      "dev_session_id": "dev:1",
+      "workflow": {
+        "state": "running",
+        "revision": 1,
+        "operation_id": "operation:1",
+        "outcome_ref": "dev:outcome:1",
+        "run_id": null,
+        "thread_id": null,
+        "workspace_tab_id": "workspace:1",
+        "terminal_session_id": null,
+        "target_ref": null,
+        "artifact_refs": [],
+        "live_verification": "verified"
+      },
+      "dap": null
+    },
+    "cases": [
+      {
+        "id": "non-debug-workflow-no-dap",
+        "changes": {},
+        "valid": true
+      },
+      {
+        "id": "no-workflow-or-dap",
+        "changes": {
+          "workflow": null
+        },
+        "valid": false
+      },
+      {
+        "id": "no-flat-dap-id",
+        "changes": {
+          "dap_session_id": "invented"
+        },
+        "valid": false
+      },
+      {
+        "id": "no-workflow-debug-state-alias",
+        "changes": {
+          "workflow/state": "paused"
+        },
+        "valid": false
+      },
+      {
+        "id": "missing-outcome",
+        "changes": {
+          "workflow/outcome_ref": {
+            "$delete": true
+          }
+        },
+        "valid": false
+      },
+      {
+        "id": "unknown-version",
+        "changes": {
+          "schema_version": "9.0.0"
+        },
+        "valid": false
+      },
+      {
+        "id": "workflow-and-real-subordinate-dap",
+        "changes": {
+          "dap": {
+            "schema_id": "pm.storage_value.dev_session_record.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project:1",
+            "dev_session_id": "dev:1",
+            "dap_session_id": "dap:1",
+            "topology": {
+              "project_id": "project:1",
+              "project_home_server_id": "server:1",
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "source_location_id": null,
+              "topology_generation": 1
+            },
+            "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+            "owner_ref": "owner:1",
+            "lease_ref": "lease:1",
+            "session_generation": 1,
+            "permission_grant_ref": "permission:1",
+            "policy_ref": "policy:1",
+            "state": "paused",
+            "waiter_arm_ref": "waiter:1",
+            "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+            "triggered_at_utc": "2026-11-04T00:00:02Z",
+            "log_refs": [],
+            "artifact_refs": [],
+            "cleanup_ref": null,
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "updated_at_utc": "2026-11-04T00:00:02Z",
+            "terminal_at_utc": null
+          }
+        },
+        "valid": true
+      },
+      {
+        "id": "dap-root-mismatch",
+        "changes": {
+          "dap": {
+            "schema_id": "pm.storage_value.dev_session_record.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project:1",
+            "dev_session_id": "dev:other",
+            "dap_session_id": "dap:1",
+            "topology": {
+              "project_id": "project:1",
+              "project_home_server_id": "server:1",
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "source_location_id": null,
+              "topology_generation": 1
+            },
+            "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+            "owner_ref": "owner:1",
+            "lease_ref": "lease:1",
+            "session_generation": 1,
+            "permission_grant_ref": "permission:1",
+            "policy_ref": "policy:1",
+            "state": "paused",
+            "waiter_arm_ref": "waiter:1",
+            "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+            "triggered_at_utc": "2026-11-04T00:00:02Z",
+            "log_refs": [],
+            "artifact_refs": [],
+            "cleanup_ref": null,
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "updated_at_utc": "2026-11-04T00:00:02Z",
+            "terminal_at_utc": null
+          }
+        },
+        "valid": false
+      },
+      {
+        "id": "dap-topology-mismatch",
+        "changes": {
+          "dap": {
+            "schema_id": "pm.storage_value.dev_session_record.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project:1",
+            "dev_session_id": "dev:1",
+            "dap_session_id": "dap:1",
+            "topology": {
+              "project_id": "project:other",
+              "project_home_server_id": "server:1",
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "source_location_id": null,
+              "topology_generation": 1
+            },
+            "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+            "owner_ref": "owner:1",
+            "lease_ref": "lease:1",
+            "session_generation": 1,
+            "permission_grant_ref": "permission:1",
+            "policy_ref": "policy:1",
+            "state": "paused",
+            "waiter_arm_ref": "waiter:1",
+            "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+            "triggered_at_utc": "2026-11-04T00:00:02Z",
+            "log_refs": [],
+            "artifact_refs": [],
+            "cleanup_ref": null,
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "updated_at_utc": "2026-11-04T00:00:02Z",
+            "terminal_at_utc": null
+          }
+        },
+        "valid": false
+      },
+      {
+        "id": "dap-waiter-required",
+        "changes": {
+          "dap": {
+            "schema_id": "pm.storage_value.dev_session_record.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project:1",
+            "dev_session_id": "dev:1",
+            "dap_session_id": "dap:1",
+            "topology": {
+              "project_id": "project:1",
+              "project_home_server_id": "server:1",
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "source_location_id": null,
+              "topology_generation": 1
+            },
+            "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+            "owner_ref": "owner:1",
+            "lease_ref": "lease:1",
+            "session_generation": 1,
+            "permission_grant_ref": "permission:1",
+            "policy_ref": "policy:1",
+            "state": "paused",
+            "waiter_arm_ref": null,
+            "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+            "triggered_at_utc": "2026-11-04T00:00:02Z",
+            "log_refs": [],
+            "artifact_refs": [],
+            "cleanup_ref": null,
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "updated_at_utc": "2026-11-04T00:00:02Z",
+            "terminal_at_utc": null
+          }
+        },
+        "valid": false
+      },
+      {
+        "id": "dap-trigger-after-waiter",
+        "changes": {
+          "dap": {
+            "schema_id": "pm.storage_value.dev_session_record.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project:1",
+            "dev_session_id": "dev:1",
+            "dap_session_id": "dap:1",
+            "topology": {
+              "project_id": "project:1",
+              "project_home_server_id": "server:1",
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "source_location_id": null,
+              "topology_generation": 1
+            },
+            "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+            "owner_ref": "owner:1",
+            "lease_ref": "lease:1",
+            "session_generation": 1,
+            "permission_grant_ref": "permission:1",
+            "policy_ref": "policy:1",
+            "state": "paused",
+            "waiter_arm_ref": "waiter:1",
+            "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+            "triggered_at_utc": "2026-11-04T00:00:00Z",
+            "log_refs": [],
+            "artifact_refs": [],
+            "cleanup_ref": null,
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "updated_at_utc": "2026-11-04T00:00:02Z",
+            "terminal_at_utc": null
+          }
+        },
+        "valid": false
+      },
+      {
+        "id": "dap-terminal-truth",
+        "changes": {
+          "dap": {
+            "schema_id": "pm.storage_value.dev_session_record.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project:1",
+            "dev_session_id": "dev:1",
+            "dap_session_id": "dap:1",
+            "topology": {
+              "project_id": "project:1",
+              "project_home_server_id": "server:1",
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "source_location_id": null,
+              "topology_generation": 1
+            },
+            "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+            "owner_ref": "owner:1",
+            "lease_ref": "lease:1",
+            "session_generation": 1,
+            "permission_grant_ref": "permission:1",
+            "policy_ref": "policy:1",
+            "state": "terminated",
+            "waiter_arm_ref": "waiter:1",
+            "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+            "triggered_at_utc": "2026-11-04T00:00:02Z",
+            "log_refs": [],
+            "artifact_refs": [],
+            "cleanup_ref": null,
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "updated_at_utc": "2026-11-04T00:00:02Z",
+            "terminal_at_utc": null
+          }
+        },
+        "valid": false
+      },
+      {
+        "id": "trailing-LF-workflow-outcome_ref",
+        "changes": {
+          "workflow/outcome_ref": "dev:outcome:1\n"
+        },
+        "valid": false
+      },
+      {
+        "id": "oversize-valid-DAP-value",
+        "changes": {
+          "dap": {
+            "schema_id": "pm.storage_value.dev_session_record.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project:1",
+            "dev_session_id": "dev:1",
+            "dap_session_id": "dap:1",
+            "topology": {
+              "project_id": "project:1",
+              "project_home_server_id": "server:1",
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "source_location_id": null,
+              "topology_generation": 1
+            },
+            "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+            "owner_ref": "owner:1",
+            "lease_ref": "lease:1",
+            "session_generation": 1,
+            "permission_grant_ref": "permission:1",
+            "policy_ref": "policy:1",
+            "state": "paused",
+            "waiter_arm_ref": "waiter:1",
+            "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+            "triggered_at_utc": "2026-11-04T00:00:02Z",
+            "log_refs": [
+              "log:0:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:2:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:3:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:4:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:5:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:6:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:7:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:8:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:9:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:10:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:11:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:12:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:13:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:14:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:15:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:16:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:17:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:18:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:19:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:20:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:21:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:22:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:23:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:24:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:25:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:26:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:27:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:28:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:29:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:30:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:31:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:32:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:33:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:34:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:35:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:36:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:37:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:38:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:39:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:40:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:41:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:42:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:43:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:44:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:45:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:46:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:47:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:48:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:49:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:50:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:51:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:52:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:53:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:54:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:55:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:56:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:57:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:58:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:59:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:60:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:61:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:62:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:63:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:64:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:65:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:66:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:67:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:68:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:69:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:70:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:71:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:72:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:73:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:74:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:75:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:76:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:77:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:78:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:79:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:80:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:81:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:82:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:83:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:84:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:85:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:86:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:87:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:88:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:89:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:90:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:91:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:92:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:93:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:94:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:95:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:96:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:97:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:98:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "log:99:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            ],
+            "artifact_refs": [],
+            "cleanup_ref": null,
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "updated_at_utc": "2026-11-04T00:00:02Z",
+            "terminal_at_utc": null
+          }
+        },
+        "valid": false
+      }
+    ],
+    "migration_base": {
+      "kind": "dap_v1",
+      "source": {
+        "schema_id": "pm.storage_value.dev_session_record.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project:1",
+        "dev_session_id": "dev:1",
+        "dap_session_id": "dap:1",
+        "topology": {
+          "project_id": "project:1",
+          "project_home_server_id": "server:1",
+          "execution_host_id": "host:1",
+          "execution_environment_id": "environment:1",
+          "source_location_id": null,
+          "topology_generation": 1
+        },
+        "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+        "owner_ref": "owner:1",
+        "lease_ref": "lease:1",
+        "session_generation": 1,
+        "permission_grant_ref": "permission:1",
+        "policy_ref": "policy:1",
+        "state": "paused",
+        "waiter_arm_ref": "waiter:1",
+        "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+        "triggered_at_utc": "2026-11-04T00:00:02Z",
+        "log_refs": [],
+        "artifact_refs": [],
+        "cleanup_ref": null,
+        "created_at_utc": "2026-11-04T00:00:00Z",
+        "updated_at_utc": "2026-11-04T00:00:02Z",
+        "terminal_at_utc": null
+      },
+      "evidence": {
+        "verified": true,
+        "backup_verified": true,
+        "project_id": "project:1",
+        "dev_session_id": "dev:1"
+      }
+    },
+    "migration_cases": [
+      {
+        "id": "preserve-complete-dap-no-workflow-inference",
+        "changes": {},
+        "expected": {
+          "schema_id": "pm.storage_value.dev_session_record.v2",
+          "schema_version": "2.0.0",
+          "project_id": "project:1",
+          "dev_session_id": "dev:1",
+          "workflow": null,
+          "dap": {
+            "schema_id": "pm.storage_value.dev_session_record.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project:1",
+            "dev_session_id": "dev:1",
+            "dap_session_id": "dap:1",
+            "topology": {
+              "project_id": "project:1",
+              "project_home_server_id": "server:1",
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "source_location_id": null,
+              "topology_generation": 1
+            },
+            "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+            "owner_ref": "owner:1",
+            "lease_ref": "lease:1",
+            "session_generation": 1,
+            "permission_grant_ref": "permission:1",
+            "policy_ref": "policy:1",
+            "state": "paused",
+            "waiter_arm_ref": "waiter:1",
+            "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+            "triggered_at_utc": "2026-11-04T00:00:02Z",
+            "log_refs": [],
+            "artifact_refs": [],
+            "cleanup_ref": null,
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "updated_at_utc": "2026-11-04T00:00:02Z",
+            "terminal_at_utc": null
+          }
+        }
+      },
+      {
+        "id": "reject-bad-legacy-waiter",
+        "changes": {
+          "source/waiter_arm_ref": null
+        },
+        "expected": null
+      },
+      {
+        "id": "reject-ambiguous-root",
+        "changes": {
+          "evidence/dev_session_id": "dev:other"
+        },
+        "expected": null
+      },
+      {
+        "id": "reject-unbacked-migration",
+        "changes": {
+          "evidence/backup_verified": false
+        },
+        "expected": null
+      },
+      {
+        "id": "legacy-DAP-trailing-LF-source-adapter_capability_snapshot_ref",
+        "changes": {
+          "source/adapter_capability_snapshot_ref": "adapter:capabilities:1\n"
+        },
+        "expected": null
+      },
+      {
+        "id": "legacy-DAP-trailing-LF-source-owner_ref",
+        "changes": {
+          "source/owner_ref": "owner:1\n"
+        },
+        "expected": null
+      },
+      {
+        "id": "legacy-DAP-trailing-LF-source-lease_ref",
+        "changes": {
+          "source/lease_ref": "lease:1\n"
+        },
+        "expected": null
+      },
+      {
+        "id": "legacy-DAP-trailing-LF-source-permission_grant_ref",
+        "changes": {
+          "source/permission_grant_ref": "permission:1\n"
+        },
+        "expected": null
+      },
+      {
+        "id": "legacy-DAP-trailing-LF-source-policy_ref",
+        "changes": {
+          "source/policy_ref": "policy:1\n"
+        },
+        "expected": null
+      },
+      {
+        "id": "legacy-DAP-trailing-LF-source-waiter_arm_ref",
+        "changes": {
+          "source/waiter_arm_ref": "waiter:1\n"
+        },
+        "expected": null
+      }
+    ]
+  },
+  {
+    "schema_ref": "Plans/ds15_preview_state_v2.schema.json",
+    "positive": {
+      "schema_id": "pm.ds15.preview_state.v2",
+      "schema_version": "2.0.0",
+      "project_id": "project:1",
+      "preview_subject_id": "subject:1",
+      "source_ref": "source:1",
+      "restore_intent": "split",
+      "attached_surface": "editor_preview",
+      "export_prefs_ref": null,
+      "scroll_sync": true,
+      "last_error_ref": null,
+      "last_preview_session_id": null,
+      "runtime_verification": "unverified",
+      "last_source_revision": null,
+      "last_preview_revision": null,
+      "legacy_status": "running"
+    },
+    "cases": [
+      {
+        "id": "subject-ui-historical-running",
+        "changes": {},
+        "valid": true
+      },
+      {
+        "id": "no-live-restore",
+        "changes": {
+          "runtime_verification": "verified"
+        },
+        "valid": false
+      },
+      {
+        "id": "no-session-as-subject",
+        "changes": {
+          "preview_session_id": "preview:1"
+        },
+        "valid": false
+      },
+      {
+        "id": "no-source-body",
+        "changes": {
+          "raw_dom": "<secret>"
+        },
+        "valid": false
+      },
+      {
+        "id": "unknown-version",
+        "changes": {
+          "schema_version": "9.0.0"
+        },
+        "valid": false
+      },
+      {
+        "id": "trailing-LF-source_ref",
+        "changes": {
+          "source_ref": "source:1\n"
+        },
+        "valid": false
+      }
+    ],
+    "migration_base": {
+      "kind": "preview_v1",
+      "source": {
+        "preview_id": "legacy:1",
+        "preview_type": "web",
+        "source_file": "src/app.html",
+        "status": "running",
+        "last_refresh": "2026-11-04T00:00:00Z"
+      },
+      "evidence": {
+        "verified": true,
+        "backup_verified": true,
+        "mappings": [
+          {
+            "preview_id": "legacy:1",
+            "source_file": "src/app.html",
+            "saved_subject_ui": {
+              "schema_id": "pm.ds15.preview_state.v2",
+              "schema_version": "2.0.0",
+              "project_id": "project:1",
+              "preview_subject_id": "subject:1",
+              "source_ref": "source:1",
+              "restore_intent": "split",
+              "attached_surface": "editor_preview",
+              "export_prefs_ref": null,
+              "scroll_sync": true,
+              "last_error_ref": null,
+              "last_preview_session_id": null,
+              "runtime_verification": "unverified",
+              "last_source_revision": null,
+              "last_preview_revision": null,
+              "legacy_status": "running"
+            }
+          }
+        ]
+      }
+    },
+    "migration_cases": [
+      {
+        "id": "legacy-running-is-not-live",
+        "changes": {},
+        "expected": {
+          "schema_id": "pm.ds15.preview_state.v2",
+          "schema_version": "2.0.0",
+          "project_id": "project:1",
+          "preview_subject_id": "subject:1",
+          "source_ref": "source:1",
+          "restore_intent": "split",
+          "attached_surface": "editor_preview",
+          "export_prefs_ref": null,
+          "scroll_sync": true,
+          "last_error_ref": null,
+          "last_preview_session_id": null,
+          "runtime_verification": "unverified",
+          "last_source_revision": null,
+          "last_preview_revision": null,
+          "legacy_status": "running"
+        }
+      },
+      {
+        "id": "no-guessed-subject",
+        "changes": {
+          "evidence/mappings": []
+        },
+        "expected": null
+      },
+      {
+        "id": "no-ambiguous-subject",
+        "changes": {
+          "evidence/mappings": [
+            {
+              "preview_id": "legacy:1",
+              "source_file": "src/app.html",
+              "saved_subject_ui": {
+                "schema_id": "pm.ds15.preview_state.v2",
+                "schema_version": "2.0.0",
+                "project_id": "project:1",
+                "preview_subject_id": "subject:1",
+                "source_ref": "source:1",
+                "restore_intent": "split",
+                "attached_surface": "editor_preview",
+                "export_prefs_ref": null,
+                "scroll_sync": true,
+                "last_error_ref": null,
+                "last_preview_session_id": null,
+                "runtime_verification": "unverified",
+                "last_source_revision": null,
+                "last_preview_revision": null,
+                "legacy_status": "running"
+              }
+            },
+            {
+              "preview_id": "legacy:1",
+              "source_file": "src/app.html",
+              "saved_subject_ui": {
+                "schema_id": "pm.ds15.preview_state.v2",
+                "schema_version": "2.0.0",
+                "project_id": "project:1",
+                "preview_subject_id": "subject:1",
+                "source_ref": "source:1",
+                "restore_intent": "split",
+                "attached_surface": "editor_preview",
+                "export_prefs_ref": null,
+                "scroll_sync": true,
+                "last_error_ref": null,
+                "last_preview_session_id": null,
+                "runtime_verification": "unverified",
+                "last_source_revision": null,
+                "last_preview_revision": null,
+                "legacy_status": "running"
+              }
+            }
+          ]
+        },
+        "expected": null
+      },
+      {
+        "id": "no-unverified-source-map",
+        "changes": {
+          "evidence/verified": false
+        },
+        "expected": null
+      },
+      {
+        "id": "no-source-path-guess",
+        "changes": {
+          "source/source_file": "src/other.html"
+        },
+        "expected": null
+      },
+      {
+        "id": "isolated-preview-map-source-id",
+        "changes": {
+          "source/preview_id": "legacy:other"
+        },
+        "expected": null
+      },
+      {
+        "id": "isolated-preview-result-closed-schema",
+        "changes": {
+          "evidence/mappings/0/saved_subject_ui/raw_body": "forbidden"
+        },
+        "expected": null
+      }
+    ]
+  },
+  {
+    "schema_ref": "Plans/ds15_browser_capture_chip_v2.schema.json",
+    "positive": {
+      "schema_id": "pm.ds15.browser_capture_chip.v2",
+      "schema_version": "2.0.0",
+      "thread_id": "thread:app1",
+      "chip_id": "chip:1",
+      "browser_session_id": "browser:1",
+      "attachment_type": "browser_selection_context",
+      "capture_status": "captured",
+      "source_ref": "capture:source:1",
+      "provenance_ref": "capture:provenance:1",
+      "summary_ref": "capture:summary:1",
+      "scope": {
+        "kind": "app",
+        "project_id": null,
+        "user_id": "user:1",
+        "computer_id": "computer:1",
+        "profile_id": "profile:1"
+      }
+    },
+    "cases": [
+      {
+        "id": "app-thread-owned-chip",
+        "changes": {},
+        "valid": true
+      },
+      {
+        "id": "no-ownerless-chip",
+        "changes": {
+          "thread_id": {
+            "$delete": true
+          }
+        },
+        "valid": false
+      },
+      {
+        "id": "no-fake-project-in-app",
+        "changes": {
+          "scope/project_id": "fake"
+        },
+        "valid": false
+      },
+      {
+        "id": "no-raw-page",
+        "changes": {
+          "page_body": "raw"
+        },
+        "valid": false
+      },
+      {
+        "id": "trailing-LF-source_ref",
+        "changes": {
+          "source_ref": "capture:source:1\n"
+        },
+        "valid": false
+      },
+      {
+        "id": "trailing-LF-provenance_ref",
+        "changes": {
+          "provenance_ref": "capture:provenance:1\n"
+        },
+        "valid": false
+      },
+      {
+        "id": "trailing-LF-summary_ref",
+        "changes": {
+          "summary_ref": "capture:summary:1\n"
+        },
+        "valid": false
+      }
+    ],
+    "migration_base": {
+      "kind": "capture_chip",
+      "source": {
+        "thread_id": "thread:app1",
+        "chip_id": "chip:1",
+        "browser_session_id": "browser:1",
+        "attachment_type": "browser_selection_context",
+        "capture_status": "captured",
+        "source_ref": "capture:source:1",
+        "provenance_ref": "capture:provenance:1",
+        "summary_ref": "capture:summary:1",
+        "scope": {
+          "kind": "app",
+          "project_id": null,
+          "user_id": "user:1",
+          "computer_id": "computer:1",
+          "profile_id": "profile:1"
+        }
+      },
+      "evidence": {
+        "verified": true,
+        "backup_verified": true,
+        "thread_id": "thread:app1",
+        "scope": {
+          "kind": "app",
+          "project_id": null,
+          "user_id": "user:1",
+          "computer_id": "computer:1",
+          "profile_id": "profile:1"
+        }
+      }
+    },
+    "migration_cases": [
+      {
+        "id": "keep-real-app-thread",
+        "changes": {},
+        "expected": {
+          "schema_id": "pm.ds15.browser_capture_chip.v2",
+          "schema_version": "2.0.0",
+          "thread_id": "thread:app1",
+          "chip_id": "chip:1",
+          "browser_session_id": "browser:1",
+          "attachment_type": "browser_selection_context",
+          "capture_status": "captured",
+          "source_ref": "capture:source:1",
+          "provenance_ref": "capture:provenance:1",
+          "summary_ref": "capture:summary:1",
+          "scope": {
+            "kind": "app",
+            "project_id": null,
+            "user_id": "user:1",
+            "computer_id": "computer:1",
+            "profile_id": "profile:1"
+          }
+        }
+      },
+      {
+        "id": "ownerless-legacy-chip-unavailable",
+        "changes": {
+          "source/thread_id": {
+            "$delete": true
+          }
+        },
+        "expected": null
+      },
+      {
+        "id": "no-cross-thread-migration",
+        "changes": {
+          "evidence/thread_id": "thread:other"
+        },
+        "expected": null
+      },
+      {
+        "id": "isolated-capture-original-scope",
+        "changes": {
+          "evidence/scope/user_id": "user:other"
+        },
+        "expected": null
+      },
+      {
+        "id": "isolated-capture-result-closed-schema",
+        "changes": {
+          "source/raw_body": "forbidden"
+        },
+        "expected": null
+      }
+    ]
+  }
+]

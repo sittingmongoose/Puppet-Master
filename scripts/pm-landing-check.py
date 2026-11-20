@@ -121,6 +121,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import posixpath
 import re
 import signal
 import subprocess
@@ -476,7 +477,7 @@ def type_tag(value: Any) -> str:
     return "<value>"
 
 
-def normalize(check: str, subcheck: str, failure: Any, root: Path) -> dict[str, Any]:
+def normalize(check: str, subcheck: str, failure: Any, root: Path, context: "RenameContext | None" = None) -> dict[str, Any]:
     """Turn one raw failure into {key, check, subcheck, error, path, fields, stale}."""
     if not isinstance(failure, dict):
         raw: dict[str, Any] = {"error": str(failure)}
@@ -494,7 +495,7 @@ def normalize(check: str, subcheck: str, failure: Any, root: Path) -> dict[str, 
         "error": error,
         "path": path,
         "fields": rest,
-        "stale": is_staleness(error, scrubbed),
+        "stale": is_staleness(error, scrubbed) or renamed_shard_ref(error, raw, root, context),
         # The unscrubbed failure, for the branch-path match only. Scrubbing replaces the measured
         # `actual`/`expected` with a type tag, and some failures name a document only inside those
         # lists, so matching against the scrubbed fields would miss them. Keys starting with an
@@ -517,6 +518,157 @@ def is_staleness(error: str, scrubbed: dict[str, Any]) -> bool:
         return True
     detail = scrubbed.get("detail")
     return isinstance(detail, str) and STALENESS_DETAIL_MARKER in detail
+
+
+# A line-range shard name: the document's shard ordinal and the source lines it holds. JSON and other
+# documents sharded by line count are named this way, so an edit that adds or removes lines renames
+# the shard while its ordinal stays.
+LINE_RANGE_SHARD_RE = re.compile(r"^(\d+)-lines-\d+-\d+\.md$")
+SEALED_EVIDENCE_PREFIX = "Plans/.evidence/"
+SHARDS_PREFIX = "Plans/_shards/"
+
+
+class RenameContext:
+    """What the renamed-shard rule needs from git (T53): the base revision, whose files a renamed target
+    must have existed in, and the paths the branch itself changed (`git diff --name-only <base>..HEAD`),
+    which the referring evidence file must not be among. Only base-file lookups are cached; evidence
+    cleanliness is checked against the current commits and working tree each time. A git failure answers no."""
+
+    def __init__(self, root: Path, base: str, touched):
+        self.root, self.base, self.touched = root, base, frozenset(touched)
+        self._at_base: dict[str, bool] = {}
+        # T88: why an evidence file is not left alone, by path (reported, so the landing agent can tell whose work it is)
+        self.why: dict[str, str] = {}
+
+    def _git(self, *args: str) -> subprocess.CompletedProcess:
+        # T88: read-only and lock-free: never refresh or rewrite the checkout's index (the shared checkout's other threads)
+        return subprocess.run(["git", "--no-optional-locks", "--literal-pathspecs", "-c", "core.quotePath=false", *args],
+                              cwd=self.root, capture_output=True)
+
+    def left_alone(self, path: str) -> bool:
+        """T63 (REVIEW-etools-tb3-opus findings 7 and 8): the branch left the evidence file alone. It is not among the
+        paths the branch's commits changed (`touched`, read from `git diff --name-only -z`, so a non-ASCII path is
+        compared raw, never in git's quoted form); the working tree holds no change to it either (`git status`: not
+        modified, staged, deleted or untracked); and neither it nor a folder above it is a symbolic link, whose target
+        the branch could edit while the link itself stays unchanged. A git failure answers no."""
+        if path in self.touched:
+            self.why.setdefault(path, "the branch's commits changed it")
+            return False
+        alone, reason = self._alone(path)
+        if reason:
+            self.why[path] = reason
+        else:
+            self.why.pop(path, None)
+        return alone
+
+    def _alone(self, path: str) -> tuple[bool, str]:
+        """T88 (TOOLBATCH4 pre-check findings 6 and 7): read only, with no optional lock (`git status` refreshed and
+        wrote the shared checkout's index), and nothing hidden from it: `git status` with ignored files too (an untracked
+        evidence file under a .gitignored or info/exclude'd folder kept the excuse); the index's own flags (an edit under
+        skip-worktree or assume-unchanged does not show in status); and the file's bytes against HEAD's (which catches
+        both, whatever git reports). Returns (alone, why not)."""
+        parts = path.split("/")
+        if any((self.root / "/".join(parts[:i])).is_symlink() for i in range(1, len(parts) + 1)):
+            return False, "evidence is or sits under a symbolic link"
+        # The context can outlive a later commit as well as a working-tree edit. Recheck the path,
+        # with rename detection off so a renamed evidence file's old path cannot disappear.
+        changed = self._git("diff", "--no-renames", "--no-ext-diff", "--name-only", "-z", f"{self.base}..HEAD", "--", path)
+        if changed.returncode != 0:
+            return False, "git diff failed"
+        if changed.stdout:
+            return False, "the branch's commits changed it"
+        status = self._git("status", "--porcelain=v1", "-z", "--untracked-files=all", "--ignored=matching", "--", path)
+        if status.returncode != 0:
+            return False, "git status failed"
+        if status.stdout:
+            line = status.stdout.decode("utf-8", "surrogateescape").split("\0")[0]
+            return False, "evidence has working-tree changes: " + line
+        flags = self._git("ls-files", "-v", "-z", "--", path)
+        if flags.returncode != 0:
+            return False, "git ls-files failed"
+        tag = flags.stdout.decode("utf-8", "surrogateescape").split("\0")[0][:1]
+        if tag == "S" or (tag and tag.islower()):
+            return False, "evidence is flagged " + ("skip-worktree" if tag in ("S", "s") else "assume-unchanged") + " in the index"
+        blob = self._git("cat-file", "blob", "HEAD:" + path)
+        on_disk = self.root / path
+        if blob.returncode != 0:
+            return (False, "evidence is not in HEAD but is on disk") if on_disk.exists() else (False, "evidence is not in HEAD")
+        try:
+            data = on_disk.read_bytes()
+        except OSError:
+            return False, "evidence is in HEAD but not on disk"
+        if data != blob.stdout:
+            return False, "evidence differs from HEAD on disk"
+        return True, ""
+
+    def existed_at_base(self, path: str) -> bool:
+        if path not in self._at_base:
+            proc = subprocess.run(["git", "cat-file", "-e", f"{self.base}:{path}"], cwd=self.root,
+                                  capture_output=True, text=True)
+            self._at_base[path] = proc.returncode == 0
+        return self._at_base[path]
+
+
+def plain_repository_path(path: str) -> bool:
+    """A relative POSIX path in its normal form (T53): no leading slash or backslash, and no empty, `.` or
+    `..` segment, so `Plans/.evidence/../x` is not under Plans/.evidence/ by its prefix alone."""
+    return (bool(path) and not path.startswith("/") and "\\" not in path and posixpath.normpath(path) == path
+            and all(part not in ("", ".", "..") for part in path.split("/")))
+
+
+def renamed_shard_ref(error: str, raw: Any, root: Path, context: RenameContext | None = None) -> bool:
+    """A `missing_ref` from sealed evidence to a regenerated shard whose line-range name changed.
+
+    It is governance staleness, the same kind of thing as `artifact_hash_stale` on that evidence: the
+    reseal refreshes the evidence's artifact list. All of these must hold, read from the checkout and
+    from git:
+    - the failure is a `missing_ref` whose referring file (`path`) is sealed evidence under Plans/.evidence/,
+      written in its normal form (T53: `Plans/.evidence/../x` is not evidence), and the branch did not
+      change that file (T63, RenameContext.left_alone: it is not in `git diff --name-only -z <base>..HEAD`,
+      the working tree holds no change to it, and it is no symbolic link): generated evidence is only
+      rewritten by a reseal, so a branch-edited evidence file's references are the branch's own;
+    - its target (`artifact_ref`, else `artifact`, else `ref`) is a line-range shard, directly under
+      Plans/_shards/<document>/, in its normal form, that no longer exists, and that did exist at the base
+      revision (`git cat-file -e <base>:<target>`, T53): a range name that never existed is not a rename;
+    - that document's current manifest still holds a shard with the same ordinal (`shard_id`), under
+      another line-range name, and that shard exists.
+    Any other `missing_ref` (a deleted unit, a missing path outside the shards, a reference from a
+    file that is not sealed evidence) keeps its class, and so does every `missing_ref` when there is no
+    base to compare with (no context: --record-baseline).
+    """
+    if error != "missing_ref" or not isinstance(raw, dict) or context is None:
+        return False
+    source = raw.get("path")
+    target = next((raw[k] for k in ("artifact_ref", "artifact", "ref") if isinstance(raw.get(k), str)), None)
+    if not isinstance(source, str) or not source.startswith(SEALED_EVIDENCE_PREFIX) or not isinstance(target, str):
+        return False
+    if not plain_repository_path(source) or not plain_repository_path(target) or not context.left_alone(source):
+        return False
+    parts = target.split("/")
+    if not target.startswith(SHARDS_PREFIX) or len(parts) != 4 or not parts[2] or ".." in parts:
+        return False
+    match = LINE_RANGE_SHARD_RE.fullmatch(parts[3])
+    if not match or (root / target).exists() or not context.existed_at_base(target):
+        return False
+    manifest_path = root / "Plans" / "_shards" / parts[2] / "manifest.json"
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    shards = manifest.get("shards") if isinstance(manifest, dict) else None
+    if not isinstance(shards, list):
+        return False
+    ordinal = match.group(1)
+    for shard in shards:
+        if not isinstance(shard, dict) or shard.get("shard_id") != ordinal:
+            continue
+        path = shard.get("path")
+        if (isinstance(path, str) and path != target and path.startswith(SHARDS_PREFIX + parts[2] + "/")
+                and len(path.split("/")) == 4 and LINE_RANGE_SHARD_RE.fullmatch(path.split("/")[3])
+                and LINE_RANGE_SHARD_RE.fullmatch(path.split("/")[3]).group(1) == ordinal
+                and (root / path).is_file()):
+            return True
+    return False
 
 
 def excused_by_kind(on_branch: list[dict[str, Any]]) -> dict[str, int]:
@@ -750,23 +902,30 @@ def exit_code(
     return 2 if blocking else 1
 
 
-def grown_buckets(seen: dict[str, int], baseline: dict[str, int]) -> list[dict[str, Any]]:
+def grown_buckets(seen: dict[str, int], baseline: dict[str, int],
+                  renamed: dict[str, int] | None = None) -> list[dict[str, Any]]:
     """Buckets that hold more failures than the baseline recorded.
 
     A bucket the baseline has never seen is left out: its failures are already named one by one in
     the new set, and reporting the bucket as well would say the same thing twice. This is the only
     way growth inside a bucket the baseline matches by count alone can be seen.
+
+    `renamed` counts, per bucket, the `missing_ref` rows that are renamed-shard staleness
+    (renamed_shard_ref). A `missing_ref` bucket grew by staleness alone when its other rows are no
+    more than the baseline held; any other growth keeps its class.
     """
     rows = []
     for name in sorted(seen):
         if name not in baseline or seen[name] <= baseline[name]:
             continue
         error = name.split("|")[2]
+        by_rename = error == "missing_ref" and renamed is not None and seen[name] - renamed.get(name, 0) <= baseline[name]
         rows.append({
             "bucket": name,
             "baseline_count": baseline[name],
             "count": seen[name],
-            "stale": is_staleness_kind(error),
+            "stale": is_staleness_kind(error) or by_rename,
+            **({"renamed_shard_refs": renamed.get(name, 0)} if by_rename else {}),
         })
     return rows
 
@@ -774,7 +933,8 @@ def grown_buckets(seen: dict[str, int], baseline: dict[str, int]) -> list[dict[s
 # ------------------------------------------------------------------------------ reading a report
 
 
-def extract(check: str, report: dict[str, Any], root: Path) -> tuple[list[dict[str, Any]], dict[str, dict[str, int]]]:
+def extract(check: str, report: dict[str, Any], root: Path,
+            context: RenameContext | None = None) -> tuple[list[dict[str, Any]], dict[str, dict[str, int]]]:
     """Return (normalized failures, {subcheck: {"reported": n, "sampled": m}}).
 
     `reported` is the check's own count of failures for that subcheck; `sampled` is how many it
@@ -786,17 +946,17 @@ def extract(check: str, report: dict[str, Any], root: Path) -> tuple[list[dict[s
     if check == "plan-migration-validate":
         failures = report.get("failures") or []
         counts[""] = {"reported": len(failures), "sampled": len(failures)}
-        items.extend(normalize(check, "", failure, root) for failure in failures)
+        items.extend(normalize(check, "", failure, root, context) for failure in failures)
         return items, counts
 
     for block in report.get("failures") or []:
         if not isinstance(block, dict):
-            items.append(normalize(check, "", block, root))
+            items.append(normalize(check, "", block, root, context))
             continue
         subcheck = str(block.get("check", ""))
         sampled = block.get("failures") or []
         counts[subcheck] = {"reported": reported_count(report, subcheck, len(sampled)), "sampled": len(sampled)}
-        items.extend(normalize(check, subcheck, failure, root) for failure in sampled)
+        items.extend(normalize(check, subcheck, failure, root, context) for failure in sampled)
     return items, counts
 
 
@@ -813,15 +973,20 @@ def reported_count(report: dict[str, Any], subcheck: str, fallback: int) -> int:
 
 
 def branch_paths(root: Path, base: str) -> list[str]:
+    """The paths the branch's commits changed. T63: read with -z (NUL-separated, never quoted) and
+    core.quotePath=false, so a path with non-ASCII characters is the path itself, as every other reader names
+    it, not git's quoted form ("Plans/.evidence/\\303\\251.json")."""
+    # T88 (TOOLBATCH4 pre-check finding 5): --no-renames, so a renamed file's old path is one of the branch's paths (git
+    # diff's default rename detection named only the new one: on main's 9ddfa95b51, 66,989 paths against 66,990);
+    # --no-ext-diff and no optional lock, so no configuration changes what is listed and nothing writes the index
     proc = subprocess.run(
-        ["git", "diff", "--name-only", f"{base}..HEAD"],
+        ["git", "--no-optional-locks", "-c", "core.quotePath=false", "diff", "--no-renames", "--no-ext-diff", "--name-only", "-z", f"{base}..HEAD"],
         cwd=root,
         capture_output=True,
-        text=True,
     )
     if proc.returncode != 0:
-        raise RuntimeError(f"git diff --name-only {base}..HEAD failed: {(proc.stderr or '').strip()}")
-    return sorted({line.strip() for line in proc.stdout.splitlines() if line.strip()})
+        raise RuntimeError(f"git diff --name-only {base}..HEAD failed: {(proc.stderr or b'').decode('utf-8', 'replace').strip()}")
+    return sorted({path for path in proc.stdout.decode("utf-8", "surrogateescape").split("\0") if path})
 
 
 PM7_INVENTORY = "Plans/settings_inventory.json"
@@ -1436,6 +1601,7 @@ def key_from_exports(
     timeout_seconds: int,
     keep_dir: Path | None = None,
     items: list[dict[str, Any]] | tuple[dict[str, Any], ...] = (),
+    context: RenameContext | None = None,
 ) -> tuple[dict[tuple[str, str], list[dict[str, Any]]], list[dict[str, Any]]]:
     """The exports brief: key each subcheck that prints only a sample from its complete export.
 
@@ -1511,7 +1677,7 @@ def key_from_exports(
                                  f"{row['reported']}")
             else:
                 key = (row["check"], row["subcheck"])
-                rows_now = [normalize(row["check"], row["subcheck"], failure, root) for failure in failures]
+                rows_now = [normalize(row["check"], row["subcheck"], failure, root, context) for failure in failures]
                 printed = Counter(item["key"] for item in items if (item["check"], item["subcheck"]) == key)
                 printed.subtract(Counter(item["key"] for item in rows_now))
                 unmatched = sum(count for count in printed.values() if count > 0)
@@ -1682,6 +1848,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     touched: list[str] = []
     currency: dict[str, Any] = {}
     audit_inputs = readiness_audit_inputs(root)
+    rename_context = None
     if not args.record_baseline:
         try:
             baseline = load_baseline(baseline_path)
@@ -1697,6 +1864,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             print(f"pm-landing-check: {exc}", file=sys.stderr)
             return 3
         currency = baseline_currency(root, baseline.get("commit"), args.base)
+        rename_context = RenameContext(root, args.base, touched)
 
     items: list[dict[str, Any]] = []
     counts: dict[str, dict[str, dict[str, int]]] = {}
@@ -1715,7 +1883,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             (keep_dir / f"{check}.json").write_text(
                 json.dumps(report, indent=1, sort_keys=True) + "\n", encoding="utf-8")
         statuses[check] = str(report.get("status", "unknown"))
-        check_items, check_counts = extract(check, report, root)
+        check_items, check_counts = extract(check, report, root, rename_context)
         items.extend(check_items)
         counts[check] = check_counts
         listed[check] = listed_totals(check, report)
@@ -1758,7 +1926,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             argv_map = f"{type(exc).__name__}: {exc}"
     exported, export_rows = key_from_exports(
         root, counts, None if args.record_baseline else (baseline.get("checks") or {}), timed_out, argv_map,
-        args.subcheck_timeout_seconds, keep_dir, items)
+        args.subcheck_timeout_seconds, keep_dir, items, context=rename_context)
     require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                       "changed during the exports")
 
@@ -1840,11 +2008,14 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     pre_existing: list[dict[str, Any]] = []
     changed_on_branch = 0
     seen_buckets: dict[str, int] = {}
+    renamed_buckets: dict[str, int] = {}
     for item in items:
         name = bucket_of(item)
         fresh = False
         if (item["check"], item["subcheck"]) not in partial:
             seen_buckets[name] = seen_buckets.get(name, 0) + 1
+            if item["error"] == "missing_ref" and item["stale"]:
+                renamed_buckets[name] = renamed_buckets.get(name, 0) + 1
             fingerprints = known.get(name, set())
             fresh = fingerprints is not None and item["key"].rsplit("|", 1)[1] not in fingerprints
         # Rule 2: a failure that is not staleness, in a bucket the baseline holds whose count has not
@@ -1877,7 +2048,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                             if (item["check"], item["subcheck"]) == (row["check"], row["subcheck"]))
             row["classes"] = dict(sorted(tally.items(), key=lambda pair: (-pair[1], pair[0])))
 
-    grown = grown_buckets(seen_buckets, baseline_counts)
+    grown = grown_buckets(seen_buckets, baseline_counts, renamed_buckets)
     subcheck_growth = grown_subchecks(compared, baseline.get("checks") or {})
     for row in subcheck_growth:
         row["stale"] = readiness_counter_is_staleness(row, items, run_counts, baseline_counts,
@@ -1937,6 +2108,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                 "pre_existing": pre_existing,
                 "grown_buckets": grown,
                 "grown_subchecks": subcheck_growth,
+                "rename_excuse_lost": dict(sorted(rename_context.why.items())) if rename_context else {},
                 "excused_by_kind": excused_by_kind(on_branch),
                 "resolved_buckets": resolved,
                 "infrastructure": infrastructure,
@@ -1962,7 +2134,12 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             infra = sum(1 for row in infrastructure if row["check"] == check)
             note = f", {plural(infra, 'infrastructure result')} among them" if infra else ""
             print(f"  {check:24s} {statuses[check]:5s} {total:7d} failures (baseline {was}){note}")
-        print(f"  branch paths from git diff --name-only {args.base}..HEAD: {len(touched)}")
+        print(f"  branch paths from git diff --no-renames --name-only {args.base}..HEAD: {len(touched)}")
+        if rename_context and rename_context.why:
+            # T88: whose work it is: an evidence file the renamed-shard rule found not left alone, and why
+            print(f"  renamed-shard rule: {len(rename_context.why)} evidence file(s) not left alone, so their missing_ref rows keep their class:")
+            for where, why in sorted(rename_context.why.items())[:20]:
+                print(f"    {where}: {why}")
         if keep_dir is not None:
             print(f"  full check reports kept in {keep_dir}")
         for line in describe_export_commands():

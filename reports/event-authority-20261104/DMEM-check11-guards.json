@@ -1,0 +1,2604 @@
+{
+  "status": "pass",
+  "source_commit": "13030242c51899636c4d7416f27a16b14e3a8b7a",
+  "full_proof_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix9/check11.json",
+  "full_proof_sha256": "d243a1a551e83be8647fc5e069e52f00a70a3b7e02a95d84d69581286484d846",
+  "custody_matrix_cases": 13062,
+  "maintenance_cases": 15460,
+  "archive_cases": 8206,
+  "id_hash_encoding": "SHA-256 of compact ensure_ascii=False JSON list in proof order",
+  "guard_tables": {
+    "maintenance": [
+      {
+        "guard": "action",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:unknown-action",
+          "memory.dedup_sweep.started:guard:unknown-action",
+          "memory.index.lexical.rebuild.completed:guard:unknown-action"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "7dfabb9afe4996171b1da458d3881832858ef3b61ef8a498fbcbc115e5ec803c",
+        "stay_ids_sha256": "ef9b40219a93a5f05846f5dc7bc5ed54db9b7205c17b805a852a8caf3f6bf3e1",
+        "restored": true
+      },
+      {
+        "guard": "admission",
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 192,
+        "stays": 15268,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:boundary-admitted",
+          "memory.dedup_sweep.completed:domains:writer-admitted-0"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn",
+          "memory.dedup_sweep.completed:guard:dedupe_key"
+        ],
+        "flip_ids_sha256": "77fe4a126c9ec3c1de230e14a5527cbe935ba274061f78d2619938fa13620a3c",
+        "stay_ids_sha256": "a7ea7f14b3c5dc6d14b8d5a19c93746fe42b736d7ede792e06b988fc26cb9c78",
+        "restored": true
+      },
+      {
+        "guard": "artifacts",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 15456,
+        "flipping_examples": [
+          "memory.index.lexical.rebuild.completed:guard:artifact-custody",
+          "memory.index.lexical.rebuild.started:guard:artifact-custody",
+          "memory.index.semantic.rebuild.completed:guard:artifact-custody"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "fc8c6e985f72e7e9a4ccf282927d223c88d4849de08f0bf1ace8d87e51f11bb2",
+        "stay_ids_sha256": "aad82492dbb51e67e30b3b7ed2646846e7607daba003ceb3ccfc1a3d3b75dd92",
+        "restored": true
+      },
+      {
+        "guard": "boundary_acceptance",
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 48,
+        "stays": 15412,
+        "flipping_examples": [
+          "memory.dedup_sweep.started:guard:boundary-acceptance_durable",
+          "memory.dedup_sweep.started:domains:boundary-acceptance_durable-0",
+          "memory.dedup_sweep.started:domains:boundary-acceptance_durable-1"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "03e615ffd1b1bc79c070b9944062d71160115ad4a4bc2f7f02cf995cb192814c",
+        "stay_ids_sha256": "8d25e82bc28be481476fd045e651e9ef4f82c623db059697a6fbd7001d8be082",
+        "restored": true
+      },
+      {
+        "guard": "boundary_payload",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:boundary-payload-join",
+          "memory.dedup_sweep.started:guard:boundary-payload-join",
+          "memory.index.lexical.rebuild.completed:guard:boundary-payload-join"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "197979a75f112844aff333b605f569ca73d73bb9a9c1bd303897942aa42ff01f",
+        "stay_ids_sha256": "df72db9751828fc75effb489ca0a27c21ebb98e456674f8a4a14b4be4ff0ad66",
+        "restored": true
+      },
+      {
+        "guard": "boundary_receipts",
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 144,
+        "stays": 15316,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:boundary-started_receipt",
+          "memory.dedup_sweep.completed:guard:boundary-effect_settled",
+          "memory.dedup_sweep.completed:guard:boundary-original_full_value"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "cb9a692000dbf17d33775fc2474d373c92d0911d3d14b7b4ea79c1a2647775b1",
+        "stay_ids_sha256": "dc144c983e8d89d6c19ccd38d109d24bcfd1dbfa454ec22c55dac37315e65e76",
+        "restored": true
+      },
+      {
+        "guard": "boundary_request",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:boundary-request-hash",
+          "memory.dedup_sweep.started:guard:boundary-request-hash",
+          "memory.index.lexical.rebuild.completed:guard:boundary-request-hash"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "cfb15cd4707673a0e2b00971c2625587323cc7b1bcaaf1ac506b992155bd3205",
+        "stay_ids_sha256": "db863f51b84980240e3083f715c0a180b96bfbd21d15437355d02344f7f333ee",
+        "restored": true
+      },
+      {
+        "guard": "boundary_scope",
+        "named_duplicate_sites": [],
+        "flips": 24,
+        "stays": 15436,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:boundary-project_id",
+          "memory.dedup_sweep.completed:guard:boundary-operation_id",
+          "memory.dedup_sweep.completed:guard:boundary-source_revision_sha256"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "7fbee7176002125c3f5cdff3fb90142a5ee41ba78635a3ef050423a8aa492460",
+        "stay_ids_sha256": "11a679c60aab9a59c4cca1fda46166fae1765f7c993cb70710602c2f2eaa75c0",
+        "restored": true
+      },
+      {
+        "guard": "boundary_snapshot",
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 192,
+        "stays": 15268,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:boundary-request_matches",
+          "memory.dedup_sweep.completed:guard:boundary-current_source",
+          "memory.dedup_sweep.completed:domains:boundary-request_matches-0"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "81c4833c93e717f7e32c7254795db39a7f3532e54ba7c55f18032f27f4ddec77",
+        "stay_ids_sha256": "07d9f3f7db3fe911004f1ab0b302b820802a7c06a7e36a7362c826fbf05375c6",
+        "restored": true
+      },
+      {
+        "guard": "boundary_terminal",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 15456,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:boundary-terminal-missing",
+          "memory.index.lexical.rebuild.completed:guard:boundary-terminal-missing",
+          "memory.index.semantic.rebuild.completed:guard:boundary-terminal-missing"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "651192aebaaa6ee6756531d8294cd16605d9f58fd4a662980ddbde0ed61afd29",
+        "stay_ids_sha256": "544ec0cb2852fa58427e041aca758445494dc0f4ea0f2a6be9b04527b35d514a",
+        "restored": true
+      },
+      {
+        "guard": "checkpoint_event",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:checkpoint-foreign-event-identity",
+          "memory.dedup_sweep.started:guard:checkpoint-foreign-event-identity",
+          "memory.index.lexical.rebuild.completed:guard:checkpoint-foreign-event-identity"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "6c224b09fd38802bccb238779f3dbc73588a4b7eb29b1f0b68378ba1caacb936",
+        "stay_ids_sha256": "17d9124aaa0c8b0a5665ec434f373df5ea09473693440fc962e13e615e66a627",
+        "restored": true
+      },
+      {
+        "guard": "checkpoint_key",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:checkpoint-foreign-key",
+          "memory.dedup_sweep.started:guard:checkpoint-foreign-key",
+          "memory.index.lexical.rebuild.completed:guard:checkpoint-foreign-key"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "c61fd416072752657aacac902c42ca84df98232a495caa5edf47c2e09776f070",
+        "stay_ids_sha256": "7c486ed3c031779d7daa4652106f64e377951539ed40c8b3f95ec8b6e51169b4",
+        "restored": true
+      },
+      {
+        "guard": "checkpoint_storage",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:checkpoint-foreign-storage",
+          "memory.dedup_sweep.started:guard:checkpoint-foreign-storage",
+          "memory.index.lexical.rebuild.completed:guard:checkpoint-foreign-storage"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "66d3966412c4a67c203258c44a06d39f509d5abf1b7625066a7b9c534f59d414",
+        "stay_ids_sha256": "3a93e3146f6300d857010262c3452cbb2951e3cf5407044c8501e6b9cfcfe836",
+        "restored": true
+      },
+      {
+        "guard": "commitment_numbers",
+        "named_duplicate_sites": [
+          "current canonical_numbers and numeric preflights + current integer/safe-bound schemas",
+          "historical_numbers integrality preflight + frozen integer schemas; no historical safe-integer maximum"
+        ],
+        "flips": 368,
+        "stays": 15092,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:number-fraction",
+          "memory.dedup_sweep.completed:guard:number-infinity",
+          "memory.dedup_sweep.completed:guard:number-nan"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "a6cb03ca8d06d6bc87741431e1e6fbd9aa693dc9194d86b446c1e6ab3dc4e3e1",
+        "stay_ids_sha256": "7f11252e623751b09ce96d3d441658210ad876c843ec394369a3643443b4c270",
+        "restored": true
+      },
+      {
+        "guard": "custody_binding",
+        "named_duplicate_sites": [
+          "retained_binding at repeated retained-value joins"
+        ],
+        "flips": 4806,
+        "stays": 10654,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:canonical-history:forged-rehashed-value",
+          "memory.dedup_sweep.completed:canonical-history:foreign-project",
+          "memory.dedup_sweep.completed:canonical-history:foreign-identity"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "fdd28f6bc9acf19f63f746127c8708ab283be091a5d21cf7c508a436a2e5c7da",
+        "stay_ids_sha256": "851680efadc50f46729889d09a485a4dd83697486c8042f157d6c38545702cb0",
+        "restored": true
+      },
+      {
+        "guard": "custody_digest",
+        "named_duplicate_sites": [],
+        "flips": 1134,
+        "stays": 14326,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:canonical-history:forged-commitment",
+          "memory.dedup_sweep.completed:canonical-history:numeric-spelling-commitment-1.0",
+          "memory.dedup_sweep.completed:canonical-history:numeric-spelling-commitment-1e0"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "a8685ef0bc42b83ab1856749d1c60393cc9981ae097b05d6761dca28dd8d36a6",
+        "stay_ids_sha256": "0df77a7baa04c5ac5abddf6415d0aadfe4d2d28c45510d0526076020b874cd3f",
+        "restored": true
+      },
+      {
+        "guard": "custody_flush",
+        "named_duplicate_sites": [],
+        "flips": 1038,
+        "stays": 14422,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:canonical-history:record-not-flushed",
+          "memory.dedup_sweep.completed:canonical-history:record-not-flushed-replay",
+          "memory.dedup_sweep.completed:canonical-history:record-not-flushed-compatibility"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "254d82ba314362fa7d9e8eaa8c87e0b96ead3f707737fd0edd36fb3822273667",
+        "stay_ids_sha256": "eb58aee47754cd5d849bee9b20dd769bb08fdcda042211cfa530c65eaa64dbf2",
+        "restored": true
+      },
+      {
+        "guard": "custody_presence",
+        "named_duplicate_sites": [],
+        "flips": 934,
+        "stays": 14526,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:canonical-history:missing-start",
+          "memory.dedup_sweep.completed:canonical-history:missing-start-replay",
+          "memory.dedup_sweep.completed:canonical-history:missing-start-compatibility"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "248f2560b96855a09b6e653724489ebed10c5876081346c005b474c2a6c12667",
+        "stay_ids_sha256": "1f88892af86477a5651b6b75d3f77e8b77e2614b09c15f419c52e59b362a85a8",
+        "restored": true
+      },
+      {
+        "guard": "custody_shape",
+        "named_duplicate_sites": [],
+        "flips": 958,
+        "stays": 14502,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:canonical-history:record-shape",
+          "memory.dedup_sweep.completed:canonical-history:record-shape-replay",
+          "memory.dedup_sweep.completed:canonical-history:record-shape-compatibility"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "53a2e62a0c3bd28ee2fa6f3047dc82b1155b9b0cdf1aa4febed3eecea6ec601a",
+        "stay_ids_sha256": "a36528f956cf2c4ff2936d2d087acecd5bc7362d0923331b30c62121517039b3",
+        "restored": true
+      },
+      {
+        "guard": "effect_count",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 15456,
+        "flipping_examples": [
+          "memory.index.lexical.rebuild.completed:guard:effect-count",
+          "memory.index.lexical.rebuild.started:guard:effect-count",
+          "memory.index.semantic.rebuild.completed:guard:effect-count"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "8b84afc1c9bc38d67475809fc839a3b31b43b1aa076106860e52dfa07c171ae2",
+        "stay_ids_sha256": "01e589f936f532a8920a3aebabcf0fa5b924cb340027a730957e60fff68c3221",
+        "restored": true
+      },
+      {
+        "guard": "effect_once",
+        "named_duplicate_sites": [],
+        "flips": 16,
+        "stays": 15444,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:effect-once",
+          "memory.dedup_sweep.completed:guard:committed-effect-cannot-fail",
+          "memory.dedup_sweep.started:guard:effect-once"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "feb31019a64d9aefbd76b1996bf5890811d86f8a9d64939bc50b5098fdc6a68b",
+        "stay_ids_sha256": "81edce7d4956140b48888f87a81bc02a0edffaab6a59916bf97ad9db18a580d2",
+        "restored": true
+      },
+      {
+        "guard": "envelope_schema",
+        "named_duplicate_sites": [
+          "selected 2.0.0 envelope schema",
+          "selected frozen 1.0.0 compatibility-reader schema",
+          "closed envelope schema constants + only the repeated schema_id/schema_version comparisons in historical_binding; format guard remains enabled",
+          "SP-236 sequence type/min/max predicates remain enabled; those have their own surgical rows"
+        ],
+        "flips": 216,
+        "stays": 15244,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:envelope-schema",
+          "memory.dedup_sweep.completed:canonical-history:envelope-extra",
+          "memory.dedup_sweep.completed:canonical-history:envelope-extra-replay"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "a1b6602d74c558ac4657d748e0a5a6d5005ef92394138087ccd97294e6e9a2b8",
+        "stay_ids_sha256": "7e9d26aec53fd8f14bac270f3ac9ac249582caa4a157383204038b9d9723be6f",
+        "restored": true
+      },
+      {
+        "guard": "formats_enforced",
+        "named_duplicate_sites": [
+          "explicit enforced_formats date-time/uuid predicates + schema format application",
+          "UTC/end-of-input patterns on formatted timestamp leaves only; type, length, required fields and unrelated identifier patterns remain enabled"
+        ],
+        "flips": 2488,
+        "stays": 12972,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:formats:Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_completed/properties/occurred_at_utc:0",
+          "memory.dedup_sweep.completed:formats:Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_completed/properties/occurred_at_utc:1",
+          "memory.dedup_sweep.completed:formats:Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_completed/properties/occurred_at_utc:2"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "c352567cfbafd5507a91cc44e1e48fd250b1141c4a0297694c97309637515fe8",
+        "stay_ids_sha256": "02bb500cb56b249dde723c22783612baa01cee16b964ecaec4cb2634004a01fe",
+        "restored": true
+      },
+      {
+        "guard": "history_event",
+        "named_duplicate_sites": [],
+        "flips": 40,
+        "stays": 15420,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:history-family",
+          "memory.dedup_sweep.completed:canonical-history:foreign-family",
+          "memory.dedup_sweep.completed:canonical-history:foreign-family-replay"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "54967bf17a50e317c18648223b4fdf823b58202a6faf36c8e237a6597b995579",
+        "stay_ids_sha256": "1126ed4700f713c0330d1cf24fa08fa241f1200d96328a36a08f3caec3e3dc35",
+        "restored": true
+      },
+      {
+        "guard": "inline_cap",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:inline-cap",
+          "memory.dedup_sweep.started:guard:inline-cap",
+          "memory.index.lexical.rebuild.completed:guard:inline-cap"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "41d6b0e0404923651138469268f09581a3bff0a4debc2df3b5413182cc4281ee",
+        "stay_ids_sha256": "9bcb763c06c89a5d675fe1223d645f0ed9a84566ec925d21022a7fe0324437a5",
+        "restored": true
+      },
+      {
+        "guard": "json_number_grammar",
+        "named_duplicate_sites": [],
+        "flips": 56,
+        "stays": 15404,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:canonical-history:numeric-01",
+          "memory.dedup_sweep.completed:canonical-history:numeric-01-replay",
+          "memory.dedup_sweep.completed:canonical-history:numeric-01-compatibility"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "70855cb2b778a3883ad988e3753d5c2abdc381da7af409624c58303118abd36f",
+        "stay_ids_sha256": "c3a1ad6328efde21fc90fb94863a2bcce66c0cb7d1d0939dc700ea7efb3deade",
+        "restored": true
+      },
+      {
+        "guard": "operation_cas",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:cas",
+          "memory.dedup_sweep.started:guard:cas",
+          "memory.index.lexical.rebuild.completed:guard:cas"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "850d7870765bac89cf8c8ed48d50e791b3e068d5b7b68f2315ea341d954902b2",
+        "stay_ids_sha256": "4a7f9330e558fb50ccecab168ae2b8be461b83c9f044b35c69d1f16b8aeb08e2",
+        "restored": true
+      },
+      {
+        "guard": "operation_receipt",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:started_event_id",
+          "memory.dedup_sweep.started:guard:started_event_id",
+          "memory.index.lexical.rebuild.completed:guard:started_event_id"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "c81f1e4f67edfbc35fc3a06deacfe5c15c364be3add815ae26f7d8aa7965314e",
+        "stay_ids_sha256": "1f6db142f372dacb042a98e67857549e3408f75bab4383e7d4c85e4340dd3f74",
+        "restored": true
+      },
+      {
+        "guard": "operation_result_digest",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:result_sha256",
+          "memory.dedup_sweep.started:guard:result_sha256",
+          "memory.index.lexical.rebuild.completed:guard:result_sha256"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "7b4aef5f32b5a3e0939b479b30af2f126b1b71029da0e05d0cc883c0a9594c59",
+        "stay_ids_sha256": "b169da4adf4538bbb125b41d73ef5a2e2fb88f51e6955073d2ab72930d0bb946",
+        "restored": true
+      },
+      {
+        "guard": "operation_result_ref",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:result_ref",
+          "memory.dedup_sweep.started:guard:result_ref",
+          "memory.index.lexical.rebuild.completed:guard:result_ref"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "e21e5e1517569028d1963d3c1541687925ef1efe1918e21c0312dd213ba74495",
+        "stay_ids_sha256": "372f70885b90423fc14d8eac63b3da2b7320909849f23aaf4c466b574d279ab4",
+        "restored": true
+      },
+      {
+        "guard": "operation_schema",
+        "named_duplicate_sites": [],
+        "flips": 72,
+        "stays": 15388,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:operation-schema",
+          "memory.dedup_sweep.completed:write-recipe:canonical-18446744073709551615:forged-operation-recipe_version",
+          "memory.dedup_sweep.completed:write-recipe:canonical-18446744073709551615:forged-operation-schema_version"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "e806bf9f2ccb61538e201b6ea10f558c7b3aa4ba188913a0a1553471cdefa26f",
+        "stay_ids_sha256": "bff782308b0d3bd1ee33a0dc9d394166b64ea4fd1b0e7ceff94dae4d61c0a8ab",
+        "restored": true
+      },
+      {
+        "guard": "original_input",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:append-original-value",
+          "memory.dedup_sweep.started:guard:append-original-value",
+          "memory.index.lexical.rebuild.completed:guard:append-original-value"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "a8b90d6382de0eb77ac759a50434c900204e39677ec9072e82c7d17202693e22",
+        "stay_ids_sha256": "192f837dde9d70a2b0f20667a3100b6b476d5efc4e060d63080a5445ff175f51",
+        "restored": true
+      },
+      {
+        "guard": "outcome",
+        "named_duplicate_sites": [
+          "runtime status domain",
+          "operation schema status enums in the applicable phase"
+        ],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:unknown-outcome",
+          "memory.dedup_sweep.started:guard:unknown-outcome",
+          "memory.index.lexical.rebuild.completed:guard:unknown-outcome"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "b42c885cdb45384cde4faf27893ccee23533ed236def377abdbaa7f27e0f03d5",
+        "stay_ids_sha256": "d11a271313239a555e4e8b0cb87c4cca5239d1401bf205b08d10eaff2fdcf1ce",
+        "restored": true
+      },
+      {
+        "guard": "partition",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:dedupe_key",
+          "memory.dedup_sweep.started:guard:dedupe_key",
+          "memory.index.lexical.rebuild.completed:guard:dedupe_key"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "cd6af56ae164b389c2ca8ec08a9acfb82e9daf41ea6cbbb55245bee3c53eec04",
+        "stay_ids_sha256": "90de6ee10d6d619e463241336a194f97439e2f1beb774947f2cadee845b76777",
+        "restored": true
+      },
+      {
+        "guard": "payload_schema",
+        "named_duplicate_sites": [
+          "exact-family closed payload schema at all caller/retained sites"
+        ],
+        "flips": 40,
+        "stays": 15420,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:payload-schema",
+          "memory.dedup_sweep.completed:canonical-history:payload-extra",
+          "memory.dedup_sweep.completed:canonical-history:payload-extra-replay"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "98493f7637a12f676fbe898165bb4299ed1d8043fdc809f54e2f7f0ad27d0f07",
+        "stay_ids_sha256": "424fec5c76d6943efae91925881f5391b4caf539fb428e5b8ee9706cf250d8c0",
+        "restored": true
+      },
+      {
+        "guard": "permission_or_withdrawal",
+        "named_duplicate_sites": [
+          "access/withdrawal invariant at repeated read, writer and commit sites",
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 2218,
+        "stays": 13242,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn",
+          "memory.dedup_sweep.completed:guard:boundary-permission"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:dedupe_key",
+          "memory.dedup_sweep.completed:guard:producer-actor"
+        ],
+        "flip_ids_sha256": "5dedb13d1809d1139eaa7557f02ed15bde99fd3dbcf458a0004d9a744376d8e5",
+        "stay_ids_sha256": "430c1bac98662b35a54e25952aa284d571fa2b1d089451e76785115463a7f87d",
+        "restored": true
+      },
+      {
+        "guard": "phase",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:append-phase",
+          "memory.dedup_sweep.started:guard:append-phase",
+          "memory.index.lexical.rebuild.completed:guard:append-phase"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "007d8c083452f9d8da74cf3a6aaa6ca368b488e7a016926d5668836b9f29646a",
+        "stay_ids_sha256": "5b9375eb959e1b74e9d7232cd5d8ef55b956277457f980ed788a0b04e7c92539",
+        "restored": true
+      },
+      {
+        "guard": "prior_selector",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 15456,
+        "flipping_examples": [
+          "memory.index.lexical.rebuild.completed:guard:prior-selector",
+          "memory.index.lexical.rebuild.started:guard:prior-selector",
+          "memory.index.semantic.rebuild.completed:guard:prior-selector"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "c20be2faa0e327ac58acdcb7db13623971d9c541e46474d7895f19bccb47aea1",
+        "stay_ids_sha256": "3decbbcf707c5250d303622bc656d9b42a5b6e824912bc2508b1d559e3094c05",
+        "restored": true
+      },
+      {
+        "guard": "producer_join",
+        "named_duplicate_sites": [
+          "current-writer producer join",
+          "retained-start actor join",
+          "canonical-history producer predicate"
+        ],
+        "flips": 40,
+        "stays": 15420,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:producer-actor",
+          "memory.dedup_sweep.completed:canonical-history:foreign-producer",
+          "memory.dedup_sweep.completed:canonical-history:foreign-producer-replay"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "89c12bfe592319de466c272c11012ca25b926c9d491477e443893db7bebeef0a",
+        "stay_ids_sha256": "beefa42ba22c020c44234ee8c484cd90f86f4ca6d6ace082089b1830902d68b6",
+        "restored": true
+      },
+      {
+        "guard": "references_resolve",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:references",
+          "memory.dedup_sweep.started:guard:references",
+          "memory.index.lexical.rebuild.completed:guard:references"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "93e598cbeeda76337ff12af3cc37151e2b41e9c9dc57b16ec4caa4a5d37bc968",
+        "stay_ids_sha256": "37ace7fce2f3effdaf63b2cad64bd5c2f81d3894504ab68118ab3929fc3a03d9",
+        "restored": true
+      },
+      {
+        "guard": "replay_policy",
+        "named_duplicate_sites": [
+          "current-writer replay refusal and policy equality",
+          "repeated retained/caller replay-policy join"
+        ],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:replay-only",
+          "memory.dedup_sweep.started:guard:replay-only",
+          "memory.index.lexical.rebuild.completed:guard:replay-only"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "76e812529a9e21a1bbf92c5f9b8aac10b27c3d02151e3f408d8f2678829dbea8",
+        "stay_ids_sha256": "d9c44f583572405609244f145e6c3c836ff62319a34602fd6ad07c88da8b7117",
+        "restored": true
+      },
+      {
+        "guard": "request",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:request",
+          "memory.dedup_sweep.started:guard:request",
+          "memory.index.lexical.rebuild.completed:guard:request"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "9b2d1305b1a63acf165865ea6c305fff6f0081b9901893f3458ae933914ff767",
+        "stay_ids_sha256": "451dc0870b87133d6e8e2456eca42864ace68d7a4d7fc487d27f731bef3afac3",
+        "restored": true
+      },
+      {
+        "guard": "selected_target",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 15456,
+        "flipping_examples": [
+          "memory.index.lexical.rebuild.completed:guard:selected-target",
+          "memory.index.lexical.rebuild.started:guard:selected-target",
+          "memory.index.semantic.rebuild.completed:guard:selected-target"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "f5a7e7844f8a5f1aaaf91a6553b9877c946e6f63f5aa777e394a62fb26a7772c",
+        "stay_ids_sha256": "fc637857e9c433be4edde0702b5dc1191ed524c6b0f4c7a97e84441916ad9359",
+        "restored": true
+      },
+      {
+        "guard": "selector_cas",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 15456,
+        "flipping_examples": [
+          "memory.index.lexical.rebuild.completed:guard:selector-cas",
+          "memory.index.lexical.rebuild.started:guard:selector-cas",
+          "memory.index.semantic.rebuild.completed:guard:selector-cas"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "600a443a07f64cf5d586bc6b78a8e9ef2d5da7a5cdf7902215d7cba50c9ab429",
+        "stay_ids_sha256": "9be907a9fec101c1e8f7f962c5ef5aa7172138cc476916527867b2ede3f7190f",
+        "restored": true
+      },
+      {
+        "guard": "selector_schema",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 15456,
+        "flipping_examples": [
+          "memory.index.lexical.rebuild.completed:guard:selector-schema",
+          "memory.index.lexical.rebuild.started:guard:selector-schema",
+          "memory.index.semantic.rebuild.completed:guard:selector-schema"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "b9553200ecda89cc7b6a9482a55207aae258a6a08624cbf8592d090bed75d03e",
+        "stay_ids_sha256": "5fc58b0fd0156f4115d77008d048039ef21b5d05c5bec48599f5ad63ea71d023",
+        "restored": true
+      },
+      {
+        "guard": "selector_scope",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 15456,
+        "flipping_examples": [
+          "memory.index.lexical.rebuild.completed:guard:selector-scope",
+          "memory.index.lexical.rebuild.started:guard:selector-scope",
+          "memory.index.semantic.rebuild.completed:guard:selector-scope"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "8df2e5d1b11dac9038069c862a61441d6cdcc146d4968b6db06879b531843f01",
+        "stay_ids_sha256": "6383a6b6dec956bff8e03f37628d1c614ead7c14614a08a006499497953abccd",
+        "restored": true
+      },
+      {
+        "guard": "source",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:source",
+          "memory.dedup_sweep.started:guard:source",
+          "memory.index.lexical.rebuild.completed:guard:source"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "b3daebcaf121d10cd5af6fa2b8b608e36ce450e026c37a15297cb6733efb7cfd",
+        "stay_ids_sha256": "1fd8a74685d0aee741037c0b750c93ac5f7d5984bea8ca74b5bdce730eedd535",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_NoneType",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: NoneType",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 16,
+        "stays": 15444,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:storage-uint64:fresh:sequence_id:null",
+          "memory.dedup_sweep.completed:storage-uint64:metadata-only-retry:sequence_id:null",
+          "memory.dedup_sweep.started:storage-uint64:fresh:sequence_id:null"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "82eb5d6e0cde10cea97e60c9294506695daedba16d83def95e65dc97000301d9",
+        "stay_ids_sha256": "102c8bea459f2858b7ed0e5777cf42cefec663f6aa63fa019ae872ce0c25d15d",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_bool",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: bool",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 48,
+        "stays": 15412,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:domains:numeric-type-sequence_id-bool-true",
+          "memory.dedup_sweep.completed:domains:numeric-type-sequence_id-bool-false",
+          "memory.dedup_sweep.completed:storage-uint64:fresh:sequence_id:boolean-false"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "29bc541b36a36d64a4a10162fdc494651e6c1b920be6d41ffc0e406034ca48a4",
+        "stay_ids_sha256": "5a4436bc39534f95a8fcf9973977ef9a853c806d92aabf6e7553cb51ea85d85a",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_dict",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: dict",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 32,
+        "stays": 15428,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:domains:numeric-type-sequence_id-9",
+          "memory.dedup_sweep.completed:domains:numeric-type-sequence_id-10",
+          "memory.dedup_sweep.completed:storage-uint64:fresh:sequence_id:object"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "63fe33b4e453ff2f8d191ac1363bdf3ca191ec15e9a8afc7461b5c6ef344cebe",
+        "stay_ids_sha256": "d91adf1635fce041924a9bde37f88715281b4ceb60b5cf353f16e0f556d07705",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_float",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: float",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 16,
+        "stays": 15444,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:storage-uint64:fresh:sequence_id:float",
+          "memory.dedup_sweep.completed:storage-uint64:metadata-only-retry:sequence_id:float",
+          "memory.dedup_sweep.started:storage-uint64:fresh:sequence_id:float"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "f7d0b6f5459d38ecd949bbe2f771bdb19c9e9775d7b3485f339ac680ead690d4",
+        "stay_ids_sha256": "a2cbb879a4ab9821be51213f94b83f71833223435bf0347bf270eff9aedacf34",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_list",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: list",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 32,
+        "stays": 15428,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:domains:numeric-type-sequence_id-7",
+          "memory.dedup_sweep.completed:domains:numeric-type-sequence_id-8",
+          "memory.dedup_sweep.completed:storage-uint64:fresh:sequence_id:array"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "be6b335291d81807535dd31203b592cccefc9b8a20b4f713f20fe24dd692db23",
+        "stay_ids_sha256": "7697156d03eee3364aef0625a099e0bfe32345f4da6e2a2a29cc016b58746b5c",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_maximum",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: maximum",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 16,
+        "stays": 15444,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:storage-uint64:fresh:sequence_id:overflow",
+          "memory.dedup_sweep.completed:storage-uint64:metadata-only-retry:sequence_id:overflow",
+          "memory.dedup_sweep.started:storage-uint64:fresh:sequence_id:overflow"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "c8df45e21d680b8569c2c4aef2fabadf2aadfb7344614234cfee9b8363e26a5f",
+        "stay_ids_sha256": "409ee792c8a1a6701ba63827c67d666d2de426a68abc60cd3b9ff70be7146544",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_minimum",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: minimum",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 16,
+        "stays": 15444,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:storage-uint64:fresh:sequence_id:negative",
+          "memory.dedup_sweep.completed:storage-uint64:metadata-only-retry:sequence_id:negative",
+          "memory.dedup_sweep.started:storage-uint64:fresh:sequence_id:negative"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "d953003a8c9740df75e030a766b987da8c7a884158d90cbc4e9e0169d63df34f",
+        "stay_ids_sha256": "3074fb629c7d135ebac7cb55c2b248a48348090697e5640d5377720b043463e5",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_str",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: str",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 48,
+        "stays": 15412,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:domains:numeric-type-sequence_id-0",
+          "memory.dedup_sweep.completed:domains:numeric-type-sequence_id-1",
+          "memory.dedup_sweep.completed:domains:numeric-type-sequence_id-2"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "2b7333d7f715f5dc7fca916ce00ef2d5e16872ddc90b59801a11c669229bed99",
+        "stay_ids_sha256": "09454e5aa6ebd030525b9582f8d40f569bbc65ca49a1c685883f2a035b655ae7",
+        "restored": true
+      },
+      {
+        "guard": "target_identity",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 15456,
+        "flipping_examples": [
+          "memory.index.lexical.rebuild.completed:guard:target_identity",
+          "memory.index.lexical.rebuild.started:guard:target_identity",
+          "memory.index.semantic.rebuild.completed:guard:target_identity"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "86f60ce0eaeaa68bba7ab33c51183e0b9311a0e8c946da3c8544c51ef98a430c",
+        "stay_ids_sha256": "18bb6ca3f8895252f94d14660a72fa0c50ecac62dd975ce001b6c338fe4d50f3",
+        "restored": true
+      },
+      {
+        "guard": "target_manifest",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 15456,
+        "flipping_examples": [
+          "memory.index.lexical.rebuild.completed:guard:target_manifest",
+          "memory.index.lexical.rebuild.started:guard:target_manifest",
+          "memory.index.semantic.rebuild.completed:guard:target_manifest"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "33060290fef24230a591afe8c5f91016e3d831eaa5537a574e655a9b8fb51977",
+        "stay_ids_sha256": "8afd0a2a9c1b969b39c627917d7ea3dc6100a22057f0052d258bf6724bdcd22b",
+        "restored": true
+      },
+      {
+        "guard": "target_order",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 15456,
+        "flipping_examples": [
+          "memory.index.lexical.rebuild.completed:guard:target_order",
+          "memory.index.lexical.rebuild.started:guard:target_order",
+          "memory.index.semantic.rebuild.completed:guard:target_order"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "436afb0a0ab92393abef5594fffd731422d621d40400b6991547596db20d5cfb",
+        "stay_ids_sha256": "24960219323eb21d7be6e127255b32d0da6eb6e040ccfa2d3eb630afaf9d11b1",
+        "restored": true
+      },
+      {
+        "guard": "target_schema",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 15456,
+        "flipping_examples": [
+          "memory.index.lexical.rebuild.completed:guard:target-schema",
+          "memory.index.lexical.rebuild.started:guard:target-schema",
+          "memory.index.semantic.rebuild.completed:guard:target-schema"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "f8df10dfaf35d595c2a63f55b3074a3a814e12e6a047083025163dd6a631ac91",
+        "stay_ids_sha256": "9f6e406beb1f54fff36d449ec963795a372c3aefff5973ba31bd858cca8fcee1",
+        "restored": true
+      },
+      {
+        "guard": "target_source",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 15456,
+        "flipping_examples": [
+          "memory.index.lexical.rebuild.completed:guard:target_source",
+          "memory.index.lexical.rebuild.started:guard:target_source",
+          "memory.index.semantic.rebuild.completed:guard:target_source"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "697a016cc8dff77d1347d89586a9053c7f7b74170c7ad61dec63b4e46e46a230",
+        "stay_ids_sha256": "369862b2c776fd994aff68dd93fe3857adb6beee3eacc2c26b174250be12e583",
+        "restored": true
+      },
+      {
+        "guard": "terminal_custody",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 15452,
+        "flipping_examples": [
+          "memory.dedup_sweep.completed:guard:terminal-receipt",
+          "memory.dedup_sweep.started:guard:terminal-receipt",
+          "memory.index.lexical.rebuild.completed:guard:terminal-receipt"
+        ],
+        "staying_examples": [
+          "memory.dedup_sweep.completed:guard:admitted",
+          "memory.dedup_sweep.completed:guard:permission",
+          "memory.dedup_sweep.completed:guard:withdrawn"
+        ],
+        "flip_ids_sha256": "523086aa8b79b1af775d945ab79738372a2f2f64bfac24d0c95312f245a4a66e",
+        "stay_ids_sha256": "afb3b501a740b442f60792133fafe034a3c1ed673f72d17a0b82c14a8d96827a",
+        "restored": true
+      }
+    ],
+    "archive": [
+      {
+        "guard": "action",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:unknown-action",
+          "memory.monthly_summary.started:guard:unknown-action",
+          "memory.prune_archive.completed:guard:unknown-action"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "1d70c3cc1cc352ce2f47760699d0bfea0e71dfd1c25d80380669452ea2d02e70",
+        "stay_ids_sha256": "deb8ca86b87d3e16a12f47e0b32f8ecdf6a9fefa09c7461f69d8badde2b64cc2",
+        "restored": true
+      },
+      {
+        "guard": "admission",
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 100,
+        "stays": 8106,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:not-admitted",
+          "memory.monthly_summary.completed:guard:admitted",
+          "memory.monthly_summary.completed:guard:boundary-admitted"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "5f0525acadbea4847cc46ec52ff8f6ed61f792e2741d4aedfce5c526e32f841b",
+        "stay_ids_sha256": "a4c2bc6c5479da82eb8dffbaaef2c63e7b63ca64b79852f1b342d8f53c43e711",
+        "restored": true
+      },
+      {
+        "guard": "boundary_acceptance",
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 24,
+        "stays": 8182,
+        "flipping_examples": [
+          "memory.monthly_summary.started:guard:boundary-acceptance_durable",
+          "memory.monthly_summary.started:domains:boundary-acceptance_durable-0",
+          "memory.monthly_summary.started:domains:boundary-acceptance_durable-1"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "d9cac7203a7cf1e09476b745d3a9eeb660d53355993e9a9c40c0455eef4f3976",
+        "stay_ids_sha256": "88cde93282c183bc4b433884239176a7b9e2023f426e551e81bc33fc278001a0",
+        "restored": true
+      },
+      {
+        "guard": "boundary_payload",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:boundary-payload-join",
+          "memory.monthly_summary.started:guard:boundary-payload-join",
+          "memory.prune_archive.completed:guard:boundary-payload-join"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "e112899fb1641b6d2dd8dccde3319481185de58b3354e12f315f5f006d495de9",
+        "stay_ids_sha256": "ae82f52c8611c8426eb26d965a101d0b83cc364b9ec3ea11ff151f6725ea1d5d",
+        "restored": true
+      },
+      {
+        "guard": "boundary_receipts",
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 72,
+        "stays": 8134,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:boundary-started_receipt",
+          "memory.monthly_summary.completed:guard:boundary-effect_settled",
+          "memory.monthly_summary.completed:guard:boundary-original_full_value"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "6ec3ab282431649cb0cb3df46be85eacd6193bc760e9768dd6e818ac47943b89",
+        "stay_ids_sha256": "3d6b76d77b50c47e6b170943bbc8fb4b634ef903c76669f0f872f1451d5d35e0",
+        "restored": true
+      },
+      {
+        "guard": "boundary_request",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:boundary-request-hash",
+          "memory.monthly_summary.started:guard:boundary-request-hash",
+          "memory.prune_archive.completed:guard:boundary-request-hash"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "7ba2dbb59a574a665a150bbe8674374bd71310dec79c48d8c459450d3f388139",
+        "stay_ids_sha256": "4344315f733352b4cce7b31b87647f3328e5070255e65671374d969d2bea7e52",
+        "restored": true
+      },
+      {
+        "guard": "boundary_scope",
+        "named_duplicate_sites": [],
+        "flips": 12,
+        "stays": 8194,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:boundary-project_id",
+          "memory.monthly_summary.completed:guard:boundary-operation_id",
+          "memory.monthly_summary.completed:guard:boundary-source_revision_sha256"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "f16564e0460e8c387ab42901372bf48cfa0939804d2804d5badf646777d327bd",
+        "stay_ids_sha256": "63c50656276c91eedd2e4699e1ef489c1fb5e87f80f72c61d8959364d06a3b5c",
+        "restored": true
+      },
+      {
+        "guard": "boundary_snapshot",
+        "named_duplicate_sites": [
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 96,
+        "stays": 8110,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:boundary-request_matches",
+          "memory.monthly_summary.completed:guard:boundary-current_source",
+          "memory.monthly_summary.completed:domains:boundary-request_matches-0"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "81711453580de390107faa1c73f23734e173de2e66d1f0560415da2eef5bebf3",
+        "stay_ids_sha256": "4f513bfc3bf01e97a315b184741f78b0c99fbd8333c3c98b21d85573500952d1",
+        "restored": true
+      },
+      {
+        "guard": "boundary_terminal",
+        "named_duplicate_sites": [],
+        "flips": 2,
+        "stays": 8204,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:boundary-terminal-missing",
+          "memory.prune_archive.completed:guard:boundary-terminal-missing"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "b7ae348451cd30df13e8a4133e162746d369b4be6e988c20524839afb08ba7ca",
+        "stay_ids_sha256": "b1e0e74803021dccc6659080c831eb84a7f97f2dbf0e59428c46263f57be1102",
+        "restored": true
+      },
+      {
+        "guard": "checkpoint_event",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:checkpoint-foreign-event-identity",
+          "memory.monthly_summary.started:guard:checkpoint-foreign-event-identity",
+          "memory.prune_archive.completed:guard:checkpoint-foreign-event-identity"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "66c874df8ebdab968e18b81c63716fc52f20b8c8d42a0bfa25cd1a6609d6e99b",
+        "stay_ids_sha256": "be24097738db7735089ce1d90817cdcfa00a49fa0b8eab03b92b1debc375b790",
+        "restored": true
+      },
+      {
+        "guard": "checkpoint_key",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 8198,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:checkpoint-checkpoint_key",
+          "memory.monthly_summary.completed:guard:checkpoint-foreign-key",
+          "memory.monthly_summary.started:checkpoint-checkpoint_key"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "29e95bc8fa9fa962c424aabd25ef739478a69ca15dcf5935227121f17dc5bddd",
+        "stay_ids_sha256": "feecfbc70ef830d8e7e847c47ff9c671874a71427079c16732e70d9a7002aaae",
+        "restored": true
+      },
+      {
+        "guard": "checkpoint_storage",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 8198,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:checkpoint-storage_instance_id",
+          "memory.monthly_summary.completed:guard:checkpoint-foreign-storage",
+          "memory.monthly_summary.started:checkpoint-storage_instance_id"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "ddcff9431ce7dcf93405dcb39599dfa8b418e712215115e76218272231573329",
+        "stay_ids_sha256": "c4ca852f2f60e2fe48a2b3d1bfd97bfe3e9b60e9c884251efc8f2a68f7c1b381",
+        "restored": true
+      },
+      {
+        "guard": "commitment_numbers",
+        "named_duplicate_sites": [
+          "current canonical_numbers and numeric preflights + current integer/safe-bound schemas",
+          "historical_numbers integrality preflight + frozen integer schemas; no historical safe-integer maximum"
+        ],
+        "flips": 184,
+        "stays": 8022,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:number-fraction",
+          "memory.monthly_summary.completed:guard:number-infinity",
+          "memory.monthly_summary.completed:guard:number-nan"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "cf29640bb9bbe9778b6f4c5db8286ccee48aad431fc8febdb9b027c659828c05",
+        "stay_ids_sha256": "f95844f1a74844b84260c73d87598e5320e30ef7f26883230744d817dd1570f4",
+        "restored": true
+      },
+      {
+        "guard": "custody_digest",
+        "named_duplicate_sites": [],
+        "flips": 864,
+        "stays": 7342,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:start-custody-digest",
+          "memory.monthly_summary.completed:history-forged-digest",
+          "memory.monthly_summary.completed:path-memory.monthly_summary.completed:phase:recover@start_saved#start-append-crash-recover/2:reduced"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "57389de9f75a293ca9178bf361bf574bd4c5e45ca8e51c87e475334c0f8c6502",
+        "stay_ids_sha256": "f2a5cf2ab66674d0d55855c87e05f3ccbc980a63a896bf2e070b46f8d6855091",
+        "restored": true
+      },
+      {
+        "guard": "custody_flush",
+        "named_duplicate_sites": [],
+        "flips": 442,
+        "stays": 7764,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:start-custody-not-flushed",
+          "memory.monthly_summary.completed:canonical-history:record-not-flushed",
+          "memory.monthly_summary.completed:canonical-history:record-not-flushed-replay"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "64ad7e446329f6a597c74ca5a7bde7a3b2e7cb03b909abc505f131731558b897",
+        "stay_ids_sha256": "869156aa8fc85cc1b34068f13eb72d70b7cac941163428880804f84a2741a452",
+        "restored": true
+      },
+      {
+        "guard": "custody_presence",
+        "named_duplicate_sites": [],
+        "flips": 390,
+        "stays": 7816,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:start-custody-missing",
+          "memory.monthly_summary.completed:canonical-history:missing-start",
+          "memory.monthly_summary.completed:canonical-history:missing-start-replay"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "ea89f63242f315957ee123c4e958201b677f78c2d5e233a415c431b8ca89b4db",
+        "stay_ids_sha256": "895a2808ed83c24f94c6565b8dd9a226b94d54d1cd6179c1d01944f1d490dd78",
+        "restored": true
+      },
+      {
+        "guard": "custody_shape",
+        "named_duplicate_sites": [],
+        "flips": 398,
+        "stays": 7808,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:canonical-history:record-shape",
+          "memory.monthly_summary.completed:canonical-history:record-shape-replay",
+          "memory.monthly_summary.completed:canonical-history:record-shape-compatibility"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "013c2193a157f77c8f0c86ecbb4ea72f5e63fcc063a56c003caf2f7044114c4d",
+        "stay_ids_sha256": "9f805ed7469b37c6601db68a104d212ec5dfa392ab05df9ec3bedd25d657154b",
+        "restored": true
+      },
+      {
+        "guard": "cutoff_commitment",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:cutoff-changed-hash",
+          "memory.monthly_summary.started:cutoff-changed-hash",
+          "memory.prune_archive.completed:cutoff-changed-hash"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "c94512865958d28c13d74e4ce1481e59e8e88f9fcc277b26cf9e7bbfa4a114e9",
+        "stay_ids_sha256": "8b40c4a36cadbf5a616fd29383d3bd7baaba58d294dd60f0d5decf5cd439e855",
+        "restored": true
+      },
+      {
+        "guard": "cutoff_record",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:cutoff-boolean-is-not-authority",
+          "memory.monthly_summary.started:cutoff-boolean-is-not-authority",
+          "memory.prune_archive.completed:cutoff-boolean-is-not-authority"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "a2af3afdf3c04276abe45c98889ac5326663e80e790584e237f724571166457c",
+        "stay_ids_sha256": "719e2065b746b34c4ab736e9186652d7a897adc32304077500bf68a2a6eb2105",
+        "restored": true
+      },
+      {
+        "guard": "cutoff_reference",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:cutoff-self-reference",
+          "memory.monthly_summary.started:cutoff-self-reference",
+          "memory.prune_archive.completed:cutoff-self-reference"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "550aa6d20edc39d511c0e98aee61a163dd92dfa1095e7e1b5b3391bedf1e07bd",
+        "stay_ids_sha256": "f995e97fadb6c954415b3cd9b57fc45c9e8f93e359cf368e5acf52001e5f0a57",
+        "restored": true
+      },
+      {
+        "guard": "cutoff_scope",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 8198,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:cutoff-other-job",
+          "memory.monthly_summary.completed:cutoff-other-project",
+          "memory.monthly_summary.started:cutoff-other-job"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "68db3f904d61f4aedb74c01315627bf3dd3a99d312c7e95cf39d7b709b89706f",
+        "stay_ids_sha256": "59348044a563d1e8c7efb8c8c6f1a67f88ab9653bae34fc59b1bbf62b0d384d0",
+        "restored": true
+      },
+      {
+        "guard": "cutoff_unique",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:cutoff-duplicate-reference",
+          "memory.monthly_summary.started:cutoff-duplicate-reference",
+          "memory.prune_archive.completed:cutoff-duplicate-reference"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "3901d59615c423ae6f308eb5130dfd53390f5eb42c707bc223aca7c6998e4d83",
+        "stay_ids_sha256": "b23c4587885ea4f8b17d0ea7489a116079820ce0ba6591e409e3613c1162077e",
+        "restored": true
+      },
+      {
+        "guard": "cutoffs_unavailable",
+        "named_duplicate_sites": [],
+        "flips": 328,
+        "stays": 7878,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:cutoff-other-job",
+          "memory.monthly_summary.completed:cutoff-other-project",
+          "memory.monthly_summary.completed:cutoff-boolean-is-not-authority"
+        ],
+        "flip_ids_sha256": "7f9018fd8e2161b458a47432a6106d60e074bb7eae7f34e2cbca2bfb37e5927b",
+        "stay_ids_sha256": "60b330ff99e45414d6fcf5bc45fe32ae4159443f76bcd28c6b2c0234fd27a364",
+        "restored": true
+      },
+      {
+        "guard": "effect_once",
+        "named_duplicate_sites": [],
+        "flips": 12,
+        "stays": 8194,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:repeated-effect",
+          "memory.monthly_summary.completed:guard:effect-once",
+          "memory.monthly_summary.completed:guard:committed-effect-cannot-fail"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "3bde09251398b615b9db17bf85e290b09f2e8734ad7ab75d668a14ca1e56e35c",
+        "stay_ids_sha256": "9fe6f31b0bb325350a2225573b4ae9613ceb84657fec8c51ba78c3aef4919d78",
+        "restored": true
+      },
+      {
+        "guard": "envelope_schema",
+        "named_duplicate_sites": [
+          "selected 2.0.0 envelope schema",
+          "selected frozen 1.0.0 compatibility-reader schema",
+          "closed envelope schema constants + only the repeated schema_id/schema_version comparisons in historical_binding; format guard remains enabled",
+          "SP-236 sequence type/min/max predicates remain enabled; those have their own surgical rows"
+        ],
+        "flips": 112,
+        "stays": 8094,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:unknown-envelope-field",
+          "memory.monthly_summary.completed:guard:envelope-schema",
+          "memory.monthly_summary.completed:canonical-history:envelope-extra"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "11df1b6173c16b9b21a5bb9990725f52320237268a2bff485012072e17c7e3cd",
+        "stay_ids_sha256": "b293a32e19f5d5bade5a11a2756b585dc5791252c727d673b890f4c963d3eec8",
+        "restored": true
+      },
+      {
+        "guard": "evidence_preserved",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:evidence-lost",
+          "memory.monthly_summary.started:evidence-lost",
+          "memory.prune_archive.completed:evidence-lost"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "1a74a03a783eaa89af32c053a3189eb139f7313b8a80cccbe16fa6d97b6e739e",
+        "stay_ids_sha256": "df794389dfa982bf0a7d5ac9dbe27831e8fbee1ea9a672e2a49686a62469ae92",
+        "restored": true
+      },
+      {
+        "guard": "formats_enforced",
+        "named_duplicate_sites": [
+          "explicit enforced_formats date-time/uuid predicates + schema format application",
+          "UTC/end-of-input patterns on formatted timestamp leaves only; type, length, required fields and unrelated identifier patterns remain enabled"
+        ],
+        "flips": 1244,
+        "stays": 6962,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:formats:Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_completed/properties/occurred_at_utc:0",
+          "memory.monthly_summary.completed:formats:Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_completed/properties/occurred_at_utc:1",
+          "memory.monthly_summary.completed:formats:Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_completed/properties/occurred_at_utc:2"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "390ee8be75630401b4af5836a72c52cedf87015d856f2b304809962ce5903438",
+        "stay_ids_sha256": "c71d69183f66cc50eb974505a36ccc84d9eb04885b4e1bd6f1e65a21abccaafa",
+        "restored": true
+      },
+      {
+        "guard": "history_event",
+        "named_duplicate_sites": [],
+        "flips": 20,
+        "stays": 8186,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:history-family",
+          "memory.monthly_summary.completed:canonical-history:foreign-family",
+          "memory.monthly_summary.completed:canonical-history:foreign-family-replay"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "4d570b4ee5c8d60ec68c7e28b6ce73c2ee44fce877d688e772bd3bf749f788bd",
+        "stay_ids_sha256": "1e6b84b73dcad7484c37d8b36bea097c832c411cc23bab1c1de3f821ffda40fd",
+        "restored": true
+      },
+      {
+        "guard": "inline_cap",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:inline-cap",
+          "memory.monthly_summary.started:guard:inline-cap",
+          "memory.prune_archive.completed:guard:inline-cap"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "a402089c45b3ecddf3b5fdc8c9c6734bbbf2d594256175054a1878421ab32f99",
+        "stay_ids_sha256": "8d8baff011a360320cfe1327c4338cddb4e1a2a6239aa30865d20699947b4cc0",
+        "restored": true
+      },
+      {
+        "guard": "json_number_grammar",
+        "named_duplicate_sites": [],
+        "flips": 28,
+        "stays": 8178,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:canonical-history:numeric-01",
+          "memory.monthly_summary.completed:canonical-history:numeric-01-replay",
+          "memory.monthly_summary.completed:canonical-history:numeric-01-compatibility"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "d1e161a7246bc878b4f89ddbd8ffb99e18f4d0e3cd25d92ee1d98b097f7e4b87",
+        "stay_ids_sha256": "6d39b1de8de7966dc6d535d4f5601773fa90bf104a126245faefc7eb9758cad5",
+        "restored": true
+      },
+      {
+        "guard": "memory_flags",
+        "named_duplicate_sites": [
+          "exact memory Boolean types before selection",
+          "same exact types for input and output in archive_validate"
+        ],
+        "flips": 352,
+        "stays": 7854,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:domains:settle-old-note-pinned-0",
+          "memory.monthly_summary.completed:domains:settle-old-note-pinned-1",
+          "memory.monthly_summary.completed:domains:settle-old-note-pinned-2"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "d6b6b4deb906778fb2ccc5b986ed614683e8bbb1d03535eb0adfa7f1267e09a9",
+        "stay_ids_sha256": "b7090c82aea62ac754d80e1c0d3c8b37e42d2e0c5484b4ce519c356122914007",
+        "restored": true
+      },
+      {
+        "guard": "no_extra_memories",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:extra-memory",
+          "memory.monthly_summary.started:extra-memory",
+          "memory.prune_archive.completed:extra-memory"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "e2138ace3bf7bbf2671d8764bc161370b85a12564aebaeec7cb3e022adfd48f4",
+        "stay_ids_sha256": "5a0b8f9b12624311a845bd68312a4026096f7b965f682fbe6d3f98fe078b853d",
+        "restored": true
+      },
+      {
+        "guard": "no_prune_summary",
+        "named_duplicate_sites": [],
+        "flips": 2,
+        "stays": 8204,
+        "flipping_examples": [
+          "memory.prune_archive.completed:prune-invented-summary",
+          "memory.prune_archive.started:prune-invented-summary"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "1df6e0f5176ed29860c1335e441ec7d71ef14ecfbfa11382027efe1685a04ebc",
+        "stay_ids_sha256": "5d42db7b36213e50f637e852c2860aa38212cc6308668532487aefa819b7dd51",
+        "restored": true
+      },
+      {
+        "guard": "operation_cas",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 8198,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:stale-cas",
+          "memory.monthly_summary.completed:guard:cas",
+          "memory.monthly_summary.started:stale-cas"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "2501732c1c5c28c5ab5d1c1c9133abb311361bfb28b6f783f80be58c548164f9",
+        "stay_ids_sha256": "ee16ad7e9a50aeebf5114d892cb4af1edcca48518e90e6be96466281dc21cf5b",
+        "restored": true
+      },
+      {
+        "guard": "operation_receipt",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:started_event_id",
+          "memory.monthly_summary.started:guard:started_event_id",
+          "memory.prune_archive.completed:guard:started_event_id"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "ded18fc928cd821ca1b3b9c8dd36018c6b9db8eb58498ecb8a585ff31c9e5c27",
+        "stay_ids_sha256": "0c7acc57b2214f39fa252bf0aa2c0a268b157c6659ceeb88fe4e170b2460440f",
+        "restored": true
+      },
+      {
+        "guard": "operation_result_digest",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:result_sha256",
+          "memory.monthly_summary.started:guard:result_sha256",
+          "memory.prune_archive.completed:guard:result_sha256"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "2a1ad9e48ca67d1cfe7f947fb3d024372f76a96e4d33fea854ae7c0684dbdc69",
+        "stay_ids_sha256": "b4c7883c077a809f242b8400a2fa2d0a6b3677f74cb5dd47e7f72768597d3917",
+        "restored": true
+      },
+      {
+        "guard": "operation_result_ref",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:result_ref",
+          "memory.monthly_summary.started:guard:result_ref",
+          "memory.prune_archive.completed:guard:result_ref"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "a856192c14040ccb029ac4802a5523ccc91bf0df5020a87cff4f2e18ed3c6702",
+        "stay_ids_sha256": "0900121abb57e1aac85eeeaccb9fdb28ccd0c50ad1ff152fe76db98ac6b352a0",
+        "restored": true
+      },
+      {
+        "guard": "operation_schema",
+        "named_duplicate_sites": [],
+        "flips": 40,
+        "stays": 8166,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:unknown-operation-field",
+          "memory.monthly_summary.completed:guard:operation-schema",
+          "memory.monthly_summary.completed:write-recipe:canonical-18446744073709551615:forged-operation-recipe_version"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "7d4f1f8bc76b10fafb94a8f597d60a095984123f95ed5235263fbbd15a09b7b5",
+        "stay_ids_sha256": "dc9422bcd7b3629b5d5734a0de50347d475f95728df520e91893c668531c79d6",
+        "restored": true
+      },
+      {
+        "guard": "original_input",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:append-original-value",
+          "memory.monthly_summary.started:guard:append-original-value",
+          "memory.prune_archive.completed:guard:append-original-value"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "2b873a919cd82cc6933a8f6e9f54fcb29e7ded2352cb1522197d310735e5fd8f",
+        "stay_ids_sha256": "4f7c2b311edb6a46137bacff6469fe8fa6d97cc034597d7f00eafc21376b1cc8",
+        "restored": true
+      },
+      {
+        "guard": "originals_preserved",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:original-deleted",
+          "memory.monthly_summary.started:original-deleted",
+          "memory.prune_archive.completed:original-deleted"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "b88f14e402c477351d602d769cd6f29ee396ce941a24aac4e675a95c40623f42",
+        "stay_ids_sha256": "850bbd5ab47f027a6e99646d148c7d6eb8fa2a184cbfcecbd74e4052aaf5bec7",
+        "restored": true
+      },
+      {
+        "guard": "outcome",
+        "named_duplicate_sites": [
+          "runtime status domain",
+          "operation schema status enums in the applicable phase"
+        ],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:unknown-outcome",
+          "memory.monthly_summary.started:guard:unknown-outcome",
+          "memory.prune_archive.completed:guard:unknown-outcome"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "e10471d98c3036b884d867bc3baf0d2555bcf2b27575dc66e2d0ed57eea60989",
+        "stay_ids_sha256": "2e749eb51ef0fdfad955014442cfee246a2eafb7adfc6be289005ea450d2e196",
+        "restored": true
+      },
+      {
+        "guard": "partition",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 8198,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:raw-project-partition",
+          "memory.monthly_summary.completed:guard:dedupe_key",
+          "memory.monthly_summary.started:raw-project-partition"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "048d51e4ca260721cc1dbd2fe5586639eb48d00722bcbb2e27fac0713dee22c5",
+        "stay_ids_sha256": "7ce90224ae72866e4482cf0ec77521d41033b28608a1f5e2250a88b8d43df003",
+        "restored": true
+      },
+      {
+        "guard": "payload_schema",
+        "named_duplicate_sites": [
+          "exact-family closed payload schema at all caller/retained sites"
+        ],
+        "flips": 98,
+        "stays": 8108,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:payload-extra",
+          "memory.monthly_summary.completed:payload-missing-schema_version",
+          "memory.monthly_summary.completed:payload-missing-event_type"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "6539e05e8e162366ec038a3f1a2b01a0742956d46d83ae7b4a3f34d2ceb3277a",
+        "stay_ids_sha256": "05a12a59ed464dae0aceb7ddb31943b2cbb3b8e6c6e2215402141f93820867e8",
+        "restored": true
+      },
+      {
+        "guard": "permission_or_withdrawal",
+        "named_duplicate_sites": [
+          "access/withdrawal invariant at repeated read, writer and commit sites",
+          "flag exact Boolean type plus Boolean-identity value test, at all repeated sites of this logical fence"
+        ],
+        "flips": 1044,
+        "stays": 7162,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:no-permission",
+          "memory.monthly_summary.completed:withdrawn",
+          "memory.monthly_summary.completed:history-withdrawn"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "c10f5441f4705bde73ccf70112643276597dbe191e7d39d97a7b3eec21889079",
+        "stay_ids_sha256": "250df0e29c58090630f095f64a19d22f4429193eeaff2e83dd0052e14324e4af",
+        "restored": true
+      },
+      {
+        "guard": "phase",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:guard:append-phase",
+          "memory.monthly_summary.started:guard:append-phase",
+          "memory.prune_archive.completed:guard:append-phase"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "199beb2747abb4f8bd831bd1a44174910243902bcfe71747aec961a9a13bb725",
+        "stay_ids_sha256": "69fced3d2915143274c0a415ded23a1b2f2e1209674ab0d2e90775580f4346fd",
+        "restored": true
+      },
+      {
+        "guard": "pins_preserved",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:pin-archived",
+          "memory.monthly_summary.started:pin-archived",
+          "memory.prune_archive.completed:pin-archived"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "217f3f644005ea27eb8a43a899ec2e017e5cbcac7dae9c0d86bab89a850f1c2f",
+        "stay_ids_sha256": "4e94b7eb553024590b58edc4916db34a27c55950c18080811666a0b4b7e09fd5",
+        "restored": true
+      },
+      {
+        "guard": "references_resolve",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 8198,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:dormant-unresolved-ref",
+          "memory.monthly_summary.completed:guard:references",
+          "memory.monthly_summary.started:dormant-unresolved-ref"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "6dad028555ee72b6009e15f25f5ba3fba7730843155a2f3322f728f50f8438c5",
+        "stay_ids_sha256": "c93a4e97d6a33a9a0c5f178189fc2869e9a401c0eee416344d656ede7f90a872",
+        "restored": true
+      },
+      {
+        "guard": "replay_policy",
+        "named_duplicate_sites": [
+          "current-writer replay refusal and policy equality",
+          "repeated retained/caller replay-policy join"
+        ],
+        "flips": 8,
+        "stays": 8198,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:replay-only",
+          "memory.monthly_summary.completed:guard:replay-only",
+          "memory.monthly_summary.started:replay-only"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "5ea777ae9f2bb371fa3587016fb9f6e280ce8c36525441a2eb2fc67b1c55a290",
+        "stay_ids_sha256": "a5794e38f0f4fbb7290078f6777e13380d0ea15802292b69d03b5f6acaca2e0f",
+        "restored": true
+      },
+      {
+        "guard": "request",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 8198,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:request-changed",
+          "memory.monthly_summary.completed:guard:request",
+          "memory.monthly_summary.started:request-changed"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "ce4ec69b308403c89f81b316f5255d071e36d8980af498d622215cd3f0fc68bf",
+        "stay_ids_sha256": "08749a65bf448a70e434fac540d41999b77d42a6e09c91c9c3b63663051c3693",
+        "restored": true
+      },
+      {
+        "guard": "selected_archived",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:selected-not-archived",
+          "memory.monthly_summary.started:selected-not-archived",
+          "memory.prune_archive.completed:selected-not-archived"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "25428d6870831e94c6b36548a2da4f5eccf60be5e8ada5ec4aebba5cf2a81851",
+        "stay_ids_sha256": "a9e03eca47f8fa2fd20c194199106f9454d3fae676ae7a5872882fec327b2e53",
+        "restored": true
+      },
+      {
+        "guard": "selected_fields_preserved",
+        "named_duplicate_sites": [],
+        "flips": 12,
+        "stays": 8194,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:selected-rewrite-kind",
+          "memory.monthly_summary.completed:selected-rewrite-pinned",
+          "memory.monthly_summary.completed:selected-rewrite-new_field"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "68655100ce190e839b8fe558725908cd4209644a4ab73718d83356d45a418671",
+        "stay_ids_sha256": "a865ce20cf9bccce689dcc877f24bb9706895bc86656aa6e6eaa6774848b4482",
+        "restored": true
+      },
+      {
+        "guard": "selection_exists",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:missing-selection",
+          "memory.monthly_summary.started:missing-selection",
+          "memory.prune_archive.completed:missing-selection"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "955c00801e946ee989f681f994b9070aee10b3696c4ac5ad7d8c44a238d1f83e",
+        "stay_ids_sha256": "e88fcca2fa3c2f95bbd524041d1580b57cbafd5ca0448f69dfbd3c383a4fd245",
+        "restored": true
+      },
+      {
+        "guard": "selection_kind",
+        "named_duplicate_sites": [],
+        "flips": 2,
+        "stays": 8204,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:non-note-summary",
+          "memory.monthly_summary.started:non-note-summary"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "e24452b251dc7480a12609e0e63dd3e89e201b9b048d60b1393a32556c10f396",
+        "stay_ids_sha256": "8bce77b925ffabb6a428ec0717270152765acf42bd63c84da47c934eb69ccf8f",
+        "restored": true
+      },
+      {
+        "guard": "selection_pinned",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:pinned-selection",
+          "memory.monthly_summary.started:pinned-selection",
+          "memory.prune_archive.completed:pinned-selection"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "7c866bb9c61b1912baedec840117dd268aca9914671298c170e82df859eb6ec2",
+        "stay_ids_sha256": "be63f12749075bd8c9d799b36bd8887e6e20e0054dd1eab90feb85907f4d8169",
+        "restored": true
+      },
+      {
+        "guard": "selection_unique",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:duplicate-selection",
+          "memory.monthly_summary.started:duplicate-selection",
+          "memory.prune_archive.completed:duplicate-selection"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "5e83b9302192d2257fdc61b3dc3ba4a793c9284161d8fc6e3949a4fb74b67fdf",
+        "stay_ids_sha256": "15e72b420c88e19be07f2fb849b127cab800c3783a63a4bf1177f1dfce0252fa",
+        "restored": true
+      },
+      {
+        "guard": "semantic_binding",
+        "named_duplicate_sites": [
+          "caller envelope/payload semantic joins",
+          "retained_binding at all retained-value joins",
+          "start-custody payload event_type and command_id constants only"
+        ],
+        "flips": 2034,
+        "stays": 6172,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:producer-actor",
+          "memory.monthly_summary.completed:payload-source",
+          "memory.monthly_summary.completed:start-custody-rehashed-foreign-value"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "59b87b08eaae1c67575b1c03e17b719042a53d7286311a275dc1d383cbba21c2",
+        "stay_ids_sha256": "bc5e4cd1113f679e0b3009ffd29df85f38f89efd580982bc656942c52451aa6c",
+        "restored": true
+      },
+      {
+        "guard": "source",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 8198,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:source-changed",
+          "memory.monthly_summary.completed:guard:source",
+          "memory.monthly_summary.started:source-changed"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "5c5ba9141c9e11cb55affcc81a61d39d29ef29e4ada18ccf39a78280d21b9a32",
+        "stay_ids_sha256": "9500daa22a44c297dce44fafd4336fb0eb6f664f9a7f23922b1f22834b4dc10e",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_NoneType",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: NoneType",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 8,
+        "stays": 8198,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:storage-uint64:fresh:sequence_id:null",
+          "memory.monthly_summary.completed:storage-uint64:metadata-only-retry:sequence_id:null",
+          "memory.monthly_summary.started:storage-uint64:fresh:sequence_id:null"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "58730a148fec060f046318233a32e9168fe5ed27cfa8c8c58c07fd75070d27f7",
+        "stay_ids_sha256": "0c479117e0c9a1f8e30cd2df03b13b5a4d1e92d5c1c380c3bf6016d1691e5113",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_bool",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: bool",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 24,
+        "stays": 8182,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:domains:numeric-type-sequence_id-bool-true",
+          "memory.monthly_summary.completed:domains:numeric-type-sequence_id-bool-false",
+          "memory.monthly_summary.completed:storage-uint64:fresh:sequence_id:boolean-false"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "9e97ab9fbb43a3e706fb222f6512f1ae3c40e3201cf1a5513e39019908e527c3",
+        "stay_ids_sha256": "37931ccef5c983f95ad8976dd2a59f23dc27606cb6db069384c46b20699a2f8b",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_dict",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: dict",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 16,
+        "stays": 8190,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:domains:numeric-type-sequence_id-9",
+          "memory.monthly_summary.completed:domains:numeric-type-sequence_id-10",
+          "memory.monthly_summary.completed:storage-uint64:fresh:sequence_id:object"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "81a94035af93a232d5b05acd70df07c264b583af3d84c025e50c7faf5e915268",
+        "stay_ids_sha256": "672ceb651418f343d95cb85944c776beaeddd3488d2cd5e09cc08778a6818406",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_float",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: float",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 8,
+        "stays": 8198,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:storage-uint64:fresh:sequence_id:float",
+          "memory.monthly_summary.completed:storage-uint64:metadata-only-retry:sequence_id:float",
+          "memory.monthly_summary.started:storage-uint64:fresh:sequence_id:float"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "5e345b32b81550ae61ce20d362679a7cf00bc84a76f187fb5d738ea758939d54",
+        "stay_ids_sha256": "e2b01643603651a239e7372ba7c7a563534e5bfcafe360204d809575f273d78a",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_list",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: list",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 16,
+        "stays": 8190,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:domains:numeric-type-sequence_id-7",
+          "memory.monthly_summary.completed:domains:numeric-type-sequence_id-8",
+          "memory.monthly_summary.completed:storage-uint64:fresh:sequence_id:array"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "30c8133093b049231f6c39e39769ae52f9079d77a90ff5a4f7bdfeed27d000ed",
+        "stay_ids_sha256": "4272f5f94e7538de9ca0f6df445344815edfa3b8f3b1f0e53c15c6ccdb628af1",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_maximum",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: maximum",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 8,
+        "stays": 8198,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:storage-uint64:fresh:sequence_id:overflow",
+          "memory.monthly_summary.completed:storage-uint64:metadata-only-retry:sequence_id:overflow",
+          "memory.monthly_summary.started:storage-uint64:fresh:sequence_id:overflow"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "5ede0b14dfa95751442e585852585f98f3568a53553d491232ff71d4b60a9405",
+        "stay_ids_sha256": "5f67d952a1fbdb841cdc8dbebac51a62c0a056300726d81c312ea370145e3f37",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_minimum",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: minimum",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 8,
+        "stays": 8198,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:storage-uint64:fresh:sequence_id:negative",
+          "memory.monthly_summary.completed:storage-uint64:metadata-only-retry:sequence_id:negative",
+          "memory.monthly_summary.started:storage-uint64:fresh:sequence_id:negative"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "f307692b5f323e2654ee913a92e0205deb6c839f635f52a63c55ef64d3259689",
+        "stay_ids_sha256": "12b0148bdeb35ecafe5a35bf538e86619fdbb6094a0a851ddeceec796a93ce4b",
+        "restored": true
+      },
+      {
+        "guard": "storage_uint64_str",
+        "named_duplicate_sites": [
+          "One sequence_id predicate only: str",
+          "runtime exact-type exclusion; current envelope schema; newly stored start-custody schema, only where each enforces that same predicate; per-case site proof is in check11.json"
+        ],
+        "flips": 24,
+        "stays": 8182,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:domains:numeric-type-sequence_id-0",
+          "memory.monthly_summary.completed:domains:numeric-type-sequence_id-1",
+          "memory.monthly_summary.completed:domains:numeric-type-sequence_id-2"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "b1799cdc2c9b3d8581c026a2be76f4d9bf0251fa6ef35db1329d7bfbcddce0d8",
+        "stay_ids_sha256": "df8a660555478104d21a2acd640941ea84af3e91ccb82993f5afc0ed4a237c6b",
+        "restored": true
+      },
+      {
+        "guard": "summary_provenance",
+        "named_duplicate_sites": [],
+        "flips": 2,
+        "stays": 8204,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:summary-lost-evidence",
+          "memory.monthly_summary.started:summary-lost-evidence"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "d576ea6a5c9777f81b950dee2c76a7cb045ef11ded1eceedc0b76344c05fdb9e",
+        "stay_ids_sha256": "5a43f70630827842559e1baa57b6c1db19a24025ca5c25280e00aa02be1aac4d",
+        "restored": true
+      },
+      {
+        "guard": "terminal_custody",
+        "named_duplicate_sites": [],
+        "flips": 8,
+        "stays": 8198,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:terminal-custody",
+          "memory.monthly_summary.completed:guard:terminal-receipt",
+          "memory.monthly_summary.started:terminal-custody"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "583a9ac533a4d83cd8c1350aa1336d28d967fd8210ebd7526de2e488d895c14d",
+        "stay_ids_sha256": "3a67c3a110f8d3110ca74c5fa9f39fbf2400c2ea70780ad586f3b646a855a47f",
+        "restored": true
+      },
+      {
+        "guard": "unselected_preserved",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:unselected-changed",
+          "memory.monthly_summary.started:unselected-changed",
+          "memory.prune_archive.completed:unselected-changed"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "9eeb8409f91ab7449eb43c82b470dff13c8db05b4270a821d417f8376598d489",
+        "stay_ids_sha256": "d36f226ba067ae52240ccb7172b73132661b326f62539082d092aa2908f71066",
+        "restored": true
+      },
+      {
+        "guard": "versions_preserved",
+        "named_duplicate_sites": [],
+        "flips": 4,
+        "stays": 8202,
+        "flipping_examples": [
+          "memory.monthly_summary.completed:version-lost",
+          "memory.monthly_summary.started:version-lost",
+          "memory.prune_archive.completed:version-lost"
+        ],
+        "staying_examples": [
+          "memory.monthly_summary.completed:automatic-cutoffs-absent",
+          "memory.monthly_summary.completed:memory-panel-cutoffs-absent",
+          "memory.monthly_summary.completed:direct-cutoffs-absent"
+        ],
+        "flip_ids_sha256": "f5e7320a992453b0e862846c4b596b61a3ddda82c16dff6f7b15305859ae6602",
+        "stay_ids_sha256": "5d786d6e488da4683cacae30468a0dd6cf56576b4afb094638b771f9cb575758",
+        "restored": true
+      }
+    ]
+  },
+  "storage_uint64_site_proof_cases": 216
+}

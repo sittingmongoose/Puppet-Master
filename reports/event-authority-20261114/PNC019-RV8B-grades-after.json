@@ -1,0 +1,683 @@
+{
+ "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+ "criteria": [
+  "membership_version",
+  "owner_doc",
+  "producer",
+  "closed_payload_schema",
+  "scope_identity",
+  "replay_idempotency",
+  "retention",
+  "redaction_custody",
+  "transitions",
+  "consumers_checkpoints",
+  "compatibility_withdrawal",
+  "positive_negative_oracles"
+ ],
+ "status_meaning": "PASS/PARTIAL/ABSENT/CONFLICT as in the rubric; a PASS grades owner text, never native or runtime proof. Native execution NOT_RUN for every family.",
+ "oracle_bar": "Criterion 12 PASS requires an executable checker whose guard rows are proved by the gated tool (scripts/pm_guard_isolation.py), using the shared number and date-time calls and retained reads from the sealed receipt (PNC019-RUN quality bar; same bar as lane s3b). Authored cases without that checker grade PARTIAL.",
+ "schema_id": "pm.pnc019.rv8b.depth_grades.v1",
+ "grade": "after",
+ "assessed_tree": {
+  "commit": "c31f0166a56dec0a506d62c061b3a506be345ec4",
+  "branch": "plans/ea-pnc-rv8b-20261114",
+  "note": "Grades the Plans tree at this commit; the grade files and report are committed immediately after it."
+ },
+ "rows": [
+  {
+   "event_type": "goal_run.replanned",
+   "family_id": "event-family-goal-run-replanned",
+   "family_revision": "2.0.0 (prepared successor 3.0.0)",
+   "registry_pointer": "#/families/3",
+   "scope_policy": "project_only",
+   "group": "goal",
+   "disposition": "CURRENT_WRITER (prepared; registry switch at S5b)",
+   "native_execution": "NOT_RUN",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Registry row event-family-goal-run-replanned stays at 2.0.0, project_only, with a closed v2 root whose $id matches; no sibling or alias admission. The v3 successor row is prepared outside the registry for the S5b writer, keeping family_id, scope, identity pointers, redaction and retention.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 228,
+       "line_end": 228,
+       "quote": "\"family_id\": \"event-family-goal-run-replanned\"",
+       "excerpt_sha256": "64ce4718954de9b85ce0125676e5bc871605bef2829774ea5369cc0de71e25c1",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 229,
+       "line_end": 229,
+       "quote": "\"family_revision\": \"2.0.0\"",
+       "excerpt_sha256": "111cd773b758e128c7f05e5c41e27c77e807384fd855eaa1cc7533244e50d7a0",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+       "unit": "$id",
+       "line_start": 750,
+       "line_end": 750,
+       "quote": "\"$id\": \"pm.goal_runtime_event.goal_run_replanned.schema.v2\"",
+       "excerpt_sha256": "ac6ff3810ccf872585debe1e9e9ce816c888043c73369a85ed6511d6354cb66a",
+       "file_sha256": "535a5510a5d0ef7c1c7c6b9a329d36af0564e14671809657b9faa62564194175",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/goal_run_replan_contracts/prepared-registry-row.json",
+       "unit": "prepared_row",
+       "line_start": 8,
+       "line_end": 8,
+       "quote": "\"family_revision\": \"3.0.0\"",
+       "excerpt_sha256": "0251fec263a67ee6218b89eaf4cf9f895aadd9187888984528d345d091dc8135",
+       "file_sha256": "e69f7dba7318bf2167120bf15b96b6899e849ddd6158632b33d6938d04ab6f63",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "rv8b before grade at 2f44dc23cd (reports/event-authority-20261114/PNC019-RV8B-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Registry unchanged by this lane; the prepared v3 row is recorded for S5b without editing the registry."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "The semantic anchor (Goal and GoalRun payload minima) still governs the registered v2 row and now routes current v3 writes to GRS-3100/CV-3100/SP-3100/EP-3101; the payload anchor SP-214 routes the family's projection to GRS-3101/SP-3102. The governing text is reachable from both anchors (rubric clarification 1).",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 232,
+       "line_end": 232,
+       "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\"",
+       "excerpt_sha256": "91bf44995150698a250e61e6c9537fb9c667da5d6766d837dc38ea542d2f22cb",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Goal and GoalRun payload minima",
+       "line_start": 2907,
+       "line_end": 2907,
+       "quote": "Current v3 (prepared, DL-080 option 1): GRS-3100 with CV-3100, SP-3100 and EP-3101 on `all_writers.v8` births",
+       "excerpt_sha256": "f8ca58f0aab1bfaab577528ed261107f530ecc0e034f10c16b7c94842343e715",
+       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 233,
+       "line_end": 233,
+       "quote": "\"payload_owner_doc\": \"Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer\"",
+       "excerpt_sha256": "8a56f9ea8fd0001d6045b55116400600fead64f75505be23b9feac0e3a619ddc",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-214 amendment",
+       "line_start": 15561,
+       "line_end": 15561,
+       "quote": "for `goal_run.replanned` the individually admitted projection route is the prepared v8 branch of GRS-3101",
+       "excerpt_sha256": "8998840d4fc4f9f524a01a8be9051be1628d1306ffb968af17abc1b47090c476",
+       "file_sha256": "29b0ec78f81d5c079ac217a91a4453a2ddaf4b3ee269fd5244bba2d51dcf6465",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "rv8b before grade at 2f44dc23cd (reports/event-authority-20261114/PNC019-RV8B-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Both anchors now reach the current contract units this lane wrote."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "EP-3101 names owner.executor.workflow_run.replan.v1 with the exact frozen v8 entrypoints and order (claim, prepare, native application, finalization, append with SP-286 first receipt under SP-336/SP-347, completion, observation, read, release; command result after the first receipt); EP-3100 adopts the v8 descriptor that registers it before genuine birth; EP-118 now lists it on v8 births only.",
+     "evidence": [
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "EP-3101",
+       "line_start": 12964,
+       "line_end": 12964,
+       "quote": "One writer is named: owner.executor.workflow_run.replan.v1, whose entrypoints are exactly the frozen v8 methods draft.replan.prepare.v3",
+       "excerpt_sha256": "74679d50529b27cc4460f217fbdbac5f2a09a1415d3080fde7e640ca221222f8",
+       "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "EP-3101",
+       "line_start": 12964,
+       "line_end": 12964,
+       "quote": "append through ordinary Storage with SP-286 first-AppendReceipt and CV-339 custody under SP-336/SP-347 durability (C4)",
+       "excerpt_sha256": "74679d50529b27cc4460f217fbdbac5f2a09a1415d3080fde7e640ca221222f8",
+       "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "EP-3101",
+       "line_start": 12964,
+       "line_end": 12964,
+       "quote": "The command result (RuntimeReplanResult, EP-236) is published only after the first receipt; receipt_ref names it.",
+       "excerpt_sha256": "74679d50529b27cc4460f217fbdbac5f2a09a1415d3080fde7e640ca221222f8",
+       "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "EP-3100",
+       "line_start": 12896,
+       "line_end": 12896,
+       "quote": "only a genuine original Workflow birth installs v8, with WorkflowBirth.installed_contract_digest and the combined Enrollment equal to the adoption digest",
+       "excerpt_sha256": "15adceef89241f2a7cd5621bce4fcf3500e8b3cf05c76db3e7ebaf15e949f322",
+       "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "EP-118 amendment",
+       "line_start": 7733,
+       "line_end": 7733,
+       "quote": "the Workflow writer list also names `owner.executor.workflow_run.replan.v1` (EP-3101), the optional/replanned materialization route this adoption excludes",
+       "excerpt_sha256": "5316b112c8dd3e881121e89174a0752a599f89cdb71d22544be6936d57765e7e",
+       "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "rv8b before grade at 2f44dc23cd (reports/event-authority-20261114/PNC019-RV8B-grades-before.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "The named writer, its order, SP-286 adoption and its installation on the adopted v8 edition are now owner text."
+    },
+    "closed_payload_schema": {
+     "status": "PARTIAL",
+     "representation": "exact_normative_owner",
+     "finding": "The current v3 root (CV-3100) is closed and self-contained on the GoalRun envelope: no expected_goal_revision or parent_goal_id, required idempotency_key and Workflow clocks, Goal revision unchanged; v2 is the historical reader only, so the old CONFLICT no longer governs current writes. Still PARTIAL: the registry selects v2 until the S5b switch.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json",
+       "unit": "root",
+       "line_start": 1311,
+       "line_end": 1311,
+       "quote": "\"$id\": \"pm.goal_runtime_event.goal_run_replanned.schema.v3\"",
+       "excerpt_sha256": "af471c001120e65173dde6c6502be175cddcc8f9f51f8338daf72a4a8beccdc6",
+       "file_sha256": "1e0f5508eb1e8a68857e0fad83c75a4988ba4be960e4716d32295777acb41b49",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-3100",
+       "line_start": 51630,
+       "line_end": 51630,
+       "quote": "expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone",
+       "excerpt_sha256": "8b6a4c153a1b2f443c1eb7019fcaadb0183725f1fdc8360a288c4a62dcd9bac5",
+       "file_sha256": "c57afec7d861fd04910fbfba1535e7a24eef3bab33abc0867d6af5ce61de7644",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-3100",
+       "line_start": 51630,
+       "line_end": 51630,
+       "quote": "Prepared without admission: the registry row keeps v2 until the S5b switch",
+       "excerpt_sha256": "8b6a4c153a1b2f443c1eb7019fcaadb0183725f1fdc8360a288c4a62dcd9bac5",
+       "file_sha256": "c57afec7d861fd04910fbfba1535e7a24eef3bab33abc0867d6af5ce61de7644",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 234,
+       "line_end": 234,
+       "quote": "\"payload_schema_id\": \"pm.goal_runtime_event.goal_run_replanned.schema.v2\"",
+       "excerpt_sha256": "7e2883afce63c8f470b413788d41f8c8afee8eb3e4d45004fade57b7b8137aee",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "rv8b before grade at 2f44dc23cd (reports/event-authority-20261114/PNC019-RV8B-grades-before.json)",
+      "status": "CONFLICT"
+     },
+     "change": "upgraded",
+     "change_reason": "CONFLICT resolved by an explicit v3 successor and a v2 historical-reader role; the registry switch is S5b, outside this lane."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "project_only scope; SP-3100 fixes the twelve-member v3 key (GRS-079 key family, Workflow clocks, generation, refs, action), byte-equal inner and outer keys, outer scope/project/run_id = goal_run_id joins, null node/attempt and every copy from the frozen ProducerIntent. Registered started/cancelled/certified rows pass this cell without a registry run_id pointer; the v3 row keeps the same pointers.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 231,
+       "line_end": 231,
+       "quote": "\"scope_policy\": \"project_only\"",
+       "excerpt_sha256": "8472a5d51eb53462551949130f1f8bd4f09280814f6c7f854cccadb4de30bc95",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-3100",
+       "line_start": 67313,
+       "line_end": 67313,
+       "quote": "Identity: idempotency key pm.goal-runtime-event.v3: plus lowercase SHA-256 of CV-1100 qualified RFC 8785 JCS of [\"pm.goal-runtime-event-idempotency.v3\"",
+       "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+       "file_sha256": "29b0ec78f81d5c079ac217a91a4453a2ddaf4b3ee269fd5244bba2d51dcf6465",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-3100",
+       "line_start": 67313,
+       "line_end": 67313,
+       "quote": "inner and outer keys are byte-equal; outer scope_kind project, project_id, run_id = payload goal_run_id, node_id and attempt_id null",
+       "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+       "file_sha256": "29b0ec78f81d5c079ac217a91a4453a2ddaf4b3ee269fd5244bba2d51dcf6465",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/goal_run_replan_contracts/prepared-registry-row.json",
+       "unit": "prepared_row",
+       "line_start": 24,
+       "line_end": 24,
+       "quote": "\"/payload/project_id\"",
+       "excerpt_sha256": "32df1e60481a989d49dabe19a36b19e53aa9034cf5f15203d0f1482cb8279363",
+       "file_sha256": "e69f7dba7318bf2167120bf15b96b6899e849ddd6158632b33d6938d04ab6f63",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "rv8b before grade at 2f44dc23cd (reports/event-authority-20261114/PNC019-RV8B-grades-before.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "The Workflow revision joins, required inner key and run join are now exact owner text."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-3100 adopts SP-286 by name: same key and digest return the original event_id, receipt and transition with no second append or effect; a different digest is idempotency_conflict; a stale Workflow revision is revision_conflict; unprovable dedupe appends nothing; a lost acknowledgement resolves from retained receipt custody; event_id, key and timestamps are never regenerated; EP-3101 never re-applies native state.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-3100",
+       "line_start": 67313,
+       "line_end": 67313,
+       "quote": "Replay: same key and same producer semantic digest return the original event_id, receipt, sequence and transition with no second append or effect",
+       "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+       "file_sha256": "29b0ec78f81d5c079ac217a91a4453a2ddaf4b3ee269fd5244bba2d51dcf6465",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-3100",
+       "line_start": 67313,
+       "line_end": 67313,
+       "quote": "SP-286 first-AppendReceipt custody and its CV-339 full-value custody_v2 are adopted by name",
+       "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+       "file_sha256": "29b0ec78f81d5c079ac217a91a4453a2ddaf4b3ee269fd5244bba2d51dcf6465",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "EP-3101",
+       "line_start": 12964,
+       "line_end": 12964,
+       "quote": "a lost acknowledgement resolves from SP-286 retained receipt custody; nothing re-dispatches, re-applies or mints a new event value",
+       "excerpt_sha256": "74679d50529b27cc4460f217fbdbac5f2a09a1415d3080fde7e640ca221222f8",
+       "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "rv8b before grade at 2f44dc23cd (reports/event-authority-20261114/PNC019-RV8B-grades-before.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "The v3 key, lost-acknowledgement rule and SP-286 adoption are now owner text."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "The registry keeps RP-RUNTIME-365D@1.0.0 (run_completion, 31,536,000 s). The family-owned projection and checkpoint use RP-PROJECTION-3GEN@1.0.0 (SP-3102, SP-317); writer authority families use the existing RP-AUTHORITY-INDEFINITE@1.0.0 of every Workflow authority family, the ProducerIntent RP-RUNTIME-365D; no new policy or open choice.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 265,
+       "line_end": 265,
+       "quote": "\"policy_id\": \"RP-RUNTIME-365D\"",
+       "excerpt_sha256": "ff4d0a8da38a8f3056162d8a1f66e9cc6a187fe4827aa9f5f6c952963259f7b3",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-3102",
+       "line_start": 67440,
+       "line_end": 67440,
+       "quote": "current, staged and retired generations count toward RP-PROJECTION-3GEN@1.0.0",
+       "excerpt_sha256": "f70f0f5bd18043cddb45ca037d798784dc0fb60b23b329fbbebfd3167e44bccc",
+       "file_sha256": "29b0ec78f81d5c079ac217a91a4453a2ddaf4b3ee269fd5244bba2d51dcf6465",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-3101",
+       "line_start": 67377,
+       "line_end": 67377,
+       "quote": "Lifetime: compact original authority families use RP-AUTHORITY-INDEFINITE@1.0.0, the policy of every existing Workflow source, start, cancel, standard and certified authority family",
+       "excerpt_sha256": "c11a5178ecc21857924f8426068ff2265b3da28a75920c384e70745787ea621b",
+       "file_sha256": "29b0ec78f81d5c079ac217a91a4453a2ddaf4b3ee269fd5244bba2d51dcf6465",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "rv8b before grade at 2f44dc23cd (reports/event-authority-20261114/PNC019-RV8B-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Assignment carried; the new projection and Storage roles bind existing policies only."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "reject_unhandled_secrets plus SP-3100 custody: seglog record and SP-286 row are the Event originals, the SP-3101 compact families the writer originals, disposition records stay with their native owner; backup and restore keep them coherent; reads apply current access, deletion and hold checks; an unresolvable reference reads unresolved; SP-3101 forbids reconstruction on restore.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 253,
+       "line_end": 253,
+       "quote": "\"mode\": \"reject_unhandled_secrets\"",
+       "excerpt_sha256": "91c21aae18a31744144bca6d3504227098463bc391436ab5b9042a5b03d04763",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-3100",
+       "line_start": 67313,
+       "line_end": 67313,
+       "quote": "Custody: the canonical seglog record and its SP-286 custody row are the Event originals; the v8 compact authority families of SP-3101 are the writer",
+       "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+       "file_sha256": "29b0ec78f81d5c079ac217a91a4453a2ddaf4b3ee269fd5244bba2d51dcf6465",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-3100",
+       "line_start": 67313,
+       "line_end": 67313,
+       "quote": "every read applies current Project access, deletion and hold checks, and an unresolvable referenced record reads unresolved, never inferred",
+       "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+       "file_sha256": "29b0ec78f81d5c079ac217a91a4453a2ddaf4b3ee269fd5244bba2d51dcf6465",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-3101",
+       "line_start": 67377,
+       "line_end": 67377,
+       "quote": "unknown or missing custody stays mutation-fenced, with no reconstruction, backfill, rekey or substitute issuer",
+       "excerpt_sha256": "c11a5178ecc21857924f8426068ff2265b3da28a75920c384e70745787ea621b",
+       "file_sha256": "29b0ec78f81d5c079ac217a91a4453a2ddaf4b3ee269fd5244bba2d51dcf6465",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "rv8b before grade at 2f44dc23cd (reports/event-authority-20261114/PNC019-RV8B-grades-before.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Family-specific custody, backup/restore and read checks are now owner text."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "GRS-3100 adopts D-R19 over the native Workflow status set with the six actions; cancel is never published by a replan and reaches cancelled only through D06 and goal_run.cancelled v3 (GRS-080, correction C7); Known-37 4.2 resume is reconciled (v8 births only; D-R21 resumable=false needs a changed-admission proof); GRS-3101 gives the same-run rule table.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-3100",
+       "line_start": 10317,
+       "line_end": 10317,
+       "quote": "Transitions adopt D-R19 over the native Workflow status set: running|provisional_success|verifying|failed_verification|repairing|blocked|stopped -> successor by action",
+       "excerpt_sha256": "971c1eb16db884860d1acf4abb3ec81162376fca4c18776cbe500048e0c5e3c1",
+       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-3100",
+       "line_start": 10317,
+       "line_end": 10317,
+       "quote": "The cancel action is never published by a replan: the manager",
+       "excerpt_sha256": "971c1eb16db884860d1acf4abb3ec81162376fca4c18776cbe500048e0c5e3c1",
+       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Known-37 4.2 amendment",
+       "line_start": 3726,
+       "line_end": 3726,
+       "quote": "A run born under a profile without that writer keeps the fence: its blocked or stopped status leaves only by D06 cancellation (GRS-080, GRS-200, GRS-201).",
+       "excerpt_sha256": "8a47896dfff7a0f7c65d9aefcf2470e78d05f0a53762499c3a4621ce9282c97d",
+       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-3101",
+       "line_start": 10390,
+       "line_end": 10390,
+       "quote": "Rule table: started -> replanned; replanned -> replanned; started or replanned -> cancelled",
+       "excerpt_sha256": "4ca0046c28f3d826a62779364c5dd631f6f3c3c72b21b193cfa2a7a10d0b5acf",
+       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "rv8b before grade at 2f44dc23cd (reports/event-authority-20261114/PNC019-RV8B-grades-before.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Lifecycle edges, the cancel reconciliation with GRS-080 and the resume fence are now adopted owner text."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "GRS-3101 extends GRS-085 with one reducer branch per authentic birth profile; v8 births accept replanned rows with exact revision, generation and source joins. SP-3102 names owner.goal_run.history_v8.project_prefix.v1, closed row and checkpoint schemas, keys, the SP-278 nine-field durable token (DL-076), atomic CAS advance and new-generation rebuild.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-3101",
+       "line_start": 10390,
+       "line_end": 10390,
+       "quote": "selects each run",
+       "excerpt_sha256": "4ca0046c28f3d826a62779364c5dd631f6f3c3c72b21b193cfa2a7a10d0b5acf",
+       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-3102",
+       "line_start": 67440,
+       "line_end": 67440,
+       "quote": "Consumer: owner.goal_run.history_v8.project_prefix.v1, the only writer of the v8 branch values",
+       "excerpt_sha256": "f70f0f5bd18043cddb45ca037d798784dc0fb60b23b329fbbebfd3167e44bccc",
+       "file_sha256": "29b0ec78f81d5c079ac217a91a4453a2ddaf4b3ee269fd5244bba2d51dcf6465",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-3102",
+       "line_start": 67440,
+       "line_end": 67440,
+       "quote": "Checkpoint: adopts SP-278 with the nine-field durable read token (DL-076) as index_read_token; no stored value holds redb_snapshot_id.",
+       "excerpt_sha256": "f70f0f5bd18043cddb45ca037d798784dc0fb60b23b329fbbebfd3167e44bccc",
+       "file_sha256": "29b0ec78f81d5c079ac217a91a4453a2ddaf4b3ee269fd5244bba2d51dcf6465",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/goal_run_replan_contracts/projection.schema.json",
+       "unit": "#/$defs/checkpoint",
+       "line_start": 322,
+       "line_end": 322,
+       "quote": "\"const\": \"pm.storage_value.goal_run_history_v8_checkpoint.v1\"",
+       "excerpt_sha256": "f0acc187b14aa8cddb84267276a10e9e2bb79e66533af3fa255be31392ff266a",
+       "file_sha256": "cfab45ff17d4bb84bd006eb68211b94e1fb6e97c6759b2aab077c7f673a3f4e1",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "rv8b before grade at 2f44dc23cd (reports/event-authority-20261114/PNC019-RV8B-grades-before.json)",
+      "status": "ABSENT"
+     },
+     "change": "upgraded",
+     "change_reason": "An admitted-shape consumer, value schema, checkpoint and SP-278 adoption now exist for this family."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "v2 stays the historical reader (bytes unchanged) and legacy v1 keeps its normalizer; the draft payload and goal.replanned alias are never selected (wiring row fixed). SP-3100 gives writer cutoff at the final predicate, pending resolution from retained custody, per-reader withdrawal without deletion and new-generation rebuild fences.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-3100",
+       "line_start": 67313,
+       "line_end": 67313,
+       "quote": "Withdrawal: writer cutoff at the writer",
+       "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+       "file_sha256": "29b0ec78f81d5c079ac217a91a4453a2ddaf4b3ee269fd5244bba2d51dcf6465",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-3100",
+       "line_start": 67313,
+       "line_end": 67313,
+       "quote": "readers are withdrawn one by one without deletion and return unavailable",
+       "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+       "file_sha256": "29b0ec78f81d5c079ac217a91a4453a2ddaf4b3ee269fd5244bba2d51dcf6465",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-3100",
+       "line_start": 51630,
+       "line_end": 51630,
+       "quote": "The whole v2 schema stays unchanged as the historical reader and is never reinterpreted.",
+       "excerpt_sha256": "8b6a4c153a1b2f443c1eb7019fcaadb0183725f1fdc8360a288c4a62dcd9bac5",
+       "file_sha256": "c57afec7d861fd04910fbfba1535e7a24eef3bab33abc0867d6af5ce61de7644",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Wiring_Matrix.production.json",
+       "unit": "catalog.runtime_replan",
+       "line_start": 61877,
+       "line_end": 61877,
+       "quote": "goal.replanned is historical-only (GRS-070) and is never its effect or an alias",
+       "excerpt_sha256": "fe250873001644d29a659f1aefba62a72776b3eb4a161cef9398772c318fbb42",
+       "file_sha256": "464184b2020ce5a60cef73a5fe1f971115efa947942ad419457cfdf0ea6f88c6",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "rv8b before grade at 2f44dc23cd (reports/event-authority-20261114/PNC019-RV8B-grades-before.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "An explicit withdrawal protocol now accompanies the compatibility rules."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "ATS-3100: scripts/pm_goal_run_replan_oracles.py, 277 cases (58 positive, 219 one-defect negative) over 155 Method B rows in 24 tables of at most eight; the gated tool proves 155/155; shared number corpus (504 routes, 0 mismatch) and date-time calls; sealed-receipt retained reads with store snapshot; distinct-copy controls and swaps; mutation proof 60/60. Native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3100",
+       "line_start": 14567,
+       "line_end": 14567,
+       "quote": "Every refusal is decided only by Method B guard rows in generated tables of at most eight rows",
+       "excerpt_sha256": "8b27797374edfd6b9b4e8110998354788eeed1c037e59be355c5c69e1689fd00",
+       "file_sha256": "77b51860608a6c9c0afe27ff6acdf94f0371c62a5d57c04ab196db0bf5ae0f90",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3100",
+       "line_start": 14567,
+       "line_end": 14567,
+       "quote": "the gated guard tool scripts/pm_guard_isolation.py proves every row through scripts/pm-grr-guard-tables.py",
+       "excerpt_sha256": "8b27797374edfd6b9b4e8110998354788eeed1c037e59be355c5c69e1689fd00",
+       "file_sha256": "77b51860608a6c9c0afe27ff6acdf94f0371c62a5d57c04ab196db0bf5ae0f90",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3100",
+       "line_start": 14567,
+       "line_end": 14567,
+       "quote": "Copy rows have distinct values in every control and copy-swap witnesses.",
+       "excerpt_sha256": "8b27797374edfd6b9b4e8110998354788eeed1c037e59be355c5c69e1689fd00",
+       "file_sha256": "77b51860608a6c9c0afe27ff6acdf94f0371c62a5d57c04ab196db0bf5ae0f90",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3100 acceptance",
+       "line_start": 14587,
+       "line_end": 14587,
+       "quote": "- python3 scripts/pm-grr-mutation-proof.py --scratch <dir> kills every mutant under its declared detector outcome.",
+       "excerpt_sha256": "6e48d27721b1c2c25c1b75a8ff1b7f603f2c6375ad2c5a6d5bc1127b2a3b57f2",
+       "file_sha256": "77b51860608a6c9c0afe27ff6acdf94f0371c62a5d57c04ab196db0bf5ae0f90",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "rv8b before grade at 2f44dc23cd (reports/event-authority-20261114/PNC019-RV8B-grades-before.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Executable oracles meeting the stream E bar replace the v2 prose pair."
+    }
+   },
+   "pass_count": 11,
+   "vector": "P P P p P P P P P P P P",
+   "remaining_gaps": [
+    "S5b registry switch to the prepared v3 row (closed_payload_schema). Not this lane: admission happens at S5b.",
+    "Technical, open: no fresh edition composes the EP-200 stop/block writers with the v8 Replan writer (GRS-3101 composition limit).",
+    "Native installation, issuer authentication, transactions, codecs, crash/restore and full native cancellation stay NOT_RUN."
+   ],
+   "static_checks_seen": [
+    "python3 scripts/pm_goal_run_replan_oracles.py",
+    "python3 scripts/pm-grr-table-generate.py --check",
+    "python3 scripts/pm-grr-guard-tables.py --out <dir>",
+    "python3 scripts/pm-grr-mutation-proof.py --scratch <dir>",
+    "python3 scripts/pm_event_numbers.py --self-test --scope numbers",
+    "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+    "python3 scripts/pm-command-payload-defs-check.py"
+   ],
+   "notes": "Graded against the 2026-09-24 rubric and the stream E oracle bar. scope_identity is PASS although lane s3a graded goal_run.stopped PARTIAL for a missing registry run_id pointer: the rubric names no such pointer, and goal_run.started, goal_run.cancelled and goal_run.certified passed this cell at Step 8 with the same project_id/thread_id pointers. closed_payload_schema stays PARTIAL as for goal_run.stopped, because the registry selects v2 until S5b. Native NOT_RUN lowered no grade."
+  }
+ ]
+}

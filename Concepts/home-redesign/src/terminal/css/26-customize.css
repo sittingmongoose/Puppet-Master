@@ -643,7 +643,7 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-chipbox.pmt-cz-lit .pmt-cz-chip:is(:hov
 html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-tile[aria-checked="true"], .pmt-cz-set[aria-pressed="true"]):is(:hover, .pmh-on) { background: var(--o55-nier-ink) !important; }
 /* NieR's hover tone lifts a tile, a chip or a set a step toward its ink, and their quieter words take the full ink on
    it (a hovered scheme's "Dark" read 3.41:1 in NieR dark); a chosen one is reversed, above */
-html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-tile:not([aria-checked="true"]), .pmt-cz-set:not([aria-pressed="true"]), .pmt-cz-chipbox:not(.pmt-cz-lit) .pmt-cz-chip):is(:hover, .pmh-on) :is(.pmt-cz-tmeta, .pmt-cz-chiphelp, .pmt-cz-chipfoot, .pmt-cz-chipstate, small) { color: var(--pmw-text, inherit); }
+html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-tile:not([aria-checked="true"]), .pmt-cz-set:not([aria-pressed="true"]), .pmt-cz-chipbox:not(.pmt-cz-lit) .pmt-cz-chip):is(:hover, .pmh-on) :is(.pmt-cz-tmeta, .pmt-cz-chiphelp, .pmt-cz-chipfoot, .pmt-cz-chipstate, .pmt-cz-small) { color: var(--pmw-text, inherit); }
 /* words drawn in the accent (Friendly's kicker, the index's change counts, a group's count, "mine"): on a light screen
    the accent darkens until it reads 4.5:1 on the plate (Friendly light's green kicker read 3.21:1). Retro light's accent
    is darkened already and NieR's is its ink */

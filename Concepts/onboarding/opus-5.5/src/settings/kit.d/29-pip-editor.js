@@ -8,9 +8,15 @@
        click switches it at once (the chat behind follows the change)
      - the meter "On N / 25"; presets Full, Quiet, Still and Plain (S1: no Classic); a preset is a value of the row
      - a live preview: a small team drawn by the chat's own primitive (PM56_SHELL.pmxMark, so it is Pip with the parts
-       now chosen), and "Play: the team works" running it from waiting to done
+       now chosen), and "Play: the team works" running it from waiting to done. It follows you down the sheet as the
+       look Customize screens' previews do (their one rule, 2026-10-14): when less than 40 % of the stage shows, the
+       same team, smaller, is docked at the top of the sheet, and leaves when the stage comes back (B-16: the picture
+       scrolled away while the chips that change it were in view)
      - Reduce motion: a note on Motion (those parts stay still while it is on, and are kept for when it is off)
-     - Sound: Pip's voice plays only while the Project's sound is on; the chat's speaker is that switch
+     - Sound: Pip's voice plays only while the Project's sound is on; the chat's speaker is that switch. "Hear Pip's
+       chirp" plays one in this look's voice (a sample: the switch still decides, the part does not), and Play chirps
+       as the team changes state, as the chat's Pip does, while "Pip chirps in the app" is on; a line under Play says
+       when it will be silent and why (B-12: Play made no sound and nothing let you hear the chirp)
    Local actions, which write nothing (pm7_control_bindings pip.editor.open / .close / .replay):
      ui.settings.pip_editor.open    open(): the Settings row's sheet; popup(): a dialog (the wand's "Pip…", the
                                     title-bar theme menu's "Customize Pip…")
@@ -24,6 +30,8 @@
   const SHELL = () => window.PM56_SHELL || null;
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const say = (key, fallback, vars) => (typeof o55NierCopy === 'function' ? o55NierCopy('pipSettings.' + key, fallback, vars) : fallback);
+  /* the stage and its dock show the same team (B-16) */
+  const drawStage = (wrap, step) => { wrap.querySelectorAll('.pipe-stage').forEach(s => { s.innerHTML = team(step); }); };
   const still = () => { try { return !!o55Still(); } catch (e) { return document.documentElement.getAttribute('data-motion') === 'reduced'; } };
   const reducedMotion = () => document.documentElement.getAttribute('data-motion') === 'reduced'
     || !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -40,6 +48,19 @@
   const PLAY = [['queued', 'queued', 'queued', 'queued'], ['working', 'queued', 'working', 'queued'], ['working', 'working', 'done', 'queued'],
     ['done', 'working', 'done', 'needs'], ['done', 'done', 'done', 'done']];
   const WORD = { idle: 'leads', working: 'working', queued: 'waits its turn', needs: 'needs you', done: 'done' };
+  /* B-12: the chirp a step makes, by the most telling state a helper reached in it (the chat's faces: happy is cheer,
+     wonder is alert, watch is think; pip.js CHIRP), through the one player (O55.sound.pip) */
+  const CHIRP = { done: 'cheer', needs: 'alert', working: 'think' };
+  const PIPV = () => (window.O55 && window.O55.sound && window.O55.sound.pip) || null;
+  /* NieR's Pod voice wins where both would speak (S7, as in the chat) */
+  const podSpeaks = () => { const h = document.documentElement, p = (h.getAttribute('data-o55-nier-parts') || '').split(/\s+/); return h.getAttribute('data-o55-nier') === 'on' && (p.includes('voice') || p.includes('pod')); };
+  function chirpStep(step) {
+    const P = PIPV(); if (!P || typeof P.vocal !== 'function' || podSpeaks()) return false;
+    const was = step > 0 ? PLAY[step - 1] : CAST.slice(1).map(c => c.state), now = PLAY[step];
+    const reached = now.filter((s, i) => s !== was[i]);
+    const name = ['done', 'needs', 'working'].map(s => reached.includes(s) ? CHIRP[s] : '').find(Boolean);
+    try { return !!(name && P.vocal(name, { where: 'app' })); } catch (e) { return false; }
+  }
   function chatTheme() {
     const H = window.PM56_HOST;
     try { if (H && typeof H.theme === 'function') return H.theme(); } catch (e) { /* the chat is optional */ }
@@ -80,7 +101,8 @@
     const groups = R.GROUPS.map(g => {
       const ps = R.PARTS.filter(p => p.group === g); if (!ps.length) return '';
       const note = g === 'Motion' ? `<p class="pipe-note pipe-motion-note">${esc(say('motionNote', 'Reduce motion is on, so these stay still. Your choices are kept for when it is off.'))}</p>`
-        : g === 'Sound' ? `<p class="pipe-note pipe-sound-note">${esc(say('soundNote', 'Pip sounds only while sound is on for this Project; muting the chat’s speaker mutes Pip too.'))}</p>` : '';
+        : g === 'Sound' ? `<p class="pipe-note pipe-sound-note">${esc(say('soundNote', 'Pip sounds only while sound is on for this Project; muting the chat’s speaker mutes Pip too.'))}</p>`
+          + `<div class="pipe-hear-row"><button type="button" class="btn small pipe-hear" data-pipe-hear>${icon('volume')}<span>${esc(say('hear', 'Hear Pip’s chirp'))}</span></button><p class="pipe-hear-why" role="status" aria-live="polite"></p></div>` : '';
       return `<section class="pipe-group" data-pipe-group="${esc(g)}"><header class="pipe-ghead"><h4>${esc(say('group.' + g, g))}</h4><span class="pipe-gcount"></span></header>${note}`
         + `<div class="pipe-chips">${ps.map(chip).join('')}</div></section>`;
     }).join('');
@@ -88,11 +110,13 @@
     /* the stage is a labelled group, so each seat's caption (its role and state) reads; Play names why it can't run */
     const why = 'pipe-play-why-' + (++bodyN);
     return '<div class="pipe">'
+      /* the dock: a zero-height sticky line at the top of the sheet's scroller, its box hanging from it (B-16) */
+      + `<div class="pipe-dock" hidden aria-hidden="true"><div class="pipe-dock-box"><span class="pipe-dock-title">${esc(say('dockTitle', 'Preview'))}</span><div class="pipe-stage pipe-dock-stage pm56-host" data-theme="${esc(chatTheme())}">${team(-1)}</div></div></div>`
       + `<div class="pipe-top"><div class="pipe-stage pm56-host" data-theme="${esc(chatTheme())}" aria-label="${esc(say('stageLabel', 'Preview: a small team in the chat'))}" role="group">${team(-1)}</div>`
       + '<div class="pipe-side">'
       + `<div class="pipe-meter"><div class="pipe-meter-head"><span>${esc(say('meterLabel', 'Pip parts'))}</span><b class="pipe-meter-n"></b></div><div class="pipe-meter-cells">${R.PARTS.map(() => '<i></i>').join('')}</div></div>`
       + `<div class="pipe-presets" role="group" aria-label="${esc(say('presets', 'Presets'))}">${presets}</div>`
-      + `<button type="button" class="btn small pipe-play" data-pipe-replay data-pip-local="ui.settings.pip_editor.replay" aria-describedby="${why}"><span>${esc(say('play', 'Play: the team works'))}</span></button><p class="pipe-play-why" id="${why}"></p>`
+      + `<button type="button" class="btn small pipe-play" data-pipe-replay data-pip-local="ui.settings.pip_editor.replay" aria-describedby="${why}"><span>${esc(say('play', 'Play: the team works'))}</span></button><p class="pipe-play-why" id="${why}"></p><p class="pipe-play-sound"></p>`
       + '</div></div>'
       + `<p class="pipe-reach">${esc(say('reach', 'Parts change Pip in the chat and in setup. Pip’s mark, the app icon, the tray and loading signs stay as they are, and every helper is still a Pip.'))}</p>`
       + groups + '</div>';
@@ -114,23 +138,28 @@
     box.querySelectorAll('.pipe-meter-cells > i').forEach((cell, i) => cell.classList.toggle('on', i < c.on));
     const pre = R.preset();
     box.querySelectorAll('.pipe-preset').forEach(b => setA(b, 'aria-pressed', String(b.dataset.pipePreset === pre)));
-    const stage = box.querySelector('.pipe-stage');
-    if (stage) { setA(stage, 'data-theme', chatTheme()); if (!wrap.__pipePlaying) stage.innerHTML = team(-1); }
+    box.querySelectorAll('.pipe-stage').forEach(s => setA(s, 'data-theme', chatTheme()));
+    if (!wrap.__pipePlaying) drawStage(box, -1);
     const rb = box.querySelector('[data-pipe-replay]'), why = box.querySelector('.pipe-play-why');
     const reason = !have.has('state-faces') ? say('playWhy', 'Turn on State faces to see the team work.') : '';
     /* not the disabled property: the hover-tag layer turns a disabled button into a lasting aria-disabled one */
     setA(rb, 'aria-disabled', String(!!reason)); if (why.textContent !== reason) why.textContent = reason;
+    /* whether Play will sound, and why not */
+    const P = PIPV(), quiet = box.querySelector('.pipe-play-sound');
+    const silent = !have.has('app-voice') ? say('playSilentPart', 'Play is silent while “Pip chirps in the app” is off.')
+      : P && typeof P.allowed === 'function' && !P.allowed('app') ? say('playSilentSound', 'Play is silent while sound is off for this Project.') : '';
+    if (quiet && quiet.textContent !== silent) quiet.textContent = silent;
   }
   /* Play: the team works (ui.settings.pip_editor.replay): the preview steps from waiting to done, then rests; it writes
      nothing. A step is a redraw of the team (the chat's own marks act once as they change state). */
   function replay(wrap) {
-    const stage = wrap && wrap.querySelector('.pipe-stage'); if (!stage) return;
+    const stage = wrap && wrap.querySelector('.pipe-top .pipe-stage'); if (!stage) return;
     clearTimeout(wrap.__pipeT);
     let step = 0; wrap.__pipePlaying = true;
-    const show = () => { if (!stage.isConnected) { wrap.__pipePlaying = false; return; } stage.innerHTML = team(step); };
+    const show = () => { if (!stage.isConnected) { wrap.__pipePlaying = false; return; } drawStage(wrap, step); chirpStep(step); };
     const next = () => {
       step += 1;
-      if (step >= PLAY.length) { wrap.__pipeT = setTimeout(() => { wrap.__pipePlaying = false; if (stage.isConnected) stage.innerHTML = team(-1); }, 1600); return; }
+      if (step >= PLAY.length) { wrap.__pipeT = setTimeout(() => { wrap.__pipePlaying = false; if (stage.isConnected) drawStage(wrap, -1); }, 1600); return; }
       show(); wrap.__pipeT = setTimeout(next, 1100);
     };
     show(); wrap.__pipeT = setTimeout(next, 1100);
@@ -142,14 +171,62 @@
     const p = t.closest('[data-pipe-preset]');
     if (p) { R.applyPreset(p.dataset.pipePreset); paint(wrap); return; }
     const r = t.closest('[data-pipe-replay]');
-    if (r && r.getAttribute('aria-disabled') !== 'true') replay(wrap);
+    if (r && r.getAttribute('aria-disabled') !== 'true') { replay(wrap); paint(wrap); return; }
+    /* the sample: one chirp in this look's voice; with sound off it says why instead */
+    const hear = t.closest('[data-pipe-hear]');
+    if (hear) {
+      const P = PIPV(), why = wrap.querySelector('.pipe-hear-why');
+      let ok = false; try { ok = !!(P && typeof P.vocal === 'function' && P.vocal('cheer', { where: 'app', sample: true })); } catch (e) { ok = false; }
+      const w = ok ? '' : say('hearWhy', 'Sound is off for this Project. Turn it on with the chat’s speaker to hear Pip.');
+      if (why && why.textContent !== w) why.textContent = w;
+    }
   }
   /* One editor in a host; destroy drops the registry subscription and the play timer */
+  /* the dock follows the stage's own place: shown while less than 40 % of the stage is in the sheet's view (an
+     IntersectionObserver with the viewport as root measures through the sheet's scroller, which clips the stage) */
+  function dockWatch(host) {
+    const stage = host.querySelector('.pipe-top .pipe-stage'), dock = host.querySelector('.pipe-dock');
+    if (!stage || !dock || typeof IntersectionObserver !== 'function') return () => {};
+    const io = new IntersectionObserver(es => {
+      const e = es[es.length - 1], want = e.isIntersecting ? e.intersectionRatio < 0.4 : e.boundingClientRect.height > 0 && stage.isConnected;
+      if (dock.hidden === !want) return;
+      dock.hidden = !want;
+    }, { threshold: [0, 0.4, 1] });
+    io.observe(stage);
+    /* the dock steps aside (nearly clear, and it never takes the pointer) while the pointer or the focus is on what it
+       floats over, so a chip under it can be read as well as reached, as the editor's docked preview does
+       (11-editor-customize.js dockAside); it comes back when they leave */
+    const box = dock.querySelector('.pipe-dock-box');
+    let raf = 0, at = null;
+    const aside = () => {
+      raf = 0;
+      if (dock.hidden || !at || !box) { dock.classList.remove('is-aside'); return; }
+      const r = box.getBoundingClientRect();
+      let hit;
+      if (at.el) { const b = at.el.getBoundingClientRect(); hit = b.right > r.left && b.left < r.right && b.bottom > r.top && b.top < r.bottom; }
+      else hit = at.x >= r.left - 10 && at.x <= r.right + 10 && at.y >= r.top - 10 && at.y <= r.bottom + 10;
+      dock.classList.toggle('is-aside', hit);
+    };
+    const soon = a => { at = a; if (!raf) raf = requestAnimationFrame(aside); };
+    const move = e => soon({ x: e.clientX, y: e.clientY }), leave = () => soon(null);
+    const focus = e => { if (!dock.contains(e.target)) soon({ el: e.target }); };
+    const scrolled = () => { if (at) soon(at); };
+    host.addEventListener('pointermove', move, { passive: true });
+    host.addEventListener('pointerleave', leave);
+    host.addEventListener('focusin', focus);
+    host.addEventListener('scroll', scrolled, { capture: true, passive: true });
+    return () => {
+      io.disconnect(); cancelAnimationFrame(raf);
+      host.removeEventListener('pointermove', move); host.removeEventListener('pointerleave', leave);
+      host.removeEventListener('focusin', focus); host.removeEventListener('scroll', scrolled, { capture: true });
+    };
+  }
   function bind(host) {
     const R = REG();
     const fire = e => onClick(e, host);
     host.addEventListener('click', fire);
     paint(host);
+    const undock = dockWatch(host);
     let off = () => {}, dead = false;
     if (R && typeof R.on === 'function') {
       const un = R.on('change', () => { if (!host.isConnected) { destroy(); return; } paint(host); });
@@ -158,6 +235,7 @@
     function destroy() {
       if (dead) return; dead = true;
       try { off(); } catch (e) { /* already dropped */ }
+      undock();
       clearTimeout(host.__pipeT);
       host.removeEventListener('click', fire);
     }

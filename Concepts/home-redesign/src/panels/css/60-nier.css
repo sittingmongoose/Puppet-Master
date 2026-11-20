@@ -100,7 +100,7 @@ html[data-o55-nier="on"] .pmw-menu > :is([data-lv="out-fwd"], [data-lv="out-back
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-mitem, .pmw-empty-btn, .pmw-mru-row, .pmw-mlink):is(:hover, :focus-visible, .is-current) {
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important;
 }
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-mitem, .pmw-empty-btn):is(:hover, :focus-visible, .is-current) :is(.pmw-mcopy span, .pmw-mright, .pmw-empty-key, .pmw-empty-path, .pmw-empty-chev, .pmw-mlead) { color: inherit; background: transparent; }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-mitem, .pmw-empty-btn):is(:hover, :focus-visible, .is-current) :is(.pmw-mcopy :where(.pmw-msub):is(span), .pmw-mright, .pmw-empty-key, .pmw-empty-path, .pmw-empty-chev, .pmw-mlead) { color: inherit; background: transparent; }
 /* ticks part: corner ticks on every panel (the old W-01 map ticks lived on the retired Home surfaces) */
 html[data-o55-nier="on"][data-o55-nier-parts~="ticks"] .pmw-panel::after {
   content: ""; position: absolute; inset: 0; z-index: 6; pointer-events: none;

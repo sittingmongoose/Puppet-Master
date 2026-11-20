@@ -2736,7 +2736,7 @@ canonical_text: 'The existing approval host renders three distinct authorities f
   audit/backup/retention and historical restored evidence; current Settings, client claims or a copied grant
   never become an actual human decision.
 
-  RuntimeApproveV3Request and RuntimeDeclineV3Request select a closed union of the historical run_id/node_id/blocked_sequence/optional attempt_id payload and a discriminated chat_tool decision carrying its exact command, request digest/revision, tool/target, protected person evidence and expiry. Pre-attempt blocks retain absent attempt_id; current attempts resolve only from the original blocked episode, never focus. Results distinguish node identity/effects from the ChatToolApprovalResult resolution payload. node.unblocked applies only to node approval; chat-tool resolution uses approval.chat_tool_resolved with DL-300 requires_owner_adoption. Cross-variant fields, wrong decisions and stale/currentness mismatch refuse; the host, handlers and permission ladder are shared.'
+  RuntimeApproveV3Request and RuntimeDeclineV3Request select a closed union of the historical run_id/node_id/blocked_sequence/optional attempt_id payload and a discriminated chat_tool decision carrying its exact command, request digest/revision, tool/target, protected person evidence and expiry. Pre-attempt blocks retain absent attempt_id; current attempts resolve only from the original blocked episode, never focus. Results distinguish node identity/effects from the ChatToolApprovalResult resolution payload. node.unblocked applies only to node approval; chat-tool resolution uses approval.chat_tool_resolved with DL-300 requires_owner_adoption. Cross-variant fields, wrong decisions and stale/currentness mismatch refuse; the host, handlers and permission ladder are shared. The host producers, request pairing and storage custody of approval.chat_tool_requested and approval.chat_tool_resolved are CV-2301, CV-2302 and SP-2301 to SP-2303 (newly authored under DL-411, PNC-019 S2).'
 gui_related: true
 gui_classification_reason: Approval cards, scope selection, live action targets and recovery controls are
   user-visible.
@@ -2801,3 +2801,128 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage-plan.md#SP-353, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-020
+
+### HITL-1120 - Exact Project owner verification exception approval
+
+```yaml
+plan_unit_id: HITL-1120
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/human-in-the-loop.md
+canonical_text: 'Newly authored provider capture/resolution binding approval.goal_verification_exception.v1, materializing
+  DL-081 rather than a new approval policy. The existing HITL owner receives a typed request for exact Project/Goal/run/source/graph/currentness,
+  original verification finding IDs and evidence, proposed incomplete-item dispositions and the nonempty exact residual-risk
+  set. Identity is the original request ref plus original revision/digest; same identity with different content
+  conflicts. PS-1120 authenticates the Project-owning user and current target authority. An actual Workflow blocked
+  episode keeps its existing run/node/blocked_sequence and scope; a host-only request uses its actual typed owner
+  request and never fabricates a node or blocked_sequence.
+
+
+  Capture and resolve use CV-1122''s closed approval_request/approval_resolution roots. The existing provider retains
+  original actor, effective/requested account and lane/attempt attribution when present, exact approval scope and
+  immutable resolution. Only approved by that Project owner for every listed risk/disposition allows the exception;
+  denied, pending, expired, revoked, unknown, foreign-target/person, stale graph or added risk refuses. Generic
+  Always, YOLO, model prose, worker approval or a blanket receipt never substitutes for this human decision. This
+  grant waives only the specific verification disposition under the actual original Workflow owner; it cannot waive
+  Stop, permissions, secrets or unknown mutation/receipt/recovery truth.
+
+
+  The actual original request and provider resolution must resolve independently from native custody at capture
+  and after the last helper before exception issue and Goal body/publication. A forged digest cannot supply provider
+  origin. Current approver/target authority and revocation are rechecked where a new effect would occur; retained
+  audit reads original lawful approval under current disclosure permissions without requiring a live Workflow. SP-1122
+  composes existing approval/evidence owner clocks and receipt custody without new policy or a new approval engine.
+  ATS-1115 exercises exact risk and person/currentness joins. The outcome label remains completed_with_approved_verification_exception.
+  Native execution remains NOT_RUN.
+
+
+  CV-1122''s _providers bank supplies the exact capture and resolve request/result roots. Capture returns the existing
+  typed request_ref/request_sha256; resolution takes those exact two fields and independently reads the existing
+  HITL provider''s immutable original resolution, then applies the current PS-1120 authority check. It never accepts
+  an injected resolution or a Goal operation as approval identity.'
+gui_related: true
+gui_classification_reason: Preserves the approved truthful verification-exception label and human approval identity.
+depends_on:
+- DL-081
+unblocks: []
+acceptance_criteria:
+- Independently resolved original source, complete identity and receipt bytes gate every applicable boundary.
+- No partial effect is repeated or promoted to success after an unknown outcome.
+- Prepared without admission; existing historical resources and policies remain exact.
+validation_surfaces:
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+- Plans/goal_lifecycle_host_contracts/methods.json
+- python3 scripts/pm_goal_own_b_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_lifecycle_original_authority
+reasoning_tier: high
+context_scope: dg_own_b_20261105
+implementation_surfaces:
+- Plans/human-in-the-loop.md
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry/admission, new retention policy, native proof, WorkNode, readiness or governance seal.
+```
+
+## DG-OWN-C original source and boundary contracts (2026-11-05)
+
+### HITL-1130 - Goal update original approval provider
+
+```yaml
+plan_unit_id: HITL-1130
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/human-in-the-loop.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal.updated, sections U1-U7 materialize
+  GoalUpdateProposalRequest and ApprovalRequest and owner.hitl.goal_update.capture.v1, resolve.v1 and read_resolution.v1
+  within the existing approval host. Bind actual agent source message and user instruction to the exact Goal/predecessor/currentness/whole
+  proposed text and genuine protected person decision. Denial, expiry, revocation, foreign/stale target or
+  source refuses before body CAS. Proposal is read-only; direct Save has no additional confirmation. No generic
+  approval or caller hash grants mutation.
+gui_related: true
+gui_classification_reason: Defines existing approval-dialog target and human-decision presentation.
+depends_on:
+- GRS-068
+- HITL-038
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/human-in-the-loop.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal update original approval provider). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json

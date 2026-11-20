@@ -1194,6 +1194,7 @@
             "Plans/assistant_chat_contracts.schema.json#/$defs/ELI5ThreadOverrideRequestScopeV2",
             "Plans/assistant_chat_contracts.schema.json#/$defs/GoalEditorRouteScopeV2",
             "Plans/assistant_chat_contracts.schema.json#/$defs/ThreadTitleRegenerateRequestScopeV2",
+            "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteEditRequestV1",
             "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanBuildRequestScopeV2",
             "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCancelRequestScopeV2",
             "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCreateRequestScopeV2",
@@ -1348,6 +1349,7 @@
             "Plans/assistant_chat_contracts.schema.json#/$defs/RouteResult",
             "Plans/assistant_chat_contracts.schema.json#/$defs/RouteResultScopeV2",
             "Plans/assistant_chat_contracts.schema.json#/$defs/ThreadTitleGenerationResultScopeV2",
+            "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteMutationResultV1",
             "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/ArtifactExportResultScopeV2",
             "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanBuildResultScopeV2",
             "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanCancelResultScopeV2",
@@ -1501,6 +1503,13 @@
         "state_selector": {
           "type": "string",
           "maxLength": 16384
+        },
+        "ui_disposition": {
+          "enum": [
+            "ordinary_gui",
+            "internal_support_only"
+          ],
+          "description": "DL-475: internal_support_only retains a compatibility/support identity but admits no ordinary GUI producer, even after native admission."
         }
       },
       "required": [
@@ -2257,6 +2266,45 @@
                 "const": true
               }
             }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "ui_disposition": {
+                "const": "internal_support_only"
+              }
+            },
+            "required": [
+              "ui_disposition"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "enum": [
+                  "cmd.chat.memory.verify",
+                  "cmd.chat.memory.pin",
+                  "cmd.chat.memory.discard",
+                  "cmd.chat.memory.toggle_auto_save_unverified",
+                  "cmd.chat.memory.preview_capsule",
+                  "cmd.chat.memory.rebuild_lexical_index",
+                  "cmd.chat.memory.rebuild_semantic_index",
+                  "cmd.chat.memory.verification_sweep",
+                  "cmd.chat.memory.dedup_sweep",
+                  "cmd.chat.memory.summarize_monthly",
+                  "cmd.chat.memory.prune_archive",
+                  "cmd.chat.teach.set_lock"
+                ]
+              },
+              "gui_consumers": {
+                "type": "array",
+                "maxItems": 0
+              }
+            },
+            "required": [
+              "command_id"
+            ]
           }
         }
       ]

@@ -54,7 +54,9 @@
       if (!['local_or_vpn', 'tailscale', 'reverse_proxy', 'remote_link'].includes(d.remote_mode)) d.remote_mode = 'local_or_vpn';
       if (d.settings_transfer.mode !== 'start_fresh') d.settings_transfer = create().settings_transfer;
     }
-    if (d.project_mode === 'later' && d.settings_transfer.mode !== 'start_fresh') d.settings_transfer = create().settings_transfer;
+    /* copy is part of creating a new registry Project (new, or registering a folder or a Project kept online): a restore or
+       Later carries none (SSYS-062) */
+    if (!['new', 'existing_local', 'existing_online'].includes(d.project_mode) && d.settings_transfer.mode !== 'start_fresh') d.settings_transfer = create().settings_transfer;
     if (d.online_mode === 'none') {
       d.forge_retired = null;
       Object.assign(d, { forge: 'none', forge_provider_variant: null, forge_instance_url: '', forge_instance_profile: null, forge_account_action: null, forge_account_ref: '', repository_ref: '', repository_visibility: null });

@@ -1,0 +1,709 @@
+{
+  "base_commit": "7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+  "blind_reviews": "NOT_RUN",
+  "criterion_12_counts": {
+    "after": {
+      "PASS": 11
+    },
+    "before": {
+      "PARTIAL": 11
+    }
+  },
+  "date_time": {
+    "corpus_checks": 83127,
+    "global_inventory": "FAIL",
+    "global_inventory_cause": {
+      "detail": "exclusion_purpose_citation_unreadable: Plans/.plan_migration/pds-20261114-002-current-planunit-snapshot/span_map.jsonl",
+      "error": "scan_exclusions_invalid"
+    },
+    "global_inventory_failures": 291,
+    "independent_receipt_copy_checks": 28732,
+    "issue": "existing shared-tool issue; CH1 corroboration added to TOOL-ISSUES.md",
+    "node_bindings": "PASS"
+  },
+  "families": [
+    {
+      "applicable_owner_phases": [
+        "wt_bound",
+        "wt_original",
+        "wt_receipt",
+        "wt_transaction",
+        "wt_state",
+        "nw_producer",
+        "sd_complete"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.thread_worktree_bound",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch1/schemas/bound/schema-coverage.json",
+      "schema": {
+        "boundaries": 19,
+        "controls": 320,
+        "expected_refusal_kills": 7175,
+        "invalid_mutations": 207
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 34,
+        "unreachable": 348,
+        "whole_definition_applicator": 561,
+        "witnessed": 2655
+      },
+      "source_controls": 4,
+      "source_expected_refusal_kills": 118
+    },
+    {
+      "applicable_owner_phases": [
+        "wt_create_failed",
+        "wt_original",
+        "wt_receipt",
+        "wt_transaction",
+        "wt_state",
+        "nw_producer",
+        "sd_complete"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.thread_worktree_create_failed",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch1/schemas/create_failed/schema-coverage.json",
+      "schema": {
+        "boundaries": 19,
+        "controls": 322,
+        "expected_refusal_kills": 6945,
+        "invalid_mutations": 207
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 34,
+        "unreachable": 348,
+        "whole_definition_applicator": 561,
+        "witnessed": 2553
+      },
+      "source_controls": 6,
+      "source_expected_refusal_kills": 102
+    },
+    {
+      "applicable_owner_phases": [
+        "wt_merge_failed",
+        "wt_original",
+        "wt_receipt",
+        "wt_transaction",
+        "wt_state",
+        "nw_producer",
+        "sd_complete"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.thread_worktree_merge_failed",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch1/schemas/merge_failed/schema-coverage.json",
+      "schema": {
+        "boundaries": 19,
+        "controls": 350,
+        "expected_refusal_kills": 7707,
+        "invalid_mutations": 207
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 34,
+        "unreachable": 348,
+        "whole_definition_applicator": 571,
+        "witnessed": 2827
+      },
+      "source_controls": 24,
+      "source_expected_refusal_kills": 256
+    },
+    {
+      "applicable_owner_phases": [
+        "wt_merged",
+        "wt_original",
+        "wt_receipt",
+        "wt_transaction",
+        "wt_state",
+        "nw_producer",
+        "sd_complete"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.thread_worktree_merged",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch1/schemas/merged/schema-coverage.json",
+      "schema": {
+        "boundaries": 19,
+        "controls": 370,
+        "expected_refusal_kills": 7679,
+        "invalid_mutations": 207
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 34,
+        "unreachable": 348,
+        "whole_definition_applicator": 571,
+        "witnessed": 2797
+      },
+      "source_controls": 52,
+      "source_expected_refusal_kills": 1014
+    },
+    {
+      "applicable_owner_phases": [
+        "wt_pr_created",
+        "wt_original",
+        "wt_receipt",
+        "wt_transaction",
+        "wt_state",
+        "nw_producer",
+        "sd_complete"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.thread_worktree_pr_created",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch1/schemas/pr_created/schema-coverage.json",
+      "schema": {
+        "boundaries": 19,
+        "controls": 332,
+        "expected_refusal_kills": 7605,
+        "invalid_mutations": 255
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "recorded_format_skip": 6,
+        "selector": 34,
+        "unreachable": 348,
+        "whole_definition_applicator": 569,
+        "witnessed": 2783
+      },
+      "source_controls": 2,
+      "source_expected_refusal_kills": 120
+    },
+    {
+      "applicable_owner_phases": [
+        "wt_pr_failed",
+        "wt_original",
+        "wt_receipt",
+        "wt_transaction",
+        "wt_state",
+        "nw_producer",
+        "sd_complete"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.thread_worktree_pr_failed",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch1/schemas/pr_failed/schema-coverage.json",
+      "schema": {
+        "boundaries": 19,
+        "controls": 320,
+        "expected_refusal_kills": 7413,
+        "invalid_mutations": 209
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 34,
+        "unreachable": 348,
+        "whole_definition_applicator": 571,
+        "witnessed": 2715
+      },
+      "source_controls": 4,
+      "source_expected_refusal_kills": 134
+    },
+    {
+      "applicable_owner_phases": [
+        "wt_terminal",
+        "wt_original",
+        "wt_receipt",
+        "wt_transaction",
+        "wt_state",
+        "nw_producer",
+        "sd_complete"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.thread_worktree_pre_merge_test_failed",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch1/schemas/pre_merge_test_failed/schema-coverage.json",
+      "schema": {
+        "boundaries": 19,
+        "controls": 376,
+        "expected_refusal_kills": 8489,
+        "invalid_mutations": 243
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 98,
+        "unreachable": 394,
+        "whole_definition_applicator": 739,
+        "witnessed": 3207
+      },
+      "source_controls": 32,
+      "source_expected_refusal_kills": 434
+    },
+    {
+      "applicable_owner_phases": [
+        "wt_terminal",
+        "wt_original",
+        "wt_receipt",
+        "wt_transaction",
+        "wt_state",
+        "nw_producer",
+        "sd_complete"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.thread_worktree_pre_merge_test_passed",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch1/schemas/pre_merge_test_passed/schema-coverage.json",
+      "schema": {
+        "boundaries": 19,
+        "controls": 350,
+        "expected_refusal_kills": 8039,
+        "invalid_mutations": 223
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 38,
+        "unreachable": 394,
+        "whole_definition_applicator": 619,
+        "witnessed": 3029
+      },
+      "source_controls": 26,
+      "source_expected_refusal_kills": 298
+    },
+    {
+      "applicable_owner_phases": [
+        "wt_test_started",
+        "wt_original",
+        "wt_receipt",
+        "wt_transaction",
+        "wt_state",
+        "nw_producer",
+        "sd_complete"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.thread_worktree_pre_merge_test_started",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch1/schemas/pre_merge_test_started/schema-coverage.json",
+      "schema": {
+        "boundaries": 19,
+        "controls": 352,
+        "expected_refusal_kills": 7467,
+        "invalid_mutations": 207
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 34,
+        "unreachable": 348,
+        "whole_definition_applicator": 569,
+        "witnessed": 2731
+      },
+      "source_controls": 26,
+      "source_expected_refusal_kills": 626
+    },
+    {
+      "applicable_owner_phases": [
+        "wt_renamed",
+        "wt_original",
+        "wt_receipt",
+        "wt_transaction",
+        "wt_state",
+        "nw_producer",
+        "sd_complete"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.thread_worktree_renamed",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch1/schemas/renamed/schema-coverage.json",
+      "schema": {
+        "boundaries": 19,
+        "controls": 308,
+        "expected_refusal_kills": 7147,
+        "invalid_mutations": 207
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 34,
+        "unreachable": 348,
+        "whole_definition_applicator": 561,
+        "witnessed": 2619
+      },
+      "source_controls": 2,
+      "source_expected_refusal_kills": 98
+    },
+    {
+      "applicable_owner_phases": [
+        "wt_unbound",
+        "wt_original",
+        "wt_receipt",
+        "wt_transaction",
+        "wt_state",
+        "nw_producer",
+        "sd_complete"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.thread_worktree_unbound",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch1/schemas/unbound/schema-coverage.json",
+      "schema": {
+        "boundaries": 19,
+        "controls": 344,
+        "expected_refusal_kills": 6983,
+        "invalid_mutations": 207
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 34,
+        "unreachable": 348,
+        "whole_definition_applicator": 561,
+        "witnessed": 2559
+      },
+      "source_controls": 8,
+      "source_expected_refusal_kills": 102
+    }
+  ],
+  "guard_proof": {
+    "applicable_tables": 69,
+    "findings": 0,
+    "masked": 0,
+    "max_rows_per_table": 7,
+    "proved": 220,
+    "raw_tool_status": "Seven singleton table reports remain FAIL/unproved_guards; all applicable reachable rows are credited only as reported by the tool.",
+    "rows": 227,
+    "unproved_singletons": [
+      {
+        "phase": "sc_project_bytes",
+        "proof": {
+          "phase": "sc_project_bytes",
+          "proof": "SC12 has already strictly decoded the bytes as UTF-8 equal to project_id, whose own strict UTF-8 encoding is exact. Strict valid UTF-8 is injective and encode(decode(bytes))=bytes.",
+          "source_pins": [
+            {
+              "function": "_scope_partition",
+              "line": 684,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "b22cbabe4b254d581b7ccf563517f9b5612510cb4ee2aa7246092970d3466e95"
+            },
+            {
+              "function": "_historical_read",
+              "line": 452,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "6b1a7114782d90a5f0bb2e3f6dec16377270b977077ebf6a7a65d7c3885c31f6"
+            },
+            {
+              "function": "_joins",
+              "line": 734,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "18cf1b5c73889219ddef8a842113e7b62dd5f049e733cc737b072d84a69986b4"
+            },
+            {
+              "function": "_checkpoint_joins",
+              "line": 866,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "e05de8b71365315f6047ca9a8e0ffc82a8ee5d359f2962fa32c952f891f6c2cc"
+            },
+            {
+              "function": "_checkpoint_storage",
+              "line": 966,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "0582972c3119026cf649b5b78db8611594a34ce944157c76d770a09c171f4ad1"
+            }
+          ],
+          "table": "scripts/pm_dch_table_sc_project_bytes.py"
+        },
+        "row": "SC13_decoded_bytes"
+      },
+      {
+        "phase": "cp_family_entailed",
+        "proof": {
+          "phase": "cp_family_entailed",
+          "proof": "CP01 validates the selected complete checkpoint edition before any source family comparisons; every installed edition pins event_type to this exact family.",
+          "source_pins": [
+            {
+              "function": "_scope_partition",
+              "line": 684,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "b22cbabe4b254d581b7ccf563517f9b5612510cb4ee2aa7246092970d3466e95"
+            },
+            {
+              "function": "_historical_read",
+              "line": 452,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "6b1a7114782d90a5f0bb2e3f6dec16377270b977077ebf6a7a65d7c3885c31f6"
+            },
+            {
+              "function": "_joins",
+              "line": 734,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "18cf1b5c73889219ddef8a842113e7b62dd5f049e733cc737b072d84a69986b4"
+            },
+            {
+              "function": "_checkpoint_joins",
+              "line": 866,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "e05de8b71365315f6047ca9a8e0ffc82a8ee5d359f2962fa32c952f891f6c2cc"
+            },
+            {
+              "function": "_checkpoint_storage",
+              "line": 966,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "0582972c3119026cf649b5b78db8611594a34ce944157c76d770a09c171f4ad1"
+            }
+          ],
+          "table": "scripts/pm_dch_table_cp_family_entailed.py"
+        },
+        "row": "CP29_value_event_type"
+      },
+      {
+        "phase": "cp_event_family_entailed",
+        "proof": {
+          "phase": "cp_event_family_entailed",
+          "proof": "The same unchanged event object passed the complete retained reader before this row. That reader calls JN02 with this exact expected family before returning; no intervening write changes the object.",
+          "source_pins": [
+            {
+              "function": "_scope_partition",
+              "line": 684,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "b22cbabe4b254d581b7ccf563517f9b5612510cb4ee2aa7246092970d3466e95"
+            },
+            {
+              "function": "_historical_read",
+              "line": 452,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "6b1a7114782d90a5f0bb2e3f6dec16377270b977077ebf6a7a65d7c3885c31f6"
+            },
+            {
+              "function": "_joins",
+              "line": 734,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "18cf1b5c73889219ddef8a842113e7b62dd5f049e733cc737b072d84a69986b4"
+            },
+            {
+              "function": "_checkpoint_joins",
+              "line": 866,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "e05de8b71365315f6047ca9a8e0ffc82a8ee5d359f2962fa32c952f891f6c2cc"
+            },
+            {
+              "function": "_checkpoint_storage",
+              "line": 966,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "0582972c3119026cf649b5b78db8611594a34ce944157c76d770a09c171f4ad1"
+            }
+          ],
+          "table": "scripts/pm_dch_table_cp_event_family_entailed.py"
+        },
+        "row": "CP30_event_event_type"
+      },
+      {
+        "phase": "cp_consumer_entailed",
+        "proof": {
+          "phase": "cp_consumer_entailed",
+          "proof": "CP01 validates the selected complete checkpoint edition, whose consumer_id const equals this exact row reader in every installed edition.",
+          "source_pins": [
+            {
+              "function": "_scope_partition",
+              "line": 684,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "b22cbabe4b254d581b7ccf563517f9b5612510cb4ee2aa7246092970d3466e95"
+            },
+            {
+              "function": "_historical_read",
+              "line": 452,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "6b1a7114782d90a5f0bb2e3f6dec16377270b977077ebf6a7a65d7c3885c31f6"
+            },
+            {
+              "function": "_joins",
+              "line": 734,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "18cf1b5c73889219ddef8a842113e7b62dd5f049e733cc737b072d84a69986b4"
+            },
+            {
+              "function": "_checkpoint_joins",
+              "line": 866,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "e05de8b71365315f6047ca9a8e0ffc82a8ee5d359f2962fa32c952f891f6c2cc"
+            },
+            {
+              "function": "_checkpoint_storage",
+              "line": 966,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "0582972c3119026cf649b5b78db8611594a34ce944157c76d770a09c171f4ad1"
+            }
+          ],
+          "table": "scripts/pm_dch_table_cp_consumer_entailed.py"
+        },
+        "row": "CP32_consumer"
+      },
+      {
+        "phase": "cp_projector_entailed",
+        "proof": {
+          "phase": "cp_projector_entailed",
+          "proof": "CP01 validates the selected complete checkpoint edition, whose projector_id const equals this exact row domain_projector in every installed edition.",
+          "source_pins": [
+            {
+              "function": "_scope_partition",
+              "line": 684,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "b22cbabe4b254d581b7ccf563517f9b5612510cb4ee2aa7246092970d3466e95"
+            },
+            {
+              "function": "_historical_read",
+              "line": 452,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "6b1a7114782d90a5f0bb2e3f6dec16377270b977077ebf6a7a65d7c3885c31f6"
+            },
+            {
+              "function": "_joins",
+              "line": 734,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "18cf1b5c73889219ddef8a842113e7b62dd5f049e733cc737b072d84a69986b4"
+            },
+            {
+              "function": "_checkpoint_joins",
+              "line": 866,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "e05de8b71365315f6047ca9a8e0ffc82a8ee5d359f2962fa32c952f891f6c2cc"
+            },
+            {
+              "function": "_checkpoint_storage",
+              "line": 966,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "0582972c3119026cf649b5b78db8611594a34ce944157c76d770a09c171f4ad1"
+            }
+          ],
+          "table": "scripts/pm_dch_table_cp_projector_entailed.py"
+        },
+        "row": "CP33_projector"
+      },
+      {
+        "phase": "cs_pointer_bounds",
+        "proof": {
+          "phase": "cs_pointer_bounds",
+          "proof": "CS06 already requires the exact one-key pointer containing an ASCII reference recomputed from real encoded bytes and their BLAKE3. Such a built-in map and string are always encodable by the current codec.",
+          "source_pins": [
+            {
+              "function": "_scope_partition",
+              "line": 684,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "b22cbabe4b254d581b7ccf563517f9b5612510cb4ee2aa7246092970d3466e95"
+            },
+            {
+              "function": "_historical_read",
+              "line": 452,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "6b1a7114782d90a5f0bb2e3f6dec16377270b977077ebf6a7a65d7c3885c31f6"
+            },
+            {
+              "function": "_joins",
+              "line": 734,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "18cf1b5c73889219ddef8a842113e7b62dd5f049e733cc737b072d84a69986b4"
+            },
+            {
+              "function": "_checkpoint_joins",
+              "line": 866,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "e05de8b71365315f6047ca9a8e0ffc82a8ee5d359f2962fa32c952f891f6c2cc"
+            },
+            {
+              "function": "_checkpoint_storage",
+              "line": 966,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "0582972c3119026cf649b5b78db8611594a34ce944157c76d770a09c171f4ad1"
+            }
+          ],
+          "table": "scripts/pm_dch_table_cs_pointer_bounds.py"
+        },
+        "row": "CS04_pointer_encodable"
+      },
+      {
+        "phase": "cs_pointer_size_entailed",
+        "proof": {
+          "phase": "cs_pointer_size_entailed",
+          "proof": "The exact CS06 pointer has a fixed ASCII prefix, 64 hex digits, a bounded decimal byte length and fixed media suffix. Even a 20-digit uint64 length gives at most 131 physical bytes, below 16384.",
+          "source_pins": [
+            {
+              "function": "_scope_partition",
+              "line": 684,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "b22cbabe4b254d581b7ccf563517f9b5612510cb4ee2aa7246092970d3466e95"
+            },
+            {
+              "function": "_historical_read",
+              "line": 452,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "6b1a7114782d90a5f0bb2e3f6dec16377270b977077ebf6a7a65d7c3885c31f6"
+            },
+            {
+              "function": "_joins",
+              "line": 734,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "18cf1b5c73889219ddef8a842113e7b62dd5f049e733cc737b072d84a69986b4"
+            },
+            {
+              "function": "_checkpoint_joins",
+              "line": 866,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "e05de8b71365315f6047ca9a8e0ffc82a8ee5d359f2962fa32c952f891f6c2cc"
+            },
+            {
+              "function": "_checkpoint_storage",
+              "line": 966,
+              "path": "scripts/pm_dch_events.py",
+              "sha256": "0582972c3119026cf649b5b78db8611594a34ce944157c76d770a09c171f4ad1"
+            }
+          ],
+          "table": "scripts/pm_dch_table_cs_pointer_size_entailed.py"
+        },
+        "row": "CS05_pointer_size"
+      }
+    ],
+    "unrelated": 0
+  },
+  "implementation_head": "ce483b6976f45b4b07de8b69b8fd4b322f4ff789",
+  "jared_questions": [],
+  "lane": "C12-CH1",
+  "membership": "UNCHANGED",
+  "native_execution": "NOT_RUN",
+  "numbers": {
+    "adapter_checks": 186,
+    "receipt_uint64_checks": 1474,
+    "shared_self_test": "PASS"
+  },
+  "original_suite": {
+    "checks": 48126,
+    "status": "pass",
+    "stop_checks": 4612,
+    "stop_status": "pass"
+  },
+  "other_cells": "UNCHANGED",
+  "producer_route_fix": {
+    "after_accepted": false,
+    "before_accepted": true,
+    "new_guard": "nw_producer/NW01_producer_route",
+    "shared_refusal": "jcs_binary64"
+  },
+  "retained": {
+    "reads": 426,
+    "snapshots": 67,
+    "status": "pass"
+  },
+  "schema_totals": {
+    "boundaries": 209,
+    "controls": 3744,
+    "expected_refusal_kills": 82649,
+    "invalid_mutations": 2379
+  },
+  "source_invalid_mutations": 0,
+  "source_mutation_controls": 186,
+  "source_mutation_expected_refusal_kills": 3302,
+  "source_route_cuts": {
+    "accepted": 3082,
+    "exception_uncredited": 110,
+    "later_refusal_uncredited": 110
+  }
+}

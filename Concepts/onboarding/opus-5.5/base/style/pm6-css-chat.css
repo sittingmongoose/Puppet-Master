@@ -166,8 +166,9 @@
     }
     /* Glow on hover / while open — same accent-blue as context-lens hover border,
        soft bloom (not a hard outline ring around the SVG). */
-    .pm6-chat-ctx:hover > svg,
-    .pm6-chat-ctx.is-ctx-open > svg {
+    /* (the ring named class-first, same specificity as svg: a bare svg after :hover went into Chrome's page-wide set) */
+    .pm6-chat-ctx:hover > :where(.pm6-chat-ctx-ring):is(svg),
+    .pm6-chat-ctx.is-ctx-open > :where(.pm6-chat-ctx-ring):is(svg) {
       filter: drop-shadow(0 0 3px color-mix(in srgb, var(--accent-blue) 70%, transparent))
               drop-shadow(0 0 7px color-mix(in srgb, var(--accent-blue) 40%, transparent));
     }

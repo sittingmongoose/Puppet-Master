@@ -1,0 +1,155 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "thread_id",
+    "chip_id",
+    "browser_session_id",
+    "attachment_type",
+    "capture_status",
+    "source_ref",
+    "provenance_ref",
+    "summary_ref",
+    "scope"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.ds15.browser_capture_chip.v2"
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "thread_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "chip_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "browser_session_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "attachment_type": {
+      "enum": [
+        "browser_element_context",
+        "browser_selection_context"
+      ]
+    },
+    "capture_status": {
+      "enum": [
+        "captured",
+        "blocked",
+        "expired",
+        "scrubbed",
+        "revoked"
+      ]
+    },
+    "source_ref": {
+      "description": "Stable non-secret reference. Raw credentials, tokens, auth values, credential paths, file contents, and provider-visible bytes are forbidden.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+    },
+    "provenance_ref": {
+      "description": "Stable non-secret reference. Raw credentials, tokens, auth values, credential paths, file contents, and provider-visible bytes are forbidden.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+    },
+    "summary_ref": {
+      "description": "Stable non-secret reference. Raw credentials, tokens, auth values, credential paths, file contents, and provider-visible bytes are forbidden.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "project_id",
+        "user_id",
+        "computer_id",
+        "profile_id"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "project",
+            "app"
+          ]
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "user_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "computer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "profile_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "app"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.ds15.browser_capture_chip.v2"
+}

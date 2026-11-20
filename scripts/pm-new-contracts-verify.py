@@ -27,6 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT / "scripts"))
 from pm_full_thread_semantics import full_thread_semantic_failures
+from pm_quiet_memory import check as quiet_memory_check
 from pm_named_plan_semantics import named_plan_owner_join_failures
 from pm_azure_setup_semantics import validate_azure_setup_pairs
 from pm_git_adapter_commands import apply_case as git_apply_case, semantic_problems as git_semantic_problems, run_checks as git_command_checks
@@ -1621,6 +1622,10 @@ def main() -> int:
 
     if len(CONTRACT_PAIRS) != EXPECTED_CONTRACT_PAIR_COUNT or len(set(CONTRACT_PAIRS)) != EXPECTED_CONTRACT_PAIR_COUNT:
         findings.append({"code": "authored_manifest_cardinality_or_uniqueness_failure", "expected": EXPECTED_CONTRACT_PAIR_COUNT, "actual": len(CONTRACT_PAIRS)})
+
+    quiet_findings, quiet_counts = quiet_memory_check(ROOT)
+    findings.extend(quiet_findings)
+    counts.update(quiet_counts)
 
     self_test_count, self_test_failures = run_internal_self_tests()
     counts["internal_self_tests"] = self_test_count

@@ -1,0 +1,464 @@
+{
+  "audit_id": "audit-20260616-008-orchestrator-goal-runtime-flow-post-repair",
+  "closures": [
+    {
+      "appended_matrix_line": 1,
+      "appended_matrix_sha256": "2083599fc057c31d56fff2ff0a7f0066e6bb1cec2aba8c347faa24d8905062aa",
+      "appended_registry_line": 1146,
+      "appended_registry_sha256": "69eb20c0b6e327ccceaf3a7dc1b0de0299274c71417f4180ded08fde16556bf9",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 4
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Models_System.md#unit=MS-109": "9b9198405fd985350f78916fa4130a336966573b6b99904abf0eab6e22b9bfe4",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=MS-109": "1a4bc1d91fb31f7ce94d120d7a6aae9957a1afee16e15b25091905eb791878b8"
+      },
+      "finding_key": "sfk-d0a806b07e048515e69e0b22",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-008-orchestrator-goal-runtime-flow-post-repair-semantic-risks-jsonl-4",
+      "reviews": {
+        "astra": {
+          "batch": "S04",
+          "file": "supplemental/batches/S04/review-astra-r1.jsonl",
+          "packet_row_digest": "6a0e58e4b758f1c0583df9bab6c88e1086b7d122f7f52ef2ca725efb077ce616",
+          "reason": "MS-109 confines Models ownership to capability_lane/agent_role model-provider binding and explicitly treats write_mode/certification_tier as references to the other owners. Its acceptance criteria, negative constraint, implementation_surfaces and owner_hints support the repaired ownership boundary.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S04",
+          "file": "supplemental/batches/S04/review-sol-r1.jsonl",
+          "packet_row_digest": "6a0e58e4b758f1c0583df9bab6c88e1086b7d122f7f52ef2ca725efb077ce616",
+          "reason": "MS-109 confines Models ownership to capability_lane/agent_role model-provider binding and explicitly consumes write_mode/certification_tier from the Goal Runtime, Contracts, storage, Permissions and Worktree owners. Its negative constraint and owner-impact metadata enforce that boundary, repairing the reported ownership overreach.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 2,
+      "appended_matrix_sha256": "82a9be89eb9c4352f788fd4f88669b9905ab89d8a0c7017fc7b39acc36467cc2",
+      "appended_registry_line": 1147,
+      "appended_registry_sha256": "011bd471f6bca5beb903ad49f7689ff28b9b8e2645ae025735b9406ac56e5093",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 5
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Planning_Ledger_System.md#unit=PLS-010": "2aad2592fa483168e14210899810eb3a62b7c2db0c53a337fa27ef1c783363ce",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/manifest.json#json=/status": "6248de8c916da2d0fe49f63c83197b5673acaf91acac3855966ff8b19d6dab03",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/compile_queue.json#json=/candidate_compile_plan/active": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/compile_queue.json#json=/candidate_compile_plan/ready_atom_ids": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/compile_queue.json#json=/candidate_compile_plan/reason": "e2617aff6ef1e349ad4a2de47c1c12dd3dbfd2ad7bebf2a7ed36cfa8d0a0677d",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/compile_queue.json#json=/candidate_compile_plan/source_lineage_pre_seal_ready_atom_ids": "dadabdad1e02cc54653d3fcbb54ef99101eba25adc92d49abb39a7b307af32b8",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/compile_queue.json#json=/candidate_compile_plan/status": "8adae1fc000ec8fb84747cb4943968a5ab6d2e62c2e7947f1e541d7878e35e81",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/current.json#json=/ready_for_plan_compile_atoms": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/current.json#json=/status": "6248de8c916da2d0fe49f63c83197b5673acaf91acac3855966ff8b19d6dab03",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_impact_matrix.json#json=/docs": "28ac57c8c0f80b793c26b9e89813174619681fd3fc2012111e099ce6a83988a2",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_impact_matrix.json#json=/docs/0": "0abb74e843dc2244a8be9c7aceeace3613bf4a965dbda7442b99b38917cb022a",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/gui_impact_matrix.json#json=/surfaces": "771a1e01c211c62009b540f03774ed1a250ec08423812b6cae879656c2cd13c5",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/gui_impact_matrix.json#json=/surfaces/0": "d1636ded8a54c6a8b2a1260d150cd8dfc1c65fee910a03533c6d31798f8a7fc7",
+        "scripts/pm-bootstrap-ledger-validate.py#pydef=main": "8414728924ce6965b39d3c33da0e3612064b92367bf24f2b616c7f8192f5e8fd"
+      },
+      "finding_key": "sfk-1cf9deb1f4ba5da76977a446",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-008-orchestrator-goal-runtime-flow-post-repair-semantic-risks-jsonl-5",
+      "reviews": {
+        "astra": {
+          "batch": "S04",
+          "file": "supplemental/batches/S04/review-astra-r1.jsonl",
+          "packet_row_digest": "247bf211781f75c3ff71e76dc4640e02b659dd5de23d2793c81caea725a25e5d",
+          "reason": "The manifest and current projection are sealed, current readiness is zero, and the candidate plan is inactive with an empty ready_atom_ids list; the 102 former ready atoms remain only in source_lineage_pre_seal_ready_atom_ids. All 68 document rows and 18 GUI rows have sealed, inactive compile statuses, and the validator explicitly enforces sealed manifest status for a sealed compiled phase.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S04",
+          "file": "supplemental/batches/S04/review-sol-r1.jsonl",
+          "packet_row_digest": "7c8b34410343b014a33a9c4a885fc00162c3ccd76f54235e19adecd900d9a95b",
+          "reason": "Manifest/current are sealed with zero ready atoms, and the candidate plan is inactive with an empty ready_atom_ids list and the old list kept under source_lineage_pre_seal_ready_atom_ids. All 68 document rows and 18 GUI rows have sealed, inactive compile statuses with the old labels retained as lineage; the validator also requires sealed manifest status for a sealed compiled phase.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 3,
+      "appended_matrix_sha256": "753cbcf07b1ab851903ca3a0e9e4a13c788ecce25c5425233b3f83ed28e96c94",
+      "appended_registry_line": 1148,
+      "appended_registry_sha256": "e8e328138a98a73183006084f132a02a2f039fc3b8406d075ddeaa6802e6338d",
+      "closes": {
+        "plan_unit_id": "CW-008",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_row": 12
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/chain-wizard.md#section=Canon Status (2026-06-21)": "04e27804f4dfa3109a4a76de9f925270e674b28d37a34dc0f42470ed876f7960",
+        "Plans/chain-wizard.md#unit=CW-008": "de95dc33025556b6be996fb0f92575c224c9230795bb1d762342f4ba4f9fd574"
+      },
+      "finding_key": "sfk-9bc30e2bbbae732e94c7a43b",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-008-orchestrator-goal-runtime-flow-post-repair-planunit-source-claims-jsonl-12",
+      "reviews": {
+        "astra": {
+          "batch": "S04",
+          "file": "supplemental/batches/S04/review-astra-r1.jsonl",
+          "packet_row_digest": "c4e1970822f9611d8b98a99737f5cb0c9ead6a0fe1edecd938285e6d68905bf3",
+          "reason": "The dated Canon Status section retires the entire chain-wizard document and all CW-* PlanUnits from active product authority, and CW-008 is retired. Its remaining text is a compatibility pointer to current owners, not an active compiled requirement whose historical reciprocal links need restoration.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "stale_retired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S04",
+          "file": "supplemental/batches/S04/review-sol-r1.jsonl",
+          "packet_row_digest": "c4e1970822f9611d8b98a99737f5cb0c9ead6a0fe1edecd938285e6d68905bf3",
+          "reason": "The 2026-06-21 Canon Status section retires chain-wizard.md and every CW-* unit from active product canon. CW-008 itself remains retired and routes the former names to PRD Builder/Planning Wizard, so its historical lineage mismatch no longer concerns an active requirement.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "stale_retired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 4,
+      "appended_matrix_sha256": "04739e250319eadf147bf1507d72d7eba57ff59b28cb4967303b71eef490fa78",
+      "appended_registry_line": 1149,
+      "appended_registry_sha256": "b49c196c27b0eba74f7bf42fa27196af13a24dfee3fe451916027fc9d3110d7f",
+      "closes": {
+        "plan_unit_id": "CWF-151",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_row": 13
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/chain-wizard-flexibility.md#section=Change Summary": "1068d39e4924922392276ffa166521b29b5b9ea12d0430c86eb51276dcbe12e9",
+        "Plans/chain-wizard-flexibility.md#unit=CWF-151": "781b2a310115f346d5f398da2abd0127d386d1989644acbe306bb0487d92c6f4"
+      },
+      "finding_key": "sfk-f7bb7417ecb2c203eee4d696",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-008-orchestrator-goal-runtime-flow-post-repair-planunit-source-claims-jsonl-13",
+      "reviews": {
+        "astra": {
+          "batch": "S04",
+          "file": "supplemental/batches/S04/review-astra-r1.jsonl",
+          "packet_row_digest": "a6ff2e97251e19e9a7d92d66edb5bf527b61b1fe66b425609eee1a501ce2e62c",
+          "reason": "The dated Change Summary explicitly retires chain-wizard-flexibility and all CWF-* PlanUnits, and CWF-151 has status retired. Current PRD Builder and Planning Wizard ownership does not reactivate this legacy PlanUnit, so stale_retired fits the finding.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "stale_retired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S04",
+          "file": "supplemental/batches/S04/review-sol-r1.jsonl",
+          "packet_row_digest": "a6ff2e97251e19e9a7d92d66edb5bf527b61b1fe66b425609eee1a501ce2e62c",
+          "reason": "The document's Change Summary explicitly retires chain-wizard-flexibility.md and all CWF-* units from active product canon as of 2026-06-21. CWF-151 remains retired compatibility for the PRD Builder migration, which supports stale_retired for this unit-specific lineage finding.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "stale_retired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 5,
+      "appended_matrix_sha256": "281d5bfc5cc0dbd02ff24611d26f63002601b0c9600045764fb8d615d33452ef",
+      "appended_registry_line": 1150,
+      "appended_registry_sha256": "f8525873c6fc0ed9204963bdacaad712dd95193f101875df64204009d58de93c",
+      "closes": {
+        "source_artifact": "owner_routing_findings.jsonl",
+        "source_row": 1
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Models_System.md#unit=MS-109": "9b9198405fd985350f78916fa4130a336966573b6b99904abf0eab6e22b9bfe4",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=MS-109": "1a4bc1d91fb31f7ce94d120d7a6aae9957a1afee16e15b25091905eb791878b8"
+      },
+      "finding_key": "sfk-744cec87d97e65672d6a6a6b",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-008-orchestrator-goal-runtime-flow-post-repair-owner-routing-findings-jsonl-1",
+      "reviews": {
+        "astra": {
+          "batch": "S04",
+          "file": "supplemental/batches/S04/review-astra-r1.jsonl",
+          "packet_row_digest": "50d8803242cd0b70945952819dd71102da4d81c2b396e30ec84e5bbeace63e41",
+          "reason": "MS-109 now owns model-provider capability binding and explicitly consumes write_mode and certification_tier from Goal Runtime, Contracts, storage, Permissions and Worktree owners. The negative constraint forbids Models-owned enforcement, lease policy or certification semantics, and its owner metadata routes the affected documents.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S04",
+          "file": "supplemental/batches/S04/review-sol-r1.jsonl",
+          "packet_row_digest": "50d8803242cd0b70945952819dd71102da4d81c2b396e30ec84e5bbeace63e41",
+          "reason": "MS-109 confines Models ownership to capability_lane/agent_role model-provider binding and explicitly consumes write_mode/certification_tier from the Goal Runtime, Contracts, storage, Permissions and Worktree owners. Its negative constraint and owner-impact metadata enforce that boundary, repairing the reported ownership overreach.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 6,
+      "appended_matrix_sha256": "3870d497dcb4005aeb55799d896dc76125481372cf1fc230450128b2ff26ec2f",
+      "appended_registry_line": 1151,
+      "appended_registry_sha256": "bc00712f66c398fa5ad224fba0d59b65276c723858f93aa46e8d9ef5d443b123",
+      "closes": {
+        "source_artifact": "owner_routing_findings.jsonl",
+        "source_row": 2
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Goal_Runtime_System.md#unit=GRS-026": "5c1e5dcd81c5c49c41d1b257b63a3088905da6886dee8aedb0d1a1fe01c6acf7",
+        "Plans/Goal_Runtime_System.md#unit=GRS-027": "56d4d5ffa81b932ef7fc3cdd2a6a59f440ff399d0ffe17c0704b890afe71b85f"
+      },
+      "finding_key": "sfk-210c0448dc5962c0d545caeb",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-008-orchestrator-goal-runtime-flow-post-repair-owner-routing-findings-jsonl-2",
+      "reviews": {
+        "astra": {
+          "batch": "S04",
+          "file": "supplemental/batches/S04/review-astra-r1.jsonl",
+          "packet_row_digest": "a493d4967e5df0dc88bfdcc014114cf7128021b3ab10a608d606eefb7364604e",
+          "reason": "Both GRS-026 and GRS-027 now include Contracts, storage, Permissions and Worktree in implementation_surfaces and owner_hints. GRS-026 explicitly consumes write authority through the Permissions/Worktree owners, while GRS-027 is additionally marked superseded; the reported routing-metadata omission is repaired.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S04",
+          "file": "supplemental/batches/S04/review-sol-r1.jsonl",
+          "packet_row_digest": "a493d4967e5df0dc88bfdcc014114cf7128021b3ab10a608d606eefb7364604e",
+          "reason": "Both GRS-026 and GRS-027 now include Contracts_V0, storage-plan, Permissions_System and WorktreeGitImprovement in implementation_surfaces and owner_hints. GRS-026 also explicitly consumes write authority through Permissions/Worktree, and GRS-027 is superseded lineage, so the reported metadata under-routing is repaired.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 7,
+      "appended_matrix_sha256": "79c6feb1c2240bfa42dbc982b2fba1269da0c69f96b942c9171bfd2c85d4abe4",
+      "appended_registry_line": 1152,
+      "appended_registry_sha256": "c1cd0ddb64b18729ede21f57e3156edeb1c871e68bb3279acd29ec3bf8f2358b",
+      "closes": {
+        "source_artifact": "owner_routing_findings.jsonl",
+        "source_row": 3
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Run_Graph_View.md#unit=RGV-012": "d775d44ab90cdb7fafae127c660778c60595a76d574ddff945c86c08c38edaa4"
+      },
+      "finding_key": "sfk-d0de9c32bc0cbb42cda21365",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-008-orchestrator-goal-runtime-flow-post-repair-owner-routing-findings-jsonl-3",
+      "reviews": {
+        "astra": {
+          "batch": "S04",
+          "file": "supplemental/batches/S04/review-astra-r1.jsonl",
+          "packet_row_digest": "4743655d80fb5a0992845133790ca2dfe1d9066e747ff89d9ddb5abc99ec8060",
+          "reason": "RGV-012 now declares CV-288 and SP-215 dependencies and includes the Contracts and storage documents in both implementation_surfaces and owner_hints. This matches its projection-only canonical prose and repairs the specific cross-document routing omission.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S04",
+          "file": "supplemental/batches/S04/review-sol-r1.jsonl",
+          "packet_row_digest": "4743655d80fb5a0992845133790ca2dfe1d9066e747ff89d9ddb5abc99ec8060",
+          "reason": "RGV-012 now depends on CV-288 and SP-215 and names Contracts_V0/storage-plan in both implementation_surfaces and owner_hints. This repairs the missing cross-document routing while preserving the Run Graph's projection-only authority.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 8,
+      "appended_matrix_sha256": "66856bc125212eb01062a209e38c918bf867a19fefc9954edccde6528aebbf1e",
+      "appended_registry_line": 1185,
+      "appended_registry_sha256": "270ddb1243f58aa366f12faf84e9a97783dbcb165043dcc248b44af9e352fe65",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 1
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Contracts_V0.md#unit=CV-288": "30cb2e62a81553c7e38b2e605ba3ada9f9ad675b268352f2a5ac9948ae7fa917",
+        "Plans/Goal_Runtime_System.md#unit=GRS-027": "56d4d5ffa81b932ef7fc3cdd2a6a59f440ff399d0ffe17c0704b890afe71b85f",
+        "Plans/Orchestrator_Page.md#unit=OP-022": "601dddb429e0919be41d42f8a14831330e6add5fcedb9688bb9ec1ed88cc8f0a",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0094": "6c7995df1261a9fcb7a3357a44f07bd7dfb8195ecbdd97d2c901361dd874be14",
+        "Plans/storage-plan.md#unit=SP-215": "18e35ab12e9294f9235657b66050f3da43b429f20d927553d83be6da49943d73"
+      },
+      "finding_key": "sfk-a8d643d8d9f22bd924d492bf",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-008-orchestrator-goal-runtime-flow-post-repair-semantic-risks-jsonl-1",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "adccc42c28f826289883794749e26cad589e0d961b9a108181f8b84f2506e8e5",
+          "reason": "CV-288 and SP-215 now preserve attempt, defect_signatures, and status failed | passed | blocked in the governed VerificationCycle example and forbid expanding its status. OP-022 projects the same narrow fields; superseded GRS-027 is not relied on as current product authority.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "adccc42c28f826289883794749e26cad589e0d961b9a108181f8b84f2506e8e5",
+          "reason": "The exact VerificationCycle example keys, including attempt and defect_signatures, and failed | passed | blocked are present in active contract/storage prose and acceptance criteria. OP-022 projects the same bounded fields, while GRS-027 is explicitly superseded.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 9,
+      "appended_matrix_sha256": "72b30cfe906b66b4bc3ab60af37cc2bf8a0e1ae391fbe79a77bcf94d6a7d67d0",
+      "appended_registry_line": 1186,
+      "appended_registry_sha256": "a2b01e69e2f93474bd7b5c52b7da72ebad3ab45bc7fcdd3d42e7da816b1aa8eb",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 3
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/orchestrator-subagent-integration.md#section=Ledger Compile Addendum - pldg-20260614-001": "9ce9d3c6d946a80286ca0fac4bed782c63c4274884356e8bd0a8439af14f98ec",
+        "Plans/orchestrator-subagent-integration.md#section=Ledger Compile Addendum - pldg-20260616-002 > OSI-428 - Bounded Extensive Subagent Waves": "29c9fb2156d4fd182f94b7e7a3b4caa669f2bd3105b408ffe6f7311dd28d8fbd",
+        "Plans/orchestrator-subagent-integration.md#section=Migration Coverage": "39fb7be7b2b5dc3f83aa4a0b6750ca41a5d7dfa9ebc8aacf42469c6efe4c1ee8",
+        "Plans/orchestrator-subagent-integration.md#unit=OSI-425": "64b5ccbe05c5b79eebe4759702b006bb68a0bf41738739c55147de1eeded2287",
+        "Plans/orchestrator-subagent-integration.md#unit=OSI-428": "866fdffefbaf60e3a10567b2ce47786b52908169fe744c8eee382c15c3bfa66b"
+      },
+      "finding_key": "sfk-b5f544bd611cdba5c4030310",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-008-orchestrator-goal-runtime-flow-post-repair-semantic-risks-jsonl-3",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "805e86f7ff8238faaeaa922698c275258c9080c8247fcb7ec992dc35ca8095d2",
+          "reason": "A CommonMark parse of the current owner document recognizes both ledger addenda and the OSI-425/OSI-428 headings at top level, with separate yaml fences for the two PlanUnits. The intervening Migration Coverage section contains no code fence, so the audited grouping defect is repaired.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "805e86f7ff8238faaeaa922698c275258c9080c8247fcb7ec992dc35ca8095d2",
+          "reason": "A CommonMark parse recognizes both ledger addenda and the OSI-425/OSI-428 headings at top level, each with its own YAML fence. Migration Coverage contains no intervening stray fence, so the reported section-grouping defect is repaired.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 10,
+      "appended_matrix_sha256": "37d138f1d687ce884fe9805458f95a2644ac0445d25dcc4fc8abd99706409b79",
+      "appended_registry_line": 1187,
+      "appended_registry_sha256": "b5a065547fae69a6e69d6a9ca1627e881e4b5f6afe449a53953a5ed2145ceeb0",
+      "closes": {
+        "plan_unit_id": "GRS-027",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_row": 4
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Contracts_V0.md#unit=CV-288": "30cb2e62a81553c7e38b2e605ba3ada9f9ad675b268352f2a5ac9948ae7fa917",
+        "Plans/Goal_Runtime_System.md#unit=GRS-027": "56d4d5ffa81b932ef7fc3cdd2a6a59f440ff399d0ffe17c0704b890afe71b85f",
+        "Plans/Goal_Runtime_System.md#unit=GRS-053": "c4ef09014af4add172888e6645240ea5363a3fd4959083328cce2690fd0cb140",
+        "Plans/Orchestrator_Page.md#unit=OP-022": "601dddb429e0919be41d42f8a14831330e6add5fcedb9688bb9ec1ed88cc8f0a",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/decisions.jsonl#jsonlset=compiled_output_plan_unit_ids=GRS-027": "f8d914672dd5d0bafa8c92eedc476af1b30abd9199f1093e97ac019f122d2d00",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=GRS-027": "3118f9c93b8a2c84913ad390aff214dd6733a4462b794425a43c777d4badfd1c",
+        "Plans/storage-plan.md#unit=SP-215": "18e35ab12e9294f9235657b66050f3da43b429f20d927553d83be6da49943d73"
+      },
+      "finding_key": "sfk-752ec42b5fec17b9db257871",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-008-orchestrator-goal-runtime-flow-post-repair-planunit-source-claims-jsonl-4",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "5d5117f29833983e71b298fcb04cebcf6b9e666d8605b0eb3d43a950e5923769",
+          "reason": "GRS-027 is explicitly superseded and its former Goal-owned verification/certifier policy is marked non-active lineage, with GRS-053 explaining the smaller Goal engine and workflow-owned state. Active CV-288/SP-215/OP-022 preserve the VerificationCycle shape, so stale_retired correctly disposes the claim against the retired unit rather than asserting its old output history is fully repaired.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "stale_retired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "5d5117f29833983e71b298fcb04cebcf6b9e666d8605b0eb3d43a950e5923769",
+          "reason": "GRS-027 is explicitly superseded and its Goal-owned verification/repair role cast is retired, with custody transferred to Orchestrator and Executor. The active CV-288/SP-215/OP-022 owners carry the missing example semantics, so stale_retired fits the finding against the former Goal unit.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "stale_retired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    }
+  ],
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-334",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "route": "new_registry_row",
+    "source": "Jared, \"approve all\", T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z (stream C question 7, option (a)); extended to the other June audits with uncovered rows by pm7-build's relay of the same approved option (pm-mail 1105030457-ade2, 2026-11-05)"
+  },
+  "matrix": {
+    "original_rows": 0,
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "pass_id": "audit-20260616-008-orchestrator-goal-runtime-flow-post-repair-supplemental-20261111",
+  "reviews": "Sol and Astra blind reviews are listed on each closures entry (verdict, your_verdict, your_status, packet_row_digest, batch file)",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}

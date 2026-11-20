@@ -345,15 +345,17 @@ function faceTiles() {
   }).join('');
 }
 function caretArt(shape) { return '<span class="pmed-cur pmed-cur-' + shape + '"><span>let s</span><i></i><span>= 1</span></span>'; }
-function blinkArt(kind) { return '<span class="pmed-cur pmed-cur-line pmed-blink-' + kind + '"><span>s.len()</span><i></i></span>'; }
-function moveArt(kind) { return '<span class="pmed-move pmed-move-' + kind + '"><b></b><b></b><i></i></span>'; }
+function blinkArt(kind) { return '<span class="pmed-cur pmed-cur-line pmed-blink-' + kind + '"><span>s.len()</span><i class="pmed-cur-i"></i></span>'; }
+function moveArt(kind) { return '<span class="pmed-move pmed-move-' + kind + '"><b></b><b></b><i class="pmed-move-i"></i></span>'; }
 function trailArt(kind) { return '<span class="pmt-cz-trail pmt-cz-trail-' + kind + '"><i></i><b></b></span>'; }
 function guideArt(kind) { return '<span class="pmed-guides pmed-guides-' + kind + '"><span></span><span></span><span></span><span></span></span>'; }
 
 function skeleton(name) {
   var F = EL().FIELDS, html = '';
   html += '<div class="pmt-cz-scrim" data-act="scrim" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="pmt-cz-frame" aria-hidden="true"><span class="pmt-cz-framelabel">This editor</span></div>';
-  html += '<section class="pmt-cz-dialog" role="dialog" aria-modal="true" aria-labelledby="pmed-cz-title" aria-describedby="pmed-cz-lead" tabindex="-1" data-lg-surface="menu" data-lg-dense>';
+  /* aria-modal is the shown screen's alone (show sets it, close takes it away): a prepared, parked screen is no open
+     modal dialog (FO-149) */
+  html += '<section class="pmt-cz-dialog" role="dialog" aria-labelledby="pmed-cz-title" aria-describedby="pmed-cz-lead" tabindex="-1" data-lg-surface="menu" data-lg-dense>';
   html += '<header class="pmt-cz-head"><div class="pmt-cz-titles"><p class="pmt-cz-kicker"><span>' + esc('Customize · ' + name) + '</span></p>' +
     '<h2 class="pmt-cz-title" id="pmed-cz-title">Editor appearance</h2>' +
     '<p class="pmt-cz-lead" id="pmed-cz-lead">Pick what you want to change. The preview and this editor show it at once, and it is saved.</p></div>' +
@@ -366,7 +368,7 @@ function skeleton(name) {
     '<aside class="pmt-cz-side"><div class="pmt-cz-meter"><div class="pmt-cz-meterhead"><span data-meter-scope>This editor</span><b data-meter-n></b></div>' +
     '<div class="pmt-cz-cells" aria-hidden="true" style="grid-template-columns: repeat(' + COUNTED.length + ', 1fr)">' + COUNTED.map(function () { return '<i></i>'; }).join('') + '</div></div>' +
     '<div class="pmt-cz-sets" role="group" aria-label="Quick sets">' + SETS.map(function (s) {
-      return '<button type="button" class="pmt-cz-set" aria-pressed="false" data-set="' + s.id + '" data-pmh="tile"' + NOTAG + '><span>' + esc(s.label) + '</span><small>' + esc(s.help) + '</small></button>';
+      return '<button type="button" class="pmt-cz-set" aria-pressed="false" data-set="' + s.id + '" data-pmh="tile"' + NOTAG + '><span>' + esc(s.label) + '</span><small class="pmt-cz-small">' + esc(s.help) + '</small></button>';
     }).join('') + '</div>' +
     '<div class="pmt-cz-try" role="group" aria-label="Try it in the preview"><span class="pmt-cz-trylabel">Try it</span>' +
     '<button type="button" class="pmt-textbtn" data-act="try-move"' + NOTAG + '>Move the caret</button>' +
@@ -379,7 +381,7 @@ function skeleton(name) {
     '<div class="pmt-cz-dock" data-dock hidden aria-hidden="true"><span class="pmt-cz-docktitle">Preview</span><div class="pmt-cz-dockbox pmed-pvbox" data-dock-box></div></div></nav>';
   /* colours */
   html += '<section class="pmt-cz-group" data-group="colors" aria-labelledby="pmed-cz-g-colors">' + ghead('colors', 'Colors', 'One catalog with the terminal. Hover a scheme to see it here and on the editor; click to keep it.') +
-    '<div class="pmt-cz-findrow"><input class="pmt-cz-search pmt-pop-search" type="search" placeholder="Find a scheme" aria-label="Find a scheme"' + NOTAG + '><span class="pmt-cz-findn" data-find-n></span></div>' +
+    '<div class="pmt-cz-findrow"><input class="pmt-cz-search pmt-pop-search" type="search" placeholder="Find a scheme" aria-label="Find a scheme"' + NOTAG + '><span class="pmt-cz-findn" data-find-n role="status" aria-live="polite" aria-atomic="true"></span></div>' +
     '<div class="pmt-cz-tiles pmt-cz-schemes" role="radiogroup" aria-label="Code colours">' + schemeTiles() + '</div>' +
     '<p class="pmt-cz-note" data-note-colors hidden></p>' +
     '<div class="pmt-cz-chips">' + chip('schemePair', 'Switch with light and dark', 'A scheme you pick swaps for its family’s other version when the app changes mode.') +
@@ -557,6 +559,9 @@ function* construct(opts) {
   var setA = function (e, n, x) { if (e && e.getAttribute(n) !== x) e.setAttribute(n, x); };
   // text written only when it differs: a rewrite of the same words still lays the page out again, once per slider step
   var setT = function (e, x) { if (e && e.textContent !== x) e.textContent = x; };
+  // hidden written only when it differs, like setA and setT: the sheet's unseen redraw after a look change rewrote the hidden
+  // it held on every chip, weight and group control (pm7-perf lane K)
+  var setH = function (e, h) { h = !!h; if (e && e.hidden !== h) e.hidden = h; };
   function fmt(key, x) {
     if (x === null || x === undefined || x === '' || isNaN(x)) return '';
     if (key === 'lineHeight') return Number(x).toFixed(2) + '×';
@@ -584,7 +589,7 @@ function* construct(opts) {
     if (I.own) return name + ' is indented with ' + I.own + ' spaces, so Tab puts in ' + I.own + '.';
     return name + ' has no indentation to follow yet, so Tab puts in ' + (I.tabs ? 'a tab, ' + I.unit + ' columns wide.' : I.unit + ' spaces.');
   }
-  function note(sel, text) { var e = root.querySelector(sel); if (!e) return; e.hidden = !text; if (e.textContent !== text) e.textContent = text; }
+  function note(sel, text) { var e = root.querySelector(sel); if (!e) return; setH(e, !text); if (e.textContent !== text) e.textContent = text; }
   /* the look's own code colours (Follow look), read off the editor once per look, colour mode and phosphor,
      in a frame of its own; until it lands the screen keeps what it drew */
   var LOOK_TOKENS = ['--pmw-ed-fg', '--pmw-ed-bg', '--pmw-ed-gutbg', '--pmw-ed-s-kw', '--pmw-ed-s-fn', '--pmw-ed-s-str', '--pmw-ed-s-com', '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2'];
@@ -699,7 +704,7 @@ function* construct(opts) {
     append(function () {
       tiles.forEach(function (tile, i) {
         if (heights[i] === null) { tile.removeAttribute('data-pmed-sized'); return; }
-        tile.style.containIntrinsicBlockSize = 'auto ' + heights[i] + 'px'; tile.setAttribute('data-pmed-sized', '');
+        tile.style.containIntrinsicBlockSize = 'auto ' + heights[i] + 'px'; if (!tile.hasAttribute('data-pmed-sized')) tile.setAttribute('data-pmed-sized', '');
       });
       root.classList.add('pmed-contained'); contained = true;
     });
@@ -765,7 +770,7 @@ function* construct(opts) {
       if (key === 'ligatures' && o && !R.font.ligatures) word = 'On · this face has none';
       if (st.textContent !== word) st.textContent = word;
       c.classList.toggle('pmt-cz-is-mine', mine(key));
-      var box = c.parentNode, more = box.querySelector('.pmt-cz-chipmore'); if (more) more.hidden = !o;
+      var box = c.parentNode, more = box.querySelector('.pmt-cz-chipmore'); if (more) setH(more, !o);
       box.classList.toggle('pmt-cz-lit', o);
     });
     [].forEach.call(root.querySelectorAll('input[type="range"][data-key]'), function (r) {
@@ -776,18 +781,20 @@ function* construct(opts) {
     });
     setT(root.querySelector('[data-out="fontSize"]'), fmt('fontSize', R.font.size));
     setA(root.querySelector('[data-act="default"][data-key="fontSize"]'), 'aria-disabled', String(!mine('fontSize')));
-    root.querySelector('[data-when-line]').hidden = R.caret.shape !== 'line';
-    root.querySelector('[data-chip="activeIndent"]').hidden = R.lines.guides === 'off';
+    setH(root.querySelector('[data-when-line]'), R.caret.shape !== 'line');
+    setH(root.querySelector('[data-chip="activeIndent"]'), R.lines.guides === 'off');
     /* weights the face has */
     var wr = R.font.weights;
-    [].forEach.call(root.querySelectorAll('[data-key="fontWeight"]'), function (b) { var n = Number(b.getAttribute('data-value')); b.hidden = !wr || n < wr[0] || n > wr[1]; });
+    [].forEach.call(root.querySelectorAll('[data-key="fontWeight"]'), function (b) { var n = Number(b.getAttribute('data-value')); setH(b, !wr || n < wr[0] || n > wr[1]); });
     var why = root.querySelector('[data-weight-why]'), wtxt = R.font.id === 'jetbrains-mono' ? 'JetBrains Mono comes from Regular to Heavy here.' : '';
     if (why.textContent !== wtxt) why.textContent = wtxt;
     /* the Follow look tile: the look's own colours, read from the editor's own tokens */
     var fa = root.querySelector('[data-follow-art]');
     if (fa && lt && fa.getAttribute('data-for') !== lkKey) {
       var g = function (n) { return lt[n] || ''; };
-      fa.innerHTML = codeArt({ bg: g('--pmw-ed-gutbg') || g('--pmw-ed-bg'), fg: g('--pmw-ed-fg'), kw: g('--pmw-ed-s-kw'), fn: g('--pmw-ed-s-fn'), str: g('--pmw-ed-s-str'), com: g('--pmw-ed-s-com'), b0: g('--pmw-ed-bp-0'), word: 'the look' });
+      var art = codeArt({ bg: g('--pmw-ed-gutbg') || g('--pmw-ed-bg'), fg: g('--pmw-ed-fg'), kw: g('--pmw-ed-s-kw'), fn: g('--pmw-ed-s-fn'), str: g('--pmw-ed-s-str'), com: g('--pmw-ed-s-com'), b0: g('--pmw-ed-bp-0'), word: 'the look' });
+      var parsed = document.createElement('template'); parsed.innerHTML = art;
+      if (fa.innerHTML !== parsed.innerHTML) fa.innerHTML = art;
       fa.setAttribute('data-for', lkKey);
     }
     var fm = root.querySelector('[data-follow-meta]'), fs2 = EL().followScheme(), ftxt = fs2 ? 'Like ' + fs2.name : 'The look’s own';
@@ -819,7 +826,7 @@ function* construct(opts) {
       var k = GROUP_KEYS[gp[0]].filter(mine).length, t = k ? k + ' changed' : '';
       var c = root.querySelector('[data-count="' + gp[0] + '"]'); if (c.textContent !== t) c.textContent = t;
       var nv = root.querySelector('[data-navn="' + gp[0] + '"]'); if (nv.textContent !== (k ? String(k) : '')) nv.textContent = k ? String(k) : '';
-      root.querySelector('[data-act="group-reset"][data-group="' + gp[0] + '"]').hidden = !k;
+      setH(root.querySelector('[data-act="group-reset"][data-group="' + gp[0] + '"]'), !k);
     });
     var ft = root.querySelector('[data-foot-n]'), ftt = n ? n + (n === 1 ? ' change from the look in ' : ' changes from the look in ') + (scope === 'tab' ? 'this editor' : 'all editors') : 'Following the look';
     if (ft.textContent !== ftt) ft.textContent = ftt;
@@ -900,7 +907,7 @@ function* construct(opts) {
     var s = root.querySelectorAll('.pmt-cz-scrim > i'), x0 = hole ? Math.max(0, r.left) : 0, y0 = hole ? Math.max(0, r.top) : 0, x1 = hole ? Math.min(W, r.right) : 0, y1 = hole ? Math.min(H, r.bottom) : 0;
     var rects = hole ? [[0, 0, W, y0], [0, y1, W, H - y1], [0, y0, x0, y1 - y0], [x1, y0, W - x1, y1 - y0]] : [[0, 0, W, H], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
     rects.forEach(function (q, i) { s[i].style.cssText = 'left:' + q[0] + 'px;top:' + q[1] + 'px;width:' + Math.max(0, q[2]) + 'px;height:' + Math.max(0, q[3]) + 'px'; });
-    var fr = root.querySelector('.pmt-cz-frame'); fr.hidden = !hole;
+    var fr = root.querySelector('.pmt-cz-frame'); setH(fr, !hole);
     if (hole) fr.style.cssText = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px';
     root.classList.toggle('pmt-cz-narrow', narrow);
     syncDock();
@@ -1396,7 +1403,7 @@ function* construct(opts) {
   function dockTo(on) {
     if (!preview || !!on === !dock.hidden) return;
     (on ? dockBox : homeBox).appendChild(pvHost);
-    dock.hidden = !on; root.classList.toggle('pmt-cz-docked', !!on);
+    setH(dock, !on); root.classList.toggle('pmt-cz-docked', !!on);
     if (on) Motion.play(dock);
     preview.demo.relayout();
   }
@@ -1503,7 +1510,7 @@ function* construct(opts) {
     // Return focus before making the sheet inert. Its measured contents and
     // all exit effects stay mounted through the family animation.
     if (!noFocus) { try { (anchor && anchor.isConnected ? anchor : null) ? anchor.focus({ preventScroll: true }) : inst.focus(); } catch (_) {} }
-    root.setAttribute('aria-hidden', 'true'); focusStopsOn(false);
+    root.setAttribute('aria-hidden', 'true'); dialog.removeAttribute('aria-modal'); focusStopsOn(false);
     // Keep the whole sheet through its exit and reuse it on the next visit.
     // Neither teardown nor a fresh 37-tile build belongs inside an animation.
     function park() {
@@ -1565,7 +1572,7 @@ function* construct(opts) {
     if (needsPaint) paint(); else PMW.czFit(root, fitInFrame);
     fitLater = null;
     focusStopsOn(true);
-    root.removeAttribute('aria-hidden');
+    root.removeAttribute('aria-hidden'); dialog.setAttribute('aria-modal', 'true');
     passThrough(true);
     root.classList.remove('pmed-prepared');
     // the entrance's end lets the pointer hit the sheet too, for a pointer that has not moved

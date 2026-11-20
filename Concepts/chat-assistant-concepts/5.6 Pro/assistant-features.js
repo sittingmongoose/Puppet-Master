@@ -643,13 +643,13 @@
     var mark=window.PM56_SHELL&&window.PM56_SHELL.pmxKindMark?window.PM56_SHELL.pmxKindMark('eli5',13):icon('chat',13);
     var out='<button class="menu-item af-wand-row" data-action="af-eli5-toggle" role="checkbox" aria-checked="'+eff+'">'+
       '<span class="menu-icon">'+mark+'</span>'+
-      '<span class="menu-copy"><strong>ELI5 · Explain simply in this chat</strong>'+
-      '<span>Answers use everyday words. Your code and files never change.'+(override?'':' Follows your usual setting.')+'</span></span>'+
+      '<span class="menu-copy"><strong class="menu-ttl">ELI5 · Explain simply in this chat</strong>'+
+      '<span class="menu-sub">Answers use everyday words. Your code and files never change.'+(override?'':' Follows your usual setting.')+'</span></span>'+
       '<span class="af-checkbox'+(eff?' checked':'')+'">'+(eff?icon('check',11):'')+'</span>'+
       '</button>';
     if(override){
       out+='<button class="menu-item af-wand-subrow" data-action="af-eli5-reset">'+
-        '<span class="menu-icon"></span><span class="menu-copy"><span>Follow my usual setting ('+(F.eli5.appDefault?'On':'Off')+')</span></span></button>';
+        '<span class="menu-icon"></span><span class="menu-copy"><span class="menu-sub">Follow my usual setting ('+(F.eli5.appDefault?'On':'Off')+')</span></span></button>';
     }
     return out;
   }
@@ -781,7 +781,7 @@
     var icon=ctx.icon;
     return '<button class="menu-item af-wand-row" data-action="af-revert-seed">'+
       '<span class="menu-icon">'+icon('changes',13)+'</span>'+
-      '<span class="menu-copy"><strong>Simulate an agent file edit</strong><span>Adds a demo turn for Revert Last Agent Edit · cycles eligible / ineligible / conflicted</span></span></button>';
+      '<span class="menu-copy"><strong class="menu-ttl">Simulate an agent file edit</strong><span class="menu-sub">Adds a demo turn for Revert Last Agent Edit · cycles eligible / ineligible / conflicted</span></span></button>';
   }
 
   /* =====================================================================
@@ -1032,13 +1032,13 @@
     if(!inv || inv.status==='complete'){
       return '<button class="menu-item af-wand-row" data-action="af-debug-start">'+
         '<span class="menu-icon">'+icon('flask',13)+'</span>'+
-        '<span class="menu-copy"><strong>Start Investigation Context</strong><span>'+(inv?'Previous investigation complete · start another':'Target, baseline, instrumentation, reproduction, analysis, repair, verification, cleanup')+'</span></span></button>';
+        '<span class="menu-copy"><strong class="menu-ttl">Start Investigation Context</strong><span class="menu-sub">'+(inv?'Previous investigation complete · start another':'Target, baseline, instrumentation, reproduction, analysis, repair, verification, cleanup')+'</span></span></button>';
     }
     var label = inv.status==='attention_required' ? 'Cleanup needs attention · Recover' : 'Advance · phase '+(inv.phaseIndex+1)+'/8';
     var action = inv.status==='attention_required' ? 'af-debug-recover' : 'af-debug-advance';
     return '<button class="menu-item af-wand-row" data-action="'+action+'" data-value="'+e(inv.id)+'">'+
       '<span class="menu-icon">'+icon('flask',13)+'</span>'+
-      '<span class="menu-copy"><strong>Investigation Context</strong><span>'+e(label)+'</span></span></button>';
+      '<span class="menu-copy"><strong class="menu-ttl">Investigation Context</strong><span class="menu-sub">'+e(label)+'</span></span></button>';
   }
 
   /* =====================================================================
@@ -1390,7 +1390,7 @@
     var t=ctx.thread, e=ctx.esc; if(!t || ctx.position!=='after-rename') return '';
     var why=regenBlock(t);
     return '<button class="menu-item'+(why?' af-title-regen-off':'')+'" data-action="af-title-regenerate" data-value="'+e(t.id)+'"'+(why?' disabled aria-disabled="true"':'')+'>'+
-      '<span class="menu-icon">'+ctx.icon('refresh',13)+'</span><span class="menu-copy"><strong>Name it for me</strong><span>'+
+      '<span class="menu-icon">'+ctx.icon('refresh',13)+'</span><span class="menu-copy"><strong class="menu-ttl">Name it for me</strong><span class="menu-sub">'+
       e(why || (F.title.locks[t.id] ? 'Replaces the name you gave it' : 'Names it from your first message'))+'</span></span></button>';
   });
 
@@ -1662,12 +1662,12 @@
     var icon=ctx.icon;
     return eli5WandRows(ctx) + revertWandRow(ctx) + debugWandRow(ctx) +
       '<button class="menu-item af-wand-row" data-action="af-memory-open"><span class="menu-icon">'+icon('kind-memory',13)+'</span>'+
-      '<span class="menu-copy"><strong>Memory</strong><span>Taught (lock-aware) and automatic — two owners, one panel</span></span></button>'+
+      '<span class="menu-copy"><strong class="menu-ttl">Memory</strong><span class="menu-sub">Taught (lock-aware) and automatic — two owners, one panel</span></span></button>'+
       '<button class="menu-item af-wand-row" data-action="af-teach-open"><span class="menu-icon">'+icon('kind-teach',13)+'</span>'+
-      '<span class="menu-copy"><strong>Teach Puppet Master…</strong><span>Durable memory capture · /teach or natural language. Not the Teacher Persona.</span></span></button>'+
+      '<span class="menu-copy"><strong class="menu-ttl">Teach Puppet Master…</strong><span class="menu-sub">Durable memory capture · /teach or natural language. Not the Teacher Persona.</span></span></button>'+
       /* New chat defaults (8.14): the defaults kind mark (a speech bubble with a small plus), never sparkles */
       '<button class="menu-item af-wand-row" data-action="af-settings-open"><span class="menu-icon">'+(window.PM56_SHELL&&window.PM56_SHELL.pmxKindMark?window.PM56_SHELL.pmxKindMark('defaults',13):icon('settings',13))+'</span>'+
-      '<span class="menu-copy"><strong>New chat defaults…</strong><span>How new chats start: explain simply, show thinking, and how chats get named.</span></span></button>';
+      '<span class="menu-copy"><strong class="menu-ttl">New chat defaults…</strong><span class="menu-sub">How new chats start: explain simply, show thinking, and how chats get named.</span></span></button>';
   });
 
   /* transcriptMessage extra is {m,t} — NOT {message:m} like messageOverflow /

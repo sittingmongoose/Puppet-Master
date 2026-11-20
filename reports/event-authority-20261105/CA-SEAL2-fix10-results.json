@@ -1,0 +1,366 @@
+{
+  "schema_id": "pm.assurance.ca_seal2.fix10.v1",
+  "base_commit": "fe09cf2be8f7f11ffc5c1f8f5980f40d68ced660",
+  "code_commit": "422727d7f7b1431d3e829eadf45da772c97db814",
+  "validator_sha256": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+  "checker_sha256": "4d3c66e2624e5220b0c5666b75fa6462e34da64b2cbefda800be36c1d7272ea4",
+  "corpus": {
+    "passed": 200,
+    "checks": 200,
+    "original_map": true,
+    "replay_caches": false,
+    "scratch_copy_passed": 200,
+    "scratch_copy_checks": 200,
+    "verified_sources": 597,
+    "prior_tests_retained": 194,
+    "new_tests": [
+      "negative_preserved_changed_enclosing_header",
+      "negative_preserved_changed_occurrence",
+      "negative_preserved_duplicate_claim",
+      "negative_preserved_inserted_sole_claim",
+      "negative_preserved_rebinding_inserted_call",
+      "positive_occurrence_map_controls"
+    ],
+    "changed_prior_result_records": []
+  },
+  "findings": {
+    "CA2-C10-B01": "fixed: preservation is a computed CA-SEAL occurrence map; each claim must be its own node's mapped counterpart, once"
+  },
+  "occurrence_map": {
+    "baseline": "17c842445a2623bb0334ba8d6932e7a6bf088967",
+    "aligned_functions": 4,
+    "new_functions": 11,
+    "aligned_blocks": 8,
+    "aligned_lines": 1306,
+    "eligible_nodes": 1126,
+    "ineligible_nodes": {
+      "changed enclosing header": 1,
+      "function new since CA-SEAL": 455,
+      "inserted or changed line": 35
+    },
+    "functions": {
+      "multi_family_receipt_state": {
+        "history": true,
+        "aligned_blocks": 2,
+        "aligned_lines": 28,
+        "nodes": 57,
+        "eligible_nodes": 51
+      },
+      "post_august_validator_pin": {
+        "history": true,
+        "aligned_blocks": 2,
+        "aligned_lines": 46,
+        "nodes": 57,
+        "eligible_nodes": 56
+      },
+      "recount_json": {
+        "history": false,
+        "aligned_blocks": 0,
+        "aligned_lines": 0,
+        "nodes": 18,
+        "eligible_nodes": 0
+      },
+      "recount_object": {
+        "history": false,
+        "aligned_blocks": 0,
+        "aligned_lines": 0,
+        "nodes": 2,
+        "eligible_nodes": 0
+      },
+      "recount_anchor": {
+        "history": false,
+        "aligned_blocks": 0,
+        "aligned_lines": 0,
+        "nodes": 25,
+        "eligible_nodes": 0
+      },
+      "third_change_validator_pin": {
+        "history": false,
+        "aligned_blocks": 0,
+        "aligned_lines": 0,
+        "nodes": 20,
+        "eligible_nodes": 0
+      },
+      "recount_change_state": {
+        "history": false,
+        "aligned_blocks": 0,
+        "aligned_lines": 0,
+        "nodes": 35,
+        "eligible_nodes": 0
+      },
+      "recount_relative": {
+        "history": false,
+        "aligned_blocks": 0,
+        "aligned_lines": 0,
+        "nodes": 18,
+        "eligible_nodes": 0
+      },
+      "recount_source_bytes": {
+        "history": false,
+        "aligned_blocks": 0,
+        "aligned_lines": 0,
+        "nodes": 26,
+        "eligible_nodes": 0
+      },
+      "recount_frozen_inputs": {
+        "history": false,
+        "aligned_blocks": 0,
+        "aligned_lines": 0,
+        "nodes": 135,
+        "eligible_nodes": 0
+      },
+      "recount_outcomes": {
+        "history": false,
+        "aligned_blocks": 0,
+        "aligned_lines": 0,
+        "nodes": 146,
+        "eligible_nodes": 0
+      },
+      "recount_validation": {
+        "history": false,
+        "aligned_blocks": 0,
+        "aligned_lines": 0,
+        "nodes": 23,
+        "eligible_nodes": 0
+      },
+      "recount_snapshot_pins": {
+        "history": false,
+        "aligned_blocks": 0,
+        "aligned_lines": 0,
+        "nodes": 7,
+        "eligible_nodes": 0
+      },
+      "main": {
+        "history": true,
+        "aligned_blocks": 2,
+        "aligned_lines": 1202,
+        "nodes": 1020,
+        "eligible_nodes": 1009
+      },
+      "build_receipt": {
+        "history": true,
+        "aligned_blocks": 2,
+        "aligned_lines": 30,
+        "nodes": 28,
+        "eligible_nodes": 10
+      }
+    },
+    "preserved_rows_matched": 620
+  },
+  "occurrence_audit": {
+    "preserved_rows": 620,
+    "preserved_rows_matching_computed_counterpart": 620,
+    "preserved_rows_agreeing_with_recheck_whole_file_line_map": 620,
+    "historical_occurrences_claimed_more_than_once": 0,
+    "eligible_node_outcomes": {
+      "non-predicate data operation": 506,
+      "preserved August predicate": 620
+    },
+    "ineligible_outcomes": {
+      "killed by": 15,
+      "non-predicate data operation": 20,
+      "same-predicate duplicate": 1
+    },
+    "rows_changing_outcome": []
+  },
+  "preservation_probes": [
+    {
+      "label": "rebinding_inserted_call",
+      "round9_rule": "PASS",
+      "round10_rule": "FAIL: preserved occurrence mismatch",
+      "problem_counts": {
+        "claims_another_occurrence": 0,
+        "not_an_unchanged_occurrence": 1,
+        "occurrence_claimed_twice": 1
+      },
+      "single_category_cuts": {
+        "without claims_another_occurrence": "FAIL",
+        "without not_an_unchanged_occurrence": "FAIL",
+        "without occurrence_claimed_twice": "FAIL"
+      }
+    },
+    {
+      "label": "inserted_sole_claim",
+      "round9_rule": "PASS",
+      "round10_rule": "FAIL: preserved occurrence mismatch",
+      "problem_counts": {
+        "claims_another_occurrence": 0,
+        "not_an_unchanged_occurrence": 1,
+        "occurrence_claimed_twice": 0
+      },
+      "single_category_cuts": {
+        "without claims_another_occurrence": "FAIL",
+        "without not_an_unchanged_occurrence": "PASS",
+        "without occurrence_claimed_twice": "FAIL"
+      }
+    },
+    {
+      "label": "duplicate_claim",
+      "round9_rule": "PASS",
+      "round10_rule": "FAIL: preserved occurrence mismatch",
+      "problem_counts": {
+        "claims_another_occurrence": 1,
+        "not_an_unchanged_occurrence": 0,
+        "occurrence_claimed_twice": 1
+      },
+      "single_category_cuts": {
+        "without claims_another_occurrence": "FAIL",
+        "without not_an_unchanged_occurrence": "FAIL",
+        "without occurrence_claimed_twice": "FAIL"
+      }
+    },
+    {
+      "label": "changed_occurrence",
+      "round9_rule": "PASS",
+      "round10_rule": "FAIL: preserved occurrence mismatch",
+      "problem_counts": {
+        "claims_another_occurrence": 0,
+        "not_an_unchanged_occurrence": 1,
+        "occurrence_claimed_twice": 0
+      },
+      "single_category_cuts": {
+        "without claims_another_occurrence": "FAIL",
+        "without not_an_unchanged_occurrence": "PASS",
+        "without occurrence_claimed_twice": "FAIL"
+      }
+    },
+    {
+      "label": "changed_enclosing_header",
+      "round9_rule": "PASS",
+      "round10_rule": "FAIL: preserved occurrence mismatch",
+      "problem_counts": {
+        "claims_another_occurrence": 0,
+        "not_an_unchanged_occurrence": 2,
+        "occurrence_claimed_twice": 0
+      },
+      "single_category_cuts": {
+        "without claims_another_occurrence": "FAIL",
+        "without not_an_unchanged_occurrence": "PASS",
+        "without occurrence_claimed_twice": "FAIL"
+      }
+    }
+  ],
+  "cycle10_replays": {
+    "rebinding_witness": {
+      "coverage": "FAIL: preserved occurrence mismatch",
+      "problem_counts": {
+        "claims_another_occurrence": 0,
+        "not_an_unchanged_occurrence": 1,
+        "occurrence_claimed_twice": 1
+      }
+    },
+    "astra6_coverage_insertions": [
+      {
+        "label": "isinstance_assignment",
+        "missing": 1,
+        "stale": 0,
+        "refused": true
+      },
+      {
+        "label": "boolean_bitand_assignment",
+        "missing": 1,
+        "stale": 0,
+        "refused": true
+      },
+      {
+        "label": "bare_name_filter",
+        "missing": 1,
+        "stale": 0,
+        "refused": true
+      },
+      {
+        "label": "unknown_call",
+        "missing": 1,
+        "stale": 0,
+        "refused": true
+      },
+      {
+        "label": "known_predicate_call",
+        "missing": 1,
+        "stale": 0,
+        "refused": true
+      }
+    ],
+    "adjacent_insertions": [
+      {
+        "label": "tuple",
+        "missing": 1
+      },
+      {
+        "label": "attribute",
+        "missing": 1
+      },
+      {
+        "label": "subscript",
+        "missing": 1
+      },
+      {
+        "label": "xor",
+        "missing": 1
+      },
+      {
+        "label": "walrus_comprehension",
+        "missing": 2
+      },
+      {
+        "label": "any_generator",
+        "missing": 2
+      },
+      {
+        "label": "all_generator",
+        "missing": 2
+      },
+      {
+        "label": "default_argument",
+        "missing": 2
+      },
+      {
+        "label": "lambda",
+        "missing": 1
+      },
+      {
+        "label": "alias",
+        "missing": 1
+      }
+    ],
+    "hidden_builder": {
+      "coverage_refused": true,
+      "corpus_exit": 1,
+      "corpus_passed": 199,
+      "corpus_checks": 200,
+      "failed": [
+        "positive_complete_predicate_coverage"
+      ],
+      "restored": {
+        "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+        "reports/event-authority-20261105/CA-SEAL2-coverage.json": "d320b5494c1816cfaa1634d15c8ef5ef6a5da6f46b2a14c5ffef70459820629f",
+        "reports/event-authority-20261105/seal-check-recount-receipt.json": "899661007cdeb012ec5254d63c36629d41dd1adafd958fb9de9ebdcb6b3739da"
+      }
+    },
+    "b02_cuts": [
+      {
+        "label": "exact-member",
+        "passed": 197,
+        "checks": 200,
+        "failed": [
+          "negative_outcome_missing_name",
+          "negative_outcome_duplicate_name",
+          "negative_outcome_extra_name"
+        ]
+      },
+      {
+        "label": "admission",
+        "passed": 199,
+        "checks": 200,
+        "failed": [
+          "negative_missing_complete_admission_record"
+        ]
+      }
+    ],
+    "history_audit": {
+      "rows": 620,
+      "line_provenance_mismatches": 0
+    }
+  },
+  "evidence_directory": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix10"
+}

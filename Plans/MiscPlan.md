@@ -1326,6 +1326,34 @@ Required rules:
 - resolved, cancelled, and superseded investigations attempt cleanup automatically; failed cleanup transitions the investigation to `failed_cleanup` instead of pretending success
 - unresolved instrumentation remnants must remain user-visible until cleaned up or explicitly accepted as follow-up work
 
+### DL-429 approved probe and cleanup transitions
+
+**A’s proposed meanings:** A lane is one identified set of temporary changes on one target. Cleanup/rollback means undoing those changes and removing temporary connections. A durable fix is an explicitly accepted lasting code change, distinct from temporary debugging. Planned = installation not complete; Active = installed and ready; Collecting = gathering evidence; Cleanup pending = removal owed or underway; Cleanup failed = a removal attempt failed; Cleaned = this probe is finished with no temporary changes or debug connections left. Cleanup results are **Not needed** (nothing required undoing), **Pending** (undoing is still owed), **Succeeded** (undoing was verified), **Failed** (the attempt failed), and **Superseded** (responsibility handed over, with remaining work still visible). Pending while Active/Collecting means later removal is owed, not that removal is running.
+
+**A’s complete allowed changes** (each arrow saves a change entry; “/” separates probe status and cleanup result):
+
+| What happens | Before → after | What is recorded or preserved |
+|---|---|---|
+| Installation succeeds | Planned / Not needed → Active / Pending | Installation succeeded; later removal is owed. |
+| Evidence collection starts | Active / Pending → Collecting / Pending | Collection began. |
+| Collection pauses or finishes while the probe remains installed | Collecting / Pending → Active / Pending | Collection outcome; removal is still owed. |
+| Installation or collection fails, or work ends, and proof shows the entire lane never needed any undoing and has no leftover change, process or attachment | Planned / Not needed, Active / Pending, or Collecting / Pending → Cleaned / Not needed | Save failure/end reason and no-leftovers proof. “Collection changed nothing” alone is insufficient if an earlier installation remains. |
+| Installation partly fails, collection fails, or work resolves/is cancelled with known or possible leftovers | Planned / Not needed, Active / Pending, or Collecting / Pending → Cleanup pending / Pending | Save reason, exact remaining obligations and recovery link; attempt cleanup automatically. |
+| Inspection after an uncertain failure proves that removal was never needed | Cleanup pending / Pending, Cleanup pending / Superseded, or Cleanup failed / Failed → Cleaned / Not needed | Save whole-lane proof that no temporary change, process or attachment ever required undoing. Retain the earlier uncertainty/failure; never relabel actual removal as Not needed. |
+| Removal or undoing temporary changes succeeds and no temporary resources remain | Cleanup pending / Pending → Cleaned / Succeeded | Save proof of removal, including detaching temporary debugger/profiler connections. |
+| Removal, rollback or detach fails | Cleanup pending / Pending → Cleanup failed / Failed | Save remaining files, settings, processes or connections; show failure even when disk files are clean. |
+| An authorized cleanup retry begins | Cleanup failed / Failed → Cleanup pending / Pending | Save retry and attempt number; at most two retries after the initial attempt. |
+| Retry succeeds or fails | Cleanup pending / Pending → Cleaned / Succeeded or Cleanup failed / Failed | Same success proof or visible leftovers as above. |
+| Newer work replaces an unfinished probe, or responsibility passes to an explicitly approved durable fix, while cleanup may still be owed | Planned / Not needed, Active / Pending, Collecting / Pending, Cleanup pending / Pending, or Cleanup failed / Failed → Cleanup pending / Superseded | Save old/new responsible owners, linked work, remaining obligations and retry count. Handoff proves no removal. Replacement triggers automatic cleanup; promotion uses the existing approval route. |
+| Receiving owner starts or resumes that cleanup | Cleanup pending / Superseded → Cleanup pending / Pending | Save acceptance and resumed removal; handoff never resets the retry ceiling. Resuming after a failed attempt is a retry under that ceiling. |
+| Receiving owner accepts cleanup after an earlier failed attempt but no retry is authorized or both retries are already used | Cleanup pending / Superseded → Cleanup failed / Failed | Save acceptance and the still-failed outcome; do not run another attempt or claim cleanup succeeded. |
+| Newer work replaces a lane proved never to have needed cleanup | Planned / Not needed, Active / Pending, or Collecting / Pending → Cleaned / Not needed | Save replacement reason and linked work with proof there are no leftovers anywhere in that lane. |
+
+The initial probe record is **Planned / Not needed**; creation is not a previous-to-next change. No other status/result pair or transition is allowed by A. Failed cleanup with no authorized retry, or both retries used, stays **Cleanup failed / Failed** with leftovers visible. A requirement to preserve a change or an accepted follow-up does not claim Cleaned; handed-over cleanup stays **Cleanup pending / Superseded** until its receiving owner acts. A second handoff waits for that acceptance; reprocessing the same handoff adds nothing. Failed or uncertain handoff leaves previous responsibility and status in place. A Cleaned probe never restarts; later installation gets a new linked probe. No new code-changing debugging starts on the same target until leftovers are resolved, undone or explicitly promoted into the durable fix. Two investigations may not add overlapping temporary changes. Recovery snapshots taken before temporary changes, exact setting restoration and hiding secrets remain required. This chooses no additional history lifetime.
+
+
+CV-574 owns the source-to-event binding and closed payload/detail schemas. The state/result aliases are collector_state = manifest.state = event.state and cleanup_result = manifest.cleanup_outcome = event.rollback_state; previous fields come from the original lane. scope_kind repeats its exact declared scope, not EventRecord scope. Every saved change includes its reason and before/after values, with original proof/obligation/recovery refs; creation, unchanged observation and replay emit nothing. No new history lifetime is selected.
+
 ### Investigation instrumentation lifecycle contract
 
 Cursor-like Debug Mode remains an investigation workflow reference, not automatic MVP scope. `/blog`-sourced reference behavior is hypothesis-first: collect runtime evidence through temporary-instrumentation, local debug-server collection on the editor-side, reproduction, interpretation, small targeted patching, user re-verifies, and cleanup. The fit is regressions, timing `/races`, performance, and "reproduces but unclear from static read"; pure compile-time failures rely on build `/test` capture instead.
@@ -6074,15 +6102,22 @@ plan_unit_id: M-079
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MiscPlan.md
-canonical_text: Instrumentation-first debug behavior is not grounded MVP behavior until the temporary-instrumentation patch pipeline declares lifecycle, collector state, evidence sink, cleanup, rollback, and failed-cleanup semantics.
+canonical_text: Instrumentation-first debug behavior is not grounded MVP behavior until the temporary-instrumentation
+  patch pipeline declares lifecycle, collector state, evidence sink, cleanup, rollback, and failed-cleanup
+  semantics. DL-429 now supplies the complete approved six-state/five-result meanings and transition table
+  in this owner; CV-574 binds original before/after values, reason, whole-lane proof, handoff acceptance
+  and the unchanged two-retry ceiling.
 gui_related: false
-gui_classification_reason: The unit covers backend debug pipeline lifecycle, evidence, cleanup, and rollback contracts rather than direct GUI presentation.
+gui_classification_reason: The unit covers backend debug pipeline lifecycle, evidence, cleanup, and rollback
+  contracts rather than direct GUI presentation.
 split_recommended: true
 depends_on:
 - M-078
 unblocks: []
 acceptance_criteria:
-- Temporary-instrumentation patch pipeline declares an instrumentation_id, collector_state, install/collect/remove sequence, debug-specific mutation rules, evidence sink contract, and explicit write cleanup/rollback semantics.
+- Temporary-instrumentation patch pipeline declares an instrumentation_id, collector_state, install/collect/remove
+  sequence, debug-specific mutation rules, evidence sink contract, and explicit write cleanup/rollback
+  semantics.
 - Resolved, cancelled, and superseded investigations attempt cleanup automatically.
 - Failed residue uses lifecycle failed_cleanup with stop_reason_code = investigation.cleanup_failed.
 - Instrumentation-first behavior is not treated as grounded MVP behavior until this contract exists.
@@ -6100,6 +6135,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0101
+- Plans/Decision_Log.md#DL-429
+- Plans/Contracts_V0.md#CV-574
 preserved_exact_tokens:
 - Investigation instrumentation lifecycle contract
 - Instrumentation-first behavior is not grounded MVP behavior
@@ -6109,7 +6146,7 @@ preserved_exact_tokens:
 - collector-state
 - install/collect/remove
 - evidence sink contract
-- "/cleanup/rollback"
+- /cleanup/rollback
 - failed_cleanup
 - stop_reason_code = investigation.cleanup_failed
 negative_constraints:
@@ -6118,12 +6155,14 @@ compatibility_only_notes:
 - blog-sourced Cursor-like behavior is hypothesis-first reference behavior only.
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Runtime, evidence, storage, assistant-chat, and GitHub integration owner docs retain authority for concrete storage, evidence, and export mechanics.
+- Runtime, evidence, storage, assistant-chat, and GitHub integration owner docs retain authority for concrete
+  storage, evidence, and export mechanics.
 owner_hints:
 - Plans/MiscPlan.md
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md'
-split_recommendation_reason: Temporary instrumentation lifecycle spans collector state, mutation rules, evidence, cleanup, rollback, and failed residue semantics.
+split_recommendation_reason: Temporary instrumentation lifecycle spans collector state, mutation rules,
+  evidence, cleanup, rollback, and failed residue semantics.
 ```
 
 ### M-080 - Debug Cleanup Residue Visibility And Bundle Records

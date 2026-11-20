@@ -80,7 +80,14 @@ plan_unit_id: WN-001
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Working_Notebook.md
-canonical_text: "Plans/Working_Notebook.md is the sole semantic owner of the PM-owned Working Notebook: notebook identity and scope kinds, entry envelope, revisions and idempotency, epistemic vocabulary, resume capsule content, notebook checkpoint content, capture rules, sharing and derivation restrictions, promotion requests, validity/staleness, and retention semantics. Context-window transition policy is owned by Prompt_Pipeline, transition runtime by Shared_Integration_Runtime, Assistant memory by assistant-memory-subsystem, Attempt Journal/Parent Summary by agent-rules-context, permissions by Permissions_System, and physical storage machinery by storage-plan."
+canonical_text: 'Plans/Working_Notebook.md is the sole semantic owner of the PM-owned Working Notebook:
+  notebook identity and scope kinds, entry envelope, revisions and idempotency, epistemic vocabulary,
+  resume capsule content, notebook checkpoint content, capture rules, sharing and derivation restrictions,
+  promotion requests, validity/staleness, and retention semantics. Context-window transition policy is
+  owned by Prompt_Pipeline, transition runtime by Shared_Integration_Runtime, Assistant memory by assistant-memory-subsystem,
+  Attempt Journal/Parent Summary by agent-rules-context, permissions by Permissions_System, and physical
+  storage machinery by storage-plan. Saved Memory is for reusable notes; written Instructions, conversations
+  and task-continuation notebook entries are separate. DL-475 keeps notebook capture/resume tuning internal.'
 gui_related: false
 gui_classification_reason: Notebook semantics are runtime-agnostic specification; GUI entry points are specified in their UI owners.
 depends_on: [PDS-003, SP-243]
@@ -98,8 +105,9 @@ context_scope: working_notebook
 implementation_surfaces: [Plans/Working_Notebook.md, Plans/Prompt_Pipeline.md, Plans/Tools.md, Plans/storage-plan.md]
 node_compile_hint: {mode: semantic_owner_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-S03
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-N01
+- source_packet:PM-WNC-2026-09-05-v1:WNC-S03
+- source_packet:PM-WNC-2026-09-05-v1:WNC-N01
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["Working Notebook", "semantic owner", "resume capsule", "notebook checkpoint", "materiality-triggered capture"]
 negative_constraints:
   - Do not create a second notebook, notes, or scratchpad authority in any other Plans doc.
@@ -116,7 +124,14 @@ plan_unit_id: WN-002
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Working_Notebook.md
-canonical_text: A Working Notebook preserves authored observations, hypotheses, rejected approaches with their conditions, useful evidence locations, research progress, caveats, and continuation suggestions. Every entry carries one epistemic kind hypothesis|observation|rejected_approach|reference|continuation|user_note and one freshness value current|needs_revalidation|source_unavailable. Rejected approaches retain their scope and conditions and never become universal prohibitions. Unconfirmed hypotheses are saved without any Verified label; there is no verified epistemic kind and no notebook-authority shortcut to Verified memory.
+canonical_text: A Working Notebook preserves authored observations, hypotheses, rejected approaches with
+  their conditions, useful evidence locations, research progress, caveats, and continuation suggestions.
+  Every entry carries one epistemic kind hypothesis|observation|rejected_approach|reference|continuation|user_note
+  and one freshness value current|needs_revalidation|source_unavailable. Rejected approaches retain their
+  scope and conditions and never become universal prohibitions. Unconfirmed hypotheses are saved without
+  any Verified label; there is no verified epistemic kind and no notebook-authority shortcut to Verified
+  memory. Temporary task progress stays here, rather than being saved as a memory after every reply. Fading
+  reduces saved-note influence, archiving retains old notes and Delete is a user action.
 gui_related: false
 gui_classification_reason: Entry semantics and payload fields are not GUI work; UI rendering of these states is specified in assistant-chat-design.
 depends_on: [WN-001]
@@ -134,8 +149,9 @@ context_scope: working_notebook
 implementation_surfaces: [Plans/Working_Notebook.md, Plans/assistant-chat-design.md]
 node_compile_hint: {mode: semantic_owner_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-N01
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-N07
+- source_packet:PM-WNC-2026-09-05-v1:WNC-N01
+- source_packet:PM-WNC-2026-09-05-v1:WNC-N07
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["hypothesis", "observation", "rejected_approach", "reference", "continuation", "user_note", "needs_revalidation", "source_unavailable"]
 negative_constraints:
   - Do not add a verified epistemic kind or any notebook authority shortcut into Verified memory.
@@ -357,7 +373,17 @@ plan_unit_id: WN-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Working_Notebook.md
-canonical_text: Notebook entries are deliberately authored user-visible working artifacts, not verification results. A notebook observation never becomes Verified memory or completion evidence by being written, retrieved, repeated, or included in a checkpoint; certainty upgrades happen only through destination-owner gates such as Plans/assistant-memory-subsystem.md verification. Notebook writes cannot self-certify task success, and coordinator or worker completion truth comes from the runtime owners, never from note status prose. Inspection surfaces expose author, evidence references, and freshness so users can judge claims themselves. The notebook contains no export or reconstruction of provider-private chain of thought, and provider-hidden native notes are never represented as PM-authored entries.
+canonical_text: Notebook entries are deliberately authored user-visible working artifacts, not verification
+  results. A notebook observation never becomes Verified memory or completion evidence by being written,
+  retrieved, repeated, or included in a checkpoint; certainty upgrades happen only through destination-owner
+  gates such as Plans/assistant-memory-subsystem.md verification. Notebook writes cannot self-certify
+  task success, and coordinator or worker completion truth comes from the runtime owners, never from note
+  status prose. Inspection surfaces expose author, evidence references, and freshness so users can judge
+  claims themselves. The notebook contains no export or reconstruction of provider-private chain of thought,
+  and provider-hidden native notes are never represented as PM-authored entries. DL-475 adds user-statement
+  support for explicit personal preferences only as what the user said; notebook observations still prove
+  no world claim or completion. Memory verification/support UI is hidden, while useful task evidence remains
+  available.
 gui_related: false
 gui_classification_reason: Authority semantics are runtime behavior; inspection UI is specified in assistant-chat-design.
 depends_on: [WN-002, AMS-001]
@@ -374,8 +400,9 @@ context_scope: working_notebook
 implementation_surfaces: [Plans/Working_Notebook.md, Plans/assistant-memory-subsystem.md]
 node_compile_hint: {mode: semantic_owner_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-N07
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-N17
+- source_packet:PM-WNC-2026-09-05-v1:WNC-N07
+- source_packet:PM-WNC-2026-09-05-v1:WNC-N17
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["never becomes Verified memory", "self-certify", "provider-private chain of thought"]
 negative_constraints:
   - Do not upgrade certainty through retrieval, repetition, or checkpoint inclusion.
@@ -428,17 +455,19 @@ plan_unit_id: WN-010
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Working_Notebook.md
-canonical_text: >-
-  Sharing selects exact note revisions and explicit recipients under current permissions and phase
-  policy; it never copies all author context. Derived notes, capsule selections, handoffs, summaries,
-  and search projections preserve the restrictions of their sources: paraphrasing, relabeling, or
-  partial quoting of Assistant-only memory, protected evidence, or private participant material cannot
-  widen access. If exact dependency isolation is unavailable, affected derived blocks are excluded or
-  rebuilt conservatively rather than silently declassified. Private working slices are not shared by
-  default, including with blind-phase reviewers. Bytes already sent to a provider cannot be recalled;
-  restriction changes invalidate only future dispatch use and say so. App notebook scratch keeps the
-  same recipient/phase rules; explicit conversion/import never reclassifies private or Assistant-only
-  content as shared Project material.
+canonical_text: 'Sharing selects exact note revisions and explicit recipients under current permissions
+  and phase policy; it never copies all author context. Derived notes, capsule selections, handoffs, summaries,
+  and search projections preserve the restrictions of their sources: paraphrasing, relabeling, or partial
+  quoting of restricted Memory, protected evidence, or private participant material cannot widen access.
+  If exact dependency isolation is unavailable, affected derived blocks are excluded or rebuilt conservatively
+  rather than silently declassified. Private working slices are not shared by default, including with
+  blind-phase reviewers. Bytes already sent to a provider cannot be recalled; restriction changes invalidate
+  only future dispatch use and say so. App notebook scratch keeps the same recipient/phase rules; explicit
+  conversion/import never reclassifies private or source-restricted content as shared Project material. Crews,
+  reviews and the chat assistant''s other helpers may read the current Project''s notes and the same user''s
+  personal Every project notes, read-only under current actor/source/phase permissions. No helper-owned
+  memory, other-Project access or private app-thread access follows. Summaries and handoffs inherit restrictions;
+  paraphrase cannot widen them.'
 gui_related: false
 gui_classification_reason: Restriction semantics are runtime/permission behavior, not GUI work.
 depends_on: [WN-005, PS-120]
@@ -460,6 +489,7 @@ source_lineage:
 - source_packet:PM-WNC-2026-09-05-v1:WNC-H05
 - projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N25/N26
 - 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["exact note revisions", "explicit recipients", "cannot widen access", "already sent"]
 negative_constraints:
   - Do not widen access by paraphrase, relabel, partial quote, or export.
@@ -721,23 +751,18 @@ plan_unit_id: WN-018
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Working_Notebook.md
-canonical_text: >-
-  Notebook behavior preferences resolve through Settings_System at the row's admitted Everywhere,
-  Computer and optional Project levels: memory.notebook.auto-capture=true,
-  memory.notebook.resume-capsule=true, memory.notebook.capsule-budget-tokens=512 and
-  memory.notebook.injection-budget-tokens=1024. Budgets are ceilings, not reservations, further
-  reduced by Prompt_Pipeline allocation. WN-021 admits thread-scoped app scratch without a Project
-  Vault. Settings transfer carries behavior values only, never notebook bodies, checkpoints, recipient
-  authority or references as content.
+canonical_text: Working Notebook auto-capture and resume capsules are built in, with initial 512-token
+  capsule and 1024-token injection ceilings rather than user settings or reservations. Prompt_Pipeline
+  may reduce them. Legacy memory.notebook.auto-capture/resume-capsule/capsule-budget-tokens/injection-budget-tokens
+  are compatibility reads only under SSYS-040. WN-021 retains thread-private app scratch; no notebook
+  bodies, checkpoints or recipient authority travel in Settings transfer.
 gui_related: false
 gui_classification_reason: Settings registration is configuration data; the Settings pane itself is owned by FinalGUISpec/Settings_System patterns.
 depends_on: [WN-004, WN-017]
 unblocks: []
 acceptance_criteria:
-- The four exact setting IDs/types/defaults use the one inventory/resolver and work without a Project at admitted
-  levels.
-- Disabling auto-capture neither shares/deletes notes nor disables mandatory checkpoints.
-- App scratch access remains thread/participant-scoped; conversion fences transfer before destination Vault activation.
+- The four retired notebook keys are absent from live Settings; built-in limits and all source restrictions
+  remain.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-implementation-readiness
   - python3 scripts/pm-plans-verify.py json-syntax
@@ -751,6 +776,7 @@ source_lineage:
 - source_packet:PM-WNC-2026-09-05-v1:WNC-A13
 - projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N24/N26
 - 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["memory.notebook.auto-capture", "memory.notebook.resume-capsule", "memory.notebook.capsule-budget-tokens", "memory.notebook.injection-budget-tokens", "ceilings, not reservations"]
 negative_constraints:
 - Do not put notebook content in ordinary settings, export, mirrors or copied setup values.
@@ -877,6 +903,299 @@ The following durable event families are specified as candidates with planned pa
 
 ContractRef: ContractName:Plans/Working_Notebook.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md
 
+<!-- W3G phase 1 owner block: newly authored, prepared without admission. -->
+
+### WN-1514 - notebook.checkpoint_committed: prepared event contract
+
+```yaml
+plan_unit_id: WN-1514
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Working_Notebook.md
+canonical_text: Newly authored owner contract for notebook.checkpoint_committed alone under deck-2 9.a A (DL-450);
+  prepared without admission. preparing becomes committed only after every required original entry revision, capsule
+  and workflow checkpoint dependency is durable and directly readable. The original required-set owner supplies
+  the full set; a caller cannot omit a slot. Full flush precedes committed publication. The note checkpoint never
+  substitutes for a pending tool receipt or proves a side effect.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Working_Notebook.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- notebook.checkpoint_committed
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** WorkingNotebook checkpoint owner at the Storage barrier-class commit boundary. Reuse WN-016/017/021, SP-256/SP-336 and exact notebook_checkpoint_record plus the complete original required entry-revision/capsule/workflow dependency set. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1514 selects `Plans/event_authority_w3g/payloads/notebook_checkpoint_committed.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and application are distinct new selectors; app has real Server/Computer/thread and null Project. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. preparing becomes committed only after every required original entry revision, capsule and workflow checkpoint dependency is durable and directly readable. The original required-set owner supplies the full set; a caller cannot omit a slot. The payload `required_revisions_sha256` is SHA-256 of the existing CV-317 RFC 8785 encoding of the complete original ordered `required_entry_revisions` array, recomputed from that array at every check; a well-formed digest of any other array (reordered, partial or substituted) is refused as `checkpoint_required_set_refused` even when the required set, its custody and the capsule hash are intact. Full flush precedes committed publication. The note checkpoint never substitutes for a pending tool receipt or proves a side effect.
+
+**Replay, consumer and checkpoints.** SP-1514 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.notebook.checkpoint_committed.history.v1@1.0.0` is the sole newly authored family history reader for Notebook/Context Details history; continuation still requires its native admission. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1514 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17649): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1263` and the `notebook.checkpoint_committed` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1514, ContractName:Plans/storage-plan.md#SP-1514
+
+### WN-1515 - notebook.checkpoint_failed: prepared event contract
+
+```yaml
+plan_unit_id: WN-1515
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Working_Notebook.md
+canonical_text: Newly authored owner contract for notebook.checkpoint_failed alone under deck-2 9.a A (DL-450);
+  prepared without admission. A preparing checkpoint becomes failed only on its actual typed reason. Required failure
+  defers destructive context transition and preserves source context. Optional capture failure is visible and has
+  at most one transport retry under the same original identity. No committed checkpoint, discarded source or success
+  receipt is claimed.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Working_Notebook.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- notebook.checkpoint_failed
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** WorkingNotebook checkpoint owner on an originally recorded typed capture/commit failure. Reuse WN-016/020/021 and exact failed notebook_checkpoint_record or original typed failure result preserving recovery material. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1515 selects `Plans/event_authority_w3g/payloads/notebook_checkpoint_failed.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and application are distinct new selectors; app has real Server/Computer/thread and null Project. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. A preparing checkpoint becomes failed only on its actual typed reason. Required failure defers destructive context transition and preserves source context. Optional capture failure is visible and has at most one transport retry under the same original identity. No committed checkpoint, discarded source or success receipt is claimed.
+
+**Replay, consumer and checkpoints.** SP-1515 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.notebook.checkpoint_failed.history.v1@1.0.0` is the sole newly authored family history reader for Notebook/Context Details history; continuation still requires its native admission. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1515 binds retention as `RP-OPERATIONAL-2555D@1.0.0` for its Project records, assigned by DL-455 (E-CARDS-3 item 3.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17659 and :17669): seven years (220,752,000 seconds) sharing the existing 2,000,000-entry seven-year Project allowance; Storage's Project first-save anchor adapter for that policy (DL-455, DL-457; :17675) lists this type among its change, failure and refusal entries (:17681), so the anchor is the entry's own first durable save unless an independently saved original supplies its own proved first-save time; retry, reprocessing, recovery and restore never restart it. Its application records use `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` (DL-455's separate 2,000,000-entry application allowance, count key `app:operational_security`, `anchor_kind=creation`: the first successful save that survives a restart, 220,752,000 seconds). No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1263` and the `notebook.checkpoint_failed` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1515, ContractName:Plans/storage-plan.md#SP-1515
+
+### WN-1516 - notebook.entry_committed: prepared event contract
+
+```yaml
+plan_unit_id: WN-1516
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Working_Notebook.md
+canonical_text: Newly authored owner contract for notebook.entry_committed alone under deck-2 9.a A (DL-450); prepared
+  without admission. Birth is entry revision 1 with expected_revision 0; every update/append is expected_revision+1
+  under CAS. An attributed original commit is directly readable regardless of search lag. Flexible note bodies stay
+  behind refs and retain epistemic kind, freshness and inherited restrictions. No note becomes memory verification,
+  execution permission or completion.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Working_Notebook.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- notebook.entry_committed
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** WorkingNotebook notebook_write or authorized user correction through the same original revision/CAS owner. Reuse WN-006/007/019/021, original notebook_revision_mutation and exact working_notebook_entry_record revision/body hash/restrictions. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1516 selects `Plans/event_authority_w3g/payloads/notebook_entry_committed.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and application are distinct new selectors; app has real Server/Computer/thread and null Project. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. Birth is entry revision 1 with expected_revision 0; every update/append is expected_revision+1 under CAS. An attributed original commit is directly readable regardless of search lag. Flexible note bodies stay behind refs and retain epistemic kind, freshness and inherited restrictions. No note becomes memory verification, execution permission or completion.
+
+**Replay, consumer and checkpoints.** SP-1516 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.notebook.entry_committed.history.v1@1.0.0` is the sole newly authored family history reader for Notebook/Context Details history; continuation still requires its native admission. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1516 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17649): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1263` and the `notebook.entry_committed` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1516, ContractName:Plans/storage-plan.md#SP-1516
+
+### WN-1517 - notebook.entry_superseded: prepared event contract
+
+```yaml
+plan_unit_id: WN-1517
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Working_Notebook.md
+canonical_text: Newly authored owner contract for notebook.entry_superseded alone under deck-2 9.a A (DL-450); prepared
+  without admission. An actual active entry revision is superseded by its recorded successor under exact CAS. Both
+  immutable revisions and attributed old/new linkage remain. Supersession is not deletion, verification or cross-scope
+  sharing; an unchanged retry does not append another event. In-flight model bytes retain the old bound revision.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Working_Notebook.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- notebook.entry_superseded
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** WorkingNotebook notebook_supersede and the original attributed successor-revision owner. Reuse WN-007/010/014/019/021, exact original superseded entry revision and original successor link under notebook restriction/CAS custody. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1517 selects `Plans/event_authority_w3g/payloads/notebook_entry_superseded.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and application are distinct new selectors; app has real Server/Computer/thread and null Project. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. An actual active entry revision is superseded by its recorded successor under exact CAS. Both immutable revisions and attributed old/new linkage remain. Supersession is not deletion, verification or cross-scope sharing; an unchanged retry does not append another event. In-flight model bytes retain the old bound revision.
+
+**Replay, consumer and checkpoints.** SP-1517 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.notebook.entry_superseded.history.v1@1.0.0` is the sole newly authored family history reader for Notebook/Context Details history; continuation still requires its native admission. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1517 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17649): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1263` and the `notebook.entry_superseded` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1517, ContractName:Plans/storage-plan.md#SP-1517
+
+### WN-1518 - notebook.transition_state_changed: prepared event contract
+
+```yaml
+plan_unit_id: WN-1518
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Working_Notebook.md
+canonical_text: Newly authored owner contract for notebook.transition_state_changed alone under deck-2 9.a A (DL-450);
+  prepared without admission. Record an actual owner transition along requested -> preparing -> checkpointed ->
+  admitted -> activated -> recovered_resumed, or its defined terminal deferred/denied/failed/cancelled edge from
+  a nonterminal state. Each exact source transition has one original identity; unchanged reads/replay create none.
+  Changed route/account/Stop/generations require safe owner re-admission, never invented activation. Observable
+  activation and complete checkpoint/admission evidence precede the respective success edges; recovery resumes no
+  stopped work.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Working_Notebook.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- notebook.transition_state_changed
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** SharedIntegrationRuntime context-transition lifecycle owner; Notebook supplies required content only. Reuse Prompt_Pipeline proactive fresh-window request/admission section, SIR-042, WN-016/021 and original context_transition_record/admission receipt. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1518 selects `Plans/event_authority_w3g/payloads/notebook_transition_state_changed.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and application are distinct new selectors; app has real Server/Computer/thread and null Project. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. Record an actual owner transition along requested -> preparing -> checkpointed -> admitted -> activated -> recovered_resumed, or its defined terminal deferred/denied/failed/cancelled edge from a nonterminal state. Each exact source transition has one original identity; unchanged reads/replay create none. Changed route/account/Stop/generations require safe owner re-admission, never invented activation. Observable activation and complete checkpoint/admission evidence precede the respective success edges; recovery resumes no stopped work.
+
+**Replay, consumer and checkpoints.** SP-1518 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.notebook.transition_state_changed.history.v1@1.0.0` is the sole newly authored family history reader for Notebook/Context Details history; continuation still requires its native admission. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1518 binds retention as `RP-RUNTIME-365D@1.0.0`. Case L-3 Runtime/run/node/attempt and SP-256 context_transition_record assignment; require the actual original run lineage/completion anchor, never window or provider-session identity. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1263` and the `notebook.transition_state_changed` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1518, ContractName:Plans/storage-plan.md#SP-1518
+
 ## 4. Integration Surfaces
 
 | Surface | Integration | Owner of surface |
@@ -891,7 +1210,7 @@ ContractRef: ContractName:Plans/Working_Notebook.md, ContractName:Plans/storage-
 | Providers | One effective controller; native opacity; capability resolution | `Plans/CLI_Bridged_Providers.md`, `Plans/Models_System.md` |
 | Usage | Helper attribution, exactly-once, occupancy vs cumulative | `Plans/usage-feature.md` |
 | Storage/backup/host | Owned families, backup participation, lease fencing | `Plans/storage-plan.md`, `Plans/Backup_Restore_System.md`, `Plans/Project_Sync_and_Backbone.md` |
-| Settings | memory.notebook.* Project-scoped values | `Plans/Settings_System.md` |
+| Compatibility input | Legacy memory.notebook.* values are migration-only reads, absent from live Settings/search/transfer; built-in notebook policy stays with its owner | `Plans/Settings_System.md`, WN-018 |
 | Commands/UI wiring | cmd.chat.open_working_notebook, cmd.chat.request_fresh_context, cmd.orchestrator.open_notebook catalog rows; fail-closed until production wiring exists | `Plans/UI_Command_Catalog.md`, `Plans/UI_Wiring_Rules.md` |
 
 Internal notebook state writes performed inside read-only work (ask/plan modes) are explicitly policy-limited sidecar writes to PM-owned notebook storage. They never confer target-project mutation authority, never widen tool or external-write ceilings, and never require switching to regular/yolo modes.

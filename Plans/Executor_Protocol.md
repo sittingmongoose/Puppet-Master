@@ -5463,13 +5463,10 @@ plan_unit_id: EP-089
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: >-
-  Orchestrator sets worktree execution fields when launching a DAE in a lane-owned worktree, Assistant
-  Chat sets them for bound-thread agent-mode or plan-mode work, and execution defaults to the project root
-  when execution_unit_context.worktree_id is absent and no bound worktree context is present. That
-  Project-root fallback applies only to a real Project context. EP-132 app requests freeze the owned chat
-  folder or explicitly granted root on the actual Computer; absent worktree never resolves to current
-  focus, home or a main Project.
+canonical_text: |-
+  Orchestrator sets worktree execution fields when launching a DAE in a lane-owned worktree. When the active thread has a bound worktree, Assistant Chat sets them for agent-mode or plan-mode work. Execution defaults to the verified project root on the chosen Computer when execution_unit_context.worktree_id is absent and no bound worktree context is present. That Project-root fallback applies only to a real Project context. EP-132 app requests freeze the owned chat folder or explicitly granted root on the actual Computer; absent worktree never resolves to current focus, home or a main Project.
+
+  Each new independently dispatchable task/WorkNode/child resolves SIR-056 placement before Executor attachment. host_assignment_id references the owner decision with requested/effective Computer, actor/pin, requirements and policy/allowed-set/source evidence; do not add fields to execution_unit_context 1.0.0. The selected Computer must materialize and verify the exact approved baseline and required isolated worktree under W-080 before launch. Absent worktree never substitutes a same-named directory on another Computer. Agent pins apply to that work only, inside the person's constraint and current allowed set; they cannot alter shared defaults. New required transport/context fields require a governed successor, with original historical readers retained.
 gui_related: false
 gui_classification_reason: This unit defines caller runtime responsibilities, not GUI presentation.
 split_recommended: false
@@ -5492,10 +5489,11 @@ node_compile_hint:
   mode: caller_worktree_handoff_responsibilities
   create_worknodes: false
 source_lineage:
-  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066"
+- "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+- "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+- "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - Caller responsibilities
 - Orchestrator
@@ -5524,15 +5522,10 @@ plan_unit_id: EP-090
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: >-
-  Assistant Chat turn-start resolves thread_state:{thread_id}:worktree_binding, freezes
-  execution_unit_context.worktree_id and working_directory for that turn, applies mid-turn unbinds only to
-  later turns or rotated follow-ups, and propagates the frozen cwd to FileSafe, tools, shell cwd, MCP,
-  @file, auto-retrieval, provider CLI, and DAE execution-context payloads. EP-132 app execution selects an
-  explicit scope-aware sibling of the context/source/identity contract, real thread/Computer/roots and
-  Stop/writer/permission evidence. Original Project exact context, hash/idempotency/accepted-source and
-  passive replay resources remain valid; no null Project is cast into an existing Project-only identity
-  recipe.
+canonical_text: |-
+  Assistant Chat turn-start resolves thread_state:{thread_id}:worktree_binding, freezes execution_unit_context.worktree_id and working_directory for that turn, applies mid-turn unbinds only to later turns or rotated follow-ups, and propagates the frozen cwd to FileSafe checks, tools, bash/shell `cwd`, MCP tools, @file, auto-retrieval scope context, provider CLI, and DAE execution-context JSON payloads. EP-132 app execution selects an explicit scope-aware sibling of the context/source/identity contract, real thread/Computer/roots and Stop/writer/permission evidence. Original Project exact context, hash/idempotency/accepted-source and passive replay resources remain valid; no null Project is cast into an existing Project-only identity recipe.
+
+  Freeze the turn/attempt's one exact Computer/Host/Environment/source/worktree/account/route and owner epoch before the first effect, retaining current policy/allowed-set, Plan/build/grant/permission/Stop/revocation evidence through host_assignment_id. Policy changes apply to unstarted work, never rewrite that binding. Keep context-dependent follow-ups on their bound worker; offline started work waits and resumes there. A safe retry elsewhere requires an admitted checkpoint, outcome reconciliation, old-owner fencing and a fresh exact attempt/authority check. Route or Client loss and lease expiry cannot prove the old worker stopped; the Home Server never automatically fails over.
 gui_related: false
 gui_classification_reason: This unit defines backend/runtime turn context propagation, not GUI presentation.
 split_recommended: false
@@ -5556,10 +5549,11 @@ node_compile_hint:
   mode: assistant_chat_turn_worktree_freeze_and_cwd_propagation
   create_worknodes: false
 source_lineage:
-  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066"
+- "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+- "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+- "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
 - thread_state:{thread_id}:worktree_binding
 - execution_unit_context.worktree_id
@@ -6090,22 +6084,18 @@ owner_hints:
 ```yaml
 plan_unit_id: EP-098
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
+  RETIRED BY DL-478 (Jared, 2026-11-12, "Sweep and retire all") -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The GoalRun decomposition, verification, repair, and certification dispatch flow is retired; the old text is retained only for source lineage.
   Executor/runtime scheduler owns concrete runnable WorkNode dispatch for Orchestrator GoalRuns. Goal Runtime and Orchestrator may define objectives, WorkGraph shape, WorkNode requests, verification requirements, receipts, and projections, but Executor remains authoritative for readiness, dependency, blocked-state, retry/backoff, wakeups, capacity-aware parallel dispatch, and failure-class recovery. High-end controller/planner decomposition may decompose objectives into a WorkGraph and bounded WorkNodes as runnable work requests, but concrete dispatch remains gated by Executor readiness and scheduler policy. WorkNode execution success is provisional until verification and receipt certification complete.
   A failed VerificationCycle yields typed VerificationFinding records grouped in a DefectBundle; Executor schedules bounded RepairWorkNodes under its intake, readiness, write-authority, and retry policies, then verification reruns against the affected target plus regression scope after each repair. The loop continues until zero findings remain or a true blocker or authority boundary is reached; a failed verification cannot be reported as successful completion.
 gui_related: false
 gui_classification_reason: Scheduler ownership, dispatch, retry/backoff, capacity, and provisional execution semantics are runtime behavior, not visual presentation.
 depends_on: [GRS-026, GRS-027, PNC-009, PS-115, W-071]
-unblocks: [OP-022, RGV-012]
+unblocks: [OP-022, RGV-012, RAP-027]
 acceptance_criteria:
-  - Goal Runtime does not dispatch concrete graph nodes directly.
-  - Executor scheduler readiness, blocked/backoff, retry, capacity, wakeup, and failure-class semantics remain canonical for WorkNodes.
-  - RepairWorkNodes and WorkNode retries remain bounded by scheduler and write-surface policy.
-  - Failed VerificationCycles produce VerificationFindings in a DefectBundle, bounded RepairWorkNodes, and verification reruns against the affected target and regression scope until zero findings remain or a true blocker or authority boundary is reached.
-  - Controller/planner decomposition can produce WorkGraph and bounded WorkNode runnable work requests without bypassing Executor readiness or scheduler authority.
-  - WorkNode success alone does not certify parent GoalRun or final completion.
+  - No product work or acceptance obligation is compiled from this retired unit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Executor WorkNode scheduler integration tests
@@ -6166,7 +6156,7 @@ canonical_text: >-
     WorkNode requests become runnable only after Executor intake validates graph integrity, source-control requirements, test bindings, model routing, authority requirements, readiness prerequisites, and scheduler metadata. ExecutorIntakeReport is the boundary artifact proving that a WorkNodeRequest was accepted, rejected, or blocked. The strict runtime contract packet defines non-executable WorkGraph draft and WorkNodeRequest shapes before dispatch; Executor owns runnable dispatch, ready-state evaluation, capacity-aware scheduling, retry/backoff, blocked-state recovery, and failure-class recovery after explicit runtime enablement and accepted intake.
 gui_related: false
 gui_classification_reason: Intake, scheduling, retry, and blocked recovery are runtime protocol behavior, not visual presentation.
-depends_on: [EP-098, PNC-013]
+depends_on: [PNC-013]
 unblocks: [EP-100, EP-101, EP-102, GRS-030]
 acceptance_criteria:
   - WorkNodeRequest records cannot bypass Executor intake.
@@ -6591,8 +6581,8 @@ plan_unit_id: EP-105
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: 'After Activation Decision accepts the certified graph, Executor materializes canonical WorkNodeRecord objects from accepted WorkNodeRequests and emits materialization receipts. WorkNodeRecord includes worknode_id, goal_run_id, workgraph_id and revision, source_request_id, source PlanUnit and acceptance refs, objective, surfaces, typed readiness predicates, lifecycle, attempts and retries, authority, model, tests, repository/worktree/safe-point refs, evidence, currentness, cancellation, invalidation, and replan generation. Existing project_plan_node schema remains an import or compatibility contract with an explicit adapter and must not silently become the canonical runtime WorkNodeRecord. Work dispatch, change, test, retry, and completion receipts use worknode_id and attempt_id plus source_request_id and graph revision; a WorkNodeRequest reference alone is not sufficient runtime identity. A context-aware incomplete-content
-  validator runs at Planning Wizard approval, Plan Compile certification, WorkNode completion, and Goal completion across active Plans, compile artifacts, first-party code, tests, generated outputs, and delivery artifacts. Implementation readiness of the complete pipeline requires a clean-room fixture proving Approve And Build creates exactly one PlanCompileRun, executes mandatory parallel stages, certifies a complete WorkGraph and WorkNodeRequests, passes Executor intake/provisioning, atomically creates GoalRun and WorkNodes, queues an entrypoint, and appears in Orchestrator. The fixture suite covers duplicate PlanApproved delivery, restart during every activation step, greenfield Git, non-Git FileSafe, dirty repository, remote SSH, optional GitHub or PR, missing harness, testing override, plan revision during compile and execution, cancellation before and after mutation, missing parallel receipts, and a deliberately introduced incomplete item.'
+canonical_text: 'After Activation Decision accepts the graph, Executor materializes canonical WorkNodeRecord objects from accepted WorkNodeRequests and emits materialization receipts. WorkNodeRecord includes worknode_id, workgraph_id and revision, source_request_id, source PlanUnit and acceptance refs, objective, surfaces, typed readiness predicates, lifecycle, attempts and retries, authority, model, tests, repository/worktree/safe-point refs, evidence, currentness, cancellation, invalidation, and replan generation. Existing project_plan_node schema remains an import or compatibility contract with an explicit adapter and must not silently become the canonical runtime WorkNodeRecord. Work dispatch, change, test, retry, and completion receipts use worknode_id and attempt_id plus source_request_id and graph revision; a WorkNodeRequest reference alone is not sufficient runtime identity. A context-aware incomplete-content
+  validator runs at Planning Wizard approval, Plan Compile certification, and WorkNode completion across active Plans, compile artifacts, first-party code, tests, generated outputs, and delivery artifacts. Implementation readiness of the complete pipeline requires a clean-room fixture proving Approve And Build creates exactly one PlanCompileRun, executes mandatory parallel stages, prepares a complete WorkGraph and WorkNodeRequests, passes Executor intake/provisioning, atomically creates WorkNodes, queues an entrypoint, and appears in Orchestrator. The fixture suite covers duplicate PlanApproved delivery, restart during every activation step, greenfield Git, non-Git FileSafe, dirty repository, remote SSH, optional GitHub or PR, missing harness, testing override, plan revision during compile and execution, cancellation before and after mutation, missing parallel receipts, and a deliberately introduced incomplete item.'
 gui_related: false
 gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
 depends_on: []
@@ -6647,7 +6637,6 @@ preserved_exact_tokens:
 - WorkNodeRecord
 - WorkNodeMaterializationReceipt
 - worknode_id
-- goal_run_id
 - workgraph_revision
 - attempt_id
 - replan generation
@@ -6656,7 +6645,6 @@ preserved_exact_tokens:
 - Planning Wizard approval
 - Plan Compile certification
 - WorkNode completion
-- Goal completion
 - clean-room fixture
 - exactly one PlanCompileRun
 - entrypoint queued
@@ -7214,7 +7202,7 @@ canonical_text: >-
   transport_decision_receipt.
 gui_related: false
 gui_classification_reason: This unit defines runtime scheduling and transport behavior, not visual presentation.
-depends_on: [EP-026, EP-028, EP-030, EP-032, EP-085, EP-098, EP-110, EP-111, EP-112, EP-113, CV-313]
+depends_on: [EP-026, EP-028, EP-030, EP-032, EP-085, EP-110, EP-111, EP-112, EP-113, CV-313]
 unblocks: []
 acceptance_criteria:
   - "`scheduler.pass` uses the closed wake_reason set shared with Contracts_V0."
@@ -7738,6 +7726,11 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/executor_cancellation_contracts/methods.json, ContractName:Plans/executor_cancellation_contracts/realm-entry-boundaries.json, ContractName:Plans/executor_cancellation_contracts/physical-families.json, ContractName:Plans/executor_cancellation_schema_resources.json
+
+
+**DG-OWN-A adoption.** Fresh stop/block adoption: EP-1110 supplies a separately named whole fresh source edition; EP-1111/EP-1112 are its original stop/block participants. Every v7/retained branch of this unit stays unchanged.
+
+Amended 2026-11-14 (DL-080 option 1, PNC-019 lane rv8b): on a genuine `all_writers.v8` birth (EP-3100) the Workflow writer list also names `owner.executor.workflow_run.replan.v1` (EP-3101), the optional/replanned materialization route this adoption excludes; D01 `update_workflow` observes that writer's native application and never issues it. Every other birth keeps the exclusion and RequiredOtherWorkflowWriterSource=false.
 
 ### EP-119 - Original bounded safe-stop, FileSafe and disposable Process sources
 
@@ -8784,6 +8777,9 @@ gui_classification_reason: Original source, native authority/custody, schema, st
 ```
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-124, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json
+
+
+**DG-OWN-A adoption.** Fresh stop/block adoption: EP-1110 supplies a separately named whole fresh source edition; EP-1111/EP-1112 are its original stop/block participants. Every v7/retained branch of this unit stays unchanged.
 
 ## Assistant turn presentation stream (2026-09-27)
 
@@ -10059,7 +10055,7 @@ command_payload_definitions:
       judgments:
         - key: command_kind
           choice: domain_action
-          gap_note: "Canon requires command_kind metadata on recovery commands (UI_Command_Catalog.md:6852) but states no value for this command; domain_action because it emits goal.replanned (Wiring_Matrix.production.json catalog.runtime_replan)."
+          gap_note: "Canon requires command_kind metadata on recovery commands (UI_Command_Catalog.md:6852) but states no value for this command; domain_action because its effect is the goal_run.replanned Event that EP-3101's Replan writer appends on an all_writers.v8 birth (Wiring_Matrix.production.json catalog.runtime_replan, amended 2026-11-14); goal.replanned is historical-only (GRS-070) and never its effect."
         - key: disabled_reason_codes
           choice: [blocked_state_required, stale_projection]
           gap_note: "No catalog row states disabled reasons for this command; chosen from the closed set: it needs the live blocked episode that exposes its allowed_action_id (UI_Command_Catalog.md:1246), and a stale blocked_sequence or projection refuses (UI_Command_Catalog.md:1220)."
@@ -10679,3 +10675,2350 @@ command_payload_definitions:
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-230, ContractName:Plans/UI_Command_Catalog.md#UCC-089, ContractName:Plans/UI_Command_Catalog.md#UCC-090, ContractName:Plans/UI_Command_Catalog.md#UCC-091, ContractName:Plans/UI_Command_Catalog.md#UCC-092, ContractName:Plans/UI_Command_Catalog.md#UCC-093, ContractName:Plans/UI_Command_Catalog.md#UCC-094, ContractName:Plans/UI_Command_Catalog.md#UCC-095, ContractName:Plans/Contracts_V0.md#safe_point.restored, ContractName:Plans/projects_refresh_fix_contracts.schema.json
+
+
+## EP-210 — attempt.completed prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `attempt.completed@1.0.0`, prepared without admission. `executor.attempt_completed.emitter.v1@1.0.0` is the exact Executor emitter for this transition: active_attempt -> terminal_attempt; terminal outcome must have success=true or failure_class, never both; retry/backoff evidence is not a second dispatch.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-500 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: Before completion the exact original attempt is active and in-flight work is reconciled. Terminal success is done; terminal failure has its canonical classified failure. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/attempt_completed. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### attempt.completed source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.attempt_completed.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `attempt.completed@1.0.0`. It is invoked by `executor.attempt_completed.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `run` | Executor original run/GoalRun and installed WorkGraph generation; retain original run/thread joins and replan generation. |
+| `node` | EP-105 materialized WorkNodeRecord: payload node_id equals actual worknode_id, with original source_request_id, workgraph_id and revision. A request or legacy project_plan_node alone cannot satisfy this read. |
+| `attempt` | Executor actual original attempt and frozen admission/terminal observation, joined to its materialized node and run. |
+| `execution` | EP execution_unit_context, immutable runtime snapshot and original permission/model/account/source-control owner results; package/seam/lane/worktree and requested/effective identities stay together. |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `run_id` | `run.body.run_id` |
+| `thread_id` | `run.body.thread_id` |
+| `node_id` | `node.body.worknode_id` |
+| `attempt_id` | `attempt.body.attempt_id` |
+| `replan_generation` | `run.body.replan_generation` |
+| `terminal_state` | `operation.body.terminal_state` |
+| `retry_count` | `operation.body.retry_count` |
+| `runtime_snapshot_ref` | `execution.body.runtime_snapshot_ref` |
+| `failure_class` | `operation.body.failure_class` |
+| `success` | `operation.body.success` |
+| `backoff_until_utc` | `operation.body.backoff_until_utc` |
+| `verification_result_refs` | `operation.body.verification_result_refs` |
+| `reviewer_result_refs` | `operation.body.reviewer_result_refs` |
+| `safe_point_id` | `execution.body.safe_point_id` |
+| `remediation_root_id` | `operation.body.remediation_root_id` |
+| `remediation_parent_attempt_id` | `operation.body.remediation_parent_attempt_id` |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `attempt.completed` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `active` | `{"terminal_state": "done"}` | `done` |
+| `active` | `{"terminal_state": "failed"}` | `failed` |
+
+Owner predicates, independently evaluated from the source records: `execution.body.in_flight=reconciled`.
+
+A done terminal requires success=true and no failure_class; failed requires the classified failure and no success. Reconciled in-flight work and actual verifier/reviewer evidence precede terminal publication.
+
+Ordering barrier for `attempt.completed`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"terminal_publications": 1, "worker_dispatches": 0}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-210
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: attempt.completed@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- attempt.completed uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- attempt.completed
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-210, ContractName:Plans/Contracts_V0.md#CV-500, ContractName:Plans/storage-plan.md#SP-500
+
+
+## EP-211 — attempt.started prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `attempt.started@1.0.0`, prepared without admission. `executor.attempt_started.emitter.v1@1.0.0` is the exact Executor emitter for this transition: admitted candidate -> started attempt; frozen permission/model/runtime snapshots and exact worktree baseline are durable before the barrier; increment policy counters once before worker spawn.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-501 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: The exact new attempt is admitted, immutable requested/effective snapshots are durable, and the owner worktree baseline is valid. Append before worker spawn. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/attempt_started. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### attempt.started source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.attempt_started.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `attempt.started@1.0.0`. It is invoked by `executor.attempt_started.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `run` | Executor original run/GoalRun and installed WorkGraph generation; retain original run/thread joins and replan generation. |
+| `node` | EP-105 materialized WorkNodeRecord: payload node_id equals actual worknode_id, with original source_request_id, workgraph_id and revision. A request or legacy project_plan_node alone cannot satisfy this read. |
+| `attempt` | Executor actual original attempt and frozen admission/terminal observation, joined to its materialized node and run. |
+| `execution` | EP execution_unit_context, immutable runtime snapshot and original permission/model/account/source-control owner results; package/seam/lane/worktree and requested/effective identities stay together. |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `run_id` | `run.body.run_id` |
+| `thread_id` | `run.body.thread_id` |
+| `node_id` | `node.body.worknode_id` |
+| `attempt_id` | `attempt.body.attempt_id` |
+| `replan_generation` | `run.body.replan_generation` |
+| `scheduler_lane` | `execution.body.scheduler_lane` |
+| `permission_snapshot_id` | `execution.body.permission_snapshot_id` |
+| `requested_model_snapshot_id` | `execution.body.requested_model_snapshot_id` |
+| `effective_model_snapshot_id` | `execution.body.effective_model_snapshot_id` |
+| `runtime_snapshot_ref` | `execution.body.runtime_snapshot_ref` |
+| `safe_point_id` | `execution.body.safe_point_id` |
+| `remediation_root_id` | `operation.body.remediation_root_id` |
+| `remediation_parent_attempt_id` | `operation.body.remediation_parent_attempt_id` |
+| `requested_account_snapshot_id` | `execution.body.requested_account_snapshot_id` |
+| `effective_account_snapshot_id` | `execution.body.effective_account_snapshot_id` |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `attempt.started` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `admitted` | `{}` | `started` |
+
+Owner predicates, independently evaluated from the source records: `execution.body.snapshot_commit=durable`; `execution.body.baseline=verified`; `execution.body.permission=current`.
+
+When the frozen source has a requested/effective account identity or requested_account_binding other than none, both original requested_account_snapshot_id and effective_account_snapshot_id are required (the existing CV snapshot-identifier rule). A source without those interpretation facts may omit nonexistent account snapshots. Frozen permission/model/account/runtime and baseline commits plus the SP-286 barrier receipt precede worker spawn. Policy counters increment once for the original attempt; retries return its first result.
+
+Ordering barrier for `attempt.started`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"counter_increments": 1, "worker_dispatches": 1}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-211
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: attempt.started@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- attempt.started uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- attempt.started
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-211, ContractName:Plans/Contracts_V0.md#CV-501, ContractName:Plans/storage-plan.md#SP-501
+
+
+## EP-212 — node.blocked prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `node.blocked@1.0.0`, prepared without admission. `executor.node_blocked.emitter.v1@1.0.0` is the exact Executor emitter for this transition: eligible node -> blocked episode; mint blocked_sequence once per actual episode under node CAS. Before an attempt exists omit attempt_id. Required restore anchors and snapshot refs publish atomically with the block, never fabricate a prior attempt.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-502 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: The same node has a newly accepted block cause and a reserved new blocked_sequence. Retry resolves that original episode rather than minting another sequence. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/node_blocked. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### node.blocked source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.node_blocked.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `node.blocked@1.0.0`. It is invoked by `executor.node_blocked.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `run` | Executor original run/GoalRun and installed WorkGraph generation; retain original run/thread joins and replan generation. |
+| `node` | EP-105 materialized WorkNodeRecord: payload node_id equals actual worknode_id, with original source_request_id, workgraph_id and revision. A request or legacy project_plan_node alone cannot satisfy this read. |
+| `attempt` | Executor actual original attempt and frozen admission/terminal observation, joined to its materialized node and run. |
+| `episode` | Contracts canonical run/node/blocked_sequence episode, its actual optional attempt, current ordered allowed_action_ids, classified cause and durable resolution/restore result. |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `run_id` | `run.body.run_id` |
+| `thread_id` | `run.body.thread_id` |
+| `node_id` | `node.body.worknode_id` |
+| `replan_generation` | `run.body.replan_generation` |
+| `blocked_sequence` | `episode.body.blocked_sequence` |
+| `blocked_reason_code` | `operation.body.blocked_reason_code` |
+| `allowed_action_ids` | `operation.body.allowed_action_ids` |
+| `preserved_local_work` | `operation.body.preserved_local_work` |
+| `attempt_id` | `episode.body.attempt_id` (explicit null forbids payload/envelope/attempt slot; otherwise join the exact attempt record) |
+| `detail_ref` | `operation.body.detail_ref` |
+| `failure_class` | `operation.body.failure_class` |
+| `timeout_class` | `operation.body.timeout_class` |
+| `wait_state_class` | `operation.body.wait_state_class` |
+| `auth_realm` | `operation.body.auth_realm` |
+| `missing_scopes` | `operation.body.missing_scopes` |
+| `requires_safe_point_restore` | `operation.body.requires_safe_point_restore` |
+| `safe_point_id` | `operation.body.safe_point_id` |
+| `anchor_ref` | `operation.body.anchor_ref` |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `node.blocked` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `new` | `{}` | `unresolved` |
+
+Owner predicates, independently evaluated from the source records: `episode.body.cause_status=current`.
+
+Before an attempt exists, omit attempt_id from both payload and envelope and do not resolve an invented attempt slot. Mint blocked_sequence once per actual new episode. An actual safe-point-restore requirement requires its original safe_point_id and anchor_ref before publication. Auth scopes, timeout/wait classifiers and ordered actions must preserve the real cause.
+
+Ordering barrier for `node.blocked`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"blocked_episodes": 1, "worker_dispatches": 0}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-212
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: node.blocked@1.0.0 has the exact family-local prepared contract in
+  this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- node.blocked uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- node.blocked
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-212, ContractName:Plans/Contracts_V0.md#CV-502, ContractName:Plans/storage-plan.md#SP-502
+
+
+## EP-213 — node.completed prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `node.completed@1.0.0`, prepared without admission. `executor.node_completed.emitter.v1@1.0.0` is the exact Executor emitter for this transition: verified -> done or verify_pending -> failed; preserve verifier and packaging evidence. Removing a node from the ready set cannot complete it.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-503 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: For result_outcome=done the original node is verified; for failed it is verify_pending. Actual verifier evidence must resolve and match the attempt. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/node_completed. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### node.completed source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.node_completed.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `node.completed@1.0.0`. It is invoked by `executor.node_completed.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `run` | Executor original run/GoalRun and installed WorkGraph generation; retain original run/thread joins and replan generation. |
+| `node` | EP-105 materialized WorkNodeRecord: payload node_id equals actual worknode_id, with original source_request_id, workgraph_id and revision. A request or legacy project_plan_node alone cannot satisfy this read. |
+| `attempt` | Executor actual original attempt and frozen admission/terminal observation, joined to its materialized node and run. |
+| `execution` | EP execution_unit_context, immutable runtime snapshot and original permission/model/account/source-control owner results; package/seam/lane/worktree and requested/effective identities stay together. |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `run_id` | `run.body.run_id` |
+| `node_id` | `node.body.worknode_id` |
+| `attempt_id` | `attempt.body.attempt_id` |
+| `replan_generation` | `run.body.replan_generation` |
+| `result_outcome` | `operation.body.result_outcome` |
+| `evidence_refs` | `operation.body.evidence_refs` |
+| `artifact_refs` | `operation.body.artifact_refs` |
+| `runtime_snapshot_ref` | `execution.body.runtime_snapshot_ref` |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `node.completed` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `verified` | `{"result_outcome": "done"}` | `done` |
+| `verify_pending` | `{"result_outcome": "failed"}` | `failed` |
+
+Owner predicates, independently evaluated from the source records: `execution.body.verification=accepted`; `execution.body.packaging=passed`.
+
+A done result requires a verified source node; failed requires verify_pending plus accepted classified verification evidence. All required Document Set packaging checks precede completion. A ready-set removal alone is never completion.
+
+Ordering barrier for `node.completed`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"node_terminal_publications": 1, "worker_dispatches": 0}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-213
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: node.completed@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- node.completed uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- node.completed
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-213, ContractName:Plans/Contracts_V0.md#CV-503, ContractName:Plans/storage-plan.md#SP-503
+
+
+## EP-214 — node.started prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `node.started@1.0.0`, prepared without admission. `executor.node_started.emitter.v1@1.0.0` is the exact Executor emitter for this transition: queued -> in_progress after admitted readiness and frozen actual attempt; a ready event alone cannot start a node.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-504 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: The node is queued, actual dependencies satisfy readiness, and the exact attempt is admitted; transition only then to in_progress. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/node_started. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### node.started source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.node_started.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `node.started@1.0.0`. It is invoked by `executor.node_started.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `run` | Executor original run/GoalRun and installed WorkGraph generation; retain original run/thread joins and replan generation. |
+| `node` | EP-105 materialized WorkNodeRecord: payload node_id equals actual worknode_id, with original source_request_id, workgraph_id and revision. A request or legacy project_plan_node alone cannot satisfy this read. |
+| `attempt` | Executor actual original attempt and frozen admission/terminal observation, joined to its materialized node and run. |
+| `execution` | EP execution_unit_context, immutable runtime snapshot and original permission/model/account/source-control owner results; package/seam/lane/worktree and requested/effective identities stay together. |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `run_id` | `run.body.run_id` |
+| `node_id` | `node.body.worknode_id` |
+| `attempt_id` | `attempt.body.attempt_id` |
+| `replan_generation` | `run.body.replan_generation` |
+| `execution_unit_context_ref` | `execution.body.execution_unit_context_ref` |
+| `runtime_snapshot_ref` | `execution.body.runtime_snapshot_ref` |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `node.started` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `queued` | `{}` | `in_progress` |
+
+Owner predicates, independently evaluated from the source records: `execution.body.dependency_state=satisfied`; `execution.body.attempt_admission=accepted`; `execution.body.permission=current`; `execution.body.baseline=verified`.
+
+Only the admitted real attempt for the queued materialized node permits in_progress. Readiness alone is insufficient. Worker dispatch belongs to attempt.started; replaying this node chronology cannot spawn another worker.
+
+Ordering barrier for `node.started`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"node_start_publications": 1, "worker_dispatches": 0}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-214
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: node.started@1.0.0 has the exact family-local prepared contract in
+  this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- node.started uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- node.started
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-214, ContractName:Plans/Contracts_V0.md#CV-504, ContractName:Plans/storage-plan.md#SP-504
+
+
+## EP-215 — node.unblocked prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `node.unblocked@1.0.0`, prepared without admission. `executor.node_unblocked.emitter.v1@1.0.0` is the exact Executor emitter for this transition: matching unresolved blocked episode -> resolved; require the exact ordered action/current prerequisite and durable recovery result. No stale approval and no safe-point anchor release before its owner terminal result.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-505 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: The exact original blocked_sequence is unresolved; its resolution evidence is durable and any required recovery-anchor release is permitted by the existing owner. Unblocking itself grants no restore success. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/node_unblocked. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### node.unblocked source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.node_unblocked.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `node.unblocked@1.0.0`. It is invoked by `executor.node_unblocked.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `run` | Executor original run/GoalRun and installed WorkGraph generation; retain original run/thread joins and replan generation. |
+| `node` | EP-105 materialized WorkNodeRecord: payload node_id equals actual worknode_id, with original source_request_id, workgraph_id and revision. A request or legacy project_plan_node alone cannot satisfy this read. |
+| `attempt` | Executor actual original attempt and frozen admission/terminal observation, joined to its materialized node and run. |
+| `episode` | Contracts canonical run/node/blocked_sequence episode, its actual optional attempt, current ordered allowed_action_ids, classified cause and durable resolution/restore result. |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `run_id` | `run.body.run_id` |
+| `node_id` | `node.body.worknode_id` |
+| `replan_generation` | `run.body.replan_generation` |
+| `blocked_sequence` | `episode.body.blocked_sequence` |
+| `resolution` | `operation.body.resolution` |
+| `attempt_id` | `episode.body.attempt_id` (explicit null forbids payload/envelope/attempt slot; otherwise join the exact attempt record) |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `node.unblocked` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `unresolved` | `{}` | `resolved` |
+
+Owner predicates, independently evaluated from the source records: `episode.body.resolution_commit=durable`; `episode.body.release_state=permitted`.
+
+Resolve the exact still-unresolved episode and its actual optional attempt; pre-attempt work carries no fabricated attempt. The chosen action must still occur in the current ordered allowed_action_ids. The current prerequisite must be resolved; safe_point_restored specifically waits for the committed original restore result before anchor release. Old approvals cannot resolve a later blocked_sequence.
+
+Ordering barrier for `node.unblocked`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"episode_resolutions": 1, "worker_dispatches": 0}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-215
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: node.unblocked@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- node.unblocked uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- node.unblocked
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-215, ContractName:Plans/Contracts_V0.md#CV-505, ContractName:Plans/storage-plan.md#SP-505
+
+
+## EP-216 — plan.decomposition_degraded prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `plan.decomposition_degraded@1.0.0`, prepared without admission. `executor.plan_decomposition_degraded.emitter.v1@1.0.0` is the exact Executor emitter for this transition: pre-lock decomposition -> degraded pre-lock shape; graph_locked=true rejects. Shapes are redacted bounded shape descriptors, not plan bodies; evidence_ref resolves the original evidence.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-506 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: Decomposition input is pre_lock and actual shape/evidence match the original analysis. Locked graph failure is refused as degradation. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/plan_decomposition_degraded. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### plan.decomposition_degraded source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.plan_decomposition_degraded.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `plan.decomposition_degraded@1.0.0`. It is invoked by `executor.plan_decomposition_degraded.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `decomposition` | Executor pre-lock Project/source_stage decomposition input, original/degraded structural descriptors and retained evidence; no run or attempt is invented. |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `source_stage` | `operation.body.source_stage` |
+| `reason_code` | `operation.body.reason_code` |
+| `original_shape` | `operation.body.original_shape` |
+| `degraded_shape` | `operation.body.degraded_shape` |
+| `evidence_ref` | `operation.body.evidence_ref` |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `plan.decomposition_degraded` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `pre_lock` | `{}` | `degraded_pre_lock` |
+
+Owner predicates, independently evaluated from the source records: `decomposition.body.graph_lock=unlocked`; `decomposition.body.evidence_state=retained`.
+
+The graph must still be unlocked before and at owner CAS. Original/degraded shapes are structural descriptors only; evidence_ref resolves the original redacted evidence. Locked-graph failure follows run.graph_integrity_failed and is not degradation. This pre-lock fallback has no run. G28/DL-401 assigns its event to `RP-OPERATIONAL-2555D@1.0.0`, measured from commitment of the original fallback result, as bound by SP-506. Existing holds and count-overflow refusal still apply; referenced bodies and checkpoints retain their independent owner policies.
+
+Ordering barrier for `plan.decomposition_degraded`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"degradation_publications": 1, "worker_dispatches": 0}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-216
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: plan.decomposition_degraded@1.0.0 has the exact family-local prepared
+  contract in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- plan.decomposition_degraded uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- plan.decomposition_degraded
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-216, ContractName:Plans/Contracts_V0.md#CV-506, ContractName:Plans/storage-plan.md#SP-506
+
+
+## EP-217 — remediation.resolved prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `remediation.resolved@1.0.0`, prepared without admission. `executor.remediation_resolved.emitter.v1@1.0.0` is the exact Executor emitter for this transition: active remediation child -> fixed, superseded, abandoned or replan_required with exact original parent/root/child joins; ceiling_exceeded is blocked-state evidence, not a current resolution.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-507 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: The exact root/child is active, the referenced child is terminal and resolution evidence is durable; fixed additionally requires child success. Other current resolutions keep their existing owner meaning. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/remediation_resolved. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### remediation.resolved source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.remediation_resolved.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `remediation.resolved@1.0.0`. It is invoked by `executor.remediation_resolved.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `run` | Executor original run/GoalRun and installed WorkGraph generation; retain original run/thread joins and replan generation. |
+| `node` | EP-105 materialized WorkNodeRecord: payload node_id equals actual worknode_id, with original source_request_id, workgraph_id and revision. A request or legacy project_plan_node alone cannot satisfy this read. |
+| `lineage` | Executor original remediation root/parent/child/generation record and current ceiling, classification and resolution evidence. |
+| `parent_attempt` | Executor original parent attempt, independently looked up by remediation_parent_attempt_id; never inferred from the child. |
+| `child_attempt` | Executor original admitted child attempt, independently looked up by child_attempt_id; never the parent attempt. |
+| `root` | Executor original remediation root record, independently looked up by remediation_root_id. |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `run_id` | `run.body.run_id` |
+| `node_id` | `node.body.worknode_id` |
+| `child_attempt_id` | `lineage.body.child_attempt_id` |
+| `remediation_root_id` | `lineage.body.remediation_root_id` |
+| `remediation_parent_attempt_id` | `lineage.body.remediation_parent_attempt_id` |
+| `remediation_generation` | `lineage.body.remediation_generation` |
+| `replan_generation` | `run.body.replan_generation` |
+| `finding_refs` | `operation.body.finding_refs` |
+| `resolution` | `operation.body.resolution` |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `remediation.resolved` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `active` | `{"resolution": "fixed"}` | `fixed` |
+| `active` | `{"resolution": "superseded"}` | `superseded` |
+| `active` | `{"resolution": "abandoned"}` | `abandoned` |
+| `active` | `{"resolution": "replan_required"}` | `replan_required` |
+
+Owner predicates, independently evaluated from the source records: `lineage.body.child_terminal=settled`; `lineage.body.evidence_commit=durable`.
+
+Independently join original parent, child and root records; child differs from parent. The joined lineage.body.remediation_generation equals the normalized lineage.body.generation and is itself compared directly with lineage.body.ceiling; checking a different generation cannot establish this ceiling. fixed requires child done; superseded/abandoned/replan_required retain their actual owner terminal evidence. Ceiling exceeded remains blocked-state evidence, never a new resolution enum.
+
+Ordering barrier for `remediation.resolved`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"remediation_resolutions": 1, "worker_dispatches": 0}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-217
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: remediation.resolved@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- remediation.resolved uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- remediation.resolved
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-217, ContractName:Plans/Contracts_V0.md#CV-507, ContractName:Plans/storage-plan.md#SP-507
+
+
+## EP-218 — remediation.spawned prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `remediation.spawned@1.0.0`, prepared without admission. `executor.remediation_spawned.emitter.v1@1.0.0` is the exact Executor emitter for this transition: classified failed parent -> admitted remediation child, within existing generation/ceiling policy; append lineage before child dispatch; child_attempt_id is the child attempt identity, never the parent.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-508 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: The actual parent has a classified failure, existing remediation ceilings permit this generation, and the exact distinct child is admitted; append before child dispatch. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/remediation_spawned. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### remediation.spawned source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.remediation_spawned.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `remediation.spawned@1.0.0`. It is invoked by `executor.remediation_spawned.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `run` | Executor original run/GoalRun and installed WorkGraph generation; retain original run/thread joins and replan generation. |
+| `node` | EP-105 materialized WorkNodeRecord: payload node_id equals actual worknode_id, with original source_request_id, workgraph_id and revision. A request or legacy project_plan_node alone cannot satisfy this read. |
+| `lineage` | Executor original remediation root/parent/child/generation record and current ceiling, classification and resolution evidence. |
+| `parent_attempt` | Executor original parent attempt, independently looked up by remediation_parent_attempt_id; never inferred from the child. |
+| `child_attempt` | Executor original admitted child attempt, independently looked up by child_attempt_id; never the parent attempt. |
+| `root` | Executor original remediation root record, independently looked up by remediation_root_id. |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `run_id` | `run.body.run_id` |
+| `node_id` | `node.body.worknode_id` |
+| `child_attempt_id` | `lineage.body.child_attempt_id` |
+| `remediation_root_id` | `lineage.body.remediation_root_id` |
+| `remediation_parent_attempt_id` | `lineage.body.remediation_parent_attempt_id` |
+| `remediation_generation` | `lineage.body.remediation_generation` |
+| `replan_generation` | `run.body.replan_generation` |
+| `finding_refs` | `operation.body.finding_refs` |
+| `parent_failure_class` | `operation.body.parent_failure_class` |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `remediation.spawned` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `classified_failure` | `{}` | `active` |
+
+Owner predicates, independently evaluated from the source records: `lineage.body.parent_classification=recorded`; `lineage.body.child_admission=accepted`.
+
+Independently join original parent, child and root records and the admitted child. The joined lineage.body.remediation_generation equals the normalized lineage.body.generation and is itself compared directly with lineage.body.ceiling; a divergent normalized generation rejects. Classified failure and durable lineage precede the first child dispatch; replay never starts a second child.
+
+Ordering barrier for `remediation.spawned`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"lineage_publications": 1, "worker_dispatches": 1}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-218
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: remediation.spawned@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- remediation.spawned uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- remediation.spawned
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-218, ContractName:Plans/Contracts_V0.md#CV-508, ContractName:Plans/storage-plan.md#SP-508
+
+
+## EP-219 — run.completed prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `run.completed@1.0.0`, prepared without admission. `executor.run_completed.emitter.v1@1.0.0` is the exact Executor emitter for this transition: active run -> owner-declared terminal result only after all required Document Set packaging audits pass and in-flight work is reconciled. Canonical usage remains usage.event; optional usage_ref resolves the UF-085 snapshot; no legacy inline token tuple.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-509 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: The run is active, in-flight work is reconciled and owner terminal evidence is valid, in addition to mandatory Document Set packaging checks. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/run_completed. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### run.completed source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.run_completed.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `run.completed@1.0.0`. It is invoked by `executor.run_completed.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `run` | Executor original run/GoalRun and installed WorkGraph generation; retain original run/thread joins and replan generation. |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `run_id` | `run.body.run_id` |
+| `replan_generation` | `run.body.replan_generation` |
+| `terminal_outcome` | `operation.body.terminal_outcome` |
+| `usage_ref` | `operation.body.usage_ref` |
+| `result_ref` | `operation.body.result_ref` |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `run.completed` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `active` | `{}` | `terminal` |
+
+Owner predicates, independently evaluated from the source records: `run.body.in_flight=reconciled`; `run.body.packaging=passed`; `run.body.terminal_evidence=accepted`.
+
+Reconcile all in-flight work and every required Document Set reconstruction, line-accounting, idempotency, index/manifest and clean-room audit before the terminal result. terminal_outcome/result_ref are the original owner result. usage_ref, when present, resolves UF-085, never an inline token tuple.
+
+Ordering barrier for `run.completed`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"run_terminal_publications": 1, "worker_dispatches": 0}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-219
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: run.completed@1.0.0 has the exact family-local prepared contract in
+  this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.completed uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.completed
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-219, ContractName:Plans/Contracts_V0.md#CV-509, ContractName:Plans/storage-plan.md#SP-509
+
+
+## EP-220 — run.graph_integrity_failed prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `run.graph_integrity_failed@1.0.0`, prepared without admission. `executor.run_graph_integrity_failed.emitter.v1@1.0.0` is the exact Executor emitter for this transition: active graph validation -> integrity failure and replan path; never convert locked graph corruption into pre-lock decomposition degradation or blind retry.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-510 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: The actual active run graph has failed validation; this is evidence of graph integrity failure and only the owner replan path may repair it. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/run_graph_integrity_failed. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### run.graph_integrity_failed source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.run_graph_integrity_failed.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `run.graph_integrity_failed@1.0.0`. It is invoked by `executor.run_graph_integrity_failed.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `run` | Executor original run/GoalRun and installed WorkGraph generation; retain original run/thread joins and replan generation. |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `run_id` | `run.body.run_id` |
+| `replan_generation` | `run.body.replan_generation` |
+| `reason_code` | `operation.body.reason_code` |
+| `detail_ref` | `operation.body.detail_ref` |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `run.graph_integrity_failed` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `active` | `{}` | `integrity_failed` |
+
+Owner predicates, independently evaluated from the source records: `run.body.integrity_result=failed`; `run.body.recovery_route=replan`.
+
+Require actual failed validation of the active installed graph/generation, retain reason_code/detail_ref, and use the owner replan route. No blind retry or conversion to pre-lock decomposition degradation.
+
+Ordering barrier for `run.graph_integrity_failed`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"integrity_failure_publications": 1, "worker_dispatches": 0}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-220
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: run.graph_integrity_failed@1.0.0 has the exact family-local prepared
+  contract in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.graph_integrity_failed uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.graph_integrity_failed
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-220, ContractName:Plans/Contracts_V0.md#CV-510, ContractName:Plans/storage-plan.md#SP-510
+
+
+## EP-221 — run.node_backoff_expired prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `run.node_backoff_expired@1.0.0`, prepared without admission. `executor.run_node_backoff_expired.emitter.v1@1.0.0` is the exact Executor emitter for this transition: matching active backoff -> elapsed wake only at or after durable backoff_until_utc; no attempt dispatch or success inferred from timer expiry.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-511 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: The exact prior attempt has an active backoff and its timer matches the original backoff record; now must be at or beyond backoff_until_utc. Expiry is only a wake. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/run_node_backoff_expired. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### run.node_backoff_expired source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.run_node_backoff_expired.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `run.node_backoff_expired@1.0.0`. It is invoked by `executor.run_node_backoff_expired.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `run` | Executor original run/GoalRun and installed WorkGraph generation; retain original run/thread joins and replan generation. |
+| `node` | EP-105 materialized WorkNodeRecord: payload node_id equals actual worknode_id, with original source_request_id, workgraph_id and revision. A request or legacy project_plan_node alone cannot satisfy this read. |
+| `attempt` | Executor actual original attempt and frozen admission/terminal observation, joined to its materialized node and run. |
+| `retry` | Executor original classified prior attempt and per-error retry budget, Storage-owned retry result when relevant, original timer/deadline and baseline/permission recovery results. |
+| `failure` | `Plans/Executor_Protocol.md` (actual original classified outcome, per-error counter, response/failure clocks, Retry-After header and original refresh/rebuilt-client evidence) |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `run_id` | `run.body.run_id` |
+| `node_id` | `node.body.worknode_id` |
+| `attempt_id` | `attempt.body.attempt_id` |
+| `replan_generation` | `run.body.replan_generation` |
+| `failure_class` | `operation.body.failure_class` |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `run.node_backoff_expired` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `active` | `{}` | `elapsed` |
+
+Owner predicates, independently evaluated from the source records: `retry.body.timer_identity=original`.
+
+Join the same original attempt/classification/timer as backoff start. First observation ts must be at or beyond the original durable backoff_until_utc. Expiry publishes a wake only, never dispatch or success.
+
+Review-round-1 retry policy closure for `run.node_backoff_expired`: reuse EP-032's existing classified matrix and SP-238's distinct Storage adapter rules. Newly authored normalized `failure` owner read binds this exact family's original classified error_id and actual attempt; `retry` requires that exact failure parent and the original per-error retry_count_before (used), never a shared retry bucket. The exact policy_owner_ref is Plans/Executor_Protocol.md#EP-032, or Plans/storage-plan.md#SP-238 for storage_io. limit must equal the selected current owner value: provider_transient=3, rate_limited=3, structured_output_invalid=2, auth_expired=1; Storage interrupted=3 and transient_busy=1; every other Storage class and every nonretryable failure reject. Require integer 0 <= used < limit and payload retry_count=used+1 where that field exists.
+
+Use independently read original response_received_at_utc <= failed_at_utc <= retry.scheduled_at_utc <= first observation ts. The original deadline is scheduled_at_utc plus 1s/2s/4s for provider_transient's respective per-error retry ordinal; rate_limited uses the original Retry-After delta-seconds from response receipt or HTTP-date (no earlier than scheduling), or 30s from scheduling when absent. Invalid/unavailable header evidence refuses the claim. structured_output_invalid and Storage interrupted are immediate; Storage transient_busy is exactly 250 ms. auth_expired is immediate only after one successful original refresh and rebuilt client, ordered failed_at <= refresh completion <= client rebuilt <= scheduling. Require the original retry deadline in every capture, join backoff start's payload deadline to it and reject early expiry; observation time alone does not establish the delay. Source hashes/parents and the complete observation remain mandatory. These are newly authored capture/read bindings for already specified policy, never new persisted failure/counter families or native proof.
+
+Storage retry evidence always retains the same actual Executor attempt, new_executor_attempt=false and successor_attempt_id=null. Only the owning Storage adapter retry may be scheduled; there is no Executor attempt creation, dispatch or counter increment. The existing family effect counts remain unchanged; no native emission is inferred from a normalized immediate deadline.
+
+The existing matrix’s none/immediate policy creates no timed backoff: reject this family when the computed original delay is zero (including expired/zero Retry-After). A valid immediate retry may be recorded by run.node_retry_scheduled under its own admission checks; a synthetic timer cannot turn an immediate retry into a backoff transition.
+
+Ordering barrier for `run.node_backoff_expired`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"wake_publications": 1, "worker_dispatches": 0}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-221
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: run.node_backoff_expired@1.0.0 has the exact family-local prepared
+  contract in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.node_backoff_expired uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.node_backoff_expired
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-221, ContractName:Plans/Contracts_V0.md#CV-511, ContractName:Plans/storage-plan.md#SP-511
+
+
+## EP-222 — run.node_backoff_started prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `run.node_backoff_started@1.0.0`, prepared without admission. `executor.run_node_backoff_started.emitter.v1@1.0.0` is the exact Executor emitter for this transition: classified retryable failure -> scheduled backoff with existing per-error budgets; no retry of graph_integrity, verification_failed or reviewer_findings; timer never converts to terminal success.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-512 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: The prior attempt has a classified retryable failure and its actual per-error retry budget remains. backoff_until_utc cannot precede the first recorded observation. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/run_node_backoff_started. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### run.node_backoff_started source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.run_node_backoff_started.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `run.node_backoff_started@1.0.0`. It is invoked by `executor.run_node_backoff_started.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `run` | Executor original run/GoalRun and installed WorkGraph generation; retain original run/thread joins and replan generation. |
+| `node` | EP-105 materialized WorkNodeRecord: payload node_id equals actual worknode_id, with original source_request_id, workgraph_id and revision. A request or legacy project_plan_node alone cannot satisfy this read. |
+| `attempt` | Executor actual original attempt and frozen admission/terminal observation, joined to its materialized node and run. |
+| `retry` | Executor original classified prior attempt and per-error retry budget, Storage-owned retry result when relevant, original timer/deadline and baseline/permission recovery results. |
+| `failure` | `Plans/Executor_Protocol.md` (actual original classified outcome, per-error counter, response/failure clocks, Retry-After header and original refresh/rebuilt-client evidence) |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `run_id` | `run.body.run_id` |
+| `node_id` | `node.body.worknode_id` |
+| `attempt_id` | `attempt.body.attempt_id` |
+| `replan_generation` | `run.body.replan_generation` |
+| `failure_class` | `operation.body.failure_class` |
+| `backoff_until_utc` | `operation.body.backoff_until_utc` |
+| `retry_count` | `operation.body.retry_count` |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `run.node_backoff_started` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `classified_failure` | `{}` | `active` |
+
+Owner predicates, independently evaluated from the source records: `retry.body.classification_state=recorded`.
+
+Use the exact classified prior attempt and per-error budget. No automatic retry of graph_integrity, verification_failed, reviewer_findings or quota_exceeded. Storage I/O stays within its adapter retry class/budget and never becomes a fresh Executor attempt. backoff_until_utc cannot precede first observation.
+
+Review-round-1 retry policy closure for `run.node_backoff_started`: reuse EP-032's existing classified matrix and SP-238's distinct Storage adapter rules. Newly authored normalized `failure` owner read binds this exact family's original classified error_id and actual attempt; `retry` requires that exact failure parent and the original per-error retry_count_before (used), never a shared retry bucket. The exact policy_owner_ref is Plans/Executor_Protocol.md#EP-032, or Plans/storage-plan.md#SP-238 for storage_io. limit must equal the selected current owner value: provider_transient=3, rate_limited=3, structured_output_invalid=2, auth_expired=1; Storage interrupted=3 and transient_busy=1; every other Storage class and every nonretryable failure reject. Require integer 0 <= used < limit and payload retry_count=used+1 where that field exists.
+
+Use independently read original response_received_at_utc <= failed_at_utc <= retry.scheduled_at_utc <= first observation ts. The original deadline is scheduled_at_utc plus 1s/2s/4s for provider_transient's respective per-error retry ordinal; rate_limited uses the original Retry-After delta-seconds from response receipt or HTTP-date (no earlier than scheduling), or 30s from scheduling when absent. Invalid/unavailable header evidence refuses the claim. structured_output_invalid and Storage interrupted are immediate; Storage transient_busy is exactly 250 ms. auth_expired is immediate only after one successful original refresh and rebuilt client, ordered failed_at <= refresh completion <= client rebuilt <= scheduling. Require the original retry deadline in every capture, join backoff start's payload deadline to it and reject early expiry; observation time alone does not establish the delay. Source hashes/parents and the complete observation remain mandatory. These are newly authored capture/read bindings for already specified policy, never new persisted failure/counter families or native proof.
+
+Storage retry evidence always retains the same actual Executor attempt, new_executor_attempt=false and successor_attempt_id=null. Only the owning Storage adapter retry may be scheduled; there is no Executor attempt creation, dispatch or counter increment. The existing family effect counts remain unchanged; no native emission is inferred from a normalized immediate deadline.
+
+The existing matrix’s none/immediate policy creates no timed backoff: reject this family when the computed original delay is zero (including expired/zero Retry-After). A valid immediate retry may be recorded by run.node_retry_scheduled under its own admission checks; a synthetic timer cannot turn an immediate retry into a backoff transition.
+
+Ordering barrier for `run.node_backoff_started`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"timer_creations": 1, "worker_dispatches": 0}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-222
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: run.node_backoff_started@1.0.0 has the exact family-local prepared
+  contract in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.node_backoff_started uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.node_backoff_started
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-222, ContractName:Plans/Contracts_V0.md#CV-512, ContractName:Plans/storage-plan.md#SP-512
+
+
+## EP-223 — run.node_ready prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `run.node_ready@1.0.0`, prepared without admission. `executor.run_node_ready.emitter.v1@1.0.0` is the exact Executor emitter for this transition: not ready -> dependency-satisfying ready; all blockers resolve and current graph/Spec Lock/capacity requirements pass. Preserve ready_since_utc while continuously ready, do not dispatch from this event.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-513 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: The node was not ready; its actual dependencies and graph/Spec Lock now satisfy readiness. Continuing readiness preserves the original timestamp rather than another entry event. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/run_node_ready. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### run.node_ready source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.run_node_ready.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `run.node_ready@1.0.0`. It is invoked by `executor.run_node_ready.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `run` | Executor original run/GoalRun and installed WorkGraph generation; retain original run/thread joins and replan generation. |
+| `node` | EP-105 materialized WorkNodeRecord: payload node_id equals actual worknode_id, with original source_request_id, workgraph_id and revision. A request or legacy project_plan_node alone cannot satisfy this read. |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `run_id` | `run.body.run_id` |
+| `node_id` | `node.body.worknode_id` |
+| `replan_generation` | `run.body.replan_generation` |
+| `ready_since_utc` | `operation.body.ready_since_utc` |
+| `wake_reason` | `operation.body.wake_reason` |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `run.node_ready` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `not_ready` | `{}` | `ready` |
+
+Owner predicates, independently evaluated from the source records: `node.body.dependencies=satisfied`; `node.body.graph_integrity=valid`; `node.body.spec_lock=current`; `node.body.backoff=inactive`; `node.body.blockers=resolved`.
+
+All actual dependencies must satisfy their existing owners; current graph/Spec Lock and replan_generation, inactive backoff and resolved blockers are mandatory. Entry is not_ready -> ready once; continuous readiness preserves ready_since_utc. No dispatch or success follows from this event alone.
+
+Ordering barrier for `run.node_ready`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"ready_entries": 1, "worker_dispatches": 0}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-223
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: run.node_ready@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.node_ready uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.node_ready
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-223, ContractName:Plans/Contracts_V0.md#CV-513, ContractName:Plans/storage-plan.md#SP-513
+
+
+## EP-224 — run.node_retry_scheduled prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `run.node_retry_scheduled@1.0.0`, prepared without admission. `executor.run_node_retry_scheduled.emitter.v1@1.0.0` is the exact Executor emitter for this transition: classified prior attempt -> scheduled successor admission under the existing retry budget; preserve prior identity, verify safe-point/worktree and refresh permission before any distinct successor attempt.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-514 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: The exact prior attempt is classified, actual retry budget remains and baseline is valid; no new attempt may dispatch without fresh permission and safe-point owner checks. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/run_node_retry_scheduled. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### run.node_retry_scheduled source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.run_node_retry_scheduled.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `run.node_retry_scheduled@1.0.0`. It is invoked by `executor.run_node_retry_scheduled.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `run` | Executor original run/GoalRun and installed WorkGraph generation; retain original run/thread joins and replan generation. |
+| `node` | EP-105 materialized WorkNodeRecord: payload node_id equals actual worknode_id, with original source_request_id, workgraph_id and revision. A request or legacy project_plan_node alone cannot satisfy this read. |
+| `retry` | Executor original classified prior attempt and per-error retry budget, Storage-owned retry result when relevant, original timer/deadline and baseline/permission recovery results. |
+| `prior_attempt` | `Plans/Executor_Protocol.md` (the actual original attempt named by failure.attempt_id) |
+| `failure` | `Plans/Executor_Protocol.md` (actual original classified outcome, per-error counter, response/failure clocks, Retry-After header and original refresh/rebuilt-client evidence) |
+| `execution` | EP execution_unit_context, immutable runtime snapshot and original permission/model/account/source-control owner results; package/seam/lane/worktree and requested/effective identities stay together. |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `run_id` | `run.body.run_id` |
+| `node_id` | `node.body.worknode_id` |
+| `prior_attempt_id` | `retry.body.prior_attempt_id` |
+| `replan_generation` | `run.body.replan_generation` |
+| `retry_count` | `operation.body.retry_count` |
+| `failure_class` | `operation.body.failure_class` |
+| `safe_point_id` | `execution.body.safe_point_id` |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `run.node_retry_scheduled` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `classified_failure` | `{}` | `scheduled` |
+
+Owner predicates, independently evaluated from the source records: `execution.body.baseline=verified`; `execution.body.permission=current`; `retry.body.safe_point=verified`.
+
+Join prior_attempt_id to the actual classified attempt, preserve the exact retry count and per-error budget, verify the safe-point/baseline and refresh permission before any distinct successor. The event reserves successor admission, not worker dispatch. Storage adapter retries never mint an Executor attempt.
+
+Review-round-1 retry policy closure for `run.node_retry_scheduled`: reuse EP-032's existing classified matrix and SP-238's distinct Storage adapter rules. Newly authored normalized `failure` owner read binds this exact family's original classified error_id and actual attempt; `retry` requires that exact failure parent and the original per-error retry_count_before (used), never a shared retry bucket. The exact policy_owner_ref is Plans/Executor_Protocol.md#EP-032, or Plans/storage-plan.md#SP-238 for storage_io. limit must equal the selected current owner value: provider_transient=3, rate_limited=3, structured_output_invalid=2, auth_expired=1; Storage interrupted=3 and transient_busy=1; every other Storage class and every nonretryable failure reject. Require integer 0 <= used < limit and payload retry_count=used+1 where that field exists.
+
+Use independently read original response_received_at_utc <= failed_at_utc <= retry.scheduled_at_utc <= first observation ts. The original deadline is scheduled_at_utc plus 1s/2s/4s for provider_transient's respective per-error retry ordinal; rate_limited uses the original Retry-After delta-seconds from response receipt or HTTP-date (no earlier than scheduling), or 30s from scheduling when absent. Invalid/unavailable header evidence refuses the claim. structured_output_invalid and Storage interrupted are immediate; Storage transient_busy is exactly 250 ms. auth_expired is immediate only after one successful original refresh and rebuilt client, ordered failed_at <= refresh completion <= client rebuilt <= scheduling. Require the original retry deadline in every capture, join backoff start's payload deadline to it and reject early expiry; observation time alone does not establish the delay. Source hashes/parents and the complete observation remain mandatory. These are newly authored capture/read bindings for already specified policy, never new persisted failure/counter families or native proof.
+
+Storage retry evidence always retains the same actual Executor attempt, new_executor_attempt=false and successor_attempt_id=null. Only the owning Storage adapter retry may be scheduled; there is no Executor attempt creation, dispatch or counter increment. For this family only, storage_io post-state accounting is worker_dispatches=0, successor_admissions=0, adapter_retry_schedules=1; the existing successor_admissions=1 remains exact for non-Storage classified retries. These are oracle effect counts, not new stored counters.
+
+Ordering barrier for `run.node_retry_scheduled`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"successor_admissions": 1, "worker_dispatches": 0}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-224
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: run.node_retry_scheduled@1.0.0 has the exact family-local prepared
+  contract in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.node_retry_scheduled uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.node_retry_scheduled
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-224, ContractName:Plans/Contracts_V0.md#CV-514, ContractName:Plans/storage-plan.md#SP-514
+
+
+## EP-225 — scheduler.pass prepared Event Authority contract
+
+Newly authored owner contract under DL-045, after the per-family search in reports/event-authority-20261104/DX.md. This unit governs only `scheduler.pass@1.0.0`, prepared without admission. `executor.scheduler_pass.emitter.v1@1.0.0` is the exact Executor emitter for this transition: one pending wake set -> one scored pass, before dispatch; first recovery wake is startup_recovered. Select at most available_slots using the canonical score order, retain every nonselected ready node and its exclusion reason. Legacy non_selected is import-only.
+
+The producer validates current Project ownership, graph/replan generation, original input and referenced immutable runtime/snapshot identities, permission and worktree baseline before preparing immutable payload bytes. Every present run/thread/node/attempt join must equal its actual owner record and EventRecord envelope; never derive Project from focus. Pre-attempt blocks omit attempt_id. Requested/effective model/account/persona and package/seam/lane/worktree identity are resolved through the existing immutable runtime snapshot or execution_unit_context reference, with its full current owner equality checks, never reconstructed from today's settings. Conditional evidence (verification/reviewer, auth scope, timeout/wait, safe-point and remediation lineage) is required whenever the underlying outcome has that feature; absence cannot suppress a real outcome discriminator.
+
+Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286 and CV-339 including strict stored full-value v2 resolution, SP-336/SP-347 durability classes and flush fences. Lost acknowledgement resolves original full value and first receipt, never guesses success or fabricates a second effect. A barrier required before execution uses the barrier-class append. Missing original full-value custody fences retries. This event is evidence of the transition; replay cannot perform its associated worker, retry, recovery or notification action.
+
+Event ordering follows canonical local sequence; node events remain sequential and cross-node events eventual. The later Executor Event Dedup Key Sequence Fallback governs over the old timestamp tuple. event_sequence is reserved once for the logical transition, persisted in the original owner input/transition before append, monotonic within an attempt or (when no attempt exists) this run/node or pre-lock Project decomposition stream. Retry reloads the same sequence and semantic bytes; it cannot obtain another sequence to bypass dedupe. See SP-515 for the exact family identity and historical compatibility.
+
+Family-local source predicate contract: The exact wake set is pending with no previously committed pass. Original pass identity, ready/selected/nonselected partition, scores, capacity and first recovery wake are preserved. The unpersisted normalized source proof for this exact family is closed at Plans/executor_event_source_proofs.schema.json#/$defs/scheduler_pass. Source facts are observations resolved from the actual canonical owner records named above under the same admission/read fence; caller-supplied booleans or fixture data never establish runtime authority. Source bindings must match every payload identity/snapshot ref, independently of envelope equality; only fields actually present are compared, with conditional presence governed above. Fixtures exercise each exact field mismatch, each invalid source state and each envelope mismatch independently. No new physical state or canonical lifecycle enum is created by these normalized reader predicates.
+
+### scheduler.pass source-read and transition closure (pass two)
+
+Newly authored technical owner contract under DL-045 after the independent per-family pass-two search in `reports/event-authority-20261104/DX.md`: `executor.scheduler_pass.source_adapter.v1@1.0.0` is the exact unpersisted source adapter for `scheduler.pass@1.0.0`. It is invoked by `executor.scheduler_pass.emitter.v1@1.0.0` while holding the existing Project/run writer-admission fence. It is not a physical value family, lifecycle owner, new command, or permission grant. The machine companion is this family's own `semantic_adapter` object in `Plans/executor_event_contracts.json`; no sibling supplies a source role, join or transition.
+
+Read these exact owner roles under one coherent admission/read boundary, using original immutable record refs and revisions rather than caller truth flags:
+
+| Local source-read slot | Canonical owner and source selection |
+|---|---|
+| `project` | Project_System current Project identity and Storage root; never focus or a display label. |
+| `operation` | Executor original reserved transition input: immutable semantic observation, event_sequence, predecessor revision and original dependency refs. The same input is reloaded after a crash. |
+| `run` | Executor original run/GoalRun and installed WorkGraph generation; retain original run/thread joins and replan generation. |
+| `scheduler` | Executor one original pending wake set for run/replan_generation, original scheduler_pass_id, current candidate set, scores, capacity, partition and recorded wake ordering. |
+
+The earlier source_facts/source_bindings fixtures remain shape-only regressions; this pass-two adapter supplies the source-read and transition contract. The normalized read captures in `Plans/executor_event_semantic_fixtures.json` are static oracle inputs only. Native adapters must resolve and validate the complete existing owner records/schemas and their hashes, permissions and deletion fences; the captured join view does not replace a complete runtime snapshot or execution_unit_context schema. Every slot must match its actual source owner, exact Project/storage root, expected revision, body digest and required parent refs. Missing/unavailable originals refuse publication and retries; an empty substitute is forbidden. Payload/envelope Project, run, thread and attempt joins are exact when present. Project partition is `project~` plus unpadded base64url of UTF-8 Project ID (Storage Case L-5).
+
+Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:
+
+| Payload field | Required owner-read equality |
+|---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
+| `project_id` | `project.body.project_id` |
+| `event_sequence` | `operation.body.event_sequence` |
+| `run_id` | `run.body.run_id` |
+| `thread_id` | `run.body.thread_id` |
+| `replan_generation` | `run.body.replan_generation` |
+| `scheduler_pass_id` | `operation.body.scheduler_pass_id` |
+| `wake_reason` | `operation.body.wake_reason` |
+| `available_slots` | `operation.body.available_slots` |
+| `ready_nodes` | `operation.body.ready_nodes` |
+| `selected_nodes` | `operation.body.selected_nodes` |
+| `non_selected_nodes` | `operation.body.non_selected_nodes` |
+| `coalesced_wake_reasons` | `operation.body.coalesced_wake_reasons` |
+| `wake_event_refs` | `operation.body.wake_event_refs` |
+
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+
+The lifecycle table for `scheduler.pass` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
+
+| Before | Payload discriminator | After |
+|---|---|---|
+| `pending` | `{}` | `committed` |
+
+Owner predicates, independently evaluated from the source records: `scheduler.body.prior_pass=absent`; `scheduler.body.generation_state=current`.
+
+Order wakes by (recorded_at_utc,event_id); preserve the first primary reason and every additional coalesced reason/ref. First recovery wake is startup_recovered; watchdog_recheck cannot supersede pending event-driven work. Select exactly min(ready count, available_slots) using the canonical score tuple, retaining every nonselected candidate and its original exclusion reason. Every selected score/lane equals the original candidate record. Apply the existing EP-052 score-term domain to both ready_nodes[].manual_priority and selected_nodes[].score_tuple.manual_priority and to the original normalized owner scores: integer 0..100 inclusive, default 50. A missing configured priority normalizes to 50 before scoring; the emitted/captured score carries that explicit value. Reject each lower/upper violation independently, even when payload, mirror and hashed source agree on the invalid integer. Publish pass history before dispatch. SP-515 binds its existing canonical runtime classification to RP-RUNTIME-365D@1.0.0; admission remains separately absent.
+
+Ordering barrier for `scheduler.pass`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"pass_publications": 1, "worker_dispatches": 0}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
+
+```yaml
+plan_unit_id: EP-225
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: scheduler.pass@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- scheduler.pass uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- scheduler.pass
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-225, ContractName:Plans/Contracts_V0.md#CV-515, ContractName:Plans/storage-plan.md#SP-515
+
+### EP-200 - Workflow run stop and block writers
+
+```yaml
+plan_unit_id: EP-200
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: |-
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). It is the Workflow writer listing DL-080 requires for goal_run.stopped and goal_run.blocked, Project edition only. Two writers are named: owner.executor.workflow_run.stop.v1, entered from handlers::orchestrator::pause (cmd.orchestrator.pause) and handlers::runtime::abort_run (cmd.runtime.abort_run); and owner.executor.workflow_run.block.v1, entered from the Executor scheduler when a run-level block is admitted. Each moves the native Workflow body status once, under the D01 update_workflow observation, and its own event follows in the order below. Installation: EP-118 keeps refusing every unlisted writer (RequiredOtherWorkflowWriterSource=false), and the all_writers.v7 descriptor (EP-124) lists neither writer, so neither can run on any existing birth. They become available only on a fresh Workflow source edition whose all-writers descriptor lists them; the complete newly authored edition is EP-1110, with separate EP-1111 stop and EP-1112 block original source/method/result protocols, and no existing birth is enrolled or cast.
+gui_related: false
+gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
+split_recommended: false
+depends_on:
+- EP-118
+- EP-119
+- EP-124
+- SP-286
+- SP-309
+- SP-426
+- SP-427
+- DL-080
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The stop writer is reached only from cmd.orchestrator.pause and cmd.runtime.abort_run; the block writer only from the Executor scheduler; no other route appends either family.
+- Each writer orders admission, settlement or block receipt, native status update, append with SP-286 first receipt, then terminal command publication; no step is reordered or skipped.
+- On every existing birth both writers stay refused by RequiredOtherWorkflowWriterSource=false; only a fresh source edition that lists them may install them.
+- A lost acknowledgement resolves through SP-286 retained receipt resolution; the writer never re-dispatches, rolls back or mints a new event value.
+validation_surfaces:
+- Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json
+- Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json
+- Plans/goal_run_stop_block_oracle_fixtures.json
+- python3 scripts/pm_goal_run_stop_block_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: unlisted_workflow_writer_admission
+reasoning_tier: high
+context_scope: workflow_run_stop_block_writers
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-080
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (item 3)
+preserved_exact_tokens:
+- "owner.executor.workflow_run.stop.v1"
+- "owner.executor.workflow_run.block.v1"
+- "RequiredOtherWorkflowWriterSource=false"
+negative_constraints:
+- No completion, certification, replan, resume or ownership-transfer writer.
+- No enrollment of an existing birth and no application-scope writer.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+**Why a listing and not an installation.** DL-080 says "Each contract names the family's writer, which the Workflow writer list lacks today". EP-118 lists the original materialized, stage-entrypoint, prepare-start, prestart-abort, original-start and D06 writers and refuses every other one; EP-124 binds the entire `all_writers.v7` descriptor before birth. Naming the two writers here closes the listing gap; installing them needs a fresh Workflow source edition with these writers in its descriptor, and that edition is now authored by EP-1110 with exact resource-bank/method bindings. No existing birth is changed.
+
+**Stop writer order** (`owner.executor.workflow_run.stop.v1`).
+1. Admission at the writer's final predicate: current Project permission for the command, writer-capable Storage, no recovery hold, the native status is one D-R21 source (`ready`, `running`, `provisional_success`, `verifying`, `failed_verification`, `repairing`, `blocked`, or `stopped` with new settlement or recovery evidence), and the expected GoalRun revision is current.
+2. Settlement: the bounded safe-stop owner (EP-119, SP-309) settles the run's in-flight effects and returns durable settlement dispositions. `resumable=true` additionally needs a validated safe point and no unresolved mutation fence; otherwise the writer sets `resumable=false`.
+3. Native update: the native body status becomes `stopped` and the GoalRun revision advances exactly once; D01 `update_workflow.v3` observes the update and never issues it. The Goal body, revision and four-state lifecycle are unchanged.
+4. Append: the frozen goal_run.stopped v3 EventRecord (SP-426 identity) is appended through Storage; the first AppendReceipt is retained under SP-286 by name.
+5. Terminal publication: the command result is published only after the first receipt (CV-333 central response). A refusal after step 3 keeps every genuine earlier effect and reports recovery, never rollback.
+
+**Block writer order** (`owner.executor.workflow_run.block.v1`).
+1. Admission: the scheduler has a run-level block cause from the v2 `blocked_reason_code` list, the native status is one D-R16 source (`ready`, `running`, `provisional_success`, `verifying`, `failed_verification`, `repairing`, or `blocked` with new evidence, action or recovery revision), and the expected GoalRun revision is current.
+2. Block receipt: the owner of the cause (Permissions for denial, Storage for storage blocks, the approval owner for approval) has issued the receipt the payload names; D-R16 requires it to exist before append.
+3. Native update: status `blocked`, GoalRun revision advances once, D01 observes; Goal state unchanged.
+4. Append with SP-286 first receipt (SP-427 identity).
+5. No command result: the scheduler records its pass outcome after the first receipt.
+
+**Search (DL-045).** Scope: EP-116..124, EP-132, GRS-026, GRS-027, GRS-071, GRS-075, GRS-079..085, SP-309..317, CV-340, `Plans/Wiring_Matrix.production.json` rows `catalog.orchestrator_pause` and `catalog.runtime_abort_run`, `Plans/workflow_standard_source_contracts/` and the Known-37 matrix rows EA-UND-0016 and EA-UND-0021. Found: both wiring rows expect `goal_run.stopped`; EP-118 refuses unlisted writers; no unit names a stop or block writer, method or entrypoint. These two writer identities are newly authored.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-118, ContractName:Plans/Executor_Protocol.md#EP-124, ContractName:Plans/Goal_Runtime_System.md#GRS-200, ContractName:Plans/Goal_Runtime_System.md#GRS-201, ContractName:Plans/Decision_Log.md#DL-080
+
+### EP-1110 - Fresh original stop/block all-writers source edition
+
+```yaml
+plan_unit_id: EP-1110
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Newly authored DL-045 owner contract for the exact Project goal_run.stopped and goal_run.blocked
+  source installation required by DL-080. Adopt the complete SB0/SB1 source protocol, profile.json, separate
+  literal resource realms, whole fresh namespace/resource map and methods under Plans/goal_run_stop_block_contracts/.
+  The distinct pm.executor.workflow_source.all_writers.stop_block.v1 descriptor incorporates every EP-124 native/producer/coordinator
+  participant and complete original method/argument/final predicates, plus exactly the stop and block original
+  owners. Original D01 adds only original_run_stop and original_run_block with their full origin/publication
+  roots. Fix the entire descriptor and authentic exhaustive writer registrations before genuine original native
+  birth; coissue native/D01/coordinator initial controls under absent-key CAS. No serialized profile, hash or
+  installed flag is a source installation. EP-118 and EP-124 adopt this edition only for those genuine fresh
+  births; their v7 and retained routes remain byte-exact. The separately gated Replan all_writers.v8 name and
+  behavior are not used. This is prepared without admission and native execution remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
+  visual surface.
+split_recommended: false
+depends_on:
+- EP-118
+- EP-124
+- SP-1110
+- SP-1111
+- CV-1110
+unblocks: []
+acceptance_criteria:
+- Exact original installed profile and full source census are independently authenticated at every entry and
+  final held boundary.
+- Old v7 births and every historical realm refuse casting or retrospective enrollment.
+- Every inherited participant retains its complete original owner semantics; new namespace substitutions never
+  replace a whole argument with selectors.
+validation_surfaces:
+- Plans/goal_run_stop_block_contracts/protocol.md
+- Plans/goal_run_stop_block_contracts/contracts.schema.json
+- python3 scripts/pm_goal_own_a_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: original_stop_block_source_custody_and_publication
+reasoning_tier: high
+context_scope: event_authority_dg_own_a_20261105
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_run_stop_block_contracts/
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-080
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No application stopped edition, old-birth enrollment, registry/admission/Decision Log change or retention
+  policy.
+- No native installation/execution, runtime/readiness, WorkNode, NodeSeed or governance qualification.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-118, ContractName:Plans/Executor_Protocol.md#EP-124, ContractName:Plans/storage-plan.md#SP-1110, ContractName:Plans/storage-plan.md#SP-1111, ContractName:Plans/Contracts_V0.md#CV-1110
+
+
+### EP-1111 - Original goal_run.stopped source and terminal publication
+
+```yaml
+plan_unit_id: EP-1111
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Newly authored DL-045 owner contract for exactly goal_run.stopped Project v3. EP-200 adopts
+  SB2 in Plans/goal_run_stop_block_contracts/protocol.md and the separate StopIntent/StopControl/StopNativeResult/StopOrigin/StopResult
+  roots and complete method tuples. The actual pause or abort command admits owner.executor.workflow_run.stop.v1
+  on a genuine EP-1110 birth, authenticates D01/native revision and complete current sources, then obtains the
+  bounded safe-stop owner complete original effect census, settlement dispositions, required flush and safe-point
+  authority. Freeze the complete original Event before native publication. Commit original native stopped revision
+  +1, source control and D01 lineage atomically under full preimage CAS; Goal body/context and activation clocks
+  are preserved. Append only the frozen own-family Event, resolve SP-286 original eleven-field receipt plus
+  strict v2 full-value custody independently, then publish the original command terminal result. Native-only/Event-only/unknown
+  states remain pending. Same-operation recovery never repeats effects, native revision or timestamps; semantic
+  conflicts refuse, and current replay-only writes refuse before dedupe. Retained lawful originals use actual
+  write-time source and current disclosure authority without new-writer gates.
+gui_related: false
+gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
+  visual surface.
+split_recommended: false
+depends_on:
+- EP-1110
+- GRS-200
+- SP-426
+- SP-1110
+- CV-420
+unblocks: []
+acceptance_criteria:
+- Every legal/repeated/illegal D-R21 status and original settlement/safe-point source is checked independently.
+- Cause, native/D01, Event/first receipt and terminal publication preserve the acyclic original phase order.
+- Writer withdrawal prevents fresh append while already-issued original custody remains independently resolvable.
+validation_surfaces:
+- Plans/goal_run_stop_block_contracts/protocol.md
+- Plans/goal_run_stop_block_contracts/contracts.schema.json
+- python3 scripts/pm_goal_own_a_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: original_stop_block_source_custody_and_publication
+reasoning_tier: high
+context_scope: event_authority_dg_own_a_20261105
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_run_stop_block_contracts/
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-080
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No application stopped edition, old-birth enrollment, registry/admission/Decision Log change or retention
+  policy.
+- No native installation/execution, runtime/readiness, WorkNode, NodeSeed or governance qualification.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-1110, ContractName:Plans/Goal_Runtime_System.md#GRS-200, ContractName:Plans/storage-plan.md#SP-426, ContractName:Plans/storage-plan.md#SP-1110, ContractName:Plans/Contracts_V0.md#CV-420
+
+
+### EP-1112 - Original goal_run.blocked source and scheduler result
+
+```yaml
+plan_unit_id: EP-1112
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Newly authored DL-045 owner contract for exactly goal_run.blocked Project v3. EP-200 adopts
+  SB3 in Plans/goal_run_stop_block_contracts/protocol.md and the separate BlockIntent/BlockControl/BlockNativeResult/BlockOrigin/BlockResult
+  roots and complete method tuples. Only the actual scheduler run-block operation enters owner.executor.workflow_run.block.v1
+  on a genuine EP-1110 birth. Independently resolve the cause owner full original receipt, applicable current
+  authority and preserved work; no caller reference/hash supplies receipt authenticity. Freeze the complete
+  CV-421 Event. Native blocked revision +1, own control and D01 lineage commit atomically under complete preimage
+  CAS with Goal body and activation clocks preserved. Append exact own family, obtain actual SP-286 first eleven-field
+  receipt and strict v2 full-value custody, then publish scheduler pass outcome. No command result or allowed-action
+  dispatch is introduced. This block family independently adopts immutable original retry/recovery, semantic
+  conflict, current replay-only refusal, write-time retained source and writer/reader withdrawal rules in SB3/SB4.
+gui_related: false
+gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
+  visual surface.
+split_recommended: false
+depends_on:
+- EP-1110
+- GRS-201
+- SP-427
+- SP-1111
+- CV-421
+unblocks: []
+acceptance_criteria:
+- Every legal/repeated/illegal D-R16 edge and exact original cause receipt is authenticated.
+- Preserved work absence requires genuine before-mutation evidence; no allowed action is dispatched.
+- No native-only, Event-only or unknown result is published as scheduler success.
+validation_surfaces:
+- Plans/goal_run_stop_block_contracts/protocol.md
+- Plans/goal_run_stop_block_contracts/contracts.schema.json
+- python3 scripts/pm_goal_own_a_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: original_stop_block_source_custody_and_publication
+reasoning_tier: high
+context_scope: event_authority_dg_own_a_20261105
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_run_stop_block_contracts/
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-080
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No application stopped edition, old-birth enrollment, registry/admission/Decision Log change or retention
+  policy.
+- No native installation/execution, runtime/readiness, WorkNode, NodeSeed or governance qualification.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-1110, ContractName:Plans/Goal_Runtime_System.md#GRS-201, ContractName:Plans/storage-plan.md#SP-427, ContractName:Plans/storage-plan.md#SP-1111, ContractName:Plans/Contracts_V0.md#CV-421
+
+### EP-1120 - Original approved exception Workflow decision and result mapping
+
+```yaml
+plan_unit_id: EP-1120
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: 'Newly authored original Workflow verification-exception source, pm.workflow.approved_verification_exception.v1,
+  under DL-045 and DL-081. GRS-1122 and CV-1122 bind the exact Project/Goal/run and original workgraph/controller.
+  Original graph/requirements, WorkNode results, validator evidence, acceptance dispositions, existing source-control/safe-point/rollback
+  records and complete residual-risk set are independently resolved. Child-Goal requirements are authentically empty
+  under GRS-052/075. Workers and reviewers cannot issue the final decision. Unknown, extra, missing, duplicate or
+  foreign requirements refuse before custody.
+
+
+  Each actual non-passing verification item is joined to the exact HITL-1120 request and still-valid Project-owner
+  approval; no request-supplied smaller required set is trusted. Original outcome remains failed|blocked|skipped
+  with evidence and explicit disposition, never a fabricated pass. The original controller issues certified_with_approved_exception
+  with truthful completed_with_approved_verification_exception, certifier/approver and full risk/disposition refs.
+  It commits the distinct original exception result/receipt under SP-1122 before Goal completion consumes it. All
+  current permissions, Stop, graph/currentness, recovery and mutation-custody guards survive; an exception is no
+  bypass of an unresolved effect or non-verification safety guard.
+
+
+  This is a new distinct source/result mapping, not a cast into pm.workflow.standard_source, native-v7 all_writers,
+  prepare.v2 or Standard goal_run.certified. Existing Workflow GoalRun status/transition and clean certification
+  schemas stay exact; the exception result does not by itself append an event or invent a new enum. Actual native
+  source installation must explicitly include this result mapping before it is callable. The Goal host consumes
+  the original exception receipt through GRS-1122''s separate method and applies all current completion barriers
+  and shared metadata CAS. Lost acknowledgments resolve the exact original result and never repeat certification
+  or Goal body work. SP-1122 supplies custody/backup/withdrawal and ATS-1115 the route-specific suite. Native execution
+  remains NOT_RUN.
+
+
+  The exact issuer method is owner.workflow.approved_verification_exception.issue.v1@1.0.0 in CV-1122''s provider
+  bank. SP-1122''s separate goal_verification_exception_receipt row commits the original exception source and result
+  before the Goal host consumes its receipt. This is a distinct canonical Workflow receipt, not the Goal lifecycle
+  result or a Standard certification row. Same-key issue/recovery resolves the exact original receipt; unavailable
+  or unknown issue returns no success-shaped receipt.'
+gui_related: false
+gui_classification_reason: Original lifecycle source, receipt custody and protocol predicates.
+depends_on:
+- GRS-1122
+- DL-081
+unblocks: []
+acceptance_criteria:
+- Independently resolved original source, complete identity and receipt bytes gate every applicable boundary.
+- No partial effect is repeated or promoted to success after an unknown outcome.
+- Prepared without admission; existing historical resources and policies remain exact.
+validation_surfaces:
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+- Plans/goal_lifecycle_host_contracts/methods.json
+- python3 scripts/pm_goal_own_b_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_lifecycle_original_authority
+reasoning_tier: high
+context_scope: dg_own_b_20261105
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry/admission, new retention policy, native proof, WorkNode, readiness or governance seal.
+```
+
+## DG-OWN-C original source and boundary contracts (2026-11-05)
+
+### EP-1130 - goal_run.started original producer suite adoption
+
+```yaml
+plan_unit_id: EP-1130
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal_run.started, W3 adopts the complete
+  original EP-120 Start/native D01 publication and native-v7 source dispatch. Test original full arguments
+  and every own entry/final boundary, first receipt/result and retained versus fresh current source. Do not
+  change a closed roster, enroll an old birth, cast a schema realm or use caller admission/source flags. Amended
+  2026-11-11 (DG-S, DL-045) the original Start contract of commit_start.v2 and its Storage participant runs on
+  TEST_ONLY owners in `scripts/pm_goal_dg_s_oracles.py`, with native-v7 dispatch, held-invocation-only
+  PublicationResult, classification-only recover_start and fenced pending prefixes. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- GRS-079
+- SP-1134
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (goal_run.started original producer suite adoption). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### EP-1131 - goal_run.cancelled original producer suite adoption
+
+```yaml
+plan_unit_id: EP-1131
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal_run.cancelled, W4 adopts the complete
+  original EP-121 positive D06, full D05 success, distinct Goal/Stop/effect origins and native D01 publication.
+  Test original full arguments and every own entry/final boundary, first receipt/result and retained versus
+  fresh current source. Do not change a closed roster, enroll an old birth, cast a schema realm or use caller
+  admission/source flags. Complete inherited-root witnesses remain required and no native execution is claimed.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- GRS-080
+- SP-1135
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (goal_run.cancelled original producer suite adoption). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### EP-1132 - goal_run.certified original producer suite adoption
+
+```yaml
+plan_unit_id: EP-1132
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal_run.certified, W5 adopts the complete
+  original EP-124 all_writers.v7 and prepare.v2, whole coordinator identity/F5 append/joint native D01 commit/release
+  and Q1-Q4. Test original full arguments and every own entry/final boundary, first receipt/result and retained
+  versus fresh current source. Do not change a closed roster, enroll an old birth, cast a schema realm or use
+  caller admission/source flags. Complete inherited-root witnesses remain required and no native execution
+  is claimed.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- GRS-084
+- SP-1136
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (goal_run.certified original producer suite adoption). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+
+## Event Authority W3F Phase 1 — Prepared Without Admission (2026-11-05)
+
+Newly authored owner contracts under deck 2 item 9.a A. This section adds no admitted family and enables no native writer. The per-family base search is recorded in `reports/event-authority-20261105/W3F-search.json`. Criterion 12 remains PARTIAL until the shared number/time rules and guard-isolation tool pass review and phase 2 runs.
+
+### EP-1460 - Canonical Graph Lock Event Adoption
+
+```yaml
+plan_unit_id: EP-1460
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: |-
+  Newly authored owner contract for `run.graph_canonical_locked@1.0.0`; search/reuse evidence: `reports/event-authority-20261105/W3F-search.json` entry `run.graph_canonical_locked`, base `f9c5de6561dff0a53a48e530f2a5c6804a7e941d`. Existing definitions reused: Executor graph-lock boundary; replan generation lifecycle; EP-088; Wiring_Matrix canonical graph wiring; Project_Output_Artifacts canonical graph. The family is prepared without admission; membership is ABSENT, never inferred from this unit or its schema. The family candidate id is `event-family-run-graph-canonical-locked`.
+
+  2. Owner and semantic boundary. Reuse the canonical Executor graph-lock boundary and generation lifecycle. Only project scope is supported for this Project canonical graph; app operation support elsewhere is not inherited. Validate the exact genuine approved canonical graph (all node/edge/dependency IDs, graph digest and approval refs) through its existing graph owner before lock commit. A graph digest is checked from the actual canonical artifact bytes under that artifact owner recipe, not a new serializer here. Original canonical graph body commit and graph_commit_receipt_ref precede event append. The original event first receipt precedes new dispatch acceptance. Initial generation is 0 with null previous_generation and previous_lock_event_id. Applied structural replan increments once (u32 domain, no wrap) and joins prior lock/run/approved graph; stale attempts/safe points/blocked projections are queryable but never resumable. Invalid post-lock structure stops new dispatch as graph_integrity; no flattening or silent degraded execution. The event is evidence of an existing graph commit, never authority to reconstruct or change the canonical graph.
+
+  3. Producer and publication. Only `ExecutorCanonicalGraph.commit_lock@1.0.0` may prepare this exact fact after the actual owner gate. Immutable original input and original owner operation identity are captured before calling helpers. The owner source/body commit (where this fact reports an independently committed source) precedes append. Explicitly adopt SP-286 and CV-339 `storage.first_append_receipt.resolve.v2`: actual original complete EventRecord/semantic input in the same Storage instance resolves the original eleven-field AppendReceipt, original four-field result and exact original wire/full-value commitments. Source commit -> body/pack durability -> family append -> original synced first receipt -> publication is the order. Mutation-authorizing, graph-lock and UI-waited receipts are barrier-class under SP-336/SP-347; no downstream mutation passes the receipt boundary. Missing acknowledgement stays fenced; neither tail absence nor caller flags prove never-issued. With no independent durable source, append is the canonical body commit, never an invented prior canonical value.
+
+  4. Closed payload. `Plans/event_payloads/w3f/run_graph_canonical_locked.schema.json` is the family's complete, independently closed 1.0.0 resolved-body schema. Every required-present nullable field remains present. Exact type precedes value comparisons (boolean is not integer; string booleans/numbers/null/arrays/objects never coerce). Every identifier/digest full-matches including trailing-LF rejection. Format annotations are enforced by the reviewed shared timestamp profile, not a silently skipped JSON Schema format. An unresolved $ref in any branch refuses schema installation eagerly.
+
+  5. Scope and identity. This family's candidate payload is `pm.event_payload.run.graph_canonical_locked.v1@1.0.0` at `Plans/event_payloads/w3f/run_graph_canonical_locked.schema.json`. The schema closes the resolved body, not a new envelope. Adopt `Plans/Contracts_V0.md#EventRecord`, CV-317 and CV-366 by name. Match context.scope_kind/project_id/thread_id to EventRecord and actual accepted owner context; the genuine owning Server/Host/root/worktree/remote joins must all agree. No focus fallback, empty Project, hidden root, cross-Server or cross-thread substitution.
+  Project scope uses Storage's exact `project~{base64url_no_pad(UTF8(project_id))}` partition; application scope is `app`, project_id null and an actual owning Server/Host. Discovery additionally requires its real thread/admitted root under T-161; prompts require their actual target thread under CV-314. Other thread/root/worktree/remote refs are present only when the genuine operation has them; no working root is invented for a rootless inbox or non-file invocation. owner_operation_id equals genuine original lock_id, stable for that accepted graph commit; the same (run_id,replan_generation) cannot name two canonical graph digests. An initial lock has generation zero and no predecessor; an applied structural replan has the exact prior generation plus one, an original prior lock and its new approved graph. owner_operation_id is exactly the original lock_id. event_id is `evt_w3f_` plus lowercase SHA-256 of RFC 8785 JSON array of strings [actual storage_instance_id, Storage-owned recovery_epoch in its canonical decimal string form, actual scope_partition, exact event_type, owner_operation_id]. Application idempotency_key is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}` (lowercase hex of exact UTF-8); Project idempotency_key is `w3f:{event_type}:{hex(owner_operation_id)}`. All identity inputs, including the actual original Storage recovery_epoch, are frozen at first preparation and retained on every retry; a later restore/current epoch never remints the original. No timestamp/retry counter/focus or projection revision enters identity. Recompute expected identities from captured trusted original inputs, never a supplied digest.
+  No numeric or timestamp code is owned here: producer-semantic digest and numeric/date-time qualification stay in EventRecord/CV-317/CV-339/SP-236 and the reviewed shared CV-1100/CV-1101/SP-1100/SP-1101 successors adopted in phase 2. Until those reviewed prerequisites and this family's admission exist the current writer is unavailable. No schema cap narrows Storage uint64.
+
+  6. Replay and idempotency. Adopt the unchanged EventRecord producer_semantic_digest field set and SP-286 full-value comparison, never Storage-assigned sequence/timestamps as caller semantics. Current writer/retry uses dedupe_by_idempotency_key; normal append rejects projector_replay_only as replay_only_not_appendable even for an otherwise valid original. Same actual scoped key and original semantic body returns the actual original receipt/result and no second event/effect. Different body with that identity is idempotency_conflict; behind/unavailable dedupe is dedupe_unavailable. Rebuild/historical read uses the original authenticated recipe and cannot search, verify, execute, authorize, dispatch, charge Usage, notify or write canonical state. It never restarts a retention clock.
+
+  7. Retention. `retention_policy_ref=RP-RUNTIME-365D@1.0.0`. Storage Case L-3 exact class applies: Runtime/run/node/attempt, anchored to the real run completion, 365 days, 1,000,000/run plus 5,000,000/project, roll successor; no imaginary run. Original first-receipt/dedupe/source custody keeps its own policy; every actual hold/reference/backup dependency applies. No body-dereference grant follows from event retention. G15/G23/G26 recommendations in the recount are leads only, not name-based assignments. No new lifetime or deletion rule is chosen here.
+
+  8. Redaction and custody. Seglog is the only canonical event history; original full-value first-receipt custody belongs to SP-286/CV-339 and survives coherent mandatory backup with referenced payload packs, original identity/recipe and recovery controls. Redb/index/GUI/caches never reconstruct lost canonical authority. Keep original accepted input values stable in the live owner operation until its first append settles; there is no newly durable pending-operation journal. On process loss resolve only an actual known original identity; a missing/uncertain source or receipt is unavailable, never permission to mint a replacement. A separately accepted new operation has a genuinely new owner identity, never relabelled restored/retried work. On a verified older restore no omitted request is automatically resumed. Discovery source_receipt_ref may be null when there was no independent existing receipt; a self-reference is not independent custody. Trusted original append/admission custody, not retention of mutable request caches, authenticates valid historical bytes. Every read resolves current access/deletion/tombstone/hold authority for the exact source and checks it again immediately before disclosure; retention/hold never restores visibility. Raw prompts/queries/hidden paths/provider content/credentials/SSH secrets never enter this body; refs are opaque owner-issued objects, never substitute capability. Bodies above SP-337's 16 KiB inline limit use its BLAKE3/size/media payload reference, exact pack bytes durable before referencing acknowledgement. Validate the resolved complete body. Measure every stored part, including any redb value, against storage_profile.value_limit_bytes; externalizing the body never exempts another part from its limit. For a value without an admitted large-value shape, fail that write/advance closed rather than invent a pointer codec.
+
+  9. Transitions and ordering. Use only this family's semantic predicates in paragraph 2. Source identity, state, policy, exact payload, full-value custody and current writer admission must all remain valid at the final append boundary after all helpers; otherwise zero new effect. Per-source actual causal order is preserved through EventRecord sequence and original causation. No timestamp-based dedupe or inferred cross-node order overrides the envelope owner. Historical readers verify the original lawful fact without demanding today's live state. A duplicate is an original-result read, never another transition.
+
+  10. Consumers/checkpoints. This family explicitly adopts `SP-1460` and SP-278 `reader.storage.event_record_index@1.0.0`, including its nine-field durable token (DL-076), full ten-field live read transaction token and no persisted redb_snapshot_id. Operating read consumer is `reader.run.graph_canonical_locked@1.0.0`; its source/selector/currentness and custody rules are exact-family, not borrowed from another row. Family checkpoint disposition is none_required: this consumer owns no durable projection, cursor, receipt, acknowledgement, cache or advance. Only the generic independently published SP-278 checkpoint advances; read/interruption/retry leaves no family-owned effect. No family CAS is applicable because there is no durable advance. The output is one in-memory, bounded, original-family observation after final source/token/access revalidation.
+
+  11. Compatibility and withdrawal. Current writes require this exact family/version/schema/source grant and normal replay policy; unknown future versions are unavailable. No deployed predecessor payload or family-specific converter was found; preserve any genuinely admitted historical envelope through its original verified registry revision and schema/number/time recipe, never relabel it 1.0.0 or rerun current live-state guards. A caller-controlled recipe/version cannot select history. At withdrawal the actual family registry cutoff fences this producer before append (including retry); existing SP-286 original receipt reads remain read-only. Stop new reads/materialization for a withdrawn schema/reader, invalidate its in-flight authority lease, and fence any affected derived generation. StorageMigrationCoordinator installs a separately reviewed successor codec/reader and rebuilds only derived state from the still admitted canonical source under SP-278; it publishes the new reader/generation atomically before reads resume. No source rewrite, schema URI rebind, original receipt reconstruction, native effect or silent upgrade. A malformed/withdrawn/foreign retained record is refused; valid retained history may be read after the current live object changes, with current disclosure controls. Phase 2 must test both directions.
+
+  12. Oracle plan only. `Plans/w3f_event_oracle_plan.json` contains this family's predicate inventory with positive baselines and negatives of exactly one defect. No oracle code, runtime evidence or check-11 proof is claimed. Phase 2 adopts the reviewed shared number/time helper and `scripts/pm_guard_isolation.py`, inventories all enforcement sites per predicate, cuts a compound rule per predicate, and proves each negative becomes accepted only when every duplicate site for that same predicate is removed. Criterion 12 remains PARTIAL; native work is NOT_RUN.
+gui_related: false
+gui_classification_reason: Event storage, identity and custody contract; visual presentation belongs to existing
+  owners.
+depends_on:
+- CV-1460
+- EP-099
+unblocks: []
+acceptance_criteria:
+- Only the exact named family/version and original owner facts can satisfy this contract.
+- Prepared without admission; no native append, runtime enablement or readiness claim.
+- Phase 2 must implement the per-guard oracle plan and shared isolation proof before review.
+validation_surfaces:
+- Plans/w3f_event_oracle_plan.json
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_original_custody_and_scope
+reasoning_tier: high
+context_scope: event_authority_w3f_phase1
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3F-search.json
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md#9.a
+preserved_exact_tokens:
+- run.graph_canonical_locked@1.0.0
+- reports/event-authority-20261105/W3F-search.json
+- run.graph_canonical_locked
+- f9c5de6561dff0a53a48e530f2a5c6804a7e941d
+- event-family-run-graph-canonical-locked
+- ExecutorCanonicalGraph.commit_lock@1.0.0
+- storage.first_append_receipt.resolve.v2
+- Plans/event_payloads/w3f/run_graph_canonical_locked.schema.json
+- pm.event_payload.run.graph_canonical_locked.v1@1.0.0
+- Plans/event_payloads/w3f/run_graph_canonical_locked.schema.json
+- Plans/Contracts_V0.md#EventRecord
+- project~{base64url_no_pad(UTF8(project_id))}
+- app
+- evt_w3f_
+- application@1:{hex(server_id)}:{hex(owner_operation_id)}
+- w3f:{event_type}:{hex(owner_operation_id)}
+- retention_policy_ref=RP-RUNTIME-365D@1.0.0
+- SP-1460
+- reader.storage.event_record_index@1.0.0
+- reader.run.graph_canonical_locked@1.0.0
+- Plans/w3f_event_oracle_plan.json
+- scripts/pm_guard_isolation.py
+negative_constraints:
+- No registry family append, admission record, Decision Log change, governance reseal or native execution.
+- Never infer a binding, policy, source authority or migration from a sibling family.
+```
+
+## Workflow Replan v8 source adoption and writer (PNC-019 lane rv8b, 2026-11-14)
+
+### EP-3100 - Fresh all_writers.v8 source adoption and installation boundary
+
+```yaml
+plan_unit_id: EP-3100
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: |-
+  Newly authored owner contract under DL-045, written for DL-080 option 1 (PNC-019 lane rv8b, 2026-11-14). It adopts the frozen Workflow source pm.executor.workflow_source.all_writers.v8 (external root /mnt/Cursor/PM-Experiments/goal-replan-combined-source-20260921/v3/, manifest SHA-256 9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e, frozen installed_contract_digest 2d69459c1e5ff9c39c3ed234f8b21cd68621b9420b80c1ac9442794a1e4e4155), accepted by the independent review of 2026-11-14 (ACCEPT_WITH_NOTES), as one fresh Workflow source edition for ordinary native execution, original Standard certification and original goal_run.replanned publication. Placement: 74 operative members are byte-identical under Plans/goal_run_replan_contracts/source-v8/ at their package-relative paths; the other 1,433 descriptor members resolve only against the frozen root, each authenticated by its preimage SHA-256, never against canon or a newer same-ID resource. Adoption applies the nine explicit corrections C1..C9 of Plans/goal_run_replan_contracts/adoption.json (payload successor, idempotency preimage, descriptor representation, append durability precedence, numbers and date-time, Goal body physical edition, cancel routed to D06, replay recipe, unified run history); no other frozen member is changed, repinned or reinterpreted. Representation: the canon adoption digest is SHA-256 of the sorted-key compact UTF-8 JSON adoption descriptor (CV-352 rule), recorded in adoption-digest.txt; the frozen digest keeps its pretty-printed-bytes rule; the two are distinct and neither substitutes for the other or for a v6 or v7 birth digest. Installation: only a genuine original Workflow birth installs v8, with WorkflowBirth.installed_contract_digest and the combined Enrollment equal to the adoption digest, after every exact method, participant, codec, physical selector, recovery, backup, retention and deletion guard is installed. No v3, v6, v7 or all_writers.stop_block.v1 birth is enrolled, upgraded, cast or late-enrolled. The v8 certified component pm.goal_run_certified.producer_source.v3 and the v8 started, cancelled and source-control dependencies are bound by full original-scope correspondence to their own frozen originals, not by repinning to the v7 certified family. Native installation, runtime execution and Event admission remain NOT_RUN.
+gui_related: false
+gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
+split_recommended: false
+depends_on:
+- EP-118
+- EP-122
+- EP-124
+- CV-352
+- CV-3100
+- DL-080
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Every placed member equals its frozen manifest entry and, where listed, its preimage whole_members entry, byte for byte; the frozen preimage SHA-256 equals 2d69459c1e5ff9c39c3ed234f8b21cd68621b9420b80c1ac9442794a1e4e4155.
+- The adoption digest is recomputed from the adoption descriptor under the CV-352 rule and equals adoption-digest.txt; it differs from the frozen digest and is the only digest a v8 birth may record.
+- No member outside corrections C1..C9 differs from its frozen bytes, and every correction names its frozen member, its canon replacement and its owner unit.
+- No existing birth of another profile is enrolled, cast or late-enrolled, and no v8 header describes a v7 body.
+- Static acceptance establishes no installed native authority, native cancellation, runtime execution, Event depth or readiness.
+validation_surfaces:
+- Plans/goal_run_replan_contracts/adoption.json
+- Plans/goal_run_replan_contracts/adoption-digest.txt
+- Plans/goal_run_replan_contracts/source-v8/manifest.json
+- Plans/goal_run_replan_contracts/source-v8/installed-profile-preimage.json
+- python3 scripts/pm_goal_run_replan_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: unlisted_workflow_writer_admission
+reasoning_tier: high
+context_scope: workflow_all_writers_v8_adoption
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_run_replan_contracts
+node_compile_hint:
+  mode: source_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-080
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PM-Experiments/goal-replan-combined-source-20260921/v3/manifest.json (sha256 9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e)
+- /mnt/Cursor/PM-Experiments/goal-replan-combined-root-review-20260921/v3/REVIEW.md (ACCEPT_WITH_NOTES, adoption items 1 to 8 and T-REPLAY)
+preserved_exact_tokens:
+- "pm.executor.workflow_source.all_writers.v8"
+- "2d69459c1e5ff9c39c3ed234f8b21cd68621b9420b80c1ac9442794a1e4e4155"
+- "9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e"
+negative_constraints:
+- No enrollment, upgrade or cast of an existing birth, and no edit of a frozen member outside C1..C9.
+- No claim of native installation, runtime execution, native cancellation or Event admission.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+**Why only part of the package is copied.** The frozen package is about 188 MB, mostly composition banks, pinned inputs and original resource banks that authenticate lineage. Copying it would add raw source lineage to this repository. The operative members (protocols, method maps, participant tuples, profile, physical families, stored routes, the nineteen whole schemas, the draft payload and its graph-patch source) are placed; the rest is pinned by the descriptor's own hashes, as the v6 package pins its external source manifest (`Plans/workflow_standard_source_contracts/README.md`).
+
+**Replay (T-REPLAY, correction C8).** The review found that rerunning `compose_whole_banks.py` reorders `changes` in 49 of 1,241 ledger rows, which changes one descriptor member's digest without changing meaning. Adoption therefore authenticates the frozen bytes and never replays authoring scripts or refreshes the descriptor; a future replay must keep the frozen ledger or define a stable order before a newly reviewed descriptor exists. The tool issue is filed in the program's tool-issue list.
+
+**What stays open.** Native installation, original issuer authentication, transaction, codec, flush, interleaving, restore and effect tests, and full native cancellation are separately NOT_RUN. A fresh edition that also lists the EP-200 stop and block writers is not written (GRS-3101).
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-118, ContractName:Plans/Executor_Protocol.md#EP-124, ContractName:Plans/Contracts_V0.md#CV-352, ContractName:Plans/Executor_Protocol.md#EP-3101, ContractName:Plans/Decision_Log.md#DL-080
+
+### EP-3101 - Workflow Replan writer
+
+```yaml
+plan_unit_id: EP-3101
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: |-
+  Newly authored owner contract under DL-045, written for DL-080 option 1 (PNC-019 lane rv8b, 2026-11-14). It is the Workflow writer listing DL-080 requires for goal_run.replanned, Project edition only. One writer is named: owner.executor.workflow_run.replan.v1, whose entrypoints are exactly the frozen v8 methods draft.replan.prepare.v3, apply_native.v3, finalize_producer.v3, append_original.v3, complete.v3, observe.v3, read_original.v3 and release.v3 in that order, with draft.replan.reconcile.v3 for recovery, draft.replan.project.v3 for the projection participant and draft.replan.enroll_profile.v3 at genuine birth (Plans/goal_run_replan_contracts/source-v8/replan/methods.json). It is reached from handlers::runtime::replan (cmd.runtime.replan) for a live blocked episode whose allowed_action_ids contain replan, and from the bounded manager's own replan decision; each route supplies a genuine BoundedManagerResult, and neither the command nor the writer chooses the graph or the action. Installation: EP-118 keeps refusing every unlisted writer (RequiredOtherWorkflowWriterSource=false); the writer exists only on a genuine all_writers.v8 birth (EP-3100) and claims the run's one exclusive combined slot (combined.claim.v1) before prepare. Order: claim; prepare (complete NativeApplySource, prospective candidates and the durable ProducerIntent before any effect); one native transaction applies graph, RequiredSet, WorkNode dispositions, born members, the checked u32 generation +1 and the native body revision +1; finalize the producer with only the applied graph-patch joins; append through ordinary Storage with SP-286 first-AppendReceipt and CV-339 custody under SP-336/SP-347 durability (C4); complete; observe (D01 observer only); read and project; release, which clears only the publication fence. The command result (RuntimeReplanResult, EP-236) is published only after the first receipt; receipt_ref names it. A next_action of cancel is refused before prepare (C7). A refusal after native application keeps every genuine earlier effect and reports recovery_required, never rollback; a lost acknowledgement resolves from SP-286 retained receipt custody; nothing re-dispatches, re-applies or mints a new event value. Typed args and refusal codes of cmd.runtime.replan are unchanged (EP-236); on a birth without the installed writer the command refuses handler_unavailable and emits nothing.
+gui_related: false
+gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
+split_recommended: false
+depends_on:
+- EP-118
+- EP-119
+- EP-236
+- EP-3100
+- SP-286
+- SP-3100
+- SP-3101
+- DL-080
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Only owner.executor.workflow_run.replan.v1 appends goal_run.replanned, only on a v8 birth, and only after native application and producer finalization.
+- The writer orders claim, prepare, native application, finalization, append with SP-286 first receipt, completion, observation, read and release; no step is reordered or skipped.
+- cmd.runtime.replan keeps its typed args (run_id, blocked_sequence, allowed_action_id, node_id, attempt_id?) and closed error codes; it requires allowed_action_id replan on a live blocked episode and refuses handler_unavailable on a birth without the writer.
+- next_action cancel is refused before prepare; the writer never performs cancellation, SchedulerStop or effect cleanup.
+- A lost acknowledgement resolves through SP-286 retained receipt resolution; the writer never re-applies native state, advances another generation or mints a new key or timestamp.
+validation_surfaces:
+- Plans/goal_run_replan_contracts/adoption.json
+- Plans/goal_run_replan_contracts/cancellation-dependencies.json
+- Plans/goal_run_replan_contracts/oracle-fixtures.json
+- python3 scripts/pm_goal_run_replan_oracles.py
+- python3 scripts/pm-command-payload-defs-check.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: unlisted_workflow_writer_admission
+reasoning_tier: high
+context_scope: workflow_run_replan_writer
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-080
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PM-Experiments/goal-replan-combined-root-review-20260921/v3/REVIEW.md (adoption items 2 and 7)
+preserved_exact_tokens:
+- "owner.executor.workflow_run.replan.v1"
+- "RequiredOtherWorkflowWriterSource=false"
+- "cmd.runtime.replan"
+negative_constraints:
+- No completion, certification, cancellation, stop, resume-without-replan or ownership-transfer writer.
+- No enrollment of an existing birth and no application-scope writer.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+**Why a listing and an installation together.** EP-200 could only name its writers, because no edition listed them. The v8 descriptor already registers the Replan methods and participants before birth, so naming the principal here and adopting the descriptor in EP-3100 closes both the listing and the installation contract. Native installation itself stays NOT_RUN.
+
+**The command route.** `cmd.runtime.replan` is a Blocked run action (`Plans/Wiring_Matrix.production.json` row `catalog.runtime_replan`). Its handler checks the blocked episode identity (`run_id`, `node_id`, `blocked_sequence`, `allowed_action_id = replan`, `attempt_id` only after an attempt exists), Project permission and that the run's birth installed this writer; then it asks the bounded manager for a decision and hands that decision to the writer. A stale `blocked_sequence` refuses `stale_projection`; no live blocked episode refuses `blocked_state_required`; a missing writer refuses `handler_unavailable`. Its declared effect is the `goal_run.replanned` Event; `goal.replanned` is historical-only (GRS-070) and is never its effect or an alias.
+
+**Separate cancellation.** Full original cancellation (`record_cancellation`, SchedulerStop, native cancel result and origin, effect cleanup and D06) is a separate genuine dependency (`Plans/goal_run_replan_contracts/cancellation-dependencies.json`). The limited execution revocation of the v8 Stop protocol never counts as it.
+
+**Search (DL-045).** Scope: EP-116..124, EP-200, EP-236, GRS-070, GRS-079..085, GRS-200..202, SP-286, SP-309..317, the Known-37 matrix row EA-UND-0019-GOAL, `Plans/workflow_standard_source_contracts/`, `Plans/goal_run_stop_block_contracts/` and the wiring row `catalog.runtime_replan`. Found: EP-118 excludes the optional/replanned materialization route; no unit names a Replan writer, method or entrypoint; the wiring row expected the historical `goal.replanned`. The writer identity is newly authored.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-118, ContractName:Plans/Executor_Protocol.md#EP-3100, ContractName:Plans/Executor_Protocol.md#EP-236, ContractName:Plans/Goal_Runtime_System.md#GRS-3100, ContractName:Plans/Decision_Log.md#DL-080

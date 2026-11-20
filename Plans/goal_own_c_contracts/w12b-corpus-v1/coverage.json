@@ -1,0 +1,660 @@
+{
+  "schema_id": "pm.goal.cancelled.w12b_corpus_coverage.v1",
+  "status": "TEST_ONLY_IMPLEMENTATION_INCOMPLETE",
+  "event_type": "goal.cancelled",
+  "whole_root_closure": "NOT_COMPLETE",
+  "native_execution": "NOT_RUN",
+  "source_selection": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-methods.v2.json",
+  "source_selection_sha256": "0d721fcd3d9cdb54ef77b260b3122e7808fe51ea8d58fbf9570b58590719e029",
+  "qualifying_unfixable_blocker": null,
+  "qualification": "All five selected successor realms; no original bank/resource/URI/hash restamped",
+  "oracle": "python3 scripts/pm_goal_own_c3_w12b_oracles.py",
+  "implemented_components": [
+    "Complete retained original Goal body/control/objective-history/origin image validation in a no-association six-participant fixture",
+    "Whole closed BindingRevision/Origin/Control, WriterDomain/Head, Stop/body-control destination wrappers, compact result and manifest in one fixture transaction",
+    "No-association active cancellation source, Stop/pending/receipt/settlement/frozen producer, complete EventRecord/eleven-field first receipt/compact group and control/terminal fixtures",
+    "Before/after boundary interruption, lost append acknowledgement, immutable unknown/no-effect/success replay, source/candidate fences and withdrawal fixture cases"
+  ],
+  "remaining": [
+    "All complete inherited entry/helper/lower-effect/final tuples, including actual original dispatch/registration/permission/backup/deletion source graphs; component fixtures do not issue native authority",
+    "M1-M9: bound-Plan and Workflow native source-image mapping; original host Stop receipt/control representations beyond the selected fixture; representable unpublished BindingPending candidates; actual native Stop/binding/writer-domain installation and complete recovery/withdrawal tuples",
+    "Bound Plan: BeforeStopSources/Prepared, acyclic original assignment, native PlanRun and full Scheduler/consent/callback selection, joint original effects and original retained/current/compaction/retirement tuples",
+    "Workflow: complete BeforeStopNativeEntry and OriginalOwnersNativeEntry causality, native D05 safe-stop/effect/capability/final-flush and positive D06 production/publication; original terminal chronology",
+    "SP-310 late assignment: complete original allocator/lease/CURRENT/manifest/numeric-domain/codec/resource/audit tuples; exact first frame/group/full-value readback and abandoned-reservation recovery",
+    "SP-313 v2: whole private OriginalInspectionCustodyReadEntryV1 and InspectCurrentEventEntryV2 tuples, every independently callable lower source route and generic SP-278 read token/source/checkpoint joins",
+    "Complete active/paused/blocked, completed/already-cancelled, prior ordinary pending/no-effect/unknown/recovery and all original retained/current/withdrawal variants",
+    "SP-337 over-limit producer/stored-operation reference routes and complete effective-schema/runtime guard negative coverage; shared guard isolation and number/recipe sweep remain separate"
+  ],
+  "methods": [
+    {
+      "index": 0,
+      "method": "capture_source",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "SourceAudit",
+      "component_witness": "W12b no-association fixture owner; does not close the inherited original method tuple"
+    },
+    {
+      "index": 1,
+      "method": "latch_and_reserve",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "StopIntent",
+      "component_witness": "W12b no-association fixture owner; does not close the inherited original method tuple"
+    },
+    {
+      "index": 2,
+      "method": "commit_receipt",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "CancellationReceipt",
+      "component_witness": "W12b no-association fixture owner; does not close the inherited original method tuple"
+    },
+    {
+      "index": 3,
+      "method": "settle_owner",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "OwnerSettlement",
+      "component_witness": "W12b no-association fixture owner; does not close the inherited original method tuple"
+    },
+    {
+      "index": 4,
+      "method": "freeze_event",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "ProducerInput",
+      "component_witness": "W12b no-association fixture owner; does not close the inherited original method tuple"
+    },
+    {
+      "index": 5,
+      "method": "append_original",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "OriginalPublication",
+      "component_witness": "W12b no-association fixture owner; does not close the inherited original method tuple"
+    },
+    {
+      "index": 6,
+      "method": "publish_control",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "ControlPublication",
+      "component_witness": "W12b no-association fixture owner; does not close the inherited original method tuple"
+    },
+    {
+      "index": 7,
+      "method": "terminal",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "TerminalInput / TerminalPrepared / Terminal",
+      "component_witness": "W12b no-association fixture owner; does not close the inherited original method tuple"
+    },
+    {
+      "index": 8,
+      "method": "resolve_original",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "Progress",
+      "component_witness": "W12b no-association fixture owner; does not close the inherited original method tuple"
+    },
+    {
+      "index": 9,
+      "method": "audit_read",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "AuditReadRequest / AuditReadResult"
+    },
+    {
+      "index": 10,
+      "method": "inspect_current",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "EventInspectRequest / EventInspectResult"
+    },
+    {
+      "index": 11,
+      "method": "backup_capture",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "all physical families/required source members"
+    },
+    {
+      "index": 12,
+      "method": "backup_restore",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "all physical families/required source members"
+    },
+    {
+      "index": 13,
+      "method": "enroll_stop_and_control",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "StopControl / BodyControlV2"
+    },
+    {
+      "index": 14,
+      "method": "retained_terminal_replay",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE"
+    },
+    {
+      "index": 15,
+      "method": "retained_no_effect_or_unknown_replay",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE"
+    },
+    {
+      "index": 16,
+      "method": "install_writer_domain",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "WriterDomain / WriterDomainHead",
+      "component_witness": "W12b no-association fixture owner; does not close the inherited original method tuple"
+    },
+    {
+      "index": 17,
+      "method": "birth_none",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "BindingRevision / BindingOrigin / BindingControl"
+    },
+    {
+      "index": 18,
+      "method": "reserve_binding",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "BindingPending"
+    },
+    {
+      "index": 19,
+      "method": "commit_plan_binding",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "GoalPlanBinding / PlanAssociation / BindingRevision"
+    },
+    {
+      "index": 20,
+      "method": "commit_workflow_binding",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "WorkflowAssociation / BindingRevision"
+    },
+    {
+      "index": 21,
+      "method": "transfer_binding_owner",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "BindingRevision"
+    },
+    {
+      "index": 22,
+      "method": "adopt_existing_binding",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "BindingRevision / BindingOrigin / BindingControl",
+      "component_witness": "W12b no-association fixture owner; does not close the inherited original method tuple"
+    },
+    {
+      "index": 23,
+      "method": "resolve_stopped_pending",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "BindingPendingResolution"
+    },
+    {
+      "index": 24,
+      "method": "read_current_for_cancel",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "BindingReadRequest / BindingReadCurrent"
+    },
+    {
+      "index": 25,
+      "method": "read_retained_selection",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "BindingReadAudit"
+    },
+    {
+      "index": 26,
+      "method": "capture_cancel_selection",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "BindingSelection"
+    },
+    {
+      "index": 27,
+      "method": "reserve_append_assignment",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "AppendSourceRead / AppendReservationSource"
+    },
+    {
+      "index": 28,
+      "method": "issue_assignment_audit",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "AssignmentInput / AssignmentAudit"
+    },
+    {
+      "index": 29,
+      "method": "admit_codec_domain",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "DomainCommitmentInput / AssignmentAdmission"
+    },
+    {
+      "index": 30,
+      "method": "append_reserved",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "unchanged ProducerInput / OriginalPublication"
+    },
+    {
+      "index": 31,
+      "method": "publish_cancel_terminal",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "unchanged TerminalInput / TerminalPrepared / Terminal"
+    },
+    {
+      "index": 32,
+      "method": "backup_capture",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "all original source families"
+    },
+    {
+      "index": 33,
+      "method": "backup_restore",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "all original source families"
+    },
+    {
+      "index": 34,
+      "method": "delete_binding_control",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "closed_types": "BindingControl"
+    },
+    {
+      "index": 35,
+      "method": "retained_terminal_replay",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE"
+    },
+    {
+      "index": 36,
+      "method": "retained_no_effect_or_unknown_replay",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE"
+    },
+    {
+      "index": 37,
+      "method": "owner.assistant_plan.cancel_bound_run.prepare.v3",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/BeforeStopSources",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/PreparationResult"
+    },
+    {
+      "index": 38,
+      "method": "owner.assistant_plan.cancel_bound_run.commit.v3",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/PreparedBoundCancelRequest",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CommitResult"
+    },
+    {
+      "index": 39,
+      "method": "owner.scheduling.invalidate_cancelled_execution.participate.v3",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/PreparedBoundCancelRequest",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CommitResult"
+    },
+    {
+      "index": 40,
+      "method": "owner.goal.cancel.read_current_plan_effects.v3",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/EffectSelector",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CurrentEffectReadResult"
+    },
+    {
+      "index": 41,
+      "method": "owner.storage.plan_effects.verify_current_custody.v3",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CurrentEffectReadRequest",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CurrentEffectReadResult"
+    },
+    {
+      "index": 42,
+      "method": "owner.goal.cancel.read_retained_plan_effects.v3",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RetainedEffectSelector",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RetainedEffectReadResult"
+    },
+    {
+      "index": 43,
+      "method": "owner.storage.plan_effects.read_original_custody.v3",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RetainedEffectReadSources",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RetainedEffectReadResult"
+    },
+    {
+      "index": 44,
+      "method": "owner.storage.assistant_plan_run.compact_expired.v3",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunScope",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementResult"
+    },
+    {
+      "index": 45,
+      "method": "owner.storage.assistant_plan_run.compact_expired_native.v3",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementSources",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementResult"
+    },
+    {
+      "index": 46,
+      "method": "owner.storage.assistant_plan_run.read_retirement.v3",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunScope",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementResult"
+    },
+    {
+      "index": 47,
+      "method": "owner.storage.assistant_plan_run.verify_retirement_read.v3",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementReadSources",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementResult"
+    },
+    {
+      "index": 48,
+      "method": "owner.storage.assistant_plan_run.read_completion_anchor.v3",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunScope",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunAnchorReadResult"
+    },
+    {
+      "index": 49,
+      "method": "owner.goal.workflow_cancel.capture_source.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/SourceCaptureEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/BeforeStopNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageSourceAudit"
+      }
+    },
+    {
+      "index": 50,
+      "method": "owner.goal.workflow_cancel.prepare.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/BeforeStopEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/BeforeStopNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageBeforeStopReadiness"
+      }
+    },
+    {
+      "index": 51,
+      "method": "owner.goal.workflow_cancel.latch_and_reserve.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/StopPublicationEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/BeforeStopNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageStopReceipt"
+      }
+    },
+    {
+      "index": 52,
+      "method": "owner.goal.workflow_cancel.commit_receipt.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/CurrentStoppedGoalEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/GoalControlPlaneAdmission"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageCancellationReceipt"
+      }
+    },
+    {
+      "index": 53,
+      "method": "owner.goal.workflow_cancel.settle_owner.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/OriginalOwnersEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageWorkflowScopeProof"
+      }
+    },
+    {
+      "index": 54,
+      "method": "owner.goal.workflow_cancel.freeze_event.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/PostOwnersEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProducerInput"
+      }
+    },
+    {
+      "index": 55,
+      "method": "owner.storage.goal_workflow_cancel.reserve_assignment.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/LatePrepareEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/LateReservation"
+      }
+    },
+    {
+      "index": 56,
+      "method": "owner.storage.goal_workflow_cancel.issue_assignment_audit.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/LateAssignmentEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageLateAssignmentAudit"
+      }
+    },
+    {
+      "index": 57,
+      "method": "owner.goal.workflow_cancel.append_original.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/LateAssignmentEntry"
+        },
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageLateAssignmentAudit"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/OriginalGoalAppendReadback"
+      }
+    },
+    {
+      "index": 58,
+      "method": "owner.goal.workflow_cancel.publish_control.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/PostOwnersEntry"
+        },
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/OriginalGoalAppendReadback"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageControlPublication"
+      }
+    },
+    {
+      "index": 59,
+      "method": "owner.goal.workflow_cancel.terminal_succeeded.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/SucceededTerminalEntry"
+        },
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/OriginalGoalAppendReadback"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageTerminal"
+      }
+    },
+    {
+      "index": 60,
+      "method": "owner.goal.workflow_cancel.terminal_unsettled.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/UnsettledTerminalEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageTerminal"
+      }
+    },
+    {
+      "index": 61,
+      "method": "owner.goal.workflow_cancel.read_retained_success.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/SucceededRetainedEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/RetainedWorkflowEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/AuditReadResult"
+      }
+    },
+    {
+      "index": 62,
+      "method": "owner.goal.workflow_cancel.read_retained_unsettled.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/UnsettledRetainedEntry"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/AuditReadResult"
+      }
+    },
+    {
+      "index": 63,
+      "method": "owner.goal.workflow_cancel.inspect_current_event.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventInspectRequest"
+        },
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/OriginalGoalAppendReadback"
+        }
+      ],
+      "whole_result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventInspectResult"
+      }
+    },
+    {
+      "index": 64,
+      "method": "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_entry_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadEntryV1"
+      },
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadRequestV1"
+      },
+      "complete_result_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadResultV1"
+      }
+    },
+    {
+      "index": 65,
+      "method": "owner.goal.workflow_cancel.inspect_current_event.v2",
+      "status": "NOT_RUN_COMPLETE_INHERITED_TUPLE",
+      "whole_private_entry_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/InspectCurrentEventEntryV2"
+      },
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventInspectRequest"
+      },
+      "complete_result_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventInspectResult"
+      }
+    }
+  ]
+}

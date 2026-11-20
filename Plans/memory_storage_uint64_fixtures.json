@@ -1,0 +1,62 @@
+{
+  "schema_id": "pm.memory.storage_uint64_fixtures.v1",
+  "owner": "Plans/storage-plan.md#SP-236",
+  "fields": [
+    "sequence_id"
+  ],
+  "positive_values": [
+    0,
+    9007199254740991,
+    9007199254740992,
+    9007199254740993,
+    1152921504606846976,
+    18446744073709551615
+  ],
+  "negative_values": [
+    {
+      "name": "overflow",
+      "value": 18446744073709551616,
+      "guard": "storage_uint64_maximum"
+    },
+    {
+      "name": "negative",
+      "value": -1,
+      "guard": "storage_uint64_minimum"
+    },
+    {
+      "name": "boolean-false",
+      "value": false,
+      "guard": "storage_uint64_bool"
+    },
+    {
+      "name": "boolean-true",
+      "value": true,
+      "guard": "storage_uint64_bool"
+    },
+    {
+      "name": "float",
+      "value": 1.0,
+      "guard": "storage_uint64_float"
+    },
+    {
+      "name": "string",
+      "value": "1",
+      "guard": "storage_uint64_str"
+    },
+    {
+      "name": "null",
+      "value": null,
+      "guard": "storage_uint64_NoneType"
+    },
+    {
+      "name": "array",
+      "value": [],
+      "guard": "storage_uint64_list"
+    },
+    {
+      "name": "object",
+      "value": {},
+      "guard": "storage_uint64_dict"
+    }
+  ]
+}

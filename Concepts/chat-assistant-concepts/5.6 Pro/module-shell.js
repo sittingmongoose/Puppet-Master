@@ -1550,7 +1550,7 @@
   /* pmxAddRow({action,attrs,label}) - the roster foot's "+ Add a helper". */
   function pmxAddRow(o) {
     o = o || {};
-    return '<button type="button" class="' + cls('text-button pmx-addrow', o.cls) + '" data-action="' + esc(o.action) + '"' + raw(o.attrs) + (o.disabled ? ' disabled' : '') + '>' + pmxGlyph('plus', 13) + '<span>' + str(o.label || 'Add a helper') + '</span></button>';
+    return '<button type="button" class="' + cls('text-button pmx-addrow', o.cls) + '" data-action="' + esc(o.action) + '"' + raw(o.attrs) + (o.disabled ? ' disabled' : '') + '>' + pmxGlyph('plus', 13) + '<span class="pmx-addrow-l">' + str(o.label || 'Add a helper') + '</span></button>';
   }
   function pmxRoute(o) {
     o = o || {};
@@ -1730,7 +1730,7 @@
     return '<div class="' + cls('pmx-tabs', o.cls) + '" role="tablist"' + k(o.key) + raw(o.attrs) + '>' + (o.items || []).map(function (it) {
       var on = String(it.value) === String(o.current);
       return '<button type="button" role="tab" aria-selected="' + on + '" class="pmx-tab' + (on ? ' active' : '') + '" data-action="' + esc(o.action) + '" ' + attr + '="' + esc(it.value) + '"' + raw(it.attrs) + '>' + str(it.label) +
-        (it.count != null && it.count !== '' ? '<small>' + it.count + '</small>' : '') + '</button>';
+        (it.count != null && it.count !== '' ? '<small class="pmx-tab-n">' + it.count + '</small>' : '') + '</button>';
     }).join('') + '</div>';
   }
 

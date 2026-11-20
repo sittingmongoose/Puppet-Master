@@ -1,0 +1,152 @@
+[
+  {
+    "event_type": "memory.monthly_summary.started",
+    "head": "dc4c46c58c7462f288684a6e672febdf134e3c89",
+    "scope": "All live top-level Plans Markdown and JSON, individually searched by exact event name; no ledgers, shards, indexes, migration or audit artifacts. Also re-read AMS 6.3/7.2/9.2/AMS-054, UCC-085, SP-636/SP-637, CV-656/CV-657, ATS-315, SP-278/SP-286/CV-339 and the unlanded decisions/retention branches.",
+    "hits": [
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `m"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1124,
+        "text": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 6289,
+        "text": "- memory.monthly_summary.started"
+      },
+      {
+        "path": "Plans/memory_maintenance_contracts.json",
+        "line": 207,
+        "text": "      \"event_type\": \"memory.monthly_summary.started\","
+      }
+    ],
+    "negative_evidence": "UCC-085 names this exact command/event pair and DL-045 authorizes its technical completion. No full payload, concrete operation custody, identity, recovery or qualified reader/checkpoint contract exists for this exact family. Its blocked manifest row is a question, not an authority. No age or score cutoff exists.",
+    "reuse": [
+      "SP-637",
+      "CV-657",
+      "SP-278",
+      "SP-286",
+      "CV-339",
+      "AMS section 7.2",
+      "UCC-085",
+      "DL-402/DL-403 (unlanded b6332f391a7870bad5f01a29a7e9d080050dac27)",
+      "DL-401/G04 retention (unlanded 2663667e14346235daaa561d193e959422640b6e)"
+    ],
+    "newly_authored_owner_contract": "Separate exact-family adoption unit with explicit job, phase, command, schema, operation, identity, reader and custody bindings; archive-only and cutoff-refusal oracles. No cutoff values selected."
+  },
+  {
+    "event_type": "memory.monthly_summary.completed",
+    "head": "dc4c46c58c7462f288684a6e672febdf134e3c89",
+    "scope": "All live top-level Plans Markdown and JSON, individually searched by exact event name; no ledgers, shards, indexes, migration or audit artifacts. Also re-read AMS 6.3/7.2/9.2/AMS-054, UCC-085, SP-636/SP-637, CV-656/CV-657, ATS-315, SP-278/SP-286/CV-339 and the unlanded decisions/retention branches.",
+    "hits": [
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `m"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1124,
+        "text": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/memory_maintenance_contracts.json",
+        "line": 202,
+        "text": "      \"event_type\": \"memory.monthly_summary.completed\","
+      }
+    ],
+    "negative_evidence": "UCC-085 names this exact command/event pair and DL-045 authorizes its technical completion. No full payload, concrete operation custody, identity, recovery or qualified reader/checkpoint contract exists for this exact family. Its blocked manifest row is a question, not an authority. No age or score cutoff exists.",
+    "reuse": [
+      "SP-636",
+      "CV-656",
+      "SP-278",
+      "SP-286",
+      "CV-339",
+      "AMS section 7.2",
+      "UCC-085",
+      "DL-402/DL-403 (unlanded b6332f391a7870bad5f01a29a7e9d080050dac27)",
+      "DL-401/G04 retention (unlanded 2663667e14346235daaa561d193e959422640b6e)"
+    ],
+    "newly_authored_owner_contract": "Separate exact-family adoption unit with explicit job, phase, command, schema, operation, identity, reader and custody bindings; archive-only and cutoff-refusal oracles. No cutoff values selected."
+  },
+  {
+    "event_type": "memory.prune_archive.started",
+    "head": "dc4c46c58c7462f288684a6e672febdf134e3c89",
+    "scope": "All live top-level Plans Markdown and JSON, individually searched by exact event name; no ledgers, shards, indexes, migration or audit artifacts. Also re-read AMS 6.3/7.2/9.2/AMS-054, UCC-085, SP-636/SP-637, CV-656/CV-657, ATS-315, SP-278/SP-286/CV-339 and the unlanded decisions/retention branches.",
+    "hits": [
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `m"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1125,
+        "text": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/memory_maintenance_contracts.json",
+        "line": 217,
+        "text": "      \"event_type\": \"memory.prune_archive.started\","
+      }
+    ],
+    "negative_evidence": "UCC-085 names this exact command/event pair and DL-045 authorizes its technical completion. No full payload, concrete operation custody, identity, recovery or qualified reader/checkpoint contract exists for this exact family. Its blocked manifest row is a question, not an authority. No age or score cutoff exists.",
+    "reuse": [
+      "SP-637",
+      "CV-657",
+      "SP-278",
+      "SP-286",
+      "CV-339",
+      "AMS section 7.2",
+      "UCC-085",
+      "DL-402/DL-403 (unlanded b6332f391a7870bad5f01a29a7e9d080050dac27)",
+      "DL-401/G04 retention (unlanded 2663667e14346235daaa561d193e959422640b6e)"
+    ],
+    "newly_authored_owner_contract": "Separate exact-family adoption unit with explicit job, phase, command, schema, operation, identity, reader and custody bindings; archive-only and cutoff-refusal oracles. No cutoff values selected."
+  },
+  {
+    "event_type": "memory.prune_archive.completed",
+    "head": "dc4c46c58c7462f288684a6e672febdf134e3c89",
+    "scope": "All live top-level Plans Markdown and JSON, individually searched by exact event name; no ledgers, shards, indexes, migration or audit artifacts. Also re-read AMS 6.3/7.2/9.2/AMS-054, UCC-085, SP-636/SP-637, CV-656/CV-657, ATS-315, SP-278/SP-286/CV-339 and the unlanded decisions/retention branches.",
+    "hits": [
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `m"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1125,
+        "text": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 6290,
+        "text": "- memory.prune_archive.completed"
+      },
+      {
+        "path": "Plans/memory_maintenance_contracts.json",
+        "line": 212,
+        "text": "      \"event_type\": \"memory.prune_archive.completed\","
+      }
+    ],
+    "negative_evidence": "UCC-085 names this exact command/event pair and DL-045 authorizes its technical completion. No full payload, concrete operation custody, identity, recovery or qualified reader/checkpoint contract exists for this exact family. Its blocked manifest row is a question, not an authority. No age or score cutoff exists.",
+    "reuse": [
+      "SP-636",
+      "CV-656",
+      "SP-278",
+      "SP-286",
+      "CV-339",
+      "AMS section 7.2",
+      "UCC-085",
+      "DL-402/DL-403 (unlanded b6332f391a7870bad5f01a29a7e9d080050dac27)",
+      "DL-401/G04 retention (unlanded 2663667e14346235daaa561d193e959422640b6e)"
+    ],
+    "newly_authored_owner_contract": "Separate exact-family adoption unit with explicit job, phase, command, schema, operation, identity, reader and custody bindings; archive-only and cutoff-refusal oracles. No cutoff values selected."
+  }
+]

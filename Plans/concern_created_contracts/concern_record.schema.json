@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.storage_value.concern_record.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "record_id",
+    "record_kind",
+    "concern_id",
+    "project_id",
+    "revision",
+    "concern_category",
+    "severity",
+    "status",
+    "owner_kind",
+    "owner_ref",
+    "creator_ref",
+    "created_by_kind",
+    "created_by_ref",
+    "subject_ref",
+    "source_event_refs",
+    "evidence_refs",
+    "artifact_refs",
+    "lineage_refs",
+    "summary",
+    "created_at",
+    "updated_at",
+    "visibility_level",
+    "attention_level",
+    "chatworthy",
+    "blocking_effect_ref",
+    "resolution_kind",
+    "resolver_ref",
+    "resolved_at",
+    "run_ref",
+    "scope_ref",
+    "redaction_profile"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.storage_value.concern_record.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "record_kind": {
+      "const": "concern"
+    },
+    "concern_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "concern_category": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z][a-z0-9_]*$(?![\\s\\S])"
+    },
+    "severity": {
+      "enum": [
+        "info",
+        "warning",
+        "error",
+        "critical"
+      ]
+    },
+    "status": {
+      "enum": [
+        "active",
+        "acknowledged",
+        "resolved",
+        "dismissed"
+      ]
+    },
+    "owner_kind": {
+      "enum": [
+        "Runtime",
+        "Package Overseer",
+        "Seam Overseer",
+        "Corroboration",
+        "Graph Patch",
+        "Recovery",
+        "User",
+        "External Resource"
+      ]
+    },
+    "owner_ref": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 320,
+      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+    },
+    "creator_ref": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 320,
+      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+    },
+    "created_by_kind": {
+      "enum": [
+        "Runtime",
+        "Package Overseer",
+        "Seam Overseer",
+        "Corroboration",
+        "Graph Patch"
+      ]
+    },
+    "created_by_ref": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 320,
+      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+    },
+    "subject_ref": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 320,
+      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+    },
+    "source_event_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 8,
+        "maxLength": 320,
+        "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+      },
+      "maxItems": 64,
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 8,
+        "maxLength": 320,
+        "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+      },
+      "maxItems": 64,
+      "uniqueItems": true
+    },
+    "artifact_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 8,
+        "maxLength": 320,
+        "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+      },
+      "maxItems": 64,
+      "uniqueItems": true
+    },
+    "lineage_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 8,
+        "maxLength": 320,
+        "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+      },
+      "maxItems": 64,
+      "uniqueItems": true
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 320,
+      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "visibility_level": {
+      "type": "string",
+      "minLength": 1
+    },
+    "attention_level": {
+      "type": "string",
+      "minLength": 1
+    },
+    "chatworthy": {
+      "type": "boolean"
+    },
+    "blocking_effect_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "resolution_kind": {
+      "enum": [
+        null,
+        "fixed",
+        "accepted_risk",
+        "superseded",
+        "merged",
+        "split",
+        "invalidated",
+        "obsoleted_by_patch",
+        "obsoleted_by_recovery"
+      ]
+    },
+    "resolver_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "resolved_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "run_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "scope_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "redaction_profile": {
+      "const": "secret_refs_only"
+    }
+  }
+}

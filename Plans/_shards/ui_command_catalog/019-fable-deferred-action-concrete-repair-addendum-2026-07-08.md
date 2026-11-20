@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8827-L10956
+Source lines: L8845-L10979
 
-Source SHA256: `3076b04b822023dbbc42190301d7803c7772652b6b3fc3f45d443c7c7683b726`
+Source SHA256: `bc0b5a57e9ac720343912a6df888a28d74bcf8bf04f1c0dd0686f219f4856ba7`
 
 ---
 
@@ -987,37 +987,37 @@ command_payload_definition_map:
     catalog_unit: UCC-231
     owner_unit: CRAU-115
     row_group: UCC-049..UCC-053
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21889, quote: "cmd.docker.bake is the live bare Bake command exposed by CRAU-011"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.docker.bake is the live bare Bake command exposed by CRAU-011"}
   - command_id: cmd.docker.container.stats
     catalog_unit: UCC-231
     owner_unit: CRAU-115
     row_group: UCC-049..UCC-053
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21890, quote: "cmd.docker.container.stats shows live or cached container stats with freshness markers"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.docker.container.stats shows live or cached container stats with freshness markers"}
   - command_id: cmd.git.worktree.merge
     catalog_unit: UCC-132
     owner_unit: W-095
     row_group: UCC-054..UCC-055
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-132, field: canonical_text, line: 13084, quote: "cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-132, field: canonical_text, quote: "cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked"}
   - command_id: cmd.git.worktree.open_topology
     catalog_unit: UCC-231
     owner_unit: W-095
     row_group: UCC-054..UCC-055
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21892, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
   - command_id: cmd.git.worktree.repair
     catalog_unit: UCC-231
     owner_unit: W-095
     row_group: UCC-054..UCC-055
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21892, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
   - command_id: cmd.debug.record_verification
     catalog_unit: UCC-142
     owner_unit: CS-125
     row_group: UCC-077..UCC-083
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, line: 14068, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
   - command_id: cmd.debug.run_cleanup
     catalog_unit: UCC-142
     owner_unit: CS-125
     row_group: UCC-077..UCC-083
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, line: 14068, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
   unresolved_tokens: []
   non_definition_tokens:
   - token: cmd.docker.remove
@@ -1744,8 +1744,9 @@ command_payload_definition_map:
   - owner_state: dedup_hold_pending
     maps_to: not_configured
     sources:
-    - 'Plans/Decision_Log.md DL-444 and DL-445: the duplicate sweep''s automatic jobs and panel buttons stay unavailable
-      until the answer is applied and all remaining definition, review and recording approvals pass. Mapped as
+    - 'Plans/Decision_Log.md DL-444 and DL-445: the duplicate sweep''s automatic jobs stay unavailable until the answer is
+      applied and all remaining definition, review and recording approvals pass (DL-475 gives the Memory page no
+      upkeep buttons, so this hold covers the built-in upkeep only). Mapped as
       maintenance_cutoffs_pending is (DL-403); a stream C lead proposal recorded in DL-341, not a coordinator resolution'
   - owner_state: dependency_conflict
     maps_to: blocked_state_required
@@ -1827,13 +1828,15 @@ command_payload_definition_map:
   - owner_state: maintenance_cutoffs_pending
     maps_to: not_configured
     sources:
-    - 'Plans/Decision_Log.md DL-403: memory maintenance waits for approved cutoffs, and the two maintenance buttons
-      show as unavailable with the reason until they exist; DL-341 coordinator resolution 3'
+    - 'Plans/Decision_Log.md DL-403: memory maintenance waits for approved cutoffs, and the two maintenance commands
+      stay unavailable with the reason until they exist; DL-341 coordinator resolution 3. DL-475 (2026-11-11) gives the
+      Memory page no upkeep buttons: upkeep is built in, so this owner state holds the built-in maintenance commands'
     - 'Plans/Decision_Log.md DL-446 and DL-447: the cutoffs now exist (monthly summary: 90 idle days and score below
       0.10; prune archive: 180 idle days and score below 0.05), and what still holds the two maintenance commands is
       each card''s "Automatic jobs and panel buttons stay unavailable until your answer is applied and all remaining
-      definition, review and recording approvals pass". The owner state names that hold until it lifts; source added
-      by the stream C lead''s P0d task (DL-341 round_3_changes)'
+      definition, review and recording approvals pass" (DL-475 later removed the panel buttons, so the hold now covers
+      the built-in upkeep only). The owner state names that hold until it lifts; source added by the stream C lead''s
+      P0d task (DL-341 round_3_changes)'
   - owner_state: missing_approver
     maps_to: permission_required
     sources:
@@ -2132,8 +2135,10 @@ command_payload_definition_map:
     canon_name: gist_id
     decision: DL-341
     evidence:
-      doc: Plans/UI_Command_Catalog.md
-      quote: '| `cmd.chat.memory.verify` | `{ project_id, gist_id }` |'
+      doc: Plans/assistant-memory-subsystem.md
+      unit: AMS-141
+      field: canonical_text
+      quote: gist_id and expected_revision
     note: 'DL-341 coordinator resolution 4: the memory item identity is gist_id in the catalog memory rows and in
       Plans/assistant-memory-subsystem.md (MemoryGist).'
   contested: []

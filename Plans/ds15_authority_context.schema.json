@@ -1,0 +1,1952 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.ds15.authority_context.v1",
+  "$defs": {
+    "doctor.custom_headless.checked": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "config_inspected",
+        "doctor_invocation_id",
+        "owner_command_authorized"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": "string"
+            }
+          }
+        },
+        "envelope_project_id": {
+          "type": "string"
+        },
+        "envelope_run_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "config_inspected": {
+          "type": "boolean"
+        },
+        "doctor_invocation_id": {
+          "type": "string"
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    },
+    "live.session.started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "launch_outcome",
+        "driver_session_id",
+        "owner_command_authorized"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": "string"
+            }
+          }
+        },
+        "envelope_project_id": {
+          "type": "string"
+        },
+        "envelope_run_id": {
+          "type": "string"
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "launch_outcome": {
+          "type": "string"
+        },
+        "driver_session_id": {
+          "type": "string"
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    },
+    "live.step.updated": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "session_state",
+        "previous_revision",
+        "owner_command_authorized"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": "string"
+            }
+          }
+        },
+        "envelope_project_id": {
+          "type": "string"
+        },
+        "envelope_run_id": {
+          "type": "string"
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "session_state": {
+          "type": "string"
+        },
+        "previous_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    },
+    "live.artifact.created": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "artifact",
+        "owner_command_authorized"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": "string"
+            }
+          }
+        },
+        "envelope_project_id": {
+          "type": "string"
+        },
+        "envelope_run_id": {
+          "type": "string"
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "artifact": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "ref",
+            "receipt_ref",
+            "committed"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "ref": {
+              "type": "string"
+            },
+            "receipt_ref": {
+              "type": "string"
+            },
+            "committed": {
+              "type": "boolean"
+            }
+          }
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    },
+    "live.session.completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "session_state",
+        "finalization",
+        "owner_command_authorized"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": "string"
+            }
+          }
+        },
+        "envelope_project_id": {
+          "type": "string"
+        },
+        "envelope_run_id": {
+          "type": "string"
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "session_state": {
+          "type": "string"
+        },
+        "finalization": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "committed",
+            "manifest_ref",
+            "summary_ref",
+            "checks_ref"
+          ],
+          "properties": {
+            "committed": {
+              "type": "boolean"
+            },
+            "manifest_ref": {
+              "type": "string"
+            },
+            "summary_ref": {
+              "type": "string"
+            },
+            "checks_ref": {
+              "type": "string"
+            }
+          }
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    },
+    "live.session.degraded": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "previous_revision",
+        "visible_dependency_available",
+        "launch_outcome",
+        "owner_command_authorized"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": "string"
+            }
+          }
+        },
+        "envelope_project_id": {
+          "type": "string"
+        },
+        "envelope_run_id": {
+          "type": "string"
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "previous_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "visible_dependency_available": {
+          "type": "boolean"
+        },
+        "launch_outcome": {
+          "type": "string"
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    },
+    "browser.context_captured": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "target_resolution",
+        "resolved_thread_id",
+        "thread_writable",
+        "auto_send",
+        "chip",
+        "thread_scope",
+        "owner_command_authorized"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "user_id": {
+              "type": "string"
+            },
+            "computer_id": {
+              "type": "string"
+            },
+            "profile_id": {
+              "type": "string"
+            }
+          }
+        },
+        "envelope_project_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "envelope_run_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "target_resolution": {
+          "type": "string"
+        },
+        "resolved_thread_id": {
+          "type": "string"
+        },
+        "thread_writable": {
+          "type": "boolean"
+        },
+        "auto_send": {
+          "type": "boolean"
+        },
+        "chip": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "chip_id",
+            "thread_id",
+            "attachment_type",
+            "source_ref",
+            "committed",
+            "status",
+            "provenance_ref"
+          ],
+          "properties": {
+            "chip_id": {
+              "type": "string"
+            },
+            "thread_id": {
+              "type": "string"
+            },
+            "attachment_type": {
+              "type": "string"
+            },
+            "source_ref": {
+              "type": "string"
+            },
+            "committed": {
+              "type": "boolean"
+            },
+            "status": {
+              "type": "string"
+            },
+            "provenance_ref": {
+              "type": "string"
+            }
+          }
+        },
+        "thread_scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "user_id": {
+              "type": "string"
+            },
+            "computer_id": {
+              "type": "string"
+            },
+            "profile_id": {
+              "type": "string"
+            }
+          }
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    },
+    "dev.session.started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "workflow_state",
+        "previous_revision",
+        "dev_session_id",
+        "managed_outcome_committed",
+        "launch_outcome",
+        "managed_resources_settled",
+        "dap_state_before",
+        "dap_state_after",
+        "rewrite_terminal_history",
+        "dap_transition_ref",
+        "dap_owner_verified",
+        "links",
+        "owner_command_authorized",
+        "operation_id"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": "string"
+            }
+          }
+        },
+        "envelope_project_id": {
+          "type": "string"
+        },
+        "envelope_run_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "workflow_state": {
+          "type": "string"
+        },
+        "previous_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dev_session_id": {
+          "type": "string"
+        },
+        "managed_outcome_committed": {
+          "type": "boolean"
+        },
+        "launch_outcome": {
+          "type": "string"
+        },
+        "managed_resources_settled": {
+          "type": "boolean"
+        },
+        "dap_state_before": {
+          "type": "string"
+        },
+        "dap_state_after": {
+          "type": "string"
+        },
+        "rewrite_terminal_history": {
+          "type": "boolean"
+        },
+        "dap_transition_ref": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "dap_owner_verified": {
+          "type": "boolean"
+        },
+        "links": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "run_id",
+            "thread_id",
+            "workspace_tab_id",
+            "terminal_session_id",
+            "dap_session_id"
+          ],
+          "properties": {
+            "run_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "thread_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "workspace_tab_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "terminal_session_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "dap_session_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          }
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "operation_id": {
+          "type": "string"
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    },
+    "dev.session.stopping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "workflow_state",
+        "previous_revision",
+        "dev_session_id",
+        "managed_outcome_committed",
+        "launch_outcome",
+        "managed_resources_settled",
+        "dap_state_before",
+        "dap_state_after",
+        "rewrite_terminal_history",
+        "dap_transition_ref",
+        "dap_owner_verified",
+        "links",
+        "owner_command_authorized",
+        "operation_id"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": "string"
+            }
+          }
+        },
+        "envelope_project_id": {
+          "type": "string"
+        },
+        "envelope_run_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "workflow_state": {
+          "type": "string"
+        },
+        "previous_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dev_session_id": {
+          "type": "string"
+        },
+        "managed_outcome_committed": {
+          "type": "boolean"
+        },
+        "launch_outcome": {
+          "type": "string"
+        },
+        "managed_resources_settled": {
+          "type": "boolean"
+        },
+        "dap_state_before": {
+          "type": "string"
+        },
+        "dap_state_after": {
+          "type": "string"
+        },
+        "rewrite_terminal_history": {
+          "type": "boolean"
+        },
+        "dap_transition_ref": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "dap_owner_verified": {
+          "type": "boolean"
+        },
+        "links": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "run_id",
+            "thread_id",
+            "workspace_tab_id",
+            "terminal_session_id",
+            "dap_session_id"
+          ],
+          "properties": {
+            "run_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "thread_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "workspace_tab_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "terminal_session_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "dap_session_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          }
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "operation_id": {
+          "type": "string"
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    },
+    "dev.session.stopped": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "workflow_state",
+        "previous_revision",
+        "dev_session_id",
+        "managed_outcome_committed",
+        "launch_outcome",
+        "managed_resources_settled",
+        "dap_state_before",
+        "dap_state_after",
+        "rewrite_terminal_history",
+        "dap_transition_ref",
+        "dap_owner_verified",
+        "links",
+        "owner_command_authorized",
+        "operation_id"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": "string"
+            }
+          }
+        },
+        "envelope_project_id": {
+          "type": "string"
+        },
+        "envelope_run_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "workflow_state": {
+          "type": "string"
+        },
+        "previous_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dev_session_id": {
+          "type": "string"
+        },
+        "managed_outcome_committed": {
+          "type": "boolean"
+        },
+        "launch_outcome": {
+          "type": "string"
+        },
+        "managed_resources_settled": {
+          "type": "boolean"
+        },
+        "dap_state_before": {
+          "type": "string"
+        },
+        "dap_state_after": {
+          "type": "string"
+        },
+        "rewrite_terminal_history": {
+          "type": "boolean"
+        },
+        "dap_transition_ref": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "dap_owner_verified": {
+          "type": "boolean"
+        },
+        "links": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "run_id",
+            "thread_id",
+            "workspace_tab_id",
+            "terminal_session_id",
+            "dap_session_id"
+          ],
+          "properties": {
+            "run_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "thread_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "workspace_tab_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "terminal_session_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "dap_session_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          }
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "operation_id": {
+          "type": "string"
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    },
+    "dev.session.restarting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "workflow_state",
+        "previous_revision",
+        "dev_session_id",
+        "managed_outcome_committed",
+        "launch_outcome",
+        "managed_resources_settled",
+        "dap_state_before",
+        "dap_state_after",
+        "rewrite_terminal_history",
+        "dap_transition_ref",
+        "dap_owner_verified",
+        "links",
+        "owner_command_authorized",
+        "operation_id"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": "string"
+            }
+          }
+        },
+        "envelope_project_id": {
+          "type": "string"
+        },
+        "envelope_run_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "workflow_state": {
+          "type": "string"
+        },
+        "previous_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dev_session_id": {
+          "type": "string"
+        },
+        "managed_outcome_committed": {
+          "type": "boolean"
+        },
+        "launch_outcome": {
+          "type": "string"
+        },
+        "managed_resources_settled": {
+          "type": "boolean"
+        },
+        "dap_state_before": {
+          "type": "string"
+        },
+        "dap_state_after": {
+          "type": "string"
+        },
+        "rewrite_terminal_history": {
+          "type": "boolean"
+        },
+        "dap_transition_ref": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "dap_owner_verified": {
+          "type": "boolean"
+        },
+        "links": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "run_id",
+            "thread_id",
+            "workspace_tab_id",
+            "terminal_session_id",
+            "dap_session_id"
+          ],
+          "properties": {
+            "run_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "thread_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "workspace_tab_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "terminal_session_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "dap_session_id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          }
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "operation_id": {
+          "type": "string"
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    },
+    "preview.session.started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "preview_subject_id",
+        "preview_session_id",
+        "source_revision",
+        "runtime_verified",
+        "restored_live_claim",
+        "session_state",
+        "managed_resources_settled",
+        "refreshable",
+        "refresh_committed",
+        "previous_revision",
+        "browser_session_id",
+        "owner_command_authorized"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": "string"
+            }
+          }
+        },
+        "envelope_project_id": {
+          "type": "string"
+        },
+        "envelope_run_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "preview_subject_id": {
+          "type": "string"
+        },
+        "preview_session_id": {
+          "type": "string"
+        },
+        "source_revision": {
+          "type": "string"
+        },
+        "runtime_verified": {
+          "type": "boolean"
+        },
+        "restored_live_claim": {
+          "type": "boolean"
+        },
+        "session_state": {
+          "type": "string"
+        },
+        "managed_resources_settled": {
+          "type": "boolean"
+        },
+        "refreshable": {
+          "type": "boolean"
+        },
+        "refresh_committed": {
+          "type": "boolean"
+        },
+        "previous_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "browser_session_id": {
+          "type": "string"
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    },
+    "preview.session.refreshed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "preview_subject_id",
+        "preview_session_id",
+        "source_revision",
+        "runtime_verified",
+        "restored_live_claim",
+        "session_state",
+        "managed_resources_settled",
+        "refreshable",
+        "refresh_committed",
+        "previous_revision",
+        "browser_session_id",
+        "owner_command_authorized"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": "string"
+            }
+          }
+        },
+        "envelope_project_id": {
+          "type": "string"
+        },
+        "envelope_run_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "preview_subject_id": {
+          "type": "string"
+        },
+        "preview_session_id": {
+          "type": "string"
+        },
+        "source_revision": {
+          "type": "string"
+        },
+        "runtime_verified": {
+          "type": "boolean"
+        },
+        "restored_live_claim": {
+          "type": "boolean"
+        },
+        "session_state": {
+          "type": "string"
+        },
+        "managed_resources_settled": {
+          "type": "boolean"
+        },
+        "refreshable": {
+          "type": "boolean"
+        },
+        "refresh_committed": {
+          "type": "boolean"
+        },
+        "previous_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "browser_session_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    },
+    "preview.session.stopped": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "preview_subject_id",
+        "preview_session_id",
+        "source_revision",
+        "runtime_verified",
+        "restored_live_claim",
+        "session_state",
+        "managed_resources_settled",
+        "refreshable",
+        "refresh_committed",
+        "previous_revision",
+        "browser_session_id",
+        "owner_command_authorized"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": "string"
+            }
+          }
+        },
+        "envelope_project_id": {
+          "type": "string"
+        },
+        "envelope_run_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "preview_subject_id": {
+          "type": "string"
+        },
+        "preview_session_id": {
+          "type": "string"
+        },
+        "source_revision": {
+          "type": "string"
+        },
+        "runtime_verified": {
+          "type": "boolean"
+        },
+        "restored_live_claim": {
+          "type": "boolean"
+        },
+        "session_state": {
+          "type": "string"
+        },
+        "managed_resources_settled": {
+          "type": "boolean"
+        },
+        "refreshable": {
+          "type": "boolean"
+        },
+        "refresh_committed": {
+          "type": "boolean"
+        },
+        "previous_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "browser_session_id": {
+          "type": "string"
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    },
+    "catalog.install.started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "owner_command_authorized",
+        "catalog_outcome_committed",
+        "catalog_phase",
+        "catalog_owner_payload"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id",
+            "user_id",
+            "computer_id",
+            "profile_id"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "project",
+                "app"
+              ]
+            },
+            "project_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "user_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "profile_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "project"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "app"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "envelope_project_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "envelope_run_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "catalog_outcome_committed": {
+          "type": "boolean"
+        },
+        "catalog_phase": {
+          "type": "string"
+        },
+        "catalog_owner_payload": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "$id": "pm.ds15.catalog_install_started.payload.v1",
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "required": [
+            "schema_version",
+            "scope",
+            "item_type",
+            "item_id",
+            "version",
+            "operation_id",
+            "owner_ref",
+            "outcome_ref",
+            "installation_ref",
+            "phase"
+          ],
+          "properties": {
+            "schema_version": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "project_id",
+                "user_id",
+                "computer_id",
+                "profile_id"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "project",
+                    "app"
+                  ]
+                },
+                "project_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "minLength": 1
+                },
+                "user_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "computer_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "profile_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "project"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "project_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "app"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "project_id": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "item_type": {
+              "enum": [
+                "command",
+                "skill",
+                "plugin",
+                "hook",
+                "theme",
+                "mcp_config"
+              ]
+            },
+            "phase": {
+              "type": "string"
+            },
+            "item_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "owner_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "outcome_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "version": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "installation_ref": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    },
+    "catalog.install.completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "owner_command_authorized",
+        "catalog_outcome_committed",
+        "catalog_phase",
+        "catalog_owner_payload"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id",
+            "user_id",
+            "computer_id",
+            "profile_id"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "project",
+                "app"
+              ]
+            },
+            "project_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "user_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "profile_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "project"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "app"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "envelope_project_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "envelope_run_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "catalog_outcome_committed": {
+          "type": "boolean"
+        },
+        "catalog_phase": {
+          "type": "string"
+        },
+        "catalog_owner_payload": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "$id": "pm.ds15.catalog_install_completed.payload.v1",
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "required": [
+            "schema_version",
+            "scope",
+            "item_type",
+            "item_id",
+            "version",
+            "operation_id",
+            "owner_ref",
+            "outcome_ref",
+            "installation_ref",
+            "phase"
+          ],
+          "properties": {
+            "schema_version": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "project_id",
+                "user_id",
+                "computer_id",
+                "profile_id"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "project",
+                    "app"
+                  ]
+                },
+                "project_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "minLength": 1
+                },
+                "user_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "computer_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "profile_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "project"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "project_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "app"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "project_id": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "item_type": {
+              "enum": [
+                "command",
+                "skill",
+                "plugin",
+                "hook",
+                "theme",
+                "mcp_config"
+              ]
+            },
+            "phase": {
+              "type": "string"
+            },
+            "item_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "owner_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "outcome_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "version": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "installation_ref": {
+              "type": [
+                "null",
+                "string"
+              ],
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        },
+        "replay_policy": {
+          "type": "string"
+        },
+        "envelope_replay_policy": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,360 @@
+{
+  "schema_id": "pm.work_placement_policy.fixtures.v1",
+  "schema_version": "1.0.0",
+  "owner_doc": "Plans/Shared_Integration_Runtime.md",
+  "owner_plan_unit": "SIR-056",
+  "evidence_level": "schema_fixture_only",
+  "native_runtime_executed": false,
+  "projects_refresh_cases": [
+    {
+      "case_id": "placement-mode-auto",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/placement_mode",
+      "record": "auto",
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-mode-chosen",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/placement_mode",
+      "record": "chosen",
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-preset-balanced",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/auto_preset",
+      "record": "balanced",
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-preset-fastest",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/auto_preset",
+      "record": "fastest",
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-preset-keep_my_computer_free",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/auto_preset",
+      "record": "keep_my_computer_free",
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-level-prefer",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/computer_level",
+      "record": "prefer",
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-level-normal",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/computer_level",
+      "record": "normal",
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-level-less_often",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/computer_level",
+      "record": "less_often",
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-level-only_when_i_choose_it",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/computer_level",
+      "record": "only_when_i_choose_it",
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-no-home-server-mode",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/placement_mode",
+      "record": "home_server",
+      "expected_schema_valid": false,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-no-task-priority-preset",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/auto_preset",
+      "record": "custom_task_priority",
+      "expected_schema_valid": false,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-no-legacy-manual-only",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/computer_level",
+      "record": "manual_only",
+      "expected_schema_valid": false,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-balanced-default-weights",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/auto_weights",
+      "record": {
+        "free_cpu": 1,
+        "free_memory_gb": 1,
+        "free_disk_gb": 1,
+        "queued_work": 1,
+        "gpu_headroom": 0,
+        "has_the_files_already": 0,
+        "file_route_speed": 0
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-advanced-locality-weight",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/auto_weights",
+      "record": {
+        "free_cpu": 1,
+        "free_memory_gb": 1,
+        "free_disk_gb": 1,
+        "queued_work": 1,
+        "gpu_headroom": 0,
+        "has_the_files_already": 4,
+        "file_route_speed": 0
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-negative-weight",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/auto_weights",
+      "record": {
+        "free_cpu": 1,
+        "free_memory_gb": -1,
+        "free_disk_gb": 1,
+        "queued_work": 1,
+        "gpu_headroom": 0,
+        "has_the_files_already": 0,
+        "file_route_speed": 0
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-floor-is-not-weight",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/auto_weights",
+      "record": {
+        "free_cpu": 1,
+        "free_memory_gb": 1,
+        "free_disk_gb": 1,
+        "queued_work": 1,
+        "gpu_headroom": 0,
+        "has_the_files_already": 0,
+        "file_route_speed": 0,
+        "minimum_memory_gb": 0
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-missing-queue-weight",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/auto_weights",
+      "record": {
+        "free_cpu": 1,
+        "free_memory_gb": 1,
+        "free_disk_gb": 1,
+        "gpu_headroom": 0,
+        "has_the_files_already": 0,
+        "file_route_speed": 0
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-choice-auto",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/placement_choice",
+      "record": {
+        "mode": "auto",
+        "execution_host_id": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-choice-chosen",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/placement_choice",
+      "record": {
+        "mode": "chosen",
+        "execution_host_id": "host-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-auto-hidden-pin",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/placement_choice",
+      "record": {
+        "mode": "auto",
+        "execution_host_id": "host-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-chosen-missing-computer",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/placement_choice",
+      "record": {
+        "mode": "chosen",
+        "execution_host_id": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-chosen-display-name-alias",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/placement_choice",
+      "record": {
+        "mode": "chosen",
+        "computer_name": "My Computer",
+        "execution_host_id": "host-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-project-auto",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/project_policy",
+      "record": {
+        "schema_id": "pm.work_placement.project_policy.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-a",
+        "requested_mode": "auto",
+        "default_computer": "host-a",
+        "allowed_computers": [
+          "host-a",
+          "host-b"
+        ],
+        "preset_override": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-project-preset-override",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/project_policy",
+      "record": {
+        "schema_id": "pm.work_placement.project_policy.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-a",
+        "requested_mode": "auto",
+        "default_computer": "host-a",
+        "allowed_computers": [
+          "host-a",
+          "host-b"
+        ],
+        "preset_override": "fastest"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-duplicate-allowed-computer",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/project_policy",
+      "record": {
+        "schema_id": "pm.work_placement.project_policy.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-a",
+        "requested_mode": "auto",
+        "default_computer": "host-a",
+        "allowed_computers": [
+          "host-a",
+          "host-b",
+          "host-a"
+        ],
+        "preset_override": "fastest"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-chosen-without-default",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/project_policy",
+      "record": {
+        "schema_id": "pm.work_placement.project_policy.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-a",
+        "requested_mode": "chosen",
+        "default_computer": null,
+        "allowed_computers": [],
+        "preset_override": "fastest"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-task-absolute-minimums-slots",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/task_minimums",
+      "record": {
+        "minimum_memory_gb": 10,
+        "minimum_disk_gb": 50,
+        "os": [
+          "linux"
+        ],
+        "required_slot_refs": [
+          "browser-slot",
+          "recording-slot"
+        ]
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-task-cannot-change-priority",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/task_minimums",
+      "record": {
+        "minimum_memory_gb": 10,
+        "minimum_disk_gb": 50,
+        "os": [
+          "linux"
+        ],
+        "required_slot_refs": [
+          "browser-slot",
+          "recording-slot"
+        ],
+        "priority": 100
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-task-cannot-change-preset",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/task_minimums",
+      "record": {
+        "minimum_memory_gb": 10,
+        "minimum_disk_gb": 50,
+        "os": [
+          "linux"
+        ],
+        "required_slot_refs": [
+          "browser-slot",
+          "recording-slot"
+        ],
+        "preset": "fastest"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": []
+    },
+    {
+      "case_id": "placement-negative-floor",
+      "schema_ref": "Plans/work_placement_policy.schema.json#/$defs/task_minimums",
+      "record": {
+        "minimum_memory_gb": 10,
+        "minimum_disk_gb": -1,
+        "os": [
+          "linux"
+        ],
+        "required_slot_refs": [
+          "browser-slot",
+          "recording-slot"
+        ]
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": []
+    }
+  ]
+}

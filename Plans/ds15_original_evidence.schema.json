@@ -1,0 +1,306 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.ds15.original_evidence.v1",
+  "type": "object",
+  "properties": {
+    "original": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "event",
+        "event_id",
+        "idempotency_key"
+      ],
+      "properties": {
+        "payload": {
+          "type": "object"
+        },
+        "event": {
+          "type": "object"
+        },
+        "event_id": {
+          "type": "string"
+        },
+        "idempotency_key": {
+          "type": "string"
+        },
+        "application_source": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      }
+    },
+    "envelope": {
+      "type": "object"
+    },
+    "outcome": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "event_id",
+        "committed",
+        "source_ref"
+      ],
+      "properties": {
+        "payload": {
+          "type": "object"
+        },
+        "event_id": {
+          "type": "string"
+        },
+        "committed": {
+          "type": "boolean"
+        },
+        "source_ref": {
+          "type": "string"
+        }
+      }
+    },
+    "original_context": {
+      "type": "object"
+    },
+    "storage_instance_id": {
+      "type": "string"
+    },
+    "scope_partition": {
+      "type": "string"
+    },
+    "receipt": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "custody": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "issued_result": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "receipt_ref": {
+      "type": "string"
+    },
+    "application_source": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "browser_owner_records": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "retained_events": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "backup_closure_verified": {
+      "type": "boolean"
+    },
+    "permission_now": {
+      "type": "boolean"
+    },
+    "source_deleted_now": {
+      "type": "boolean"
+    },
+    "share_current": {
+      "type": "boolean"
+    },
+    "reader_withdrawn": {
+      "type": "boolean"
+    },
+    "receipt_retained": {
+      "type": "boolean"
+    },
+    "retained_prefix_complete": {
+      "type": "boolean"
+    },
+    "reader_installed": {
+      "type": "string"
+    },
+    "live_snapshot_id": {
+      "type": "string"
+    },
+    "current_live_snapshot_id": {
+      "type": "string"
+    },
+    "replay_policy": {
+      "type": "string"
+    },
+    "scan_low": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "scan_high": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "selected_high": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "withdrawal_frontier": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "admitted_sequence": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "expected_previous": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "stored_previous": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "payload": {
+      "type": "object"
+    },
+    "context": {
+      "type": "object"
+    },
+    "checkpoint": {
+      "type": "object"
+    },
+    "selected_token": {
+      "type": "object"
+    },
+    "selected_source": {
+      "type": "object"
+    },
+    "index_rows": {
+      "type": "array"
+    },
+    "selected_matches": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "required": [
+              "scope"
+            ],
+            "properties": {
+              "scope": {
+                "type": "object",
+                "required": [
+                  "kind"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "app"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "payload"
+        ]
+      },
+      "then": {
+        "properties": {
+          "original": {
+            "required": [
+              "application_source"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "required": [
+                  "scope"
+                ],
+                "properties": {
+                  "scope": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "app"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "payload"
+            ]
+          },
+          {
+            "properties": {
+              "envelope": {
+                "type": "object",
+                "required": [
+                  "event_type"
+                ],
+                "properties": {
+                  "event_type": {
+                    "const": "browser.context_captured"
+                  }
+                }
+              }
+            },
+            "required": [
+              "envelope"
+            ]
+          }
+        ]
+      },
+      "then": {
+        "required": [
+          "application_source",
+          "browser_owner_records"
+        ]
+      }
+    }
+  ],
+  "additionalProperties": false
+}

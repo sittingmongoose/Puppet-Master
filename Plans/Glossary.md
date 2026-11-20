@@ -1785,6 +1785,7 @@ source_lineage:
 - dec-0022
 - q-0028
 - chat:teach-bundle-accepted-pmconcept-reference
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0111
 - atom-0112
@@ -2014,66 +2015,66 @@ preserved_exact_tokens:
 - missing-state behavior
 - no-help-needed
 negative_constraints:
-- Do not assume the generic Help/Glossary architecture already contains Teach-specific content.
-- Do not let Teacher rely on glossary architecture without checking whether a concrete help entry exists.
-- Do not leave Teach-specific help entries implicit in Persona prose only.
-- Do not make every Teacher answer invent local definitions instead of resolving canonical help entries.
-- Do not use a two-column term table as the durable Teach help-entry format.
-- Do not store Teach help examples without source owner refs or related-concept links.
-- Do not make tooltip-only help sufficient for Teach concepts that require examples or related concepts.
-- Do not let Teacher simplify wording by renaming runtime truth or canonical terms.
-- Do not let Teacher silently skip missing help entries.
-- Do not search/read external or cross-project sources unless the user explicitly approves that route.
-- Do not use taught memory outside its scope.
-- Do not let Teach ship with untracked missing help entries.
-- Do not treat generic Glossary architecture as coverage for concrete Teach user flows.
-- Do not fork Teach help copy into disconnected UI strings.
-- Do not let short-copy variants drift from canonical terms or related concepts.
-- Do not mark Help/Glossary support complete without concrete Teach help-entry coverage tests.
-- Do not allow Teacher to cite missing or broken help-entry links as valid sources.
-- Do not treat q-0027 acceptance as complete filled Teach help content.
-- Do not call Teach Help/Glossary implementation-ready without concrete entries, surfaces, examples, and tests.
-- Do not describe Teach as a standalone automation runner.
-- Do not imply every Teacher interaction becomes durable taught memory.
-- Do not hide the distinction between learning/help and mutating PM state.
-- Do not present Teacher as a separate feature detached from Teach.
-- Do not let Teacher claim authority without visible source/context disclosure.
-- Do not allow Teacher to perform unsafe mutations as teaching gestures.
-- Do not persist Teach conversation content as memory without confirmation.
-- Do not use taught memory outside its approved scope.
-- Do not bury edit/delete controls away from the memory explanation.
-- Do not let later Teach runs overwrite locked corrections without explicit user action.
-- Do not cite a locked record without showing its scope/source when relevant.
-- Do not let Teacher present PM facts as unsourced hidden prompt lore.
-- Do not collapse stale, missing, disabled, and permission-required states into generic uncertainty.
-- Do not cite unavailable PlanUnits before a future compile creates them.
-- Do not use raw cursor/click automation as the teaching UI.
-- Do not let the caption obscure the control being taught.
-- Do not make the overlay the only accessible explanation path.
-- Do not let `Do it` execute mutations without a confirmation step.
-- Do not make confirmation copy vague about the affected object.
-- Do not default a destructive confirmation to proceed.
-- Do not hide fallback from requested model to effective model.
-- Do not make Teach model configuration raw-file only.
-- Do not reuse a broad automation model setting when a scoped Teach/Teacher setting is intended.
-- Do not let Teacher guess through missing PM coverage.
-- Do not silently change persona/model/tool path without disclosure.
-- Do not treat handoff as failure when it is the correct safer route.
-- Do not silently switch an existing assistant conversation into Teacher mode.
-- Do not launch Teacher without preserving current surface/control context when available.
-- Do not require users to know slash commands before discovering Teach.
-- Do not fork labels between surfaces.
-- Do not make context help available only from the full Help page.
-- Do not include generic examples when current surface context is available.
-- Do not let microcopy examples become disconnected product truth.
-- Do not use cheerful copy to soften missing coverage, unsafe mutation, or persistence warnings.
-- Do not rename canonical terms in short-copy variants.
-- Do not author Teach help as disconnected prose without owner refs.
-- Do not cite future PlanUnits before compile creates them.
-- Do not duplicate conflicting definitions across owners.
-- Do not rely on a freeform list with no coverage matrix.
-- Do not mark MVP complete with missing required Teach help rows.
-- Do not accept no-help-needed dispositions without owner evidence.
+  - "Do not assume the generic Help/Glossary architecture already contains Teach-specific content."
+  - "Do not let Teacher rely on glossary architecture without checking whether a concrete help entry exists."
+  - "Do not leave Teach-specific help entries implicit in Persona prose only."
+  - "Do not make every Teacher answer invent local definitions instead of resolving canonical help entries."
+  - "Do not use a two-column term table as the durable Teach help-entry format."
+  - "Do not store Teach help examples without source owner refs or related-concept links."
+  - "Do not make tooltip-only help sufficient for Teach concepts that require examples or related concepts."
+  - "Do not let Teacher simplify wording by renaming runtime truth or canonical terms."
+  - "Do not let Teacher silently skip missing help entries."
+  - "Do not search/read external or cross-project sources unless the user explicitly approves that route."
+  - "Do not use taught memory outside its scope."
+  - "Do not let Teach ship with untracked missing help entries."
+  - "Do not treat generic Glossary architecture as coverage for concrete Teach user flows."
+  - "Do not fork Teach help copy into disconnected UI strings."
+  - "Do not let short-copy variants drift from canonical terms or related concepts."
+  - "Do not mark Help/Glossary support complete without concrete Teach help-entry coverage tests."
+  - "Do not allow Teacher to cite missing or broken help-entry links as valid sources."
+  - "Do not treat q-0027 acceptance as complete filled Teach help content."
+  - "Do not call Teach Help/Glossary implementation-ready without concrete entries, surfaces, examples, and tests."
+  - "Do not describe Teach as a standalone automation runner."
+  - "Do not imply every Teacher interaction becomes durable taught memory."
+  - "Do not hide the distinction between learning/help and mutating PM state."
+  - "Do not present Teacher as a separate feature detached from Teach."
+  - "Teacher must not invent PM authority or task evidence. Ordinary non-memory task citations and missing-coverage disclosure remain; saved-note sources and per-run context inclusion stay internal without a source inspector or memory-use receipt."
+  - "Do not allow Teacher to perform unsafe mutations as teaching gestures."
+  - "Do not persist Teach conversation content as memory without confirmation."
+  - "Do not use taught memory outside its approved scope."
+  - "Do not bury edit/delete controls away from the memory explanation."
+  - "Do not let later Teach runs overwrite locked corrections without explicit user action."
+  - "Do not cite a locked record without showing its scope/source when relevant."
+  - "Do not let Teacher present PM facts as unsourced hidden prompt lore."
+  - "Do not collapse stale, missing, disabled, and permission-required states into generic uncertainty."
+  - "Do not cite unavailable PlanUnits before a future compile creates them."
+  - "Do not use raw cursor/click automation as the teaching UI."
+  - "Do not let the caption obscure the control being taught."
+  - "Do not make the overlay the only accessible explanation path."
+  - "Do not let `Do it` execute mutations without a confirmation step."
+  - "Do not make confirmation copy vague about the affected object."
+  - "Do not default a destructive confirmation to proceed."
+  - "Do not hide fallback from requested model to effective model."
+  - "Do not make Teach model configuration raw-file only."
+  - "Do not reuse a broad automation model setting when a scoped Teach/Teacher setting is intended."
+  - "Do not let Teacher guess through missing PM coverage."
+  - "Do not silently change persona/model/tool path without disclosure."
+  - "Do not treat handoff as failure when it is the correct safer route."
+  - "Do not silently switch an existing assistant conversation into Teacher mode."
+  - "Do not launch Teacher without preserving current surface/control context when available."
+  - "Do not require users to know slash commands before discovering Teach."
+  - "Do not fork labels between surfaces."
+  - "Do not make context help available only from the full Help page."
+  - "Do not include generic examples when current surface context is available."
+  - "Do not let microcopy examples become disconnected product truth."
+  - "Do not use cheerful copy to soften missing coverage, unsafe mutation, or persistence warnings."
+  - "Do not rename canonical terms in short-copy variants."
+  - "Do not author Teach help as disconnected prose without owner refs."
+  - "Do not cite future PlanUnits before compile creates them."
+  - "Do not duplicate conflicting definitions across owners."
+  - "Do not rely on a freeform list with no coverage matrix."
+  - "Do not mark MVP complete with missing required Teach help rows."
+  - "Do not accept no-help-needed dispositions without owner evidence."
 owner_hints:
 - Plans/Glossary.md
 - Plans/FinalGUISpec.md

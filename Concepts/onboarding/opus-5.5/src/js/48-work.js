@@ -150,6 +150,10 @@
     list.forEach((x) => { const n = surfaceName(x.surface); by[n] = (by[n] || 0) + 1; });
     return Object.keys(by).map((k) => k + ' ' + by[k]).join(', ');
   }
+  /* the bar is painted on every 1 s tick: a value it already shows is not written again, since the same attribute or
+     hidden written again still restyles the page and wakes its DOM watchers (lane A, 2026-11-10: about 16 such writes a
+     second at rest, a main frame each tick) */
+  const put = (el, k, v) => { if (el.getAttribute(k) !== v) el.setAttribute(k, v); };
   function paintItem(b, kind, n, ask, c) {
     if (!b) return;
     const A = kind === 'agents', live = n > 0;
@@ -160,29 +164,29 @@
     else h += '<span><strong>' + n + '</strong> ' + T(A ? (n === 1 ? 'bar.agent' : 'bar.agents') : (n === 1 ? 'bar.process' : 'bar.processes')) + '</span>' +
       (ask ? askMark + '<span><strong>' + ask + '</strong> ' + T(A ? (ask === 1 ? 'bar.question' : 'bar.questions') : (ask === 1 ? 'bar.needsInputOne' : 'bar.needsInputMany')) + '</span></span>' : '');
     if (b.__wkHtml !== h) { b.innerHTML = h; b.__wkHtml = h; }
-    b.setAttribute('data-tone', live ? 'working' : 'idle');
-    b.setAttribute('data-ask', ask ? 'true' : 'false');
+    put(b, 'data-tone', live ? 'working' : 'idle');
+    put(b, 'data-ask', ask ? 'true' : 'false');
     const on = ui.open && ui.tab === kind;
-    b.setAttribute('aria-expanded', on ? 'true' : 'false');
+    put(b, 'aria-expanded', on ? 'true' : 'false');
     b.classList.toggle('is-open', on);
     const list = A ? items({ kind: 'agent' }).filter(isLive) : liveProcs();
     const askWords = A ? plural(ask, T('bar.question'), T('bar.questions')) : ask + ' ' + T(ask === 1 ? 'bar.needsInputOne' : 'bar.needsInputMany');
-    b.setAttribute('data-pm-hover-label', T(A ? 'bar.agentsLabel' : 'bar.processesLabel'));
-    b.setAttribute('data-pm-hover-detail', (n ? T(A ? 'bar.agentsRunning' : 'bar.processesRunning', { n: plural(n, T(A ? 'bar.agent' : 'bar.process'), T(A ? 'bar.agents' : 'bar.processes')), where: bySurface(list) })
+    put(b, 'data-pm-hover-label', T(A ? 'bar.agentsLabel' : 'bar.processesLabel'));
+    put(b, 'data-pm-hover-detail', (n ? T(A ? 'bar.agentsRunning' : 'bar.processesRunning', { n: plural(n, T(A ? 'bar.agent' : 'bar.process'), T(A ? 'bar.agents' : 'bar.processes')), where: bySurface(list) })
       : T(A ? 'bar.noneAgents' : 'bar.noneProcesses')) + (ask ? ' ' + T(A ? 'bar.asksAgents' : 'bar.asksProcesses', { n: askWords }) : '') +
       (!A && c.scheduled ? ' ' + T('bar.scheduled', { n: c.scheduled }) : '') + ' ' + T('bar.click'));
-    b.setAttribute('aria-label', T(A ? 'bar.ariaAgents' : 'bar.ariaProcesses', { n: n, ask: ask ? ', ' + askWords : '' }));
+    put(b, 'aria-label', T(A ? 'bar.ariaAgents' : 'bar.ariaProcesses', { n: n, ask: ask ? ', ' + askWords : '' }));
   }
   function paintBar(why) {
     const g = group(), w = W();
     if (!g) return;
     if (!w) { g.hidden = true; return; }
-    g.hidden = false;
+    if (g.hidden) g.hidden = false;
     const c = counts(), feed = w.feed ? w.feed() : { state: 'current' };
     const paint = () => {
       paintItem(g.querySelector('[data-status-action="agents"]'), 'agents', c.agents, c.questions, c);
       paintItem(g.querySelector('[data-status-action="processes"]'), 'processes', c.processes, c.needsInput, c);
-      g.setAttribute('data-work-words', words() ? 'on' : 'off');
+      put(g, 'data-work-words', words() ? 'on' : 'off');
     };
     if (why !== 'tick') wordsDontFit = false;
     paint();
@@ -190,12 +194,12 @@
     const stale = g.querySelector('[data-work-stale]');
     if (stale) {
       const on = feed.state === 'stale';
-      stale.hidden = !on;
+      if (stale.hidden !== !on) stale.hidden = !on;
       if (on) {
         const h = st('offline', 10) + '<span class="wk-dim">' + T('bar.stale') + '</span>';
         if (stale.__wkHtml !== h) { stale.innerHTML = h; stale.__wkHtml = h; }
-        stale.setAttribute('data-pm-hover-label', T('bar.staleLabel'));
-        stale.setAttribute('data-pm-hover-detail', T('bar.staleDetail', { ago: short(Date.now() - (feed.at || Date.now())) }));
+        put(stale, 'data-pm-hover-label', T('bar.staleLabel'));
+        put(stale, 'data-pm-hover-detail', T('bar.staleDetail', { ago: short(Date.now() - (feed.at || Date.now())) }));
       }
     }
   }
@@ -852,8 +856,14 @@
       const all = items().filter(o.filter || (() => true));
       const groups = (o.groups ? o.groups(all) : [{ key: 'all', items: sort(all) }]).filter((g) => g.items.length);
       const focused = doc.activeElement && host.contains(doc.activeElement) ? focusKey(doc.activeElement) : null;
-      const html = groups.map((g) => (o.section ? o.section(g, rowsOf(g)) : rowsOf(g))).join('');
-      host.innerHTML = html || '<p class="wk-empty">' + esc(o.empty || '') + '</p>';
+      const html = groups.map((g) => (o.section ? o.section(g, rowsOf(g)) : rowsOf(g))).join('') || '<p class="wk-empty">' + esc(o.empty || '') + '</p>';
+      /* the same rows as the ones drawn, apart from their times, progress and output: patch those in place, as a tick
+         does, instead of drawing the list again. Home's Agents board repaints on every show of its tab (it missed the
+         changes while hidden), and a fresh list is new rows and new loaders to style, lay out and arm: 4 to 8 ms of
+         the 240 to 270 ms a Home tab switch cost, and the 17 Pip loaders' restart (pm7-perf lane I) */
+      const bare = untick(html);
+      if (host.__wkBare === bare && host.firstChild) { patchTicks(host, fmt); if (o.onPaint) o.onPaint(all); return; }
+      host.innerHTML = html; host.__wkBare = bare;
       watchMoving(host);
       if (focused) { const f = host.querySelector(focused); if (f) f.focus({ preventScroll: true }); }
       if (o.onPaint) o.onPaint(all);
@@ -923,13 +933,29 @@
 
   /* --------------------------------------------------------------------------------------- staying current */
   const progText = (it) => T('detail.progressOf', { done: it.progress.done, total: it.progress.total, unit: esc(it.progress.unit) });
+  /* a list's markup without what a tick patches (times, progress, output tails): two lists with the same untick()
+     hold the same rows, and patchTicks brings the one drawn up to date. The patched values are escaped text, so they
+     hold no "<"; a tail ends with its pre. */
+  function untick(h) { return h.replace(/(data-work-(?:time|prog)="[^"]*">)[^<]*/g, '$1').replace(/(data-work-tail="[^"]*">)[\s\S]*?<\/pre><\/div>/g, '$1</div>'); }
   /* what a row is: a tick that changes any of it (work ends, fails, starts waiting, stops) repaints the panel; a tick
      that only moves time, output or progress patches those in place (A6) */
   const shape = () => items().map((x) => x.id + ':' + x.state + ':' + (x.stopping ? 1 : 0) + ':' + (needsYou(x) ? 1 : 0) + ':' + (x.lost ? 1 : 0) + ':' + (x.progress && isLive(x) ? 1 : 0)).join('|');
   let lastShape = '';
-  /* time, output tail and progress in place, for the panel and for the chat's Processes view */
+  /* time, output tail and progress in place, for the panel and for the chat's Processes view.
+     While the onboarding window is open over the app (html[data-o55-open]) the app beneath holds still (onboarding
+     README, Performance rules, 6): a root outside the window is not written, only remembered, and is patched the moment
+     the window goes, so its clocks are current in the first frame it shows again. Under the window these writes (the
+     chat composer's work clocks, every second) woke five of the chat's DOM watchers, a frame each (pm7-perf lane C2). */
+  const heldTicks = new Map();
+  const underWindow = (root) => doc.documentElement.hasAttribute('data-o55-open') && !(root.closest && root.closest('#pm-o55-onboarding'));
+  if (typeof MutationObserver === 'function') new MutationObserver(() => {
+    if (doc.documentElement.hasAttribute('data-o55-open') || !heldTicks.size) return;
+    const held = [...heldTicks]; heldTicks.clear();
+    held.forEach(([root, fmt]) => { if (root.isConnected) patchTicks(root, fmt); });
+  }).observe(doc.documentElement, { attributes: true, attributeFilter: ['data-o55-open'] });
   function patchTicks(root, fmt) {
     if (!root) return;
+    if (underWindow(root)) { heldTicks.set(root, fmt); return; }
     root.querySelectorAll('[data-work-time]').forEach((el) => { const it = byId(el.getAttribute('data-work-time')); if (it) { const v = (fmt || time)(it); if (el.textContent !== v) el.textContent = v; } });
     root.querySelectorAll('[data-work-prog]').forEach((el) => { const it = byId(el.getAttribute('data-work-prog')); if (it && it.progress) { const v = progText(it); if (el.innerHTML !== v) el.innerHTML = v; } });
     root.querySelectorAll('[data-work-tail]').forEach((el) => {

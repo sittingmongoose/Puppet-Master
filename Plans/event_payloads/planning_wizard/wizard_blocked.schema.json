@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/dcw/wizard_blocked.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "event_type",
+    "project_id",
+    "planning_run_id",
+    "wizard_id",
+    "blockage_id",
+    "observation_id",
+    "source_ref",
+    "permission_snapshot_id",
+    "thread_id",
+    "predecessor_event_id",
+    "ts",
+    "round_count",
+    "report_ref",
+    "resume_url",
+    "route_target_ref"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.event_payload.wizard.blocked.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "event_type": {
+      "const": "wizard.blocked"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "planning_run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "wizard_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "blockage_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "permission_snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "thread_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "predecessor_event_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "round_count": {
+      "type": "integer",
+      "minimum": 0,
+      "format": "pm-uint"
+    },
+    "report_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resume_url": {
+      "type": "string",
+      "minLength": 1
+    },
+    "route_target_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "$defs": {
+    "referenced_stub": {
+      "type": "object",
+      "maxProperties": 0,
+      "additionalProperties": false
+    },
+    "payload_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blake3",
+        "byte_size",
+        "media_type"
+      ],
+      "properties": {
+        "blake3": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 16385,
+          "maximum": 18446744073709551615,
+          "format": "pm-uint"
+        },
+        "media_type": {
+          "const": "application/vnd.puppetmaster.event.wizard-blocked+msgpack"
+        }
+      }
+    }
+  },
+  "$comment": "CV-253 timestamp owner and existing DCW format enforcement; CV-1101 adoption is sweep B2. Numbers use existing Storage owner boundaries; CV-1100/SP-1100/SP-1101 adoption is SW-N1. No new timestamp grammar or numeric ceiling."
+}

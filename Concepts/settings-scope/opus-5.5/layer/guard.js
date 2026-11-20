@@ -5,7 +5,7 @@
    through PSX.write, which admits each part before the world changes:
      first start     nothing is kept before a computer is set up (SETTINGS-PROPOSAL 7.14)
      the device      a Member's device changes only its own screen values: level device, its own key (7.10); viewing
-                     another device in Change view never gives its rights (S.actor is the device in use, S.ctx.device
+                     another device's screen in the header's Change never gives its rights (S.actor is the device in use, S.ctx.device
                      the screen being viewed)
      the level       a row only takes the levels it offers (1.3), and its own type, range and choices
      the writer      the computer that keeps that level must be answering; nothing is queued (7.1, 7.5)
@@ -50,15 +50,26 @@
     if (x.level === 'act') return x.key;        // an action on one computer: install, sign in, set up
     return null;
   }
-  /* the row's own type, range and choices */
+  /* the row's own type, range and choices. Jared 2026-11-13 ("when i set a value for a specific project or computer, i
+     can set any value i want"): the limits come from the same source as the row's main control (places.js
+     PSX.places.check: Plans' inventory range, the base row's min, max and step, a slider's bounds, a list's choices, a
+     model row's models and depths), read at the place the write is for, so every path refuses what the row refuses */
   function invalid(x) {
     const def = DEF[x.id]; if (!def || x.value === undefined) return null;
+    if (PSX.places) {
+      const ctx = x.level ? PSX.places.ctxAt(x.level, x.key) : S.ctx;
+      const why = PSX.places.check(x.id, x.value, ctx);
+      if (why) return why;
+      if (PSX.places.limits(x.id, ctx)) return Array.isArray(PSX.DEFAULTS[x.id]) && !Array.isArray(x.value) ? 'It has to be a list' : null;
+    }
     const d = PSX.DEFAULTS[x.id], s = PSX.engineSetting(x.id);
     if (typeof d === 'number') {
       if (typeof x.value !== 'number' || !Number.isFinite(x.value)) return 'It has to be a number';
       const min = s && Number.isFinite(+s.min) ? +s.min : (d >= 0 ? (def.combine === 'computer_ceiling' ? 1 : 0) : -Infinity);
       const max = s && Number.isFinite(+s.max) ? +s.max : Infinity;
-      if (x.value < min) return `It can’t be less than ${min}`;
+      /* inventory alignment: Plans' inventory makes some limit rows computer ceilings whose own default is 0 ("no
+         limit"); the row's own default is never refused, whatever floor a ceiling would otherwise get */
+      if (x.value < min && x.value !== d) return `It can’t be less than ${min}`;
       if (x.value > max) return `It can’t be more than ${max}`;
       if (Number.isInteger(d) && !Number.isInteger(x.value) && def.combine === 'computer_ceiling') return 'It has to be a whole number';
     }
@@ -67,7 +78,12 @@
     return null;
   }
   function offeredAt(x) {
-    const def = DEF[x.id]; if (!def || x.value === undefined) return null;
+    const def = DEF[x.id];
+    /* review S1 and the inventory alignment: a row kept inside its owner (PSX.ownerHeld: Plans' inventory home: thing,
+       every ordinary level set_inside_a_thing; the reviewed list only for rows it doesn't list) takes no write at
+       everywhere, a computer, a device or a project */
+    if (!def) return PSX.ownerHeld && PSX.ownerHeld(x.id) ? PSX.REASONS.kept_by_owner[0] : null;
+    if (x.value === undefined) return null;
     const off = PSX.offered(def);
     if (x.level === 'everywhere' && !off.everywhere) return PSX.REASONS[def.reason || 'about_this_project'][0];
     if (x.level === 'computer' && !off.computer) return PSX.REASONS[def.screen ? 'about_the_screen' : (def.reason || 'same_for_you')][0];

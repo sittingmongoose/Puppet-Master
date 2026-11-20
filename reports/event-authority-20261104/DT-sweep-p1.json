@@ -1,0 +1,280 @@
+{
+  "phase": "sweep_part1",
+  "source_head": "8f7c9515f1d79f2ecd13c177bdeea5ec68bb1fa6",
+  "rebased_from": "4b82bc8d3b105b78a09e4c311722ca27323cec39",
+  "rebase_onto": "e42ce235b4711325ced818c777f070c3ee0d7952",
+  "branch": "plans/ea-w2-tools-gates-approvals-20261104",
+  "ready": false,
+  "native_execution": "NOT_RUN",
+  "items": [
+    {
+      "item": "Deck 2 3.d / DL-430 / F1",
+      "status": "fixed",
+      "commit": "adc6449ead1e114f97007d99265805f8607434b8",
+      "location": "scripts/pm-dt-event-contracts.py:381"
+    },
+    {
+      "item": "Deck 2 4.f / DL-436",
+      "status": "fixed_delegated_to_DS15",
+      "commit": "8f7c9515f1d79f2ecd13c177bdeea5ec68bb1fa6",
+      "DS15": {
+        "branch": "origin/plans/ea-w2-section15-newtools-20261104",
+        "commit": "8791f549ae15b84d3d3583cdd7c21c6f65788127",
+        "contract": {
+          "event_type": "tool.custom_headless.skipped",
+          "family_revision": "1.0.0",
+          "preparation_status": "prepared_without_admission",
+          "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-326",
+          "storage_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-326",
+          "payload_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-326",
+          "oracle_owner": "Plans/Automated_Testing_System.md#ATS-329",
+          "payload_schema_ref": "Plans/ds15_tool_custom_headless_skipped.schema.json",
+          "checkpoint_schema_ref": "Plans/ds15_tool_custom_headless_skipped_checkpoint.schema.json",
+          "consumer": "reader.ds15.tool_custom_headless_skipped.v1@1.0.0",
+          "checkpoint_key": "projector.checkpoint.ds15.tool_custom_headless_skipped:{project_id}",
+          "identity_fields": [],
+          "scope_policy": "project_only",
+          "idempotency_recipe": "sha256(canonical MessagePack array [\"tool.custom_headless.skipped\", \"1.0.0\", actual project_id])",
+          "retention_policy_ref": "RP-OPERATIONAL-2555D",
+          "checkpoint_retention_policy_ref": "RP-OPERATIONAL-2555D",
+          "decision": "DL-436",
+          "card_item": "4.f",
+          "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/tool_custom_headless_skipped-search.json"
+        }
+      }
+    },
+    {
+      "item": "F16",
+      "status": "part2",
+      "reason": "Shared number domain/recipe; no lane-local serializer or cap permitted.",
+      "location": "scripts/pm-dt-event-contracts.py:170"
+    },
+    {
+      "item": "S1/S2",
+      "status": "retained_fixed",
+      "original_commit": "eee8f2ce43",
+      "verification": "Reviewer S1/S2 probes against rebased implementation; zero wrong-type acceptances."
+    },
+    {
+      "item": "Fixture isolation and stale FileSafe labels",
+      "status": "fixed",
+      "commits": [
+        "adc6449ead1e114f97007d99265805f8607434b8",
+        "8f7c9515f1d79f2ecd13c177bdeea5ec68bb1fa6"
+      ],
+      "location": "Plans/dt_event_contract_fixtures.json:103830"
+    }
+  ],
+  "grades": {
+    "before_all_18": {
+      "ABSENT": 25,
+      "PASS": 182,
+      "PARTIAL": 7,
+      "CONFLICT": 2
+    },
+    "before_owned_17": {
+      "ABSENT": 17,
+      "PASS": 181,
+      "PARTIAL": 4,
+      "CONFLICT": 2
+    },
+    "after_owned_17": {
+      "ABSENT": 17,
+      "PASS": 166,
+      "PARTIAL": 21
+    },
+    "family_pass_counts": [
+      {
+        "event_type": "approval.requested",
+        "before": 11,
+        "after": 10
+      },
+      {
+        "event_type": "approval.granted",
+        "before": 11,
+        "after": 10
+      },
+      {
+        "event_type": "approval.denied",
+        "before": 11,
+        "after": 10
+      },
+      {
+        "event_type": "approval.timeout",
+        "before": 11,
+        "after": 10
+      },
+      {
+        "event_type": "config.migrated",
+        "before": 11,
+        "after": 10
+      },
+      {
+        "event_type": "gate.evaluation_started",
+        "before": 11,
+        "after": 10
+      },
+      {
+        "event_type": "gate.failed",
+        "before": 11,
+        "after": 10
+      },
+      {
+        "event_type": "gate.passed",
+        "before": 11,
+        "after": 10
+      },
+      {
+        "event_type": "requirements.clarification_requested",
+        "before": 10,
+        "after": 9
+      },
+      {
+        "event_type": "run.background_enqueued",
+        "before": 11,
+        "after": 10
+      },
+      {
+        "event_type": "tool.denied",
+        "before": 9,
+        "after": 10
+      },
+      {
+        "event_type": "tool.execution_completed",
+        "before": 11,
+        "after": 10
+      },
+      {
+        "event_type": "tool.execution_started",
+        "before": 11,
+        "after": 10
+      },
+      {
+        "event_type": "tool.invoked",
+        "before": 11,
+        "after": 10
+      },
+      {
+        "event_type": "usage.event",
+        "before": 10,
+        "after": 9
+      },
+      {
+        "event_type": "worktree.created",
+        "before": 10,
+        "after": 9
+      },
+      {
+        "event_type": "worktree.deleted",
+        "before": 10,
+        "after": 9
+      }
+    ],
+    "exact_quotes_verified": 408
+  },
+  "checks": [
+    {
+      "command": "python3 scripts/pm-dt-event-contracts.py",
+      "exit": 0,
+      "status": "pass",
+      "detail": "17 families; 27435 assertions",
+      "evidence": {
+        "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/checker-final.json",
+        "sha256": "a74b3086edae60d5e5ed120b300bb7a32b1ffca69c7d9d84c756237e5b18084f"
+      }
+    },
+    {
+      "command": "python3 /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/emission-regression.py",
+      "exit": 0,
+      "status": "pass",
+      "detail": "Faulty emit and legacy-stop variants each run the complete 27435-assertion checker and exit 1 for FileSafe negatives only.",
+      "evidence": {
+        "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/emission-regression.json",
+        "sha256": "ce4f437deece3c6d1487b521e3fc619335b2e67730590d23269b6848d3f2daef"
+      }
+    },
+    {
+      "command": "python3 /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/type-sweep.py",
+      "exit": 0,
+      "status": "pass",
+      "detail": "5236 flag cases, zero wrong-type acceptances; all 17 envelope writer probes refuse malformed types.",
+      "evidence": {
+        "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/type-sweep.json",
+        "sha256": "ab59290dee05d9a6dc9c9280b0ccbb4d0a4ea407be31b009e140742c5ca50cf6"
+      }
+    },
+    {
+      "command": "python3 /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/large-retry.py",
+      "exit": 0,
+      "status": "diagnostic_F16_open",
+      "detail": "51 accepted exact-integer digest exceptions; 17 safe-integer and 17 equal-float controls succeed. Diagnostic success is not numeric-domain PASS.",
+      "evidence": {
+        "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/large-retry.json",
+        "sha256": "9895d0ec016bc8a3b1abf78ccad9ad4ec2ee1000863db0cbcde0ed46a7722330"
+      }
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+      "exit": 0,
+      "status": "pass",
+      "evidence": {
+        "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/shard-generate.json",
+        "sha256": "26c095b4864c76a28018bcd03b437fcc746f08c9e59dcd1128e26285351e8f53"
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py generate",
+      "exit": 0,
+      "status": "pass",
+      "evidence": {
+        "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/index-generate.json",
+        "sha256": "30ab2faed7bf76eafa974ef8348d6860e09b291c4d67d4b43a3f18ddc2d8a3f3"
+      }
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "exit": 0,
+      "status": "pass",
+      "evidence": {
+        "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/shard-check.json",
+        "sha256": "bb0bee76498588bda400411e345702fc74d0a79997d931d7b950958cb9bc0004"
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "exit": 0,
+      "status": "pass",
+      "detail": "Top-level pass; readiness remains blocked_runtime_certification_incomplete.",
+      "evidence": {
+        "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/index-validate.json",
+        "sha256": "99f4a8860a2dcfe5c5bad6633023d5f0282c31134300dc02b51e3ffff453378f"
+      }
+    },
+    {
+      "command": "python3 scripts/pm-storage-recovery-contracts.py --self-test",
+      "exit": 0,
+      "status": "pass",
+      "detail": "22/22 controls",
+      "evidence": {
+        "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/storage-recovery.json",
+        "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
+      }
+    },
+    {
+      "command": "python3 scripts/pm-storage-profile-check.py",
+      "exit": 1,
+      "status": "baseline_fail",
+      "detail": "41 errors, identical to the pinned origin/main; zero added/removed.",
+      "evidence": {
+        "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/storage-profile-comparison.json",
+        "sha256": "87290dfdd9ab29715d4d58f01947fdd0ccebe67e0835703555070b72ab638059"
+      }
+    }
+  ],
+  "part2_items": [
+    "F16 producer_semantic_bytes / RFC8785 admitted-u64 digest gap (scripts/pm-dt-event-contracts.py:170-176); approval blocked_sequence uses the same projection. Adopt CV-1100/SP-1100/SP-1101 and shared helper.",
+    "Replace existing local AST/schema proof machinery with the approved shared guard tables/tool. Reprove the full negative corpus per predicate and regrade all seventeen oracle cells."
+  ],
+  "new_ids": [],
+  "protected_paths_changed": []
+}

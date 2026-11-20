@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L4020-L4214
+Source lines: L4162-L4353
 
-Source SHA256: `59ed224d15e3e1a8b69889f2cbb2bb3390f5053a1b3f899f5b3cb443b6427170`
+Source SHA256: `459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47`
 
 ---
 
@@ -15,19 +15,17 @@ Source SHA256: `59ed224d15e3e1a8b69889f2cbb2bb3390f5053a1b3f899f5b3cb443b6427170
 ```yaml
 plan_unit_id: GRS-026
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
+  RETIRED BY DL-478 (Jared, 2026-11-12, "Sweep and retire all") -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The GoalRun build envelope and its child-work, verification, repair, and certification flow are retired. The old text below is retained for lineage only.
   Goal Runtime is the durable objective, authority, child-work, evidence, repair, and certification envelope for Orchestrator GoalRuns. It governs GoalRun phase, scope, write authority, child goals and SubagentWaves, evidence expectations, completion criteria, replan events, blockers, receipts, and final certification while Orchestrator owns user-visible projections and Executor owns scheduler truth. The lifecycle sequence preserves GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification without changing Executor dispatch ownership. Replan records preserve affected WorkNodes, cancelled or re-steered child work, remaining valid evidence, new revision, and next action without replacing the existing Goal Replan Event owner policy. GoalRun write authority consumes write_mode values read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer through Permissions and Worktree owners rather than re-owning permission enforcement.
 gui_related: false
 gui_classification_reason: Runtime authority, state, receipts, and certification behavior are orchestration/control-plane behavior, not visual presentation.
 depends_on: [GRS-002, GRS-005, GRS-012, GRS-016, GRS-017, OP-020, EP-097]
 unblocks: [OP-022, OSI-428, EP-098, CV-288]
 acceptance_criteria:
-  - Orchestrator GoalRuns use Goal Runtime as the control envelope without replacing Orchestrator projections.
-  - The GoalRun lifecycle preserves GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification.
-  - Executor/runtime scheduler remains the canonical owner for readiness, blocked overlays, retry/backoff, capacity, wakeups, and dispatch.
-  - GoalRun completion requires receipt-backed certification rather than worker, subagent, or WorkNode success alone.
+  - No product work or acceptance obligation is compiled from this retired unit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow
@@ -59,7 +57,6 @@ source_lineage:
 preserved_exact_tokens:
   - "Goal Runtime"
   - "Orchestrator"
-  - "control envelope"
   - "GoalRun"
   - "WorkGraph"
   - "WorkNode"

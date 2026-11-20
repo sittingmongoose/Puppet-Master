@@ -33,7 +33,7 @@
 
   /* ---- icons: one 24 px stroke grammar (NieR's icons part squares their ends in CSS) ---- */
   const PATHS = {
-    studio: '<path d="M4 7h16M4 17h16"/><rect x="12.5" y="4.5" width="5" height="5" rx="1" fill="currentColor"/><rect x="6.5" y="14.5" width="5" height="5" rx="1" fill="currentColor"/>',
+    studio: '<path d="M4 7h16M4 17h16"/><rect class="pmds-knob" x="12.5" y="4.5" width="5" height="5" rx="1" fill="currentColor"/><rect class="pmds-knob" x="6.5" y="14.5" width="5" height="5" rx="1" fill="currentColor"/>',
     close: '<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
     search: '<circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/>',
     start: '<path d="M12 3.5l2.5 5.3 5.8.7-4.3 4 1.1 5.7L12 16.4 6.9 19.2 8 13.5l-4.3-4 5.8-.7z"/>',
@@ -125,7 +125,7 @@
      the tour's spotlight gliding to its next target, and stacked layers rewinding into one. They move on hover and
      focus only, and stand still under Reduced Motion. */
   const ART = {
-    onb: '<span class="pmds-art pmds-art-onb" aria-hidden="true"><span class="pmds-a-win"><span class="pmds-a-stage"><span class="pmds-a-sun"></span><span class="pmds-a-hill"></span></span><span class="pmds-a-copy"><i></i><i></i><i></i><b></b></span></span><span class="pmds-a-steps"><i></i><i></i><i></i><i></i><i></i></span></span>',
+    onb: '<span class="pmds-art pmds-art-onb" aria-hidden="true"><span class="pmds-a-win"><span class="pmds-a-stage"><span class="pmds-a-sun"></span><span class="pmds-a-hill"></span></span><span class="pmds-a-copy"><i></i><i></i><i></i><b class="pmds-a-cta"></b></span></span><span class="pmds-a-steps"><i class="pmds-a-step"></i><i class="pmds-a-step"></i><i class="pmds-a-step"></i><i class="pmds-a-step"></i><i class="pmds-a-step"></i></span></span>',
     tour: '<span class="pmds-art pmds-art-tour" aria-hidden="true"><span class="pmds-a-app"><i></i><i></i><i></i><i></i></span><span class="pmds-a-spot"></span><span class="pmds-a-call"><i></i><i></i></span></span>',
     reset: '<span class="pmds-art pmds-art-reset" aria-hidden="true"><span class="pmds-a-layer"></span><span class="pmds-a-layer"></span><span class="pmds-a-layer"></span><span class="pmds-a-turn">' + '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4.5v4h4"/></svg></span></span>'
   };

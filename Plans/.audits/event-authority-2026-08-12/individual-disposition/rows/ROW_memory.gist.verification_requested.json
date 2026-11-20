@@ -2,8 +2,8 @@
   "event_type": "memory.gist.verification_requested",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to memory.gist.verification_requested. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "RECLASSIFY_TO_EXCLUDED under Plans/Decision_Log.md#DL-407 (E-CARDS-1 2c A): memory.gist.verification_requested. Verification request retains only its command result and creates zero history events. AMS-130 supplies the complete surviving semantic contract, CV-785 identity/replay/withdrawal, SP-765 custody, ATS-380 oracles. Parent union application waits for memory.gist_state_changed admission under PNC019 S4. Historical cohort, bucket and census membership are preserved. This is an exclusion, not event admission or contract-depth credit. Prior DCN row-local application is retained; the parent union has not yet merged it.",
   "evidence": {
     "owner_doc": {
       "status": "OWNER_REQUIRED",
@@ -76,6 +76,46 @@
       "citation": "Plans/UI_Command_Catalog.md:1092",
       "status": "ok",
       "notes": "Current command-catalog row explicitly maps `cmd.chat.memory.verify` to `memory.gist.verification_requested` and provides project-scoped command arguments."
+    },
+    {
+      "citation": "Plans/assistant-memory-subsystem.md:3179",
+      "status": "ok",
+      "notes": "DL-407 retires memory.gist.verification_requested"
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:1127",
+      "status": "ok",
+      "notes": "verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation"
+    },
+    {
+      "citation": "Plans/Decision_Log.md:4582",
+      "status": "ok",
+      "notes": "PNC019 s4x current-text recheck: ### DL-407: Memory changes use one complete state-change contract"
+    },
+    {
+      "citation": "Plans/assistant-memory-subsystem.md:4804",
+      "status": "ok",
+      "notes": "PNC019 s4x current-text recheck: DL-407 retires memory.gist.verification_requested, memory.gist.verified, memory.gist.verification_failed, memory.gist.updated,"
+    },
+    {
+      "citation": "Plans/assistant-memory-subsystem.md:4788",
+      "status": "ok",
+      "notes": "PNC019 s4x current-text recheck: RealMemoryProvider records one real successful MemoryGist change for each successful verify, edit, pin, unpin,"
+    },
+    {
+      "citation": "Plans/assistant-memory-subsystem.md:4796",
+      "status": "ok",
+      "notes": "PNC019 s4x current-text recheck: exception; it does not invent a second verification rule. Requested verification and failed verification keep"
+    },
+    {
+      "citation": "Plans/assistant-memory-subsystem.md:4888",
+      "status": "ok",
+      "notes": "PNC019 s4x current-text recheck: changed_fields is exactly"
+    },
+    {
+      "citation": "Plans/storage-plan.md:17618",
+      "status": "ok",
+      "notes": "PNC019 s4x current-text recheck: **Names given no rule.** Eleven of the table's names leave it under Jared's Card 2 answers and get no rule here, because a retired name is never admitted: `browser.session.navigated` and `browser.session.resized` (G10), which DL-405 retires; the seven memory command events `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist.verification_failed`, `memory.gist.updated`, `memory.gist.pinned`, `memory.gist.unpinned` and `memory.gist.discarded` (G03), which DL-407 retires once the full contract of `memory.gist_state_changed` covers successful edits, pins, discards and automatic changes; and `settings.updated` and `settings.theme.updated` (G22), which DL-408 retires as superseded by `settings.layer.changed`. DL-408 keeps records already written under the older dedicated DRY-guard spelling readable; this text changes nothing about them. `scheduler.pass` is not among these groups: the plans already class it as one-year runtime history, which DL-401 records as decided."
     }
   ],
   "owner_veto": null,
@@ -87,7 +127,8 @@
   "provisional": false,
   "quality_notes": [
     "Deepened independently against the binding 12-field schema; absent field-local authority remains OWNER_REQUIRED rather than inferred.",
-    "ADMISSION_FREEZE preserved: this disposition does not authorize admission, registry append, or consumer checkpoint advancement."
+    "ADMISSION_FREEZE preserved: this disposition does not authorize admission, registry append, or consumer checkpoint advancement.",
+    "PNC019 s4x: fresh exclusion citations; existing contract evidence grades and historical application provenance preserved. Parent union merge required."
   ],
   "cohort_pins": [
     "july248"

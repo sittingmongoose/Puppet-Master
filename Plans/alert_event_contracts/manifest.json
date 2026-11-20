@@ -1,0 +1,69 @@
+{
+  "admission": "ABSENT; no writes or checkpoints",
+  "families": [
+    {
+      "event_type": "alert.acknowledged",
+      "slug": "alert_acknowledged",
+      "sp": "SP-660",
+      "f3": "F3-700",
+      "cv": "CV-680",
+      "ats": "ATS-330",
+      "payload_schema": "Plans/event_payloads/attention/alert_acknowledged.schema.json",
+      "operation": "alert_acknowledged_operation",
+      "checkpoint": "alert_acknowledged_checkpoint",
+      "command": "cmd.alert.acknowledge",
+      "handler": "handlers::alert::acknowledge",
+      "subject": "alert_id",
+      "outcome": "register (prepared)",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION"
+    },
+    {
+      "event_type": "alert.dismissed",
+      "slug": "alert_dismissed",
+      "sp": "SP-661",
+      "f3": "F3-701",
+      "cv": "CV-681",
+      "ats": "ATS-331",
+      "payload_schema": "Plans/event_payloads/attention/alert_dismissed.schema.json",
+      "operation": "alert_dismissed_operation",
+      "checkpoint": "alert_dismissed_checkpoint",
+      "command": "cmd.alert.dismiss",
+      "handler": "handlers::alert::dismiss",
+      "subject": "alert_id",
+      "outcome": "register (prepared)",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION"
+    },
+    {
+      "event_type": "alert.rule_muted",
+      "slug": "alert_rule_muted",
+      "sp": "SP-662",
+      "f3": "F3-702",
+      "cv": "CV-682",
+      "ats": "ATS-332",
+      "payload_schema": "Plans/event_payloads/attention/alert_rule_muted.schema.json",
+      "operation": "alert_rule_muted_operation",
+      "checkpoint": "alert_rule_muted_checkpoint",
+      "command": "cmd.alert.mute_rule",
+      "handler": "handlers::alert::mute_rule",
+      "subject": "alert_rule_id",
+      "outcome": "register (prepared)",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION"
+    },
+    {
+      "event_type": "alert.snoozed",
+      "slug": "alert_snoozed",
+      "sp": "SP-663",
+      "f3": "F3-703",
+      "cv": "CV-683",
+      "ats": "ATS-333",
+      "payload_schema": "Plans/event_payloads/attention/alert_snoozed.schema.json",
+      "operation": "alert_snoozed_operation",
+      "checkpoint": "alert_snoozed_checkpoint",
+      "command": "cmd.alert.snooze",
+      "handler": "handlers::alert::snooze",
+      "subject": "alert_id",
+      "outcome": "register (prepared)",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION"
+    }
+  ]
+}

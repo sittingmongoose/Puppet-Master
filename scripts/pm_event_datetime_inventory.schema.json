@@ -1,0 +1,517 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "authority",
+    "reviewed_base",
+    "fingerprint_scope",
+    "nodes"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.event_datetime_inventory.v1"
+    },
+    "authority": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewed_base": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fingerprint_scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "origin",
+          "pointer",
+          "resource_pointer",
+          "resource_id",
+          "fields",
+          "resource_sha256",
+          "node_sha256",
+          "profile",
+          "classification",
+          "owner",
+          "citation",
+          "role_evidence"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "origin": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pointer": {
+            "type": "string",
+            "pattern": "^(?:/|$)"
+          },
+          "resource_pointer": {
+            "type": "string",
+            "pattern": "^(?:/|$)"
+          },
+          "resource_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "fields": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "observed_at_utc",
+                "persisted_at_utc"
+              ]
+            }
+          },
+          "resource_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "node_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "profile": {
+            "enum": [
+              "storage_utc_z",
+              "owner_schema"
+            ]
+          },
+          "classification": {
+            "enum": [
+              "EventRecord",
+              "event_record_index",
+              "original_storage_fields",
+              "Storage issued original fields",
+              "other_owner_observation",
+              "source_lineage_schema_patch",
+              "wildcard_non_timestamp",
+              "wildcard_non_timestamp_role",
+              "wildcard_review_required"
+            ]
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1
+          },
+          "citation": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "required": [
+                    "path",
+                    "quote"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "quote": {
+                      "type": "string",
+                      "minLength": 12
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "path",
+                    "pointer",
+                    "value"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "pointer": {
+                      "type": "string",
+                      "pattern": "^(?:/|$)"
+                    },
+                    "value": {}
+                  }
+                }
+              ]
+            }
+          },
+          "role_evidence": {
+            "type": "object",
+            "required": [
+              "resource_title",
+              "schema_identity",
+              "required"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "resource_title": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "schema_identity": {
+                "type": [
+                  "object",
+                  "null"
+                ]
+              },
+              "required": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "value_evidence": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "battery_sha256",
+              "samples",
+              "value_schema_sha256",
+              "all_refused",
+              "results",
+              "reviewed_role",
+              "singleton_probes_complete",
+              "sibling_dependencies",
+              "value_constraint_paths",
+              "role_authority",
+              "timestamp_only_nodes",
+              "deciding_nodes",
+              "automatic_credit"
+            ],
+            "properties": {
+              "battery_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "samples": {
+                "type": "integer",
+                "minimum": 300
+              },
+              "value_schema_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "all_refused": {
+                "type": "boolean"
+              },
+              "results": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "field",
+                    "accepted",
+                    "first_accepted"
+                  ],
+                  "properties": {
+                    "field": {
+                      "enum": [
+                        "observed_at_utc",
+                        "persisted_at_utc"
+                      ]
+                    },
+                    "accepted": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "first_accepted": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "context": {
+                      "type": "object"
+                    }
+                  }
+                }
+              },
+              "reviewed_role": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": false,
+                "required": [
+                  "node",
+                  "value_schema_sha256",
+                  "role",
+                  "reason",
+                  "citation"
+                ],
+                "properties": {
+                  "node": {
+                    "type": "array",
+                    "minItems": 3,
+                    "maxItems": 3,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "value_schema_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "role": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "citation": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "path",
+                      "pointer",
+                      "value"
+                    ],
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "pointer": {
+                        "type": "string"
+                      },
+                      "value": {}
+                    }
+                  },
+                  "classification": {
+                    "enum": [
+                      "other_owner_observation",
+                      "wildcard_non_timestamp_role"
+                    ]
+                  },
+                  "sibling_contexts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                }
+              },
+              "singleton_probes_complete": {
+                "type": "boolean"
+              },
+              "sibling_dependencies": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "path",
+                    "pointer",
+                    "keyword"
+                  ],
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "pointer": {
+                      "type": "string"
+                    },
+                    "keyword": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "value_constraint_paths": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "field",
+                    "path"
+                  ],
+                  "properties": {
+                    "field": {
+                      "enum": [
+                        "observed_at_utc",
+                        "persisted_at_utc"
+                      ]
+                    },
+                    "path": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "path",
+                          "pointer"
+                        ],
+                        "properties": {
+                          "path": {
+                            "type": "string"
+                          },
+                          "pointer": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "implicit_additional_properties": {
+                      "const": true
+                    }
+                  }
+                }
+              },
+              "role_authority": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "field",
+                    "endpoints",
+                    "unproven"
+                  ],
+                  "properties": {
+                    "field": {
+                      "enum": [
+                        "observed_at_utc",
+                        "persisted_at_utc"
+                      ]
+                    },
+                    "endpoints": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "path",
+                          "pointer"
+                        ],
+                        "properties": {
+                          "path": {
+                            "type": "string"
+                          },
+                          "pointer": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "unproven": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "path",
+                          "pointer",
+                          "keyword",
+                          "scope"
+                        ],
+                        "properties": {
+                          "path": {
+                            "type": "string"
+                          },
+                          "pointer": {
+                            "type": "string"
+                          },
+                          "keyword": {
+                            "type": "string"
+                          },
+                          "scope": {
+                            "enum": [
+                              "map",
+                              "value"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "timestamp_only_nodes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "path",
+                    "pointer"
+                  ],
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "pointer": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "deciding_nodes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "path",
+                    "pointer"
+                  ],
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "pointer": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "automatic_credit": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

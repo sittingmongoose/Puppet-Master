@@ -1,0 +1,1150 @@
+{
+  "schema_id": "pm.event_authority.dt.prepared.v1",
+  "definition_authority_ref": "Plans/Decision_Log.md#DL-045",
+  "admission_status": "ABSENT",
+  "families": [
+    {
+      "event_type": "approval.requested",
+      "owner": "human-in-the-loop.md",
+      "anchor": "Contracts_V0.md:954-957 / CV-355; human-in-the-loop.md:50-110; CV-366",
+      "producer": "HITLBlockedEpisodeOwner.requested",
+      "identity_fields": [
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "approval_scope_key"
+      ],
+      "transition": "An actual current blocked episode creates one ordered action request; it is not a grant. Tool requests carry tool_use_id; other requests omit it.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "role": "HITL resolver, runtime blocked controls and inspection",
+      "scope_policy": "project_only",
+      "cv": "CV-600",
+      "sp": "SP-580",
+      "ats": "ATS-290",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.approval_requested.append.v1@1.0.0",
+      "consumer_id": "storage.dt.approval_requested.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.approval_requested:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_approval_requested_checkpoint",
+      "payload_schema_id": "pm.event_payload.approval_requested.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_approval_requested_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_requested",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_requested_checkpoint",
+      "source_family_id": "dt_approval_requested_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_requested_source",
+      "source_key": "storage/event-sources/dt/approval_requested/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "HITLBlockedEpisodeOwner.requested.resolve_original",
+      "source_context_fields": [
+        "episode_state",
+        "request_kind",
+        "allowed_action_ids",
+        "tool_use_id"
+      ],
+      "semantic_case_names": [
+        "resolved_episode",
+        "empty_actions"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "lifecycle_transitions": [
+        {
+          "from": "blocked",
+          "to": "requested",
+          "predicate": "request action set is captured; no grant or tool execution",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ]
+    },
+    {
+      "event_type": "approval.granted",
+      "owner": "human-in-the-loop.md",
+      "anchor": "Contracts_V0.md:954-957 / CV-355; human-in-the-loop.md:50-110; CV-366",
+      "producer": "HITLBlockedEpisodeOwner.granted",
+      "identity_fields": [
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "approval_scope_key"
+      ],
+      "transition": "Requires the exact unresolved requested episode and an authenticated human selecting a member of its ordered allowed_action_ids; PAUSE precedence and live revocation remain enforced. Grant resolves only this episode.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "role": "HITL resolver, runtime blocked controls and inspection",
+      "scope_policy": "project_only",
+      "cv": "CV-601",
+      "sp": "SP-581",
+      "ats": "ATS-290",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.approval_granted.append.v1@1.0.0",
+      "consumer_id": "storage.dt.approval_granted.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.approval_granted:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_approval_granted_checkpoint",
+      "payload_schema_id": "pm.event_payload.approval_granted.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_approval_granted_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_granted",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_granted_checkpoint",
+      "source_family_id": "dt_approval_granted_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_granted_source",
+      "source_key": "storage/event-sources/dt/approval_granted/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "HITLBlockedEpisodeOwner.granted.resolve_original",
+      "source_context_fields": [
+        "episode_state",
+        "request_event_id",
+        "request_kind",
+        "allowed_action_ids",
+        "tool_use_id",
+        "human_authenticated",
+        "paused",
+        "revoked"
+      ],
+      "semantic_case_names": [
+        "no_request",
+        "actor_not_human",
+        "paused",
+        "revoked",
+        "unlisted_action"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "lifecycle_transitions": [
+        {
+          "from": "requested",
+          "to": "granted",
+          "predicate": "exact human action, current unpaused/unrevoked request; resolves only this blocked episode",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ]
+    },
+    {
+      "event_type": "approval.denied",
+      "owner": "human-in-the-loop.md",
+      "anchor": "Contracts_V0.md:954-957 / CV-355; human-in-the-loop.md:50-110; CV-366",
+      "producer": "HITLBlockedEpisodeOwner.denied",
+      "identity_fields": [
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "approval_scope_key"
+      ],
+      "transition": "Requires the exact unresolved requested episode; terminal denial never unblocks or executes the tool.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "role": "HITL resolver, runtime blocked controls and inspection",
+      "scope_policy": "project_only",
+      "cv": "CV-602",
+      "sp": "SP-582",
+      "ats": "ATS-291",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.approval_denied.append.v1@1.0.0",
+      "consumer_id": "storage.dt.approval_denied.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.approval_denied:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_approval_denied_checkpoint",
+      "payload_schema_id": "pm.event_payload.approval_denied.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_approval_denied_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_denied",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_denied_checkpoint",
+      "source_family_id": "dt_approval_denied_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_denied_source",
+      "source_key": "storage/event-sources/dt/approval_denied/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "HITLBlockedEpisodeOwner.denied.resolve_original",
+      "source_context_fields": [
+        "episode_state",
+        "request_event_id",
+        "request_kind",
+        "tool_use_id"
+      ],
+      "semantic_case_names": [
+        "already_resolved"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "lifecycle_transitions": [
+        {
+          "from": "requested",
+          "to": "denied",
+          "predicate": "exact unresolved request; no unblock or execution",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ]
+    },
+    {
+      "event_type": "approval.timeout",
+      "owner": "human-in-the-loop.md",
+      "anchor": "Contracts_V0.md:954-957 / CV-355; human-in-the-loop.md:50-110; CV-366",
+      "producer": "HITLBlockedEpisodeOwner.timeout",
+      "identity_fields": [
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "approval_scope_key"
+      ],
+      "transition": "Requires the exact unresolved requested episode and the original owner timeout expiry evidence; terminal timeout never authorizes work.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "role": "HITL resolver, runtime blocked controls and inspection",
+      "scope_policy": "project_only",
+      "cv": "CV-603",
+      "sp": "SP-583",
+      "ats": "ATS-291",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.approval_timeout.append.v1@1.0.0",
+      "consumer_id": "storage.dt.approval_timeout.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.approval_timeout:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_approval_timeout_checkpoint",
+      "payload_schema_id": "pm.event_payload.approval_timeout.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_approval_timeout_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_timeout",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_timeout_checkpoint",
+      "source_family_id": "dt_approval_timeout_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_timeout_source",
+      "source_key": "storage/event-sources/dt/approval_timeout/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "HITLBlockedEpisodeOwner.timeout.resolve_original",
+      "source_context_fields": [
+        "episode_state",
+        "request_event_id",
+        "request_kind",
+        "tool_use_id",
+        "deadline_at_utc"
+      ],
+      "semantic_case_names": [
+        "already_resolved",
+        "not_expired"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "lifecycle_transitions": [
+        {
+          "from": "requested",
+          "to": "timed_out",
+          "predicate": "actual original deadline expired; no authorization",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ]
+    },
+    {
+      "event_type": "config.migrated",
+      "owner": "WorktreeGitImprovement.md",
+      "anchor": "WorktreeGitImprovement.md:594-612",
+      "producer": "SettingsMigrationCoordinator.branch_granularity",
+      "identity_fields": [
+        "source_ref",
+        "source_sha256"
+      ],
+      "transition": "Only first-load single\u2192None, per_phase\u2192Phase and per_task\u2192Task are accepted. Original immutable input hash and committed Settings result are retained. Replay never writes Settings again.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
+      "role": "Settings migration recovery and inspection",
+      "scope_policy": "application_or_project",
+      "cv": "CV-604",
+      "sp": "SP-584",
+      "ats": "ATS-292",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.config_migrated.append.v1@1.0.0",
+      "consumer_id": "storage.dt.config_migrated.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.config_migrated:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_config_migrated_checkpoint",
+      "payload_schema_id": "pm.event_payload.config_migrated.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_config_migrated_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/config_migrated",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/config_migrated_checkpoint",
+      "source_family_id": "dt_config_migrated_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/config_migrated_source",
+      "source_key": "storage/event-sources/dt/config_migrated/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "SettingsMigrationCoordinator.branch_granularity.resolve_original",
+      "source_context_fields": [
+        "first_load",
+        "source_ref",
+        "source_sha256",
+        "legacy_value",
+        "committed_settings_ref"
+      ],
+      "semantic_case_names": [
+        "not_first_load",
+        "wrong_input_hash",
+        "wrong_result"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "application_source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/config_migrated_application_source",
+      "application_source_family_id": "dt_config_migrated_application_source",
+      "application_source_key": "storage/event-sources/dt/config_migrated/application/{event_id}/{stage}.msgpack",
+      "application_source_encoding": "pm.application.physical_messagepack.v1",
+      "lifecycle_transitions": [
+        {
+          "from": "legacy_input",
+          "to": "migrated_settings",
+          "predicate": "exact first-load enum mapping and original committed Settings result",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ],
+      "retention_binding": {
+        "status": "bound_existing_policy",
+        "owner_refs": [
+          "Plans/storage-plan.md#Case L-3",
+          "Plans/storage-plan.md#SP-349"
+        ],
+        "project_bucket": "2000000/Project",
+        "application_bucket": "one Server-wide counterpart bucket for config.migrated; 2000000, never per chat",
+        "anchor": "original terminal migration transition",
+        "ttl_seconds": 220752000,
+        "holds": "all existing legal/recovery/live-ref/backup/rollback/maintenance holds"
+      }
+    },
+    {
+      "event_type": "gate.evaluation_started",
+      "owner": "Progression_Gates.md",
+      "anchor": "Contracts_V0.md:943-945; Progression_Gates.md GATE-012",
+      "producer": "ProgressionGateRunner.evaluation_started",
+      "identity_fields": [
+        "gate_id",
+        "run_id",
+        "evaluation_id"
+      ],
+      "transition": "A fresh evaluation_id is captured with the exact gate inputs before evaluation. Neither this event nor a previous pass permits progression.",
+      "retention_policy_ref": "RP-RUNTIME-365D",
+      "role": "progression scheduler, validation reports and inspection",
+      "scope_policy": "project_only",
+      "cv": "CV-605",
+      "sp": "SP-585",
+      "ats": "ATS-292",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.gate_evaluation_started.append.v1@1.0.0",
+      "consumer_id": "storage.dt.gate_evaluation_started.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.gate_evaluation_started:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_gate_evaluation_started_checkpoint",
+      "payload_schema_id": "pm.event_payload.gate_evaluation_started.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_gate_evaluation_started_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/gate_evaluation_started",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/gate_evaluation_started_checkpoint",
+      "source_family_id": "dt_gate_evaluation_started_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/gate_evaluation_started_source",
+      "source_key": "storage/event-sources/dt/gate_evaluation_started/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "ProgressionGateRunner.evaluation_started.resolve_original",
+      "source_context_fields": [
+        "evaluation_state",
+        "inputs_ref",
+        "evaluation_id",
+        "score_threshold",
+        "dispatch_score_ref",
+        "dispatch_score_tuple"
+      ],
+      "semantic_case_names": [
+        "reused_evaluation",
+        "wrong_evaluation"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "lifecycle_transitions": [
+        {
+          "from": "allocated",
+          "to": "evaluating",
+          "predicate": "fresh actual evaluation identity and original inputs; no progression",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ]
+    },
+    {
+      "event_type": "gate.failed",
+      "owner": "Progression_Gates.md",
+      "anchor": "Contracts_V0.md:943-945; Progression_Gates.md GATE-012",
+      "producer": "ProgressionGateRunner.failed",
+      "identity_fields": [
+        "gate_id",
+        "run_id",
+        "evaluation_id"
+      ],
+      "transition": "Exactly one failed result follows the matching evaluation_started with failure code and evidence. A blocked GATE-012 report with clarification items is BLOCKED, not falsely classified FAIL or PASS.",
+      "retention_policy_ref": "RP-RUNTIME-365D",
+      "role": "progression scheduler, validation reports and inspection",
+      "scope_policy": "project_only",
+      "cv": "CV-606",
+      "sp": "SP-586",
+      "ats": "ATS-293",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.gate_failed.append.v1@1.0.0",
+      "consumer_id": "storage.dt.gate_failed.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.gate_failed:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_gate_failed_checkpoint",
+      "payload_schema_id": "pm.event_payload.gate_failed.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_gate_failed_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/gate_failed",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/gate_failed_checkpoint",
+      "source_family_id": "dt_gate_failed_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/gate_failed_source",
+      "source_key": "storage/event-sources/dt/gate_failed/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "ProgressionGateRunner.failed.resolve_original",
+      "source_context_fields": [
+        "evaluation_state",
+        "evaluation_id",
+        "gate_id",
+        "report_status",
+        "question_ids",
+        "evidence_refs",
+        "failure_reason_code",
+        "score_threshold",
+        "dispatch_score_ref",
+        "dispatch_score_tuple"
+      ],
+      "semantic_case_names": [
+        "no_start",
+        "blocked_not_failed",
+        "wrong_evaluation"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "lifecycle_transitions": [
+        {
+          "from": "evaluating",
+          "to": "failed",
+          "predicate": "exact original FAIL report/evidence, no BLOCKED misclassification",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ]
+    },
+    {
+      "event_type": "gate.passed",
+      "owner": "Progression_Gates.md",
+      "anchor": "Contracts_V0.md:943-945; Progression_Gates.md GATE-012",
+      "producer": "ProgressionGateRunner.passed",
+      "identity_fields": [
+        "gate_id",
+        "run_id",
+        "evaluation_id"
+      ],
+      "transition": "Exactly one result follows the matching evaluation_started; all gate-specific PASS predicates and evidence must hold. GATE-012 requires a valid PASS report with zero clarification items.",
+      "retention_policy_ref": "RP-RUNTIME-365D",
+      "role": "progression scheduler, validation reports and inspection",
+      "scope_policy": "project_only",
+      "cv": "CV-607",
+      "sp": "SP-587",
+      "ats": "ATS-293",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.gate_passed.append.v1@1.0.0",
+      "consumer_id": "storage.dt.gate_passed.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.gate_passed:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_gate_passed_checkpoint",
+      "payload_schema_id": "pm.event_payload.gate_passed.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_gate_passed_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/gate_passed",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/gate_passed_checkpoint",
+      "source_family_id": "dt_gate_passed_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/gate_passed_source",
+      "source_key": "storage/event-sources/dt/gate_passed/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "ProgressionGateRunner.passed.resolve_original",
+      "source_context_fields": [
+        "evaluation_state",
+        "evaluation_id",
+        "gate_id",
+        "report_status",
+        "question_ids",
+        "evidence_refs",
+        "all_predicates_pass",
+        "score_threshold",
+        "dispatch_score_ref",
+        "dispatch_score_tuple"
+      ],
+      "semantic_case_names": [
+        "no_start",
+        "blocked_not_passed",
+        "clarification_pending",
+        "failed_predicate"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "lifecycle_transitions": [
+        {
+          "from": "evaluating",
+          "to": "passed",
+          "predicate": "all original gate predicates PASS with complete evidence and no clarification",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ]
+    },
+    {
+      "event_type": "requirements.clarification_requested",
+      "owner": "Progression_Gates.md",
+      "anchor": "Progression_Gates.md:428-475; Contracts_V0.md:1451",
+      "producer": "RequirementsQualityGate.request_clarification",
+      "identity_fields": [
+        "wizard_id",
+        "thread_id",
+        "report_ref"
+      ],
+      "transition": "Only a schema-valid blocked requirements report with nonempty needs_user_clarification emits. question_ids equals the complete report question set. No automatic answers or progression; explicit answers and a new PASS report are required.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "role": "requirements gate escalation, thread badge and inspection",
+      "scope_policy": "project_only",
+      "cv": "CV-608",
+      "sp": "SP-588",
+      "ats": "ATS-294",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.requirements_clarification_requested.append.v1@1.0.0",
+      "consumer_id": "storage.dt.requirements_clarification_requested.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.requirements_clarification_requested:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_requirements_clarification_requested_checkpoint",
+      "payload_schema_id": "pm.event_payload.requirements_clarification_requested.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_requirements_clarification_requested_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/requirements_clarification_requested",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/requirements_clarification_requested_checkpoint",
+      "source_family_id": "dt_requirements_clarification_requested_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/requirements_clarification_requested_source",
+      "source_key": "storage/event-sources/dt/requirements_clarification_requested/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "RequirementsQualityGate.request_clarification.resolve_original",
+      "source_context_fields": [
+        "report_status",
+        "report_ref",
+        "question_ids",
+        "wizard_id",
+        "thread_id"
+      ],
+      "semantic_case_names": [
+        "not_blocked",
+        "incomplete_questions",
+        "wrong_thread"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "lifecycle_transitions": [
+        {
+          "from": "blocked_report",
+          "to": "clarification_pending",
+          "predicate": "complete report questions; explicit answers and new PASS required",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ],
+      "retention_question": "Which class and expiry anchor govern this report request where a run-completion anchor is inapplicable? Do not assume that a ref-only report request is chat content. Runtime-linked cases should reuse existing runtime minima.",
+      "retention_runtime_minimum_ref": "RP-RUNTIME-365D for runtime-linked population only; runless facet remains fenced"
+    },
+    {
+      "event_type": "run.background_enqueued",
+      "owner": "storage-plan.md",
+      "anchor": "storage-plan.md:1656; CV-365/CV-366",
+      "producer": "BackgroundRunQueue.enqueue",
+      "identity_fields": [
+        "run_id",
+        "enqueue_id"
+      ],
+      "transition": "Append only after the durable enqueue intent captures authenticated actual scope/Host/root. Queue release follows receipt. Missing worktree fields never choose main Project or application scope. Replay never enqueues again.",
+      "retention_policy_ref": "RP-RUNTIME-365D",
+      "role": "background queue recovery and inspection",
+      "scope_policy": "application_or_project",
+      "cv": "CV-609",
+      "sp": "SP-589",
+      "ats": "ATS-294",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.run_background_enqueued.append.v1@1.0.0",
+      "consumer_id": "storage.dt.run_background_enqueued.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.run_background_enqueued:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_run_background_enqueued_checkpoint",
+      "payload_schema_id": "pm.event_payload.run_background_enqueued.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_run_background_enqueued_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/run_background_enqueued",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/run_background_enqueued_checkpoint",
+      "source_family_id": "dt_run_background_enqueued_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/run_background_enqueued_source",
+      "source_key": "storage/event-sources/dt/run_background_enqueued/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "BackgroundRunQueue.enqueue.resolve_original",
+      "source_context_fields": [
+        "queue_state",
+        "enqueue_id",
+        "queue_record_ref",
+        "scope_ref",
+        "host_ref",
+        "root_ref"
+      ],
+      "semantic_case_names": [
+        "uncommitted_queue",
+        "wrong_host",
+        "wrong_root"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "application_source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/run_background_enqueued_application_source",
+      "application_source_family_id": "dt_run_background_enqueued_application_source",
+      "application_source_key": "storage/event-sources/dt/run_background_enqueued/application/{event_id}/{stage}.msgpack",
+      "application_source_encoding": "pm.application.physical_messagepack.v1",
+      "lifecycle_transitions": [
+        {
+          "from": "captured_queue_intent",
+          "to": "enqueued",
+          "predicate": "durable queue record and actual scope/Host/root before receipt-gated release",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ]
+    },
+    {
+      "event_type": "tool.denied",
+      "owner": "Tools.md",
+      "anchor": "Tools.md 8.0/8.2; Contracts_V0.md 3 tool.denied, CV-355/CV-366",
+      "producer": "ToolDispatcher.denied",
+      "identity_fields": [
+        "run_id",
+        "tool_use_id",
+        "attempt_id"
+      ],
+      "transition": "Only the already specified policy/user-denial path is prepared, before any dispatch; never executes or contributes to executed-call rollups. DL-430 resolves FileSafe non-emission: a FileSafe block saves only its dedicated FileSafe refusal entry, never tool.denied. The tool view shows the FileSafe reason and ordered allowed recovery actions; the block is distinct from execution failure and is never retried automatically. Schema refusal alone is not this prepared policy/user-denial path.",
+      "retention_policy_ref": "RP-RUNTIME-365D",
+      "role": "policy audit, blocked runtime recovery and inspection",
+      "scope_policy": "application_or_project",
+      "cv": "CV-610",
+      "sp": "SP-590",
+      "ats": "ATS-295",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.tool_denied.append.v1@1.0.0",
+      "consumer_id": "storage.dt.tool_denied.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.tool_denied:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_tool_denied_checkpoint",
+      "payload_schema_id": "pm.event_payload.tool_denied.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_tool_denied_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_denied",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_denied_checkpoint",
+      "source_family_id": "dt_tool_denied_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_denied_source",
+      "source_key": "storage/event-sources/dt/tool_denied/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "ToolDispatcher.denied.resolve_original",
+      "source_context_fields": [
+        "policy_decision",
+        "dispatch_state",
+        "denial_reason_code",
+        "blocked_reason_code",
+        "failure_class",
+        "allowed_action_ids",
+        "headless_denied",
+        "permission_snapshot_id",
+        "executed_at_all",
+        "blocked_sequence",
+        "approval_scope_key",
+        "denial_origin"
+      ],
+      "semantic_case_names": [
+        "already_dispatched",
+        "not_denied"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "application_source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_denied_application_source",
+      "application_source_family_id": "dt_tool_denied_application_source",
+      "application_source_key": "storage/event-sources/dt/tool_denied/application/{event_id}/{stage}.msgpack",
+      "application_source_encoding": "pm.application.physical_messagepack.v1",
+      "lifecycle_transitions": [
+        {
+          "from": "policy_evaluated",
+          "to": "denied",
+          "predicate": "original policy/user denial before dispatch with exact frozen blocked episode, mapped actions and permission snapshot; FileSafe blocks save only dedicated FileSafe refusals and never tool.denied (DL-430)",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ],
+      "retention_binding": {
+        "status": "bound_existing_policy",
+        "population": "runtime-attributed actual run/attempt path only",
+        "owner_refs": [
+          "Plans/Contracts_V0.md:520",
+          "Plans/storage-plan.md#Case L-3",
+          "Plans/storage-plan.md#SP-349"
+        ],
+        "project_bucket": "actual run and Project; 1000000/run and 5000000/Project",
+        "application_bucket": "one Server-wide counterpart bucket per family, same limits and holds; no per-chat reset",
+        "anchor": "actual run completion",
+        "ttl_seconds": 31536000,
+        "holds": "all existing legal/recovery/recent-run/live-ref/backup/rollback/maintenance holds"
+      },
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-430"
+      ]
+    },
+    {
+      "event_type": "tool.execution_completed",
+      "owner": "Tools.md",
+      "anchor": "Contracts_V0.md:941-942; Tools.md 8.2",
+      "producer": "ToolRunner.execution_completed",
+      "identity_fields": [
+        "run_id",
+        "tool_use_id"
+      ],
+      "transition": "Exactly one terminal record follows a matching execution_started; result_ref joins original result custody and duration_ms is nonnegative. Replay never reexecutes.",
+      "retention_policy_ref": "RP-RUNTIME-365D",
+      "role": "run graph, tool recovery, history and inspection",
+      "scope_policy": "application_or_project",
+      "cv": "CV-611",
+      "sp": "SP-591",
+      "ats": "ATS-295",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.tool_execution_completed.append.v1@1.0.0",
+      "consumer_id": "storage.dt.tool_execution_completed.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.tool_execution_completed:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_tool_execution_completed_checkpoint",
+      "payload_schema_id": "pm.event_payload.tool_execution_completed.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_tool_execution_completed_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_execution_completed",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_execution_completed_checkpoint",
+      "source_family_id": "dt_tool_execution_completed_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_execution_completed_source",
+      "source_key": "storage/event-sources/dt/tool_execution_completed/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "ToolRunner.execution_completed.resolve_original",
+      "source_context_fields": [
+        "execution_state",
+        "start_event_id",
+        "result_ref",
+        "outcome",
+        "duration_ms"
+      ],
+      "semantic_case_names": [
+        "no_start",
+        "wrong_result",
+        "wrong_duration"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "application_source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_execution_completed_application_source",
+      "application_source_family_id": "dt_tool_execution_completed_application_source",
+      "application_source_key": "storage/event-sources/dt/tool_execution_completed/application/{event_id}/{stage}.msgpack",
+      "application_source_encoding": "pm.application.physical_messagepack.v1",
+      "lifecycle_transitions": [
+        {
+          "from": "started",
+          "to": "terminal_outcome",
+          "predicate": "matching start, exact original outcome/result and nonnegative duration",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ]
+    },
+    {
+      "event_type": "tool.execution_started",
+      "owner": "Tools.md",
+      "anchor": "Contracts_V0.md:941-942; Tools.md 8.2",
+      "producer": "ToolRunner.execution_started",
+      "identity_fields": [
+        "run_id",
+        "tool_use_id"
+      ],
+      "transition": "After every dispatch policy/schema/hook gate succeeds, record the admitted tool-use start before invoking the tool. No start is emitted for a policy denial.",
+      "retention_policy_ref": "RP-RUNTIME-365D",
+      "role": "run graph, tool recovery, history and inspection",
+      "scope_policy": "application_or_project",
+      "cv": "CV-612",
+      "sp": "SP-592",
+      "ats": "ATS-296",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.tool_execution_started.append.v1@1.0.0",
+      "consumer_id": "storage.dt.tool_execution_started.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.tool_execution_started:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_tool_execution_started_checkpoint",
+      "payload_schema_id": "pm.event_payload.tool_execution_started.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_tool_execution_started_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_execution_started",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_execution_started_checkpoint",
+      "source_family_id": "dt_tool_execution_started_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_execution_started_source",
+      "source_key": "storage/event-sources/dt/tool_execution_started/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "ToolRunner.execution_started.resolve_original",
+      "source_context_fields": [
+        "execution_state",
+        "policy_decision",
+        "schema_valid",
+        "hooks_pass"
+      ],
+      "semantic_case_names": [
+        "policy_denied",
+        "schema_refused",
+        "hook_blocked",
+        "already_started"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "application_source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_execution_started_application_source",
+      "application_source_family_id": "dt_tool_execution_started_application_source",
+      "application_source_key": "storage/event-sources/dt/tool_execution_started/application/{event_id}/{stage}.msgpack",
+      "application_source_encoding": "pm.application.physical_messagepack.v1",
+      "lifecycle_transitions": [
+        {
+          "from": "admitted",
+          "to": "started",
+          "predicate": "schema, policy and hooks pass; receipt before invoking tool",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ]
+    },
+    {
+      "event_type": "tool.invoked",
+      "owner": "Tools.md",
+      "anchor": "Tools.md 8.0/8.2/8.4; Contracts_V0.md 3 and 3.4",
+      "producer": "ToolDispatcher.completed_invocation",
+      "identity_fields": [
+        "run_id",
+        "tool_use_id",
+        "attempt_id"
+      ],
+      "transition": "A completed or attempted-completed operation emits exactly one record; success=false contributes to error_count. Refused calls use tool.denied and never increment executed-call rollups. index_used describes actual acceleration and never guesses. Web operations stay this family, never web.operation.*.",
+      "retention_policy_ref": "RP-RUNTIME-365D",
+      "role": "tool_usage analytics, history and inspection",
+      "scope_policy": "application_or_project",
+      "cv": "CV-613",
+      "sp": "SP-593",
+      "ats": "ATS-296",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.tool_invoked.append.v1@1.0.0",
+      "consumer_id": "storage.dt.tool_invoked.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.tool_invoked:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_tool_invoked_checkpoint",
+      "payload_schema_id": "pm.event_payload.tool_invoked.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_tool_invoked_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_invoked",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_invoked_checkpoint",
+      "source_family_id": "dt_tool_invoked_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_invoked_source",
+      "source_key": "storage/event-sources/dt/tool_invoked/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "ToolDispatcher.completed_invocation.resolve_original",
+      "source_context_fields": [
+        "dispatch_state",
+        "success",
+        "latency_ms",
+        "index_used",
+        "web_request"
+      ],
+      "semantic_case_names": [
+        "refused_not_executed",
+        "wrong_success",
+        "wrong_latency"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "application_source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_invoked_application_source",
+      "application_source_family_id": "dt_tool_invoked_application_source",
+      "application_source_key": "storage/event-sources/dt/tool_invoked/application/{event_id}/{stage}.msgpack",
+      "application_source_encoding": "pm.application.physical_messagepack.v1",
+      "lifecycle_transitions": [
+        {
+          "from": "started",
+          "to": "attempted_completed",
+          "predicate": "actual attempt outcome, success/latency/index facts; refused calls excluded",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ],
+      "retention_binding": {
+        "status": "bound_existing_policy",
+        "population": "runtime-attributed actual run/attempt path only",
+        "owner_refs": [
+          "Plans/Contracts_V0.md:520",
+          "Plans/storage-plan.md#Case L-3",
+          "Plans/storage-plan.md#SP-349"
+        ],
+        "project_bucket": "actual run and Project; 1000000/run and 5000000/Project",
+        "application_bucket": "one Server-wide counterpart bucket per family, same limits and holds; no per-chat reset",
+        "anchor": "actual run completion",
+        "ttl_seconds": 31536000,
+        "holds": "all existing legal/recovery/recent-run/live-ref/backup/rollback/maintenance holds"
+      }
+    },
+    {
+      "event_type": "usage.event",
+      "owner": "usage-feature.md",
+      "anchor": "usage-feature.md UF-085, UF-108; storage-plan.md SP-341; CV-366",
+      "producer": "UsageTracker.normalize_finish_step",
+      "identity_fields": [
+        "usage_record_id",
+        "dedupe_key",
+        "settlement_status",
+        "observed_at_utc"
+      ],
+      "transition": "Normalize actual provider/header/CLI/estimate observations; null means unknown, never zero. Cache/reasoning subset fields are not added to inclusive totals. Adjustments replace the prior contribution for usage_record_id atomically, never add it twice. Opening Usage reads rollups and does not scan events; JSONL is import/export only. Daily account/provider/model totals survive detail expiry.",
+      "retention_policy_ref": "PENDING_RETENTION_BINDING",
+      "role": "UsageTracker rollup accounting, Ledger and inspection",
+      "scope_policy": "application_or_project",
+      "cv": "CV-614",
+      "sp": "SP-594",
+      "ats": "ATS-297",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.usage_event.append.v1@1.0.0",
+      "consumer_id": "storage.dt.usage_event.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.usage_event:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_usage_event_checkpoint",
+      "payload_schema_id": "pm.event_payload.usage_event.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_usage_event_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/usage_event",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/usage_event_checkpoint",
+      "source_family_id": "dt_usage_event_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/usage_event_source",
+      "source_key": "storage/event-sources/dt/usage_event/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "UsageTracker.normalize_finish_step.resolve_original",
+      "source_context_fields": [
+        "observation_ref",
+        "observation_sha256",
+        "usage_record_id",
+        "dedupe_key",
+        "provider_attempt_ref",
+        "parent_usage_record_id",
+        "prior_settlement_status",
+        "prior_usage_event_ref",
+        "account_id",
+        "billing_entity_id",
+        "provider_account_ref"
+      ],
+      "semantic_case_names": [
+        "wrong_observation",
+        "wrong_account",
+        "wrong_provider_attempt",
+        "invalid_settlement"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "application_source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/usage_event_application_source",
+      "application_source_family_id": "dt_usage_event_application_source",
+      "application_source_key": "storage/event-sources/dt/usage_event/application/{event_id}/{stage}.msgpack",
+      "application_source_encoding": "pm.application.physical_messagepack.v1",
+      "lifecycle_transitions": [
+        {
+          "from": "original_observation",
+          "to": "normalized_observation",
+          "predicate": "retain original observation, state and lineage; replace only accepted accounting contribution",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ],
+      "retention_binding": {
+        "status": "decided_policy_technical_adapter_pending",
+        "owner_refs": [
+          "Plans/storage-plan.md#SP-341",
+          "Plans/usage-feature.md#UF-108",
+          "Plans/storage-plan.md#SP-349"
+        ],
+        "setting_key": "ai.usage.usage-retention",
+        "default_days": 90,
+        "allowed_values": [
+          "30 days",
+          "90 days",
+          "180 days",
+          "1 year",
+          "unlimited"
+        ],
+        "detail_scope": [
+          "seglog",
+          "Parquet archive"
+        ],
+        "daily_totals": "canonical, backed up, permanent, committed before detail retirement; never rebuilt from expired events",
+        "application_bucket": "one Server-wide counterpart bucket; same setting/holds, no per-chat reset",
+        "missing_dependency": "RT structured setting-driven policy object/expiry-anchor adapter; no new duration choice",
+        "deletion_enabled": false,
+        "admission_enabled": false
+      }
+    },
+    {
+      "event_type": "worktree.created",
+      "owner": "WorktreeGitImprovement.md",
+      "anchor": "WorktreeGitImprovement.md:200-221; Contracts_V0.md:946-947",
+      "producer": "WorktreeLifecycleOwner.created",
+      "identity_fields": [
+        "project_id",
+        "worktree_id"
+      ],
+      "transition": "Original allocation ownership and branch/path custody must exist before created is appended and before a node starts work. Creation replay inspects original allocation, never creates another tree.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "role": "worktree allocator recovery, cleanup owner and inspection",
+      "scope_policy": "project_only",
+      "cv": "CV-615",
+      "sp": "SP-595",
+      "ats": "ATS-297",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.worktree_created.append.v1@1.0.0",
+      "consumer_id": "storage.dt.worktree_created.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.worktree_created:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_worktree_created_checkpoint",
+      "payload_schema_id": "pm.event_payload.worktree_created.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_worktree_created_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/worktree_created",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/worktree_created_checkpoint",
+      "source_family_id": "dt_worktree_created_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/worktree_created_source",
+      "source_key": "storage/event-sources/dt/worktree_created/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "WorktreeLifecycleOwner.created.resolve_original",
+      "source_context_fields": [
+        "allocation_state",
+        "allocation_ref",
+        "branch_name",
+        "worktree_path",
+        "repo_id",
+        "lane_id",
+        "package_id",
+        "run_id"
+      ],
+      "semantic_case_names": [
+        "not_created",
+        "wrong_path",
+        "wrong_lane"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "lifecycle_transitions": [
+        {
+          "from": "allocated",
+          "to": "created",
+          "predicate": "original owned allocation and branch/path/lineage; receipt before node use",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ],
+      "retention_question": "Resolve the runless event's class/anchor and required lineage dependencies; the projection policy does not automatically register this event's retention.",
+      "retention_runtime_minimum_ref": "RP-RUNTIME-365D for runtime-linked population only; runless facet remains fenced"
+    },
+    {
+      "event_type": "worktree.deleted",
+      "owner": "WorktreeGitImprovement.md",
+      "anchor": "WorktreeGitImprovement.md:200-221; Contracts_V0.md:946-947",
+      "producer": "WorktreeLifecycleOwner.deleted",
+      "identity_fields": [
+        "project_id",
+        "worktree_id"
+      ],
+      "transition": "Delete only after original result custody, grace period, file-lock and active-lock/safe-point dependency checks pass. Active lock references must be empty or proven released; no held safe point may lose its dependencies. Replay never deletes another tree.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "role": "worktree allocator recovery, cleanup owner and inspection",
+      "scope_policy": "project_only",
+      "cv": "CV-616",
+      "sp": "SP-596",
+      "ats": "ATS-298",
+      "family_revision": "1.0.0",
+      "definition_status": "newly_authored_owner_contract",
+      "append_admission": "storage.dt.worktree_deleted.append.v1@1.0.0",
+      "consumer_id": "storage.dt.worktree_deleted.reader.v1",
+      "consumer_version": "1.0.0",
+      "checkpoint_key": "projector.checkpoint.dt.worktree_deleted:{storage_instance_id}:{scope_partition}",
+      "checkpoint_family_id": "dt_worktree_deleted_checkpoint",
+      "payload_schema_id": "pm.event_payload.worktree_deleted.v1",
+      "checkpoint_schema_id": "pm.storage_value.dt_worktree_deleted_checkpoint.v1",
+      "payload_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/worktree_deleted",
+      "checkpoint_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/worktree_deleted_checkpoint",
+      "source_family_id": "dt_worktree_deleted_source",
+      "source_schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/worktree_deleted_source",
+      "source_key": "storage/event-sources/dt/worktree_deleted/{event_id}/{stage}.json",
+      "source_encoding": "pm.dt.source.json.v1",
+      "source_max_bytes": 1048576,
+      "source_owner_guard": "WorktreeLifecycleOwner.deleted.resolve_original",
+      "source_context_fields": [
+        "allocation_state",
+        "allocation_ref",
+        "elapsed_grace_ms",
+        "active_lock_refs",
+        "safe_point_refs",
+        "terminal_session_refs",
+        "editor_session_refs",
+        "blocked_recovery_refs",
+        "file_lock_checked",
+        "repo_id",
+        "lane_id",
+        "package_id",
+        "run_id"
+      ],
+      "semantic_case_names": [
+        "not_deleted",
+        "grace_not_elapsed",
+        "lock_held",
+        "safe_point_held",
+        "terminal_open",
+        "editor_open",
+        "recovery_held",
+        "file_lock_unchecked"
+      ],
+      "identity_integer_encoding": "unsigned_decimal_string",
+      "lifecycle_transitions": [
+        {
+          "from": "cleanup_eligible",
+          "to": "deleted",
+          "predicate": "original removal outcome only after grace/file-lock and every dependency guard",
+          "publication_barrier": "original owner outcome -> completed source durable -> exact append -> SP-286/CV-339 barrier receipt -> dependent publication",
+          "duplicate": "original full value/receipt; no transition or repeated external effect",
+          "invalid": "refuse with no append/dependent publication"
+        }
+      ],
+      "retention_question": "Is this exact event deletion-tombstone authority, or runless lifecycle history, and what is its applicable anchor? Separate runtime history and the distinct worktree_lane_thread_families projection; its RP-WORKTREE-TOMBSTONE-365D policy does not automatically register this event.",
+      "retention_runtime_minimum_ref": "RP-RUNTIME-365D for runtime-linked population only; runless facet remains fenced"
+    }
+  ],
+  "blocked": [],
+  "external_family_owners": [
+    {
+      "event_type": "tool.custom_headless.skipped",
+      "lane": "DS15",
+      "decision_ref": "Plans/Decision_Log.md#DL-436",
+      "branch": "origin/plans/ea-w2-section15-newtools-20261104",
+      "commit": "8791f549ae15b84d3d3583cdd7c21c6f65788127",
+      "semantic_contract": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-326",
+      "manifest": "Plans/ds15_deck2_contracts.json",
+      "oracle_owner": "Plans/Automated_Testing_System.md#ATS-329",
+      "status": "prepared_without_admission_by_DS15",
+      "dt_contract": "none; DT drops its blocked row and cites DS15 under DL-436"
+    }
+  ]
+}

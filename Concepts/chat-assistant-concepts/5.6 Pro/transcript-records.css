@@ -23,7 +23,7 @@
 .plan-preview-kicker>span:last-child{margin-left:auto;font-size:9px;}
 .plan-preview-open{display:grid;gap:9px;width:100%;border:0;color:var(--text);padding:13px 0 9px;background:transparent;cursor:pointer;text-align:left;}
 .plan-preview-open strong{font-size:14px;font-weight:600;line-height:1.45;}
-.plan-preview-open:hover strong{text-decoration:underline;text-underline-offset:3px;}
+.plan-preview-open:hover :where(.plan-preview-title):is(strong){text-decoration:underline;text-underline-offset:3px;}
 .plan-preview-open>span{font-size:11px;line-height:1.6;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 /* C56: one hairline opens the card's status zone (the schedule line when there is one, else the step count), and
    the action row closes it on the content edge: no tinted band, no inset of its own, the card's padding below. */

@@ -4,7 +4,7 @@ Source: `Plans/LSPSupport.md`
 
 Source lines: L1079-L1083
 
-Source SHA256: `960d3570dbedd40f82ebdd946c9b35b45ddc14d2f4b30dca7579f644b242acde`
+Source SHA256: `4388bf6474d72972430585ce6247e01e8bfe6b8abc084866d6151fc0a7febf1f`
 
 ---
 

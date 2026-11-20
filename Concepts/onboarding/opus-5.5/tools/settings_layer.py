@@ -78,7 +78,36 @@ def o55_data() -> dict:
                 raise ValueError(f'row {rid} is decided in both {owner[rid]} and {p.name}')
             rows[rid], owner[rid] = meta, p.name
     data['rows'] = {'rows': rows}
+    data['canonModels'] = canon_model_rows()
     return data
+
+
+def canon_model_rows() -> dict:
+    """FO-182/183: every `model_picker` row of Plans/settings_inventory.json, as O55S.canonModels: what the shared model
+    picker (kit.d/31-model-rows.js) reads for a row. Its own inherit label (`option_labels.inherit`) and the row it
+    inherits from (`model_picker.inherit_from`), its stored choices that are not a model (`options`: inherit, Default,
+    None, auto), its default, its catalog and where depth goes (`model_picker.effort`). The base page's pinned reference
+    still calls eleven of these rows a `select` with the old global "Same as the project"; this is the canon they read."""
+    inventory = PKG.parents[2] / 'Plans' / 'settings_inventory.json'
+    if not inventory.exists():
+        return {}
+    out = {}
+    for r in json.loads(inventory.read_text(encoding='utf-8'))['settings']:
+        if r.get('type') != 'model_picker':
+            continue
+        mp = r.get('model_picker') or {}
+        out[r['id']] = {
+            'label': r.get('label'),
+            'options': [o for o in (r.get('options') or []) if isinstance(o, str)],
+            'default': r.get('default'),
+            'inheritLabel': (r.get('option_labels') or {}).get('inherit'),
+            'inheritFrom': mp.get('inherit_from'),
+            'catalog': mp.get('catalog'),
+            'effort': mp.get('effort'),
+            'requires': mp.get('requires_enabled') or [],
+            'home': (r.get('layering') or {}).get('home'),
+        }
+    return out
 
 
 def placement() -> dict:
@@ -108,9 +137,55 @@ def placement() -> dict:
             have += [i for i in ids if i not in have]
         retired = base.setdefault('retire_ids', [])
         retired += [i for i in patch.get('retire_ids', []) if i not in retired]
+        waiting = base.setdefault('retire_with_canon', [])
+        waiting += [i for i in patch.get('retire_with_canon', []) if i not in waiting]
         extra_rules += [dict(r, _patch=p.name) for r in patch.get('overrides', [])]
     base['overrides'] = extra_rules + base.get('overrides', [])
-    return base
+    return apply_retire_with_canon(base, _inventory_doc())
+
+
+INVENTORY = PKG.parents[2] / 'Plans' / 'settings_inventory.json'
+
+
+def _inventory_doc() -> dict:
+    return json.loads(INVENTORY.read_text(encoding='utf-8')) if INVENTORY.exists() else {}
+
+
+def canon_retired(ids, inventory_doc: dict) -> list[str]:
+    """The ids of `retire_with_canon` that the canonical inventory no longer holds as active rows: gone from its
+    `settings` rows, or listed at its root as `retired_input_ids`. An inventory that cannot be read retires nothing."""
+    if not inventory_doc:
+        return []
+    active = {r['id'] for r in inventory_doc.get('settings', []) if isinstance(r, dict) and 'id' in r}
+    inputs = set(inventory_doc.get('retired_input_ids') or [])
+    return [i for i in ids if i not in active or i in inputs]
+
+
+def apply_retire_with_canon(merged: dict, inventory_doc: dict) -> dict:
+    """`retire_with_canon` (a placement.d list) names rows a Plans change is to retire: they stay drawn where their
+    rules put them until Plans/settings_inventory.json stops listing them as active rows, and from that build on they
+    are retired like `retire_ids` (drawn nowhere, found by no search), with nothing else to edit. FO-167 parks the 43
+    memory rows the quiet Memory design hides or removes this way until stream P's Settings batch lands (2026-11-12).
+    A rule left naming none of its ids is dropped, and so is a section marked `until_canon` that no rule fills."""
+    gone = canon_retired(merged.get('retire_with_canon', []), inventory_doc)
+    merged['retire_with_canon_now'] = gone
+    if not gone:
+        return merged
+    drop = set(gone)
+    merged['retire_ids'] = merged.get('retire_ids', []) + [i for i in gone if i not in merged.get('retire_ids', [])]
+    rules = []
+    for r in merged.get('overrides', []):
+        if not r.get('ids') or not drop.intersection(r['ids']):
+            rules.append(r)
+            continue
+        left = [i for i in r['ids'] if i not in drop]
+        if left:
+            rules.append(dict(r, ids=left))
+    merged['overrides'] = rules
+    filled = {r['section'] for r in rules}
+    for sid in [s for s, sec in merged['sections'].items() if sec.get('until_canon') and s not in filled]:
+        merged['sections'].pop(sid)
+    return merged
 
 
 def module_source() -> str:
@@ -384,6 +459,15 @@ def _canon_defaults(doc: str, need) -> tuple[str, list]:
             if (new_default not in empty and new_default != 'theme' and old.get('default') not in empty
                     and old.get('default') != new_default):
                 old.update({k: row[k] for k in ('default', 'recommended', 'desc') if k in row})
+                # a canon default that is none of the old choices came with canon's own choices: take them too, and
+                # drop an old recommendation that is none of them ("Keep terminal output for" showed "Keep Saved
+                # Scrollback" over five old choices it is not one of, lane-code, 2026-11-11)
+                canon_opts = row.get('options')
+                if (isinstance(old.get('options'), list) and isinstance(canon_opts, list)
+                        and new_default not in old['options'] and new_default in canon_opts):
+                    old['options'] = canon_opts
+                    if 'recommended' not in row and old.get('recommended') not in canon_opts:
+                        old.pop('recommended', None)
                 text = json.dumps(old, ensure_ascii=False, separators=(',', ':'))
                 doc = doc[:at] + text + doc[end + 1:]
                 end = at + len(text) - 1

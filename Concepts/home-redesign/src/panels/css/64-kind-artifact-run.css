@@ -503,8 +503,8 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-art-box { stroke-width:
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-art-table tbody tr:hover td,
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-run-trow:not([aria-disabled]):not(.is-static):hover,
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-run-seat:hover { background: var(--pmw-accent); color: var(--pmw-surface); }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-run-trow:not([aria-disabled]):not(.is-static):hover :is(b, small, .pmw-run-tout, .pmw-run-tcost),
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-run-seat:hover :is(b, small, .pmw-run-pup) { color: var(--pmw-surface); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-run-trow:not([aria-disabled]):not(.is-static):hover :is(.pmw-run-role, .pmw-run-sub, .pmw-run-tout, .pmw-run-tcost),
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-run-seat:hover :is(.pmw-run-role, .pmw-run-sub, .pmw-run-pup) { color: var(--pmw-surface); }
 
 /* Friendly: its page rule [data-theme^="friendly"] button { border-radius: 14px } (0,1,1) would turn these 24-32 px
    buttons into capsules (the pill ban); restated at that weight, Friendly only, so NieR's square part stays square */

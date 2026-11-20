@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L8657-L9587
+Source lines: L8765-L9704
 
-Source SHA256: `98cedbe72059189d8dedef8480350441120a92631e6e4ef4f973487aefcf68c4`
+Source SHA256: `99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1`
 
 ---
 
@@ -505,7 +505,7 @@ preserved_exact_tokens:
 - Cline
 negative_constraints: []
 observed_signal: Codex discussions request per-skill model selection and issues show custom subagent model config not honored; OpenCode issues request model variants and subagent model/effort selection; Cline SDK centralizes session/Plan/Act coordination and provider migration.
-pm_current_coverage: PM already has provider/model precedence by scope and Goal Runtime model-role policy.
+pm_current_coverage: PM already has provider/model precedence by scope. Goal Runtime model-role policy is retired by DL-478; Goals use the initiating chat model.
 pm_gap_or_delta: PM should map tasks to model/effort through a scored router instead of static defaults while preserving user policy and certification-tier rules.
 proposal_or_recommendation: Add ModelSelectionRouter with task_kind, risk_class, context_size, modalities, tool_need, verification_tier, cost_policy, latency_policy, provider availability, and fallback chain. Do not hardcode model names; use capability tiers.
 compile_disposition: create_new_planunit
@@ -519,7 +519,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  P2-MODEL-CATALOG-CONFIDENCE-UI (P2) is compiled as canonical Puppet Master intent for Provider/catalog confidence and user explanation: Add ModelCapabilityConfidence UI: verified_live, provider_reported, inferred, configured_static, stale, unknown, unsupported, with last_refresh and route/account scope. The preserved PM gap/delta is: Expose capability source confidence in Settings/model picker so users understand why a model shows/hides vision, effort, cache, or context controls. The observed external-repo signal remains source-lineage evidence: Recent issues show model catalogs with wrong context windows, missing modalities, ghost models, static capability assumptions, and route-specific gaps.
+  P2-MODEL-CATALOG-CONFIDENCE-UI (P2) is compiled as canonical Puppet Master intent for Provider/catalog
+  confidence and user explanation: Add ModelCapabilityConfidence UI: verified_live, provider_reported,
+  inferred, configured_static, stale, unknown, unsupported, with last_refresh and route/account scope.
+  The preserved PM gap/delta is: Expose capability source confidence in Settings/model picker so users
+  understand why a model shows/hides vision, effort, cache, or context controls. The observed external-
+  repo signal remains source-lineage evidence: Recent issues show model catalogs with wrong context
+  windows, missing modalities, ghost models, static capability assumptions, and route-specific gaps. An
+  exact unlisted name is validated by one small call before saving, never saved on refusal or unreachable
+  service. Name acceptance proves no feature; unknown vision/effort/cache/context remains unknown until
+  the concrete route proves it.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

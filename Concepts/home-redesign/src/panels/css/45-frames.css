@@ -91,7 +91,7 @@ html[data-theme="friendly-light"]:not([data-o55-nier="on"]) .pmw-ink-row { --pmw
 .pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover { color: var(--pmw-text); }
 .pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover::after { background: var(--pmw-ink-hover, var(--pmw-hover)); }
 .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: var(--pmw-tab-active, var(--pmw-text)); }
-.pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) small { color: inherit; opacity: .9; }
+.pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) :where(.pmw-ink-sub):is(small) { color: inherit; opacity: .9; }
 .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after, .pmw-ink { background: var(--pmw-ink-fill, var(--pmw-press)); }
 /* the focus ring goes round the fill box with a 1 px gap; the option draws no outline or shadow of its own (two
    classes, so the page's own button focus rules stay off it) */
@@ -108,7 +108,7 @@ html[data-theme="retro-light"]:not([data-o55-nier="on"]) .pmw-ink-opt:not([aria-
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover::after { background: color-mix(in srgb, var(--accent-lime) 14%, transparent); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: var(--surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after { background: var(--accent-lime); box-shadow: none; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) small { color: var(--surface); opacity: 1; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) :where(.pmw-ink-sub):is(small) { color: var(--surface); opacity: 1; }
 /* NieR: solid ink with paper words on the chosen option's own box (DL-162's NieR tab ink, the ink block of the cursor
    part), no shadow, square with the square part. A hover is NieR's hover tint with or without the cursor part, as on
    the panel's own tabs: an inked hover read as a second chosen option. The change is a cut (no fade). */
@@ -118,7 +118,7 @@ html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-ink { border-radius
 html[data-o55-nier="on"] .pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover::after { background: var(--o55-nier-hover, rgba(var(--o55-nier-ink-rgb), .10)); }
 html[data-o55-nier="on"] .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after { background: var(--o55-nier-ink); box-shadow: none; }
-html[data-o55-nier="on"] .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) small { color: var(--o55-nier-on-ink); opacity: 1; }
+html[data-o55-nier="on"] .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) :where(.pmw-ink-sub):is(small) { color: var(--o55-nier-on-ink); opacity: 1; }
 /* Reduced Motion: the fill changes at once (the ink never travels: PMW.motion.animate draws nothing) */
 html[data-motion="reduced"] .pmw-ink-opt { transition: none; }
 @media (prefers-reduced-motion: reduce) { .pmw-ink-opt { transition: none; } }

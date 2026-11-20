@@ -921,9 +921,10 @@ owner_hints: [Plans/Run_Graph_View.md, Plans/FinalGUISpec.md, Plans/orchestrator
 ```yaml
 plan_unit_id: RGV-012
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/Run_Graph_View.md
 canonical_text: >-
+  RETIRED BY DL-478 (Jared, 2026-11-12, "Sweep and retire all") -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The GoalRun graph, wave, and verification overlay flow is retired; the old text is retained only for source lineage.
   Run Graph must display GoalRun WorkGraph structure, WorkNode status, SubagentWave membership, VerificationCycle overlays, repair/retry markers, blocked/replan-required states, receipt refs, and evidence refs. For Plan/PlanUnit-originated graph preparation, the Node Graph and Run Graph views may show readiness, blockers, gui_related, receipt status, and compiler contract state only as projections. The view remains a projection over Goal Runtime, Executor, Contracts, storage, Plan_Document_System, and Plan_To_Node_Compilation records; it must not decide WorkNode readiness, capacity, compiler artifact creation, or completion authority.
 gui_related: true
 gui_classification_reason: WorkGraph nodes, verification overlays, repair markers, and evidence refs are visible Run Graph UI.
@@ -938,11 +939,7 @@ depends_on:
   - PNC-009
 unblocks: []
 acceptance_criteria:
-  - Run Graph can render GoalRun WorkGraph, WorkNode status, SubagentWave membership, and VerificationCycle overlays.
-  - Repair/retry, blocked, and replan-required states are visible in the graph view.
-  - Receipt and evidence refs are drillable through owner projections.
-  - Plan/PlanUnit graph-preparation overlays show readiness, blockers, gui_related, receipt status, and compiler contract state without creating executable artifacts.
-  - The view does not replace Executor readiness, capacity, dispatch, or Goal Runtime completion authority.
+  - No product work or acceptance obligation is compiled from this retired unit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Run Graph GoalRun overlay review
@@ -1009,16 +1006,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Run_Graph_View.md
 canonical_text: >-
-  Run Graph consumes plans-to-code execution progress after Executor intake by projecting queued WorkNodes, active WorkNodes, blocked WorkNodes, completed WorkNodes, dependency edges, model lanes, worktrees, safe points, test runs, browser/device sessions, repair loops, Auditor status, GitHub PR/Actions when configured, receipt refs, and final certification progress. The Run Graph remains an execution projection and does not own Plan Compile tab progress, PlanCompile state, Executor dispatch authority, or GoalCompletionReceipt certification authority.
+  Run Graph consumes plans-to-code execution progress after Executor intake by projecting queued WorkNodes, active WorkNodes, blocked WorkNodes, completed WorkNodes, dependency edges, model lanes, worktrees, safe points, test runs, browser/device sessions, repair loops, Auditor status, GitHub PR/Actions when configured, and receipt refs. The Run Graph remains an execution projection and does not own Plan Compile tab progress, PlanCompile state, Executor dispatch authority.
   Run Graph shows Executor execution progress only after intake and does not replace Plan Compile tab scope.
 gui_related: true
 gui_classification_reason: Execution graph nodes, model lanes, worktrees, safe points, tests, repairs, GitHub status, and certification progress are visible graph UI.
-depends_on: [RGV-012, OP-024, EP-103, GRS-030, RAP-029]
+depends_on: [OP-024, EP-103, RAP-029]
 unblocks: []
 acceptance_criteria:
   - Run Graph projects WorkNode execution progress after Executor intake.
-  - It shows source-control, test, repair, Auditor, GitHub, receipt, and certification progress where records exist.
-  - It does not replace Plan Compile tab or runtime/certification authority.
+  - It shows source-control, test, repair, Auditor, GitHub, and receipt progress where records exist.
+  - It does not replace Plan Compile tab or runtime authority.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - future Run Graph plans-to-code execution projection review
@@ -1039,9 +1036,8 @@ preserved_exact_tokens:
   - "safe points"
   - "test runs"
   - "repair loops"
-  - "final certification"
 negative_constraints:
-  - Do not let Run Graph own PlanCompile state, Executor dispatch, or completion certification.
+  - Do not let Run Graph own PlanCompile state, Executor dispatch, or completion authority.
 owner_hints:
   - Plans/Run_Graph_View.md
   - Plans/Orchestrator_Page.md

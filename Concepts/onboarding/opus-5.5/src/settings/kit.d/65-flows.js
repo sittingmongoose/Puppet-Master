@@ -11,6 +11,9 @@
    where an outside service would be involved. */
 const o55FlowStore = id => { const s = PM51.s(); s.o55Flows = s.o55Flows || {}; return (s.o55Flows[id] = s.o55Flows[id] || {}); };
 const o55FlowNow = () => new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+/* a check flow that ran to its end tells the manager that owns the row ('pm51-flow-done', { id }), so the state the steps
+   say they changed does change (Toolchain's "Restart language servers" left "Needs a restart" as it was) */
+const flowDone = id => { try { window.dispatchEvent(new CustomEvent('pm51-flow-done', { detail: { id } })); } catch (e) { /* nobody listens */ } };
 function o55FlowField(f, saved) {
   const v = saved[f.key] != null ? saved[f.key] : (f.value != null ? f.value : '');
   const data = `data-key="${a(f.key)}"`;
@@ -30,6 +33,15 @@ function o55FlowCollect(wrap, flow, into) {
   (flow.fields || []).forEach(f => { if (!missing && f.required && !into[f.key]) missing = `${f.type === 'secret' ? 'Paste' : 'Fill in'} ${f.label.toLowerCase()} first.`; });
   return missing;
 }
+/* A list that shows what a choice row allows (`itemsFrom`): one line per option of that setting, read when the list is
+   drawn, so it can only name the powers the row offers (B11 D6: "Show debug permissions" listed four powers that were
+   not the three "Debugging may, without asking" offers). `items` are fixed lines after them. */
+function o55FlowItemsFrom(flow) {
+  const src = flow.itemsFrom, found = src && findSettingGlobal(src.setting);
+  if (!found) return [];
+  const chosen = settingValue(found.setting), on = Array.isArray(chosen) ? chosen.map(String) : [];
+  return (found.setting.options || []).map(o => { const v = String(Array.isArray(o) ? o[0] : (o && typeof o === 'object' ? o.value : o)); const yes = on.includes(v); return { label: PM51.valueLabel(found.setting.id, v), help: yes ? src.on[0] : src.off[0], value: yes ? src.on[1] : src.off[1] }; });
+}
 function o55Flow(found, flow) {
   const s = found.setting, id = s.id, store = o55FlowStore(id);
   const title = flow.title || (O55R[id] || {}).actionLabel || PM51.rowLabel(s);
@@ -48,18 +60,19 @@ function o55Flow(found, flow) {
       primaryLabel: flow.primary || 'Run it', onPrimary: w => {
         const host = w.querySelector('.o55-flow-steps'); if (!host) return;
         const shown = steps.map(st => Object.assign({}, st, { status: 'Waiting', tone: 'neutral' }));
-        let i = 0; const tick = () => { if (!w.isConnected) return; shown[i] = Object.assign({}, steps[i], { status: steps[i].result || 'Done', tone: steps[i].resultTone || 'ready' }); host.innerHTML = PM51.steps(shown); i++; if (i < steps.length) window.setTimeout(tick, motionReduced() ? 0 : 380); else { store.last = `${o55FlowNow()} today · ${flow.outcome || 'finished'}`; saveState(); done(flow.outcome ? `${title}: ${flow.outcome}` : `${title}: finished`); } };
+        let i = 0; const tick = () => { if (!w.isConnected) return; shown[i] = Object.assign({}, steps[i], { status: steps[i].result || 'Done', tone: steps[i].resultTone || 'ready' }); host.innerHTML = PM51.steps(shown); i++; if (i < steps.length) window.setTimeout(tick, motionReduced() ? 0 : 380); else { store.last = `${o55FlowNow()} today · ${flow.outcome || 'finished'}`; saveState(); done(flow.outcome ? `${title}: ${flow.outcome}` : `${title}: finished`); flowDone(id); } };
         tick(); return false;
       }
     });
     return !!wrap;
   }
   if (flow.kind === 'list' || flow.kind === 'order') {
-    if (!store.items) store.items = clone(flow.items || []);
+    if (!store.items && !flow.itemsFrom) store.items = clone(flow.items || []);
     const paint = w => {
       const body = w.querySelector('.pm51-panel-body'); if (!body) return;
-      const n = store.items.length;
-      const rows = store.items.map((it, i) => ({ label: it.label, help: it.help, control: [
+      const shownItems = flow.itemsFrom ? o55FlowItemsFrom(flow).concat(clone(flow.items || [])) : store.items;
+      const n = shownItems.length;
+      const rows = shownItems.map((it, i) => ({ label: it.label, help: it.help, control: [
         it.value ? `<span class="pm51-row-value">${h(it.value)}</span>` : '',
         flow.kind === 'order' ? PM51.iconBtn({ icon: 'up', label: `Move ${it.label} up`, action: 'pm51-o55-flow-move', data: { id, i, d: -1 }, disabled: i === 0, reason: 'Already first.' }) + PM51.iconBtn({ icon: 'down', label: `Move ${it.label} down`, action: 'pm51-o55-flow-move', data: { id, i, d: 1 }, disabled: i === n - 1, reason: 'Already last.' }) : '',
         it.action ? PM51.btn({ label: it.action, small: true, icon: it.icon || 'play', action: 'pm51-o55-flow-item', data: { id, i } }) : '',

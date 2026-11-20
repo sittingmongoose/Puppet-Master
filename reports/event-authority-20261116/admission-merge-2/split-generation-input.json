@@ -1,0 +1,38 @@
+{
+  "application_baseline": "74a9f2acf53fd54e307a58e804c6650ee6de657c",
+  "canon_inputs": {
+    "Plans/Decision_Log.md": "7459dcde23641af97784403f0687fc83e9bb8a831d813ef566c59a7fa3c3dbc1"
+  },
+  "clock_wrappers": {
+    "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/tools/generate_index_fixed.py": "1258d6407da62eaf4a91ad5a0aec5a53932327e6d7cec10fd076f1ada80c056f",
+    "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/tools/generate_shards_fixed.py": "a8588628f44559446f02b340db42991c9dc5c5336061db75aa042a630e730e96"
+  },
+  "currentness_edition": {
+    "Plans/.audits/event-authority-2026-08-13-currentness/CURRENT_EVENT_SOURCE_INVENTORY.json": "9d6172257aaff309e4b57994e0419708a19d96cf5566cc41cb63dac2026aad2a",
+    "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json": "eb5173bd47897b43c2aa04627a239e1f393ada650e94e3a860ad8f88f4bb1d34",
+    "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl": "4d5e56c9840dfdcb6b7cd9f72d8e674ab909f06973ca0d77132859925b5402f6",
+    "Plans/.audits/event-authority-2026-08-13-currentness/README.md": "7d9bf1b12c3f11384b43bf14acda0c86f387379579393527e4dfe3e49d0197de",
+    "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json": "5a1c070b9f0afc24848a6da357c73c6b5ede42b5e563044f0dd0181a62616b6f",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/EXPECTED_252_EVENT_TYPES.tsv": "d59142bc9ceef3f8c2d2257b7a6fbe9307ddae236720a0ac5a8c62afc7c5f541",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json": "fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl": "e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_a.jsonl": "d4305411923dee2edfc2c8b822a9fb42eda33b320c64c7f84aaf16ce4cd134a3",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_b.jsonl": "f1279ec339fc3b20676e19787ab423ffaeaba3b7a58181828af5e94242cf7160",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_c.jsonl": "9528f134447acb50c2c8053855db64bbcfeb9bdbbc56cb1d9e52ce11eb10cc79",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_d.jsonl": "5b3af4d546e0aecca799ac38e0ae65ed81e356db18531baa7e7027dfb9cd66b2",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_e.jsonl": "52ad46cafed54f333ab144b7297ca2e188353adf38a3ee4488099e76f8acba2a",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_f.jsonl": "24585545a7234db0972ca58da2b8557416bab7ef74b75afbf318f6bfdb1c93d1",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_g.jsonl": "5e1f709cbf5a4f1bd19cec24d12b033cac79d4e0ce0e194d8babb13bdc0499db"
+  },
+  "edition_archive": {
+    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/split-currentness-edition.tar.gz",
+    "sha256": "72f48bee11e4590748e55df23f094d8ae2920fc3afeb187165a9235dd8a4728b"
+  },
+  "generated_at_utc_input": "2026-11-18T02:00:50Z",
+  "generators": {
+    "scripts/pm-plan-index.py": "bc0f70bf7bde290d1bfa07a4ac9f309f8d9fc7e885b3a0be9f65608ede7402e6",
+    "scripts/pm-shard-plans.py": "34a0d52a0d22962cbb5df19547ed93b32dcc7ba0e4ef13c18407e9149b631de4"
+  },
+  "note": "Unmodified repository generators with explicit build-start clocks. Ignored currentness input bytes are archived for independent replay; no governance seal.",
+  "schema_id": "pm.assurance.event_authority.split_generation_input.v1"
+}

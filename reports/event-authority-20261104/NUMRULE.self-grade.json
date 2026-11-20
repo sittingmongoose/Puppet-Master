@@ -1,0 +1,4504 @@
+{
+  "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
+  "assessment_id": "EA-NUMRULE-SHARED-FIX10-20261105",
+  "assessment_kind": "author_shared_prerequisite_scope_assessment",
+  "assessed_tree": {
+    "branch": "plans/ea-numrule-20261105",
+    "base": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+    "commit": "commit containing this report; exact pushed head in external pushed-head.json"
+  },
+  "native_execution": "NOT_RUN",
+  "registry": {
+    "path": "Plans/event_family_registry.json",
+    "changed": false,
+    "new_membership": "ABSENT"
+  },
+  "rows": [],
+  "family_grade_scope": "No event family is drafted by this lane; no twelve-criterion family PASS is claimed.",
+  "shared_units": [
+    {
+      "plan_unit_id": "CV-1100",
+      "owner_specification": "PASS",
+      "bounded_adapter_oracles": "PARTIAL",
+      "native_route_qualification": "NOT_RUN",
+      "finite_fraction_and_endpoint_oracles": "PASS",
+      "guard_isolation": "SWEEP_PENDING"
+    },
+    {
+      "plan_unit_id": "SP-1100",
+      "owner_specification": "PASS",
+      "frozen_byte_vector_oracles": "PASS",
+      "native_codec_durability": "NOT_RUN"
+    },
+    {
+      "plan_unit_id": "SP-1101",
+      "owner_specification": "PASS",
+      "bounded_selector_oracles": "PARTIAL",
+      "native_original_authentication": "NOT_RUN",
+      "integration_status": "PARTIAL",
+      "finite_selector_and_forged_output_oracles": "PASS",
+      "guard_isolation": "SWEEP_PENDING",
+      "reviewed_fixture_predicate_isolation": "PASS",
+      "exact_boolean_verifier_oracles": "PASS",
+      "complete_predicate_coverage": "PARTIAL"
+    },
+    {
+      "plan_unit_id": "CV-1101",
+      "owner_specification": "PASS",
+      "enforced_format_oracles": "PASS",
+      "retained_profile_fixtures": "PASS",
+      "lane_and_native_profile_integration": "NOT_RUN",
+      "integration_status": "PARTIAL",
+      "reference_composition_oracles": "PASS_FINITE_SUPPORTED_DIALECT_ROOT_EQUIVALENCE",
+      "retained_envelope_composition_fixtures": "PASS",
+      "embedded_v2_envelope_oracles": "PASS",
+      "reviewed_embedded_schema_nodes": 13,
+      "pinned_schema_bytes": "PRESERVED",
+      "classified_timestamp_inventory": "PASS_FINITE_TIMESTAMP_TRIGGER_AND_SOURCE_BOUND_ROLE_REVIEW",
+      "inventory_nodes": 233,
+      "storage_classified_nodes": 133,
+      "other_owner_nodes": 79,
+      "unclassified_nodes": 0,
+      "storage_resource_path_oracles": "PASS",
+      "completeness_gate": "PASS_FINITE_STATED_UNIVERSE_AND_MUTATION_CONTROLS",
+      "native_schema_custody": "NOT_RUN",
+      "runtime_resource_admission": "PASS_FINITE_CLOSED_PRELOADED_GRAPH",
+      "inventory_assertion_integrity": "PASS_FINITE_SOURCE_FIELD_AND_PINNED_VALUE_ROLE_BINDING",
+      "new_name_map_nodes": 21,
+      "wildcard_non_timestamp_nodes": 12,
+      "wildcard_non_timestamp_role_nodes": 9,
+      "timestamp_battery_samples": 653
+    }
+  ],
+  "corpus": {
+    "cases": 13391,
+    "positives": 6846,
+    "negatives": 6545,
+    "labelled_negatives": 6545,
+    "passed": 13391,
+    "owner_integration_checks": 769,
+    "finite_case_oracles": "PASS",
+    "guard_isolation": "SWEEP_PENDING",
+    "result": "PARTIAL",
+    "withdrawn_group_proof_claim": "The original 25 diagnostic-group removals are not per-predicate isolation proof.",
+    "labelled_cases": 13391,
+    "targeted_review_predicate_removals": 6,
+    "round2_reviewed_fixture_replay": 370,
+    "round4_reviewed_case_records_preserved": 1176,
+    "round4_added_cases": 1612,
+    "round5_reviewed_case_records_preserved": 2788,
+    "round5_added_cases": 10584,
+    "round5_one_defect_negatives": 5496,
+    "round5_bounded_cut_rows": 12,
+    "number_scope_cases": {
+      "failures": {},
+      "negative": 162,
+      "outcomes": {
+        "app-binary": {
+          "outcome": "acceptance",
+          "output": "c4020102"
+        },
+        "app-float--0.0": {
+          "outcome": "acceptance",
+          "output": "cb8000000000000000"
+        },
+        "app-float-0.0": {
+          "outcome": "acceptance",
+          "output": "cb0000000000000000"
+        },
+        "app-float-0.5": {
+          "outcome": "acceptance",
+          "output": "cb3fe0000000000000"
+        },
+        "app-float-1.0": {
+          "outcome": "acceptance",
+          "output": "cb3ff0000000000000"
+        },
+        "app-float-1.7976931348623157e308": {
+          "outcome": "acceptance",
+          "output": "cb7fefffffffffffff"
+        },
+        "app-float-1e-7": {
+          "outcome": "acceptance",
+          "output": "cb3e7ad7f29abcaf48"
+        },
+        "app-float-1e20": {
+          "outcome": "acceptance",
+          "output": "cb4415af1d78b58c40"
+        },
+        "append-append_once": {
+          "outcome": "acceptance",
+          "output": "append_once"
+        },
+        "append-dedupe_by_event_id": {
+          "outcome": "acceptance",
+          "output": "dedupe_by_event_id"
+        },
+        "append-dedupe_by_idempotency_key": {
+          "outcome": "acceptance",
+          "output": "dedupe_by_idempotency_key"
+        },
+        "append-policy-type": {
+          "error": "replay_policy",
+          "outcome": "refusal"
+        },
+        "append-replay-only": {
+          "error": "replay_only_not_appendable",
+          "outcome": "refusal"
+        },
+        "append-unknown-policy": {
+          "error": "replay_policy",
+          "outcome": "refusal"
+        },
+        "bad-token-' 1'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'+1'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'-0'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'-0.0'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'01'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'1.0'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'1\\n'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'1e-7'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'1e0'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'1e20'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "bad-token-'\u0661'": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "binding-1": {
+          "outcome": "acceptance",
+          "output": "01"
+        },
+        "binding-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "cfffffffffffffffff"
+        },
+        "binding-bad-float": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "binding-bad-negative": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "binding-bad-overflow": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "bool-array": {
+          "error": "boolean_type",
+          "outcome": "refusal"
+        },
+        "bool-null": {
+          "error": "boolean_type",
+          "outcome": "refusal"
+        },
+        "bool-number": {
+          "error": "boolean_type",
+          "outcome": "refusal"
+        },
+        "bool-object": {
+          "error": "boolean_type",
+          "outcome": "refusal"
+        },
+        "bool-ok-False": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "bool-ok-True": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "bool-string": {
+          "error": "boolean_type",
+          "outcome": "refusal"
+        },
+        "bool-string-zero": {
+          "error": "boolean_type",
+          "outcome": "refusal"
+        },
+        "bool-zero": {
+          "error": "boolean_type",
+          "outcome": "refusal"
+        },
+        "current-large-exact": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "current-nested-minuszero": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "decode-app-binary": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-app-float32": {
+          "error": "physical_noncanonical",
+          "outcome": "refusal"
+        },
+        "decode-app-float64-1.0": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-app-float64-negative-zero": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-binary": {
+          "error": "physical_type",
+          "outcome": "refusal"
+        },
+        "decode-binding-binary": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "decode-binding-float32": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "decode-binding-float64": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "decode-binding-int64-min": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "decode-binding-map": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-binding-negative-fixint": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "decode-binding-nested-negative": {
+          "error": "binding_domain",
+          "outcome": "refusal"
+        },
+        "decode-binding-uint": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-binding-uint64-max": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-duplicate-map": {
+          "error": "duplicate_key",
+          "outcome": "refusal"
+        },
+        "decode-extension": {
+          "error": "physical_tag",
+          "outcome": "refusal"
+        },
+        "decode-float-nonminimal": {
+          "error": "physical_noncanonical",
+          "outcome": "refusal"
+        },
+        "decode-good-float": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-good-int": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-good-negative-zero": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-good-uint64": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "decode-invalid-utf8": {
+          "error": "physical_decode",
+          "outcome": "refusal"
+        },
+        "decode-nan": {
+          "error": "physical_nonfinite",
+          "outcome": "refusal"
+        },
+        "decode-positive-signed": {
+          "error": "physical_noncanonical",
+          "outcome": "refusal"
+        },
+        "decode-timestamp": {
+          "error": "physical_type",
+          "outcome": "refusal"
+        },
+        "decode-trailing": {
+          "error": "physical_decode",
+          "outcome": "refusal"
+        },
+        "decode-uint-nonminimal": {
+          "error": "physical_noncanonical",
+          "outcome": "refusal"
+        },
+        "decode-unknown-profile": {
+          "error": "physical_profile",
+          "outcome": "refusal"
+        },
+        "decode-unordered-map": {
+          "error": "physical_noncanonical",
+          "outcome": "refusal"
+        },
+        "duplicate-json": {
+          "error": "duplicate_key",
+          "outcome": "refusal"
+        },
+        "full-value-container-array": {
+          "error": "full_value_edition",
+          "outcome": "refusal"
+        },
+        "full-value-container-boolean": {
+          "error": "full_value_edition",
+          "outcome": "refusal"
+        },
+        "full-value-container-integer": {
+          "error": "full_value_edition",
+          "outcome": "refusal"
+        },
+        "full-value-container-null": {
+          "error": "full_value_edition",
+          "outcome": "refusal"
+        },
+        "full-value-container-string": {
+          "error": "full_value_edition",
+          "outcome": "refusal"
+        },
+        "full-value-frozen-positive": {
+          "outcome": "acceptance",
+          "output": "8d63522b12bcf9d32e7eec9b4723ed442f9beed498e60d8655d2cfb6021d6b33"
+        },
+        "full-value-wrong-schema-id": {
+          "error": "full_value_edition",
+          "outcome": "refusal"
+        },
+        "full-value-wrong-version": {
+          "error": "full_value_edition",
+          "outcome": "refusal"
+        },
+        "history-ambiguous": {
+          "error": "original_authority",
+          "outcome": "refusal"
+        },
+        "history-caller_override": {
+          "error": "caller_recipe_override",
+          "outcome": "refusal"
+        },
+        "history-current-original": {
+          "outcome": "acceptance",
+          "output": "original-returned-with-zero-effects"
+        },
+        "history-deleted": {
+          "error": "current_disclosure",
+          "outcome": "refusal"
+        },
+        "history-denied": {
+          "error": "current_disclosure",
+          "outcome": "refusal"
+        },
+        "history-downgrade": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-exponent": {
+          "outcome": "acceptance",
+          "output": "original-returned-with-zero-effects"
+        },
+        "history-foreign-event_id": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-event_type": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-idempotency_key": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-owner_operation_id": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-project_id": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-scope_kind": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-server_id": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-source_commitment": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-foreign-storage_instance_id": {
+          "error": "original_binding",
+          "outcome": "refusal"
+        },
+        "history-forged_bytes_selfhash": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-forged_receipt": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-forged_result": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-hold_denied": {
+          "error": "current_disclosure",
+          "outcome": "refusal"
+        },
+        "history-integral_float": {
+          "outcome": "acceptance",
+          "output": "original-returned-with-zero-effects"
+        },
+        "history-large_decimal": {
+          "outcome": "acceptance",
+          "output": "original-returned-with-zero-effects"
+        },
+        "history-large_metadata": {
+          "outcome": "acceptance",
+          "output": "original-returned-with-zero-effects"
+        },
+        "history-missing": {
+          "error": "original_authority",
+          "outcome": "refusal"
+        },
+        "history-negative_zero": {
+          "outcome": "acceptance",
+          "output": "original-returned-with-zero-effects"
+        },
+        "history-rewritten_resources": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-self_authenticated_dict": {
+          "error": "original_authority",
+          "outcome": "refusal"
+        },
+        "history-string_record_bytes": {
+          "error": "original_bytes_type",
+          "outcome": "refusal"
+        },
+        "history-truthy_disclosure": {
+          "error": "current_disclosure",
+          "outcome": "refusal"
+        },
+        "history-unknown_recipe": {
+          "error": "recipe_unknown",
+          "outcome": "refusal"
+        },
+        "history-verified_string": {
+          "error": "original_authority",
+          "outcome": "refusal"
+        },
+        "history-verifier-result-false": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-verifier-result-integer": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-verifier-result-object": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-verifier-result-string": {
+          "error": "original_verification",
+          "outcome": "refusal"
+        },
+        "history-verifier-result-true": {
+          "outcome": "acceptance",
+          "output": "original-returned-with-zero-effects"
+        },
+        "history-withdrawn": {
+          "error": "current_disclosure",
+          "outcome": "refusal"
+        },
+        "int-array": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-bool": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-decimal": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-false": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-float": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-null": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-object": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-string": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-string-false": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "int-string-zero": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "jcs--0": {
+          "outcome": "acceptance",
+          "output": "0"
+        },
+        "jcs--0.0": {
+          "outcome": "acceptance",
+          "output": "0"
+        },
+        "jcs--1152921504606846976": {
+          "error": "jcs_decimal",
+          "outcome": "refusal"
+        },
+        "jcs--9007199254740992": {
+          "outcome": "acceptance",
+          "output": "-9007199254740992"
+        },
+        "jcs-1": {
+          "outcome": "acceptance",
+          "output": "1"
+        },
+        "jcs-1.0": {
+          "outcome": "acceptance",
+          "output": "1"
+        },
+        "jcs-1152921504606846976": {
+          "error": "jcs_decimal",
+          "outcome": "refusal"
+        },
+        "jcs-18446744073709551616": {
+          "error": "jcs_decimal",
+          "outcome": "refusal"
+        },
+        "jcs-1e-7": {
+          "outcome": "acceptance",
+          "output": "1e-7"
+        },
+        "jcs-1e-9999": {
+          "error": "jcs_decimal",
+          "outcome": "refusal"
+        },
+        "jcs-1e0": {
+          "outcome": "acceptance",
+          "output": "1"
+        },
+        "jcs-1e20": {
+          "outcome": "acceptance",
+          "output": "100000000000000000000"
+        },
+        "jcs-1e9999": {
+          "error": "jcs_binary64",
+          "outcome": "refusal"
+        },
+        "jcs-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "9007199254740991"
+        },
+        "jcs-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "9007199254740992"
+        },
+        "jcs-9007199254740993.0": {
+          "error": "jcs_decimal",
+          "outcome": "refusal"
+        },
+        "jcs-9223372036854775808": {
+          "error": "jcs_decimal",
+          "outcome": "refusal"
+        },
+        "jcs-binary64-only-10^23": {
+          "error": "jcs_binary64",
+          "outcome": "refusal"
+        },
+        "jcs-binary64-only-minus10^23": {
+          "error": "jcs_binary64",
+          "outcome": "refusal"
+        },
+        "jcs-decimal-kind-1.0": {
+          "error": "jcs_kind",
+          "outcome": "refusal"
+        },
+        "jcs-decimal-kind-1.25": {
+          "error": "jcs_kind",
+          "outcome": "refusal"
+        },
+        "jcs-decimal-undeclared": {
+          "error": "jcs_kind_undeclared",
+          "outcome": "refusal"
+        },
+        "jcs-declaration-decimal-declared": {
+          "outcome": "acceptance",
+          "output": "float"
+        },
+        "jcs-declaration-decimal-undeclared": {
+          "error": "jcs_kind_undeclared",
+          "outcome": "refusal"
+        },
+        "jcs-declaration-native-float": {
+          "outcome": "acceptance",
+          "output": "float"
+        },
+        "jcs-declaration-native-integer": {
+          "outcome": "acceptance",
+          "output": "integer"
+        },
+        "jcs-declaration-untyped-decimal": {
+          "outcome": "acceptance",
+          "output": null
+        },
+        "jcs-declared-decimal-kind-loss": {
+          "error": "jcs_kind",
+          "outcome": "refusal"
+        },
+        "jcs-inf": {
+          "error": "jcs_nonfinite",
+          "outcome": "refusal"
+        },
+        "jcs-integer-sign-loss": {
+          "error": "jcs_sign",
+          "outcome": "refusal"
+        },
+        "jcs-invalid-kind": {
+          "error": "jcs_numeric_kind",
+          "outcome": "refusal"
+        },
+        "jcs-kind-loss-current": {
+          "error": "jcs_kind",
+          "outcome": "refusal"
+        },
+        "jcs-kind-loss-exact": {
+          "error": "jcs_kind",
+          "outcome": "refusal"
+        },
+        "jcs-minusinf": {
+          "error": "jcs_nonfinite",
+          "outcome": "refusal"
+        },
+        "jcs-nan": {
+          "error": "jcs_nonfinite",
+          "outcome": "refusal"
+        },
+        "jcs-nonascii-order": {
+          "outcome": "acceptance",
+          "output": "{\"\ud800\udc00\":2,\"\ue000\":1}"
+        },
+        "jcs-parsed-kind-current-1.25": {
+          "outcome": "acceptance",
+          "output": "1.25"
+        },
+        "jcs-parsed-kind-current-1.5": {
+          "outcome": "acceptance",
+          "output": "1.5"
+        },
+        "jcs-parsed-kind-exact-1.25": {
+          "outcome": "acceptance",
+          "output": "1.25"
+        },
+        "jcs-parsed-kind-exact-1.5": {
+          "outcome": "acceptance",
+          "output": "1.5"
+        },
+        "jcs-sign-loss-current": {
+          "error": "jcs_sign",
+          "outcome": "refusal"
+        },
+        "jcs-sign-loss-exact": {
+          "error": "jcs_sign",
+          "outcome": "refusal"
+        },
+        "jcs-typed--0.0": {
+          "error": "jcs_sign",
+          "outcome": "refusal"
+        },
+        "jcs-typed-1.0": {
+          "error": "jcs_kind",
+          "outcome": "refusal"
+        },
+        "jcs-typed-current-1.25": {
+          "outcome": "acceptance",
+          "output": "1.25"
+        },
+        "jcs-typed-current-1.5": {
+          "outcome": "acceptance",
+          "output": "1.5"
+        },
+        "jcs-typed-decimal-1.25": {
+          "outcome": "acceptance",
+          "output": "1.25"
+        },
+        "jcs-typed-decimal-1.5": {
+          "outcome": "acceptance",
+          "output": "1.5"
+        },
+        "jcs-typed-exact-1.25": {
+          "outcome": "acceptance",
+          "output": "1.25"
+        },
+        "jcs-typed-exact-1.5": {
+          "outcome": "acceptance",
+          "output": "1.5"
+        },
+        "jcs-typed-float-1.25": {
+          "outcome": "acceptance",
+          "output": "1.25"
+        },
+        "jcs-typed-float-1.5": {
+          "outcome": "acceptance",
+          "output": "1.5"
+        },
+        "json-syntax-+1": {
+          "error": "json_syntax",
+          "outcome": "refusal"
+        },
+        "json-syntax-01": {
+          "error": "json_syntax",
+          "outcome": "refusal"
+        },
+        "json-syntax-1 2": {
+          "error": "json_syntax",
+          "outcome": "refusal"
+        },
+        "json-syntax-[1,]": {
+          "error": "json_syntax",
+          "outcome": "refusal"
+        },
+        "json-syntax-{\"a\":1,}": {
+          "error": "json_syntax",
+          "outcome": "refusal"
+        },
+        "metadata-byte_offset-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_offset-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_offset-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_offset-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_offset-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_offset-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_size-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_size-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_size-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_size-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_size-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-byte_size-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frame_end_offset-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frame_end_offset-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frame_end_offset-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frame_end_offset-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frame_end_offset-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frame_end_offset-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frontier_revision-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frontier_revision-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frontier_revision-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frontier_revision-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frontier_revision-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-frontier_revision-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-manifest_generation-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-manifest_generation-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-manifest_generation-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-manifest_generation-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-manifest_generation-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-manifest_generation-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-recovery_epoch-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-recovery_epoch-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-recovery_epoch-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-recovery_epoch-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-recovery_epoch-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-recovery_epoch-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-retained_event_count-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-retained_event_count-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-retained_event_count-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-retained_event_count-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-retained_event_count-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-retained_event_count-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-segment_generation-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-segment_generation-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-segment_generation-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-segment_generation-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-segment_generation-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-segment_generation-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-selected_segment_generation-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-selected_segment_generation-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-selected_segment_generation-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-selected_segment_generation-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-selected_segment_generation-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-selected_segment_generation-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-sequence_id-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-sequence_id-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-sequence_id-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-sequence_id-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-sequence_id-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "metadata-sequence_id-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "parse--Infinity": {
+          "error": "json_nonfinite",
+          "outcome": "refusal"
+        },
+        "parse-Infinity": {
+          "error": "json_nonfinite",
+          "outcome": "refusal"
+        },
+        "parse-NaN": {
+          "error": "json_nonfinite",
+          "outcome": "refusal"
+        },
+        "payload-id-trailing-lf": {
+          "error": "payload_id_type",
+          "outcome": "refusal"
+        },
+        "payload-inline-boundary": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "payload-inline-limit": {
+          "error": "payload_inline_limit",
+          "outcome": "refusal"
+        },
+        "payload-media": {
+          "error": "payload_media",
+          "outcome": "refusal"
+        },
+        "payload-reference-boundary": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "payload-same-size-different-bytes": {
+          "error": "payload_digest",
+          "outcome": "refusal"
+        },
+        "payload-size": {
+          "error": "payload_size",
+          "outcome": "refusal"
+        },
+        "payload-size-bool": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "payload-size-string": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "physical--inf": {
+          "error": "physical_nonfinite",
+          "outcome": "refusal"
+        },
+        "physical-binary": {
+          "error": "physical_type",
+          "outcome": "refusal"
+        },
+        "physical-decimal": {
+          "error": "physical_type",
+          "outcome": "refusal"
+        },
+        "physical-float--0.0": {
+          "outcome": "acceptance",
+          "output": "ca80000000"
+        },
+        "physical-float-0.0": {
+          "outcome": "acceptance",
+          "output": "ca00000000"
+        },
+        "physical-float-0.5": {
+          "outcome": "acceptance",
+          "output": "ca3f000000"
+        },
+        "physical-float-1.0": {
+          "outcome": "acceptance",
+          "output": "ca3f800000"
+        },
+        "physical-float-1.7976931348623157e308": {
+          "outcome": "acceptance",
+          "output": "cb7fefffffffffffff"
+        },
+        "physical-float-1e-7": {
+          "outcome": "acceptance",
+          "output": "cb3e7ad7f29abcaf48"
+        },
+        "physical-float-1e20": {
+          "outcome": "acceptance",
+          "output": "cb4415af1d78b58c40"
+        },
+        "physical-inf": {
+          "error": "physical_nonfinite",
+          "outcome": "refusal"
+        },
+        "physical-int--1": {
+          "outcome": "acceptance",
+          "output": "ff"
+        },
+        "physical-int--128": {
+          "outcome": "acceptance",
+          "output": "d080"
+        },
+        "physical-int--129": {
+          "outcome": "acceptance",
+          "output": "d1ff7f"
+        },
+        "physical-int--2147483648": {
+          "outcome": "acceptance",
+          "output": "d280000000"
+        },
+        "physical-int--2147483649": {
+          "outcome": "acceptance",
+          "output": "d3ffffffff7fffffff"
+        },
+        "physical-int--32": {
+          "outcome": "acceptance",
+          "output": "e0"
+        },
+        "physical-int--32768": {
+          "outcome": "acceptance",
+          "output": "d18000"
+        },
+        "physical-int--32769": {
+          "outcome": "acceptance",
+          "output": "d2ffff7fff"
+        },
+        "physical-int--33": {
+          "outcome": "acceptance",
+          "output": "d0df"
+        },
+        "physical-int--9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "d38000000000000000"
+        },
+        "physical-int-0": {
+          "outcome": "acceptance",
+          "output": "00"
+        },
+        "physical-int-1": {
+          "outcome": "acceptance",
+          "output": "01"
+        },
+        "physical-int-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "cf1000000000000000"
+        },
+        "physical-int-127": {
+          "outcome": "acceptance",
+          "output": "7f"
+        },
+        "physical-int-128": {
+          "outcome": "acceptance",
+          "output": "cc80"
+        },
+        "physical-int-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "cfffffffffffffffff"
+        },
+        "physical-int-255": {
+          "outcome": "acceptance",
+          "output": "ccff"
+        },
+        "physical-int-256": {
+          "outcome": "acceptance",
+          "output": "cd0100"
+        },
+        "physical-int-4294967295": {
+          "outcome": "acceptance",
+          "output": "ceffffffff"
+        },
+        "physical-int-4294967296": {
+          "outcome": "acceptance",
+          "output": "cf0000000100000000"
+        },
+        "physical-int-65535": {
+          "outcome": "acceptance",
+          "output": "cdffff"
+        },
+        "physical-int-65536": {
+          "outcome": "acceptance",
+          "output": "ce00010000"
+        },
+        "physical-int-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "cf001fffffffffffff"
+        },
+        "physical-int-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "cf0020000000000000"
+        },
+        "physical-int-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "cf0020000000000001"
+        },
+        "physical-int-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "cf8000000000000000"
+        },
+        "physical-nan": {
+          "error": "physical_nonfinite",
+          "outcome": "refusal"
+        },
+        "physical-overflow--9223372036854775809": {
+          "error": "physical_integer_range",
+          "outcome": "refusal"
+        },
+        "physical-overflow-18446744073709551616": {
+          "error": "physical_integer_range",
+          "outcome": "refusal"
+        },
+        "range--1": {
+          "error": "integer_range",
+          "outcome": "refusal"
+        },
+        "range-11": {
+          "error": "integer_range",
+          "outcome": "refusal"
+        },
+        "raw-preserved--0": {
+          "outcome": "acceptance",
+          "output": "-0"
+        },
+        "raw-preserved--0.0": {
+          "outcome": "acceptance",
+          "output": "-0.0"
+        },
+        "raw-preserved-1.0": {
+          "outcome": "acceptance",
+          "output": "1.0"
+        },
+        "raw-preserved-1e-7": {
+          "outcome": "acceptance",
+          "output": "1e-7"
+        },
+        "raw-preserved-1e-9999": {
+          "outcome": "acceptance",
+          "output": "1e-9999"
+        },
+        "raw-preserved-1e0": {
+          "outcome": "acceptance",
+          "output": "1e0"
+        },
+        "raw-preserved-1e20": {
+          "outcome": "acceptance",
+          "output": "1e20"
+        },
+        "raw-preserved-1e9999": {
+          "outcome": "acceptance",
+          "output": "1e9999"
+        },
+        "raw-preserved-9007199254740993.0": {
+          "outcome": "acceptance",
+          "output": "9007199254740993.0"
+        },
+        "recipe-hash-int": {
+          "error": "recipe_tuple",
+          "outcome": "refusal"
+        },
+        "recipe-hash-short": {
+          "error": "recipe_resource_hash",
+          "outcome": "refusal"
+        },
+        "recipe-hash-trailing-lf": {
+          "error": "recipe_resource_hash",
+          "outcome": "refusal"
+        },
+        "recipe-hash-upper": {
+          "error": "recipe_resource_hash",
+          "outcome": "refusal"
+        },
+        "recipe-hash-valid": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "recipe-type": {
+          "error": "recipe_tuple",
+          "outcome": "refusal"
+        },
+        "slot-+1": {
+          "error": "json_syntax",
+          "outcome": "refusal"
+        },
+        "slot--0": {
+          "error": "integer_token",
+          "outcome": "refusal"
+        },
+        "slot--0.0": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "slot-01": {
+          "error": "json_syntax",
+          "outcome": "refusal"
+        },
+        "slot-1.0": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "slot-1e0": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "slot-9.007199254740993e15": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "slot-9007199254740993.0": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "slot-ok-0": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "slot-ok-1": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "slot-ok-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "slot-ok-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "surrogate-json": {
+          "error": "unicode_scalar",
+          "outcome": "refusal"
+        },
+        "token--1": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token--9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token--9223372036854775809": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-0": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-1": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-1152921504606846976": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-18446744073709551615": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-18446744073709551616": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-9007199254740991": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-9007199254740992": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-9007199254740993": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-9223372036854775808": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "token-unbounded": {
+          "outcome": "acceptance",
+          "output": "accepted"
+        },
+        "uint64-overflow--1": {
+          "error": "integer_range",
+          "outcome": "refusal"
+        },
+        "uint64-overflow-18446744073709551616": {
+          "error": "integer_range",
+          "outcome": "refusal"
+        },
+        "uint64-type-bool": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "uint64-type-float": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "uint64-type-null": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "uint64-type-string": {
+          "error": "integer_type",
+          "outcome": "refusal"
+        },
+        "unknown-physical-profile": {
+          "error": "physical_profile",
+          "outcome": "refusal"
+        }
+      },
+      "positive": 183,
+      "postcondition_failures": {},
+      "total": 345
+    },
+    "number_scope_positives": 183,
+    "number_scope_negatives": 162,
+    "number_scope_integration_checks": 60
+  },
+  "failed_premise_checks": [],
+  "owner_questions": [],
+  "ids_used": [
+    "CV-1100",
+    "SP-1100",
+    "SP-1101",
+    "CV-1101"
+  ],
+  "open_items": [
+    "Shared guard-isolation adoption for every labelled negative; specifically binary64/decimal, kind/sign, catalog/verification, replay-only/replay-policy and syntax/digest",
+    "Native original-owner custody/recipe installation and resource authentication",
+    "Complete actual schema/successor route qualification and family-specific adoption across 19 lanes",
+    "Integration/governance work belongs to the lead, outside this drafting task",
+    "Live index validation still fails: 21 inherited ledger-shape failures plus DL-301/330/331/332, DP-064/066, PLS-025 and PWIZ-038 comparisons to newer main; named owner inputs unchanged in round 8."
+  ],
+  "reviewed_head": "85b0ca7ece2c4926874ee5337e7542521308ba06",
+  "review_round": 15,
+  "family_grades_before_after": "N/A: no event-family rows before or after. Native execution remains NOT_RUN.",
+  "grade_changes": {
+    "CV-1100.bounded_adapter_oracles": "author PASS -> review PARTIAL -> finite cases PASS, overall PARTIAL pending isolation",
+    "SP-1100.frozen_byte_vector_oracles": "PASS -> PASS",
+    "SP-1101.bounded_selector_oracles": "Astra PARTIAL -> B2/B3 finite isolation/result oracles PASS; aggregate selector remains PARTIAL pending shared guard inventory/native adoption",
+    "corpus": "author PASS -> review PARTIAL -> finite cases PASS, guard proof SWEEP_PENDING",
+    "CV-1101.owner_specification": "cycle-2 review PARTIAL -> finite reference owner binding PASS; native/lane integration NOT_RUN",
+    "CV-1101.enforced_format_oracles": "Astra PARTIAL -> bounded direct/reference/nested/retained composition oracles PASS; complete lane/native integration NOT_RUN",
+    "CV-1101.embedded_v2_envelope_oracles": "cycle-4 B1 BLOCKED -> finite cases/probes PASS; native/lane integration NOT_RUN",
+    "CV-1101.complete_storage_schema_boundary": "cycle-5 B1 BLOCKED -> complete classified inventory and finite current/frozen schema-path oracles PASS; native/lane installation NOT_RUN",
+    "CV-1101.round8": "Astra B1/B2/B3 BLOCKED -> stated-universe discovery, inventory integrity, and finite eager/lazy current/frozen routes PASS; complete lane/native integration NOT_RUN.",
+    "CV-1101.round9": "B1a/B1b/B2 finite controls PASS; B3 stopped under the no-owner-prose/missing-quote instruction. Overall NOT_READY; no family grades or new IDs.",
+    "CV-1101.round10": "Round-9 B3 blocked -> source-bound field/value evidence and coherent mutation controls PASS in the stated finite scope; native/lane integration NOT_RUN.",
+    "CV-1101.round11": "Cycle-10 B4 BLOCKED -> 4/4 equivalent-pattern negatives and 4/4 corrected positives PASS; source-bound pinned roles and 35 battery controls PASS. Native/lane integration remains NOT_RUN.",
+    "CV-1101.round14": "Cycle-13 pre-check LANDING_READY_WITH_NOTES -> N1 (non-deciding citation) and N2 ($dynamicRef rebinding) fixed in the stated finite scope; ten role rows moved to explicit owner-schema review. Native/lane integration remains NOT_RUN.",
+    "CV-1101.round15": "Cycle-14 pre-check NOT_READY -> B1 (citation reached under two dialects) and B2 (dynamic references in a citation) fixed by the static-closure rule and an outright all_refused requirement; N3 year sweep added to the fixed controls; N5 fixed. No row moved. Native/lane integration remains NOT_RUN.",
+    "CV-1101.round16": "FIX16 gate-bar self-check for the date-time gate: 197 AST sites and 108 owner-statement rows, 280 mutations, 273 caught, 7 declared survivors (equivalent or unreachable). No production change and no row moved. Native/lane integration remains NOT_RUN; no family grade changes."
+  },
+  "implementation_commit": "ff7caf8d7f62705c86f7dff95635cc867f198702",
+  "round1_validation": {
+    "index_status": "pass",
+    "plan_units": 7426,
+    "acceptance_units": 29960,
+    "case_oracles": "PASS",
+    "guard_isolation": "SWEEP_PENDING",
+    "existing_unit_tests": 30,
+    "failure_exit": 1
+  },
+  "ids_minted_round2": [],
+  "round2_validation": {
+    "index_generation_status": "pass",
+    "plan_units": 7426,
+    "acceptance_units": 29961,
+    "case_oracles": "PASS",
+    "guard_isolation": "SWEEP_PENDING",
+    "reviewed_fixture_replay": 370,
+    "focused_predicate_removals": 7,
+    "local_profile_controls": 8,
+    "wrong_container_refusals": 5,
+    "failure_exit": 1,
+    "exception_outcome": "exception",
+    "existing_unit_tests": 30,
+    "preserved_pinned_envelope_schema": true,
+    "index_status": "pass",
+    "shards_status": "pass"
+  },
+  "implementation_commits": {
+    "B1": "a06d87b6b616605c6e67ca01af40d6047e9fadd5",
+    "B2": "67d459eda1c7d9d71a6de098c37af0ca501a224f",
+    "B3": "0eb68afab44bc6a5198d4b0909b76a0433beafda",
+    "B1_round3": "20d66f034a94c78f26d991fe1323e1f5c04ab6f3",
+    "B1_round5": "a06d87b6b616605c6e67ca01af40d6047e9fadd5",
+    "B1_round4": "493e2974c885609d2b64e1ec8f863f234a6da38f",
+    "B1_round8": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2",
+    "B2_round8": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2",
+    "B3_round8": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2",
+    "dependency_round8": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2",
+    "B1a_round9": "f8b2d901beb804356ad3824e256af74aa9e29ad1",
+    "B1b_round9": "f8b2d901beb804356ad3824e256af74aa9e29ad1",
+    "B2_round9": "f8b2d901beb804356ad3824e256af74aa9e29ad1",
+    "B3_round10": "82e29fe59bebe69fbb8104fa551c183e750356a9",
+    "B5_round12": "263a9970a8c6783c571d83ce38f68f436a87672f",
+    "B6_round12": "263a9970a8c6783c571d83ce38f68f436a87672f",
+    "B7_round13": "3e4378f885c83dda88f5e1ea3718e5c5ce643ae3",
+    "B1_number_scope": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65",
+    "B2_number_scope": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65",
+    "B3_number_scope": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65",
+    "N1_round14": "a5ae4fc90b6da25efd00350e120291975268a401",
+    "N2_round14": "a5ae4fc90b6da25efd00350e120291975268a401",
+    "B1_round15": "ff7caf8d7f62705c86f7dff95635cc867f198702",
+    "B2_round15": "ff7caf8d7f62705c86f7dff95635cc867f198702",
+    "N3_round15": "ff7caf8d7f62705c86f7dff95635cc867f198702",
+    "N5_round15": "ff7caf8d7f62705c86f7dff95635cc867f198702",
+    "gate_bar_round16": "8f8483eae3c23c440169f7798174149156a87a4e"
+  },
+  "ids_minted_round3": [],
+  "round3_validation": {
+    "self_test_status": "pass",
+    "corpus_status": "pass",
+    "targeted_predicate_removals": 6,
+    "bounded_regression_assertions": 28,
+    "existing_unit_tests": 30,
+    "shards_status": "pass",
+    "index_status": "fail",
+    "index_failure_count": 22,
+    "index_failure_disposition": "21 unchanged legacy ledger-shape errors; PLS-025 main-ahead integration requirement; all named paths and index/validator unchanged from reviewed head.",
+    "owner_text_changed": false,
+    "derived_regeneration": "NOT_NEEDED",
+    "failure_exit": 1,
+    "exception_outcome": "exception",
+    "pinned_schema_resources_changed": false,
+    "early_index_run": "Terminated after unintended overlap with shard check; final index check ran after shards completed.",
+    "scope_audit_status": "pass",
+    "reviewed_case_records_preserved": 451
+  },
+  "ids_minted_round4": [],
+  "round4_validation": {
+    "self_test_status": "pass",
+    "corpus_status": "pass",
+    "bounded_regression_assertions": 3845,
+    "targeted_predicate_removals": 6,
+    "embedded_schema_nodes": 13,
+    "embedded_schema_files": 10,
+    "inventory_complete_envelope_nodes": 55,
+    "remaining_invalid_storage_zone_acceptances": 0,
+    "one_field_new_negatives": 624,
+    "pre_fix_acceptances_reproduced": 624,
+    "reviewed_case_records_preserved": 1176,
+    "reviewed_history_byte_strings_preserved": 400,
+    "reviewed_frozen_resource_selections_preserved": 370,
+    "unchanged_scalar_profile_controls": 76,
+    "existing_unit_tests": 30,
+    "shards_status": "pass",
+    "index_status": "fail",
+    "index_failure_count": 22,
+    "index_failure_disposition": "Same exact failure records as round 3; 21 legacy ledger-shape errors and PLS-025 integration requirement.",
+    "owner_text_changed": false,
+    "derived_regeneration": "NOT_NEEDED",
+    "pinned_schema_resources_changed": false,
+    "failure_exit": 1,
+    "exception_outcome": "exception",
+    "scope_audit_status": "pass",
+    "initial_regression_run": "Final scope comparison used the source clone; corrected to the fix4 worktree and reran."
+  },
+  "ids_minted_round5": [],
+  "round5_validation": {
+    "corpus_status": "pass",
+    "inventory_nodes": 212,
+    "storage_nodes": 133,
+    "other_owner_nodes": 79,
+    "unclassified_nodes": 0,
+    "prior_cases_unchanged": 2788,
+    "prior_original_byte_strings_unchanged": 1206,
+    "prior_frozen_selections_unchanged": 1176,
+    "bounded_predicate_cut_rows": 12,
+    "complete_guard_isolation": "SWEEP_PENDING",
+    "pinned_schemas_and_owner_prose": "PRESERVED",
+    "owner_text_changed": false,
+    "derived_regeneration": "NOT_NEEDED",
+    "native_authority": "NOT_RUN",
+    "index_expected_failure_records": 22,
+    "self_test_status": "pass",
+    "owner_integration_checks": 70,
+    "gate_mutation_checks": 20,
+    "scanner_encoding_injections": 7,
+    "legacy_reference_composition_routes": 29,
+    "injected_gate_exit": 1,
+    "injected_self_test_exit": 1,
+    "index_status": "fail",
+    "index_failure_count": 28,
+    "original_22_failure_records_preserved": true,
+    "index_pinned_failure_count": 22,
+    "existing_unit_tests": 30,
+    "shards_status": "pass",
+    "coverage_rerun": {
+      "categories": {
+        "EventRecord": 98,
+        "event_record_index": 27,
+        "original_storage_fields": 6,
+        "Storage issued original fields": 2
+      },
+      "baseline_failures": 0,
+      "escaping_nodes": 0,
+      "escaped_fields": 0,
+      "unexpected_refusals": 0,
+      "other_owner_source_nodes": 79
+    },
+    "full_boundary_rerun": {
+      "full_root_tested_paths": 3,
+      "invalid_acceptances": 0,
+      "uppercase_Z_acceptances": 4,
+      "invalid_refusals": 8,
+      "unavailable_nodes": 0
+    },
+    "other_owner_field_controls": 702,
+    "scalar_profile_comparisons": 36,
+    "bounded_fixture_assertions": 21616,
+    "scope_audit_status": "pass",
+    "failure_exit": 1
+  },
+  "scanner_hardening_commit": "c4e2beaeb3419a9339f5f28043a7c22f6fce37f5",
+  "round8_validation": {
+    "implementation_commit": "31716092a3d7ea54f90ee984fcbcc29b8a9bc0a2",
+    "reviewed_base": "b1e66f69d0a0049d773f4535efbec8457fe46493",
+    "selftest": {
+      "exit": 0,
+      "cases": 13372,
+      "positives": 6836,
+      "negatives": 6536,
+      "integration_checks": 138
+    },
+    "inventory": {
+      "failures": [],
+      "nodes": 233,
+      "other_owner_nodes": 100,
+      "status": "pass",
+      "storage_nodes": 133,
+      "unclassified_nodes": 0
+    },
+    "gate_injections": {
+      "total": 20,
+      "refused": 20,
+      "positive_detection_controls": 5,
+      "integrity_mutations_refused": 3
+    },
+    "runtime": {
+      "routes": 266,
+      "invalid_baselines": 0,
+      "escaping_eager": 0,
+      "escaping_lazy": 0,
+      "samples": []
+    },
+    "other_owner_controls": {
+      "existing_nodes": 78,
+      "existing_controls": 1092,
+      "new_name_maps": 21,
+      "new_controls": 1008,
+      "failures": 0
+    },
+    "number_probe_checks": 2041,
+    "index": {
+      "exit": 1,
+      "status": "fail",
+      "failures": 29,
+      "disposition": "21 inherited ledger-shape failures and eight comparisons against newer origin/main units; all their owner inputs unchanged from reviewed base."
+    },
+    "commands": [
+      {
+        "name": "final-selftest",
+        "command": [
+          "/tmp/numrule-fix8-venv/bin/python",
+          "scripts/pm_event_numbers.py",
+          "--self-test"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix8",
+        "exit": 0,
+        "start": "2026-11-05T12:35:14.018550+00:00",
+        "end": "2026-11-05T12:36:40.106062+00:00",
+        "seconds": 86.08742210501805,
+        "available_memory_before": 16563777536,
+        "available_memory_after": 16568246272
+      },
+      {
+        "name": "shards",
+        "command": [
+          "/tmp/numrule-fix8-venv/bin/python",
+          "scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/numrule-fix8",
+        "exit": 0,
+        "start": "2026-11-05T12:36:40.106703+00:00",
+        "end": "2026-11-05T12:37:02.660789+00:00",
+        "seconds": 22.55407313501928,
+        "available_memory_before": 16567488512,
+        "available_memory_after": 16117514240
+      }
+    ],
+    "scope_audit": {
+      "base": "b1e66f69d0a0049d773f4535efbec8457fe46493",
+      "unchanged": {
+        "Plans/Contracts_V0.md": true,
+        "Plans/storage-plan.md": true,
+        "Plans/event_number_recipe_corpus.json": true,
+        "scripts/pm_event_numbers.py": true
+      },
+      "original_nodes_preserved": 212,
+      "new_nodes": 21,
+      "original_corpus_cases": 13372,
+      "pinned_schemas_and_owner_prose_unchanged": true
+    },
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix8",
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING"
+  },
+  "round9_validation": {
+    "status": "NOT_READY",
+    "B1a": "FIXED",
+    "B1b": "FIXED",
+    "B2": "FIXED",
+    "B3": "STOPPED_MISSING_OWNER_QUOTE",
+    "selftest": {
+      "exit": 0,
+      "cases": 13372,
+      "passed": 13372,
+      "integration_checks": 162
+    },
+    "inventory": {
+      "nodes": 233,
+      "storage_nodes": 133,
+      "other_owner_nodes": 100,
+      "unclassified_nodes": 0,
+      "unchanged": true
+    },
+    "runtime": {
+      "eager_valid_baselines": 133,
+      "eager_escaping_nodes": 0,
+      "on_demand_constructor_refusals": 133,
+      "callback_invocations": 0
+    },
+    "gate_injections": {
+      "original": 20,
+      "original_refused": 20,
+      "extended": 16,
+      "extended_refused": 16,
+      "review_wildcard_containers": 4,
+      "review_wildcard_refused": 4
+    },
+    "coherent_wrong_field_mutation": {
+      "gate_exit": 0,
+      "runtime_inventory_installation": "accepted",
+      "selftest_exit": 0,
+      "case_passes": 13372,
+      "interpretation": "KNOWN_UNFIXED_B3"
+    },
+    "shards_exit": 0,
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix9",
+    "index": {
+      "exit": 1,
+      "status": "fail",
+      "failures": 84,
+      "ledger_shape_failures": 21,
+      "newer_main_comparisons": 63,
+      "validator_and_plans_unchanged": true
+    },
+    "implementation_commit": "f8b2d901beb804356ad3824e256af74aa9e29ad1",
+    "whole_tree_wildcard": {
+      "exit": 1,
+      "expected_exit": 1,
+      "plan_blobs": 8968,
+      "classified_nodes": 233,
+      "injected_failures": 4,
+      "unrelated_failures": 0
+    }
+  },
+  "round10_validation": {
+    "round": 10,
+    "implementation_commit": "82e29fe59bebe69fbb8104fa551c183e750356a9",
+    "source_base": "3bb73141e989043175ffd80774946d317667fd78",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10",
+    "scope": "Finite shared-helper/source-evidence controls; native authority NOT_RUN; full guard isolation SWEEP_PENDING. Heavy checks ran serially with >=6 GiB available at each preflight.",
+    "commands": [
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/b3_controls.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 74.52905590899172,
+        "available_bytes": 14483267584,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "bcb3beb28bcb1b46863f7c84c1ef191733065454eca3942d201c66207f10fce6",
+        "stdout_bytes": 445,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "b3-controls"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/coherent_full.py"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 1.0837491969869006,
+        "available_bytes": 14333321216,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "f0d46e64e6c51030c2b02891aa1abc7809e75a0037494c17236f82dd97a88bf5",
+        "stdout_bytes": 1031,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "coherent-full-selftest"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/coherent_integrity.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 1.725772778998362,
+        "available_bytes": 14610063360,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "070379bd8cd2aa1299e6531566c8180d2015b1033a425160ade0b53eb2fd9b3b",
+        "stdout_bytes": 3859,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "coherent-integrity"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/exclusion_probes.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 33.396777917980216,
+        "available_bytes": 14242713600,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "55417aac9ad6add290914b4fde07735b88228245556cee986a2163877b035420",
+        "stdout_bytes": 919,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "exclusion-probes"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/extended_gate_integrity.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 164.77542123000603,
+        "available_bytes": 14269186048,
+        "scratch_bytes": 40178936,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "798def756fed719974708245d7ba6fc3e56b82bc401cfae3a495ddcf3512c451",
+        "stdout_bytes": 529,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "extended-gate-integrity"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/home/sittingmongoose/pm-worktrees/numrule-fix10/scripts/pm_event_numbers.py",
+          "--self-test"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 359.76613992097555,
+        "available_bytes": 21632253952,
+        "scratch_bytes": 39966770,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "a23fa8b7cdebead5abf33839a3cc8f56a175a8a4b296e6f8a1bb9f3cf1b751d5",
+        "stdout_bytes": 2089664,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "final-selftest"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/full_wildcard_gate.py"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 238.07637687999522,
+        "available_bytes": 15203131392,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "ae8809bcbe24d642d1d1ee289fa36b81c4a93fdcce0b56c9522ae7fca60b6ee5",
+        "stdout_bytes": 1351,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "full-wildcard-gate"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/probes.py"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 4.868602211994585,
+        "available_bytes": 13745594368,
+        "scratch_bytes": 40085904,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 0,
+        "stderr_sha256": "776d6c637d5885dced2686a1df6187b224ae4d8cf7af414fe0294490b7d02b6d",
+        "stderr_bytes": 45922,
+        "name": "gate-probes-initial"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/probes.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 206.52200171697768,
+        "available_bytes": 13723770880,
+        "scratch_bytes": 40178936,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "1dcd8148b8d9d2c1acf6f089556078d45631373b2c9c75063510b65f8cd67ab9",
+        "stdout_bytes": 3371,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "gate-probes"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/name_maps_audit.py"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 2.6151610800006893,
+        "available_bytes": 14469578752,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 0,
+        "stderr_sha256": "f8428fea725cd34a7df518926033dc343269e06a80c8eef5adebb1f9ed316e05",
+        "stderr_bytes": 1140,
+        "name": "name-maps-initial"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/name_maps_audit.py"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 3.080066303984495,
+        "available_bytes": 15385858048,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 0,
+        "stderr_sha256": "9f01fb8d1a09a53aef4da8f0502d5c2eec544bca63b7189f624ffcff9fe07efb",
+        "stderr_bytes": 1465,
+        "name": "name-maps-initial2"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/name_maps_audit.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 4.46980855599395,
+        "available_bytes": 15145041920,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "f91254291617e14b495420a207347e15acfb033e74f74921f11b21d24e924217",
+        "stdout_bytes": 83,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "name-maps"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/runtime_adversarial.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 2.6799134939792566,
+        "available_bytes": 13534892032,
+        "scratch_bytes": 40085904,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "339c7ea0f2e7488743448e935750309a6d68782015302f9fa90fc75125adb9b3",
+        "stdout_bytes": 8982,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "runtime-adversarial"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/runtime_probes.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 21.961612649000017,
+        "available_bytes": 15652274176,
+        "scratch_bytes": 39966770,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "bb992d1902313d3802d7d089bac745948fda7e3e4dd595bde15c4be548d45ee9",
+        "stdout_bytes": 139,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "runtime-probes"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/injected_selftests.py",
+          "empty-citations"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.9654782710131258,
+        "available_bytes": 15228293120,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "4524644239f218906f1fd4d09832fb1292569e992dbe1b1544d5fb5013de2458",
+        "stdout_bytes": 72443,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "selftest-empty-citations"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/injected_selftests.py",
+          "pattern"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 9.250350334012182,
+        "available_bytes": 15114022912,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "b7049894454e8b4086fd1a06224f3324346e28888c8af4df56938d3ae0aa6b30",
+        "stdout_bytes": 1201,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "selftest-pattern"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/home/sittingmongoose/pm-worktrees/numrule-fix10/scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 25.352457223983947,
+        "available_bytes": 14266040320,
+        "scratch_bytes": 40216535,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc",
+        "stdout_bytes": 111,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "shards"
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix10-venv/bin/python",
+          "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix10/supplemental_runtime.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 2.388513272977434,
+        "available_bytes": 13909495808,
+        "scratch_bytes": 40085904,
+        "head": "3bb73141e989043175ffd80774946d317667fd78",
+        "stdout_sha256": "6dab62e4c41eb8992d9f330519fd52bf30c2561c7c0c4b45e73ef3b212b483ba",
+        "stdout_bytes": 2177,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "name": "supplemental-runtime"
+      }
+    ],
+    "selftest": {
+      "exit": 0,
+      "cases": 13372,
+      "passed": 13372,
+      "positives": 6836,
+      "negatives": 6536,
+      "integration_checks": 165
+    },
+    "inventory": {
+      "failures": [],
+      "nodes": 233,
+      "other_owner_nodes": 79,
+      "status": "pass",
+      "storage_nodes": 133,
+      "unclassified_nodes": 0,
+      "wildcard_non_timestamp_nodes": 21
+    },
+    "runtime": {
+      "eager_valid_baselines": 133,
+      "escaping_nodes": 0,
+      "on_demand_constructor_refusals": 133,
+      "callback_calls": 0
+    },
+    "gate_injections": {
+      "original": 20,
+      "original_refused": 20,
+      "positive_detection_controls": 5,
+      "extended": 16,
+      "extended_refused": 16,
+      "original_inventory_mutation_pairs_refused": 7
+    },
+    "coherent_wrong_field_mutation": {
+      "gate_exit": 1,
+      "runtime_installation": "REFUSED",
+      "selftest_exit": 1,
+      "whole_tree_selftest_exit": 1,
+      "case_execution": "NOT_RUN_ADMISSION_REFUSED"
+    },
+    "stronger_B3_controls": {
+      "total": 6,
+      "gate_and_selftest_refused": 6,
+      "independent_source_pin_refused": 6
+    },
+    "name_maps": {
+      "nodes": 21,
+      "source_citations": 21,
+      "value_controls": 252,
+      "matching_value_controls": 252,
+      "unsupported_constructor_refusals": 21
+    },
+    "whole_tree_wildcard": {
+      "plan_blobs": 8968,
+      "classified_nodes": 233,
+      "injected_failures": 4,
+      "unrelated_failures": 0
+    },
+    "shards_exit": 0,
+    "index_and_governance": "NOT_RERUN; owner/index inputs unchanged; no new index/governance PASS claimed.",
+    "harness_initial_results": [
+      "gate-probes-initial: missing unchanged cited report; added input 99 and reran.",
+      "name-maps-initial and name-maps-initial2: old global bank mixed unrelated current/frozen complete or embedded URI editions; selected exact bounded value graph and reran. No predicates or source bytes changed."
+    ]
+  },
+  "round10_authority_question_resolution": "The lead technical answer in NUMRULE-FIX10 permits the field own canonical schema as exact evidence; wildcard maps keep their local non-timestamp value schemas. No owner prose or Jared product decision authored.",
+  "round11_validation": {
+    "round": 11,
+    "implementation_commit": "0f0e31fe781b1507a255a844f89100e66b746774",
+    "source_base": "76916b4542b4eb013d43dd6ae72ff765675b92d6",
+    "B4": "fixed; timestamp trigger plus explicit source-bound role review",
+    "battery": {
+      "samples": 653,
+      "sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3"
+    },
+    "inventory": {
+      "failures": [],
+      "nodes": 233,
+      "other_owner_nodes": 79,
+      "status": "pass",
+      "storage_nodes": 133,
+      "unclassified_nodes": 0,
+      "wildcard_non_timestamp_nodes": 12,
+      "wildcard_non_timestamp_role_nodes": 9
+    },
+    "selftest": {
+      "cases": 13372,
+      "positives": 6836,
+      "negatives": 6536,
+      "integration_checks": 200,
+      "git_backed_repeat": "pass"
+    },
+    "runtime": {
+      "valid_preloaded": 133,
+      "escapes": 0,
+      "on_demand_refused": 133,
+      "callback_calls": 0
+    },
+    "gate_injections": {
+      "original": 20,
+      "original_refused": 20,
+      "original_inventory_mutations_refused": 5,
+      "extended": 16,
+      "extended_refused": 16,
+      "mutation_pairs_refused": 7
+    },
+    "equivalent_patterns": {
+      "negatives_failed": 4,
+      "corrected_positives_passed": 4,
+      "source_pin_distinguishes_all_eight": true,
+      "full_git_negative_failed": true
+    },
+    "battery_controls": {
+      "checks": 35,
+      "passed": 35
+    },
+    "evidence_attacks": {
+      "total": 27,
+      "unexpected": []
+    },
+    "name_maps": {
+      "nodes": 21,
+      "exact_source_citations": 21,
+      "value_controls": 252,
+      "matching_value_controls": 252,
+      "matching_all_outcomes": 273,
+      "unsupported_constructors_refused": 21
+    },
+    "graph_controls": 23,
+    "full_wildcard_gate": {
+      "failures": 4,
+      "plan_blobs_exposed": 8968
+    },
+    "preservation": {
+      "base": "5e5c4cfe2ba2e90001c9f9e962ae1d6a1f68b4a3",
+      "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+      "protected_blob_count": 4400,
+      "plans_markdown_count": 3774,
+      "schema_paths": 517,
+      "generated_shard_index_count": 3299,
+      "changed_protected_paths": [],
+      "changed_paths": [
+        "Plans/event_datetime_inventory.json",
+        "reports/event-authority-20261104/NUMRULE.checks.json",
+        "reports/event-authority-20261104/NUMRULE.md",
+        "reports/event-authority-20261104/NUMRULE.self-grade.json",
+        "reports/event-authority-20261105/NUMRULE-ADOPTION.md",
+        "scripts/pm_event_datetime.py",
+        "scripts/pm_event_datetime_admission_checks.py",
+        "scripts/pm_event_datetime_exclusions.json",
+        "scripts/pm_event_datetime_inventory.py",
+        "scripts/pm_event_datetime_inventory.schema.json",
+        "scripts/pm_event_datetime_roles.json",
+        "scripts/pm_event_datetime_timestamp_battery.json",
+        "scripts/pm_event_datetime_value_probe.py"
+      ],
+      "inventory_rows_old": 233,
+      "inventory_rows_new": 233,
+      "inventory_structural_changes": [],
+      "status": "pass"
+    },
+    "driver_groups": [
+      {
+        "name": "runtime-probes",
+        "exit": 0,
+        "seconds": 21.652874371007783
+      },
+      {
+        "name": "replay-suite",
+        "exit": 0,
+        "seconds": 989.7833450599865
+      },
+      {
+        "name": "additional-suite",
+        "exit": 0,
+        "seconds": 1013.6728249249863
+      },
+      {
+        "name": "equivalent-pattern-confirmation",
+        "exit": 0,
+        "seconds": 18.373511594021693
+      }
+    ],
+    "run_records": [
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/coherent_full.py"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 1.0496349720051512,
+        "available_bytes": 20823719936,
+        "scratch_bytes": 81458739,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "c2f1deb5aab095f29740fc271e35c0992ec8b6c258c6565fb88d77efd4ae1954",
+        "stdout_bytes": 1031,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/coherent_integrity.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 1.6497834619949572,
+        "available_bytes": 22618996736,
+        "scratch_bytes": 81458739,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "070379bd8cd2aa1299e6531566c8180d2015b1033a425160ade0b53eb2fd9b3b",
+        "stdout_bytes": 3859,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "pattern_full_confirmation.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 18.260887529002503,
+        "available_bytes": 23440121856,
+        "scratch_bytes": 81561443,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "bbc14baab16eca8e07470f22fd2f82fed5173efe81bedabc0f851c1d22eb5eef",
+        "stdout_bytes": 6473,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/full_git_checks.py",
+          "gate",
+          "equivalent-pattern-full-gate"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 4.440050158998929,
+        "available_bytes": 22090850304,
+        "scratch_bytes": 81346495,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "716dbd94aa20f9dac568fdbd0799f5168c742b042de2a1a2eb73d4e09b74ca81",
+        "stdout_bytes": 666,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/evidence_attacks.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 606.0893963630078,
+        "available_bytes": 20778999808,
+        "scratch_bytes": 81458739,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "bd784e5c5a96b56554b287ba532fb4480a2a2305096e1a4a2f4e5920cdde6d36",
+        "stdout_bytes": 2068,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/exclusion_probes.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 77.88739106501453,
+        "available_bytes": 22141329408,
+        "scratch_bytes": 81458739,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "55417aac9ad6add290914b4fde07735b88228245556cee986a2163877b035420",
+        "stdout_bytes": 919,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/extended_gate_integrity.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 284.9485367810121,
+        "available_bytes": 27970699264,
+        "scratch_bytes": 81421140,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "798def756fed719974708245d7ba6fc3e56b82bc401cfae3a495ddcf3512c451",
+        "stdout_bytes": 529,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/full_git_checks.py",
+          "selftest"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 401.1827732899983,
+        "available_bytes": 22925135872,
+        "scratch_bytes": 81525288,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "64afe23b21190d742636a620257baee6c6d8f4782131d53c26575f91ca4c3ab6",
+        "stdout_bytes": 1805,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/full_wildcard_gate.py"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 235.1420094629866,
+        "available_bytes": 18664599552,
+        "scratch_bytes": 81458739,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "e7301025b3f941f82466f06ebc37ab82a7ae363b024d9cd9705baf4e434d5eab",
+        "stdout_bytes": 1393,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/probes.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 349.6431918379967,
+        "available_bytes": 17689690112,
+        "scratch_bytes": 81421140,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "1dcd8148b8d9d2c1acf6f089556078d45631373b2c9c75063510b65f8cd67ab9",
+        "stdout_bytes": 3371,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/graph_attacks.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 5.37131003299146,
+        "available_bytes": 20891996160,
+        "scratch_bytes": 81458724,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "44750d66127840a8233dce7d9602e72f6ee4608352d81496478a46e961f82ece",
+        "stdout_bytes": 2297,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/name_maps_audit.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 10.47324610099895,
+        "available_bytes": 18471182336,
+        "scratch_bytes": 81458739,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "f91254291617e14b495420a207347e15acfb033e74f74921f11b21d24e924217",
+        "stdout_bytes": 83,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/preservation_audit.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.4285893120104447,
+        "available_bytes": 22956613632,
+        "scratch_bytes": 81458724,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "078faafd00c6e4b64cd3a88e2f2089ecbcc5bfa97ece5cf68cc8595a52a501bd",
+        "stdout_bytes": 1076,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/runtime_adversarial.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 6.052834772010101,
+        "available_bytes": 18639822848,
+        "scratch_bytes": 81421140,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "339c7ea0f2e7488743448e935750309a6d68782015302f9fa90fc75125adb9b3",
+        "stdout_bytes": 8982,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "runtime_probes.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 21.5737225220073,
+        "available_bytes": 17204441088,
+        "scratch_bytes": 81291835,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "ab26f4dfb2381eec203c65183150b015ffaf8cc088b7dbb3bb0307baf1aca519",
+        "stdout_bytes": 108,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/injected_selftests.py",
+          "empty-citations"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.8799603339866735,
+        "available_bytes": 23026143232,
+        "scratch_bytes": 81458739,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "4524644239f218906f1fd4d09832fb1292569e992dbe1b1544d5fb5013de2458",
+        "stdout_bytes": 72443,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/injected_selftests.py",
+          "pattern"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 14.16404489800334,
+        "available_bytes": 23887007744,
+        "scratch_bytes": 81458739,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "582ea05c99ccfdbe63413b2e49cf45791898709a152391da8bfca144041cb863",
+        "stdout_bytes": 1245,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/numrule-fix11-replay/venv/bin/python",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11/cycle10-replay/supplemental_runtime.py"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 6.512448517984012,
+        "available_bytes": 18350166016,
+        "scratch_bytes": 81421140,
+        "head": "0f0e31fe781b1507a255a844f89100e66b746774",
+        "stdout_sha256": "6dab62e4c41eb8992d9f330519fd52bf30c2561c7c0c4b45e73ef3b212b483ba",
+        "stdout_bytes": 2177,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0
+      }
+    ],
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix11",
+    "actual_selftest_run": {
+      "command": [
+        "/tmp/numrule-fix11-runtime/venv/bin/python",
+        "scripts/pm_event_numbers.py",
+        "--self-test"
+      ],
+      "exit": 0,
+      "seconds": 366.94725743398885,
+      "available_bytes": 17601077248,
+      "stdout_sha256": "e519875feaa045e4856cbd801132277a83cf3d7343a71307828a1724aacff1b8"
+    },
+    "shards": {
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit": 0,
+      "seconds": 20.59463908697944,
+      "available_bytes": 21542805504,
+      "stdout_sha256": "d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc"
+    },
+    "restoration": {
+      "status": "pass",
+      "inputs": 102,
+      "changed_inputs": [],
+      "extra_plan_files": [],
+      "scoped_exclusions": 6,
+      "source_implementation": "0f0e31fe781b1507a255a844f89100e66b746774"
+    },
+    "scope": "Finite shared-helper repair; no native custody, complete lane adoption or governance PASS.",
+    "index_and_governance": "NOT_RERUN; owner/index inputs unchanged; no seal or main landing.",
+    "role_rule": "Timestamp battery acceptance triggers explicit source-bound role review. All-refused is automatic; accepting maps require timestamp classification or an independently pinned non-timestamp role. No arbitrary-string classifier."
+  },
+  "round11_authority_refinement": "Timestamp battery acceptance triggers explicit source-bound role review. All-refused is automatic; accepting maps require timestamp classification or an independently pinned non-timestamp role. No arbitrary-string classifier.",
+  "round12_validation": {
+    "round": 12,
+    "source_base": "99d3427562f1af739e1014305af762e888527469",
+    "B5": "fixed; sibling-dependent probes require an independent explicit role review",
+    "B6": "fixed; exact terminal value-constraint citation required for every inventoried key",
+    "inventory": {
+      "status": "pass",
+      "nodes": 233,
+      "storage_nodes": 133,
+      "other_owner_nodes": 79,
+      "wildcard_non_timestamp_nodes": 7,
+      "wildcard_non_timestamp_role_nodes": 14,
+      "unclassified_nodes": 0,
+      "failures": []
+    },
+    "rows_moved_to_explicit_review": 5,
+    "selftest": {
+      "status": "pass",
+      "cases": 13372,
+      "case_passes": 13372,
+      "integration_checks": 227,
+      "passed_checks": 227
+    },
+    "targeted_probes": 48,
+    "coherent_full_negatives": 2,
+    "original_full_negatives": 2,
+    "runtime": {
+      "valid_preloaded": 133,
+      "on_demand_refused": 133,
+      "callback_calls": 0,
+      "escapes": 0
+    },
+    "earlier_gate_controls": {
+      "injections_refused": 36,
+      "inventory_mutations_refused": 5,
+      "extended_mutation_gate_selftest_pairs_refused": 7,
+      "evidence_attacks": 27,
+      "name_maps": 21,
+      "name_map_value_matches": 252
+    },
+    "graph_controls": 23,
+    "battery": {
+      "samples": 653,
+      "sha256": "a125323b4261c366275d5f732af49b9f4478e6e3f1c992aaffbcdda4e27e63c3"
+    },
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix12",
+    "implementation_commit": "263a9970a8c6783c571d83ce38f68f436a87672f",
+    "preservation": {
+      "owner_prose": {
+        "checked": 3774,
+        "changed": []
+      },
+      "pinned_product_schemas": {
+        "checked": 517,
+        "changed": []
+      },
+      "generated_shards_and_index": {
+        "checked": 3299,
+        "changed": []
+      },
+      "number_implementation_corpus_registry": {
+        "checked": 6,
+        "changed": []
+      },
+      "date_time_runtime_and_battery": {
+        "checked": 2,
+        "changed": []
+      },
+      "governance_and_registry": {
+        "checked": 35,
+        "changed": []
+      },
+      "rows": {
+        "status": "pass",
+        "row_count": 233,
+        "structural_changes": [],
+        "moves": [
+          {
+            "node": [
+              "Plans/shared_runtime_contracts.schema.json",
+              "json",
+              "/$defs/permission_snapshot_record/properties/resolved_permissions"
+            ],
+            "from": "wildcard_non_timestamp",
+            "to": "wildcard_non_timestamp_role"
+          },
+          {
+            "node": [
+              "Plans/storage_value_registry.json",
+              "json",
+              "/families/62/value_schema/properties/resolved_permissions"
+            ],
+            "from": "wildcard_non_timestamp",
+            "to": "wildcard_non_timestamp_role"
+          },
+          {
+            "node": [
+              "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+              "json",
+              "/$defs/permission_snapshot_record/properties/resolved_permissions"
+            ],
+            "from": "wildcard_non_timestamp",
+            "to": "wildcard_non_timestamp_role"
+          },
+          {
+            "node": [
+              "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+              "json",
+              "/properties/resolved_permissions"
+            ],
+            "from": "wildcard_non_timestamp",
+            "to": "wildcard_non_timestamp_role"
+          },
+          {
+            "node": [
+              "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+              "json",
+              "/properties/resolved_permissions"
+            ],
+            "from": "wildcard_non_timestamp",
+            "to": "wildcard_non_timestamp_role"
+          }
+        ],
+        "prior_independent_role_pins_unchanged": 9,
+        "roles_before": 9,
+        "roles_after": 14
+      },
+      "source_base": "99d3427562f1af739e1014305af762e888527469",
+      "head": "263a9970a8c6783c571d83ce38f68f436a87672f",
+      "changed_paths": [
+        "Plans/event_datetime_inventory.json",
+        "scripts/pm_event_datetime_admission_checks.py",
+        "scripts/pm_event_datetime_exclusions.json",
+        "scripts/pm_event_datetime_inventory.py",
+        "scripts/pm_event_datetime_inventory.schema.json",
+        "scripts/pm_event_datetime_roles.json",
+        "scripts/pm_event_datetime_value_probe.py"
+      ],
+      "status": "pass"
+    },
+    "infrastructure_memory_pause": {
+      "reason": "LOW_MEMORY_PAUSE",
+      "available_bytes": 6028156928,
+      "required_bytes": 6442450944,
+      "completed_evidence_cases": 20,
+      "status": "resumed; all 27 evidence cases completed with expected outcomes"
+    },
+    "scope": "Finite shared-helper fix only; no owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence, number recipe, corpus case or .gitignore change."
+  },
+  "round13_validation": {
+    "round": 13,
+    "source_base": "07cd715a3fb433094e55ea54a653beeb0bd9f35c",
+    "implementation_commit": "3e4378f885c83dda88f5e1ea3718e5c5ce643ae3",
+    "B7": "fixed; role authority is an allowlist of positive conjunctive paths, separate from discovery",
+    "rows_moved_to_explicit_review": [
+      [
+        "Plans/storage_value_registry.json",
+        "json",
+        "/families/84/value_schema/properties/tabs"
+      ],
+      [
+        "Plans/home_workspace_layout_v2.schema.json",
+        "json",
+        "/properties/tabs"
+      ],
+      [
+        "Plans/project_system_contracts.schema.json",
+        "json",
+        "/$defs/project_creation_recovery_context/properties/settled_effects"
+      ],
+      [
+        "Plans/settings_system_contracts.schema.json",
+        "json",
+        "/$defs/values_by_setting_id"
+      ]
+    ],
+    "rows_recited_without_class_change": [
+      {
+        "node": [
+          "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters"
+        ],
+        "from": "/$defs/SafeRef",
+        "to": "/$defs/SafeParameters/additionalProperties",
+        "role_from": "SafeRef",
+        "role_to": "safe_parameter_value"
+      },
+      {
+        "node": [
+          "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters"
+        ],
+        "from": "/$defs/SafeRef",
+        "to": "/$defs/SafeParameters/additionalProperties",
+        "role_from": "SafeRef",
+        "role_to": "safe_parameter_value"
+      },
+      {
+        "node": [
+          "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters"
+        ],
+        "from": "/$defs/SafeRef",
+        "to": "/$defs/SafeParameters/additionalProperties",
+        "role_from": "SafeRef",
+        "role_to": "safe_parameter_value"
+      }
+    ],
+    "inventory": {
+      "status": "pass",
+      "nodes": 233,
+      "storage_nodes": 133,
+      "other_owner_nodes": 79,
+      "wildcard_non_timestamp_nodes": 3,
+      "wildcard_non_timestamp_role_nodes": 18,
+      "unclassified_nodes": 0
+    },
+    "selftest": {
+      "cases": 13372,
+      "case_passes": 13372,
+      "checks": 287,
+      "failed_checks": []
+    },
+    "targeted_probes": 53,
+    "original_probes_same_outcome": 48,
+    "adjacent_refused": 14,
+    "coherent_full_gates": [
+      {
+        "variant": "irrelevant_if",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "plan_blobs": 8968
+      },
+      {
+        "variant": "vacuous_not",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "plan_blobs": 8968
+      }
+    ],
+    "earlier_full_gates": [
+      {
+        "name": "sibling-full-gate",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ]
+      },
+      {
+        "name": "foreign-key-full-gate",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_evidence_changed",
+          "wildcard_role_review_required"
+        ]
+      }
+    ],
+    "original_literal_gates": [
+      {
+        "name": "original-sibling-full-gate",
+        "exit": 1
+      },
+      {
+        "name": "original-foreign-key-full-gate",
+        "exit": 1
+      },
+      {
+        "name": "original-coherent-bypass-full-gate",
+        "exit": 1
+      }
+    ],
+    "earlier_controls": {
+      "runtime_valid_preloaded": 133,
+      "runtime_on_demand_refused": 133,
+      "gate_injections_refused": 25,
+      "extended_pairs": 23,
+      "evidence_attacks": 27,
+      "name_maps": 21,
+      "full_wildcard_failures": 4,
+      "graph_controls": 23
+    },
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix13",
+    "scope": "Finite shared-helper fix only; no owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence, number recipe, corpus case or .gitignore change."
+  },
+  "number_scope_round1_validation": {
+    "round": "number scope 1",
+    "source_base": "55e4d716149f743ccc9e2aa3a3edc4d09f7d4248",
+    "implementation_commit": "9b6105bb81c4ff0b8d9a62bbc6563bb35cab4f65",
+    "B1": "fixed; supported number-only mode imports no date-time code",
+    "B2": "fixed; declaration admission has its own bounded negative",
+    "B3": "fixed; profile-selected decoder positives and single-defect negatives",
+    "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers",
+    "number_only": {
+      "absent": {
+        "exit_code": 0,
+        "status": "pass",
+        "corpus_cases": 345,
+        "case_passes": 345,
+        "positives": 183,
+        "negatives": 162,
+        "integration_checks": 60,
+        "datetime_modules_imported": []
+      },
+      "import_failing": {
+        "exit_code": 0,
+        "status": "pass",
+        "corpus_cases": 345,
+        "case_passes": 345,
+        "datetime_modules_imported": []
+      },
+      "gate_failing": {
+        "exit_code": 0,
+        "status": "pass",
+        "corpus_cases": 345,
+        "case_passes": 345,
+        "datetime_modules_imported": []
+      },
+      "identical_outcomes": true
+    },
+    "all_scope": {
+      "absent_exit": 1,
+      "import_failing_exit": 1,
+      "gate_failing": {
+        "exit_code": 1,
+        "status": "fail",
+        "case_passes": 0,
+        "case_execution": "NOT_RUN_ADMISSION_REFUSED"
+      }
+    },
+    "profile_loss": {
+      "in_process_status": "fail",
+      "failed_cases": [
+        "decode-app-float64-1.0",
+        "decode-app-float64-negative-zero",
+        "decode-app-binary",
+        "decode-app-float32",
+        "decode-binding-float32",
+        "decode-binding-float64",
+        "decode-binding-negative-fixint",
+        "decode-binding-int64-min",
+        "decode-binding-nested-negative",
+        "decode-binding-binary",
+        "decode-unknown-profile"
+      ],
+      "file_cli_exit": 1
+    },
+    "b2": {
+      "both_cut_route_control": {
+        "outcome": "acceptance",
+        "output": "1.5"
+      },
+      "declaration_cut": {
+        "jcs-decimal-undeclared": {
+          "error": "jcs_kind",
+          "outcome": "refusal"
+        },
+        "jcs-declaration-decimal-undeclared": {
+          "outcome": "acceptance",
+          "output": null
+        }
+      },
+      "preservation_cut_changes": [
+        "jcs-decimal-kind-1.0",
+        "jcs-decimal-kind-1.25",
+        "jcs-declared-decimal-kind-loss",
+        "jcs-kind-loss-current",
+        "jcs-kind-loss-exact",
+        "jcs-typed-1.0"
+      ],
+      "production_route_unchanged": {
+        "error": "jcs_kind_undeclared",
+        "outcome": "refusal"
+      }
+    },
+    "b3": {
+      "app_float32_cut": [
+        "decode-app-float32"
+      ],
+      "binding_float_cut": [
+        "decode-binding-float32",
+        "decode-binding-float64"
+      ],
+      "binding_negative_cut": [
+        "decode-binding-int64-min",
+        "decode-binding-negative-fixint"
+      ]
+    },
+    "mutations": {
+      "total": 29,
+      "failing_number_only": 29
+    },
+    "full_selftest": {
+      "status": "pass",
+      "cases": 13391,
+      "case_passes": 13391,
+      "positives": 6846,
+      "negatives": 6545,
+      "checks": 287,
+      "inventory": {
+        "status": "pass",
+        "nodes": 233,
+        "storage_nodes": 133,
+        "other_owner_nodes": 79,
+        "wildcard_non_timestamp_nodes": 3,
+        "wildcard_non_timestamp_role_nodes": 18,
+        "unclassified_nodes": 0
+      }
+    },
+    "differential": {
+      "integer_boundary_values": 377,
+      "jcs_float_values": 1048,
+      "node_exit": 0,
+      "node_version": "v22.22.2",
+      "pass": true,
+      "physical_float_roundtrips": 2096
+    },
+    "rfc8785": {
+      "finite_vectors": 24,
+      "nonfinite_refusals": 2,
+      "pass": true,
+      "source": "https://www.rfc-editor.org/rfc/rfc8785.html#appendix-B"
+    },
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix1",
+    "scope": "Number scope only. No date-time code, owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence or .gitignore change."
+  },
+  "round14_validation": {
+    "round": 14,
+    "review": "cycle-13 Opus pre-check (reviews/NUMRULE-sol/REVIEW-cycle13-opus.md)",
+    "source_base": "45a6ccde933e52635c6eda7d9e82921cf66622b5",
+    "implementation_commit": "a5ae4fc90b6da25efd00350e120291975268a401",
+    "N1": "fixed; a non-timestamp role citation must, on its own, refuse every battery timestamp and all 16 fixed control strings",
+    "N2": "fixed; $dynamicRef is not a positive path, so it routes to explicit review and earns no automatic credit",
+    "rows_moved_to_explicit_timestamp_review": [
+      [
+        "Plans/section15_browser_program_contracts.schema.json",
+        "json",
+        "/$defs/browser_program_result_validation/properties/result_schema_resources"
+      ],
+      [
+        "Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json",
+        "json",
+        "/$defs/common_node/properties/payload"
+      ],
+      [
+        "Plans/settings_system_contracts.schema.json",
+        "json",
+        "/$defs/setting_value/oneOf/5"
+      ],
+      [
+        "Plans/settings_system_contracts.schema.json",
+        "json",
+        "/$defs/values_by_setting_id"
+      ],
+      [
+        "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "json",
+        "/$defs/TargetRefs"
+      ],
+      [
+        "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "json",
+        "/$defs/SafeParameters"
+      ],
+      [
+        "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "json",
+        "/$defs/TargetRefs"
+      ],
+      [
+        "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "json",
+        "/$defs/SafeParameters"
+      ],
+      [
+        "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "json",
+        "/$defs/TargetRefs"
+      ],
+      [
+        "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "json",
+        "/$defs/SafeParameters"
+      ]
+    ],
+    "rows_kept_as_non_timestamp_roles": [
+      [
+        "Plans/shared_runtime_contracts.schema.json",
+        "json",
+        "/$defs/permission_snapshot_record/properties/resolved_permissions"
+      ],
+      [
+        "Plans/storage_value_registry.json",
+        "json",
+        "/families/62/value_schema/properties/resolved_permissions"
+      ],
+      [
+        "Plans/storage_value_registry.json",
+        "json",
+        "/families/84/value_schema/properties/tabs"
+      ],
+      [
+        "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+        "json",
+        "/$defs/permission_snapshot_record/properties/resolved_permissions"
+      ],
+      [
+        "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+        "json",
+        "/properties/resolved_permissions"
+      ],
+      [
+        "Plans/home_workspace_layout_v2.schema.json",
+        "json",
+        "/properties/tabs"
+      ],
+      [
+        "Plans/project_system_contracts.schema.json",
+        "json",
+        "/$defs/project_creation_recovery_context/properties/settled_effects"
+      ],
+      [
+        "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+        "json",
+        "/properties/resolved_permissions"
+      ]
+    ],
+    "inventory": {
+      "status": "pass",
+      "nodes": 233,
+      "storage_nodes": 133,
+      "other_owner_nodes": 89,
+      "wildcard_non_timestamp_nodes": 3,
+      "wildcard_non_timestamp_role_nodes": 8,
+      "unclassified_nodes": 0
+    },
+    "selftest": {
+      "cases": 13391,
+      "case_passes": 13391,
+      "checks": 299,
+      "failed_checks": []
+    },
+    "added_or_moved_selftest_checks": [
+      "datetime_automatic_credit_withheld_dynamicRef",
+      "datetime_role_authority_accepts_object_record",
+      "datetime_role_authority_refuses_dynamicRef",
+      "datetime_role_authority_refuses_undecided_accepts_one_control",
+      "datetime_role_authority_refuses_undecided_dependentSchemas_conjunct",
+      "datetime_role_authority_refuses_undecided_doc_only_conjunct",
+      "datetime_role_authority_refuses_undecided_doc_only_conjunct_bare_stamp",
+      "datetime_role_authority_refuses_undecided_generic_ref",
+      "datetime_role_authority_refuses_undecided_generic_whole_union",
+      "datetime_role_authority_refuses_undecided_implicit_shadowed_by_value_node",
+      "datetime_role_authority_refuses_undecided_implicit_true",
+      "datetime_role_authority_refuses_undecided_member_only_conjunct",
+      "datetime_role_authority_refuses_undecided_setting_value_shape",
+      "datetime_role_authority_refuses_undecided_whole_value_stamp_a"
+    ],
+    "precheck_replay": {
+      "attacks": 51,
+      "refused": 47,
+      "accepted_as_role": [
+        "control_deciding/direct_ref",
+        "control_deciding/allOf_ref",
+        "control_deciding/every_branch_union"
+      ],
+      "passed_without_record": [
+        "control/no_record_ts_accepting"
+      ],
+      "coherent_full_gates": {
+        "vacuous_doc_only": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "ec317b0871aa73fcea6e95a6ba1c546f67e19b80b785c8e9ee9c7ce962115e9f"
+        },
+        "vacuous_member_only": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "d217e2431258a28aa4dddb511c44c5b2097799a5060f6a3c79111412e55984df"
+        },
+        "vacuous_dependentSchemas": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "5735570925de099fcefaf87d0c84c141e49360bb90e32fb2cfa868eae4da44c6"
+        },
+        "vacuous_whole_value": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "74ed381192811442e60cffd425775df6aae005ab141e3ed543505927405c537f"
+        },
+        "irrelevant_if": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "3fe01cf95d870a867ae8735df0044150985ab62abef68ffc59f961387890edfb"
+        },
+        "vacuous_not": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "7bde8b697d7540f0cdefc3a54e6befc7bb7b807b02fbab1da71858a52d3a5d73"
+        },
+        "n2_dynamicRef": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "585ba6125e46245b2b38641751f7bcb42e5dc2f8e81d205a7d55770f97bc77be"
+        }
+      },
+      "literal_cycle12_bypass": {
+        "exit": 1,
+        "failure_kinds": {
+          "inventory_schema": 84
+        }
+      }
+    },
+    "targeted_probes": 53,
+    "original_probes_same_outcome": 48,
+    "adjacent_refused": 14,
+    "cycle12_coherent_full_gates": [
+      {
+        "variant": "irrelevant_if",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "plan_blobs": 8968
+      },
+      {
+        "variant": "vacuous_not",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "plan_blobs": 8968
+      }
+    ],
+    "earlier_full_gates": [
+      {
+        "name": "sibling-full-gate",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ]
+      },
+      {
+        "name": "foreign-key-full-gate",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_evidence_changed",
+          "wildcard_role_review_required"
+        ]
+      }
+    ],
+    "original_literal_gates": [
+      {
+        "name": "original-sibling-full-gate",
+        "exit": 1
+      },
+      {
+        "name": "original-foreign-key-full-gate",
+        "exit": 1
+      },
+      {
+        "name": "original-coherent-bypass-full-gate",
+        "exit": 1
+      }
+    ],
+    "mutation_controls": {
+      "unmutated": [],
+      "n1_deciding_check_removed": [
+        "datetime_role_authority_refuses_undecided_accepts_one_control",
+        "datetime_role_authority_refuses_undecided_dependentSchemas_conjunct",
+        "datetime_role_authority_refuses_undecided_doc_only_conjunct",
+        "datetime_role_authority_refuses_undecided_generic_ref",
+        "datetime_role_authority_refuses_undecided_generic_whole_union",
+        "datetime_role_authority_refuses_undecided_implicit_shadowed_by_value_node",
+        "datetime_role_authority_refuses_undecided_implicit_true",
+        "datetime_role_authority_refuses_undecided_member_only_conjunct",
+        "datetime_role_authority_refuses_undecided_setting_value_shape",
+        "datetime_role_authority_refuses_undecided_whole_value_stamp_a"
+      ],
+      "implicit_exclusion_removed": [
+        "datetime_role_authority_refuses_undecided_implicit_shadowed_by_value_node"
+      ],
+      "dynamicRef_back_in_allowlist": [
+        "datetime_automatic_credit_withheld_dynamicRef",
+        "datetime_role_authority_refuses_dynamicRef"
+      ]
+    },
+    "not_rerun": "cycle-10 replay suite (not in the FIX14 rerun list); its last run is fix13/cycle10-replay",
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix14",
+    "scope": "Date-time helper fix only: probe, admission checks, inventory schema (one evidence field), role records (classification and reason of ten), inventory evidence and its derived pin. No owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, .evidence, .gitignore or number-scope file change."
+  },
+  "number_gate_solmax_validation": {
+    "round": "number gate (Sol max)",
+    "source_base": "45a6ccde933e52635c6eda7d9e82921cf66622b5",
+    "implementation_commit": "f9bd0abf922e0bf19e689e2315bedecae06696d7",
+    "tested_number_commit": "19be90befcdc7d84eb900b64010348679dc8eb14",
+    "rebased_onto": "85b0ca7ece",
+    "B1": "fixed; current-parser positives check exact typed values and the subsequent integer slot boundary",
+    "B2": "fixed; actual producer bytes/digest routes against independent JCS and SHA-256, endpoints and forwarding",
+    "whole_class": "returns oracle on every value-returning positive; committed mutation set run by --mutations",
+    "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers --mutations",
+    "number_only": {
+      "status": "pass",
+      "corpus_cases": 440,
+      "case_passes": 440,
+      "positives": 235,
+      "negatives": 205,
+      "integration_checks": 60
+    },
+    "all_scope": {
+      "exit_code": 0,
+      "status": "pass",
+      "corpus_cases": 13486,
+      "case_passes": 13486,
+      "integration_checks": 299,
+      "datetime_inventory": {
+        "status": "pass",
+        "nodes": 233,
+        "unclassified_nodes": 0
+      }
+    },
+    "mutations": {
+      "apis": 25,
+      "caught": 120,
+      "declared_survivors": 1,
+      "mutations": 121,
+      "not_applicable_cells": 83,
+      "not_applied": 0,
+      "review_mutations": 6,
+      "review_mutations_caught": 6,
+      "runner_exceptions": 0,
+      "survivors": 1
+    },
+    "base_comparison": {
+      "base": "45a6ccde933e52635c6eda7d9e82921cf66622b5",
+      "caught": 79,
+      "missed": 42,
+      "missed_now_caught": 41
+    },
+    "declared_survivors": [
+      {
+        "id": "append-policy-no-type-check",
+        "reason": "Equivalent at every JSON-expressible input: membership in a tuple of exact str values already refuses every non-str JSON value with the same replay_policy reason. Only a str subclass instance distinguishes the two, and the JSON corpus cannot express one."
+      }
+    ],
+    "review_mutations": {
+      "route_gap_repro": {
+        "current_parser_rounded_int": "fail",
+        "current_parser_float": "fail",
+        "producer_sorted_json": "fail",
+        "producer_sha512": "fail",
+        "producer_drops_qualification": "fail"
+      },
+      "cli_mutations": {
+        "current-parser-rounded-int": 1,
+        "current-parser-float": 1,
+        "producer-json": 1,
+        "producer-sha512": 1,
+        "decoder-profile-loss": 1,
+        "deliberate-wrong-expected-output": 1
+      }
+    },
+    "known_answer_sha256": "a2e019f1b0e9d842cb4577196da7ca6024ef6ce1158df557858ff93914567416",
+    "cases_added": 95,
+    "returns_added_to_existing": 102,
+    "vector_crosscheck": {
+      "checked": 175,
+      "mismatches": 0
+    },
+    "harness_controls_exit_1": [
+      "control-false-survivor",
+      "control-surviving-mutation",
+      "control-uncovered-cell",
+      "control-missing-returns",
+      "control-wrong-returns"
+    ],
+    "msgpack": "1.1.2",
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix2",
+    "scope": "Number scope only. No helper behaviour, date-time code (except the corpus content pin), owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, governance evidence or .gitignore change."
+  },
+  "number_opus_precheck_fix2_validation": {
+    "round": "Opus pre-check (numbers fix 2)",
+    "review": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/NUMRULE-sol/REVIEW-numbers-fix2-opus.md",
+    "source_base": "051c303a2aea17ef85a6e66d89c75cbb3b29e058",
+    "implementation_commit": "7b370be1401a6183147917b68d78b165814c0122",
+    "finding_1": "fixed; the review's 15 blind mutations are committed and caught, each with a single-defect witness case",
+    "finding_2": "fixed; jcs-binary-value kills site 294, and the refusal-site sweep is generated from the AST",
+    "finding_3": "fixed; append-policy-str-subclass kills append-policy-no-type-check, which is no longer a survivor",
+    "finding_4": "fixed; build errors and runner exceptions are problems, never catches",
+    "finding_5": "fixed; inputs decode with the runner's own integer and duplicate-key code",
+    "production_helper_changed": false,
+    "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers --mutations",
+    "number_only": {
+      "status": "pass",
+      "corpus_cases": 490,
+      "case_passes": 490,
+      "positives": 252,
+      "negatives": 238,
+      "integration_checks": 60
+    },
+    "all_scope": {
+      "exit_code": 0,
+      "status": "pass",
+      "corpus_cases": 13536,
+      "case_passes": 13536,
+      "integration_checks": 299,
+      "datetime_inventory": {
+        "status": "pass",
+        "nodes": 233,
+        "unclassified_nodes": 0
+      }
+    },
+    "mutations": {
+      "apis": 25,
+      "build_errors": 0,
+      "caught": 279,
+      "comparison_boundaries": 12,
+      "declared_survivors": 4,
+      "generated_mutations": 110,
+      "hand_written_mutations": 173,
+      "mutations": 283,
+      "not_applicable_cells": 83,
+      "not_applied": 0,
+      "refusal_predicates": 34,
+      "refusal_sites": 64,
+      "review_fix2_caught": 18,
+      "review_fix2_declared_controls": 1,
+      "review_fix2_mutations": 19,
+      "review_mutations": 6,
+      "review_mutations_caught": 6,
+      "rules": 71,
+      "rules_caught": 71,
+      "runner_exceptions": 0,
+      "survivors": 4,
+      "undeclared_survivors": 0,
+      "witnessed": 279
+    },
+    "declared_survivors": [
+      {
+        "mutation": "control-noop-comment",
+        "reason": "Harness control from the review: a behaviour-free edit. It must survive; reporting it caught would mean the harness counts false kills."
+      },
+      {
+        "mutation": "site:<module>:raise#1",
+        "reason": "CLI entry point, not an API refusal: `raise SystemExit(main())` runs only under __main__, and the mutant module is loaded in memory, never as __main__. Without it the CLI would exit 0 on a failing corpus; the fresh-process CLI controls (a deliberately wrong expected output gives exit 1) cover the exit status instead."
+      },
+      {
+        "mutation": "boundary:qualified_jcs.number:math.copysign(1.0, f) < 0:0#1",
+        "reason": "Equivalent: math.copysign(1.0, f) returns exactly 1.0 or -1.0 (NaN included), never 0, so < 0 and <= 0 agree for every input."
+      },
+      {
+        "mutation": "boundary:storage_value_bytes:v >= 0:0#1",
+        "reason": "Equivalent: with v > 0, the integer 0 takes the negative branch, whose fixint test (0 >= -32) emits bytes([0 & 255]) = 0x00, the same byte binding_bytes(0) emits."
+      }
+    ],
+    "review_rerun": {
+      "own_mutations": {
+        "primary": 15,
+        "primary_caught": 15,
+        "supplementary": {
+          "control-noop-comment": "survives",
+          "jcs-key-type-refusal-removed": "caught",
+          "token-grammar-strips-whitespace": "caught",
+          "physical-unknown-profile-accepted": "caught"
+        }
+      },
+      "refusal_sweep": {
+        "sites": 61,
+        "caught": 61
+      }
+    },
+    "harness_controls_exit_1": [
+      "control-new-refusal-site",
+      "control-mutation-set"
+    ],
+    "cases_added": 50,
+    "vector_crosscheck": {
+      "checked": 18,
+      "mismatches": 0
+    },
+    "corpus_content_pin": "e0b9edbe5d895a146b76e9bd7d79a168b424aca123b243e99c0ba1659dc06a31",
+    "msgpack": "1.1.2",
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix3",
+    "scope": "Number scope only. No production helper code, date-time code (except the corpus content pin), owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, .evidence or .gitignore change."
+  },
+  "number_opus_precheck_fix3_validation": {
+    "round": "Opus pre-check (numbers fix 3)",
+    "review": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/NUMRULE-sol/REVIEW-numbers-fix3-opus.md",
+    "brief": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/NUMRULE-NUM-FIX4.md",
+    "source_base": "9f873ad83469b4e53a6579fb115f5ef2270e1f12",
+    "implementation_commit": "98490285ec628c2d6eb02c7197e611a4aeb46aad",
+    "finding_1": "fixed; the review's 20 blind mutations and S1-S8 are committed (source review-fix3) and caught; the five blocking cases (R06, R09, R16, R19, R20) and one case per survivor are in the corpus",
+    "finding_2": "fixed; the rules table is derived from the owner text: one row per statement (source path, line, exact text), re-extracted and checked by the self-test; every hand-written mutation names its rule",
+    "finding_3": "fixed by refusing aliases outright (refusal_alias_problems); delegated refusal calls are a generated family; the binding module is not enumerated (not in the brief)",
+    "finding_4": "fixed; owner check cli_failing_corpus_exits_1 runs the CLI's own __main__ path, so site:<module>:raise#1 is caught; --mutations also runs the real CLI once",
+    "finding_5": "documented; the site-370 fixture's dependence on the module-global len is in the runner docstring and both cases' fixture_boundary",
+    "finding_6": "rerun; --scope all on the implementation commit",
+    "production_helper_changed": false,
+    "production_finding": "none; no mutation exposed a production behaviour that differs from the owner text",
+    "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers --mutations",
+    "number_only": {
+      "status": "pass",
+      "corpus_cases": 544,
+      "case_passes": 544,
+      "positives": 266,
+      "negatives": 278,
+      "integration_checks": 61
+    },
+    "all_scope": {
+      "head": "98490285ec628c2d6eb02c7197e611a4aeb46aad",
+      "exit_code": 0,
+      "status": "pass",
+      "corpus_cases": 13590,
+      "case_passes": 13590,
+      "positives": 6929,
+      "negatives": 6661,
+      "integration_checks": 300,
+      "failed_checks": [],
+      "datetime_inventory": {
+        "status": "pass",
+        "nodes": 233,
+        "unclassified_nodes": 0
+      },
+      "failures": []
+    },
+    "mutations": {
+      "apis": 26,
+      "build_errors": 0,
+      "caught": 362,
+      "comparison_boundaries": 12,
+      "container_branches": 8,
+      "declared_survivors": 4,
+      "delegated_refusals": 19,
+      "field_iterations": 23,
+      "generated_mutations": 160,
+      "hand_written_mutations": 206,
+      "hand_written_orphans": 0,
+      "hand_written_with_rule": 206,
+      "mutations": 366,
+      "normative_statements": 146,
+      "not_applicable_cells": 89,
+      "not_applied": 0,
+      "refusal_predicates": 34,
+      "refusal_sites": 64,
+      "review_fix2_caught": 18,
+      "review_fix2_declared_controls": 1,
+      "review_fix2_mutations": 19,
+      "review_fix3_caught": 28,
+      "review_fix3_mutations": 28,
+      "review_mutations": 6,
+      "review_mutations_caught": 6,
+      "rows_with_rules": 114,
+      "rows_without_mutation": 80,
+      "rules": 108,
+      "rules_caught": 108,
+      "runner_exceptions": 0,
+      "stale_rows": 0,
+      "statement_rows": 194,
+      "statement_rows_caught": 114,
+      "statement_rows_not_caught": 0,
+      "statements": 194,
+      "statements_without_row": 0,
+      "survivors": 4,
+      "undeclared_survivors": 0,
+      "witnessed": 362
+    },
+    "cli_subprocess": {
+      "exit": 1,
+      "status": "fail"
+    },
+    "declared_survivors": [
+      {
+        "mutation": "control-noop-comment",
+        "reason": "Harness control from the review: a behaviour-free edit. It must survive; reporting it caught would mean the harness counts false kills."
+      },
+      {
+        "mutation": "boundary:qualified_jcs.number:math.copysign(1.0, f) < 0:0#1",
+        "reason": "Equivalent: math.copysign(1.0, f) returns exactly 1.0 or -1.0 (NaN included), never 0, so < 0 and <= 0 agree for every input."
+      },
+      {
+        "mutation": "boundary:storage_value_bytes:v >= 0:0#1",
+        "reason": "Equivalent: with v > 0, the integer 0 takes the negative branch, whose fixint test (0 >= -32) emits bytes([0 & 255]) = 0x00, the same byte binding_bytes(0) emits."
+      },
+      {
+        "mutation": "field:OriginalBinding.__post_init__:skip project_id#1",
+        "reason": "Equivalent: the loop body already exempts project_id (f.name != \"project_id\"), so leaving project_id out of the iteration changes nothing for any input; project_id is checked by the separate original_scope predicate."
+      }
+    ],
+    "review_rerun": {
+      "fix2_own_mutations": {
+        "primary": 15,
+        "primary_caught": 15,
+        "primary_survivors": [],
+        "supplementary": {
+          "control-noop-comment": "survives",
+          "jcs-key-type-refusal-removed": "caught",
+          "token-grammar-strips-whitespace": "caught",
+          "physical-unknown-profile-accepted": "caught"
+        }
+      },
+      "fix3_own_mutations": {
+        "counted": 20,
+        "caught": 20,
+        "survivors": [],
+        "survivors_that_differ": [],
+        "supplementary": {
+          "S1-digest-uppercase-hex": "caught",
+          "S2-token-prefix-match": "caught",
+          "S3-binding-surrogatepass": "caught",
+          "S4-append-policy-casefold": "caught",
+          "S5-payload-size-minimum-one": "caught",
+          "S6-storage-default-profile-app": "caught",
+          "S7-physical-drops-null-entries": "caught",
+          "S8-parsed-decimal-default-kind": "caught",
+          "S9-R15-noncanonical-float64-admitted": "caught"
+        }
+      },
+      "fix3_freshness": {
+        "F1-new-refuse-site": {
+          "exit": 1,
+          "first_problem": "new mutation point without a committed entry: site:exact_boolean:reviewer_new_site#1"
+        },
+        "F2-new-guard-predicate": {
+          "exit": 1,
+          "first_problem": "boolean-isinstance-int: find text must occur exactly once and differ from replace"
+        },
+        "F3-new-direct-raise": {
+          "exit": 1,
+          "first_problem": "new mutation point without a committed entry: site:exact_boolean:raise#1"
+        },
+        "F4-new-same-reason-site": {
+          "exit": 1,
+          "first_problem": "new mutation point without a committed entry: site:exact_boolean:boolean_type#2"
+        },
+        "F5-aliased-refusal-call": {
+          "exit": 1,
+          "first_problem": "refusal alias or indirect reference: _refuse at line 119 (_deny = _refuse)"
+        }
+      },
+      "fix3_delegated_sweep": {
+        "points": 25,
+        "caught": 22,
+        "survivors": [
+          {
+            "module": "pm_event_index_binding",
+            "line": 18,
+            "call": "raise ValueError('MessagePack length exceeds uint32')"
+          },
+          {
+            "module": "pm_event_index_binding",
+            "line": 53,
+            "call": "raise ValueError('Binding integers must be uint64')"
+          },
+          {
+            "module": "pm_event_index_binding",
+            "line": 34,
+            "call": "raise ValueError('Unsupported MessagePack container kind')"
+          }
+        ]
+      }
+    },
+    "rules_table_controls": {
+      "intact": "as expected",
+      "C1-owner-sentence-added": "as expected",
+      "C2-owner-lines-shifted": "as expected",
+      "C3-owner-sentence-changed": "as expected",
+      "C4-row-deleted": "as expected",
+      "C5-mutation-without-rule": "as expected",
+      "C6-row-with-rules-and-reason": "as expected",
+      "C7-rule-listing-foreign-mutation": "as expected",
+      "C8-rule-named-by-no-row": "as expected",
+      "C9-new-guide-section": "as expected",
+      "C10-stale-guide-exclusion": "as expected",
+      "C11-refusal-alias": "as expected",
+      "C12-refusal-by-getattr": "as expected"
+    },
+    "end_to_end_controls": {
+      "head-numbers": {
+        "exit_code": 0,
+        "as_expected": true
+      },
+      "failing-corpus": {
+        "exit_code": 1,
+        "as_expected": true
+      },
+      "head-numbers-mutations": {
+        "exit_code": 0,
+        "as_expected": true
+      },
+      "control-owner-sentence-added": {
+        "exit_code": 1,
+        "as_expected": true
+      }
+    },
+    "cases_added": 54,
+    "cases_changed_text_only": [
+      "app-binary-reported-length-4294967296",
+      "app-binary-reported-length-4294967295"
+    ],
+    "vector_crosscheck": {
+      "checked": 20,
+      "mismatches": 0
+    },
+    "corpus_content_pin": "bc6bcc3c69e4bd0d0828a38b1b67e9079dfa9d32e1b3f62e6207627c203e7cd1",
+    "msgpack": "1.1.2",
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/num-fix4",
+    "scope": "Number scope only. No production helper code, date-time code (except the corpus content pin), owner prose, pinned product schema, registry, Decision Log, Spec Lock, generated shard/index, .evidence or .gitignore change."
+  },
+  "round15_validation": {
+    "round": 15,
+    "review": "cycle-14 Opus pre-check (reviews/NUMRULE-sol/REVIEW-cycle14-opus.md)",
+    "source_base": "051c303a2aea17ef85a6e66d89c75cbb3b29e058",
+    "implementation_commit": "ff7caf8d7f62705c86f7dff95635cc867f198702",
+    "tested_commit": "92c49a488b05fd10527e26f997749a22e338720f",
+    "rebased_onto": "884d6bd29501b21a9ff637788d0cee7de6cb8724",
+    "rebased_head": {
+      "full_gate": {
+        "status": "pass",
+        "nodes": 233,
+        "unique_git_reads": 8879
+      },
+      "selftest": {
+        "cases": 13590,
+        "case_passes": 13590,
+        "checks": 319,
+        "failed_checks": []
+      },
+      "datetime_files_identical_to_tested_commit": [
+        "Plans/event_datetime_inventory.json",
+        "scripts/pm_event_datetime.py",
+        "scripts/pm_event_datetime_admission_checks.py",
+        "scripts/pm_event_datetime_inventory.py",
+        "scripts/pm_event_datetime_inventory.schema.json",
+        "scripts/pm_event_datetime_roles.json",
+        "scripts/pm_event_datetime_timestamp_battery.json",
+        "scripts/pm_event_datetime_value_probe.py"
+      ]
+    },
+    "B1": "fixed with the lead's simpler option: non-timestamp credit, automatic or role, needs a static closure (every reachable node 2020-12, no other dialect declared at or above it); a role also requires all_refused",
+    "B2": "fixed; a closure containing $dynamicRef, $dynamicAnchor, $recursiveRef or $recursiveAnchor earns no non-timestamp credit",
+    "N3": "fixed in the stated finite scope; a deterministic year sweep (1970-2100, 4,743 timestamps) is a fixed control: a deciding citation and automatic credit must refuse it; battery a125323b... and its pin unchanged",
+    "N5": "fixed; the timestamp-only and deciding checks share one validator per node, in the dialect the positive walk reached it under",
+    "N4_N6": "information only; no change",
+    "rows_moved": [],
+    "row_moves": {
+      "unchanged_blobs": {
+        "Plans/event_datetime_inventory.json": "76d49b9874f35597f6ecfbaf68f5a253da86d487",
+        "scripts/pm_event_datetime_roles.json": "8c18bf428e1f8ea6fadda6ea12c76c27eb20fd38",
+        "scripts/pm_event_datetime_timestamp_battery.json": "40843260b03700e7b41ba4e7472e7ee8f178eb48",
+        "scripts/pm_event_datetime_inventory.schema.json": "3d93ce314256a3d2a39fbeccba19e2050821aef0"
+      },
+      "inventory_pin": "5cd2d30c18560c8f5b846ffbaeabbe91fb000ff6c8065f91fe8b99f9bf6e1d7b",
+      "classification_totals": {
+        "other_owner_observation": 88,
+        "EventRecord": 98,
+        "event_record_index": 27,
+        "original_storage_fields": 6,
+        "Storage issued original fields": 2,
+        "source_lineage_schema_patch": 1,
+        "wildcard_non_timestamp": 3,
+        "wildcard_non_timestamp_role": 8
+      },
+      "automatic_rows": [
+        "/$defs/browser_program/properties/result_schema_dependencies",
+        "/$defs/BrowserProgramApplicationV1/properties/result_schema_dependencies",
+        "/$defs/source_by_setting_id"
+      ],
+      "kept_roles_all_refused_and_deciding": [
+        "/$defs/permission_snapshot_record/properties/resolved_permissions",
+        "/families/62/value_schema/properties/resolved_permissions",
+        "/families/84/value_schema/properties/tabs",
+        "/$defs/permission_snapshot_record/properties/resolved_permissions",
+        "/properties/resolved_permissions",
+        "/properties/tabs",
+        "/$defs/project_creation_recovery_context/properties/settled_effects",
+        "/properties/resolved_permissions"
+      ]
+    },
+    "inventory": {
+      "status": "pass",
+      "nodes": 233,
+      "storage_nodes": 133,
+      "other_owner_nodes": 89,
+      "wildcard_non_timestamp_nodes": 3,
+      "wildcard_non_timestamp_role_nodes": 8,
+      "unclassified_nodes": 0
+    },
+    "selftest": {
+      "fix15_checks_present_and_passing": 19,
+      "cases": 13486,
+      "case_passes": 13486,
+      "checks": 318,
+      "failed_checks": []
+    },
+    "added_selftest_checks": [
+      "datetime_automatic_credit_withheld_dynamicAnchor",
+      "datetime_automatic_credit_withheld_mixed_dialect",
+      "datetime_automatic_credit_withheld_year_sweep",
+      "datetime_role_authority_accepts_closure_one_dialect",
+      "datetime_role_authority_accepts_closure_unreachable_draft7_resource",
+      "datetime_role_authority_refuses_closure_dialect_2019_09_only",
+      "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource",
+      "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource_with_id",
+      "datetime_role_authority_refuses_closure_dialect_mixed_value_refuses",
+      "datetime_role_authority_refuses_closure_dialect_oneOf_2020_first",
+      "datetime_role_authority_refuses_closure_dialect_union_2020_first",
+      "datetime_role_authority_refuses_closure_dialect_union_draft7_first",
+      "datetime_role_authority_refuses_closure_dynamicAnchor_in_citation",
+      "datetime_role_authority_refuses_closure_dynamicRef_beside_deciding_conjunct",
+      "datetime_role_authority_refuses_closure_dynamicRef_cites_holder",
+      "datetime_role_authority_refuses_closure_dynamicRef_cites_value_node",
+      "datetime_role_authority_refuses_closure_recursiveAnchor_in_citation",
+      "datetime_role_authority_refuses_undecided_year_sweep",
+      "datetime_year_sweep_complete"
+    ],
+    "cycle14_replay": {
+      "attacks": 78,
+      "variants": 3,
+      "refused": 69,
+      "accepted_as_role": [
+        "control/direct_ref_deciding",
+        "control/allOf_ref_withheld_deciding",
+        "control/every_branch_union_withheld_deciding",
+        "format/ipv4_only",
+        "format/not_datetime_minlen31",
+        "format/datetime_maxlen19",
+        "format/datetime_10digit_fraction",
+        "pattern/unanchored_marker",
+        "maxlen/below_all_timestamps_controls_enum_excluded",
+        "dialect/control_both_2020"
+      ],
+      "passed_without_record": [
+        "replay-c13/control_no_record_ts_accepting",
+        "dialect/union_2020_first_no_record"
+      ],
+      "kept_roles": {
+        "records": 8,
+        "battery_sweep_controls_accepted_by_citations": 0,
+        "production_battery_and_sweep_accepted": 0,
+        "year_sweep": 4743
+      }
+    },
+    "cycle14_coherent_full_gates": {
+      "dialect": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": false,
+        "unique_git_reads": 0
+      },
+      "dynamicref": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": true,
+        "unique_git_reads": 0
+      },
+      "dynamicref-holder": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": true,
+        "unique_git_reads": 0
+      },
+      "year-2027": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": true,
+        "unique_git_reads": 0
+      },
+      "n1-witness": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": false,
+        "unique_git_reads": 0
+      }
+    },
+    "precheck_replay": {
+      "attacks": 51,
+      "refused": 47,
+      "accepted_as_role": [
+        "control_deciding/direct_ref",
+        "control_deciding/allOf_ref",
+        "control_deciding/every_branch_union"
+      ],
+      "passed_without_record": [
+        "control/no_record_ts_accepting"
+      ],
+      "coherent_full_gates": {
+        "vacuous_doc_only": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "ec317b0871aa73fcea6e95a6ba1c546f67e19b80b785c8e9ee9c7ce962115e9f"
+        },
+        "vacuous_member_only": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "d217e2431258a28aa4dddb511c44c5b2097799a5060f6a3c79111412e55984df"
+        },
+        "vacuous_dependentSchemas": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "5735570925de099fcefaf87d0c84c141e49360bb90e32fb2cfa868eae4da44c6"
+        },
+        "vacuous_whole_value": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "74ed381192811442e60cffd425775df6aae005ab141e3ed543505927405c537f"
+        },
+        "irrelevant_if": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "3fe01cf95d870a867ae8735df0044150985ab62abef68ffc59f961387890edfb"
+        },
+        "vacuous_not": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "7bde8b697d7540f0cdefc3a54e6befc7bb7b807b02fbab1da71858a52d3a5d73"
+        },
+        "n2_dynamicRef": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "585ba6125e46245b2b38641751f7bcb42e5dc2f8e81d205a7d55770f97bc77be"
+        }
+      },
+      "literal_cycle12_bypass": {
+        "exit": 1,
+        "failure_kinds": {
+          "inventory_schema": 84
+        }
+      }
+    },
+    "targeted_probes": 53,
+    "original_probes_same_outcome": 48,
+    "adjacent_refused": 14,
+    "cycle12_coherent_full_gates": [
+      {
+        "variant": "irrelevant_if",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "plan_blobs": 8968
+      },
+      {
+        "variant": "vacuous_not",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "plan_blobs": 8968
+      }
+    ],
+    "earlier_full_gates": [
+      {
+        "name": "sibling-full-gate",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ]
+      },
+      {
+        "name": "foreign-key-full-gate",
+        "exit": 1,
+        "errors": [
+          "wildcard_role_evidence_changed",
+          "wildcard_role_review_required"
+        ]
+      }
+    ],
+    "original_literal_gates": [
+      {
+        "name": "original-sibling-full-gate",
+        "exit": 1
+      },
+      {
+        "name": "original-foreign-key-full-gate",
+        "exit": 1
+      },
+      {
+        "name": "original-coherent-bypass-full-gate",
+        "exit": 1
+      }
+    ],
+    "mutation_controls": {
+      "unmutated": [],
+      "dialect_rule_removed": [
+        "datetime_automatic_credit_withheld_mixed_dialect",
+        "datetime_role_authority_refuses_closure_dialect_2019_09_only",
+        "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource",
+        "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource_with_id",
+        "datetime_role_authority_refuses_closure_dialect_mixed_value_refuses",
+        "datetime_role_authority_refuses_closure_dialect_oneOf_2020_first",
+        "datetime_role_authority_refuses_closure_dialect_union_2020_first"
+      ],
+      "dynamic_rule_removed": [
+        "datetime_automatic_credit_withheld_dynamicAnchor",
+        "datetime_role_authority_refuses_closure_dynamicAnchor_in_citation",
+        "datetime_role_authority_refuses_closure_dynamicRef_beside_deciding_conjunct",
+        "datetime_role_authority_refuses_closure_dynamicRef_cites_holder",
+        "datetime_role_authority_refuses_closure_dynamicRef_cites_value_node",
+        "datetime_role_authority_refuses_closure_recursiveAnchor_in_citation"
+      ],
+      "all_refused_requirement_removed": [],
+      "all_refused_and_dialect_rule_removed": [
+        "datetime_automatic_credit_withheld_mixed_dialect",
+        "datetime_role_authority_refuses_closure_dialect_2019_09_only",
+        "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource",
+        "datetime_role_authority_refuses_closure_dialect_embedded_draft7_resource_with_id",
+        "datetime_role_authority_refuses_closure_dialect_mixed_value_refuses",
+        "datetime_role_authority_refuses_closure_dialect_oneOf_2020_first",
+        "datetime_role_authority_refuses_closure_dialect_union_2020_first"
+      ],
+      "sweep_removed_from_deciding": [
+        "datetime_role_authority_refuses_undecided_year_sweep"
+      ],
+      "sweep_removed_from_automatic": [
+        "datetime_automatic_credit_withheld_year_sweep"
+      ]
+    },
+    "not_rerun": "cycle-10 replay suite (not in the FIX15 rerun list); its last run is fix13/cycle10-replay",
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15",
+    "scope": "Date-time helper fix only: probe, admission checks, the date-time role paragraph of the guide and this report set. No inventory, role record, battery, inventory schema, exclusion, owner prose, registry, Decision Log, Spec Lock, .evidence, .gitignore or number-scope change."
+  },
+  "round16_validation": {
+    "round": 16,
+    "title": "FIX16: gate bar self-check (date-time)",
+    "brief": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/NUMRULE-FIX16.md",
+    "bar": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GATE-BAR.md",
+    "source_base": "1161543510ac8708f36d5e155e3c4e721b427b11",
+    "implementation_commit": "8f8483eae3c23c440169f7798174149156a87a4e",
+    "production_datetime_code_changed": false,
+    "behaviour_finding": "none; no mutation exposed production behaviour that differs from the owner text",
+    "test_only_notes": [
+      "FIX11 datetime_battery_format_enforced cannot detect a probe without the format checker; kept unchanged, now witnessed by datetime_unit_probe_format_enforced and datetime_unit_deciding_uses_format_checker",
+      "the 7 declared survivors are dead or redundant production code, listed for a cleanup batch"
+    ],
+    "commands": {
+      "self_test": "python3 scripts/pm_event_datetime_mutations.py --self-test",
+      "mutations": "python3 scripts/pm_event_datetime_mutations.py --mutations",
+      "scope_all": "python3 scripts/pm_event_numbers.py --self-test (regression_checks runs every self-check and the five freshness checks)"
+    },
+    "added_files": [
+      "scripts/pm_event_datetime_mutations.py",
+      "scripts/pm_event_datetime_mutations.json",
+      "scripts/pm_event_datetime_selfcheck.py",
+      "scripts/pm_event_datetime_attacks.json"
+    ],
+    "changed_files": [
+      "scripts/pm_event_datetime_admission_checks.py"
+    ],
+    "totals": {
+      "points": 197,
+      "refusal_site": 103,
+      "refusal_predicate": 60,
+      "credit_predicate": 23,
+      "comparison_boundary": 11,
+      "statements": 108,
+      "normative_statements": 82,
+      "statement_rows": 108,
+      "rows_with_rules": 96,
+      "rows_without_mutation": 12,
+      "statements_without_row": 0,
+      "stale_rows": 0,
+      "rules": 72,
+      "rules_caught": 72,
+      "hand_written_mutations": 83,
+      "hand_written_orphans": 0,
+      "generated_mutations": 197,
+      "mutations": 280,
+      "caught": 273,
+      "witnessed": 273,
+      "survivors": 7,
+      "declared_survivors": 7,
+      "undeclared_survivors": 0,
+      "build_errors": 0,
+      "runner_exceptions": 0,
+      "not_applied": 0,
+      "self_checks": 445,
+      "self_checks_passing": 445,
+      "statement_rows_caught": 96,
+      "statement_rows_not_caught": 0
+    },
+    "attacks": 97,
+    "declared_survivors": [
+      {
+        "key": "site:datetime_inventory:decoded_documents:ValueError:empty JSON container#1",
+        "reason": "Equivalent. Every caller passes non-blank text (a file or block that mentions a field or a $-keyword) or treats an empty result exactly as the refusal: _exclusion_schema_paths catches ValueError and continues (no documents either way); validate_inventory's citation read then fails with KeyError (classification_citation_unreadable either way); _source_document falls back to Markdown blocks and gets {} (KeyError, inventory_source_unreadable either way)."
+      },
+      {
+        "key": "predicate:site:datetime_inventory:scan:ValueError:exclusion_purpose_citation_unreadable#1:false not citations#1",
+        "reason": "Equivalent. citations comes from str.split(';'), which always returns at least one element, so not citations is always False."
+      },
+      {
+        "key": "site:datetime_inventory:scan:scan_walk_failed#1",
+        "reason": "Unreachable. The outer handler covers only file.relative_to(root), which cannot fail for a path yielded under root/Plans, and the per-file try whose own handler catches the same exception types. The walk itself runs earlier, inside the exclusion block, where a cycle or broken symlink is reported as scan_exclusions_invalid (witnessed by datetime_unit_scan_symlink_cycle and datetime_unit_scan_broken_symlink)."
+      },
+      {
+        "key": "predicate:site:datetime_inventory:validate_inventory:source_lineage_role_invalid#1:false 'documents' not in document#1",
+        "reason": "Equivalent. The row's pointer was already resolved in the same document (at(document, row['pointer'])); a pointer that matches /documents/N/changes/N/... resolves only if 'documents' is a key, so when the match succeeds the predicate is always False."
+      },
+      {
+        "key": "predicate:site:datetime_inventory:StorageSelection.admit:DatetimeAdmissionError:datetime_schema_unclassified#1:false match[0] is not schema#1",
+        "reason": "Equivalent. StorageSelection.nodes maps id(node) to (node, row) and holds a strong reference to node, so no other live object can share that id; a lookup that hits always returns the same object."
+      },
+      {
+        "key": "predicate:site:datetime_value_probe:_PositivePaths._map:unproven.add#1:true keyword in dialect.VALIDATORS#1",
+        "reason": "Equivalent. REFERENCES is ('$ref',) and every supported dialect (2020-12, 2019-09, draft-07, draft-06) implements $ref, so the predicate is always True where it is evaluated."
+      },
+      {
+        "key": "predicate:site:datetime_value_probe:_PositivePaths._value:unproven.add#1:true keyword in dialect.VALIDATORS#1",
+        "reason": "Equivalent. REFERENCES is ('$ref',) and every supported dialect (2020-12, 2019-09, draft-07, draft-06) implements $ref, so the predicate is always True where it is evaluated."
+      }
+    ],
+    "rows_without_mutation": [
+      {
+        "row": "CV-1101:canonical_text:1.2",
+        "reason": "Ownership or governance statement; no date-time code implements it."
+      },
+      {
+        "row": "CV-1101:canonical_text:3.3",
+        "reason": "Exact instant comparison stays with its existing owners; the date-time code compares no instants."
+      },
+      {
+        "row": "CV-1101:canonical_text:5.4",
+        "reason": "An obligation of each adopting lane at its own boundaries; no shared date-time code implements it."
+      },
+      {
+        "row": "CV-1101:canonical_text:6.1",
+        "reason": "SP-1101 original selection is RetainedDispatcher in pm_event_numbers (number scope, its own rules table); the date-time code supplies only the profiles it selects, whose rules are profile.*."
+      },
+      {
+        "row": "CV-1101:canonical_text:6.4",
+        "reason": "Ownership or governance statement; no date-time code implements it."
+      },
+      {
+        "row": "guide:Shared calls:5.10",
+        "reason": "SP-1101 original selection is RetainedDispatcher in pm_event_numbers (number scope, its own rules table); the date-time code supplies only the profiles it selects, whose rules are profile.*."
+      },
+      {
+        "row": "guide:Shared calls:6.2",
+        "reason": "The scope dispatch is run_corpus in pm_event_numbers_corpus.py (number scope), outside the date-time code; the number scope's check number_scope_imported_no_datetime_code covers --scope numbers."
+      },
+      {
+        "row": "guide:Shared calls:6.6",
+        "reason": "Ownership or governance statement; no date-time code implements it."
+      },
+      {
+        "row": "guide:Shared calls:7.12",
+        "reason": "An obligation of each adopting lane at its own boundaries; no shared date-time code implements it."
+      },
+      {
+        "row": "guide:Shared calls:9.10",
+        "reason": "A count of committed review records, not code; datetime_unit_committed_role_counts checks it and the gate recomputes every record's evidence."
+      },
+      {
+        "row": "guide:Shared calls:9.11",
+        "reason": "A count of committed review records, not code; datetime_unit_committed_role_counts checks it and the gate requires each to decide the string."
+      },
+      {
+        "row": "guide:Shared calls:9.31",
+        "reason": "Ownership or governance statement; no date-time code implements it."
+      }
+    ],
+    "selftest_cli": {
+      "exit": 0,
+      "checks": 450,
+      "failures": []
+    },
+    "full_selftest": {
+      "exit": 0,
+      "cases": 13590,
+      "case_passes": 13590,
+      "checks": 769,
+      "failed_checks": [],
+      "plan_blobs": 8968,
+      "unique_git_reads": 8879
+    },
+    "inventory": {
+      "status": "pass",
+      "nodes": 233,
+      "storage_nodes": 133,
+      "other_owner_nodes": 89,
+      "wildcard_non_timestamp_nodes": 3,
+      "wildcard_non_timestamp_role_nodes": 8,
+      "unclassified_nodes": 0
+    },
+    "cycle14_replay": {
+      "attacks": 78,
+      "variants": 3,
+      "refused": 69,
+      "accepted_as_role": [
+        "control/direct_ref_deciding",
+        "control/allOf_ref_withheld_deciding",
+        "control/every_branch_union_withheld_deciding",
+        "format/ipv4_only",
+        "format/not_datetime_minlen31",
+        "format/datetime_maxlen19",
+        "format/datetime_10digit_fraction",
+        "pattern/unanchored_marker",
+        "maxlen/below_all_timestamps_controls_enum_excluded",
+        "dialect/control_both_2020"
+      ],
+      "passed_without_record": [
+        "replay-c13/control_no_record_ts_accepting",
+        "dialect/union_2020_first_no_record"
+      ],
+      "kept_roles": {
+        "records": 8,
+        "battery_sweep_controls_accepted_by_citations": 0,
+        "production_battery_and_sweep_accepted": 0,
+        "year_sweep": 4743
+      }
+    },
+    "cycle14_coherent_full_gates": {
+      "dialect": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": false,
+        "deciding_nodes": []
+      },
+      "dynamicref": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": true,
+        "deciding_nodes": []
+      },
+      "dynamicref-holder": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": true,
+        "deciding_nodes": []
+      },
+      "year-2027": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": true,
+        "deciding_nodes": []
+      },
+      "n1-witness": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": false,
+        "deciding_nodes": []
+      }
+    },
+    "cycle13_replay": {
+      "attacks": 51,
+      "refused": 47,
+      "accepted_as_role": [
+        "control_deciding/direct_ref",
+        "control_deciding/allOf_ref",
+        "control_deciding/every_branch_union"
+      ],
+      "passed_without_record": [
+        "control/no_record_ts_accepting"
+      ],
+      "coherent_full_gates": {
+        "vacuous_doc_only": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "ec317b0871aa73fcea6e95a6ba1c546f67e19b80b785c8e9ee9c7ce962115e9f"
+        },
+        "vacuous_member_only": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "d217e2431258a28aa4dddb511c44c5b2097799a5060f6a3c79111412e55984df"
+        },
+        "vacuous_dependentSchemas": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "5735570925de099fcefaf87d0c84c141e49360bb90e32fb2cfa868eae4da44c6"
+        },
+        "vacuous_whole_value": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "74ed381192811442e60cffd425775df6aae005ab141e3ed543505927405c537f"
+        },
+        "irrelevant_if": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "3fe01cf95d870a867ae8735df0044150985ab62abef68ffc59f961387890edfb"
+        },
+        "vacuous_not": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "7bde8b697d7540f0cdefc3a54e6befc7bb7b807b02fbab1da71858a52d3a5d73"
+        },
+        "n2_dynamicRef": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "585ba6125e46245b2b38641751f7bcb42e5dc2f8e81d205a7d55770f97bc77be"
+        }
+      },
+      "literal_cycle12_bypass": {
+        "exit": 1,
+        "failure_kinds": {
+          "inventory_schema": 84
+        }
+      }
+    },
+    "cycle12_replay": {
+      "targeted_probes": 53,
+      "original_probes_same_outcome": 48,
+      "adjacent_refused": 14,
+      "coherent_full_gates": [
+        {
+          "variant": "irrelevant_if",
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "plan_blobs": 8968
+        },
+        {
+          "variant": "vacuous_not",
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "plan_blobs": 8968
+        }
+      ],
+      "earlier_full_gates": [
+        {
+          "name": "sibling-full-gate",
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ]
+        },
+        {
+          "name": "foreign-key-full-gate",
+          "exit": 1,
+          "errors": [
+            "wildcard_role_evidence_changed",
+            "wildcard_role_review_required"
+          ]
+        }
+      ],
+      "original_literal_gates": [
+        {
+          "name": "original-sibling-full-gate",
+          "exit": 1
+        },
+        {
+          "name": "original-foreign-key-full-gate",
+          "exit": 1
+        },
+        {
+          "name": "original-coherent-bypass-full-gate",
+          "exit": 1
+        }
+      ]
+    },
+    "replay_outcomes_equal_fix15": true,
+    "harness_errors": [
+      "cycle-12 driver saved the last check_inventory call (a FIX16 scratch tree); fixed to save the first (the committed tree); run 1 retained in harness-errors/, campaign resumed at full-selftest after a scratch-integrity check"
+    ],
+    "preservation": {
+      "changed": [
+        "scripts/pm_event_datetime_admission_checks.py",
+        "scripts/pm_event_datetime_attacks.json",
+        "scripts/pm_event_datetime_mutations.json",
+        "scripts/pm_event_datetime_mutations.py",
+        "scripts/pm_event_datetime_selfcheck.py"
+      ],
+      "outside_allowed": [],
+      "number_scope_changed": [],
+      "production_changed": [],
+      "plans_changed": [],
+      "gitignore_or_evidence_changed": []
+    },
+    "rows_moved": [],
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/",
+    "scope": "Date-time self-check files and this report set only. No production date-time code, inventory, role record, battery, inventory schema, exclusion, adoption guide, number-scope file, owner prose, registry, Decision Log, Spec Lock, .evidence or .gitignore change."
+  }
+}

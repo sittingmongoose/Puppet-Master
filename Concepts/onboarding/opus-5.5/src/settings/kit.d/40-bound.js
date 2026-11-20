@@ -42,7 +42,7 @@ PM51.bound = {
   /* an ordinary row, drawn inside a manager card (e.g. inside an account or a skill) */
   row(id, { label, help } = {}) {
     const f = findSettingGlobal(id); if (!f) return '';
-    const s = label || help ? Object.assign({}, f.setting, label ? { label } : {}, help ? { description: help } : {}) : f.setting;
+    const s = label || help ? Object.assign({}, f.setting, label ? { label, o55Label: label } : {}, help ? { description: help, o55Help: help } : {}) : f.setting;
     return renderSettingRow(s, f.section, f.workspace);
   },
   rows(ids, opts) { return `<div class="setting-list o55-bound-rows">${(ids || []).map(id => PM51.bound.row(id, opts)).join('')}</div>`; }
@@ -78,6 +78,18 @@ handleInputAction = function (action, el) {
 /* ---------- dependents ("when") -------------------------------------------------------------------------------- */
 const o55DepsOf = {}; /* parent id -> [child id] */
 for (const [id, meta] of Object.entries(O55R)) if (meta && meta.when && meta.when.id) (o55DepsOf[meta.when.id] = o55DepsOf[meta.when.id] || []).push(id);
+/* FO-220: a when-condition may name the picture route instead of a setting. media.image.provider is retired
+   (FO-217): the chosen picture service lives in the image-generation route, r.primary.picture, the same source
+   the manager's primaryOf reads. The route is not a setting, so PM51.value cannot answer for it; this hook reads
+   it for the route id and falls through to the stored value for every other id. The media manager redraws its
+   rows on every route save, so the condition is re-read where the row is drawn. */
+PM51.whenValue = id => {
+  if (id === 'media.image.picture-route') {
+    const r = (state.mediaRoutes || []).find(x => x.id === 'image-generation');
+    return r && r.primary ? r.primary.picture : undefined;
+  }
+  return PM51.value(id);
+};
 /* Relevance follows the chain: a row that waits on a row which is itself hidden is hidden too (Retro scanline
    strength waits on Retro textures, which only shows while a Retro theme is chosen). A condition's value comes from
    PM51.whenValue: while NieR Mode is painted the theme reads as Basic (kit.d/18-nier.js). */

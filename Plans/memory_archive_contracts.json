@@ -1,0 +1,171 @@
+{
+  "schema_id": "pm.memory_archive.contracts.v1",
+  "version": "1.0.0",
+  "admission": "ABSENT",
+  "families": [
+    {
+      "event_type": "memory.monthly_summary.completed",
+      "family_id": "event-family-memory-monthly-summary-completed",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "membership": "ABSENT",
+      "semantic_owner": "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance",
+      "storage_owner": "Plans/storage-plan.md#SP-638",
+      "payload_owner": "Plans/storage-plan.md#SP-638",
+      "payload_schema_ref": "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_completed",
+      "consumer_id": "reader.memory.monthly_summary.completed.history.v1@1.0.0",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "operation_retention_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D",
+      "retention_source": "origin/plans/ea-retention-cards1-20261104@2663667e14346235daaa561d193e959422640b6e (DL-401/G04)",
+      "ids": [
+        "SP-638"
+      ],
+      "adopts": [
+        "SP-636",
+        "CV-656",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "replay_policy": "dedupe_by_idempotency_key",
+      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_completed",
+      "current_activation": "approved cutoffs applied; admission ABSENT; operation retention pending; Project-only",
+      "approved_policy": {
+        "decisions": [
+          "DL-446"
+        ],
+        "source_card": "E-CARDS-2 6.c A",
+        "idle_days_at_least": 90,
+        "usefulness_below": 0.1,
+        "scope": "each Project independently; no no-project writer edition admitted",
+        "idle_anchor": "later of updated_at or created_at, last_access_at or created_at",
+        "score": "section 6.3 captured ranking; pins excluded before scoring",
+        "count_trigger": false,
+        "deletion": "user only"
+      }
+    },
+    {
+      "event_type": "memory.monthly_summary.started",
+      "family_id": "event-family-memory-monthly-summary-started",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "membership": "ABSENT",
+      "semantic_owner": "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance",
+      "storage_owner": "Plans/storage-plan.md#SP-639",
+      "payload_owner": "Plans/storage-plan.md#SP-639",
+      "payload_schema_ref": "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_started",
+      "consumer_id": "reader.memory.monthly_summary.started.history.v1@1.0.0",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "operation_retention_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D",
+      "retention_source": "origin/plans/ea-retention-cards1-20261104@2663667e14346235daaa561d193e959422640b6e (DL-401/G04)",
+      "ids": [
+        "SP-639"
+      ],
+      "adopts": [
+        "SP-637",
+        "CV-657",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "replay_policy": "dedupe_by_idempotency_key",
+      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_started",
+      "current_activation": "approved cutoffs applied; admission ABSENT; operation retention pending; Project-only",
+      "approved_policy": {
+        "decisions": [
+          "DL-446"
+        ],
+        "source_card": "E-CARDS-2 6.c A",
+        "idle_days_at_least": 90,
+        "usefulness_below": 0.1,
+        "scope": "each Project independently; no no-project writer edition admitted",
+        "idle_anchor": "later of updated_at or created_at, last_access_at or created_at",
+        "score": "section 6.3 captured ranking; pins excluded before scoring",
+        "count_trigger": false,
+        "deletion": "user only"
+      }
+    },
+    {
+      "event_type": "memory.prune_archive.completed",
+      "family_id": "event-family-memory-prune-archive-completed",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "membership": "ABSENT",
+      "semantic_owner": "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance",
+      "storage_owner": "Plans/Contracts_V0.md#CV-658",
+      "payload_owner": "Plans/Contracts_V0.md#CV-658",
+      "payload_schema_ref": "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_completed",
+      "consumer_id": "reader.memory.prune_archive.completed.history.v1@1.0.0",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "operation_retention_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D",
+      "retention_source": "origin/plans/ea-retention-cards1-20261104@2663667e14346235daaa561d193e959422640b6e (DL-401/G04)",
+      "ids": [
+        "CV-658"
+      ],
+      "adopts": [
+        "SP-636",
+        "CV-656",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "replay_policy": "dedupe_by_idempotency_key",
+      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_completed",
+      "current_activation": "approved cutoffs applied; admission ABSENT; operation retention pending; Project-only",
+      "approved_policy": {
+        "decisions": [
+          "DL-447"
+        ],
+        "source_card": "E-CARDS-2 6.d A",
+        "idle_days_at_least": 180,
+        "usefulness_below": 0.05,
+        "scope": "each Project independently; no no-project writer edition admitted",
+        "idle_anchor": "later of updated_at or created_at, last_access_at or created_at",
+        "score": "section 6.3 captured ranking; pins excluded before scoring",
+        "count_trigger": false,
+        "deletion": "user only"
+      }
+    },
+    {
+      "event_type": "memory.prune_archive.started",
+      "family_id": "event-family-memory-prune-archive-started",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "membership": "ABSENT",
+      "semantic_owner": "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance",
+      "storage_owner": "Plans/Contracts_V0.md#CV-659",
+      "payload_owner": "Plans/Contracts_V0.md#CV-659",
+      "payload_schema_ref": "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_started",
+      "consumer_id": "reader.memory.prune_archive.started.history.v1@1.0.0",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "operation_retention_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D",
+      "retention_source": "origin/plans/ea-retention-cards1-20261104@2663667e14346235daaa561d193e959422640b6e (DL-401/G04)",
+      "ids": [
+        "CV-659"
+      ],
+      "adopts": [
+        "SP-637",
+        "CV-657",
+        "SP-278",
+        "SP-286",
+        "CV-339"
+      ],
+      "replay_policy": "dedupe_by_idempotency_key",
+      "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_started",
+      "current_activation": "approved cutoffs applied; admission ABSENT; operation retention pending; Project-only",
+      "approved_policy": {
+        "decisions": [
+          "DL-447"
+        ],
+        "source_card": "E-CARDS-2 6.d A",
+        "idle_days_at_least": 180,
+        "usefulness_below": 0.05,
+        "scope": "each Project independently; no no-project writer edition admitted",
+        "idle_anchor": "later of updated_at or created_at, last_access_at or created_at",
+        "score": "section 6.3 captured ranking; pins excluded before scoring",
+        "count_trigger": false,
+        "deletion": "user only"
+      }
+    }
+  ]
+}

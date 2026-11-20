@@ -28,7 +28,7 @@
     {
       "retrieval_uri": "https://puppetmaster.local/Plans/section15_browser_program_contracts.schema.json",
       "path": "Plans/section15_browser_program_contracts.schema.json",
-      "whole_resource_sha256": "53bd77453d0a4d2d941bad5f36f6ac1b0beef16b769a00f31870a1085688a534",
+      "whole_resource_sha256": "c3d627e64a3ca958d1f00adc8d2c67614723e207972535f0d461fb7f802a6ce7",
       "resource_role": "selected_application_or_current_aggregate",
       "literal_root_pointers": [
         "#/$defs/browser_actionApplicationV1",
@@ -60,7 +60,7 @@
     {
       "retrieval_uri": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json",
       "path": "Plans/application_workflow_contracts.schema.json",
-      "whole_resource_sha256": "60a52bcdb07803734d9c974f99bf742aa9b74eadf0422c07517c18e4e0eaf960",
+      "whole_resource_sha256": "2cf0d5972765362907d6d4eb05eb7bc0f06cdf5e15d6a89e777f38f4b7ebab82",
       "resource_role": "selected_application_or_current_aggregate",
       "literal_root_pointers": [
         "#/$defs/AgentMessageApplicationV1",
@@ -167,7 +167,7 @@
     {
       "retrieval_uri": "https://puppetmaster.local/schemas/assistant_memory/1.0.0/assistant_memory_contracts.schema.json",
       "path": "Plans/assistant_memory_contracts.schema.json",
-      "whole_resource_sha256": "8976176eefaec9ea3742f69c3bc84808b30b24fc158f3fe93a2dca4b32ee9c14",
+      "whole_resource_sha256": "9f786c8d47967454070a4cb38e106a987e07777c52ee7501077d79796a787638",
       "resource_role": "selected_application_or_current_aggregate",
       "literal_root_pointers": [
         "#/$defs/EvidenceRefApplicationV1",
@@ -2128,5 +2128,5 @@
       "adoption_disposition": "specified_unimplemented"
     }
   ],
-  "graph_sha256": "b1253eb7c777e52a29271af2d3f8b683d158816b9026f6b0aa34bdd533fdeffc"
+  "graph_sha256": "fd892f205eadd0ab4d3da1df061fdfa9038bc848927b2b7bc30303317fd9aa2e"
 }

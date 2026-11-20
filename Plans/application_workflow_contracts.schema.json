@@ -17023,6 +17023,430 @@
           }
         }
       ]
+    },
+    "CollaborationDefinitionStorageApplicationV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope",
+        "record",
+        "record_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.collaboration_definition.application.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "record": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationDefinitionApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "record_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^payload:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/json$(?![\\s\\S])"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "record_ref"
+            ],
+            "properties": {
+              "record_ref": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "record": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "record_ref"
+            ],
+            "properties": {
+              "record_ref": {
+                "type": "string"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "record": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CollaborationRunStorageApplicationV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope",
+        "record",
+        "record_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.collaboration_run.application.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "record": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationRunApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "record_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^payload:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/json$(?![\\s\\S])"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "record_ref"
+            ],
+            "properties": {
+              "record_ref": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "record": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "record_ref"
+            ],
+            "properties": {
+              "record_ref": {
+                "type": "string"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "record": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CollaborationParticipantStorageApplicationV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope",
+        "record",
+        "record_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.collaboration_participant.application.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "record": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationParticipantApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "record_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^payload:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/json$(?![\\s\\S])"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "record_ref"
+            ],
+            "properties": {
+              "record_ref": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "record": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "record_ref"
+            ],
+            "properties": {
+              "record_ref": {
+                "type": "string"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "record": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CollaborationTranscriptStorageApplicationV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope",
+        "record",
+        "record_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.collaboration_transcript.application.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "record": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json#/$defs/CollaborationMessageApplicationV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "record_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^payload:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/json$(?![\\s\\S])"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "record_ref"
+            ],
+            "properties": {
+              "record_ref": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "record": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "record_ref"
+            ],
+            "properties": {
+              "record_ref": {
+                "type": "string"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "record": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

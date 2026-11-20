@@ -1,0 +1,170 @@
+{
+  "audit_id": "audit-20260615-002-part-4-fable-cleanup",
+  "closures": [
+    {
+      "appended_matrix_line": 1,
+      "appended_matrix_sha256": "e4e6513e800ab7d2374a32b33c552eef60d695f5f1529f9f196083fd420f80f7",
+      "appended_registry_line": 1119,
+      "appended_registry_sha256": "934972580474cb15cd56b73a06ac3ba97886a4adfe01883ceedae41fe85235b5",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 1
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/audit-20260616-001-part-4-fable-cleanup/FINAL_REPORT.md": "8fab4c6aa8f086a861fcfafea087de1eb5a8e4817606f470f1831c692d9f38a9",
+        "Plans/Planning_Ledger_System.md#unit=PLS-011": "4a03a9d7e0b4d027416f760e3ff876c85796aebdbca49162cc4facdd583ae101",
+        "Plans/ledgers/v2/ledger_registry.json#json=/sealed_ledgers/4/status": "6248de8c916da2d0fe49f63c83197b5673acaf91acac3855966ff8b19d6dab03",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/manifest.json#json=/notes": "443df342159330173de5714d9f92857bcdb60f6c866911f569a26266f3875bd1",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/manifest.json#json=/status": "6248de8c916da2d0fe49f63c83197b5673acaf91acac3855966ff8b19d6dab03",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/records/corrections.jsonl#jsonl=correction_id=corr-0001": "1cae4bee3a2a2b6c106cd2815100b6c18786f6807658616e91826a0d83a34a58",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json#json=/governance_status": "6248de8c916da2d0fe49f63c83197b5673acaf91acac3855966ff8b19d6dab03",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json#json=/phase": "89b6af22f580616136f31ada845423362ccff97da77a61c48b260424f913bc5a",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json#json=/validation_state/safe_content_checks/4": "3c0dfb3a6fa0f03867724095b5d4a5f2e8382374f9b24f005b91f00c8a4119be",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/handoff.json#json=/current_phase": "89b6af22f580616136f31ada845423362ccff97da77a61c48b260424f913bc5a",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/handoff.json#json=/last_known_good_state": "1e3e84bff751a5bf9a51f685c8b8e58bd780a626791e9602dbaf14d20c2881ed",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/open_items.json#json=/notes": "1c6ec5b9db3756bd573eac65219d654fd9036dd495ad3bf3d0fbfc1b3718f8e8",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/validation/ledger_health.json#json=/status": "94d0ebe9b43f56f6cf3c429578dc3a21477a51df654ef94bf49cd751aabb40e2"
+      },
+      "finding_key": "sfk-d73d77e9078d2fd3843502a9",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260615-002-part-4-fable-cleanup-semantic-risks-jsonl-1",
+      "reviews": {
+        "astra": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-astra-r1.jsonl",
+          "packet_row_digest": "b2e3d8c37eb42a1211b608d262c7050cd2b0772c537becb316a76241de7b7ee2",
+          "reason": "Current state, handoff, open_items, health, manifest and registry now consistently record the explicit Part 4 repair/seal rather than pending seal with untouched governance. The accepted correction and manifest acknowledge governance mutations, matching PLS-011's explicit-seal rule.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-sol-r1.jsonl",
+          "packet_row_digest": "b2e3d8c37eb42a1211b608d262c7050cd2b0772c537becb316a76241de7b7ee2",
+          "reason": "Current state, manifest, registry, handoff, open-items and health consistently describe the explicit Part 4 repair/seal rather than pending seal with untouched governance. Manifest notes acknowledge the actual shard/evidence/Spec Lock refreshes, matching PLS-011's explicit-seal boundary.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 2,
+      "appended_matrix_sha256": "c5e25925f06f17ee04f5e291dfab348a5aa223d2ab104675173b2d2085980542",
+      "appended_registry_line": 1120,
+      "appended_registry_sha256": "c50f770f913faa86465ff5a4336f0316b405bcebc2da62e05f100a8bc13eca3a",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 3
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json#json=/failures": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json#json=/status": "fedce8e8af485c2586f54c43a9b656dc70b41eb9be8c64b69c98391847dd4baf",
+        "Plans/Planning_Ledger_System.md#unit=PLS-011": "4a03a9d7e0b4d027416f760e3ff876c85796aebdbca49162cc4facdd583ae101",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json#json=/validation_state/pm_plan_migration_validate": "696cb97cf4391c9006b8385133e31c83d9608457c73ac10b5f3ee128aa9043f8",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json#json=/validation_state/safe_content_checks/2": "5d852add5732226d533fb21a2054606131fca430af598fef49d5599337b30cdc",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/validation/ledger_health.json#json=/status": "94d0ebe9b43f56f6cf3c429578dc3a21477a51df654ef94bf49cd751aabb40e2",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/validation/ledger_health.json#json=/summary/governance_seal": "559532ad927252eed5d9b6687d55203a96b956d822055f4570f196a93a42bece",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/validation/ledger_health.json#json=/warnings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "finding_key": "sfk-2515f19164dd2625f5e60506",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260615-002-part-4-fable-cleanup-semantic-risks-jsonl-3",
+      "reviews": {
+        "astra": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-astra-r1.jsonl",
+          "packet_row_digest": "7d9a38e53a220bce0b47d93e475b2c2aa70261ce45d9ec67fb2a2387b5969416",
+          "reason": "The ledger now projects pm_plan_migration_validate as pass_after_audit_warning_repair and explicitly records refreshed migration proof. Ledger health has no current warnings and reports pass_governance_sealed; the cited migration validation_report also records pass.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-sol-r1.jsonl",
+          "packet_row_digest": "7d9a38e53a220bce0b47d93e475b2c2aa70261ce45d9ec67fb2a2387b5969416",
+          "reason": "The ledger now records migration validation as pass_after_audit_warning_repair and explicitly acknowledges the refreshed proof. Health reports a passed seal with an empty warnings list, and the cited migration validation report has status pass and no failures, so the original stale/failing projection is repaired.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 3,
+      "appended_matrix_sha256": "31365ddcf70e50ef54aed3b3632ebd6c1744077e0555f142ba40f685a3d9e909",
+      "appended_registry_line": 1178,
+      "appended_registry_sha256": "b4a814c0e67b234ae270e5ee481fcf2cae6f0fc31e2e0ba5d4b64b0b5accfbdb",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 2
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/audit-20260615-002-part-4-fable-cleanup/repair_report.json": "09903c3f598417b4705b69cfd3292d7ef018557b13c952f2b390964f06910ffe",
+        "Plans/Contracts_V0.md#unit=CV-285": "02e3c5c2c80a475859340c9fa0fc99f45096ccef847bd88e9df9627877e98953",
+        "Plans/Executor_Protocol.md#unit=EP-097": "11b70ebfceab21874263f6577b07a7c45c739e506a356dc70f6c1f3a42574acc",
+        "Plans/FinalGUISpec.md#unit=F3-391": "76b06757e014e7cca28f0684420ce797c04155cd661772f5420b2dce4560f2f4",
+        "Plans/Tools.md#unit=T-158": "f876b2e569f973c61234c388ee0a033f17e104eedab1784f69d5a3e164f061b7",
+        "Plans/Wiring_Matrix.md#unit=WM-036": "46cde2f7c9b2fdae23f2cd1f52a61eb1c9c003f35135c096e418718d73c4fe21",
+        "Plans/assistant-chat-design.md#unit=ACD-415": "abf3408344a801789b57b8cd66f7066db2e8681a606254c525f67cde3df4ab2c",
+        "Plans/ledgers/v2/ledger_registry.json#json=/sealed_ledgers/4/notes": "a08a3dbf4fcc948e65d10c9a04c65e3aec36b4960b63b354f70990e740cb4fd6",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/records/decisions.jsonl#jsonl=decision_id=dec-0005": "a669deac81c22752dabd0b5a0e54fd67873d778311d729d3842558da034901db",
+        "Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup/state/current.json#json=/validation_state/safe_content_checks/6": "12d0efd04c6d4e969a3e9ffdfd46bb3176dadfc086b1edacbc27297ef48be1f4"
+      },
+      "finding_key": "sfk-2694a087a43e96edb74c1b23",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260615-002-part-4-fable-cleanup-semantic-risks-jsonl-2",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "30222c1b6f5338cff3a4b5a21ab7b3969e8277e1c3e6c0253958894c9f34b43f",
+          "reason": "Accepted dec-0005 explicitly records governance-helper script work as repair/seal scope, and current ledger/registry text records that scope. The six cited PlanUnits now prohibit product implementation files rather than asserting no tooling changed, satisfying the original finding's alternative of accounting for the script change in cycle lineage.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "30222c1b6f5338cff3a4b5a21ab7b3969e8277e1c3e6c0253958894c9f34b43f",
+          "reason": "Accepted dec-0005 explicitly includes governance-helper changes in the repair/seal scope, and the ledger projections record that tooling scope. All six cited owner units now restrict the no-implementation claim to product implementation files, resolving the original contradiction.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    }
+  ],
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-334",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "route": "new_registry_row",
+    "source": "Jared, \"approve all\", T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z (stream C question 7, option (a)); extended to the other June audits with uncovered rows by pm7-build's relay of the same approved option (pm-mail 1105030457-ade2, 2026-11-05)"
+  },
+  "matrix": {
+    "original_rows": 0,
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "pass_id": "audit-20260615-002-part-4-fable-cleanup-supplemental-20261111",
+  "reviews": "Sol and Astra blind reviews are listed on each closures entry (verdict, your_verdict, your_status, packet_row_digest, batch file)",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}

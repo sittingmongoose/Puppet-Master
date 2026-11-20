@@ -1,0 +1,1724 @@
+{
+  "status": "TECHNICAL_DIAGNOSTICS_CLEARED_FULL_VALIDATION_PENDING",
+  "source_parent": "8d7201161119f5c3f8f1f1963e5b1649772cf6bd",
+  "technical_diagnostics_removed": 313,
+  "by_owning_lane": {
+    "DCW": 40,
+    "DG6A": 36,
+    "DCH": 51,
+    "DT": 34,
+    "DG6B": 152
+  },
+  "remaining_diagnostics": 86,
+  "remaining_kinds": {
+    "storage_value_registry_retention_policy_ref_unknown": 86
+  },
+  "registry_checker_unchanged": true,
+  "retention_choices_made": false,
+  "structural_repairs": {
+    "status": "APPLIED_VALIDATION_PENDING",
+    "diagnostics_targeted": 196,
+    "repairs": [
+      {
+        "lane": "DCW",
+        "family": "revision_run",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "recovery_epoch",
+          "value_revision"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "thread_id",
+          "bundle_id",
+          "revision_id",
+          "trigger",
+          "note_reply_index",
+          "status",
+          "requested_revision_capability",
+          "effective_revision_capability",
+          "permission_snapshot_id",
+          "annotation_ids",
+          "changes",
+          "created_at",
+          "interrupted_at",
+          "resumed_from_revision_id",
+          "recovery_epoch",
+          "value_revision",
+          "phases",
+          "intent",
+          "source_key",
+          "source_payload_ref"
+        ],
+        "before_sha256": "993e4370b2a673d7a6272ed45960d778ba26c90181fa7eb2ba0195776dee9395",
+        "after_sha256": "45b40ba74255fda8bf03a6a4b4e383a98d559d8bdfd71f943e971df7ffa0b838"
+      },
+      {
+        "lane": "DCW",
+        "family": "wizard_blocked_evidence",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "recovery_epoch",
+          "value_revision"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "recovery_epoch",
+          "value_revision",
+          "source_ref",
+          "prepared_event",
+          "first_append_receipt",
+          "original_event_value_commitment",
+          "original_segment_ref",
+          "publication",
+          "observation",
+          "source_key",
+          "source_payload_ref"
+        ],
+        "before_sha256": "aafdd64734d3c615c898a75877f32f18686118147d29000db80bdc48ed236a26",
+        "after_sha256": "3dccb0fd2d258242fcd47590c984718391db4f026f6b8b0eec0f6ed94c25266e"
+      },
+      {
+        "lane": "DCW",
+        "family": "wizard_open_evidence",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "recovery_epoch",
+          "value_revision"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "recovery_epoch",
+          "value_revision",
+          "source_ref",
+          "request",
+          "child",
+          "seed",
+          "result",
+          "prepared_event",
+          "first_append_receipt",
+          "original_event_value_commitment",
+          "original_segment_ref",
+          "publication",
+          "source_key",
+          "source_payload_ref"
+        ],
+        "before_sha256": "eda64a55ac16924dc2f8831d4e28176ab04e415d8595e0e2dda175bc803473cc",
+        "after_sha256": "4189d951fb0a59fa2c22f0172f33df207b71ceb0def23a77fe5aef99ed5a237d"
+      },
+      {
+        "lane": "DCW",
+        "family": "wizard_seed_load_evidence",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "recovery_epoch",
+          "value_revision"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "recovery_epoch",
+          "value_revision",
+          "source_ref",
+          "request",
+          "child",
+          "seed",
+          "result",
+          "prepared_event",
+          "first_append_receipt",
+          "original_event_value_commitment",
+          "original_segment_ref",
+          "publication",
+          "source_key",
+          "source_payload_ref"
+        ],
+        "before_sha256": "ad35b7e8ade59544d8383b9f8e7805eb14b47264196448b6cd597ea4dd00926e",
+        "after_sha256": "3dbc808595f8e699f34de5e336f2f4be2f783af539cb1777f222f699c31a54da"
+      },
+      {
+        "lane": "DCW",
+        "family": "wizard_unblocked_evidence",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "recovery_epoch",
+          "value_revision"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "recovery_epoch",
+          "value_revision",
+          "source_ref",
+          "prepared_event",
+          "first_append_receipt",
+          "original_event_value_commitment",
+          "original_segment_ref",
+          "publication",
+          "observation",
+          "source_key",
+          "source_payload_ref"
+        ],
+        "before_sha256": "c9245cbd76e46b9ff8fef624d7b3da5a98ea457fa292c6d3e30f5ead1fbed291",
+        "after_sha256": "17d0dbbbb8bed09e65a8dab26c9f2056af18187ceae3947cef671873bb87fcdb"
+      },
+      {
+        "lane": "DG6B",
+        "family": "auth_github_authenticated_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "7d0533a40f77ab555b8cfd9ba88b4d23a58d83b8d07eb702eca79b1f11df7375",
+        "after_sha256": "2f384e35cbd9bcfacdf291f23499a22bbe1dfa8f176ea5a1cbfe95422d8aaab7"
+      },
+      {
+        "lane": "DG6B",
+        "family": "auth_github_device_code_issued_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "70c8b70aff26b8b726b4c158408d464e92a735b8b5f7ffc2167f232a81ba6db4",
+        "after_sha256": "49c8acdbef99c3d0e778e6d572cf31a16efe55090b5577b242020b4d6eaea523"
+      },
+      {
+        "lane": "DG6B",
+        "family": "auth_github_disconnected_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "e0cba82abb297e704e8ec91b584c6d252cbaea90039e88cf8f28b7e9e4287150",
+        "after_sha256": "c756698e52ba2a3852ab0b5e4782d85b86f2fb2d5f1025943ac86df91481a51f"
+      },
+      {
+        "lane": "DG6B",
+        "family": "auth_github_failed_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "773cfb8ea2ba4e62d4b5e7c481e2f52747161edc3c194eb57e56ecb29ae97ebf",
+        "after_sha256": "4963245af212598ab6eff34a83159d9c17e2d9eadfe8f3682f5bf5becf785196"
+      },
+      {
+        "lane": "DG6B",
+        "family": "auth_github_token_polling_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "9226f2afb5c60f26f68664b55711d84b736dfcd771a0e76e05684828d64e4bcd",
+        "after_sha256": "7936f823b297b5386042137e93ce739f88dd86746e7381b34800cdca2bc160fd"
+      },
+      {
+        "lane": "DG6B",
+        "family": "persona_created_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "861db467927d276f6a7323a1a3f9432b8d7023b57bdfa39d3bdf0ffda3a5b35f",
+        "after_sha256": "671ee02d9d6405852efd1668476e3ef89fd60078c4f42ead9b3c98766e5f55d2"
+      },
+      {
+        "lane": "DG6B",
+        "family": "persona_deleted_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "38f27457e4ed2f03d63bc03bca2158dd66a0554f01d7c5511c5f10f4504a60f8",
+        "after_sha256": "88f051445d50eb9c22da00e51a238d33843379357a5f5ec744d5d370ed35f63b"
+      },
+      {
+        "lane": "DG6B",
+        "family": "persona_exported_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "2d8e11683936ab8dca38c0f39ffef7fbca509ec98b270b96976f6f5fe9cd6ebb",
+        "after_sha256": "f6203891d7eb183c743a7a02e1103206ae10a311e381e4e3a9a6a5d20187d5e6"
+      },
+      {
+        "lane": "DG6B",
+        "family": "persona_imported_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "5928d8049a74961dc04c5604119f21c1111a9a58d1578370039889b87855cb58",
+        "after_sha256": "84037898884228f4b55b55969513b81563cbfd5685fcd09f0986d002895d9408"
+      },
+      {
+        "lane": "DG6B",
+        "family": "persona_selected_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "8036e7d74b0026f3e3178366ee10f67c04c60daf6147b36beb99e07ae3f384ba",
+        "after_sha256": "5288a66f201781ea4ec4eae331ed3c14aade225dc5ab75719177a351b5d2b77d"
+      },
+      {
+        "lane": "DG6B",
+        "family": "persona_updated_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "415ef382b10f649167ac3103644a0ca9a2249da21eb36a6091e7751ad391ff97",
+        "after_sha256": "409c8ab34dc20ba8a0d363a3c1d32d0d775997b96c6cea774367672117701e8d"
+      },
+      {
+        "lane": "DG6B",
+        "family": "plugin_hook_blocked_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "d8b599057ada15dff30a09197d9f1810d4193cc269c9f7207ae65bda21385a17",
+        "after_sha256": "755001dad5ff33841ea69a98a9a2d17eb3bbda3554b7b43397f41bbd3631d206"
+      },
+      {
+        "lane": "DG6B",
+        "family": "plugin_hook_error_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "4803b97184f4bc639979d0a442fc96f96891792392c79f631fb623de98f9b809",
+        "after_sha256": "1dc06d0cc4a04bbc564c636a793f7a9c2f9f3536cc8c0cb724ed5735733c8bf0"
+      },
+      {
+        "lane": "DG6B",
+        "family": "plugin_hook_invoked_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "0c1dcf18896e7fa7b419fd274da5079e01cc05291bc88e86e0a4fc37969c973b",
+        "after_sha256": "13f3f95f0d35b42d198a568cd462beebbc2aa462e25512317066cfaafa12585a"
+      },
+      {
+        "lane": "DG6B",
+        "family": "plugin_load_failed_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "2a92b07e3acd4009e5ffe99879b02f1195ad49687deb379924ac02477d8a432a",
+        "after_sha256": "db04855a20042b983769100cc5cea742e856111864aadf18511b5a6261868b29"
+      },
+      {
+        "lane": "DG6B",
+        "family": "plugin_loaded_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "f001dbbde47c7b47002ddb1abba4bb0deae68e25fa5ede528bc8ac8835f637fd",
+        "after_sha256": "cf0a01e4e2371698262b08e720ab6c1361e0de3c830ec75569cfa55ed3ee2c21"
+      },
+      {
+        "lane": "DG6B",
+        "family": "plugin_permission_override_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "ff528892150419e976e976b4722646f1b6a5802c420eb6026479afd7699821ef",
+        "after_sha256": "e12ab8d2c5a4a26cd08002f742c0f28318310cac4c8ff947d132e1520dfa3f6d"
+      },
+      {
+        "lane": "DG6B",
+        "family": "plugin_tool_collision_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "122f9b29130b68573982350c18a8857af3dfe9a68a7917cd3f0eb080bd460bd8",
+        "after_sha256": "ca83a2f8f4e837288124580c2d2c60f63a1abed349ea47aef74cc5aa74ff0bf8"
+      },
+      {
+        "lane": "DG6B",
+        "family": "plugin_tool_registered_operation",
+        "proof": "Each oneOf branch is already a closed object with the identical common required fields. Root field constraints are common to every branch; other union properties are neutral. All original branches and definitions are unchanged.",
+        "root_required": [
+          "schema_id",
+          "schema_version",
+          "event_type"
+        ],
+        "root_properties": [
+          "schema_id",
+          "schema_version",
+          "event_type",
+          "scope_key",
+          "actor_ref",
+          "payload",
+          "state",
+          "effect_receipt_ref",
+          "event_id",
+          "idempotency_key",
+          "server_id",
+          "replay_policy",
+          "payload_ref"
+        ],
+        "before_sha256": "e5c5b053fe05098ef7806739d2fbc8d1b281bb454ab9755edee231d701de2cfb",
+        "after_sha256": "65d2ea9886d9226c0960d6f61c004c72bd05dfbfde04e206e13b3bd8a7128f45"
+      },
+      {
+        "lane": "DG6A",
+        "family": "alert_acknowledged_operation",
+        "before_required_fields": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_digest",
+          "event_id",
+          "idempotency_key",
+          "request_digest",
+          "state",
+          "payload",
+          "owner_commit_ref",
+          "result_ref",
+          "dispatch_receipt_ref",
+          "original_append_result_ref",
+          "prior_owner_state",
+          "candidate_owner_state"
+        ],
+        "after_required_fields": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_digest",
+          "event_id",
+          "idempotency_key",
+          "request_digest",
+          "state",
+          "payload",
+          "owner_commit_ref",
+          "result_ref",
+          "dispatch_receipt_ref",
+          "original_append_result_ref",
+          "prior_owner_state",
+          "candidate_owner_state",
+          "original_command"
+        ],
+        "proof": "original_command is already required by the unchanged closed owner operation schema and frozen original-command custody."
+      },
+      {
+        "lane": "DG6A",
+        "family": "alert_dismissed_operation",
+        "before_required_fields": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_digest",
+          "event_id",
+          "idempotency_key",
+          "request_digest",
+          "state",
+          "payload",
+          "owner_commit_ref",
+          "result_ref",
+          "dispatch_receipt_ref",
+          "original_append_result_ref",
+          "prior_owner_state",
+          "candidate_owner_state"
+        ],
+        "after_required_fields": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_digest",
+          "event_id",
+          "idempotency_key",
+          "request_digest",
+          "state",
+          "payload",
+          "owner_commit_ref",
+          "result_ref",
+          "dispatch_receipt_ref",
+          "original_append_result_ref",
+          "prior_owner_state",
+          "candidate_owner_state",
+          "original_command"
+        ],
+        "proof": "original_command is already required by the unchanged closed owner operation schema and frozen original-command custody."
+      },
+      {
+        "lane": "DG6A",
+        "family": "alert_rule_muted_operation",
+        "before_required_fields": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_digest",
+          "event_id",
+          "idempotency_key",
+          "request_digest",
+          "state",
+          "payload",
+          "owner_commit_ref",
+          "result_ref",
+          "dispatch_receipt_ref",
+          "original_append_result_ref",
+          "prior_owner_state",
+          "candidate_owner_state"
+        ],
+        "after_required_fields": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_digest",
+          "event_id",
+          "idempotency_key",
+          "request_digest",
+          "state",
+          "payload",
+          "owner_commit_ref",
+          "result_ref",
+          "dispatch_receipt_ref",
+          "original_append_result_ref",
+          "prior_owner_state",
+          "candidate_owner_state",
+          "original_command"
+        ],
+        "proof": "original_command is already required by the unchanged closed owner operation schema and frozen original-command custody."
+      },
+      {
+        "lane": "DG6A",
+        "family": "alert_snoozed_operation",
+        "before_required_fields": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_digest",
+          "event_id",
+          "idempotency_key",
+          "request_digest",
+          "state",
+          "payload",
+          "owner_commit_ref",
+          "result_ref",
+          "dispatch_receipt_ref",
+          "original_append_result_ref",
+          "prior_owner_state",
+          "candidate_owner_state"
+        ],
+        "after_required_fields": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_digest",
+          "event_id",
+          "idempotency_key",
+          "request_digest",
+          "state",
+          "payload",
+          "owner_commit_ref",
+          "result_ref",
+          "dispatch_receipt_ref",
+          "original_append_result_ref",
+          "prior_owner_state",
+          "candidate_owner_state",
+          "original_command"
+        ],
+        "proof": "original_command is already required by the unchanged closed owner operation schema and frozen original-command custody."
+      }
+    ],
+    "source_paths": [
+      "Plans/dcw/revision_run.schema.json",
+      "Plans/dcw/wizard_blocked_evidence.schema.json",
+      "Plans/dcw/wizard_open_evidence.schema.json",
+      "Plans/dcw/wizard_seed_load_evidence.schema.json",
+      "Plans/dcw/wizard_unblocked_evidence.schema.json",
+      "Plans/dg6b_event_contracts.schema.json"
+    ],
+    "retention_unchanged": true,
+    "registry_checker_unchanged": true
+  },
+  "DG6A_DT_selector_repairs": {
+    "status": "APPLIED_VALIDATION_PENDING",
+    "diagnostics_targeted": 66,
+    "repairs": [
+      {
+        "lane": "DG6A",
+        "family": "alert_acknowledged_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-660",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/alert_event_contracts/alert_acknowledged_checkpoint.schema.json"
+      },
+      {
+        "lane": "DG6A",
+        "family": "alert_dismissed_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-661",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/alert_event_contracts/alert_dismissed_checkpoint.schema.json"
+      },
+      {
+        "lane": "DG6A",
+        "family": "alert_rule_muted_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-662",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/alert_event_contracts/alert_rule_muted_checkpoint.schema.json"
+      },
+      {
+        "lane": "DG6A",
+        "family": "alert_snoozed_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-663",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/alert_event_contracts/alert_snoozed_checkpoint.schema.json"
+      },
+      {
+        "lane": "DG6A",
+        "family": "panel_redocked_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-664",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/panel_event_contracts/panel_redocked_checkpoint.schema.json"
+      },
+      {
+        "lane": "DG6A",
+        "family": "panel_undocked_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-665",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/panel_event_contracts/panel_undocked_checkpoint.schema.json"
+      },
+      {
+        "lane": "DG6A",
+        "family": "concern_created_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-666",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/concern_created_contracts/concern_created_checkpoint.schema.json"
+      },
+      {
+        "lane": "DG6A",
+        "family": "bundle_note_created_checkpoint",
+        "owner": "Plans/FinalGUISpec.md#F3-706",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/card5_event_contracts/bundle_note_created.checkpoint.schema.json"
+      },
+      {
+        "lane": "DG6A",
+        "family": "bundle_note_status_changed_checkpoint",
+        "owner": "Plans/FinalGUISpec.md#F3-707",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/card5_event_contracts/bundle_note_status_changed.checkpoint.schema.json"
+      },
+      {
+        "lane": "DG6A",
+        "family": "bundle_annotation_state_changed_checkpoint",
+        "owner": "Plans/FinalGUISpec.md#F3-708",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/card5_event_contracts/bundle_annotation_state_changed.checkpoint.schema.json"
+      },
+      {
+        "lane": "DG6A",
+        "family": "concern_assigned_checkpoint",
+        "owner": "Plans/FinalGUISpec.md#F3-709",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/card5_event_contracts/concern_assigned.checkpoint.schema.json"
+      },
+      {
+        "lane": "DG6A",
+        "family": "concern_evidence_linked_checkpoint",
+        "owner": "Plans/FinalGUISpec.md#F3-710",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/card5_event_contracts/concern_evidence_linked.checkpoint.schema.json"
+      },
+      {
+        "lane": "DG6A",
+        "family": "concern_promoted_checkpoint",
+        "owner": "Plans/FinalGUISpec.md#F3-711",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/card5_event_contracts/concern_promoted.checkpoint.schema.json"
+      },
+      {
+        "lane": "DG6A",
+        "family": "concern_reopened_checkpoint",
+        "owner": "Plans/FinalGUISpec.md#F3-712",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/card5_event_contracts/concern_reopened.checkpoint.schema.json"
+      },
+      {
+        "lane": "DG6A",
+        "family": "concern_resolved_checkpoint",
+        "owner": "Plans/FinalGUISpec.md#F3-713",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/card5_event_contracts/concern_resolved.checkpoint.schema.json"
+      },
+      {
+        "lane": "DG6A",
+        "family": "concern_updated_checkpoint",
+        "owner": "Plans/FinalGUISpec.md#F3-714",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/card5_event_contracts/concern_updated.checkpoint.schema.json"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_approval_requested_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-580",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_requested_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_approval_granted_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-581",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_granted_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_approval_denied_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-582",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_denied_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_approval_timeout_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-583",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/approval_timeout_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_config_migrated_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-584",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/config_migrated_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_gate_evaluation_started_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-585",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/gate_evaluation_started_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_gate_failed_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-586",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/gate_failed_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_gate_passed_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-587",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/gate_passed_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_requirements_clarification_requested_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-588",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/requirements_clarification_requested_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_run_background_enqueued_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-589",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/run_background_enqueued_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_tool_denied_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-590",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_denied_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_tool_execution_completed_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-591",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_execution_completed_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_tool_execution_started_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-592",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_execution_started_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_tool_invoked_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-593",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/tool_invoked_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_usage_event_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-594",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/usage_event_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_worktree_created_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-595",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/worktree_created_checkpoint"
+      },
+      {
+        "lane": "DT",
+        "family": "dt_worktree_deleted_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-596",
+        "field": "index_read_token",
+        "classification": "nonsecret SP-278/DL-076 complete nine-field durable source selector, not credential material",
+        "schema_ref": "Plans/dt_event_contracts.schema.json#/$defs/worktree_deleted_checkpoint"
+      }
+    ],
+    "retention_unchanged": true,
+    "selector_values_unchanged": true,
+    "old_constraints_retained_separately": true
+  },
+  "DCH_selector_repairs": {
+    "status": "APPLIED_VALIDATION_PENDING",
+    "diagnostics_targeted": 51,
+    "lane": "DCH",
+    "repairs": [
+      {
+        "family": "dch_bundle_selection_forward_blocked_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-610",
+        "schema_path": "Plans/dch_event_payloads/dch_bundle_selection_forward_blocked_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_bundle_selection_sent_to_chat_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-611",
+        "schema_path": "Plans/dch_event_payloads/dch_bundle_selection_sent_to_chat_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_chat_message_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-612",
+        "schema_path": "Plans/dch_event_payloads/dch_chat_message_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_chat_thread_archived_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-613",
+        "schema_path": "Plans/dch_event_payloads/dch_chat_thread_archived_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_chat_thread_created_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-614",
+        "schema_path": "Plans/dch_event_payloads/dch_chat_thread_created_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_chat_thread_deleted_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-615",
+        "schema_path": "Plans/dch_event_payloads/dch_chat_thread_deleted_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_chat_thread_worktree_bound_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-616",
+        "schema_path": "Plans/dch_event_payloads/dch_chat_thread_worktree_bound_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_chat_thread_worktree_create_failed_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-617",
+        "schema_path": "Plans/dch_event_payloads/dch_chat_thread_worktree_create_failed_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_chat_thread_worktree_merge_failed_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-618",
+        "schema_path": "Plans/dch_event_payloads/dch_chat_thread_worktree_merge_failed_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_chat_thread_worktree_merged_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-619",
+        "schema_path": "Plans/dch_event_payloads/dch_chat_thread_worktree_merged_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_chat_thread_worktree_pr_created_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-620",
+        "schema_path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pr_created_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_chat_thread_worktree_pr_failed_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-621",
+        "schema_path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pr_failed_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_chat_thread_worktree_pre_merge_test_failed_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-622",
+        "schema_path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_failed_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_chat_thread_worktree_pre_merge_test_passed_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-623",
+        "schema_path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_passed_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_chat_thread_worktree_pre_merge_test_started_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-624",
+        "schema_path": "Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_started_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_chat_thread_worktree_renamed_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-625",
+        "schema_path": "Plans/dch_event_payloads/dch_chat_thread_worktree_renamed_checkpoint.schema.json#"
+      },
+      {
+        "family": "dch_chat_thread_worktree_unbound_checkpoint",
+        "owner": "Plans/storage-plan.md#SP-626",
+        "schema_path": "Plans/dch_event_payloads/dch_chat_thread_worktree_unbound_checkpoint.schema.json#"
+      }
+    ],
+    "current_writer_recipe": "strict-v5",
+    "displaced_recipe": "strict-v4",
+    "old_tuple_must_match": "original-dch-v4-tuple.json",
+    "old_three_frozen_recipes_unchanged": true,
+    "write_receipt_catalogue_unchanged": true,
+    "retained_original_values_unchanged": true,
+    "current_field_rename": {
+      "source_token": "source_read_token"
+    },
+    "canonical_selector_and_original_lexical_constraints_required": true,
+    "old_store_missing_receipt_default_unchanged": "strict-v4; S4 not re-decided",
+    "owner_units": [
+      "Plans/storage-plan.md#SP-610",
+      "Plans/storage-plan.md#SP-611",
+      "Plans/storage-plan.md#SP-612",
+      "Plans/storage-plan.md#SP-613",
+      "Plans/storage-plan.md#SP-614",
+      "Plans/storage-plan.md#SP-615",
+      "Plans/storage-plan.md#SP-616",
+      "Plans/storage-plan.md#SP-617",
+      "Plans/storage-plan.md#SP-618",
+      "Plans/storage-plan.md#SP-619",
+      "Plans/storage-plan.md#SP-620",
+      "Plans/storage-plan.md#SP-621",
+      "Plans/storage-plan.md#SP-622",
+      "Plans/storage-plan.md#SP-623",
+      "Plans/storage-plan.md#SP-624",
+      "Plans/storage-plan.md#SP-625",
+      "Plans/storage-plan.md#SP-626"
+    ]
+  },
+  "DCH_preservation_proof": {
+    "status": "PASS",
+    "families": 17,
+    "checks": [
+      {
+        "family": "bundle.selection_forward_blocked",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "bundle.selection_sent_to_chat",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "chat.message",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "chat.thread_archived",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "chat.thread_created",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "chat.thread_deleted",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "chat.thread_worktree_bound",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "chat.thread_worktree_create_failed",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "chat.thread_worktree_merge_failed",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "chat.thread_worktree_merged",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "chat.thread_worktree_pr_created",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "chat.thread_worktree_pr_failed",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "chat.thread_worktree_pre_merge_test_failed",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "chat.thread_worktree_pre_merge_test_passed",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "chat.thread_worktree_pre_merge_test_started",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "chat.thread_worktree_renamed",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      },
+      {
+        "family": "chat.thread_worktree_unbound",
+        "effective_schema_exact_renamed_prior_schema": true,
+        "protected_current_write_read": true,
+        "forged_bytes_refused": true,
+        "caller_rebinding_refused": true,
+        "caller_recipe_override_refused": true
+      }
+    ],
+    "old_tuple_exact": true,
+    "all_prior_schema_constraints_preserved": true,
+    "protected_receipt_fixture_source": "committed current checkpoint positive writer fixtures; independent of later candidates",
+    "production_catalogue_unchanged": true,
+    "reader_side_sealing": false,
+    "native_execution": "NOT_RUN"
+  },
+  "profile_entailment": [
+    {
+      "lane": "dg6a",
+      "profile_entails_canonical": true,
+      "changes": [
+        {
+          "path": "/properties/generation_id/pattern",
+          "kind": "strict terminal anchor",
+          "before": "^eig_[0-9a-f]{64}$",
+          "after": "^eig_[0-9a-f]{64}$(?![\\s\\S])"
+        },
+        {
+          "path": "/properties/generation_anchor_sha256/pattern",
+          "kind": "strict terminal anchor",
+          "before": "^[0-9a-f]{64}$",
+          "after": "^[0-9a-f]{64}$(?![\\s\\S])"
+        },
+        {
+          "path": "/properties/frontier_sha256/pattern",
+          "kind": "strict terminal anchor",
+          "before": "^[0-9a-f]{64}$",
+          "after": "^[0-9a-f]{64}$(?![\\s\\S])"
+        },
+        {
+          "path": "/properties/source_selection/properties/current_bytes_sha256/pattern",
+          "kind": "strict terminal anchor",
+          "before": "^[0-9a-f]{64}$",
+          "after": "^[0-9a-f]{64}$(?![\\s\\S])"
+        },
+        {
+          "path": "/properties/source_selection/properties/manifest_bytes_sha256/pattern",
+          "kind": "strict terminal anchor",
+          "before": "^[0-9a-f]{64}$",
+          "after": "^[0-9a-f]{64}$(?![\\s\\S])"
+        },
+        {
+          "path": "/properties/source_selection/properties/manifest_survivor_prefix_sha256/pattern",
+          "kind": "strict terminal anchor",
+          "before": "^[0-9a-f]{64}$",
+          "after": "^[0-9a-f]{64}$(?![\\s\\S])"
+        },
+        {
+          "path": "/properties/source_selection/properties/retained_inventory_sha256/pattern",
+          "kind": "strict terminal anchor",
+          "before": "^[0-9a-f]{64}$",
+          "after": "^[0-9a-f]{64}$(?![\\s\\S])"
+        },
+        {
+          "path": "/properties/source_selection/properties/durable_watermarks_sha256/pattern",
+          "kind": "strict terminal anchor",
+          "before": "^[0-9a-f]{64}$",
+          "after": "^[0-9a-f]{64}$(?![\\s\\S])"
+        },
+        {
+          "path": "/properties/source_selection/properties/excluded_ranges_sha256/pattern",
+          "kind": "strict terminal anchor",
+          "before": "^[0-9a-f]{64}$",
+          "after": "^[0-9a-f]{64}$(?![\\s\\S])"
+        },
+        {
+          "path": "/properties/source_selection/properties/retired_inputs_sha256/pattern",
+          "kind": "strict terminal anchor",
+          "before": "^[0-9a-f]{64}$",
+          "after": "^[0-9a-f]{64}$(?![\\s\\S])"
+        }
+      ]
+    },
+    {
+      "lane": "dt",
+      "profile_entails_canonical": true,
+      "changes": [
+        {
+          "path": "/properties/generation_id/maxLength",
+          "kind": "additional restriction",
+          "constraint": 68
+        },
+        {
+          "path": "/properties/generation_id/minLength",
+          "kind": "additional restriction",
+          "constraint": 68
+        },
+        {
+          "path": "/properties/generation_anchor_sha256/maxLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/generation_anchor_sha256/minLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/frontier_sha256/maxLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/frontier_sha256/minLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/source_selection/properties/current_bytes_sha256/maxLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/source_selection/properties/current_bytes_sha256/minLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/source_selection/properties/manifest_bytes_sha256/maxLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/source_selection/properties/manifest_bytes_sha256/minLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/source_selection/properties/manifest_survivor_prefix_sha256/maxLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/source_selection/properties/manifest_survivor_prefix_sha256/minLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/source_selection/properties/retained_inventory_sha256/maxLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/source_selection/properties/retained_inventory_sha256/minLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/source_selection/properties/durable_watermarks_sha256/maxLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/source_selection/properties/durable_watermarks_sha256/minLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/source_selection/properties/excluded_ranges_sha256/maxLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/source_selection/properties/excluded_ranges_sha256/minLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/source_selection/properties/retired_inputs_sha256/maxLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        },
+        {
+          "path": "/properties/source_selection/properties/retired_inputs_sha256/minLength",
+          "kind": "additional restriction",
+          "constraint": 64
+        }
+      ]
+    }
+  ],
+  "T198": {
+    "nodes": 254,
+    "new_nodes": 0,
+    "projection_resource_hash_changes": 13,
+    "classification_changes": 0,
+    "inventory_exit": 0,
+    "scope_all": "PENDING final consumer run"
+  },
+  "checks_including_visible_prototype_failures": {
+    "smoke/STRUCT-DCW": {
+      "exit": 0,
+      "seconds": 32,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/smoke/STRUCT-DCW.log",
+      "sha256": "7013210de86ccf2c6e4a65ce6299c884c8a53718a529dd17f46a7ec18c83babb"
+    },
+    "smoke/STRUCT-DG6B": {
+      "exit": 0,
+      "seconds": 21,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/smoke/STRUCT-DG6B.log",
+      "sha256": "ab250d5f4a4746cd7d6362fbbfc8ad57fcde96a49fdfbd3a369052b2892a0d0a"
+    },
+    "smoke/SELECTOR-DG6A": {
+      "exit": 1,
+      "seconds": 3,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/smoke/SELECTOR-DG6A.log",
+      "sha256": "915051fb64b73b1f97be8e8a909ce3316b86125fbab20da8f37b0f32bc7e9ae5"
+    },
+    "smoke/SELECTOR-DT": {
+      "exit": 1,
+      "seconds": 109,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/smoke/SELECTOR-DT.log",
+      "sha256": "e259dc01c4e95c6b2e335cca0ec6bc30d404828a33dd9a68e0db70f86e46d767"
+    },
+    "smoke2/DG6A-alert": {
+      "exit": 0,
+      "seconds": 8,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/smoke2/DG6A-alert.log",
+      "sha256": "384e05c7485363aa4cfe6df711ba46862a95fbb646a214d3ff7fced53bedecd8"
+    },
+    "smoke2/DT-all": {
+      "exit": 0,
+      "seconds": 103,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/smoke2/DT-all.log",
+      "sha256": "4842f5129778c73804a8d2d307012e23a3f33efd5979e08e6b108d2475643603"
+    },
+    "refresh3/GEN-shards": {
+      "exit": 0,
+      "seconds": 3,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/refresh3/GEN-shards.log",
+      "sha256": "10c459a991e3956eddef3d24a94a52af0422b73a1c31c7ec4dd10a18c7894eae"
+    },
+    "refresh3/GEN-index": {
+      "exit": 0,
+      "seconds": 51,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/refresh3/GEN-index.log",
+      "sha256": "2bd7c85de87338789214ae479bc181456c77c48dc092af4b3cee1f2695ea540b"
+    },
+    "refresh3/GEN-shard-check": {
+      "exit": 0,
+      "seconds": 30,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/refresh3/GEN-shard-check.log",
+      "sha256": "6a9014502323290deeaf26f2375c1aec61a2fec3726074fc61421c39689c01d1"
+    },
+    "refresh3/SYNC-clean": {
+      "exit": 0,
+      "seconds": 3,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/refresh3/SYNC-clean.log",
+      "sha256": "809de9f09113a74f9d8d550bb405a0cbe46315ea094936e955e9ac36b4c26f97"
+    },
+    "refresh3/T198-prune": {
+      "exit": 0,
+      "seconds": 0,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/refresh3/T198-prune.log",
+      "sha256": "aad9e20aa30ed72185a4da94337a32fd4444e84c42d96013677fe0e54e4edbd1"
+    },
+    "refresh3/T198-refresh-pre": {
+      "exit": 0,
+      "seconds": 127,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/refresh3/T198-refresh-pre.log",
+      "sha256": "7ba1546cdfe250eb8555503a2350006d475d0377c039f2ebd67b54cd85ce8467"
+    },
+    "refresh3/T198-classify": {
+      "exit": 0,
+      "seconds": 110,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/refresh3/T198-classify.log",
+      "sha256": "06482f14e7e9571c03255d76fa619072da3dd4668e61ef4458cb796c4eebc310"
+    },
+    "refresh3/T198-refresh": {
+      "exit": 0,
+      "seconds": 131,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/refresh3/T198-refresh.log",
+      "sha256": "6d958199f9c8e6b3a39a8eefa25d00fc77c2b444009e3c14cb3a0371f11e8c0c"
+    },
+    "refresh3/SYNC-inventory": {
+      "exit": 0,
+      "seconds": 0,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/refresh3/SYNC-inventory.log",
+      "sha256": "30cd362f20667bfe0a28915755da4a087617dcb2008e67e08c5782b0cf4abee5"
+    },
+    "refresh3/INVENTORY": {
+      "exit": 0,
+      "seconds": 101,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/refresh3/INVENTORY.log",
+      "sha256": "aea67d829783ea2e8191dfa5e41c9c7df068ec3d14483c3cfc0ff5bb19b096e4"
+    },
+    "refresh3/DCH-one": {
+      "exit": 0,
+      "seconds": 33,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/refresh3/DCH-one.log",
+      "sha256": "3fa9048b50d0c5f22071716cc0f36b3bc0784b83f0de70eaa06217b4e6f943f0"
+    },
+    "qualification/DCH-preservation": {
+      "exit": 0,
+      "seconds": 13,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/qualification/DCH-preservation.log",
+      "sha256": "0dab1defe5256565a37138dc8b3e5e7f916606da9bb254092a0793c082697d22"
+    },
+    "qualification/DG6A-audit": {
+      "exit": 1,
+      "seconds": 0,
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/qualification/DG6A-audit.log",
+      "sha256": "5ddc424685937cfd6f95069a5f8c00271dde7c4abe922862ffee84cc6d020fc6"
+    }
+  },
+  "native_execution": "NOT_RUN",
+  "remaining_retention_facts": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/INT2/RETENTION-86.md"
+}

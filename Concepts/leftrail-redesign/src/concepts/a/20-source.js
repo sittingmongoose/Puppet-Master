@@ -166,7 +166,7 @@ function sourceFilter(inst, v, it) {
   pane.querySelectorAll('.pmr-a-sec').forEach(sc => { const rows = sc.querySelectorAll('.pmr-a-row[data-item]'); if (rows.length) sc.hidden = !Array.from(rows).some(r => !r.hidden); });
   let empty = pane.querySelector('.pmr-a-filterempty');
   if (!empty) {
-    empty = h('div.pmr-a-empty.pmr-a-filterempty', h('p.pmr-a-empty-t', PMR.glyph('info'), h('span', { text: 'No worktrees match this filter.' })),
+    empty = h('div.pmr-a-empty.pmr-a-filterempty', h('p.pmr-a-empty-t', PMR.glyph('info'), h('span', { class: 'pmr-part-text', text: 'No worktrees match this filter.' })),
       h('p.pmr-a-empty-why', { text: 'The worktrees still exist; the filter only hides them here.' }),
       h('div.pmr-a-acts', act({ label: 'Show all worktrees', icon: 'x', local: 'wtFilterClear' }, { variant: 'quiet', onLocal: () => { const t = inst.tools.get(v.id).querySelector('.pmr-a-filter'); v.filters.value = 'all'; v.filters.groups.forEach(g => (g.items || []).forEach(m => { m.selected = m.value === 'all'; })); if (t) { t.querySelector('.pmr-trigger-label').textContent = 'All worktrees'; } sourceFilter(inst, v, { value: 'all' }); } })));
     pane.insertBefore(empty, pane.firstChild);

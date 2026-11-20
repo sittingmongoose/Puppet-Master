@@ -1363,7 +1363,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const ctx=makeWorkCtx(rec,m), step=ctx.step, pct=ctx.pct;
     const co=CHROME_OPTS[v]||{}, shut=rec.completed&&rec.openPhase==null;
     const cardId=ctx.cardId, recId=(m&&m.workId)||'primary';
-    return `<article class="working-card ${rec.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-card="${esc(recId)}" data-card-ui="${esc(cardId)}" data-k="workcard:${esc(cardId)}"><div class="working-head"><span class="work-phase-icon" data-k="wpi:${esc(step.id)}">${icon(step.icon,14,rec.running?'nx-r-status nx-t-working':'')}</span><div><strong>${rec.ownerProjection?esc(rec.statusLabel||(rec.completed?'Completed':'Working')):(rec.completed?'Completed':'Working')}</strong>${extEach('workingHeadCaption',{message:m,rec,ctx})||''}<span class="sub"> · ${formatElapsed(rec.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${rec.ownerProjection?extRender('workingOwnerControls',{message:m,rec,ctx}):renderWorkDemoControls(rec,cardId)}</div></div><div class="working-body" data-flip data-k="wv:${v}:${esc(cardId)}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct,ctx)}${renderLiveAgentInline(step)}${rec.expanded?renderWorkHistory(rec):''}</div>${renderOpenWorkTerminal(cardId,rec)}</article>`;
+    return `<article class="working-card ${rec.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-card="${esc(recId)}" data-card-ui="${esc(cardId)}" data-k="workcard:${esc(cardId)}"><div class="working-head"><span class="work-phase-icon" data-k="wpi:${esc(step.id)}">${icon(step.icon,14,rec.running?'nx-r-status nx-t-working':'')}</span><div class="working-status-copy"><strong class="working-status-label">${rec.ownerProjection?esc(rec.statusLabel||(rec.completed?'Completed':'Working')):(rec.completed?'Completed':'Working')}</strong>${extEach('workingHeadCaption',{message:m,rec,ctx})||''}<span class="sub"> · ${formatElapsed(rec.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${rec.ownerProjection?extRender('workingOwnerControls',{message:m,rec,ctx}):renderWorkDemoControls(rec,cardId)}</div></div><div class="working-body" data-flip data-k="wv:${v}:${esc(cardId)}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct,ctx)}${renderLiveAgentInline(step)}${rec.expanded?renderWorkHistory(rec):''}</div>${renderOpenWorkTerminal(cardId,rec)}</article>`;
   }
 
   /* Chat WOW M4: the lab controls (play/pause, step, complete, reset, history)
@@ -2127,7 +2127,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     // same cascade, container and media regime and inherited host variables, so syncActivityCompact's observer reads
     // every tier width from layout. The copies carry no action, domain id or accessible name (aria-hidden, inert);
     // data-hover-domain and .active stay, because the bar's rules size items by them.
-    const inner=(id,d)=>`<i class="state-mark ${d.state}"></i>${COLLAB_DOMAINS[id]&&!hasIcon(d.icon)?kindMark(id,12,'users'):icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span>`;
+    const inner=(id,d)=>`<i class="state-mark ${d.state}"></i><span class="ab-glyph">${COLLAB_DOMAINS[id]&&!hasIcon(d.icon)?kindMark(id,12,'users'):icon(d.icon,12)}</span><span class="label">${d.label}</span><span class="count">${d.count}</span>`;
     const isActive=id=>state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;
     const fitRow=tier=>`<div class="activity-fit${tier?' is-ab-compact':''}"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}">${items.map(([id,d])=>`<button class="activity-item ${isActive(id)?'active':''}" data-hover-domain="${id}" tabindex="-1">${inner(id,d)}</button>`).join('')}</div></div>`;
     return `<div class="activity-wrap${abCompactTier>=1?' is-ab-compact':''}${abCompactTier>=2?' is-ab-icon-only':''}" data-k="activity-wrap"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=isActive(id);return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}">${inner(id,d)}</button>`;}).join('')}</div><div class="activity-sizer" data-k="activity-sizer" aria-hidden="true" inert>${fitRow(0)}${fitRow(1)}</div></div>`;
@@ -2188,7 +2188,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     }
     const filterButton=`<button class="icon-button activity-head-filter" data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}"${hoverAttrs('act-filter','Show or hide category filter')}>${icon('filter',13)}</button>`;
     const overflow=`<details class="activity-head-overflow"><summary class="icon-button" aria-label="More Activity Detail actions">${icon('more',13)}</summary><div class="activity-head-menu"><button data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}">${icon('filter',12)} ${state.activity.filterVisible?'Hide':'Show'} domains</button></div></details>`;
-    return `<aside class="activity-panel${cover?' cover':''}" data-k="activity-panel-${layout}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}${pinButton}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}" data-hover-key="act-dom-${esc(id)}" data-hover-tip="${esc(x.label)}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,layout},sections.map(renderActivitySection).join(''))}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
+    return `<aside class="activity-panel${cover?' cover':''}" data-k="activity-panel-${layout}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-layout="${layout}" ${cover?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}${pinButton}<button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}" data-hover-key="act-dom-${esc(id)}" data-hover-tip="${esc(x.label)}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span class="act-flbl">${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,layout},sections.map(renderActivitySection).join(''))}</div>${cover?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
   }
 
   function renderActivitySection(id){
@@ -2531,7 +2531,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function armComposerObserver(){
     // The keyed shell retains these nodes. Recreating the observer every render
     // delivered another initial resize callback and repeated both forced-layout probes.
-    if(!composerRO) composerRO=new ResizeObserver(()=>{
+    // A look revealed over the onboarding window covers the chat (PM_LOOK_HOLD, 11-motion-start.js).
+    // This re-measured the hidden composer in the reveal's first frame (E4 section 3: a cache miss is
+    // getComputedStyle plus one rect for each of the five tool buttons). It waits, then runs once.
+    if(!composerRO) composerRO=new ResizeObserver(function onComposerResize(){
+      if(window.PM_LOOK_HOLD&&window.PM_LOOK_HOLD.after&&window.PM_LOOK_HOLD.after(onComposerResize))return;
       if(chromeSyncFrame!==null)return;
       chromeSyncFrame=requestAnimationFrame(runChromeSync);
     });
@@ -2620,6 +2624,16 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       seen.add(at.name);
       if(skipValue && (at.name==='value'||at.name==='checked')) continue;
       if(HOSTED && at.name==='title' && el.hasAttribute('data-pm-hover-label') && !el.hasAttribute('title')) continue;
+      /* hosted: PMConcept7's NieR cursor gives the hovered row o55np-cur-over (the paper words key on it) and marks a
+         row once per pointerover; the template does not carry it, so a render under a resting pointer (a live work
+         tick) kept the ink bar and dropped the words' paper. Keeping the class here replaces the old
+         ':hover :where(*)' rule (pm7-port/css/42-nier-parts.css), which made Chrome's page-wide :hover set
+         "whole subtree" (lane J, 2026-11-11). */
+      if(HOSTED && at.name==='class' && el.classList.contains('o55np-cur-over') && !/(^|\s)o55np-cur-over(\s|$)/.test(at.value)){
+        const v=at.value+' o55np-cur-over';
+        if(el.getAttribute('class')!==v) el.setAttribute('class',v);
+        continue;
+      }
       if(el.getAttribute(at.name)!==at.value) el.setAttribute(at.name,at.value);
     }
     /* hosted: PMConcept7's hover controller bridges a disabled control to aria-disabled and marks it was-disabled;
@@ -2711,6 +2725,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     renderApp();
   }
   function renderApp(preserve=true){
+    renderGen++; appRenderGen++;
     syncActivityDomain();
     const wasFollowing=tStick, revealing=settleWorkGate();
     /* Round 3 (A): the render that hides a tail already on screen (armWorkGate g.cut) is a cut: no scroll capture,
@@ -2750,7 +2765,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const preTop=keepTopBefore();
     if(HOSTED) pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell" data-pm56-hosted><div class="workspace"><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel('dock'):''}${renderChat()}</div></section></div></main>`);
     else pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace ${state.editorRevealed?'editor-revealed':''}">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel('dock'):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
-    document.getElementById('pmRoot').setAttribute('aria-busy','false');
+    { const r=document.getElementById('pmRoot'); if(r.getAttribute('aria-busy')!=='false') r.setAttribute('aria-busy','false'); } // only when it differs: each full render rewrote it, a write every DOM watcher of the page heard (pm7-perf lane K)
     const post=snapScroll();
     const flips=cut?[]:flipHeights(flipTargets, flipBefore);
     if(!cut){ keepTopAfter(preTop,post); flipMoves(moveTargets, moveBefore); }
@@ -2830,6 +2845,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      nothing to patch, so callers can fall back to renderApp(). */
   function patchScope(live, html){
     if(!live||!live.isConnected||!html) return false;
+    renderGen++;
     const tpl=document.createElement('template'); tpl.innerHTML=String(html).trim();
     const src=tpl.content.firstElementChild; if(!src) return false;
     if(src.getAttribute('data-k')!==live.getAttribute('data-k')) return false;
@@ -3232,7 +3248,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function followTarget(fn){ followTargetFn=typeof fn==='function'?fn:null; }
   const GLIDE_TAU=70;
   const GLIDE_DT_MAX=120;   /* a late frame still advances the glide by the time it took (to 120 ms); at 60 fps nothing changes */
-  function tEl(){ return scrollKeyEl('transcript'); }
+  /* pm7-perf lane C: the transcript, looked up once while it stays in the page. An attribute query walks the whole
+     document, and PMConcept7's is tens of thousands of nodes: tEl() alone was 25 ms a second of a Working run on Home
+     (CPU profile, Windows), from the glide, the jump pill and the room's checks. Only renderChat makes this element. */
+  var tElNode=null;   /* var, as the other state below: no read before its line runs can throw */
+  function tEl(){ if(tElNode&&tElNode.isConnected) return tElNode; tElNode=scrollKeyEl('transcript'); return tElNode; }
   function tAtBottom(el){
     el=el||tEl(); if(!el) return true;
     const limit=el.scrollHeight-el.clientHeight;
@@ -3241,7 +3261,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const target=tStick&&followTargetFn?followTargetFn(el,limit,true):null;
     return (target==null?limit:Math.min(limit,target))-el.scrollTop<=24;
   }
-  function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; tLastCh=el.clientHeight; }
+  function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; tLastCh=el.clientHeight; followMoved=true; }
   function cancelGlide(){ if(glideRAF){ cancelAnimationFrame(glideRAF); glideRAF=0; } glideTs=0; }
   /* The glide's time constant is real time; a late frame catches up the time it lost instead of falling further behind (P1, 2026-10-23: 302-367 ms on a loaded standalone). */
   function glideStep(ts){
@@ -3267,7 +3287,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const limit=el.scrollHeight-el.clientHeight, target=followTargetFn&&followTargetFn(el,limit);
     const max=target==null?limit:Math.min(limit,target), cur=el.scrollTop, d=max-cur;
     if(target!=null&&d<-.5){ writeScrollInstant(el,max); glideRAF=requestAnimationFrame(glideStep); return; }
-    if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
+    if(d<=0.5){ glideTs=0; followMoved=false; syncJumpBottom(); return; }
     const tn=performance.now(), dt=glideTs?Math.min(GLIDE_DT_MAX,Math.max(1,tn-glideTs)):16.7; glideTs=tn;
     let next;
     if(window.PM56_MOTION&&window.PM56_MOTION.reduced()) next=max;
@@ -3277,11 +3297,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     writeScrollInstant(el,next);
     /* Integer scroll offsets can round the final subpixel step back to cur forever (2px short at 120Hz). Finish
        that near-bottom settle so the next card starts a fresh glide instead of inheriting this idle one's clock. */
-    if(el.scrollTop===cur&&tAtBottom(el)){ writeScrollInstant(el,max); glideTs=0; syncJumpBottom(); return; }
+    if(el.scrollTop===cur&&tAtBottom(el)){ writeScrollInstant(el,max); glideTs=0; followMoved=false; syncJumpBottom(); return; }
     glideRAF=requestAnimationFrame(glideStep);
   }
-  function kickFollow(){ if(tStick&&!glideRAF){ glideTs=0; glideRAF=requestAnimationFrame(glideStep); } }
+  function kickFollow(){ if(tStick&&!glideRAF&&!workResting()){ glideTs=0; glideRAF=requestAnimationFrame(glideStep); } }   /* (not under PMConcept7's onboarding window: lane C2, armWorkTimer) */
   function followIfSticky(){ kickFollow(); }
+  /* pm7-perf lane C: whether the transcript's size, its list's size or its scroll position may have changed since the
+     glide last came to rest at the bottom (its observer, a scroll event, a write of ours). A patch's follow (restoreScroll)
+     kicks the glide only then: with nothing moved, each kick cost a frame and a forced layout to find it was there. */
+  var followMoved=true;
+  function kickFollowIfMoved(){
+    if(followMoved||(followTargetFn&&(!followTargetFn.active||followTargetFn.active()))) kickFollow();
+  }
   /* A turn module may hold the follow for a moment: a card about to fold frees
      far more room than the answer mounting under it needs, so chasing that
      answer first would scroll down only to be clamped back up by the fold. */
@@ -3310,7 +3337,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return g;
   }
   function stickToBottom(instant){
-    tStick=true;
+    tStick=true; followMoved=true;
     const el=tEl();
     if(instant&&el){ cancelGlide(); writeScrollInstant(el,el.scrollHeight); requestAnimationFrame(()=>{ const e2=tEl(); if(e2&&tStick) writeScrollInstant(e2,e2.scrollHeight); syncJumpBottom(); }); return; }
     kickFollow();
@@ -3320,7 +3347,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(inner===tROTarget) return;
     if(tRO){ tRO.disconnect(); tRO=null; }
     tROTarget=inner;
-    if(inner){ tRO=new ResizeObserver(()=>kickFollow()); tRO.observe(inner); tRO.observe(el); }
+    if(inner){ tRO=new ResizeObserver(()=>{ followMoved=true; kickFollow(); }); tRO.observe(inner); tRO.observe(el); }
   }
   function inTranscript(t){ return !!(t&&t.closest&&t.closest('[data-scroll-key="transcript"]')); }
   const T_SCROLL_KEYS=new Set(['PageUp','PageDown','ArrowUp','ArrowDown','Home','End',' ']);
@@ -3340,7 +3367,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const r=el.getBoundingClientRect();
     if(e.clientX>r.left+el.clientWidth){ tDragging=true; tUserInputAt=performance.now(); tStick=false; cancelGlide(); }
   },{capture:true});
-  document.addEventListener('pointerup',()=>{ if(tDragging){ tDragging=false; tUserInputAt=performance.now(); const el=tEl(); if(el) tStick=tAtBottom(el); } },{capture:true});
+  document.addEventListener('pointerup',()=>{ if(tDragging){ tDragging=false; tUserInputAt=performance.now(); followMoved=true; const el=tEl(); if(el) tStick=tAtBottom(el); } },{capture:true});
   function scrollTargets(scope=document){
     const out=[...scope.querySelectorAll('[data-scroll-key]')];
     for(let el=scope.nodeType===1?scope:null;el;el=el.parentElement) if(el.hasAttribute('data-scroll-key')) out.push(el);
@@ -3397,16 +3424,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return {total:g, el:big?big.el:null, h0:big?big.h0:0, h1:big?big.h1:0, instant};
   }
   function transcriptAwayFromBottom(){
-    const el=scrollKeyEl('transcript');
+    const el=tEl();
     if(!el) return false;
     const max=el.scrollHeight-el.clientHeight;
     if(max<=4) return false;
     return !tAtBottom(el);
   }
+  var jumpBtnNode=null;
   function syncJumpBottom(){
     const on=transcriptAwayFromBottom();
     jumpBottomVisible=on;
-    const btn=document.querySelector('.jump-bottom');
+    /* pm7-perf lane C: kept while it stays in the page (a whole-document query each call; see tEl) */
+    const btn=jumpBtnNode&&jumpBtnNode.isConnected?jumpBtnNode:(jumpBtnNode=document.querySelector('.jump-bottom'));
     if(btn) btn.classList.toggle('is-visible', on);
   }
   function onTranscriptScroll(){
@@ -3417,6 +3446,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        anchoring is switched off for the transcript (turn-stage.css): it moved the
        view up when a card above shrank, which this rule would misread. */
     const el=tEl();
+    followMoved=true;
     if(el){
       const top=el.scrollTop, prev=tLastTop, ch=el.clientHeight, lastCh=tLastCh; tLastTop=top; tLastCh=ch;
       const ours=tExpectTop!=null&&Math.abs(top-tExpectTop)<=1;
@@ -3550,7 +3580,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
         const v=pos?pos[el.dataset.scrollKey]:null;
         if(v==null) return;
         if(el.dataset.scrollKey==='transcript'&&historyAnchored&&workHistoryAnchor) return;
-        if(v==='follow'){ kickFollow(); return; }
+        if(v==='follow'){ kickFollowIfMoved(); return; }
         /* The reader moved between the patch and this frame: their position
            wins over the one captured before the patch. */
         const post=opts&&opts.post;
@@ -3682,7 +3712,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return content ? `<div class="lens-inline" data-k="lens-inline">${content}</div>` : '';
   }
   function syncInlineLens(){
-    const dock=document.querySelector('.lens-dock');
+    /* pm7-perf lane C: kept while it stays in the page (a whole-document query on every overlay render; see tEl) */
+    const dock=lensDockNode&&lensDockNode.isConnected?lensDockNode:(lensDockNode=document.querySelector('.lens-dock'));
     if(!dock)return;
     const html=renderInlineLens();
     /* Mounting the in-flow controls moves the transcript's viewport before
@@ -3698,7 +3729,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     }
   }
   let lastOverlayPayload='';
-  function renderOverlays(){
+  var lensDockNode=null;
+  function renderOverlays(opts){
     const root=document.getElementById('pmOverlayRoot');
     /* F0b (IMPACT A1-36): a scoped picker opened from a sheet goes with that sheet. Closing the
        sheet (x, Cancel, Save, Start) while its picker was open left the 560 px menu hanging at
@@ -3727,7 +3759,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     lastMenuSig=menuSig;
     syncHoverCard();
     runAfterRender('overlay',{patched});
-    requestAnimationFrame(positionOverlays);
+    /* pm7-perf lane C: a work tick that changed nothing drawn, with no menu or hover card to place, takes no frame:
+       what is left (the sprouts, syncChatDock) reads only what that tick did not touch. With a menu or a card open the
+       tick still re-places it, as every tick did. */
+    if(patched||!(opts&&opts.still)||state.menu||state.hover) requestAnimationFrame(positionOverlays);
   }
   /* F0b (e), the model-menu fold fix (DESIGN-SPEC 10.1 e; brief C.5, D-16). The 13th model
      was never below reach: scrollIntoView brings kimi-k3-turbo into the list. What missed was
@@ -3928,7 +3963,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(!scopedPicker || scopedPicker.type!=='choice')return '';
     const q=(state.menu.query||'').toLowerCase(),session=scopedPicker;
     const options=session.options.filter(o=>(o.label+' '+(o.description||'')).toLowerCase().includes(q));
-    return `<div class="menu-head"><strong>${esc(session.title)}</strong></div><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="shared-choice-search" value="${esc(state.menu.query||'')}" placeholder="Find an option…"></label></div><div class="shared-choice-list">${options.map(o=>`<button type="button" class="menu-item ${String(session.current)===String(o.value)?'active':''}" data-action="shared-choice-pick" data-value="${esc(o.value)}"><span class="menu-copy"><strong>${esc(o.label)}</strong><span>${esc(o.description||'')}</span></span>${String(session.current)===String(o.value)?icon('check',12):''}</button>`).join('')||'<p class="choice-empty">No matching options.</p>'}</div>`;
+    return `<div class="menu-head"><strong>${esc(session.title)}</strong></div><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="shared-choice-search" value="${esc(state.menu.query||'')}" placeholder="Find an option…"></label></div><div class="shared-choice-list">${options.map(o=>`<button type="button" class="menu-item ${String(session.current)===String(o.value)?'active':''}" data-action="shared-choice-pick" data-value="${esc(o.value)}"><span class="menu-copy"><strong class="menu-ttl">${esc(o.label)}</strong><span class="menu-sub">${esc(o.description||'')}</span></span>${String(session.current)===String(o.value)?icon('check',12):''}</button>`).join('')||'<p class="choice-empty">No matching options.</p>'}</div>`;
   }
   window.PM56_PICKERS={
     openChoice(button,title,current,options,onChange){
@@ -3988,7 +4023,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
 
   function renderSimpleMenu(title,items,current,action){
-    return `<div class="menu-head"><strong>${esc(title)}</strong><span class="spacer"></span><span class="chat-meta">Current · ${esc(current)}</span></div>${items.map(x=>`<button class="menu-item ${current===x[0]?'active':''}" data-action="${action}" data-value="${esc(x[0])}"><span class="menu-copy"><strong>${esc(x[0])}</strong><span>${esc(x[1])}</span></span>${current===x[0]?`<span class="check">${icon('check',12)}</span>`:''}</button>`).join('')}`;
+    return `<div class="menu-head"><strong>${esc(title)}</strong><span class="spacer"></span><span class="chat-meta">Current · ${esc(current)}</span></div>${items.map(x=>`<button class="menu-item ${current===x[0]?'active':''}" data-action="${action}" data-value="${esc(x[0])}"><span class="menu-copy"><strong class="menu-ttl">${esc(x[0])}</strong><span class="menu-sub">${esc(x[1])}</span></span>${current===x[0]?`<span class="check">${icon('check',12)}</span>`:''}</button>`).join('')}`;
   }
 
   function renderModeMenu(){
@@ -3996,7 +4031,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        Ask/Agent/Debug do not. Goal, BSD, ELI5, Crew and scheduling are ORTHOGONAL
        controls and deliberately absent here. */
     const items=[['Ask','Answer without making changes',''],['Agent','Execute the requested work',''],['Debug','Run an instrumented debugging workflow',''],['Plan','Create a read-only Plan document and To-Dos','plan'],['Deep Plan','Research through a scoped ledger, then plan','deep-plan'],['Review','Read-only review with fresh context','review']];
-    return `<div class="menu-head"><strong>Mode</strong><span class="spacer"></span><span class="chat-meta">/${state.mode.toLowerCase().replace(' ','-')}</span></div>${items.map(x=>`<button class="menu-item ${state.mode===x[0]?'active':''}" data-action="set-mode" data-value="${esc(x[0])}" ${x[2]?`data-submenu="${x[2]}"`:''}><span class="menu-icon">${icon(modeIconName(x[0]),13)}</span><span class="menu-copy"><strong>${esc(x[0])}</strong><span>${esc(x[1])}</span></span>${x[2]?`<span class="chevron">${icon('chevron',11)}</span>`:state.mode===x[0]?`<span class="check">${icon('check',11)}</span>`:''}</button>`).join('')}`;
+    return `<div class="menu-head"><strong>Mode</strong><span class="spacer"></span><span class="chat-meta">/${state.mode.toLowerCase().replace(' ','-')}</span></div>${items.map(x=>`<button class="menu-item ${state.mode===x[0]?'active':''}" data-action="set-mode" data-value="${esc(x[0])}" ${x[2]?`data-submenu="${x[2]}"`:''}><span class="menu-icon">${icon(modeIconName(x[0]),13)}</span><span class="menu-copy"><strong class="menu-ttl">${esc(x[0])}</strong><span class="menu-sub">${esc(x[1])}</span></span>${x[2]?`<span class="chevron">${icon('chevron',11)}</span>`:state.mode===x[0]?`<span class="check">${icon('check',11)}</span>`:''}</button>`).join('')}`;
   }
 
   function wandHead(wand){
@@ -4022,7 +4057,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       ['thought','Thought Stream','Control permitted reasoning visibility','thought-menu',state.capabilities.thought,'brain']
     ];
     /* W4 (PM7 build 2026-10-29): Pip holds the wand at the head of Assistant capabilities (PM56_SHELL.wandPip) */
-    const wandHtml = `<div class="menu-head"><strong>Assistant capabilities</strong><span class="spacer"></span>${wandHead(icon('wand',13))}</div>${rows.map(r=>`<button class="menu-item" data-submenu="${r[3]}"><span class="menu-icon">${icon(r[5],13)}</span><span class="menu-copy"><strong>${r[1]}</strong><span>${r[2]}</span></span><span class="shortcut">${esc(r[4])}</span><span class="chevron">${icon('chevron',11)}</span></button>`).join('')}${extRender('wandRows',{})}`;
+    const wandHtml = `<div class="menu-head"><strong>Assistant capabilities</strong><span class="spacer"></span>${wandHead(icon('wand',13))}</div>${rows.map(r=>`<button class="menu-item" data-submenu="${r[3]}"><span class="menu-icon">${icon(r[5],13)}</span><span class="menu-copy"><strong class="menu-ttl">${r[1]}</strong><span class="menu-sub">${r[2]}</span></span><span class="shortcut">${esc(r[4])}</span><span class="chevron">${icon('chevron',11)}</span></button>`).join('')}${extRender('wandRows',{})}`;
     return window.PM56_POLISH ? window.PM56_POLISH.wand(wandHtml,EXT.ctx()) : wandHtml;
   }
 
@@ -4043,9 +4078,39 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const ok=new Set(r.accounts.map(a=>ONB_PICKER[a.settings_provider_id||a.provider_entry_id]).filter(Boolean));
     return D.models.filter(m=>ok.has(m.provider));
   }
+  /* FO-186 r2 (MS-052): a typed nickname finds the model it means. The map is the Settings row's own effective
+     read (PM51.modelNicknames: your lines, the retired Media box's compatibility read, the 6.8 built-ins) through
+     the page's one Settings access — no second store. Nicknames normalize as the row does (lowercase; spaces,
+     underscores and hyphens collapse) and match whole or as a prefix. A nickname's model id maps to this picker's
+     entries the way the Settings picker resolves it: a chat model id directly, else the canonical
+     provider_id/model_id through Settings' ready-model list, by its provider (ONB_PICKER) and model name. A
+     nickname whose model is not a configured chat model lists nothing. */
+  const nickNorm=s=>String(s==null?'':s).trim().toLowerCase().replace(/[\s_-]+/g,' ');
+  function modelNicknames(){ try{ return (window.PM51&&typeof PM51.modelNicknames==='function')?PM51.modelNicknames():[]; }catch(e){ return []; } }
+  function nickChatModels(value){
+    const v=String(value||''); if(!v) return [];
+    const direct=D.models.filter(x=>x.id===v); if(direct.length) return direct;
+    let ready=[]; try{ ready=(window.PM51&&PM51.readyModels)?PM51.readyModels():[]; }catch(e){}
+    const c=ready.find(x=>x.value===v); if(!c) return [];
+    const provider=ONB_PICKER[c.pid]||'', name=nickNorm(c.model); if(!name) return [];
+    return D.models.filter(x=>(!provider||x.provider===provider)&&(nickNorm(x.name)===name||nickNorm(x.name).startsWith(name+' ')));
+  }
+  /* model id -> the nickname the current search matched (whole or prefix, normalized); empty when not searching */
+  function modelNicknameHits(){
+    const nq=nickNorm(state.modelSearch), hits={};
+    if(!nq) return hits;
+    const ids=new Set(configuredModels().map(x=>x.id));
+    modelNicknames().forEach(n=>{
+      const nn=nickNorm(n.nick);
+      if(!nn||(nn!==nq&&!nn.startsWith(nq))) return;
+      nickChatModels(n.model).forEach(m=>{ if(ids.has(m.id)&&!(m.id in hits)) hits[m.id]=n.nick; });
+    });
+    return hits;
+  }
   function filteredModels(){
     const q=state.modelSearch.toLowerCase().trim();
-    let models=configuredModels().filter(x=>!q||`${x.name} ${x.provider} ${x.account}`.toLowerCase().includes(q));
+    const hits=modelNicknameHits();
+    let models=configuredModels().filter(x=>!q||`${x.name} ${x.provider} ${x.account}`.toLowerCase().includes(q)||x.id in hits);
     if(state.modelProvider==='favorites') models=models.filter(x=>isFavorite(x.id));
     else if(state.modelProvider!=='all') models=models.filter(x=>x.provider===state.modelProvider);
     return models;
@@ -4077,7 +4142,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function groupModels(models){
     const by={};models.forEach(m=>(by[m.provider]??=[]).push(m));
-    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?`<span class="nx-bolt">${icon('lightning',10,'fast-bolt')}</span>`:''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}"${hoverAttrs('model-fav:'+m.id,(isFavorite(m.id)?'Remove from':'Add to')+' favorites')}>${icon('star',12)}</button></div>`).join('')}`).join('');
+    const hits=modelNicknameHits();
+    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong class="pm56-model-name">${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?`<span class="nx-bolt">${icon('lightning',10,'fast-bolt')}</span>`:''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${hits[m.id]?`<span class="effort-word model-nick">“${esc(hits[m.id])}”</span>`:''}${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}"${hoverAttrs('model-fav:'+m.id,(isFavorite(m.id)?'Remove from':'Add to')+' favorites')}>${icon('star',12)}</button></div>`).join('')}`).join('');
   }
   /* Measured in-browser at 1440x900, not guessed: .model-row pitch is 44.03
      (min-height:44 with border-box, so its 5/6px padding is inside), a
@@ -4108,7 +4174,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
 
   function renderContextCompactMenu(){
-    return extReplace('contextCompactMenu',{}, `<div class="menu-head"><strong>Context</strong><span class="spacer"></span><span class="meta-pill">64%</span></div><div style="padding:9px"><div class="context-big"><strong>83.9K</strong><span>of 131K tokens loaded</span></div><div class="context-bar"><i></i></div><div class="metric-grid" style="grid-template-columns:1fr 1fr;margin-top:8px"><div class="metric-card"><label>Cache hit</label><strong>78%</strong></div><div class="metric-card"><label>Available</label><strong>47.1K</strong></div></div><div class="composition-bar" style="margin-top:8px"><i></i><i></i><i></i><i></i><i></i></div><div style="display:flex;justify-content:space-between;color:var(--subtle);font-size:9px;margin-top:4px"><span>Source composition</span><span>5 source groups</span></div></div><div class="menu-divider"></div><button class="menu-item" data-action="compact-now"><span class="menu-icon">${icon('collapse',13)}</span><span class="menu-copy"><strong>Compact Now</strong><span>Preview and apply a source-aware compaction</span></span></button><button class="menu-item" data-action="context-details"><span class="menu-icon">${icon('info',13)}</span><span class="menu-copy"><strong>More Details</strong><span>Window, tokens, cache, composition, cost, and raw projection</span></span>${icon('chevron',11)}</button>`);
+    return extReplace('contextCompactMenu',{}, `<div class="menu-head"><strong>Context</strong><span class="spacer"></span><span class="meta-pill">64%</span></div><div style="padding:9px"><div class="context-big"><strong>83.9K</strong><span>of 131K tokens loaded</span></div><div class="context-bar"><i></i></div><div class="metric-grid" style="grid-template-columns:1fr 1fr;margin-top:8px"><div class="metric-card"><label>Cache hit</label><strong>78%</strong></div><div class="metric-card"><label>Available</label><strong>47.1K</strong></div></div><div class="composition-bar" style="margin-top:8px"><i></i><i></i><i></i><i></i><i></i></div><div style="display:flex;justify-content:space-between;color:var(--subtle);font-size:9px;margin-top:4px"><span>Source composition</span><span>5 source groups</span></div></div><div class="menu-divider"></div><button class="menu-item" data-action="compact-now"><span class="menu-icon">${icon('collapse',13)}</span><span class="menu-copy"><strong class="menu-ttl">Compact Now</strong><span class="menu-sub">Preview and apply a source-aware compaction</span></span></button><button class="menu-item" data-action="context-details"><span class="menu-icon">${icon('info',13)}</span><span class="menu-copy"><strong class="menu-ttl">More Details</strong><span class="menu-sub">Window, tokens, cache, composition, cost, and raw projection</span></span>${icon('chevron',11)}</button>`);
   }
 
   /* F0b (i): threadMenu gains a position right under Rename ({position:'after-rename'}); the
@@ -4130,17 +4196,17 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderThreadMenu(id){
     const t=state.threads.find(x=>x.id===id);if(!t)return '';
     const tm=threadMenuParts(t,id);
-    return `<div class="menu-head"><strong>${esc(t.title)}</strong><span class="spacer"></span><span class="chat-meta">${esc(statusLabel(t.status))}</span></div>${!t.archived?`<button class="menu-item" data-action="toggle-thread-pin" data-id="${esc(id)}"><span class="menu-icon">${icon(t.pinned?'unpin':'pin',13)}</span><span class="menu-copy"><strong>${t.pinned?'Unpin':'Pin'} thread</strong><span>${t.pinned?'Move to Recent':'Keep at the top'}</span></span></button><button class="menu-item" data-action="rename-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('edit',13)}</span><span class="menu-copy"><strong>Rename</strong><span>Change the thread title</span></span></button>${tm.after}<button class="menu-item" data-action="fork-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('fork',13)}</span><span class="menu-copy"><strong>Fork thread</strong><span>Create a child branch with lineage</span></span></button><button class="menu-item" data-action="archive-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('archive',13)}</span><span class="menu-copy"><strong>Archive</strong><span>Hide from active groups but keep searchable</span></span></button>`:`<button class="menu-item" data-action="restore-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('restore',13)}</span><span class="menu-copy"><strong>Restore thread</strong><span>Return it to Recent</span></span></button><button class="menu-item" data-action="fork-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('fork',13)}</span><span class="menu-copy"><strong>Fork archived thread</strong><span>Create an active child branch</span></span></button>${tm.after}`}${tm.end}`;
+    return `<div class="menu-head"><strong>${esc(t.title)}</strong><span class="spacer"></span><span class="chat-meta">${esc(statusLabel(t.status))}</span></div>${!t.archived?`<button class="menu-item" data-action="toggle-thread-pin" data-id="${esc(id)}"><span class="menu-icon">${icon(t.pinned?'unpin':'pin',13)}</span><span class="menu-copy"><strong class="menu-ttl">${t.pinned?'Unpin':'Pin'} thread</strong><span class="menu-sub">${t.pinned?'Move to Recent':'Keep at the top'}</span></span></button><button class="menu-item" data-action="rename-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('edit',13)}</span><span class="menu-copy"><strong class="menu-ttl">Rename</strong><span class="menu-sub">Change the thread title</span></span></button>${tm.after}<button class="menu-item" data-action="fork-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('fork',13)}</span><span class="menu-copy"><strong class="menu-ttl">Fork thread</strong><span class="menu-sub">Create a child branch with lineage</span></span></button><button class="menu-item" data-action="archive-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('archive',13)}</span><span class="menu-copy"><strong class="menu-ttl">Archive</strong><span class="menu-sub">Hide from active groups but keep searchable</span></span></button>`:`<button class="menu-item" data-action="restore-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('restore',13)}</span><span class="menu-copy"><strong class="menu-ttl">Restore thread</strong><span class="menu-sub">Return it to Recent</span></span></button><button class="menu-item" data-action="fork-thread" data-id="${esc(id)}"><span class="menu-icon">${icon('fork',13)}</span><span class="menu-copy"><strong class="menu-ttl">Fork archived thread</strong><span class="menu-sub">Create an active child branch</span></span></button>${tm.after}`}${tm.end}`;
   }
 
   function renderThreadSearchMenu(){
     const q=state.menu.query||'';const lq=q.toLowerCase();const results=q?state.threads.flatMap(t=>t.messages.filter(m=>!isInternalNote(m)&&`${m.body||''} ${m.title||''} ${m.detail||''}`.toLowerCase().includes(lq)).map(m=>({thread:t,msg:m}))).slice(0,12):[];
-    return extReplace('threadSearchMenu',{menu:state.menu}, `<div class="menu-head"><strong>Search threads</strong><span class="spacer"></span><span class="chat-meta">Current + archived</span></div><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="thread-global-search" value="${esc(q)}" placeholder="Search exact message text…"></label></div>${q?(results.length?results.map(r=>`<button class="menu-item" data-action="jump-search-result" data-thread="${esc(r.thread.id)}" data-message="${esc(r.msg.id)}"><span class="menu-icon">${icon('search',12)}</span><span class="menu-copy"><strong>${esc(r.thread.title)}</strong><span>${esc((r.msg.body||r.msg.title||r.msg.detail||'').slice(0,110))}</span></span></button>`).join(''):`<div style="padding:15px;text-align:center;color:var(--muted);font-size:11px">No active or archived message matches.</div>`):`<button class="menu-item" data-action="search-current-demo"><span class="menu-icon">${icon('search',12)}</span><span class="menu-copy"><strong>Search current thread</strong><span>Find and jump to exact messages without losing your draft</span></span></button><button class="menu-item" data-action="show-archived"><span class="menu-icon">${icon('archive',12)}</span><span class="menu-copy"><strong>Browse archived threads</strong><span>Archived threads remain searchable and restorable</span></span></button>`}`);
+    return extReplace('threadSearchMenu',{menu:state.menu}, `<div class="menu-head"><strong>Search threads</strong><span class="spacer"></span><span class="chat-meta">Current + archived</span></div><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="thread-global-search" value="${esc(q)}" placeholder="Search exact message text…"></label></div>${q?(results.length?results.map(r=>`<button class="menu-item" data-action="jump-search-result" data-thread="${esc(r.thread.id)}" data-message="${esc(r.msg.id)}"><span class="menu-icon">${icon('search',12)}</span><span class="menu-copy"><strong class="menu-ttl">${esc(r.thread.title)}</strong><span class="menu-sub">${esc((r.msg.body||r.msg.title||r.msg.detail||'').slice(0,110))}</span></span></button>`).join(''):`<div style="padding:15px;text-align:center;color:var(--muted);font-size:11px">No active or archived message matches.</div>`):`<button class="menu-item" data-action="search-current-demo"><span class="menu-icon">${icon('search',12)}</span><span class="menu-copy"><strong class="menu-ttl">Search current thread</strong><span class="menu-sub">Find and jump to exact messages without losing your draft</span></span></button><button class="menu-item" data-action="show-archived"><span class="menu-icon">${icon('archive',12)}</span><span class="menu-copy"><strong class="menu-ttl">Browse archived threads</strong><span class="menu-sub">Archived threads remain searchable and restorable</span></span></button>`}`);
   }
   function renderSubmenu(id){
     if(id.startsWith('model:')){
       const model=D.models.find(x=>x.id===id.slice(6))||selectedModel();
-      return `<div class="menu-head"><strong>${esc(model.name)}</strong><span class="spacer"></span><span class="chat-meta">Effort</span></div>${model.efforts.map(e=>`<button class="effort-row ${pickerSelection().model===model.id&&pickerSelection().effort===e?'active':''}" data-action="set-effort" data-model="${esc(model.id)}" data-value="${esc(e)}"><i class="effort-dot"></i><span style="flex:1">${esc(e)}</span>${pickerSelection().model===model.id&&pickerSelection().effort===e?icon('check',11):''}</button>`).join('')}${model.fast?`<div class="menu-divider"></div><button class="effort-row fast-row ${pickerSelection().model===model.id&&pickerSelection().fast?'active':''}" data-action="toggle-fast" data-model="${esc(model.id)}">${pickerSelection().model===model.id&&pickerSelection().fast?`<span class="nx-bolt">${icon('lightning',11,'fast-row-bolt')}</span>`:icon('lightning',11)}<span style="flex:1">Fast mode</span>${pickerSelection().model===model.id&&pickerSelection().fast?icon('check',11):''}</button>`:''}`;
+      return `<div class="menu-head"><strong>${esc(model.name)}</strong><span class="spacer"></span><span class="chat-meta">Effort</span></div>${model.efforts.map(e=>`<button class="effort-row ${pickerSelection().model===model.id&&pickerSelection().effort===e?'active':''}" data-action="set-effort" data-model="${esc(model.id)}" data-value="${esc(e)}"><i class="effort-dot"></i><span class="effort-lbl" style="flex:1">${esc(e)}</span>${pickerSelection().model===model.id&&pickerSelection().effort===e?icon('check',11):''}</button>`).join('')}${model.fast?`<div class="menu-divider"></div><button class="effort-row fast-row ${pickerSelection().model===model.id&&pickerSelection().fast?'active':''}" data-action="toggle-fast" data-model="${esc(model.id)}">${pickerSelection().model===model.id&&pickerSelection().fast?`<span class="nx-bolt">${icon('lightning',11,'fast-row-bolt')}</span>`:icon('lightning',11)}<span class="effort-lbl" style="flex:1">Fast mode</span>${pickerSelection().model===model.id&&pickerSelection().fast?icon('check',11):''}</button>`:''}`;
     }
     /* SIX Plan choices, exactly: Plan Quick/Standard/Thorough and Deep Plan
        Thorough/Exhaustive/BrainStorm. Not four regular depths, and no legacy
@@ -4155,19 +4221,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const cur=deep?state.deepPlanStrategy:state.planStrategy;
       /* item 11 (Jared, 2026-10-07): Grill Me's row carries the neon kettle grill; hovering or focusing the row plays
          its act (the lid swings open, flames and a puff of smoke, the lid drops shut) through the concept hover rule */
-      const grill=`<div class="menu-divider"></div><button class="menu-item ${state.grillMe?'active':''}" data-action="toggle-grill-me"><span class="menu-icon">${icon('grill',14)}</span><span class="menu-copy"><strong>Grill Me</strong><span>The assistant questions you first, round by round, with a recommended answer for each decision</span></span>${state.grillMe?icon('check',11):''}</button>`;
-      return `<div class="menu-head"><strong>${deep?'Deep Plan':'Plan'}</strong></div>${opts.map(o=>`<button class="menu-item ${cur===o[0]?'active':''}" data-action="set-plan-strategy" data-mode="${deep?'Deep Plan':'Plan'}" data-value="${o[0]}"><span class="menu-copy"><strong>${o[0]}</strong><span>${o[1]}</span></span>${cur===o[0]?icon('check',11):''}</button>`).join('')}${deep?grill:''}`;
+      const grill=`<div class="menu-divider"></div><button class="menu-item ${state.grillMe?'active':''}" data-action="toggle-grill-me"><span class="menu-icon">${icon('grill',14)}</span><span class="menu-copy"><strong class="menu-ttl">Grill Me</strong><span class="menu-sub">The assistant questions you first, round by round, with a recommended answer for each decision</span></span>${state.grillMe?icon('check',11):''}</button>`;
+      return `<div class="menu-head"><strong>${deep?'Deep Plan':'Plan'}</strong></div>${opts.map(o=>`<button class="menu-item ${cur===o[0]?'active':''}" data-action="set-plan-strategy" data-mode="${deep?'Deep Plan':'Plan'}" data-value="${o[0]}"><span class="menu-copy"><strong class="menu-ttl">${o[0]}</strong><span class="menu-sub">${o[1]}</span></span>${cur===o[0]?icon('check',11):''}</button>`).join('')}${deep?grill:''}`;
     }
     if(id==='review'){
       const opts=[['Single Agent','One fresh-context reviewer with the selected model and Persona'],['Multi-Pass Review','Several blind reviewers, then finding exchange · Default']];
-      return `<div class="menu-head"><strong>Review</strong><span class="spacer"></span><span class="chat-meta">Read-only</span></div>${opts.map(o=>`<button class="menu-item ${state.reviewStrategy===o[0]?'active':''}" data-action="set-review-strategy" data-value="${esc(o[0])}"><span class="menu-copy"><strong>${o[0]}</strong><span>${o[1]}</span></span>${state.reviewStrategy===o[0]?icon('check',11):''}</button>`).join('')}`;
+      return `<div class="menu-head"><strong>Review</strong><span class="spacer"></span><span class="chat-meta">Read-only</span></div>${opts.map(o=>`<button class="menu-item ${state.reviewStrategy===o[0]?'active':''}" data-action="set-review-strategy" data-value="${esc(o[0])}"><span class="menu-copy"><strong class="menu-ttl">${o[0]}</strong><span class="menu-sub">${o[1]}</span></span>${state.reviewStrategy===o[0]?icon('check',11):''}</button>`).join('')}`;
     }
     if(id==='goal-menu')return renderCapabilitySub('Goal Mode',[['On','Enable natural-language, /goal, and button invocation'],['Off','Disable the visible Goal Mode capability']],state.capabilities.goal?'On':'Off','set-goal-cap');
     /* E-02 (owner, 2026-09-27): set-crew-cap answers this chat's Crew Auto (collaboration.js chains it), so the choice is
        enforced where Crew Auto decides; turning Crew Auto off in the project settings stops it being on by default. */
     if(id==='crew-menu')return renderCapabilitySub('Crew Auto in this chat',[['On','The assistant may call a Crew when a job needs one.'],['Off','No Crew starts by itself in this chat. Your Crew Auto settings are kept.']],crewAutoHere()?'On':'Off','set-crew-cap');
     if(id==='bsd-menu')return renderCapabilitySub('Back Seat Driver',[['Off','No second opinion'],['Auto','Checks at key moments'],['On','Checks after every step']],state.capabilities.bsd,'set-bsd-cap');
-    if(id==='context-lens')return extReplace('contextLensMenu',{}, `<div class="menu-head"><strong>Context Lens</strong></div>${[['Auto','Use source-aware automatic selection'],['Focus','Prioritize selected current sources'],['Mute','Omit selected superseded sources'],['Subcompact','Preview a staged context reduction'],['Off','Disable Context Lens receipts']].map(o=>`<button class="menu-item ${state.capabilities.context===o[0]?'active':''}" data-action="set-context-cap" data-value="${o[0]}"><span class="menu-copy"><strong>${o[0]}</strong><span>${o[1]}</span></span>${state.capabilities.context===o[0]?icon('check',11):''}</button>`).join('')}${state.capabilities.context==='Subcompact'?`<div class="menu-divider"></div><div style="padding:7px"><p style="font-size:10px;color:var(--muted);margin:0 0 7px">Preview: remove 18.4K tokens while retaining provenance.</p><div class="plan-actions"><button class="soft-button" data-action="cancel-subcompact">Cancel</button><button class="primary-button" data-action="apply-subcompact">Apply</button></div></div>`:''}`);
+    if(id==='context-lens')return extReplace('contextLensMenu',{}, `<div class="menu-head"><strong>Context Lens</strong></div>${[['Auto','Use source-aware automatic selection'],['Focus','Prioritize selected current sources'],['Mute','Omit selected superseded sources'],['Subcompact','Preview a staged context reduction'],['Off','Disable Context Lens receipts']].map(o=>`<button class="menu-item ${state.capabilities.context===o[0]?'active':''}" data-action="set-context-cap" data-value="${o[0]}"><span class="menu-copy"><strong class="menu-ttl">${o[0]}</strong><span class="menu-sub">${o[1]}</span></span>${state.capabilities.context===o[0]?icon('check',11):''}</button>`).join('')}${state.capabilities.context==='Subcompact'?`<div class="menu-divider"></div><div style="padding:7px"><p style="font-size:10px;color:var(--muted);margin:0 0 7px">Preview: remove 18.4K tokens while retaining provenance.</p><div class="plan-actions"><button class="soft-button" data-action="cancel-subcompact">Cancel</button><button class="primary-button" data-action="apply-subcompact">Apply</button></div></div>`:''}`);
     if(id==='eli5-menu')return renderCapabilitySub('ELI5',[['On','Show a simpler explanation after selected responses'],['Off','Keep standard response depth']],state.capabilities.eli5?'On':'Off','set-eli5-cap');
     /* F0b (i): PREFS's Thought Stream copy (DESIGN-SPEC 8.14); the values stay Auto|Expanded. */
     if(id==='thought-menu')return renderCapabilitySub('Thought Stream',[['Auto','Opens while the AI is thinking, then folds away','While it thinks'],['Expanded','Keeps the thinking visible next to the answer','Always open']],state.capabilities.thought,'set-thought-cap')+renderThoughtLines();
@@ -4179,13 +4245,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return extRender('submenu',{id});
   }
   /* items: [value, description, label (defaults to value), fine line]. F0b (d, i). */
-  function renderCapabilitySub(title,items,current,action){ return `<div class="menu-head"><strong>${esc(title)}</strong></div>${items.map(o=>`<button class="menu-item ${current===o[0]?'active':''}" data-action="${action}" data-value="${esc(o[0])}"><span class="menu-copy"><strong>${esc(o[2]||o[0])}</strong><span>${esc(o[1])}</span>${o[3]?`<span>${esc(o[3])}</span>`:''}</span>${current===o[0]?icon('check',11):''}</button>`).join('')}`; }
+  function renderCapabilitySub(title,items,current,action){ return `<div class="menu-head"><strong>${esc(title)}</strong></div>${items.map(o=>`<button class="menu-item ${current===o[0]?'active':''}" data-action="${action}" data-value="${esc(o[0])}"><span class="menu-copy"><strong class="menu-ttl">${esc(o[2]||o[0])}</strong><span class="menu-sub">${esc(o[1])}</span>${o[3]?`<span class="menu-sub">${esc(o[3])}</span>`:''}</span>${current===o[0]?icon('check',11):''}</button>`).join('')}`; }
   /* Lines shown while thinking (DL-234): how much of the reasoning While it thinks keeps in view. The choices are
      thought-stream.js's, so the list is offered only where that module draws the thinking. */
   function renderThoughtLines(){
     const T=window.PM56_THOUGHT&&window.PM56_THOUGHT.lines; if(!T)return '';
     const cur=T.current();
-    return `<div class="menu-divider"></div><div class="menu-section-label" id="tt-lines-label">Lines shown while thinking</div><div class="tt-lines-menu" role="group" aria-labelledby="tt-lines-label">${T.choices.map(n=>`<button class="menu-item tt-lines-item ${cur===n?'active':''}" data-action="set-thought-lines" data-value="${n}"><span class="menu-copy"><strong>${n} lines</strong></span>${cur===n?icon('check',11):''}</button>`).join('')}</div>`;
+    return `<div class="menu-divider"></div><div class="menu-section-label" id="tt-lines-label">Lines shown while thinking</div><div class="tt-lines-menu" role="group" aria-labelledby="tt-lines-label">${T.choices.map(n=>`<button class="menu-item tt-lines-item ${cur===n?'active':''}" data-action="set-thought-lines" data-value="${n}"><span class="menu-copy"><strong class="menu-ttl">${n} lines</strong></span>${cur===n?icon('check',11):''}</button>`).join('')}</div>`;
   }
   function renderCompactSubmenu(id){ return `<div class="menu-head"><button class="icon-button" data-action="submenu-back">${icon('left',12)}</button><strong>Back</strong></div>${renderSubmenu(id)}`; }
 
@@ -4507,10 +4573,36 @@ suggested path                    migration 0043, reversible</div></div></sectio
      time because renderers gate them on the half-second clock. */
   function armWorkTimer(){
     clearInterval(workTimer);
+    if(workResting()){ workTimer=null; return; }   /* (pm7-perf lane C2, below: armed when the window has gone) */
     /* 500ms of MOTION time: a film tool that slows the clock slows the tick too. */
     workTimer=setInterval(workTick,window.PM56_CLOCK?window.PM56_CLOCK.ms(500):500);
   }
   window.addEventListener('pm56-clock-scale',()=>{ if(workTimer) armWorkTimer(); });
+  /* pm7-perf lane C2: while PMConcept7's onboarding window is open over the app (PM56_HOST.onRest, 00-host.js) the
+     work clock stands still: no tick, so no card or status-bar patch, and no follow glide (kickFollow). The clock
+     advances by ticks, so when the window has gone it carries on from where it stopped, and a run that would have
+     ended meanwhile ends then. A chain's next run waits too: its delay counts only the time the window is not open
+     (seqArm). Under the window the run went on: its tick twice a second, glide and room frames 96-145 a second. */
+  function workResting(){ return !!(HOSTED&&HOST.resting&&HOST.resting()); }
+  /* A chain's next run (onRecComplete) is armed here. seqDue is when it falls due; at the opening it is put aside in
+     seqPark with what is left of its delay, and armed again with that at the close; armed while the window is open, it
+     is put aside whole. seqTimer keeps its id meanwhile, so the chain still counts as pending (maybeFlushQueue) and a
+     reset or a thread switch (seqTimer=null) still ends it. Lane C3 (R1 review of lane C2): the delay used to be put
+     aside only when it fell due under the window, so a visit that ended before then was not counted at all (1200 ms
+     armed, the window open from +200 to +800 ms: the next run started at +1200 instead of +1800). */
+  var seqDue=null, seqPark=null;
+  function seqArm(fn,ms){ seqTimer=setTimeout(fn,ms); seqDue={fn,id:seqTimer,at:performance.now()+ms}; if(workResting()) seqRest(); }
+  function seqRest(){
+    const d=seqDue; seqDue=null;
+    if(d&&seqTimer===d.id){ clearTimeout(seqTimer); seqPark={fn:d.fn,id:seqTimer,left:Math.max(0,d.at-performance.now())}; }
+  }
+  if(HOSTED&&HOST.onRest) HOST.onRest(on=>{
+    if(on){ clearInterval(workTimer); workTimer=null; cancelGlide(); seqRest(); return; }
+    if(runningRecs().length) armWorkTimer();
+    const p=seqPark; seqPark=null;
+    if(p&&seqTimer===p.id) seqArm(p.fn,p.left);
+    followMoved=true; kickFollow();
+  });
   function workTick(){
     // Hosted: a shell/Home resize drag owns the frame budget. The demo clock advances a fixed step
     // per tick, so skipping ticks while body.pm-resizing simply pauses the timeline mid-drag; the
@@ -4538,10 +4630,19 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(!runningRecs().length){ stopWorkTimer(); maybeFlushQueue(); }
   }
   const STAMP_KEEP=['data-role','data-msg-type','data-family','data-turn','data-turn-pos'];
+  /* pm7-perf lane C: a tick whose card would come out exactly as it is patches nothing. renderGen counts every render
+     of the app and every scoped patch; when nothing rendered since the last light tick, a card whose markup is the
+     string that tick patched it with is already that markup, and patchScope's measuring, scroll custody, hooks and
+     frames would only find so (about one tick in four of the classic run changes nothing drawn; each such patch also
+     stripped and re-set Pip's data-pip-run). The status bar likewise. lightTickGen is renderGen as the last light tick
+     left it, or -1 when something else rendered during that tick (a hook): what that render drew is not known here. */
+  var renderGen=0, appRenderGen=0, lightTickGen=-1, statusBarHtml=null, statusBarNode=null, statusBarGen=-1;
+  const lightTickHtml=new WeakMap();
   function lightTick(live){
-    const t=activeThread(), inner=document.querySelector('.transcript-inner');
+    const tr=tEl(), t=activeThread(), inner=tr&&tr.querySelector('.transcript-inner');
     if(!t||!inner) return false;
-    const recs=new Set(live), covered=new Set();
+    const recs=new Set(live), covered=new Set(), clean=renderGen===lightTickGen, gen0=renderGen;
+    let changed=false, own=0;
     for(const m of t.messages){
       if(m.type!=='working'||!messageVisible(m)) continue;
       const rec=workRecFor(m); if(!rec||!recs.has(rec)) continue;
@@ -4552,14 +4653,24 @@ suggested path                    migration 0043, reversible</div></div></sectio
       const node=inner.querySelector(`:scope > [data-k="${CSS.escape(km[1])}"]`);
       if(!node) return false;
       html=stampItem(html,STAMP_KEEP.map(a=>[a,node.getAttribute(a)]));
+      if(clean&&lightTickHtml.get(node)===html){ covered.add(rec); continue; }
       if(!patchScope(node,html)) return false;
+      lightTickHtml.set(node,html); changed=true; own++;
       covered.add(rec);
     }
     for(const r of live) if(!covered.has(r)) return false;
-    const sb=document.querySelector('.status-bar');
-    if(sb){ const tpl=document.createElement('template'); tpl.innerHTML=renderStatusBar(); if(tpl.content.firstElementChild) pmPatchNode(sb,tpl.content.firstElementChild); }
-    renderOverlays();
+    /* only renderApp makes the status bar (never hosted): looked up once per app render */
+    if(statusBarGen!==appRenderGen){ statusBarGen=appRenderGen; statusBarNode=document.querySelector('.status-bar'); statusBarHtml=null; }
+    const sb=statusBarNode&&statusBarNode.isConnected?statusBarNode:null;
+    if(sb){
+      const sbHtml=renderStatusBar();
+      if(sbHtml!==statusBarHtml){ statusBarHtml=sbHtml; const tpl=document.createElement('template'); tpl.innerHTML=sbHtml; if(tpl.content.firstElementChild) pmPatchNode(sb,tpl.content.firstElementChild); changed=true; }
+    }
+    /* nothing drawn changed: the overlays are re-patched only if their own markup changed, and keep their places */
+    renderOverlays(changed?null:{still:true});
+    /* every tick, changed or not: for a reader who is not following it is also what shows the pill as a card's FLIP grows */
     syncJumpBottom();
+    lightTickGen=renderGen===gen0+own?renderGen:-1;
     return true;
   }
   function stopWorkTimer(killSequence){ clearInterval(workTimer); workTimer=null; if(killSequence){ clearTimeout(seqTimer); seqTimer=null; for(const k in heldNextRuns) delete heldNextRuns[k]; } }
@@ -4575,13 +4686,17 @@ suggested path                    migration 0043, reversible</div></div></sectio
     const def=rec.runId&&D.workRuns&&D.workRuns[rec.runId];
     if(!def) return;                 // a PRIMARY record completing must not scroll the reader
     followIfSticky();
-    clearTimeout(seqTimer);
+    /* (the pending successor delay is cleared here, as ever; what the rest hook holds of it goes too, or a visit to the
+       onboarding window would arm the cleared delay again: seqRest and the close know it only by seqTimer's id, which
+       stays) */
+    clearTimeout(seqTimer); seqDue=null; seqPark=null;
     /* A finished card compacts when its successor enters the thread (startWorkingRec
        sets supersededBy at spawn time) or when the turn's answer starts streaming
        (turn-stream.js). */
     if(def.next&&D.workRuns[def.next.run]){
       const nid=def.next.run, pid=rec.id||rec.runId, delay=def.next.delayMs||1200;
-      const go=()=>{ clearTimeout(seqTimer); seqTimer=setTimeout(()=>{ seqTimer=null; startWorkingRec(nid,pid); },delay); };
+      /* (its delay counts only the time PMConcept7's onboarding window is not open: seqArm, by armWorkTimer's rest hook) */
+      const go=()=>{ clearTimeout(seqTimer); seqArm(()=>{ seqTimer=null; startWorkingRec(nid,pid); },delay); };
       if(hold) heldNextRuns[pid]=go; else go();
     }
   }
@@ -5609,11 +5724,11 @@ suggested path                    migration 0043, reversible</div></div></sectio
   /* the chat's own header menu (CONTRACT 6.1): History beside the messages, D4's keep-open row, Pop out / Dock back */
   function renderColumnMenu(){
     const SC=window.PMW&&PMW.chatCol;
-    const row=(action,label,sub,on,glyph,attrs)=>`<button class="menu-item ${on?'active':''}" data-action="${action}"${attrs||''} role="menuitemcheckbox" aria-checked="${on?'true':'false'}"><span class="menu-icon">${icon(glyph,13)}</span><span class="menu-copy"><strong>${esc(label)}</strong>${sub?`<span>${esc(sub)}</span>`:''}</span>${on?icon('check',11):''}</button>`;
+    const row=(action,label,sub,on,glyph,attrs)=>`<button class="menu-item ${on?'active':''}" data-action="${action}"${attrs||''} role="menuitemcheckbox" aria-checked="${on?'true':'false'}"><span class="menu-icon">${icon(glyph,13)}</span><span class="menu-copy"><strong class="menu-ttl">${esc(label)}</strong>${sub?`<span class="menu-sub">${esc(sub)}</span>`:''}</span>${on?icon('check',11):''}</button>`;
     let out=`<div class="menu-head"><strong>Chat</strong></div>`;
     out+=row('pm56-history-pin','Keep History open','Beside the messages instead of a flyout',HOST.historyPinned(),'history',' data-ui-action-id="ui.chat_column.pin_history"');
     if(SC&&SC.keepOpenRow){ const k=SC.keepOpenRow(); out+=row('pm56-keep-open',k.label,k.sub,!!k.checked,'pin',' data-ui-action-id="'+esc(k.action||'ui.chat_column.keep_open')+'"'); }
-    if(SC&&SC.isFloating){ const fl=SC.isFloating(); out+=`<button class="menu-item" data-action="pm56-pop"><span class="menu-icon">${icon(fl?'collapse':'expand',13)}</span><span class="menu-copy"><strong>${fl?'Dock back':'Pop out window'}</strong><span>${fl?'Back to the right side':'The only way to move the chat'}</span></span></button>`; }
+    if(SC&&SC.isFloating){ const fl=SC.isFloating(); out+=`<button class="menu-item" data-action="pm56-pop"><span class="menu-icon">${icon(fl?'collapse':'expand',13)}</span><span class="menu-copy"><strong class="menu-ttl">${fl?'Dock back':'Pop out window'}</strong><span class="menu-sub">${fl?'Back to the right side':'The only way to move the chat'}</span></span></button>`; }
     return out;
   }
   function hostedColumnAction(a,btn,e){

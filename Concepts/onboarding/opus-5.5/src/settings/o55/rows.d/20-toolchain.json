@@ -221,32 +221,7 @@
   "code.execution.dockerhub-signin": {
    "actionLabel": "Connect Docker Hub",
    "icon": "user",
-   "flow": {
-    "kind": "form",
-    "icon": "user",
-    "primary": "Connect",
-    "external": true,
-    "fields": [
-     {
-      "key": "username",
-      "label": "Docker Hub username",
-      "placeholder": "your-name",
-      "required": true
-     },
-     {
-      "key": "token",
-      "label": "Access token",
-      "type": "secret",
-      "required": true,
-      "help": "Make one at hub.docker.com under Account settings, Personal access tokens."
-     }
-    ],
-    "note": "Puppet Master checks which accounts and teams you may publish under, then keeps only the token.",
-    "done": [
-     "Docker Hub connected",
-     "Publishing can use your account."
-    ]
-   }
+   "pm51": "pm51-toolchain-dockerhub-connect"
   },
   "code.execution.dockerhub-token": {
    "label": "Docker Hub access token",

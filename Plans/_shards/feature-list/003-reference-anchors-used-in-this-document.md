@@ -4,7 +4,7 @@ Source: `Plans/feature-list.md`
 
 Source lines: L13-L124
 
-Source SHA256: `43393f020659076aa039e640a3d41e20fa898a64ff4161ee881b359889bc5d43`
+Source SHA256: `1e3c076e3e5d6450aa86dc05bbe33cfbd128a43087e206006648c977104238bc`
 
 ---
 
@@ -20,7 +20,7 @@ Source SHA256: `43393f020659076aa039e640a3d41e20fa898a64ff4161ee881b359889bc5d43
 - **assistant-chat-design** — `Plans/assistant-chat-design.md`; canonical Assistant Chat behavior, modes, thread UX, and slash-command semantics.
 
 <a id="media-generation-capabilities-ref"></a>
-- **Media generation and capabilities** — `Plans/Media_Generation_and_Capabilities.md`; canonical for capability discovery and media generation routing. Feature summaries MUST defer Gemini media/account capability wording to the owner docs: Gemini Direct is key-only/API-key-backed, Gemini CLI is mode-dependent across OAuth/API-key/Google-credential rows, and stale-canon `mixed-account` or bare `key-exception` shorthand is not a complete feature description.
+- **Media generation and capabilities** — `Plans/Media_Generation_and_Capabilities.md`; canonical for capability discovery and media generation routing. Feature summaries MUST defer Gemini media/account capability wording to the owner docs: Gemini Direct is key-only/API-key-backed, the Gemini CLI media route and its historical OAuth/API-key/Google-credential rows are retired (DL-332, UF-019, UF-021, DL-478), Antigravity remains the live CLI-backed Google/agent route, and stale-canon `mixed-account` or bare `key-exception` shorthand is not a complete feature description.
 
 <a id="feature-debug-mode"></a>
 ### 6A. Debug Mode and shared debug-capable tooling

@@ -1,0 +1,1086 @@
+# Lane DS (stream E, batch 1): clearing the frozen seal check's blockers
+
+**Branch:** `plans/ea-b1-seal-blockers-20261104`, from `origin/main` `be4766513f`. Sweep part 2B is current; sweep part 2A, the part 2B number pass, sweep part 1 and the review-round sections below are historical.
+**Historical first-pass worktree:** Nas1 `~/pm-worktrees/ea-ds`, kept for the lead. Second pass (DS-P2): VM sparse worktree `~/pm-worktrees/DS-p2` from `600575221d`, removed after the push.
+**Inputs:** `BRIEF-DRAFT.md`, `lanes/DS.md`, D1b's `BLOCKERS.md` and `DEPTH.jsonl`. Every D1b claim used here was re-checked on this branch.
+
+## Sweep part 2B: findings and responses
+
+**Branch:** `plans/ea-b1-seal-blockers-20261104`. **Start:** the part 2A head `a8ea2450d1` (report commit; implementation `2dea5e4f76`), equal to the branch on both push URLs before any edit. **Gated NUMRULE merge:** already done in part 2A as `6fe849dc06` (`git log --format=%P -1 6fe849dc06` → `59699c6566… 58c2816ff3…`); `git merge --no-ff 58c2816ff3` is a no-op here ("Already up to date"), so part 2B has no merge commit of its own and needed neither addendum-1 resolution. Every NUMRULE-owned file (`scripts/pm_event_numbers*`, `scripts/pm_event_datetime*`, `Plans/event_number_recipe_corpus.json`, `Plans/event_datetime_inventory.json`, `scripts/pm_event_datetime_exclusions.json`, …; 22 paths) equals `58c2816ff3` by blob (the other two paths the NUMRULE head touches, `Plans/Contracts_V0.md` and `Plans/storage-plan.md`, are shared owner documents that carry its CV-1100/CV-1101 and SP-1100/SP-1101 units beside other lanes' text); no NUMRULE or guard-tool file is edited. **Implementation commits:** `01a586a523` (date-time, the validator class, SP-1101, witnesses and custody) and `a053c046c3` (entailment-proof line re-pin); the delivery head (this report's commit) is in the external `HEAD.txt`. No rebase. VM sparse worktree `~/pm-worktrees/sweep-p2a-ds` (the part 2A worktree), removed after the push.
+
+**Result.**
+- **Timestamps (CV-1101): my timestamp review is no longer interim.** Every `format: date-time` a DS validator meets is checked by the shared predicate `pm_event_datetime.date_time` under an explicit owner profile, with the shared `Refusal` as the error's cause; CV-253's strict `storage_utc_z` is composed on the Storage-assigned `observed_at_utc`/`persisted_at_utc` at exactly the Storage nodes the shared inventory classifies (read as data), plus DS's own 3.0.0 successor envelope. The lane grammar and calendar checks are gone (16 rows removed); time order uses an exact key on the shared predicate's calendar and leap-second table. The field table below names the profile per field. As addendum 2 directs, the lane calls `date_time` (through its format checker) and never `datetime_validator` or the inventory gate; both run at batch-2 integration.
+- **SP-1101:** every DS retained read takes its write recipe from Storage's sealed write custody of that exact original and resolves it once through the shared `RetainedDispatcher` (new table `ds_retained_custody`); the record, the request and the reader's source observation select nothing. A coherent forgery that passed every copy join before part 2B now refuses.
+- **Found and fixed:** DS's validator classes lost their CV-1100 integer, ECMA pattern and (new) Storage-profile keyword across a `$ref` into a resource that declares `$schema` (disclosed in the part 2A section). The class now keeps itself; 0 of 23 Home4 slot integer slots accept an integral float (6 did).
+- **Guard tables:** the gated tool `004bdedd63` proves **718 of 746 rows** in 198 tables; **28 rows are unprovable by construction**, each alone in its own table with a `path:line` proof; every other row is proved. 7 tables were rerun at the part 2B head (every table whose module or suite changed); the other 163 keep their part 2A result because their module and every control and negative digest are unchanged. Masked 0, unrelated 0, lane-matrix problems 0.
+- **Grades:** **55 PASS / 5 PARTIAL → the same totals.** No cell changes (below).
+- **Readiness: NOT_READY** (prepared for the batch-2 Sol max and Astra max; READY stays false; native execution NOT_RUN).
+
+**Behaviour against part 2A (verify5 at `a053c046c3` against verify4 at `2dea5e4f76`):** every exit code 0; **byte-identical output** for home4, home4-self-test, created, created-v2, reset, admission, browser-harness-faults, projects-refresh, terminal-self-test; terminal identical; unit tests created-tests 65 OK, reset-tests 53 OK, admission-tests 38 OK, pm7-tests 13 OK; round2 25 positives / 46 negatives, results identical; round3 36 positives / 67 negatives, results identical; round4 11 positives / 34 negatives, results identical; round-4 format sweep pass; cohort controls 679 → 679, failing none (the first supplemental run failed exactly these five before their edit, rc=1: five checkpoint-spelling controls now use a space separator, which the shared predicate refuses, instead of lowercase `t`, which CV-1101 makes owner-valid: U058, U104 ×2, U076 ×2).
+
+| Item | Disposition and change | Where | Verify |
+|---|---|---|---|
+| **Merge the gated NUMRULE head** | Already merged in part 2A: `6fe849dc06` is `git merge --no-ff 58c2816ff3` (second parent `58c2816ff33365384d4039553f5efdb5370930e6`). Re-running the merge here is a no-op ("Already up to date"); no addendum-1 resolution was needed. | merge commit `6fe849dc06` | `git log --format=%P -1 6fe849dc06`; `merge.log` (evidence) lists every NUMRULE-owned path `EQUAL` to `58c2816ff3`. |
+| **CV-1101: the shared predicate in every DS validator** (fixed, `01a586a523`) | `scripts/pm_contract_formats.py` keeps no grammar of its own: its `FormatChecker(profile=...)` registers `date-time` as `pm_event_datetime.date_time(value, profile=...)` (raising the shared `Refusal`; a non-string is left to `type`, a `str` subclass refuses as `date_time_type`), keeps the stock formats, and still fails a format DS does not implement. The lane regex, calendar check and leap-second arithmetic are deleted. Every DS validator whose schema reaches a `format` already received this checker (`Home4Validator`/`StrictValidator`, `RetainedBodyValidator`, the admission, created, v2 and reset validators), so every such schema verdict row now enforces the shared predicate; the five built without it (the terminal retained payload, the 3.0.0 payload-reference shape, the registry family row and the admission program's two registry checks) reach no `format`. | `scripts/pm_contract_formats.py` (`FormatChecker`, `date_time_ok`, `date_time_refusal`) | `pm_ds_format_controls`: 15 malformed and 5 owner-valid spellings classified exactly as the shared predicate does; part 2B witnesses `dt/*` (each negative's validation error carries the named shared reason). |
+| **CV-253 at the Storage fields** (fixed, `01a586a523`) | `storage_properties` extends the `properties` keyword of the DS validator class: after the stock keyword (so the original schema and the event_record date-time check stay in force) it applies `date_time(…, profile=STORAGE_UTC_Z)` to `observed_at_utc`/`persisted_at_utc` at exactly the schema nodes the shared inventory classifies `storage_utc_z` (133 rows; read as data by reviewed path and pointer, resolved by node content in this tree; no field-name guess), plus the lane's own 3.0.0 envelope root and its 1.0.0 reader, which the inventory does not list yet (recorded for the batch-2 refresh). Current and retained reads alike: a skipped old format check never authorizes invalid Storage history. | `scripts/pm_contract_formats.py` (`storage_nodes`, `storage_properties`, `LANE_STORAGE_NODES`) | `dt/storage-*` (`+00:00`, `-00:00`, lowercase `z`, `+01:00` at either field, 2.0.0 and 3.0.0, refused with `date_time_utc_z`); `sp1101/retained-storage-offset`; positives keep a 12-digit fraction and a real leap second. |
+| **Validator class across `$ref`** (found while preparing part 2B, fixed, `01a586a523`) | jsonschema 4.19.2's `evolve` re-selects the stock class by declared dialect, so `Home4Validator` and `RetainedBodyValidator` lost the CV-1100 integer, the ECMA end-of-input `pattern` and (now) the Storage keyword wherever validation crossed into a resource declaring `$schema`. `keep_dialect` makes `evolve` keep the class (draft 2020-12, the dialect of every committed Plans schema; any other declared dialect refuses). This closes the gap disclosed in the part 2A section. | `scripts/pm_contract_formats.py` (`keep_dialect`), `scripts/pm_home_layout_v2_slot_receipt.py` (`_Home4Class`, `_RetainedClass`) | `ref-evolve-probe.txt` (part 2A evidence) and `ref-evolve-probe-2b.txt`: integral float accepted at 6 of 23 Home4 slot integer slots at `2dea5e4f76`, 0 of 23 now; witnesses `num/home4-*` refuse at H4S01. Every DS CLI stays byte-identical. |
+| **Checkpoint times** (fixed, `01a586a523`) | The v1, v2 and reset checkpoint cores lose their own uppercase-only regex and `datetime.fromisoformat` calendar rows (CC02–CC05, V2R09–V2R11, RC06–RC11): their schema verdicts (CC01, V2C01, RK01) check every core time with the shared predicate first. V2R06–V2R08 remain, now the shared predicate per field, because `core_relation_failures` is also called on its own (the main-owned created tests call it with `2026-02-30…`). Every time comparison (CC09, V2R12–V2R14, RC12–RC14, RK05, WD05, RW05, RG17, RV29, V2K04/V2K09/V2K10, V2G19, V2A11, V2CL03, RU15) uses `instant`, an exact key on the shared predicate's own calendar and announced leap-second table: `fromisoformat` refused lowercase `z`, a real leap second and year 0000, and truncated fractions past six digits (two times 100 ns apart compared equal). | `scripts/pm_browser_workspace_created.py`, `scripts/pm_browser_workspace_created_v2.py`, `scripts/pm_browser_workspace_reset.py`; `scripts/pm_contract_formats.py` (`instant`, `after_seconds`) | `dt/v1-*`, `dt/v2-*`, `dt/reset-*`. |
+| **Cleanup time** (fixed, `01a586a523`) | RU11 is the shared predicate on the reset cleanup time; RU12 (a zoneless time, which `fromisoformat` accepted) is gone because the shared grammar requires a zone; RU14 (instants comparable) is gone because exact keys always compare; RU13 stays entailed (proof updated: the RU02 schema verdict checks the anchor with the same predicate). The 604800-second window counts elapsed seconds on the shared calendar. | `scripts/pm_browser_workspace_reset.py` (`cleanup`) | `dt/reset-cleanup-zoneless` (RU11, `date_time_syntax`), `dt/reset-cleanup-offset` (positive). |
+| **Compaction commit time** (fixed, `01a586a523`) | CP02 (`fromisoformat`) is gone. `committed_at_utc` declares `format: date-time` with the owner's terminal-`Z` pattern (`Plans/event_payload_context_compaction_completed.schema.json:118`), so the payload validator installs the strict `storage_utc_z` profile explicitly and the pattern stays in the schema; CP01 refuses a malformed time with the shared reason. | `scripts/pm_event_authority_ds_round2.py` (`compaction_payload_errors`); `scripts/pm_event_payload_route.py` (`validator(..., profile=...)`) | `dt/compaction-committed-lowercase-z` (CP01, `date_time_utc_z`); `dt/compaction-committed-leap` (positive). |
+| **The leaks other lanes recorded** | Each refuses through the shared check at a DS route, with the shared reason as the error's cause: `24:00:00Z` (`date_time_hour`), trailing LF (`date_time_syntax`), an illegitimate second 60 (`date_time_leap_second`), a missing zone (`date_time_syntax`), 30 February (`date_time_day`), `+00:00`/`-00:00`/lowercase `z`/an offset at a Storage field (`date_time_utc_z`). Lowercase `t` is owner-valid at every event_record field. DS had no environment without date-time support (its own checker was always passed); the scheduler and DFM leaks are other lanes'. | part 2B witnesses | `python3 scripts/pm_ds_p2b_cases.py --check`. |
+| **Widening and narrowing, stated plainly** | **Widening:** a legitimate leap second, lowercase `z` and year 0000 are now valid at the checkpoint, cleanup and compaction-commit times the lane grammar refused (part 2A witnesses CC03–CC05, V2R07/V2R10/V2R11, RC07/RC09–RC11 and CP02 are now positives); offsets and long fractions order exactly. **Narrowing:** `observed_at_utc`/`persisted_at_utc` with lowercase `z` or any offset (including `+00:00`/`-00:00`) now refuse under CV-253, current and retained. Both follow CV-1101/CV-253 and the adoption guide's authority boundary; no Jared choice. No fixture file or unit test changed outcome; the witness and control changes are listed under *Fixture expectations that changed*. | — | *Fixture expectations that changed* below. |
+| **SP-1101: one selection from sealed custody, one RetainedDispatcher resolution** (fixed, `01a586a523`) | New `scripts/pm_ds_retained.py`, table `ds_retained_custody`, runs before any retained check on every DS retained read: the shared Browser candidate check with `historical=True` (Browser created and reset history facts, the shared replay projector `ReplayOracle.consume`, the Case-L compatibility branch), compaction history (`compaction_event_errors(historical=True)`), and layout history (`layout_event_errors` and Home4 `event_checks` with `historical=True`). It looks up Storage's sealed write custody at the original's ref (**OX01** unsealed → refuse), builds the reader's expected `OriginalBinding` (**OX02** incomplete binding), and resolves once through `pm_event_numbers.RetainedDispatcher(DSOriginalOwner, installed_recipes())`: the owner authenticates the fetched EVENT_VALUE record bytes (and, for a Case-L original, its legacy source) against the SHA-256 sealed at that ref (**OX03**), the sealed recipe tuple, with its frozen resource manifest, must have an installed frozen verifier (**OX04**), and that verifier recomputes the sealed original's edition, event type, payload schema id, binding and commitment (**OX05**); every other dispatcher refusal (**OX06**) is entailed and sits alone. No caller override, no current-then-legacy probing; disclosure stays the readers' own access rows. | `scripts/pm_ds_retained.py` (`retained_recipe`, `dispatch_refusal`, `DSOriginalOwner`, `frozen_verifier`, `installed_recipes`) | `sp1101/*` witnesses; table `ds_retained_custody` in the tool rerun. |
+| **SP-1101: the recipe drives the site's own rows** (fixed, `01a586a523`) | The sealed recipe (envelope edition, payload integer domain, legacy source) replaces every implicit selection the part 2B items listed: the candidate check's envelope edition and its `RetainedBodyValidator` choice (formerly the record's `schema_version` and every historical read), the Case-L branch (formerly the record's `replay_policy`/`migration` fields), compaction history's envelope and payload domain, and the layout payload domain (formerly the reader's `historical_source['payload_validation_recipe']`, now read only by the custody builder). The route's retained physical branch (`resolved_body(historical=True)`) is unchanged: it decodes the record's own physical form, which the authenticated bytes fix. | `scripts/pm-browser-event-admission.py` (`candidate_failures`), `scripts/pm_event_authority_ds_round2.py` (`compaction_event_errors`, `compaction_payload_errors`, `layout_event_errors`), `scripts/pm_home_layout_v2_slot_receipt.py` (`layout_retained_recipe`, `event_checks`) | `sp1101/retained-typed-integer-refuses-float` (a record cannot select the older domain), `sp1101/layout-named-recipe-selects-nothing`. |
+| **Sealed write custody (static stand-in)** (new, `01a586a523`) | `Plans/ds_original_custody.json` records, for the one Storage instance these synthetic readers read, every retained original a DS witness source reads (each sealed under the recipe its reader applied before SP-1101, so no existing outcome moves), the part 2B witness seals, and the SHA-256 manifest of the frozen resources (envelope schema, family payload schema, the CV-1101 predicate module) per recipe family. `--write-custody` refuses to write when two seals of one ref carry the same bytes under different recipes or bindings (`collision_report`). If batch-2 integration changes a pinned resource, every retained read refuses at OX04 by design until the custody is re-recorded at the merged head. | `Plans/ds_original_custody.json`; `scripts/pm_ds_retained.py` (`write_custody`, `check_custody`) | `python3 scripts/pm_ds_p2b_cases.py --check` → `custody`: 110 seals, 66 refs, 0 collisions, status pass. |
+| **Retained history under the frozen recipes** (new, `01a586a523`) | Positives: a 2.0.0 Browser original sealed under the original JSON Schema integer domain reads with an integral float at an integer payload slot; owner-valid lowercase/offset/12-digit-fraction source time reads with its spelling kept; a Case-L original reads with the legacy source sealed beside it; a layout original sealed under `original-json-schema` reads its integral float revision. | `scripts/pm_ds_p2b_cases.py` | `--check`. |
+| **Forged and downgraded selections** (new, `01a586a523`) | Unsealed (OX01: created, reset, replay, compaction, layout), incomplete binding (OX02), a coherent forgery with every copy consistent (OX03), a Case-L read with a legacy source that is not the sealed one (OX03), an older recipe edition with no installed verifier (OX04), a 3.0.0 record sealed under a 2.0.0 recipe (OX05, a wrong-edition selection), the same integral float sealed under `typed-integer` (refused at GC06: the record cannot select the older domain), and a layout reader naming `original-json-schema` for a `typed-integer` original (refused at LE07: the named recipe selects nothing). A sealed 2.0.0 original with `+00:00` at `observed_at_utc` refuses at GC04 under the frozen CV-253 profile. | `scripts/pm_ds_p2b_cases.py` | `--check`. |
+| **Case-L legacy-source fields (part 2A open item)** | For retained reads the legacy source is now part of the sealed original: a source with `bytes_hex` or `segment_generation` removed, or a field of the wrong type, is not the sealed source and refuses at OX03 (it was accepted at `2dea5e4f76`). The normalizer itself still recomputes only from `legacy_envelope` and the identity headers; binding the remaining fields to the legacy bytes still needs the Case-L owner's byte recipe, so the item stays recorded for the review, narrowed to sources Storage itself sealed. | `scripts/pm_ds_retained.py`; `scripts/pm-browser-event-admission.py` (`compatibility_history_failures`) | `case-l-source-probe-2b.txt` (evidence). |
+| **Terminal** | `terminal.workgroup_moved` is withdrawn; its retained saved data has exactly one frozen recipe (the retained payload schema, TR01) and no envelope edition, so there is no selection to authenticate, as for DMEM's reduced originals; its closed payload declares no format. | `scripts/pm_terminal_workgroup_compatibility.py` | — |
+
+
+**Disputed:** none. **Stopped for Jared:** none. **IDs used:** none (no PlanUnit, Decision Log or admission IDs; no owner document changed, so no shard or index regeneration). New guard rows: OX01–OX06; new witness IDs: the part 2B case IDs in `scripts/pm_ds_p2b_cases.py`.
+
+## Timestamp fields and the shared check that covers each
+
+My timestamp review is **no longer interim**: every field below is checked by the shared CV-1101 predicate `pm_event_datetime.date_time` under the named profile, installed in every DS validator through `scripts/pm_contract_formats.py` (`FormatChecker(profile=...)`, a read-only shared predicate; a format DS does not implement fails), and for the Storage fields also called directly with `STORAGE_UTC_Z` (`storage_properties`). Each refusal is a format error whose cause is the shared `Refusal`. The DS validator classes keep themselves across `$ref` into another resource, so the same predicate applies wherever validation goes. `datetime_validator` and the inventory gate run at batch-2 integration (addendum 2).
+
+| Field | Record and schema | Owner | Shared check and profile | Where validated |
+|---|---|---|---|---|
+| `occurred_at_utc` | EventRecord 2.0.0 (`Plans/event_record.schema.json` `$defs/date_time_string`) and its frozen 1.0.0 reader; DS's 3.0.0 successor (`Plans/event_record_v3.schema.json`) and its 1.0.0 reader | EventRecord / CV-317 / CV-1101 | `date_time`, `event_record` (lowercase `t`/`z`, offsets, real leap seconds, any fraction) | GC04 (admission candidate, current and retained), CE02 (compaction), LE04 (layout), Home4 receipt schemas (H4S02) |
+| `observed_at_utc`, `persisted_at_utc` | the same EventRecords, and every inventoried CV-253 Storage node DS reaches: `Plans/home_layout_pending_receipt.schema.json` and `_v2_reader` (`PendingAppendOrigin.event` and its reader), `Plans/storage_compaction_native_contracts.schema.json`, `Plans/storage_value_registry.json` family nodes | Storage / CV-253 / CV-1101 | `event_record` through the format **and** `date_time(…, profile=STORAGE_UTC_Z)`: terminal uppercase `Z` only (no `+00:00`, `-00:00`, lowercase `z` or offset), fraction and real leap seconds kept | the same verdicts, current and retained (`storage_properties`, selected by the inventory's reviewed path and pointer, resolved by node content in this tree; the two 3.0.0 nodes are declared by the lane for the batch-2 inventory refresh) |
+| `updated_at_utc`, `withdrawn_at_utc`, `published_at_utc` | Browser checkpoint cores: v1 (`Plans/browser_workspace_created_contracts.schema.json` `$defs/timestamp`), v2 (`Plans/browser_workspace_created_checkpoint_v2.schema.json`), reset (`Plans/browser_workspace_reset_contracts.schema.json`) | SP-266 checkpoint owners (`format: date-time`, no stricter profile named) | `date_time`, `event_record`; order by the exact instant key | CC01, V2C01 and V2R06–V2R08 (`core_relation_failures` called on its own), RK01; order rows CC09, V2R12–V2R14, RC12–RC14, RK05, V2K04/V2K09/V2K10 |
+| `retired_at_utc`, `custody_bound_at_utc` | v2 custody wrapper (`$defs/timestamp`) | SP-266 | `date_time`, `event_record` | V2K01 (schema), V2K02–V2K10 order |
+| generation and cleanup transaction `committed_at_utc` | v2 generation/cleanup transactions, reset generation transaction | SP-266 | `date_time`, `event_record` | V2G/RG transaction schema rows, V2CL14; joins V2G07, RG06, V2CL20 compare the exact string |
+| SP-278 index times (`indexed_at_utc`, `first_prepared_at_utc`, `activated_at_utc`, `retired_at_utc`) | `Plans/event_record_index_checkpoint.schema.json` | SP-278 | `date_time`, `event_record` | TK01, RT01 and the v2 index schema rows |
+| Browser program request/result times | `Plans/section15_browser_program_contracts.schema.json` (`$defs/timestamp`, `timestampApplicationV1`) | Section 15 Browser program owner | `date_time`, `event_record` | CR0A, CR0B |
+| Home4 times (`certified_at_utc`, `settled_at_utc`, `saved_at_utc`, `migrated_at_utc`, `acknowledged_at_utc`, …; 95 declarations) | `Plans/home_layout_pending_receipt.schema.json`, `Plans/home_layout_v2_slot_receipt.schema.json` | Home layout owners (SP-400 family) | `date_time`, `event_record` | H4S01–H4S04 |
+| layout payload `settled_at_utc` | `Plans/event_payloads/workspace_layout_changed_v2.schema.json` | layout payload owner | `date_time`, `event_record` | LE07, H4E02 |
+| compaction `committed_at_utc` | `Plans/event_payload_context_compaction_completed.schema.json` (`format: date-time` plus the owner pattern `…Z(?![\s\S])`) | ACD-461 compaction payload owner | `date_time`, **`storage_utc_z`** (the owner's terminal-`Z` pattern selects the strict profile; the pattern stays in force) | CP01 |
+| reset cleanup time, created/reset withdrawal time | reader arguments | SP-266 | `date_time`, `event_record`; exact instants for the 604800-second window and the not-before-observation order | RU11, RU15; WD04/WD05, RW04/RW05 (the candidate checkpoint schema first) |
+| v2 cleanup observation `now_utc` | reader observation | SP-266 | exact instant key (an observation the shared predicate refuses never opens the window) and the exact-string join to the schema-checked transaction time | V2CL03, V2CL20 |
+| terminal retained payload | `Plans/event_payloads/terminal_workgroup_moved.schema.json` (closed, no format) | SP-319 | none: no timestamp field | — |
+
+## Fixture expectations that changed
+
+- **Part 2A timestamp witnesses whose spelling CV-1101 makes owner-valid** (removed from `scripts/pm_ds_p2a_cases.py` with their rows; each is now a part 2B positive that the complete checker accepts): CC03 (a real leap second at `updated_at_utc`), CC04 (lowercase `z` at `withdrawn_at_utc`), CC05 (a real leap second at `withdrawn_at_utc`), V2R07 (lowercase `z`), V2R10 and V2R11 (real leap seconds), RC07 (lowercase `z`), RC09–RC11 (real leap seconds), CP02 (a real leap second at the compaction commit time). Refusing row before: the lane grammar/calendar row; now: none (owner-valid).
+- **RU12** (a zoneless cleanup time): it refused at RU12 (`cleanup_retention_window_open`); it now refuses at RU11 (`cleanup_invalid_time`, shared reason `date_time_syntax`) and moved to the part 2B witnesses.
+- **Round 2 `compaction:invalid_calendar`** (30 February at `committed_at_utc`) still refuses; its first row is now CP01 (shared reason `date_time_day`) instead of CP02.
+- **Round 4 `strict_recorded_recipe_refuses_float`:** it read the same retained bytes as `layout_retained_numeric` with the reader naming `typed-integer`. Under SP-1101 the reader's naming selects nothing, so the strict case is now its own original (only `prior_layout_revision` an integral float), sealed under `typed-integer`; it still refuses, now because the sealed recipe's payload domain refuses the float.
+- **First refusing row of the round-3 `legacy_missing_source` negatives:** OX03 (a Case-L read with no legacy source is not the sealed original) instead of GH01; GH01 is now entailed (below). Still refused, same reader outcome.
+- **Nothing else:** every DS CLI is byte-identical to part 2A (verify5 below), every unit test passes with the same counts, and no fixture file changed. New: 51 part 2B witnesses (31 negatives, 20 positives) in `scripts/pm_ds_p2b_cases.py` and the sealed custody `Plans/ds_original_custody.json` (110 seals of 66 original refs).
+
+## Guard-table result (gated tool `004bdedd63`)
+
+Adoption changes guarded predicates (every schema verdict now runs the shared predicate and the Storage profile, the validator class keeps itself across `$ref`, the retained readers gain the custody table), so every witness source was collected again at the part 2B head (933 sources, 409331 recorded table evaluations, 23774 first refusals, 3712 refused later, 0 source exceptions). The tool result for a table is a function of its module and its suite (every control and the first single-row negative per row), so `compare_tool_inputs.py` compares each table's module bytes with `2dea5e4f76` and every control and negative digest (the tool's own `digest`) with the part 2A report: **7 tables changed and were rerun**; **163 are unchanged and keep their part 2A result exactly**; 28 are entailed. Credit is the tool's own `rows[].proved`.
+
+| Checker | Tables | Rows | Proved | Entailed (own tables) | Tool rerun at 2B | Part 2A result kept (inputs unchanged) | Masked | Unrelated | Lane matrix |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Browser created v1 (`scripts/pm_browser_workspace_created.py`) | 30 | 134 | 131 | 3 | 1 | 26 | 0 | 0 | 0 |
+| Browser created v2 checkpoint (`scripts/pm_browser_workspace_created_v2.py`) | 39 | 124 | 118 | 6 | 1 | 32 | 0 | 0 | 0 |
+| Browser reset (`scripts/pm_browser_workspace_reset.py`) | 43 | 196 | 189 | 7 | 1 | 35 | 0 | 0 | 0 |
+| DL-270 body route (`scripts/pm_event_payload_route.py`) | 7 | 24 | 24 | 0 | 0 | 7 | 0 | 0 | 0 |
+| Home4 slot/receipt (`scripts/pm_home_layout_v2_slot_receipt.py`) | 34 | 119 | 115 | 4 | 0 | 30 | 0 | 0 | 0 |
+| SP-1101 retained custody (new) (`scripts/pm_ds_retained.py`) | 2 | 6 | 5 | 1 | 1 | 0 | 0 | 0 | 0 |
+| compaction and layout event (`scripts/pm_event_authority_ds_round2.py`) | 13 | 31 | 30 | 1 | 2 | 10 | 0 | 0 | 0 |
+| shared Browser admission routes (`scripts/pm-browser-event-admission.py`) | 27 | 95 | 89 | 6 | 1 | 20 | 0 | 0 | 0 |
+| terminal retained/withdrawal (`scripts/pm_terminal_workgroup_compatibility.py`) | 3 | 17 | 17 | 0 | 0 | 3 | 0 | 0 | 0 |
+| **Total** | 198 | 746 | 718 | 28 | 7 | 163 | 0 | 0 | 0 |
+
+**Tables rerun at the part 2B head.**
+
+| Table | Why rerun | Rows | Proved | Tool negatives / controls | Status |
+|---|---|---:|---:|---:|---|
+| `comp_payload` | module changed or new; controls 1 -> 1 (digest sets differ); negatives differ for rows CP02_commit_time_valid, CP03_revision_increases, CP04_gain_equation | 2 | 2 | 2 / 1 | PASS |
+| `comp_payload_schema` | module changed or new | 1 | 1 | 1 / 1 | PASS |
+| `cr_checkpoint_entry` | module changed or new; controls 1 -> 1 (digest sets differ); negatives differ for rows CC01_schema, CC02_updated_grammar, CC03_updated_calendar, CC04_withdrawn_grammar, CC05_withdrawn_calendar | 1 | 1 | 1 / 1 | PASS |
+| `ds_retained_custody` | module changed or new; no part 2A report | 5 | 5 | 5 / 1 | PASS |
+| `gate_compatibility` | module changed or new; controls 1 -> 1 (digest sets differ); negatives differ for rows GH01_source_present, GH02_source_normalizes, GH03_no_rejection_reason, GH04_normalized_event | 3 | 3 | 3 / 1 | PASS |
+| `rs_cleanup__2` | module changed or new; controls 1 -> 1 (digest sets differ); negatives differ for rows RU07_hold_ref_fence_current, RU08_access_allowed, RU09_deletion_allows_audit, RU10_retired_selected, RU11_cleanup_time, RU12_cleanup_time_zone | 5 | 5 | 5 / 1 | PASS |
+| `v2_core_times` | module changed or new; controls 1 -> 1 (digest sets differ); negatives differ for rows V2R06_updated_datetime, V2R06_updated_grammar, V2R07_withdrawn_datetime, V2R07_withdrawn_grammar, V2R08_published_datetime, V2R08_published_grammar, V2R09_updated_calendar, V2R10_withdrawn_calendar, V2R11_published_calendar | 3 | 3 | 3 / 1 | PASS |
+
+**Rows no input refuses first that part 2B adds or re-proves** (the other 25 are part 2A's, unchanged; the full list is in `ENTAILED`, `scripts/pm_ds_guard_spec.py`).
+
+| Table | Row | Proof |
+|---|---|---|
+| `ds_retained_custody_entailed` | OX06_dispatch_other | dispatch_refusal (scripts/pm_ds_retained.py:246) passes no recipe_override and an OriginalBinding it built (OX02 refuses otherwise, :262), for a ref OX01 found sealed (:259), so RetainedDispatcher.resolve (scripts/pm_event_numbers.py:525, :528) never refuses caller_recipe_override or original_query; DSOriginalOwner (scripts/pm_ds_retained.py:181) always returns an OriginalCustody of a RecipeTuple and bytes (:209), so original_authority-by-type, recipe_selection and original_bytes_type (scripts/pm_event_numbers.py:531, :535, :540) cannot come first; the sealed binding was recorded from the same record bytes the owner just authenticated (_record, scripts/pm_ds_retained.py:227), so original_binding (scripts/pm_event_numbers.py:533) cannot; original_ambiguous needs two seals of one ref with the same bytes, which collision_report (scripts/pm_ds_retained.py:301) refuses to write and check_custody verifies is absent; disclose is always true here (:270; disclosure is each reader's own access rows), so current_disclosure (scripts/pm_event_numbers.py:544) cannot. |
+| `gate_compatibility_source_present` | GH01_source_present | candidate_failures runs the Case-L branch only for an original whose sealed recipe is Case-L (scripts/pm-browser-event-admission.py:570), after ds_retained_custody resolved it (:517); DSOriginalOwner matches a Case-L seal only when the fetched legacy source hashes to the source sealed with it (scripts/pm_ds_retained.py:197), and a Case-L original is sealed only with its legacy source observation object (_record, :233; check_custody verifies every Case-L seal carries a source), so the source the branch receives is that object. |
+| `rs_cleanup_anchor_time` | RU13_anchor_time | RU02 (scripts/pm_browser_workspace_reset.py:541) first validates the whole checkpoint against the closed reset schema, whose validator installs the shared CV-1101 date_time predicate (event_record profile; scripts/pm_browser_workspace_reset.py RK01, pm_contract_formats.FormatChecker): a retired core is withdrawn (Plans/browser_workspace_reset_contracts.schema.json:656) and a withdrawn core takes withdrawn_at_utc as $defs/timestamp, format date-time (:600, :42), so the anchor always passes the same predicate. |
+
+Part 2A's RU14 (instants comparable) is removed with its table: exact keys always compare. GH01 (Case-L source present) moves to its own table: a Case-L original is sealed only with its source, so a read without that source refuses at OX03 first. Witnesses: part 2B **51/51** (31 negatives, each the first refusal of its checker call at exactly its row, date-time ones with the shared reason as the error's cause; 20 positives); part 2A **186/186** (198 less the 12 moved to part 2B).
+
+## What Astra keeps finding, probed for part 2B
+
+(1) **Forged inputs:** a coherent forgery (a retained original rewritten with every copy consistent) passed every copy join before part 2B; it now refuses at OX03, and an original no Storage instance sealed refuses at OX01 on every retained path (created, reset, replay, compaction, layout). (2) **Storage-assigned metadata:** `observed_at_utc`/`persisted_at_utc` take CV-253's `storage_utc_z` at every inventoried Storage node and the DS 3.0.0 envelope, current and retained; `sequence_id` stays SP-1100 `storage_uint64` (part 2B numbers). (3) **Historical readers:** owner-valid retained history reads under its frozen recipe (stock-integer, broad-time, Case-L and layout positives); unsealed, forged, unknown-recipe and wrong-edition selections refuse; no current writer gate reaches a retained original (the producer-sequence, replay-policy and producer-JCS rows stay vacuous for retained reads). (4) **One field read two ways:** timestamps are never re-serialized; every comparison uses one exact key and every identity, hash and join reads the exact string; integer slots read through `current_integer` across resources now too. (5) **Unresolved references:** unchanged (RS01/TS01/H4R01). (6) **Sizes:** unchanged. (7) **Custody:** every retained read authenticates the original (and a Case-L legacy source) against sealed custody before any retained check; the Case-L source-field item is narrowed to sources Storage sealed. (8) **Masked negatives:** the guard-tool result below. (9) **Grades:** unchanged; no self-upgrade. (10, 10a) **Numbers and history:** the same integral float reads under the sealed original-JSON-Schema recipe and refuses under the sealed typed-integer recipe; the record and the reader cannot select either. (11) **Types:** a non-string timestamp is a schema `type` error; a string (including a `str` subclass) reaches the shared predicate. (12) **Formats the validator skips:** the shared predicate is installed in every DS validator class and stays installed across `$ref`; each date-time negative's validation error carries the shared reason (`check` verifies it).
+
+## Self-tests and the date-time inventory gate (addendum 2)
+
+| Command (lane tree, implementation head) | Exit | Credited result |
+|---|---:|---|
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `"status": "pass"`, **580/580** number-scope cases (276 positives, 304 negatives) |
+| `python3 scripts/pm_event_numbers.py --self-test` (scope all, the combined self-test) | 1 | `"status": "fail"`, `case_execution: NOT_RUN_ADMISSION_REFUSED`, 0 of 13,626 cases run: the inventory gate refuses first, as addendum 2 says it will on a lane tree. Recorded, not credited. |
+| `python3 scripts/pm_event_datetime_inventory.py` (the whole-`Plans/` gate) | 1 | `"status": "fail"`, **15 failures**, 233 nodes, 0 unclassified nodes |
+| `python3 scripts/pm_event_datetime.py --self-test` | — | not run and not credited: the module has no entry point (addendum 2 correction) |
+
+All 15 inventory failures are hash and evidence drift in four nodes, all from DS's own earlier owner-schema edit `a97ef6c20e` (DL-270 payload references) of `Plans/section15_browser_program_contracts.schema.json`, which `Plans/application_workflow_contracts.schema.json` cites: `inventory_node_changed` (resource hash) 3, `classification_citation_changed` 5, `owner_field_schema_evidence_changed` 3, `wildcard_value_evidence_changed` 3, `wildcard_role_schema_changed` 1, at `/$defs/browser_command_disabled_reason`, `/$defs/browser_program/properties/result_schema_dependencies`, `/$defs/browser_program_result_validation/properties/result_schema_resources` and `BrowserProgramApplicationV1/properties/result_schema_dependencies`. The gate validates the inventory before its container scan, so it stops there. None is a false pass: the gate fails closed (TOOL-ISSUES T198). The inventory and exclusions are NUMRULE files and were not edited. At batch-2 integration the inventory worker refreshes these hash-only rows and classifies the new nodes: part 2B adds `Plans/ds_original_custody.json` (custody data, no timestamp field) and the two DS 3.0.0 envelope Storage nodes this lane declares in `LANE_STORAGE_NODES`.
+
+## Family grades before and after
+
+| Family | Before | After | Remaining |
+|---|---:|---:|---|
+| context.compaction.completed | 11/12 | **11/12** | Oracle: batch-2 `datetime_validator` and inventory gate; independent review |
+| browser.workspace.created | 11/12 | **11/12** | Oracle: batch-2 `datetime_validator` and inventory gate (with the DS 3.0.0 Storage nodes); independent review |
+| browser.workspace.reset | 11/12 | **11/12** | Oracle: batch-2 `datetime_validator` and inventory gate (with the DS 3.0.0 Storage nodes); independent review |
+| workspace.layout_changed | 11/12 | **11/12** | Oracle: batch-2 `datetime_validator` and inventory gate; independent review |
+| terminal.workgroup_moved | 11/12 | **11/12** | Oracle: independent review |
+
+**55 PASS / 5 PARTIAL → the same totals.** Part 2B closes the timestamp (CV-1101) and SP-1101 reasons of the five PARTIAL oracle cells; where timestamps were a reason, they no longer are. The cells stay PARTIAL because they have not been independently reviewed (the batch-2 Sol max and Astra max) and `datetime_validator` with the inventory gate runs only at batch-2 integration; I do not upgrade a self-grade on my own reading. The oracle findings now say this instead of the stale "pending shared-tool adoption" text. The self-grade's 285 evidence quotes were re-checked at their lines: 0 mismatches.
+
+## Readiness
+
+**NOT_READY.** Part 2A, the part 2B number pass and part 2B (CV-1101, SP-1101) are done on this branch. Remaining: batch-2 integration (rebase, census pins, the date-time inventory refresh for the merged tree, which also classifies the DS 3.0.0 envelope Storage nodes and re-records `Plans/ds_original_custody.json` if a pinned resource moves, then `datetime_validator`, the inventory gate and the combined self-test), the batch Sol max and Astra max, governance reseal, and native execution (NOT_RUN). Stopped for Jared: nothing.
+
+## Commands and evidence
+
+Heavy runs started one at a time, each only at 13.5 GiB available or more (`gated.sh`, `run-heavy.sh`), as `long-job` jobs waited on in the background; no browser was used; nothing of PM7 was touched.
+
+| Command (implementation head unless stated) | Exit | Outcome |
+|---|---:|---|
+| `git merge --no-ff 58c2816ff3` | 0 | "Already up to date" (merged in part 2A as `6fe849dc06`); every NUMRULE-owned path equals `58c2816ff3` (`merge.log`) |
+| `python3 scripts/pm_ds_retained.py --write-custody` (long-job `ds-p2b-custody1`) | 0 | 110 seals, 66 refs, 0 collisions, 0 source failures (`custody-build.log`) |
+| `python3 scripts/pm_ds_p2b_cases.py --check` | 0 | `pass`, 51/51; custody check `pass` |
+| `python3 scripts/pm_ds_p2a_cases.py --check` | 0 | `pass`, 186/186 |
+| `python3 scripts/pm-ds-table-generate.py --check` | 0 | 198 tables, 746 rows, no stale or extra module |
+| every DS check (`verify.sh`, 18 commands; long-jobs `ds-p2b-verify5`, `ds-p2b-supp5`) | 0 each | see *Behaviour against part 2A*; `verify-summary-2b.json` |
+| `python3 scripts/pm-ds-guard-tables.py --out … --collect-only --save-collection …` (long-job `ds-p2b-collect`) | — | 933 sources, lane matrix 0 problems |
+| `compare_tool_inputs.py` | 0 | 7 tables to rerun, 163 unchanged (`compare.json`) |
+| `python3 scripts/pm-ds-guard-tables.py --load-collection … --phase …` (7 tables; long-job `ds-p2b-tool`) | — | 7 × PASS (20/20 rows proved); with the 163 unchanged part 2A results, 170 × PASS |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `pass`, 580/580 |
+| `python3 scripts/pm_event_numbers.py --self-test` | 1 | refused before any case (inventory gate), as addendum 2 expects |
+| `python3 scripts/pm_event_datetime_inventory.py` | 1 | 15 hash/evidence-drift failures from `a97ef6c20e`, 0 unclassified nodes |
+| probes `ref_evolve_probe.py`, `case_l_source_probe.py` | — | `ref-evolve-probe-2b.txt` (0 of 23 slots accept an integral float), `case-l-source-probe-2b.txt` |
+| self-grade evidence quote check | 0 | 285 quotes, 0 mismatches |
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/sweep-p2b/` (SHA-256 of every file in `SHA256SUMS`; large files gzipped). No raw logs or scratch workspace are committed. No pm-mail during the work, no subagent, browser, admission, registry append, Decision Log entry, Spec Lock/evidence reseal or main push; no NUMRULE or guard-tool file edited.
+
+## Sweep part 2A: findings and responses (historical)
+
+**Start:** `70f6aa805c`. **Gated guard-tool merge:** `59699c6566` (exactly `004bdedd63`, eleven files, none edited). **Gated NUMRULE merge:** `6fe849dc06` (exactly `58c2816ff3`; its number files are byte-identical to the gated number scope `a16f67c1ef`; the only conflicts were `Plans/_shards/{contracts_v0,storage-plan}/**` and `Plans/.plan_index/**`, resolved by regeneration; shard outputs change only for those two documents). **Implementation head:** `2dea5e4f76`. The delivery head (this report's commit) is in the external `HEAD.txt`. No rebase onto main this round. VM sparse worktree `~/pm-worktrees/sweep-p2a-ds`, kept for part 2B (same worktree) and removed after part 2B's push. **NOT_READY: part 2B timestamps and the Sol/Astra review remain; native execution NOT_RUN.**
+
+| Item | Disposition and change | Where | Verify |
+|---|---|---|---|
+| **Take the gated tool** | Merged `004bdedd63` with `--no-ff` as `59699c6566`: the eleven tool files only; none edited. | `scripts/pm_guard_isolation*.py`, `scripts/guard-isolation/README.md`, `Plans/guard_isolation_traps.json`, GUARDTOOL reports | `git diff --stat 59699c6566^1 59699c6566` lists 11 files; `git diff 59699c6566 HEAD -- scripts/pm_guard_isolation.py scripts/pm_guard_isolation_traps.py Plans/guard_isolation_traps.json` is empty. |
+| **SOL4-03 / part-2 item 1: guard tables** (fixed, `91f442b0cf`, `e3bb744f83`, `909563b6ac`, `e2abd121fd`, `9925dfa0df`, `767fe1677c`, `2dea5e4f76`) | Every refusal of every DS checker route is one named row of a generated Method B phase table: **197 tables, 756 rows**, from the single row spec `scripts/pm_ds_guard_spec.py` via `scripts/pm-ds-table-generate.py` (`scripts/pm_ds_table_*.py`). Checkers derive one boolean per row from the complete input and refuse only through `scripts/pm_ds_tables.py`: list-returning checkers report every refusing row; first-failure checkers (`Facts(..., chain=True)`, `stop`) return at the first refusing row. Compound conditions are one row per predicate (or-chains, flag loops, per-field joins); a fixed-field projection equality (lineage, subject) is one row. Messages that carry a value are formatted only after the table refuses. A phase of more than eight rows is emitted as consecutive part tables (`<phase>__1`, `__2`, ...; at most eight rows each, evaluated in row order and recorded as separate tables), so each tool run's cut count stays bounded; the checker's result is the same as for the whole phase. Covered: Home4 (`pm_home_layout_v2_slot_receipt.py`), the DL-270 body route, the terminal retained/withdrawal checks, compaction payload/event/history and layout event (`pm_event_authority_ds_round2.py`), Browser created v1 and v2 and reset (preflight, oracles, checkpoints, generations, tokens, cleanup, disclosure, history, bindings), and the shared Browser admission routes the DS families reach (`candidate_failures`, `semantic_failures`, Case-L compatibility, `event_failures`, central and authority binding, `ReplayOracle.consume`). The admission program's registry-wide gates (`validate`, pre-existing row pins, Goal/coordination lineage) are not DS routes and are unchanged. | `scripts/pm_ds_tables.py:1`, `scripts/pm_ds_guard_spec.py:1`, `scripts/pm-ds-table-generate.py:1` | `python3 scripts/pm-ds-table-generate.py --check` (pass, 197 tables, 756 rows). |
+| **Behaviour unchanged** | Every DS check was run at the merged base `6fe849dc06` before any edit and again at the implementation head: exit codes all 0 at both ends; **byte-identical output** for home4, home4-self-test, created, created-v2, reset, admission, browser-harness-faults, projects-refresh; terminal identical except its guard-isolation label; unit tests created-tests 65 OK, reset-tests 53 OK, admission-tests 38 OK, pm7-tests 13 OK; round-2/3/4 witness results identical except the deliberate moves (round 2: the two `missing_reference` negatives now run the complete checker instead of a removed helper and absorb the two refusal-asserting positives that duplicated them; round 3: three encoder positives and three blanket-walk negatives became six complete-writer integer-slot negatives); cohort controls 686 → 679, all passing (removed: the 11 retired proof-harness controls and the 4 blanket-walk witnesses; added: 8 complete-writer integer-slot witnesses). Two list outputs keep their set but lose a repeated code (a non-object payload context, repeated semantic codes). | baseline and final runs (evidence) | `verify-summary.json` in the evidence directory. |
+| **First refusal, not every refusal** (`e2abd121fd`) | `pm_ds_tables.entry` marks each of the 56 DS checker functions that evaluates a table; each invocation is one checker call (a nested call — an oracle's own checkpoint check, a preflight's shared candidate check — is its own call). The collection credits a negative only for the **first** refusing table of a call; tables refusing later in the same call are reported as refused later and never given to the tool. Where a whole-value row (whole-scope equality, whole-row registry disposition) would refuse before a field row on the same change, it is observed after the field rows (CR17, RP10, BF11); the returned refusal list is unchanged. | `scripts/pm_ds_tables.py:39` (`entry`), `scripts/pm_ds_guard_suites.py` (`collect`) | `summary.json`: 23745 first refusals, 3714 refused later. |
+| **Missing single-row negatives** (fixed, `909563b6ac`, `e2abd121fd`, `2dea5e4f76`) | The first collection left 226 rows without a single-row negative. `scripts/pm_ds_p2a_cases.py` holds **198 coherent witnesses**, each from a named valid parent with one changed fact and every observing copy moved (recomputed core bytes and hashes, owner/capture hashes, retokened SP-278 indices, regenerated stored-value references, registry rows in a temporary repository root). `--check` requires each to be the first refusal of its checker call at exactly its target row. | `scripts/pm_ds_p2a_cases.py` (`check`) | `python3 scripts/pm_ds_p2a_cases.py --check`: pass, 198/198. |
+| **Two-defect negatives** | The first-refusal collection has **31 multi-row observations** (two or more rows of one table refuse on the first refusal of a call): 18 come only from the DS harness fault controls (deliberately broken fixtures that test the harness itself), 7 only from the main-owned created/reset/admission unit tests (each changes two copies at once; those test files are not editable in this lane), and 6 from DS witnesses that change two copies on purpose (request and result together, event and payload Project together, a type sweep). None is given to the tool; each stays refused in the complete checker, and every row they touch has a single-row first-refusal witness. One DS fixture carried a real second defect (`receipt_json_capture_bytes` left its capture hash stale): fixed in `0dab81b89b` so it refuses only at I7. The uint64 rows now judge integer values only, so a mistyped Storage field is refused once, by its schema row. | `summary.json` (`multi`) | Lane matrix: 0 problems. |
+| **Rows nothing refuses first** (`909563b6ac`, `e2abd121fd`, `0dab81b89b`, `2dea5e4f76`) | **27 rows** that no coherent input refuses first each sit alone in their own table with a written proof (the earlier row or schema clause, `path:line`) in `ENTAILED`; the tool run skips them and credits nothing. Checker results are unchanged by the split. Listed under *Guard-table result*. | `scripts/pm_ds_guard_spec.py` (`ENTAILED`) | `summary.json`: `tool_status` `not_run_entailed` for exactly those tables. |
+| **Retired machinery** (`91f442b0cf`) | Removed `pm_ds_guard_removal.py`, `pm_ds_targeted_guard_matrix.py`, `pm_ds_boundary_faults.py`, `pm_ds_guard_cases.py` and the round-2/3/4 AST weakeners (`source_without_guard`, `remove`, the `weakeners` registrations); check 11 is the tool run. Their witnesses stay; the two round-2 `missing_reference` negatives, which called a removed helper, now run the complete checker and absorb the two refusal-asserting positives that duplicated them; the round-3 missing-source and body-fault U374 witnesses now run the complete route instead of a removed helper. | — | `git show --stat 91f442b0cf`. |
+| **Part-2 item 3: parent integration** | Unchanged: receipted terminal audit-grade projections against DL-449 under the ledger write rule, governance staleness/reseal and landing checks stay with the lead. | — | — |
+| **Found while restructuring (open, not fixed)** | The shared Case-L compatibility reader (`compatibility_history_failures`) recomputes normalization from `legacy_envelope` and the identity headers only: an authenticated legacy source observation with `bytes_hex`, `segment_generation`, `segment_name` or `byte_offset` missing or of the wrong type is accepted (`bytes_hex` is decoded only when present). Binding those fields to the legacy bytes needs the Case-L owner's byte recipe; no recipe was invented. Recorded for the Sol/Astra review (Astra item 7, custody on every path). | `scripts/pm-browser-event-admission.py` (`compatibility_history_failures`), `scripts/pm-implementation-readiness.py` (`normalized_legacy_case`) | probe in the evidence (`case-l-source-probe.txt`). |
+| **Found after the implementation head (fixed in part 2B, not here)** | While preparing part 2B: `Home4Validator` and `RetainedBodyValidator` (the classes behind every DS validator) lose their CV-1100 integer type checker and the ECMA end-of-input `pattern` when validation crosses a `$ref` into a resource that declares `$schema`, because jsonschema 4.19.2's `evolve` re-selects the stock class by dialect (`validator_for`). So the *Integer slots* row below holds at slots in the validated resource itself, but not at slots reached across resources: in the Home4 transaction slot, 6 of 23 integer slots (the prior and candidate layout `revision` and `root.pinned_count`, and the layout payload's `prior_layout_revision`/`new_layout_revision`) accept an integral float. No fixture or witness of this head depends on it. It is fixed in part 2B (the class keeps itself across `$ref`) with witnesses; see the part 2B section. | `scripts/pm_home_layout_v2_slot_receipt.py` (`_Home4Class`, `_RetainedClass`) | `ref-evolve-probe.txt` in the evidence |
+| **Resource incident (resolved)** | The first version of the witness temporary roots mirrored all of `Plans/` under the system temp directory and never removed them; 94 roots filled the `/tmp` tmpfs inode table. They were removed (`find /tmp -maxdepth 1 -name 'ds-p2a-root-*' -user $USER -exec rm -rf`), and `mirror_root` now links only the schema files and the changed file and deletes the root at exit. | `scripts/pm_ds_p2a_cases.py` (`mirror_root`) | `df -i /tmp` back to 14%. |
+| **Memory (no incident)** | Each tool run started only at 13.5 GB available or more and ran with the tool's MemoryGate pausing below 10 GB (`--pause-when-low 10 --resume-at 10`); other threads' browsers held the VM at 7-10 GB for long stretches, so the runs paused repeatedly (logged `guard-isolation paused`), and nothing was lost. Three earlier attempts (`ds-p2a-tool1` to `tool3`, before the part tables and the first-refusal collection were final) were stopped and superseded; none is merged into the result. | `long-job` logs (evidence) | `memory pauses logged: ds-p2a-supp 1, ds-p2a-tool4 342` |
+
+**Disputed:** none. **Stopped for Jared:** none. **IDs used:** none (no PlanUnit, Decision Log or admission IDs); no owner document changed in part 2A or the part 2B number pass, so no shard or index regeneration beyond the NUMRULE merge.
+
+## Guard-table result
+
+The gated tool ran once per table that has a credited negative (**170 runs**, statuses: PASS 170) over the first-refusal observations of **408701 recorded table evaluations** from **894 witness sources** (every DS CLI suite and fixture cohort, the round-2/3/4 builders and sweeps, the compaction fixture cohorts, the admission fixture validation, the created/reset/admission unit tests and the part-2A witnesses). **729 of 756 rows are proved; 27 are unprovable by construction** (tables of their own, below); every other row is proved. Credit is the tool's own `rows[].proved`. The result merges two runs of the same tool and runner: the full run at `767fe1677c` (long-job `ds-p2a-tool4`) and a supplementary run at `2dea5e4f76` (long-job `ds-p2a-supp`, a fresh collection over every source) for the 6 tables that commit changed (`gate_candidate_context`, `gate_candidate_migration`, `gate_candidate_payload_event_type`, `gate_candidate_scope`, `gate_candidate_scope_kind`, `v2_cleanup_tx_join`); those entries replace the full run's. Between the two commits only `candidate_failures` (the GC09/GC12 split), the row spec, those table modules and one added witness changed; comparing the two collections key by key outside those tables finds no difference. Each cut swaps one row to always-pass and runs every control and negative of the table, checks the guard-call trace against the uncut baseline and runs a fresh restoration.
+
+| Checker | Tables | Rows | Proved | Entailed (own tables) | Tool negatives / controls | Own flips | Stays | Masked | Unrelated |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| compaction and layout event (`scripts/pm_event_authority_ds_round2.py`) | 13 | 32 | 31 | 1 | 31 / 12 | 31 | 86 | 0 | 0 |
+| Browser created v1 (`scripts/pm_browser_workspace_created.py`) | 30 | 138 | 135 | 3 | 135 / 27 | 135 | 712 | 0 | 0 |
+| shared Browser admission routes (`scripts/pm-browser-event-admission.py`) | 26 | 95 | 90 | 5 | 90 / 21 | 90 | 418 | 0 | 0 |
+| Home4 slot/receipt (`scripts/pm_home_layout_v2_slot_receipt.py`) | 34 | 119 | 115 | 4 | 115 / 30 | 115 | 470 | 0 | 0 |
+| DL-270 body route (`scripts/pm_event_payload_route.py`) | 7 | 24 | 24 | 0 | 24 / 7 | 24 | 92 | 0 | 0 |
+| Browser reset (`scripts/pm_browser_workspace_reset.py`) | 45 | 204 | 196 | 8 | 196 / 37 | 196 | 1032 | 0 | 0 |
+| terminal retained/withdrawal (`scripts/pm_terminal_workgroup_compatibility.py`) | 3 | 17 | 17 | 0 | 17 / 3 | 17 | 112 | 0 | 0 |
+| Browser created v2 checkpoint (`scripts/pm_browser_workspace_created_v2.py`) | 39 | 127 | 121 | 6 | 121 / 33 | 121 | 544 | 0 | 0 |
+| **Total** | 197 | 756 | 729 | 27 | 729 / 170 | 729 | 3466 | 0 | 0 |
+
+**Rows no input refuses first (each alone in its own table; kept as checks, never credited).**
+
+| Table | Row | Proof |
+|---|---|---|
+| `h4_event_context` | H4E01_historical_bool | the only complete-checker caller that passes a historical selector, layout_event_errors, refuses a non-boolean at LE01 (scripts/pm_event_authority_ds_round2.py:291) before it calls event_checks; slot_invariants and receipt_invariants call event_checks with the default False (scripts/pm_home_layout_v2_slot_receipt.py:885, :922). |
+| `h4_store_id_syntax` | H4P01_id_hex64 | every blake3_id the store resolves has passed the Home4 schema pattern ^[0-9a-f]{64}$ with ECMA end of input (Plans/home_layout_v2_slot_receipt.schema.json:1848, :1855): run() validates the schema before the invariants (scripts/pm_home_layout_v2_slot_receipt.py:1102, :1123), and a referenced value is validated at H4F06 (:1044) before its own slot/receipt invariants. |
+| `h4_source_reference_size` | H4SB02_reference_over_limit | a layout source payload_ref has byte_size minimum 16385 in the Home4 schema (Plans/home_layout_v2_slot_receipt.schema.json:871), which the schema rows refuse before the invariants run (scripts/pm_home_layout_v2_slot_receipt.py:1102, :1123). |
+| `h4_receipt_capture_request_presence` | H4IC01_request_presence | the receipt schema requires original_normalized_request and a string identity_capture_bytes.normalized_request (Plans/home_layout_pending_receipt.schema.json:3445, :3496), so on a schema-valid receipt neither is null and the presence row always holds; H4S02 refuses first otherwise. |
+| `comp_event_project_present` | CE04_project_present | the EventRecord schema binds scope_kind application to a null project_id and project to a non-empty string (Plans/event_record.schema.json:149), so a null project implies application scope, which CE03 (scripts/pm_event_authority_ds_round2.py:91) refuses first in the same compaction call; CE02 refuses any other null. |
+| `v2_core_storage_uint64` | V2R05A_storage_uint64 | the SP-278 cursor and token fields carry maximum 18446744073709551615 (Plans/event_record_index_checkpoint.schema.json:146, last_frame :332) and refuse at V2K01/V2C01 first; the two unbounded fields are tied to them by V2R03 and V2R04 (scripts/pm_browser_workspace_created_v2.py:106, :107), which refuse first in the earlier relations table. |
+| `rs_core_storage_uint64` | RC05A_storage_uint64 | as V2R05A, with the reset cursor/token schema maxima (Plans/event_record_index_checkpoint.schema.json:146, :332) refusing at RK01 first and RC03/RC04 (scripts/pm_browser_workspace_reset.py:372, :373) refusing first in the earlier relations table. |
+| `v2_advance_partition` | V2A06_custody_scope_partition | V2R01 (scripts/pm_browser_workspace_created_v2.py:104) holds for both values, so scope_partition is the injective encoding of project_id; a changed partition is a changed Project, which V2A05 refuses first (the refresh table is observed before this one, :375). |
+| `rs_advance_partition` | RV24_scope_scope_partition | RC01 (scripts/pm_browser_workspace_reset.py:370) holds for both values, so a changed partition is a changed Project, which RV23 (:533) refuses first in the refresh chain. |
+| `v2_history_legacy_unwithdrawn` | V2K03_legacy_custody_withdrawal | a v1 custody wrapper requires legacy_checkpoint state withdrawn (Plans/browser_workspace_created_checkpoint_v2.schema.json:559), and the v1 contract requires a timestamp withdrawn_at_utc for that state (Plans/browser_workspace_created_contracts.schema.json:89), so the unwithdrawn branch never occurs on a value V2K01 accepts. |
+| `v2_history_legacy_custody_order` | V2K05_legacy_withdrawal_before_custody | with retired_at equal to the v1 first withdrawal W (V2K02, scripts/pm_browser_workspace_created_v2.py:207), W no later than the v1 last observation U (CC09, scripts/pm_browser_workspace_created.py:167, run first by legacy_failures at scripts/pm_browser_workspace_created_v2.py:203) and custody no earlier than U (V2K04, scripts/pm_browser_workspace_created_v2.py:209), retired_at <= custody; an input violating V2K05 violates CC09 or V2K02/V2K04 first. |
+| `v2_token_fields` | TK09_token_fields | the live read token is validated first at TK01 (scripts/pm_browser_workspace_created_v2.py:152) against the closed SP-278 read_token (additionalProperties false, ten required fields; Plans/event_record_index_checkpoint.schema.json:2570), so its field set is always the expected one. |
+| `rs_token_fields` | RT10_token_fields | the stored token is validated first at RT01 (scripts/pm_browser_workspace_reset.py:463) against the closed nine-field durable_read_token (Plans/browser_workspace_reset_contracts.schema.json:715). |
+| `v2_cleanup_tx_status` | V2CL21_tx_committed | the cleanup transaction schema fixes status to committed (Plans/browser_workspace_created_checkpoint_v2.schema.json:722), which V2CL14 (scripts/pm_browser_workspace_created_v2.py:423) refuses first. |
+| `rs_cleanup_anchor_time` | RU13_anchor_time | RU02 (scripts/pm_browser_workspace_reset.py:561) first validates every retired core: a retired core is withdrawn (Plans/browser_workspace_reset_contracts.schema.json:640) with a timestamp withdrawn_at_utc that RC06-RC11 (scripts/pm_browser_workspace_reset.py:392-397) parse, so the anchor always parses. |
+| `rs_cleanup_times_comparable` | RU14_times_comparable | RU12 (scripts/pm_browser_workspace_reset.py:589) makes the cleanup time zone-aware, and the core timestamp grammar (RC06-RC08, :392) requires Z or an offset, so both instants are aware and comparable. |
+| `rs_preflight_state` | RP22_workspace_state_reset | reset_preflight_failures returns the shared candidate refusals first (scripts/pm_browser_workspace_reset.py:102); for a reset event that includes the payload schema, which fixes workspace_state to reset (Plans/browser_event_payloads.schema.json:557). Any other admitted type has no integer prior_workspace_generation equal to the transition's, so RP23 (scripts/pm_browser_workspace_reset.py:137) refuses first in the earlier join table. |
+| `rs_preflight_generation_order` | RP25_generation_advances | the shared candidate check refuses payload facts whose prior generation is not below the generation (GS08, scripts/pm-browser-event-admission.py:390) before the reset joins run (scripts/pm_browser_workspace_reset.py:102); with advancing payload facts, a non-advancing transition differs from them, so RP23/RP24 (scripts/pm_browser_workspace_reset.py:137, :138) refuse first. |
+| `rs_preflight_event_type` | RP01_event_type | an admitted non-reset event that passes the shared candidate check has no integer facts.prior_workspace_generation (a creation fixes it to null at GS09, scripts/pm-browser-event-admission.py:391; other types do not carry it), while the transition prior generation is a schema integer, so RP23 (scripts/pm_browser_workspace_reset.py:137) refuses first in the earlier join table. |
+| `cr_preflight_run_attempt` | CR06_run_attempt_paired | the request and result lineage schema pairs run_id and attempt_id (oneOf, Plans/section15_browser_program_contracts.schema.json:167), refused at CR0A/CR0B (scripts/pm_browser_workspace_created.py:243) first; with a paired request lineage, an unpaired payload context differs from it and CR09 (scripts/pm_browser_workspace_created.py:262) refuses first in the earlier join table. |
+| `cr_preflight_request_security` | CR12_request_security_class | the request scope fixes session_security_class to ordinary (Plans/section15_browser_program_contracts.schema.json:234), refused first at CR0A (scripts/pm_browser_workspace_created.py:243). |
+| `cr_preflight_result_security` | CR14_result_security_class | the result scope fixes session_security_class to ordinary (Plans/section15_browser_program_contracts.schema.json:234), refused first at CR0B (scripts/pm_browser_workspace_created.py:243). |
+| `gate_candidate_context` | GC08_context_object | every Browser payload recipe takes $defs/common through allOf, and common requires context (Plans/browser_event_payloads.schema.json:368, :371) with $defs/context of type object (Plans/browser_event_payloads.schema.json:168, :169); validators[event_type] is that recipe (scripts/pm-browser-event-admission.py:517), so a missing or non-object context fails GC06 (scripts/pm-browser-event-admission.py:522) in the earlier gate_candidate_joins table before GC08 (scripts/pm-browser-event-admission.py:528) runs. |
+| `gate_candidate_scope_kind` | GC09_project_scope_kind | GC04 (scripts/pm-browser-event-admission.py:508) validates the event against the 2.0.0 or 3.0.0 EventRecord schema (scripts/pm-browser-event-admission.py:506), and both require scope_kind with enum application or project (Plans/event_record.schema.json:11, :47; Plans/event_record_v3.schema.json:11, :47) and bind application to a null project_id (Plans/event_record.schema.json:144; Plans/event_record_v3.schema.json:153). GC06 (scripts/pm-browser-event-admission.py:522) requires payload context project_id as a non-empty $defs/id string (Plans/browser_event_payloads.schema.json:172, :195). A scope kind other than project therefore fails GC04, or else holds a null project_id that differs from the context project_id and fails GC10 (scripts/pm-browser-event-admission.py:533, project_id in IDENTITIES at scripts/pm-browser-event-admission.py:29) unless GC06 failed; all three run in earlier tables than GC09 (scripts/pm-browser-event-admission.py:540). |
+| `gate_candidate_payload_event_type` | GC12_payload_event_type | validators is keyed by the admission row event_type (scripts/pm-browser-event-admission.py:367) and the event row is the one selected (scripts/pm-browser-event-admission.py:517); for every one of the 53 admission rows the recipe fixes properties.event_type to that row event_type as a const (for example Plans/browser_event_payloads.schema.json:436) and common requires event_type (Plans/browser_event_payloads.schema.json:370), checked mechanically over Plans/browser_event_admission.json. A payload event type other than the event type fails GC06 (scripts/pm-browser-event-admission.py:522) in the earlier gate_candidate_joins table before GC12 (scripts/pm-browser-event-admission.py:542) runs. |
+| `gate_candidate_migration` | GC15_migration_object | both EventRecord schemas require migration (Plans/event_record.schema.json:36; Plans/event_record_v3.schema.json:36) as $defs/migration (Plans/event_record.schema.json:140; Plans/event_record_v3.schema.json:149) of type object (Plans/event_record.schema.json:216; Plans/event_record_v3.schema.json:225), so a missing or non-object migration fails GC04 (scripts/pm-browser-event-admission.py:508) in the earlier gate_candidate_envelope table before GC15 (scripts/pm-browser-event-admission.py:547) runs. |
+| `gate_central_referenced_pointer` | GB15_no_referenced_pointer | the registry family schema fixes referenced_event_id_pointer to null unless scope_policy is inherits_referenced_event (Plans/event_family_registry.schema.json:338); GB02 refuses a schema violation and GB08 (scripts/pm-browser-event-admission.py:587) refuses the other scope policy first in the earlier table. |
+
+**Phase boundary.** Tables are extracted observation boundaries (tool boundary `synthetic`), as in DM, DS15, DR, DX, DC and DCH: each row reads one boolean the checker derives from the complete input, and the complete path is the checker itself, which reaches every refusal through the same rows in the same order. No `NonGuard` other than the `return g.Case(table, check, context)` plumbing return; every table module was prescanned from its text before its run. Schema validity enters as one verdict row per schema occurrence; per-keyword schema cuts are not claimed. The MessagePack decoder and the Case-L normalizer are one observation each (their internal refusals are not split).
+
+**What Astra keeps finding, probed for part 2A.** (1) Identities, digests and commitments are recomputed in derivation and compared by rows (H4B01/02, H4J11/12, H4M01/02, H4IC02/03, H4O02-04, CE12-14, TK10-19, RT11-19); forged copies are the witnesses. (2) Storage metadata: sequence/offset/generation fields are SP-1100 uint64 (CC10, V2R05A, RC05A, GC04A) and joined to the SP-278 index, never trusted from the payload. (3) Historical readers: current-writer rows (RL01, RL04, CE10, CE15, LE08/09, GC13/14/17, CO/RO producer rows) are vacuous for retained reads; retained replay-only history still reads through the Case-L rows; withdrawn, unverified and foreign history refuses. (4) One field read two ways: integer slots read through `current_integer`; joins compare exact values. (5) RS01/TS01/H4R01 refuse an unresolved reference anywhere in a schema graph. (6) Sizes: H4L00-02, H4F01, RI01A/RI02, RL03A/RL04 measure complete encoded values. (7) Custody: every oracle path runs its candidate/preflight/checkpoint rows; the Case-L source-field gap above is open. (8) Masked negatives: lane matrix 0 problems; the tool reports 0 masked negatives and 0 unrelated changes. (9) Grades unchanged. (10, 10a) Numbers: below. (11) Exact types: H4E01/H4H08/LE01/CE01/RE01/GC01/CH03 and the schema type rows. (12) Timestamps: interim only, part 2B.
+
+## Sweep part 2B numbers: findings and responses
+
+The NUMRULE head `58c2816ff3` was merged after the guard-tool merge (its number files are byte-identical to the gated number scope `a16f67c1ef`). The date-time code is **not** adopted: no DS checker imports `pm_event_datetime`, and `datetime_validator`, `date_time` and the inventory gate are not called. Recipe IDs, identity preimages and tuple positions are unchanged.
+
+| Item | Disposition and change | Where | Verify |
+|---|---|---|---|
+| **Integer slots** (fixed, `0ef5c4ca3a`) | `Home4Validator`, the shared `StrictValidator` of every DS checker, admits each schema integer slot with the shared `current_integer` (an exact integer primitive, never a bool or runtime float), each slot keeping its own schema bounds (at this head only within the validated resource: see *Found after the implementation head* above; fixed in part 2B). The lane-local `_exact_numeric_type` (which also refused integral floats at **number** slots, a rule no owner sets) and the blanket `numeric_representation_errors` walk in `encode` are removed. Retained bodies keep the stock JSON Schema integer (`RetainedBodyValidator`). | `scripts/pm_home_layout_v2_slot_receipt.py` (`_current_integer`, `Home4Validator`), `scripts/pm_event_payload_route.py` (`encode`) | Round-3 and body-fault witnesses: `1.0`, `1e0`, `-0.0` at `producer_sequence_id` and `workspace_generation` refuse at the complete writer (envelope/payload schema). |
+| **RFC 8785 recipes** (fixed, `0ef5c4ca3a`) | The recipes the owners name as RFC 8785 use the shared `qualified_jcs`: the SP-273 operation digest (`Plans/storage-plan.md`, `operation_digest = lowerhex(SHA256(RFC8785(...)))`), the CV-333 owner-result hash and the compaction identity (`Plans/storage-plan.md:19647`). An owner result the JCS route cannot represent refuses at H4O03 before the hash comparison (owner text: refuse unsupported exact numeric admission before effects). Byte-identical on every fixture (all recorded digests unchanged). The synthetic Home source adapter bytes (`source_json`) are not an RFC 8785 recipe and keep their float spelling. | `scripts/pm_home_layout_v2_slot_receipt.py` (`canonical_json`, `jcs_or_none`, `source_json`), `scripts/pm_event_authority_ds_round2.py` (compaction identity) | Home4/compaction CLIs byte-identical; H4O03 witness. |
+| **Physical event bytes** (fixed, `0ef5c4ca3a`) | EventRecord payload bytes use the shared SP-236/SP-1100 profile: inline limits, payload-reference bytes and decoding (`storage_value_bytes` / `decode_storage_value`, `EVENT_VALUE`), the Case-L physical comparison and the retained layout source bytes. An unencodable body refuses as `payload_representation` (RI01A, RL03A). Home4 stored values keep SP-400's own codec (canonical MessagePack with contentEncoding fields as bin), with H4L00 refusing a value it cannot encode. Float bytes and signed zero are unchanged. | `scripts/pm_event_payload_route.py` (`canonical_msgpack`, `physical_size`, `resolved_body`) | route witnesses RI01A/RL03A; created/reset/admission CLIs byte-identical. |
+| **Producer JCS** (fixed, `0ef5c4ca3a`) | The created/reset append oracles, the shared replay projector and the compaction and layout writer checks refuse a producer projection `producer_semantic_bytes` cannot qualify (CO02A, RO02A, GR05A, CE15, LE09); the projector's dedupe digest is the shared `producer_semantic_digest` (byte-identical on fixtures). | `producer_jcs_ok` in `scripts/pm_home_layout_v2_slot_receipt.py`, used by the four modules | witnesses at `2^53+1`. |
+| **Storage uint64** (fixed, `0ef5c4ca3a`) | SP-1100's declared Storage fields in Browser checkpoint cores and the EventRecord `sequence_id` use `storage_uint64` (CC10, V2R05A, RC05A, GC04A). V2R05A/RC05A are entailed by the SP-278 schema maxima (own tables). | `STORAGE_UINT64_FIELDS`, `storage_uint64_fields_ok` | witnesses at `2^64`. |
+| **4,400-digit integers** (present, fixed, `0ef5c4ca3a`) | **The crash class was present in DS:** a valid 4,400-digit integer crashed six routes (Home4 slot, layout payload, created and reset preflight and append, created v1 checkpoint), because jsonschema formats `repr()` of the value in a failing `oneOf`/`type` branch and Python refuses integers over 4,300 digits. Every DS schema validation (`_ExactDigitValidator`), JSON parse (`exact_json_loads`, terminal) and JSON size measurement (`exact_json_text`, created CAS digest) now runs under a scoped, restored `int_max_str_digits(0)`; no value changes. | `scripts/pm_home_layout_v2_slot_receipt.py` (`exact_digits`, `_ExactDigitValidator`) | `digits4400-probe.txt`: 0 crashes; every route refuses or accepts exactly. |
+| **Shared corpus through the complete checker** (`0ef5c4ca3a`) | `scripts/pm-ds-number-corpus.py` parses every number-scope value of the shared corpus with `loads_current_json` and runs it through seven complete DS routes (created and reset writer `producer_sequence_id`, created payload `workspace_generation`, compaction `producer_sequence_id`, layout revision edge, Browser candidate `sequence_id`, created v1 checkpoint through-sequence); the expected outcome is composed from the shared helpers alone. | `scripts/pm-ds-number-corpus.py` | **67 values, 336 route runs, 0 disagreements, 0 untracked** (19 refused by the shared parser). |
+| **Number self-test** | `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | — | Exit 0, `"status": "pass"`, **580 of 580** cases (304 negatives, 276 positives, 63 owner checks). Credited exactly as reported. |
+
+**Not used, by design:** `RetainedDispatcher` (SP-1101 dispatch selects the CV-1101 date-time profile in the same recipe tuple: part 2B), `loads_current_json` inside the checkers (DS checkers take parsed values; no DS checker has a raw JSON ingress; the corpus runner uses it), `full_value_commitment` (no DS route computes a CV-339 commitment) and `verify_payload_bytes` (the route reports the media, size and hash claims as three rows; it fails at the first). No lane serializer, cap or number grammar was added.
+
+## Timestamp fields — interim only
+
+My own review of the DS timestamp fields is **interim only** (pm7-build, 2026-11-05 16:50Z); it certifies nothing and changes nothing. DS validates `format: date-time` with the lane's explicit `scripts/pm_contract_formats.py` FormatChecker (RFC 3339 grammar, lowercase `t`/`z`, real calendar, legitimate leap seconds; unknown formats fail), passed to every DS validator. The checkpoint rows add their own uppercase-only grammar and a `datetime.fromisoformat` calendar parse (CC02-05, V2R06-11, RC06-11; compaction CP02), which refuse lowercase `t`/`z` and leap seconds that the format accepts; the witnesses use exactly those spellings. None of this is the CV-1101 profile: Storage `observed_at_utc`/`persisted_at_utc` are not held to `storage_utc_z`, and retained originals use the same checker.
+
+## Part 2B items
+
+Timestamp items only, each left as it was:
+
+- **CV-1101 date-time at every DS boundary.** `scripts/pm_contract_formats.py` (`FormatChecker`, used at `scripts/pm_event_payload_route.py:74`, `scripts/pm_home_layout_v2_slot_receipt.py:978`, `scripts/pm_browser_workspace_created_v2.py:63`, `scripts/pm_browser_workspace_reset.py:84`, `scripts/pm_browser_workspace_created.py:137`, :246); the checkpoint timestamp rows `scripts/pm_browser_workspace_created.py` (CC02-CC05), `scripts/pm_browser_workspace_created_v2.py:39` (`TIMESTAMP`, V2R06-V2R11), `scripts/pm_browser_workspace_reset.py` (RC06-RC11, `parse_time` :361); `scripts/pm_event_authority_ds_round2.py:51` (`compaction_timestamp_valid`, CP02); the shared admission validators `scripts/pm-browser-event-admission.py:370` and the retained payload validators `scripts/pm-browser-event-admission.py:520`, `scripts/pm_event_authority_ds_round2.py:324`, `scripts/pm_home_layout_v2_slot_receipt.py:750`; `Plans/event_record.schema.json:212`, `Plans/event_record_v3.schema.json:221`. Adopt `datetime_validator` with the `event_record` profile, `storage_utc_z` (CV-253) for Storage `observed_at_utc`/`persisted_at_utc`, the inventory gate, and the shared battery's negatives and edge positives; rerun the guard tables with the format capability active.
+- **SP-1101 authenticated retained dispatch** (it selects the frozen CV-1101 profile in the same tuple). The retained selections that stay implicit today: `RetainedBodyValidator` and the layout `payload_validation_recipe` (`scripts/pm_home_layout_v2_slot_receipt.py`, `layout_history_context_errors`), the route's retained 2.0.0 branch (`resolved_body(historical=True)`), the Case-L compatibility branch (`candidate_failures(historical=True)`). Compose `RetainedDispatcher` with an authenticated original owner and frozen recipes; add retained positives under the frozen recipes and forged/downgraded-selector negatives.
+
+## Family grades before and after
+
+| Family | Before | After | Remaining |
+|---|---:|---:|---|
+| context.compaction.completed | 11/12 | **11/12** | Oracle: part 2B timestamps and review |
+| browser.workspace.created | 11/12 | **11/12** | Oracle: part 2B timestamps, SP-1101, Case-L source fields, review |
+| browser.workspace.reset | 11/12 | **11/12** | Oracle: part 2B timestamps, SP-1101, Case-L source fields, review |
+| workspace.layout_changed | 11/12 | **11/12** | Oracle: part 2B timestamps, SP-1101, review |
+| terminal.workgroup_moved | 11/12 | **11/12** | Oracle: review |
+
+**55 PASS / 5 PARTIAL → the same totals.** The part-2 reason for the five PARTIAL oracle cells (no shared-tool isolation proof, no NUMRULE adoption) is closed by the tool run and the number pass, but part 2B (CV-1101, SP-1101) and the review remain, and these cells have not been independently reviewed; I do not upgrade a self-grade on that basis. The self-grade's 285 evidence quotes all still match; 112 line pins moved (the NUMRULE merge shifted the owner documents) and were re-pinned with unchanged excerpt hashes.
+
+## Commands and evidence
+
+| Command | Exit | Outcome |
+|---|---:|---|
+| `git merge --no-ff 004bdedd63` | 0 | `59699c6566`: 11 tool files, none edited |
+| `git merge --no-ff 58c2816ff3` | conflicts in generated files only | `6fe849dc06`: `Plans/_shards/{contracts_v0,storage-plan}`, `Plans/.plan_index` regenerated (shard generate, index generate with the 15 currentness files SHA-256-matched, shard check pass) |
+| every DS check at `6fe849dc06` (19 commands) and at `2dea5e4f76` (18: the retired targeted matrix is gone) | 0 each | see *Behaviour unchanged*; `verify-summary.json` |
+| `python3 scripts/pm-ds-table-generate.py --check` | 0 | 197 tables, 756 rows, no stale or extra module |
+| `python3 scripts/pm_ds_p2a_cases.py --check` | 0 | `pass`, 198/198 |
+| self-grade evidence quote check (`quote-check.json`) | 0 | 285 quotes, 0 mismatches at their pinned lines |
+| `python3 scripts/pm-ds-guard-tables.py --out <dir>` (long-jobs `ds-p2a-tool4` at `767fe1677c` and `ds-p2a-supp` at `2dea5e4f76` with `--phase` for the 6 changed tables; MemoryGate pause below 10 GB, resume at 10) | 0 (merged) | 729/756 proved, 27 entailed; PASS 170; `summary.json.gz` |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `pass`, 580/580 |
+| `python3 scripts/pm-ds-number-corpus.py --json ...` | 0 | 67 values, 336 route runs, 0 disagreements, 0 untracked |
+| 4,400-digit probe (`digits4400-probe.txt`) | — | 6 routes crashed before the fix; 0 after |
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/sweep-p2a/` (SHA-256 of every file in `SHA256SUMS`; large files gzipped). No raw logs or scratch workspace are committed. No pm-mail, subagent, browser, admission, registry append, Decision Log entry, Spec Lock/evidence reseal or main push.
+
+## Sweep part 1: findings and responses (historical)
+
+**Source head:** `31a1f32d8e03300f29eff851732058a78a5fbe13`. **Input head:** `da6e0aeba6aa837511cdb6094f49cbe136e03a65`. **Rebased base:** current fetched `origin/main` `e42ce235b4711325ced818c777f070c3ee0d7952`. Nas1 sparse worktree `/home/sittingmongoose/pm-worktrees/ds-sweep1`; removed after the branch push. This section supersedes the earlier terminal owner question; the review-round sections below are historical. **NOT_READY pending part 2; native execution NOT_RUN.**
+
+### Landed authority: DL-449 / deck 2 item 8.a
+
+`Plans/Decision_Log.md:5561` (landed on main) records option A exactly:
+
+> Preserve the original meaning and lifetime of any saved event, the refusal of new writes and checks that prevent old events being fabricated again. Explicitly remove the obligation to build a new terminal-history view, saved results from viewing it, saved original-move/results records and obsolete move tests from both owner documents. Keep only the checks needed to interpret and protect old data. No new history-viewing feature is built.
+
+The premise still holds: DL-181 retired workgroups, SMPFS-180 owns current terminal tabs, and the original producer never activated. No old move, event or original result is manufactured. DL-039's registration/citation condition, original membership, exact payload, RP-AUTHORITY-INDEFINITE lifetime and saved evidence remain. No further Jared choice is needed for 8.a.
+
+| Item | Response; commit and location | How to verify |
+|---|---|---|
+| **Deck 2 8.a / DL-449** | **Fixed**, `bc04b1258b` and `31a1f32d8e`. `Plans/storage-plan.md:27038`, `Plans/Section15_MVP_Promoted_Features_Spec.md:12413` and current SMPFS-180 remove the view, saved viewing results, unbuilt original-move/results custody and obsolete move-test obligations in both owners. SP-319 explicitly assigns no operating consumer or family projector/checkpoint, retains generic SP-278 protection and admits no new disclosure. Original distinct sections, complete unchanged pane/session identities, creation fact, DL-070 empty vacated source, bytes, array order and lifetime remain. | `python3 scripts/pm_terminal_workgroup_compatibility.py --self-test`: **7 positives / 25 negatives PASS**. Exact refusal lists, preserved unusual original JSON bytes/array order, invalid same-section history, eager dormant-ref refusal and actual invalid-positive CLI exit **1**. These are retained-data/contract observations, not an original move simulation or view. |
+| **SOL4-03: fixture defects** | **Fixed observed defects**, `e5d20ad993` and `40c0c265f4`. **24 original Home4 negatives** have coherent source bytes, SHA/BLAKE/size/media claims, result/capture hashes or present locator targets. `Plans/home_layout_v2_slot_receipt_fixtures.json:2453` now isolates the nested inline limit inside a valid complete-value reference; the former four-defect case has one diagnostic. `Plans/home_layout_v2_slot_receipt_fixtures.json:2498` changes only the claimed hash. Candidate revision, foreign Project, command, event id and schema-ref controls refresh their dependent observations. `scripts/pm_ds_home4_isolating.py:79` also updates producer_sequence_id with a changed new revision. No guard or acceptance rule is weakened. | Full Home4 checker/self-test: **10 positives / 30 schema negatives / 33 invariant negatives PASS**, 415 refs closed; **15 synthetic objects**. Final **128 Home4 cohort controls PASS**. `fixture-coherence-after.json` checks all 24 repaired originals and the supplemental revision/sequence copy. Every repaired invariant-negative has one final diagnostic; this is fixture evidence, not complete guard isolation. |
+| **SOL4-03: whole check-11 completeness** | **Part 2**, at `scripts/pm_ds_guard_removal.py:212`, `scripts/pm_ds_targeted_guard_matrix.py:16`/`:23`, and the review's exact `guard-ruling-374.{json,md}` catalog. Complete assertion inventory, clause/site isolation, true duplicate adjudication, captured contexts and coarse replay/sequence group separation require the shared guard-table restructure. No local replacement proof engine or new guard-proof machinery is authored. | Old targeted matrix rerun: **77 positives / 144 negatives / 33 groups PASS**; its complete flag describes that matrix only. It does not close SOL4-03 or the full source inventory. The old whole-audit numbers remain historical and all five oracle cells remain PARTIAL. |
+
+### Family re-grade
+
+| Family | Before | After | Remaining |
+|---|---:|---:|---|
+| context.compaction.completed | 11/12 | **11/12** | Oracle proof, part 2 |
+| browser.workspace.created | 11/12 | **11/12** | Oracle proof, part 2 |
+| browser.workspace.reset | 11/12 | **11/12** | Oracle proof, part 2 |
+| workspace.layout_changed | 11/12 | **11/12** | Oracle proof, part 2 |
+| terminal.workgroup_moved | 10/12 | **11/12** | Reduced oracle proof, part 2 |
+
+**55 PASS / 5 PARTIAL; 0 of 5 at 12/12.** Only terminal's consumer/checkpoint cell rises: DL-449 explicitly removes the unbuilt operating consumer/view obligation, so the absence is now the approved disposition, not an unanswered owner choice. Its reduced oracle baseline passes, while full check-11 proof remains incomplete. Native NOT_RUN is independent of these normative grades. [DS.selfgrade.json](DS.selfgrade.json) and [ds-sweep-p1-regrade.json](ds-sweep-p1-regrade.json) contain current exact citations and before/after hashes; **95 existing citations reanchored**. Historical assessment/admission pins, original receipts and audit rows remain unchanged. The parent reconciles canonical grade projections under `Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER_WRITE_RULE.md`; this sweep does not edit a canonical audit ledger or claim a changed frozen seal result.
+
+### Verification and limits
+
+- **Current final checks:** terminal **7/25**, Home4 **10/30/33**, final affected Home4 cohorts **128/128**, fixture-coherence witness **24 originals plus the supplemental revision case**, shards and top-level index validation all pass. Index reports **7488 PlanUnits**; native readiness remains blocked. Only the two edited owner documents change derived shards. All **15** currentness input files were copied and SHA-256 matched before index generation.
+- **Preserved broader checks:** the full **686/686 supplemental controls** passed before the last ten locator/media fixture repairs; the affected 128 Home4 controls then passed at final source. The **77/144** targeted matrix, round-3 type/history sweep and round-4 retained-source/format controls pass. Created/reset/admission/PM7 suites pass **65 / 53 / 38 / 13** tests. Projects-refresh's top-level status is **pass**. No accepted input or invalid-schema result cache, new numeric cap, serializer or proof engine is introduced.
+- **Standing checks 1–10:** current replay-only/refusal and historical separation, Project-only keys/scopes, encoded Browser partitions, whole/inline/reference limits, LF identifiers, semantic retry inputs, checkpoint/source identity, nonzero failure exit, eager reference closure and valid retained history remain supported by the same full-entry suites. New terminal checks preserve bytes and lifetime and refuse write/remint/view obligations. These static adapters do not authenticate native Storage or terminal execution. **Check 11 remains incomplete**, including syntax/hash/decoder implications that need the shared tool's clause adjudication; no blanket completeness claim is made.
+- **Transient attempts:** the first final shard check saw the two owner edits before their scheduled regeneration; the final generate/check passes. A scratch fixture witness assumed a prepared slot already had an event; its optional-event assertion was corrected and its complete 24-case rerun passes. These attempts are retained in the external command records. No product guard was relaxed.
+- **Preservation:** 12 critical inputs, including the event registry, original envelope, partial assessment, three admission pins, four original application receipts and both old guard scripts, are byte-identical to `da6e0aeba6`. No new admission, registry append, Decision Log entry, audit row mutation, Spec Lock/evidence reseal, main push, mailbox, subagent, browser or server. No new PlanUnit ids; inherited **SP-400** remains unchanged.
+
+### Part 2 items
+
+1. **SOL4-03 / shared guard tables:** adopt the reviewed `scripts/pm_guard_isolation.py`, expose named field/clause predicates and rerun the exact full inventory, duplicate/site, state/representation/fault and all-other-negative obligations. Split the old replay/producer-sequence and other compound removal groups. Include the reduced terminal checker; keep the new fixture repairs. An Astra NOT_READY remains until the required review passes.
+2. **NUMRULE adoption:** adopt CV-1100/1101, SP-1100/1101 and the shared helper only after the shared tools pass. Exact lane sites include `scripts/pm_home_layout_v2_slot_receipt.py:137`/`:345`, `scripts/pm_event_payload_route.py:58`, and existing current/historical family dispatch. Preserve original physical bytes, uint64 Storage metadata, signed zero and authenticated write-time recipe selection; add no lane-local substitute.
+3. **Parent integration:** reconcile receipted terminal audit-grade projections against DL-449 under the ledger write rule; ordinary governance staleness/reseal and landing checks remain the lead's separate work. No full-depth admission or READY claim follows from this part-1 branch.
+
+**Evidence:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/sweep-p1/`. [ds-sweep-p1-verification.json](ds-sweep-p1-verification.json) pins every relevant external artifact by absolute path and SHA-256; `SHA256SUMS` in that directory covers the delivered report, self-grade, receipts and check output. No raw logs or scratch workspace is committed. Both this report and the self-grade are copied there after push, and the task worktree is removed with its literal path.
+
+## Review round 4: findings and responses (DS-FIX4, historical)
+
+**Reviewed head:** `25c568598fa3ff1028a95c326c885474ffd7dcd1`. **Code/fixture head:** `f479a6eaee994bbc34b14395aedf7a56c124b46e`. **Final base:** `57c28f706e10dd9f7c6b13ed5e962de74e9a6ea5`. The initial rebase used `fb441b27fd75440e14115fb382b15a5258ad7ea3`; the final rebase incorporates later main. DS checker sources are byte-identical across that final rebase. Main's stronger ACD-461 and CV-329 app non-emission text is retained and re-adjudicated. Generated conflicts were regenerated, never hand-merged. No admission, seal, main landing or native execution is claimed.
+
+| Finding | Status; where / cause / fix | Verification |
+|---|---|---|
+| **DS-SOL4-01** | **Fixed**, `9cae9bd3da82a459c4815ab36d21e3f62ec011c5`. `pm_home_layout_v2_slot_receipt.py:529` and `pm_event_authority_ds_round2.py:371`: strict current integer validation reached valid retained bodies. Both historical entries now use the payload-validation recipe committed with exact retained event bytes in the verified source observation. A strict recorded recipe cannot select the original rule. | Original-recipe numeric history passes; current writes and strict-recipe history refuse the same integral-float bodies. Changed recipe/source/event, missing source/store, foreign joins and individual custody flags refuse. Exact retained bytes/pins are preserved. The verified adapter/custody is an explicit synthetic precondition, not native authentication. |
+| **DS-SOL4-02** | **Fixed**, same commit. `pm_home_layout_v2_slot_receipt.py:603`: Python equality treated Boolean/integer and integer/float copies as equal. Recursive comparison checks exact primitive/container types before values. | Actual captured JSON `7.0`/`7e0` and Boolean-to-number substitutions refuse through the full Home4 reader with source SHA and readback copies refreshed. String/null/list/object forms are covered. No new numeric cap or serializer is introduced. |
+| **DS-SOL4-03** | **Fixture gaps repaired; complete proof remains PARTIAL and disputed in part**, `dc771f4d496235fa5569c7f82216527a1177c014`, with format CLI control `f479a6eaee994bbc34b14395aedf7a56c124b46e`. Complete-entry source, join, checkpoint, history, state, representation and CLI-fault cohorts were added; original 65/53/38-test assertions remain. Four non-independent diagnostics have explicit counter-evidence; no guard is removed for them. | **686 supplemental baseline controls**; **33 targeted groups / 144 negatives / 77 positives**, all matrix peers still refused. The 374-row review partition and nine named pairs are preserved. Full source counts, exceptions and pending proof-engine work are in [ds-fix4-guard-removal.md](ds-fix4-guard-removal.md); no 262-row closure is asserted. |
+| **DS-SOL4-04** | **Fixed**, `9cae9bd3da82a459c4815ab36d21e3f62ec011c5`. Removed the repeated compaction envelope arm and the impossible naive-time arm after mandatory zone grammar. | First envelope and timestamp/calendar/zone guards remain. No artificial dead-arm negative was added. |
+| **DS-SOL4-05** | **Fixed**, `a6bef7d41c98932e160d3203003fd9829949280c`. The Browser schema's old resource pin survived its strict-identifier repair. `pm-regenerate-application-source-graph.py` verifies the reviewed prior pin, regenerates actual resource and full semantic graph hashes, and requires the ordinary graph validator to accept before writing. | Projects refresh **PASS**, 834 cases. Browser pin is `c3d627e64a3ca958d1f00adc8d2c67614723e207972535f0d461fb7f802a6ce7`; graph digest is `c90bbc44b48ce39c3ef272e478c3280afd30045be7787deb59e79d9acdfcc552`. Resource selection, literal pointers, methods and role edges are unchanged. The exact regeneration command is recorded in the verification JSON. |
+
+### Grades and preserved authority
+
+| Family | Before | After |
+|---|---:|---:|
+| **context.compaction.completed** | 11/12 | 11/12 |
+| **browser.workspace.created** | 11/12 | 11/12 |
+| **browser.workspace.reset** | 11/12 | 11/12 |
+| **workspace.layout_changed** | 11/12 | 11/12 |
+| **terminal.workgroup_moved** | 10/12 | 10/12 |
+
+**54 PASS / 6 PARTIAL; 0 of 5 at 12/12.** The four active-family oracle cells remain PARTIAL. Terminal's consumer and oracle cells remain PARTIAL; the exact existing question remains Jared's second-deck 8.a. No answer, operating terminal reader or disclosure permission was invented. Native execution is **NOT_RUN**, independently of those proof gaps.
+
+The regrade receipt is [ds-fix4-regrade-application.json](ds-fix4-regrade-application.json). All **294 current self-grade citations** were rechecked; **127** were reanchored and three quotations re-adjudicated against stronger current ACD-461 wording. No criterion status changes. The published depth assessment and historical application receipts stay historical, pinned and byte-unchanged; no claim is made that their old line numbers became current by a rebase. The receipted grade correction, four original application records, three partial-depth admission pins, layout successor, SP-273/Home4 amendment, old envelope, August fingerprints and frozen validator are preserved. The partial assessment remains SHA-256 `535b9ea34754b03edb19e15e67650e13546fb8345ae5a8121f1646e87c9ff035`.
+
+### Eleven checks and Astra items 1–12 / 10a
+
+| Check / item | Result and boundary |
+|---|---|
+| **Replay-only writers / custody on every path** | Active-family writers and Browser known retries refuse replay-only; retained originals use their historical route. Individual access/source/deletion/token/admission flags refuse wrong types. Terminal remains retained-schema-only. |
+| **App keys / encoded Project partitions** | All five registered editions remain Project-only. Existing encoded `project~` positives and foreign/raw partition negatives hold. App compaction remains non-emitting. |
+| **Complete sizes / partial measurements** | Exact 16384/16385-byte controls, original Browser overflow bodies, complete external event, all 1208 affected layout ids and whole Home4 slot/receipt references pass. No split, truncation, omitted id or new cap. |
+| **Identifiers / forged claims** | Full-match identifiers and well-formed false content ids, digests, event ids, source selections and bindings are exercised. Observational copies and physical size/media/hash claims follow the changed fact. |
+| **Retries / assigned Storage metadata** | Metadata-only retries retain original results and pins; caller body changes conflict. Token/Storage joins remain. No native frame or receipt authentication is inferred from fixture flags. |
+| **Failure exits** | Bad-positive/nonflipping/baseline-negative controls pass. CLI dependency/diagnostic/source-identity faults assert exact failure and nonzero exit. A failed format-sweep report makes the real round-4 CLI exit 1. |
+| **Eager refs / dormant branches** | Existing five-family dormant-reference controls and full offline closures remain. Full Home4 closure resolves 415 refs. No input-validation result cache is credited as proof. |
+| **History / numeric recipes (10a)** | Both layout historical entries now distinguish original and strict recorded recipes using exact bytes plus independent trusted-custody commitment. Browser/compaction retained positive and forged/withdrawn/foreign refusals remain. Broader numeric-domain adoption belongs to NUMRULE; no lane-local range cap, replacement serializer or signed-zero normalization was added. |
+| **Types / one field read two ways** | Round-3's **156** wrong-type refusals remain. Round 4 has **34 negatives / 11 positives**, including raw exponent captures and exact source types. Reset checks witness type before producer interpretation; compaction history context requires an actual Boolean. |
+| **Own defects / honest grades** | Declared targeted matrix passes. The whole source inventory remains **PARTIAL**; representation/state/fault assertions and exceptions are never relabelled as accepted invalid events. Exact current counts and pending rows are reported separately. |
+| **Formats (12)** | Explicit date-time grammar/calendar/time/offset validation replaces a silently unavailable optional checker. Unknown formats fail closed. **108 full-entry malformed timestamp probes**, **1371 format-node probes**, and five permitted retained timestamp grammar forms pass. Fractional spelling/precision is not rewritten; leap/offset/fraction edge controls are explicit. Terminal's payload has no formats; its shared envelope nodes are covered without granting disclosure. |
+
+### Verification, limits and integration
+
+Final targeted matrices, Home4/self-test, created/v2/reset/shared Browser CLIs, PM7, shared-runtime self-test, Projects refresh and **65 / 53 / 38 / 13** unittest suites pass. Shards and top-level plan-index validation pass on the final base (**7424 PlanUnits**); runtime readiness remains `blocked_runtime_certification_incomplete`. Currentness inputs were copied and hash-verified before generation. One shared-runtime invocation omitted required CLI arguments and exited 2; its corrected `--self-test` passes. The original duplicate fixture left its second schema URI alias stale; an explicitly recorded, coherent two-alias reproduction passes. Original reviewer programs are untouched.
+
+The completed committed whole-lane audit reports **881 namespace rows / 308 observed witnesses**, **570 distinct conditions / 230 with an observed witness**, and **63 exception-bearing rows**. All **1191** baseline negatives refuse; baseline failures are zero. Its status remains **PARTIAL**. An earlier tool-session run ended with SIGTERM/143 before producing a table; a slower experimental run was stopped/130 and receives no proof credit. Experimental proof machinery stays outside the repository. FIX-ROUND's **04:45Z shared-tool directive** sends assertion-inventory, compound/whole-keyword cuts and engine defects to adoption of `pm_guard_isolation.py`; it does not excuse malformed fixtures or product acceptance bugs. No local replacement engine is adopted and no full check-11 closure is claimed.
+
+The unchanged frozen validator exits **1 before / 1 after**, with **5 / 5** failure categories and all four seal/depth flags false. Its SHA is `190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20`; receipts/categories are recorded in [ds-fix4-verification.json](ds-fix4-verification.json). Expected seal/depth failures are preserved; no reseal or altered validator obtains a pass. All raw evidence is under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix4/`, cited with SHA-256 in the verification/guard reports and `SHA256SUMS`. No raw captures or runtime workspace are committed.
+
+**Ids:** none minted in round 4; the branch's existing **SP-400** is retained. No ledger compile, WorkNodes, registry append, Decision Log write, new admission, main push, landing lock or governance reseal. The task worktree is removed after the checked branch push. Initial inbox/who reads preceded loading the no-mail rule; no registration, message, later mailbox call, reviewer consultation or subagent followed.
+
+## Review round 3: findings and responses (DS-FIX3, historical)
+
+**Source revision:** `3f762144faf6edc258e070d680aab2a14fe79d8e`. **Repairs:** `c75ecbfc2faba6dc0120126f0856199857f17d9a` (pushed). **Review base:** `35dc107d9121c43ad035de82cde1fddb8e3602e3`. VM worktree `/home/sittingmongoose/pm-worktrees/DS-fix3`, removed after the final push. No native execution, full-depth admission, seal or landing is claimed.
+
+| Finding | Where / cause / fix | Verification |
+|---|---|---|
+| DS-SOL3-01 — fixed | `pm_home_layout_v2_slot_receipt.py:344`, `pm_event_payload_route.py:57`: Python's mathematical integer accepted integral floats before distinct physical hashes. Current typed validators and the encoder refuse alternative integral forms before hashing. Original codecs and retained external-body bytes are preserved; no original digest is restamped. | `pm_event_authority_ds_round3.py`: 1, 1.0, 1e0, 01, 0, -0, -0.0; compaction counts, Home4 generation, inline/external Browser generations, original envelope sequences, fresh/retry and encoder boundaries. |
+| DS-SOL3-02 — fixed | `pm-browser-event-admission.py:468` and `:492`, both family history readers and shared projector: writer-only sequence/replay/migration guards reached historical originals. Verified normalized history now uses the existing Case-L formula through an offline selected-payload validator. Exact canonical bytes, not Python's int/float equality, join the complete normalized result to the source. | Both normalized family readers and projector pass; current writers refuse. Forged ids/keys, foreign coherent Project, unsupported migration, changed numeric type, missing source and individual access/deletion/source/token/reset-admission flags refuse. Retained external numeric bytes stay readable without changing their pins. |
+| DS-SOL3-03 — fixed | `pm_event_authority_ds_round2.py:352`: standalone layout omitted family/schema/Project/id/key joins. It now validates an explicit Home4 operation binding, recomputes its digest from source, checks family/schema, and reuses complete Home4 event joins. Historical reads require explicit custody flags. | One isolated negative per missing join, plus well-formed compaction receipt, Home4 digest and event-id controls; actual own-guard removals flip their expected cases. Oracle remains PARTIAL. |
+| Check 11 — targeted gaps fixed; whole-lane proof PARTIAL | Missing references are proved at the availability seam and refused by full readers. Hash/size/media/encoding guards, both historical-authenticity predicates and non-null producer sequence have actual proofs. Existing checkpoint/CAS/generation/replacement/hold/cleanup/pending/original-result cases are wired into the source audit. | **30 combined targeted groups / 109 negatives pass**, with every other negative rejecting in each table row and no exceptions. Full source inventory and remaining ownership/routing/schema implications are explicitly partial in `ds-fix3-guard-removal.md`. |
+| Item 11 type sweep — fixed observed holes | String admission flags in both Browser append models and string access flags in creation's old checkpoint reader were truthy. They now require exact booleans; creation's witness generation also requires an actual integer. | **156 full-entry/schema probes**, using string booleans/numbers, null, arrays and nested objects across all five families. Terminal coverage is retained-schema-only; no operating reader or producer is invented. |
+
+### Re-grade
+
+| Family | Before | After |
+|---|---:|---:|
+| context.compaction.completed | 11/12 | **11/12** |
+| browser.workspace.created | 11/12 | **11/12** |
+| browser.workspace.reset | 11/12 | **11/12** |
+| workspace.layout_changed | 11/12 | **11/12** |
+| terminal.workgroup_moved | 10/12 | **10/12** |
+
+All **54 PASS / 6 PARTIAL** cells are preserved. The four active-family oracle cells remain PARTIAL while whole-lane proof is unadjudicated; terminal's consumer and oracle remain PARTIAL for its unchanged held question. The new self-grade metadata is receipted in `ds-fix3-regrade-application.json`. The corrected depth assessment and three admission pins are byte-identical to the review base. The prior receipted correction, all historical application records, EventRecord successor, SP-273/Home4 amendment and the entire terminal question are retained.
+
+### Eleven standing checks and Astra items 1–11
+
+| Check / item | Fresh probe or preserved evidence |
+|---|---|
+| Replay-only writers and retries / custody on every path | All active-family current writers refuse replay-only before reuse. Both Browser known-retry controls and non-null producer-sequence controls pass. Source/CAS/recovery/cleanup cases are reused in the full audit; remaining unproved source rows are not promoted. |
+| CV-366 app keys / encoded Project partitions | All five registered editions remain Project-only. No app writer/key is invented. Existing encoded `project~` positives and foreign/raw scope negatives remain intact. |
+| Complete sizes / partial measurements | Exact 16384/16385-byte MessagePack controls, complete resolved event, all 1208 layout affected ids and complete Home4 value references pass. No cap, truncation, split, omitted event or null-only regression is introduced. |
+| Full-match identifiers / forged identities | Strict ECMA end-of-input tests remain; source-derived compaction/Home4/layout identities and Browser normalized identities refuse well-formed false claims. |
+| Semantic retries / Storage-assigned metadata | Original sequence and observed/persisted metadata remain excluded from producer-semantic comparisons; frozen physical refs/results are retained. No Storage-native frame/timestamp authentication is claimed; verified-source observations remain explicit adapter assumptions. |
+| Checkpoint source identity / custody | Existing nine-field token, Storage instance, source/hash, exact prior CAS and live snapshot joins remain. The standalone layout uses its actual binding, not a caller digest. |
+| Failure exits / harness | All final checker and test commands exit 0. Injected bad-positive, nonflipping-guard and accepted-baseline-negative controls are required by the passing self-tests. Empty test discovery refused with exit 5 during setup and was rerun with the correct PM7 file; no zero-test result is credited. |
+| Eager references / dormant branches | The actual unresolved-ref refusal is ablated; all five dormant-ref negatives flip. Every normal schema closure remains offline and resolving. Baseline eager caches are cold; immutable schema-context constructors are cleared for every mutation. Only successful standard-library schema-definition checks are memoized by complete JSON content; malformed/non-JSON forms are checked without coercion. No event or value validation result is cached. |
+| Historical validity in both directions | Retained ordinary and normalized replay-only Browser records pass independently of live writer policy/witnesses. Source/access/deletion/withdrawal/foreign/forged/unsupported controls refuse. Compaction later-head/deleted-thread audit remains content-free. Terminal disclosure is not decided. |
+| Own-defect coverage / masked negatives / honest grades | The combined targeted table passes; its shared predicates include both prior cohorts. The full audit runs single source conditions, names captured aliases and preserves all unproved/exception rows. Its partial status and the unchanged grades prevent a full-depth claim. |
+| Alternate numbers / confused types | Numeric alternatives are refused at current typed boundaries, with isolated external and retry controls. Canonical source joins distinguish float/int forgeries. Retained physical bytes/digests are not rewritten. The 156 wrong-type controls all refuse. |
+
+### Verification, preservation and open work
+
+Browser created/v2/reset/shared CLIs, Home4 checker/self-test, both guard-harness self-tests, PM7 and shared-runtime validators, **118 Browser / 38 admission / 13 PM7 tests** pass. Shards: **99 sources / 3093 shards**, pass. Index: top-level **pass**. Currentness inputs were copied and all 15 SHA-256 values verified before index validation. No Plans source was edited, so no regeneration or governance reseal was needed or performed.
+
+The frozen validator remains `190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20` and exits **1 before / 1 after**, with the same **five** categories and all seal/depth flags false. It ran only in a scratch copy with a separately unlinked receipt. No August fingerprint, frozen validator, Decision Log, registry, admission record or canonical owner text changed in this fix round. `git diff --check` passes.
+
+**Open technical work:** the exact whole-lane partial rows in `ds-fix3-guard-removal.md` still need ownership/duplicate/routing/fault adjudication. This is not a claim that every source condition is an independent missing negative, and no complete check-11 or 12/12 proof is asserted. **Owner hold:** terminal.workgroup_moved's original withdrawal/read-disclosure question below is byte-unchanged. **Ids used:** none new; existing SP-400 and its SP-273/CV-361 context remain unchanged.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/`; exact paths and SHA-256 values are in `ds-fix3-verification.json` and the guard report. Final report and self-grade are copied there after push.
+
+## Review round 2: findings and responses (DS-FIX2, historical)
+
+**Current fix worktree:** VM `/home/sittingmongoose/pm-worktrees/DS-fix2`, removed after the final push.
+
+**Source head:** `9f83b5ed566206585dcff5a22ac4db94feaf3cee`. **Final grade:** 54 PASS / 6 PARTIAL; no 12/12 family claim. All older grades and supersession claims below are dated history and are superseded by this section and the corrected JSON. No native execution or successful seal is claimed.
+
+| Finding / ruling | Response and verification | Commit |
+|---|---|---|
+| DS-SOL2-01 | Fixed the concrete Browser inline/reference route. Exact canonical MessagePack 16,384/16,385-byte controls, resolved references, missing/hash/size/media/encoding cases, original-result retries and retained readers pass. The separate 65,536-byte JSON body budget remains. | `2a9364409a`, `bd168f51ab` |
+| DS-SOL2-02 | Fixed full-match/end-of-input guards across the actual schema closure. Four compaction ids plus Browser artifact and checkpoint publication ids have isolated LF negatives; resolved reference positives pass. | `2a9364409a` |
+| DS-SOL2-03 | Fixed unsupported assessment/repoint claims through `ds-fix2-depth-retraction.json` and `ds-fix2-regrade-application.json`. Same honest assessment path, receipted before/after hashes, depth-only admission-record changes, explicit compaction supersession-history correction. Fresh/retry replay-only, LF and eager dormant-ref negatives are authored. Full check-11 work remains PARTIAL at the review cap. | `72abc40713`, current receipted regrade |
+| Ruling 1 | Implemented all three authorized steps: governed EventRecord 3.0.0 successor with exact prior readers/upgrader and pack custody; explicit SP-273/Home4 amendment covering writer/reader/checkpoint; complete 1,208-affected-id large-event oracle (1,200 added tabs and all originals) and complete Home4 value reference. No new tab/panel cap, truncation, omitted or split event. Producer now PASS; oracle stays PARTIAL for check 11. | `2a9364409a` |
+| Ruling 2 | Applied the review's honest baseline before repair, then upgraded only the three repaired producer cells. No registration history, Jared membership decision, registry row or frozen validator change. | `72abc40713`, current receipted regrade |
+| Cycle-1 fixes and whitespace | Kept complete-value references, exact BLAKE3 ids, terminal's non-PASS cells and all four original application records. Independent 40/100-tab and 38-length BLAKE3 probes still pass. Removed the introduced search-excerpt whitespace. | `72abc40713`; preservation checks |
+
+### Governed owner contract and exact family reuse
+
+`Contracts_V0.md` section 1.2.1 and `event_record_v3.schema.json` close object/null-inline versus null/verified-reference forms. Resolved bodies pass their registered payload schema and joins. Exact uncompressed MessagePack bytes determine size/BLAKE3; existing producer-semantic digest inputs and Storage metadata exclusions remain. Pack bytes/index precede acknowledgment, or share its durable segment group; SP-337 retains holds, retention, GC and coherent restore. StorageMigrationCoordinator installs the exact writer/reader/checkpoint paths before native activation (NOT_RUN). Original `event_record.schema.json` and payload meanings remain unchanged. A legacy string reference is never silently interpreted as the successor object.
+
+Search: `ds-fix2-binding-search.json`, base `093d102406`, live owner/schema/script/test scope excluding ledgers and generated pipelines. No pre-existing EventRecord 3.0.0 reference schema was found. Each family reuses its own emitter, consumer, projector, checkpoint, exact receipt binding and retention; none is inferred from a sibling. Browser producer evidence retains each exact SMPFS command/handler/first-AppendReceipt adoption. Newly authored technical representation only, under the user's ruling and existing DL-270/DL-045/DL-046 authority.
+
+### Family grades
+
+| Family | Unsupported branch claim | Cycle-2 review baseline | After repair |
+|---|---:|---:|---:|
+| context.compaction.completed | 12 | 11 | **11/12** |
+| browser.workspace.created | 12 | 10 | **11/12** |
+| browser.workspace.reset | 12 | 10 | **11/12** |
+| workspace.layout_changed | 10 | 10 | **11/12** |
+| terminal.workgroup_moved | 10 | 10 | **10/12** |
+
+The four oracle cells remain PARTIAL because full own-defect guard-removal witnesses are incomplete. Terminal's consumer and oracle cells remain PARTIAL for the unchanged Jared question in review round 1. Native NOT_RUN alone lowers no cell. The three admission records pin the same corrected partial assessment; those pins do not supply full-depth admission proof. The layout producer ledger cell is PASS, oracle cell FAIL; all historical dispositions, cohort pins, AUG-CP choices and provisional flags remain unchanged. Compaction's historical row keeps its evidence/disposition and explicitly retracts current complete-depth supersession proof.
+
+### Guard-removal result and follow-up at the cap
+
+`ds-fix2-guard-removal.md` contains the table and exact case-number key; the full source table is retained with its SHA-256. Boundary oracles: **24 positives / 46 negatives**, **10 guard groups witnessed / 2 incomplete**. Whole source inventory: **525 conditions**, **62 with observed flips**; complete ownership/other-negative proof remains open. Empty/exception/nonflipping rows are explicitly partial, never PASS. Every guard is restored after its in-memory mutation.
+
+The broad audit caught an impossible-calendar acceptance in the new compaction model and an audit input-wiring mistake (`store_ops` instead of fixture `payload_store_ops`). Both are fixed in `13ab3a1a91`: an invalid-calendar negative and valid leap-day positive, correct payload-store mutations, and a full baseline preflight that refuses accepted negatives before ablation. Its injected bad-negative control passes. All **194 distinct baseline negatives reject** at the final source revision. The large-panel control retains all 1,208 original/added tab ids (`f3433cc603`), without omission. The large-panel control retains all 1,208 original/added tab ids (`f3433cc603`), without omission. The shared Browser projector also explicitly retains exact 2.0.0 readers (`bd168f51ab`); paired controls prove retained replay succeeds while a fresh writer still refuses 2.0.0 and an unknown retained payload field refuses projection. The reset replay ablation targets the exact cached gate instance used by preflight, and a supplied nonflipping guard now fails the boundary suite (`9f83b5ed56`); its injected bad-proof self-test passes. The two explicit boundary follow-ups are `verified_reference_resolution` (missing/hash/size/media/encoding and layout missing/corrupt references) and `browser_historical_authenticity` (unverified-source and withdrawn-checkpoint controls for each Browser reader). The remaining table rows need isolated/coherent own-defect controls and ownership adjudication; no further blind-review loop or 12/12 assertion is opened at this cap. This is technical follow-up, not a request for a new layout decision.
+
+### Eleven standing checks
+
+| Check | Current evidence / limit |
+|---|---|
+| 1 Replay-only | Explicit fresh refusals for all four current families, known retry refusals for both Browser writers; no current writer selects replay-only. Compaction's native retry obligation remains authored/NOT_RUN. |
+| 2 App key format | These registered editions are Project-only; no app writer/key is invented. |
+| 3 Project partition | Existing Browser positives use `project~`; the generic-source/Storage-id controls remain intact. |
+| 4 Inline bound | Canonical MessagePack exact boundary and reference route for Browser/layout; bounded compaction metadata stays inline. |
+| 5 Identifier LF | Full closure uses exact end-of-input semantics; eight isolated LF controls plus valid references pass. |
+| 6 Semantic retry | Original physical body/ref pins; sequence and observed/persisted changes reuse the original. No Storage metadata added to semantic comparison. |
+| 7 Checkpoint identity | Existing family/generic token tests retain exact Storage-instance and encoded scope joins. No synthetic generic fixture is claimed as an end-to-end indexed family event. |
+| 8 Failure exit | New invalid-positive CLI returns 1; self-test requires it. Audit refuses an accepted negative before weakening. Existing family CLIs and declared suites pass. |
+| 9 Ref closure | Offline eager traversal, including dormant definitions; five broken-ref controls pass. Home closure resolves 415 refs with zero unresolved. |
+| 10 Historical validity | Exact prior envelope readers, stale-live-state-independent retained facts, deleted-thread content-free audit, forged/withdrawn refusals; terminal disclosure untouched. |
+| 11 Own-defect proof | **Incomplete**; full tables and exact outstanding source rows retained. All four affected oracle cells remain PARTIAL. |
+
+### Verification and frozen seal
+
+- Browser owner tests: **118 OK**; shared Browser admission: **38 OK**; PM7 tests: **13 OK**.
+- Browser created/v2/reset/shared checkers, Home4 checker/self-test, PM7/shared-runtime validators: exit 0. New boundary suite, CLI fault control and audit input fault control: see `ds-fix2-verification.json`.
+- Shard generation/check and PlanUnit index generation/validation: top-level pass, 99 sources / 3,093 shards / 7,422 units. Only the edited Contracts, Storage and materialized Storage registry sources changed derived shards. JSON syntax and whitespace checks pass.
+- All current exact quotes, application file/line hashes and admission pins verify. The original envelope, event registry, Decision Log, frozen validator and four original application records remain byte-identical to the reviewed head.
+- Frozen validator SHA-256 `190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20`, scratch roots only: before **exit 1 / 4 categories**; after **exit 1 / 5 categories**. After retraction, only coordination.agent_registered counts as complete post-August depth. The compaction evidence-gap failure is honestly restored; registered incomplete rows are compaction, layout and terminal. DL-300 records/denominator remain open. Seal flags stay false; nothing is weakened to obtain a seal.
+
+### Open items and ids
+
+**Technical:** finish the exact guard-removal rows and adjudication listed in the table, then re-grade. No complete-depth admission or landing readiness claim. Integration still owns landing checks and governance-staleness/reseal handling. No reseal, registry append, admission or Decision Log edit was performed.
+
+**For Jared only:** terminal.workgroup_moved's existing withdrawal/read-disclosure question remains byte-unchanged; see the original question below. No terminal consumer is invented or reactivated.
+
+**Ids used:** no new PlanUnit ids. Existing SP-400 retained/amended, with existing CV-332, SP-259, SP-273 and SP-337. The unused allocated blocks stay unused.
+
+## Review round 1: findings and responses (DS-FIX1, VM, 2026-11-04)
+
+**Review:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DS-sol/REVIEW.md` (Sol, verdict NOT_READY at `a6665ac36c`). **Worktree:** VM sparse `~/pm-worktrees/DS-fix1` from `a6665ac36c`, removed after the push. No new ids were minted: SP-400 and SP-273 are amended in place.
+
+| Finding | Response | Commit |
+|---|---|---|
+| **DS-SOL-01** (blocking): Home4 had no route through SP-340's whole-value limit | **Fixed.** SP-400 now bounds the complete Home4 value and stores a larger one by reference. | `31cd37713c` |
+| **DS-SOL-02** (blocking): `blake3_id` accepted a trailing LF | **Fixed.** Exact 64-character ids, an ECMA-262 end-of-input guard on every pattern, negatives, a valid reference positive and a verified reference branch. | `31cd37713c` |
+| **DS-SOL-03** (blocking): terminal's consumer PASS exceeded the rubric | **Fixed.** Receipted update: ledger `OWNER_REQUIRED`, self-grade PARTIAL. | `78a7f8e824` |
+| **DS-SOL-04** (should fix): the second application record is post-dated | **Fixed**, and the same defect in the three first-pass records. Explicit correction record. | `2220b74e24` |
+| Layout producer and oracles, re-graded after the repair | **Still not PASS**, for a newly found reason (standing check 4): see the open item below. | `2b671a1605` |
+| The terminal question | **Stopped for Jared** (wording below). | none |
+
+### DS-SOL-01: the complete Home4 value (newly authored owner contract under DL-045)
+
+**What changed.**
+- `Plans/storage-plan.md` SP-400 prose, "The complete value and its reference form" (`:29514`-`:29520`), the unit's canonical text (`:29534`) and two new acceptance criteria. SP-340's limit (16,384 bytes for both families, read from the storage registry) bounds the complete canonical MessagePack value, never one field.
+- A value within the limit is stored inline. A larger one is written to the payload store as its exact canonical bytes, and its key holds a fixed-size reference (`stored_value_ref`): schema id and version, Storage instance, logical key, BLAKE3 id, byte size, media type `application/msgpack`, SHA-256. The decoded layouts, source bytes, event fields and SIR custody stay inside the referenced value.
+- **Resolution:** every reader verifies the object, BLAKE3, size, media type, SHA-256, canonical decoding, the Home4 schema and invariants, and the key and Storage instance before use. An unresolvable reference makes the value unavailable under SP-273's missing-or-corrupt fence.
+- **Custody:** SP-337's durability order, counting, GC and coherent backup, under the holding family's custody and retention (`RP-CONFIG-CURRENT` slot, `RP-AUTHORITY-INDEFINITE` receipt). No family, key, retention policy, hold, setting or user-visible behaviour is added.
+- SP-273's byte-capture paragraph has a dated amendment (`:21955`).
+- `Plans/home_layout_v2_slot_receipt.schema.json`: `$defs/stored_value_ref`, `blake3_id` and `sha256_hex`; `home4_value` accepts the reference; `$comment` adds I10 (whole-value bound) and I11 (reference resolution).
+
+**Search before authoring:** `reports/event-authority-20261104/ds-fix1-home4-value-reference-search.txt`.
+- SP-340 and SP-330 say a value over the limit is "split per key or stored by reference".
+- SP-337 defines the reference triple.
+- The EventRecord codec explicitly invents no overflow envelope.
+- `whole_document_keys` names only `settings:v1` and `config:v1`.
+- The two existing `value_ref` fields (settings chain, Browser program spill) are not redb value references.
+- No redb whole-value reference shape exists in `Plans/`, `scripts/` or `tests/`.
+
+**Why a whole-value reference, not per-field spills.** The review notes that moving source captures out cannot bound the decoded layout copies, and receipts grow with the event's unbounded `affected_tab_ids` too. One reference to the whole value bounds the slot and the receipt alike, and keeps SP-273's exact-byte custody intact.
+
+**Oracles.** `Plans/home_layout_v2_slot_receipt_fixtures.json` has 10 valid, 30 schema-negative and 33 joined-value-negative cases, plus a synthetic payload store of 5 objects.
+- **Boundaries:** a 16,384-byte slot inline; the same slot at 16,385 bytes by reference; that value inline rejected (I10); a reference to an honest 16,384-byte value rejected.
+- **The review's 25-tab slot:** 28,743 bytes by reference is valid; inline it is rejected (I10).
+- **Receipts:** one over the limit by reference is valid; inline it is rejected.
+- **A valid source `payload_ref`:** 16,385 bytes, beside 16,384 inline prior bytes, inside a referenced value.
+- **Resolution negatives:** missing, corrupt, resized, retyped, mis-hashed, non-canonical and Home3-versioned objects; foreign key and Storage instance; a resolved value that skips a revision; and the same five branches for the nested source reference.
+
+**Checker** (`scripts/pm_home_layout_v2_slot_receipt.py`):
+- measures the stored size against the registry;
+- verifies BLAKE3 in pure Python, matching the reference `blake3` library on 33 lengths up to 123,457 bytes;
+- strictly decodes canonical MessagePack;
+- resolves every reference;
+- registers each schema under its `$id` and its repository retrieval URI (as `application_workflow_source_graph.json` names it), never the network;
+- has `--self-test`, which shows it fails on a bad positive and a mis-declared case.
+
+**How to verify:**
+- `python3 scripts/pm_home_layout_v2_slot_receipt.py`: rc 0, counts 10/30/33, `ref_closure.unresolved` 0.
+- `python3 scripts/pm_home_layout_v2_slot_receipt.py --self-test`: rc 0.
+- The review's own `evidence/PROBES.py` against this tree: **rc 1**. Both counterexamples are now refused: the trailing-LF id by the schema and I11, the 28,743-byte slot by I10.
+
+### DS-SOL-02: exact identifiers
+
+**Schema.**
+- `blake3_id` and `sha256_hex` are pattern plus `minLength` and `maxLength` 64.
+- The source reference's `media_type` is an RFC 6838 type/subtype with no line break.
+- The readback key carries a no-line-break guard.
+
+**Checker.**
+- Every one of the 70 reachable patterns, including the Home3 patterns reused by `$ref`, is evaluated with ECMA-262 end-of-input semantics.
+- It fails on any unresolved `$ref` (standing check 9; 384 refs resolve).
+
+**Negatives.**
+- Source-reference ids: trailing LF (the review's exact probe), leading LF, upper case, 63 and 65 characters, non-hex.
+- Media type with a trailing LF.
+- `operation_digest` with a trailing LF: a plain Python validator accepts it; the ECMA guard refuses it.
+- The readback key and `original_owner_result_sha256` with a trailing LF.
+- `value_ref.blake3_id` and `value_sha256` with a trailing LF; `value_ref.blake3_id` in upper case.
+- `projector_replay_only` on slot and receipt event semantics (standing check 1).
+
+**Valid positives:** the reference cases above. The reference branch is now verified (resolution and I6/I11), not left to the inline tests.
+
+### DS-SOL-03: terminal's consumer cell
+
+**Change.** `ds-fix1-terminal-consumer-regrade.{json,md}` is a receipted update with before and after hashes and exact quotes at `2220b74e24`.
+- **Ledger:** `consumers_checkpoints` goes PASS → `OWNER_REQUIRED` (`LEDGER.jsonl:279`, `rows/ROW_terminal.workgroup_moved.json`).
+- **Self-grade:** the cell is PARTIAL, as the rubric's line 24 directs: "Where the owner itself says a facet is still open ... grade PARTIAL and quote it".
+- **Citations kept:** the reader, the `none_required` checkpoint, SP-278, "No consumer operates", and the three withdrawal quotes (SMPFS-170 `:12413`, `:12602`; SP-319 `:26912`).
+
+**What stays.** No consumer is invented or reactivated, and AUG-CP-TWM-001 is unchanged.
+
+**`provisional` stays false.** This is a judgement the re-review may reverse. DL-039's condition is that the consumer, projector and checkpoint be "cited from the Plans", and they are; the review accepted lifting it. What is open is an owner question, which the cell now records. Re-setting it to true would also bring back the validator's `individual_dispositions_provisional` failure.
+
+### DS-SOL-04: application times
+
+**The defect.** All four DS application records were post-dated against the commits that applied them, not only the one the review named.
+
+| Record | Recorded | Evidenced (commit) | Recorded later by |
+|---|---|---|---|
+| `ds-step5-august-ledger-application.json` | 18:30:00Z | 18:08:51Z (`55f68a717e`) | 1,269 s |
+| `ds-step6-compaction-ledger-note.json` | 18:45:00Z | 18:09:32Z (`ade1ee3d6c`) | 2,128 s |
+| `ds-step7-exclusions-application.json` | 18:50:00Z | 18:11:24Z (`43d1ab5555`) | 2,316 s |
+| `ds-p2-august-regrade-application.json` | 23:30:00Z | 19:11:41Z (`af9bff39ae`) | 15,499 s |
+
+**The correction.** `ds-fix1-application-time-correction.{json,md}` is the record.
+- The evidenced time is the application commit's time, an upper bound; the preceding commit bounds it below.
+- The mirrored timestamps are corrected in the five rows (layout, terminal, compaction and the two exclusions) and their census lines, each with a note.
+- The four original records are byte-unchanged. The correction's before hashes equal DS-P2's after hashes, so the chain continues.
+
+### Layout re-graded at the new head (standing check 4)
+
+**Result.** Producer and oracles stay non-PASS: ledger FAIL, self-grade PARTIAL, record `ds-fix1-layout-regrade.{json,md}`.
+
+**Cause.** A `workspace.layout_changed` 2.0.0 payload over 16 KiB has no append route:
+- CV-361's `affected_tab_ids` and the other affected arrays are unbounded, with no tab cap in the v2 layout, and SP-330 contemplates layouts over 16 KiB;
+- SP-273 fixes `payload_ref=null` for this family's new writes (`storage-plan.md:21851`);
+- the envelope's DL-270 prose replaces a body over 16 KiB with a BLAKE3 `payload_ref` (`Contracts_V0.md:1019`);
+- `Plans/event_record.schema.json` 2.0.0 still requires an object `payload` (`:116`) and types `payload_ref` as a nullable string (`:120`-`:121`).
+
+**Why it stays open here.** Settling the envelope's prose against its schema is the envelope owner's work, not this lane's. The family can adopt the route once it is consistent. Under the rubric the producer lacks that append boundary, and the oracles cannot test a boundary missing from the contract.
+
+### The terminal question (stopped for Jared)
+
+> **`terminal.workgroup_moved` was withdrawn on 2026-10-09 (DL-181, SMPFS-170's rule) and its producer never ran, so no move was ever recorded. Which rule should SP-319 and SMPFS-170 both state?**
+> - **A.** Keep compatibility only. Any recorded 1.0.0 event keeps its exact meaning, retention, write refusal and no-remint checks. Retire the dedicated passive reader's new-disclosure path, SP-319's original-move oracles and both read-result and custody companions, explicitly, in both owners.
+> - **B.** A, plus a passive reader that discloses recorded 1.0.0 events through a closed read-result (`verified_historical` | `unresolved_historical_validation` | `unavailable`) with reader oracles. Since no operation was ever admitted, an authentic event can only resolve to `unresolved_historical_validation`. The original-move oracles and the original result/custody companion become lineage.
+> - **C.** Keep SP-319's full literal list: the reader, the original result/custody companion and the original-move paired oracles, written for an operation that never existed.
+
+**The review's recommendation: A**, "explicitly approved and applied to both owners". Its reasons:
+- B would add a disclosure route that cannot be inferred from an "unresolved" result.
+- C keeps substantial tests for retired behaviour.
+- "Readability" should mean preserved compatibility interpretation, not permission for a new disclosure route.
+
+Until Jared answers, `consumers_checkpoints` and `positive_negative_oracles` stay non-PASS. With an answer, the owner edits, fixtures and checker are a short follow-up (ids SMPFS-300-309 or SP-401-409).
+
+### Family grades (self-grade; ledger in brackets)
+
+| Family | Before (`a6665ac36c`) | After (`2b671a1605`) | Not PASS after |
+|---|---|---|---|
+| `context.compaction.completed` | 12 | 12 | none |
+| `browser.workspace.created` | 12 | 12 | none |
+| `browser.workspace.reset` | 12 | 12 | none |
+| `workspace.layout_changed` | 12 [12] | **10 [10]** | producer, positive_negative_oracles (PARTIAL [FAIL]) |
+| `terminal.workgroup_moved` | 11 [11] | **10 [10]** | consumers_checkpoints (PARTIAL [OWNER_REQUIRED]), positive_negative_oracles (PARTIAL [FAIL]) |
+
+Status counts: 59 PASS / 1 PARTIAL before, **56 PASS / 4 PARTIAL** after. Every one of the 279 evidence quotes was re-checked at `2b671a1605`.
+
+### Frozen seal check (validator SHA-256 `190a86f2…`, unchanged, scratch copies)
+
+**Result.** rc 1 both times, `seal_prerequisites_met` false, **4 failures before and 4 after**.
+
+| Failure | Before (`a6665ac36c`) | After (`2b671a1605`) |
+|---|---|---|
+| `post_august_admission_incomplete` | DL-300 three, no record | unchanged |
+| `unexpected_august_set` | DL-300 three + the August pair | unchanged |
+| `registered_contract_depth_incomplete` | 1: terminal (oracles) | **2: terminal (consumers, oracles); layout (producer, oracles)** |
+| `fresh_census_denominator_not_closed` | present | present |
+
+**Receipts:** `drafts/DS/seal-fix1-before-a6665ac36c-receipt.json`, `seal-fix1-after-<head>-receipt.json`.
+
+### Standing checks across the families this branch prepares
+
+| Check | Layout (Home4, this lane) | Terminal | Compaction, Browser created, Browser reset (oracles outside this lane) |
+|---|---|---|---|
+| 1 `projector_replay_only` negative | **added** (slot and receipt) | no oracle (stopped) | **absent** from their fixtures and checkers |
+| 2 CV-366 app-scope keys | n/a (project_only) | n/a | n/a: compaction's one application case is a `project_only` rejection |
+| 3 `project~` partition | n/a: Home keys use no partition | n/a | Browser created fixtures use `project~` |
+| 4 bodies over 16 KiB | **Home4 values fixed**; **event body open** (above) | n/a | not re-audited |
+| 5 anchored patterns and trailing-LF negatives | **fixed** (exact lengths plus ECMA guard; 9 trailing-LF negatives) | n/a | **no trailing-LF negatives found**; not re-audited per pattern |
+| 6 retry body | Home4 compares SP-273's semantic fields only (unchanged) | n/a | not re-audited |
+| 7 checkpoint identities | n/a in Home4 fixtures | n/a | not re-audited |
+| 8 failure oracles reject success | the Home4 checker exits 1 on any failure; `--self-test` proves it | n/a | not re-audited |
+| 9 every `$ref` resolves | **checker fails on an unresolved `$ref`** (384 resolve) | n/a | not re-audited |
+
+These three families' oracle cells are not touched by the fixes and are not re-graded here (the review accepted 12/12). If the lead treats standing checks 1 and 5 as rubric requirements, their oracle cells would be PARTIAL. Step 4's admission repoints would then no longer hold. That is the lead's call; see the open items.
+
+### Checks (round 1, VM, exit codes; baseline worktree at `a6665ac36c` for comparison)
+
+| Check | `a6665ac36c` | Head |
+|---|---|---|
+| `pm-plan-index.py validate` / `pm-shard-plans.py --check` | 0 / 0 | 0 / 0 (`status: pass`, 7422 units; only storage-plan shards and the index regenerated) |
+| `pm_home_layout_v2_slot_receipt.py` / `--self-test` | 0 (5/12/14) / n/a | 0 (10/30/33) / 0 |
+| `pm-storage-profile-check.py` | 1 | 1, identical output (pre-existing missing profiles) |
+| `pm-plans-verify.py` json-syntax, lint-path-refs, lint-contractrefs | 1 / 1 / 1 | 1 / 1 / 1, identical output |
+| `pm-plans-verify.py` lint-banned-phrases | 0 | 0 |
+| `pm-plans-verify.py` validate-plan-graph | 1 | 1, same failures; only the Spec Lock `actual` hashes of `storage-plan.md` and its index files differ |
+| `pm-plans-verify.py` validate-browser-event-admission, validate-pm7-gui-fixtures, validate-projects-refresh-contracts | 0 / 0 / 0 | 0 / 0 / 0 |
+| PM7 GUI, shared runtime, projects refresh, Browser created / created v2 / reset / admission checkers | 0 each | 0 each |
+| unittest: Browser admission 38, created 65, reset 53, PM7 GUI 13 | OK | OK |
+| unittest: holding bucket / coordination events | 2 / 14 failures | the same 2 / 14 |
+| review `evidence/PROBES.py` | (0 at review) | **1**: both defects refused |
+| Frozen seal check | 1, 4 failures | 1, 4 failures |
+
+**Expected governance staleness for the reseal request:** the Spec Lock hash of `Plans/storage-plan.md` (again).
+
+### Open items added in round 1
+
+1. **Layout's event body over 16 KiB.** It has no append route, because the envelope's DL-270 prose and `event_record.schema.json` 2.0.0 disagree. This needs the envelope owner. The family then adopts the route: Home4 event semantics, the reader, and a big-event oracle.
+2. **Seal-family oracles and standing checks 1 and 5.** The compaction, Browser created and Browser reset oracles have no `projector_replay_only` and no trailing-LF negatives. They are outside this lane's paths; the lead decides whether this reopens their oracle cells and the step-4 repoints.
+3. **The Home3 schema's anchored patterns.** `Plans/home_layout_pending_receipt.schema.json` has 168 patterns, without length guards. The Home4 checker guards every pattern it reaches, but a plain Python validator of Home3 values still accepts a trailing LF. The Home3 schema is outside this lane.
+4. **Registering the 4.0.0 edges.** When they are registered, SP-340's "the storage registry's storage_profile records which" should also record the Home4 reference form. SP-400 changes no registry row now.
+5. **`individual-disposition/COVERAGE.json`.** It is still not regenerated, as in every DS step.
+
+## Second pass (DS-P2, VM, 2026-11-04)
+
+The first pass left the frozen seal check at 4 failures. Three depth cells on the two August families remained, all technical work under DL-045. This pass took each in turn.
+
+| Cell | Outcome | Commit |
+|---|---|---|
+| `workspace.layout_changed` producer | **PASS.** SP-400 writes the v2 slot and receipt schema that SP-330 required ("Home4", 4.0.0). | `2e5801d7df` |
+| `workspace.layout_changed` oracles | **PASS.** The suite SP-273 pins is fixed against DL-076, re-frozen as v5 and repinned, with receipts. | `bef4342ecc` |
+| `terminal.workgroup_moved` oracles | **Stopped** with an owner question (below). Nothing was written for it. | none |
+| Both August rows re-graded | Receipted row update in the step-5 pattern: layout 12/12, terminal 11/12. | `af9bff39ae` |
+
+**Superseded in review round 1 (above):** the review rejected layout's producer and oracle PASS (DS-SOL-01/02) and terminal's consumer PASS (DS-SOL-03); round 1 repairs the Home4 contract and re-grades layout 10/12 and terminal 10/12.
+
+**Frozen seal check.** The validator was unchanged (SHA-256 `190a86f2…`) and ran on scratch copies.
+- **Before (`600575221d`):** 4 failures. The receipt equals the first pass's `43d1ab5555` receipt in every field but the time.
+- **After (`af9bff39ae`):** 4 failures. `seal_prerequisites_met` stays false.
+
+| Failure | Before (`600575221d`) | After (`af9bff39ae`) |
+|---|---|---|
+| `post_august_admission_incomplete` | the DL-300 three have no record | unchanged (waits on cards) |
+| `unexpected_august_set` | DL-300 three + the August pair | unchanged: it lists every live family that is neither Known37 nor admitted, whatever its depth |
+| `registered_contract_depth_incomplete` | 2: layout (producer, oracles), terminal (oracles) | **1: terminal (oracles)** |
+| `fresh_census_denominator_not_closed` | present | present (its `blocked_by` strings are fixed text) |
+
+The count stays 4 because the remaining terminal cell keeps `registered_contract_depth_incomplete` open. The other three failures do not depend on these cells.
+
+### Cell 1: layout producer (SP-400, newly authored owner contract under DL-045)
+
+**Premise check.** SP-330: "The successor slot and receipt schema for v2 writes is not written in this addendum: it must reference `pm.home_workspace_layout.v2` and the CV-361 payload by `$ref` … until it exists no native v2 writer is admitted through those families". SP-273's 2026-10-09 amendment calls it "an open item of SP-330". Both are still current. The registry admits only 2.0.0 appends. The family is one of DL-045's 285 names.
+
+**Search first.** Every `Plans/`, `scripts/` and `tests/` file naming the v2 record, the 2.0.0 payload, the two families or the capture and core codec ids was read (`reports/event-authority-20261104/ds-p2-home4-binding-search.txt`).
+- No slot, receipt or capture definition is typed for the v2 record or the 2.0.0 payload.
+- No MessagePack capture or core codec id exists.
+
+**What was written:**
+- **`Plans/home_layout_v2_slot_receipt.schema.json`.** It references the v2 record and CV-361 by `$ref`. It reuses by `$ref` every Home3 member that is not typed for v1 layouts or the 1.1.0 payload, and replaces only these:
+  - the two layouts;
+  - event semantics: a 2.0.0 payload, never `migrated_from_v1`, never a null command;
+  - `command_id` in the binding and the owner result: the CV-361 set; the owner result moves to 2.0.0;
+  - the v2 readback key;
+  - the encodings DL-270 retires: binary source bytes, or a BLAKE3 payload reference above 16 KiB, and new canonical MessagePack ids for capture and migration core.
+- **Fixtures.** `Plans/home_layout_v2_slot_receipt_fixtures.json` has 5 valid values, 12 schema negatives and 14 joined-value negatives. Each negative was checked to fail for its stated reason.
+- **Checker.** `scripts/pm_home_layout_v2_slot_receipt.py` checks the fixtures against the schema and invariants I1–I9; rc 0, pass.
+- **Owner text in `Plans/storage-plan.md`:**
+  - the SP-400 section and unit;
+  - dated amendments in SP-330's transaction paragraph and in SP-273's prose and canonical text.
+
+**What it does not change.** No registry row, family, key, retention policy or hold. The storage registry rows keep naming Home3 until the 4.0.0 edges are registered with their installation, as SP-400 says.
+
+**Newly authored names:**
+- schema and slot-producer version `4.0.0` of the existing families;
+- owner result `pm.home_layout_owner_result.v1` at `2.0.0`;
+- `home_content_free_capture_canonical_msgpack.v1`;
+- `home_slot_migration_core_canonical_msgpack.v1`;
+- the `layout_source_bytes` shape (`inline` / `payload_ref`).
+
+### Cell 2: layout oracles (DL-076 re-freeze)
+
+The suite at `~/PM-Experiments/event-authority-step08-workspace-layout-20260911` is a symlink into `/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/`, so it is on the share. v4 was left untouched, and `v5/` was made beside it.
+
+**Proof the change is DL-076 only.** In a scratch copy, v4 first reproduced its own fixtures byte-identically.
+
+**The proposed schema.** v5's proposed schema is byte-identical to canon's DL-076 correction (`fe46283fc5`). v4's copy was byte-identical to that commit's parent content.
+
+**What v5 does:**
+- `validate_v5.py` stores the nine-field durable token and joins each read's own live snapshot.
+- Converted v2 bundles and synthetic history keep the durable token only.
+- The v2 `generic_snapshot` defect moves to the live read.
+
+**Result.**
+- Stored `redb_snapshot_id`: 173 → 0. Proposed-schema occurrences: 6 → 0.
+- Live-read occurrences (`proof`, `admitted_receipt_store`) are kept: they are live fences.
+- All 48 relation, 22 history, 4 cleanup, 32 slot-migration and 12 cleanup-ordinary cases keep their ids, validity and counts. Three negative outcomes now name the DL-076 join.
+- `freeze_v5.py` asserts all of this and wrote manifest `62823e0a62173cdd99bc41cc676e1aec9f4b5689122a51bc289ffb951aa70877` (53 members).
+- A fresh scratch rerun reproduces every member.
+
+**Repin.**
+- `Plans/home_layout_event_contract_fixtures.json` `frozen_joined_subject` names v5. The old pin and the reason sit beside it in `refrozen`, as the Browser pin's reason sits beside its re-frozen value.
+- SP-273 records the re-freeze.
+- SP-273 also records that the full-value suite (`7ab4fb00…`, pinned by a 2026-09-11 report) stores no reader checkpoint in its own cases, and that its pre-DL-076 checkpoint copies are superseded by the corrected Home3 schema and v5.
+
+That suite was **not** re-frozen. It is 193 MB and 3,658 files, with pinned-source checks against old canon. This is a judgement call a reviewer may reverse.
+
+Receipts: `reports/event-authority-20261104/ds-p2-layout-suite-refreeze.{md,json}`.
+
+### Cell 3: terminal oracles (stopped)
+
+**What canon settles for a withdrawn family:**
+- **Withdrawal refusal.** CV-361: "No producer writes terminal.workgroup_moved" (`Contracts_V0.md:23713`); Wiring Matrix: "No entry declares terminal.workgroup_moved" (`:7286`).
+- **Historical readability.** "recorded events stay readable at 1.0.0" (CV-361); "the family keeps its registry row for history" (`:23774`).
+- **No remint.** A move pending at upgrade "is never reminted" (CV-361).
+
+**What canon leaves open:**
+1. **Reader disclosure (two owner documents disagree).**
+   - SMPFS-170 says the withdrawal admits "no new producer admission and no new reader disclosure" and "the passive reader admits no new disclosure" (`Section15_MVP_Promoted_Features_Spec.md:12413`, `:12604`).
+   - SP-319's DL-181 amendment keeps "this passive reader … only to read 1.0.0 events already written" (`storage-plan.md:26912`).
+   - SP-319's canonical text says no consumer operates (`:27073`).
+2. **Live-behavior oracles for a feature that never ran.**
+   - SP-319 still says "Paired static oracles and closed original/read-result companions remain required" (`:27090`), and "These are required paired oracles for the companion task" (`:27057`).
+   - Those oracles are original-move checks: a positive "real-shaped changed move" with original result and append joins; negatives such as fifth-section admission, false rollback after possible append and lost-acknowledgement remint.
+   - Writing them needs the original result/custody companion that SP-319 calls "separate unfinished work under SMPFS-170" (`:26991`–`:26992`). SMPFS-170 says no such operation was ever admitted.
+   - The DL-181 amendment itself notes that one of these oracles "describes the retired cap of four sections" (`:26912`), but does not retire the list.
+
+**The exact question (for a card; the first two options touch DL-045's reserved "conflict between two owner documents").** For `terminal.workgroup_moved`, withdrawn under SMPFS-170's rule with a producer that never activated, which oracle set does SP-319 require?
+- **A.** Withdrawal and historical-readability oracles only. The reader is withdrawn and discloses nothing. SP-319's original-move oracles and both companions become lineage.
+  - The withdrawal and readability oracles: any append is refused; a recorded 1.0.0 event validates by its own `payload_schema_id` and is never rewritten or aliased; SP-330's conversion never mints one; a terminal tab move is a `tab_moved`.
+- **B.** A, plus the passive reader's closed read-result companion (`verified_historical` | `unresolved_historical_validation` | `unavailable`) and reader oracles. An authentic recorded event can only resolve to `unresolved_historical_validation`, because no operation was ever admitted. The original-move oracles and the original result/custody companion become lineage. This sides with SP-319 over SMPFS-170 on disclosure.
+- **C.** Everything SP-319 lists, including the original result/custody companion and the original-move oracles, written for an operation that never existed.
+
+Whichever is chosen, the A-part is needed. With an answer, the fixtures, checker and companion are a short follow-up, using ids from SMPFS-300–309 or SP-401–409.
+
+### Premise checks (second pass)
+
+| Answer or text | Today's text | Result |
+|---|---|---|
+| DL-045, authoring scope | `workspace.layout_changed` and `terminal.workgroup_moved` are both in its 285 names (first pass) | Holds |
+| SP-330/SP-273, "not written … until it exists no native v2 writer is admitted" | Unchanged since 2026-10-09 | Holds; basis of SP-400 |
+| DL-270 (SP-337, SP-339, SP-340), JSON/base64 retired for new stored writes | Current | Holds; SP-400 uses binary fields and new MessagePack ids |
+| DL-076, stored token without `redb_snapshot_id` | Current; canonical schemas corrected 2026-09-24 | Holds; basis of v5 |
+| DL-039 AUG-CP-WLC-001 / AUG-CP-TWM-001 | Unchanged | Holds; owner choices untouched |
+| SMPFS-170 withdrawal vs SP-319 reader and oracle list | Disagree (above) | **Open; the terminal cell is stopped** |
+
+### Checks (second pass, VM, exit codes)
+
+| Check | Result |
+|---|---|
+| `pm-shard-plans.py --generate` / `--check` (after cells 1 and 2) | 0 / 0; only storage-plan shards changed |
+| `pm-plan-index.py generate` / `validate` | 0 / 0, top-level `status: pass`; 7422 units (+SP-400) |
+| `pm-plans-verify.py lint-path-refs`, `json-syntax`, `lint-contractrefs` | rc 1 on the sparse tree before and after, with the same 14 / 1 / 1 failures (absent `Concepts`, the raw-capture link, an old audit ref); no new failure |
+| `pm-plans-verify.py lint-banned-phrases` | rc 0, pass |
+| `pm-plans-verify.py validate-plan-graph` | rc 1, 1,438 failures, none naming SP-400 or the new files |
+| `scripts/pm_home_layout_v2_slot_receipt.py` | rc 0: 5 positive, 12 schema-negative, 14 invariant-negative cases as declared |
+| v5 suite: `check_slot_migration.py`, `validate_v5.py`, `check_slot_migration.py`, `freeze_v5.py`, fresh scratch rerun | rc 0 each; 0 manifest mismatches |
+| `pm-validate-pm7-gui-fixtures.py validate` / `pm-plans-verify.py validate-pm7-gui-fixtures` | rc 0, pass / rc 0, pass (7 workspace-event valid fixtures) |
+| `pm-projects-refresh-contracts.py` / `pm-shared-runtime-command-contracts.py validate` | rc 0 / rc 0 |
+| `tests/test_pm_validate_pm7_gui_fixtures.py` | 13 OK |
+| `tests/test_event_authority_holding_bucket.py` | 2 failures, the same two as the first pass and `main` |
+| Frozen seal check, scratch copies, validator `190a86f2…` | rc 1 on both: 4 failures before, 4 after (depth sample 2 → 1) |
+
+**Expected governance staleness for the reseal request:** the Spec Lock hash of `Plans/storage-plan.md` (again).
+
+## Result (first pass)
+
+The frozen seal check (`Plans/.audits/event-authority-2026-08-12/independent-validator/`, run unchanged on scratch copies) goes from **6 failures on `main` to 4 on this branch**. `seal_prerequisites_met` stays false.
+
+| Failure | `main` `be4766513f` | This branch |
+|---|---|---|
+| `post_august_admission_incomplete` | 6 issues: DL-300 three have no record; compaction, created and reset `depth_incomplete` | 3 issues: only the DL-300 three (no record; card CC-D1b-1) |
+| `unexpected_august_set` | 8 families | 5: the DL-300 three plus the two August families (it lists every live family that is neither Known37 nor admitted) |
+| `individual_dispositions_evidence_gap_blocking` | compaction | **cleared** |
+| `individual_dispositions_provisional` | 2 August rows | **cleared** |
+| `registered_contract_depth_incomplete` | compaction (11 fields), terminal and layout (`consumers_checkpoints`, provisional) | terminal: `positive_negative_oracles`; layout: `producer`, `positive_negative_oracles` |
+| `fresh_census_denominator_not_closed` | present | present (post-seal by the validator's own note; its `blocked_by` text is fixed strings) |
+
+The `main` run's receipt equals `state/independent-validator-diagnostic-be4766513f.json` in every field but `generated_at_utc`.
+
+**Why prerequisites are still not met:**
+- **The DL-300 three.** They are untouched, as the lane says; they wait on cards CC-D1b-1 and CC-D1b-2.
+- **The August pair (premise failure, step 5).** At today's text they are 10/12 (layout) and 11/12 (terminal), not 12/12. D1b's counterfactual D assumed the ledger's older PASS cells were still true; three of them are not.
+
+## Commits
+
+| # | Commit | Step | What |
+|---|---|---|---|
+| 1 | `d7e5840240` | 1 | ACD-461 admits `context.compaction.completed` in its Project edition only; the app counterpart emits no EventRecord until Event Authority admits an application payload version. Shards and index regenerated. |
+| 2 | `f86b68e982` | 2 | SP-319's canonical text states that no consumer operates on `terminal.workgroup_moved`. Shards and index regenerated. |
+| 3 | `62e4f832f0` | 8 (moved earlier) | Re-freeze of the shared Browser admission suite's `upstream40` pin. |
+| 4 | `3b7dd7b9f2` | 3 | Fresh depth assessment `depth-b1-seal-families.json` and `.md`. |
+| 5 | `66a93f80f3` | 4 | Three DL-077 admission records repointed to it. |
+| 6 | `55f68a717e` | 5 | August ledger rows: consumers cited, provisional lifted, citations refreshed, three cells regraded. |
+| 7 | `ade1ee3d6c` | 6 | Compaction's July ledger row: superseded note. |
+| 8 | `43d1ab5555` | 7 | Exclusions: `dashboard.widget_added`, `coordination.debug_mirror_exported`. |
+| 9 | (this report) | 8 | Branch report and self-grade. |
+
+## The eight steps
+
+### 1. Compaction scope (ACD-461)
+
+The 2026-11-03 projects-refresh edit (`7a17526dc2`) wrote "`context.compaction.completed` has explicit original Project and newly admitted application editions". No application edition was ever admitted:
+
+- **Registry row:** `project_only` with no `payload_versions` (`Plans/event_family_registry.json:2874-2917`).
+- **SP-259's criterion:** "The sole new family uses project_only scope" (`Plans/storage-plan.md:19531`).
+- **DL-300:** "This is the one Event Authority grant of the projects and settings refresh". It gives app editions to eleven Goal families, not this one (`Plans/Decision_Log.md:21055`).
+- **CV-366:** "Unknown/missing source, version or family is unavailable/quarantined; a registry or all-true fixture boolean cannot admit native writes". Its event-selection table has no compaction row.
+
+**What changed.** The identity-and-scope paragraph and the canonical text now say three things:
+- the family is admitted in its original Project edition only;
+- the app counterpart (CV-329, CV-366 `CompactionCompletionApplicationV1`, SP-259) "emits no `context.compaction.completed` EventRecord until Event Authority admits an application payload version of this family";
+- the app sibling's replay applies "once that application version is admitted".
+
+`source_lineage` gains DL-300.
+
+**What stays exact.** The Project edition, every binding, and the app counterpart's rules. Nothing is decided about the app thread's compaction operation itself.
+
+**Checks.**
+- `pm-plan-index.py generate` rc 0 and `validate` pass; the shard check passes.
+- Only ACD files were regenerated.
+- `pm-projects-refresh-contracts.py` rc 0 on `main` and on the branch.
+
+### 2. Terminal operating consumer (SP-319)
+
+One sentence was added to SP-319's canonical text:
+
+> "No consumer operates on terminal.workgroup_moved, because its producer never activated and no operation was ever admitted (SMPFS-170's withdrawal rule, applied by DL-181; CV-361); terminal.workgroup_move_history_read.v1@1.0.0 survives only in SMPFS-170's lineage text, and this reader stays only for a 1.0.0 event already recorded, if any."
+
+**Sources.**
+- SMPFS-170, superseded: "the producer terminal.workgroup_move_commit.v1 never activates and the passive reader admits no new disclosure; no operation was ever admitted" (`Plans/Section15_MVP_Promoted_Features_Spec.md:12601-12603`).
+- CV-361: "No producer writes terminal.workgroup_moved" (`Plans/Contracts_V0.md:23713`).
+- SP-319's own 2026-10-09 amendment (`Plans/storage-plan.md:26903`).
+
+I chose the "none operates" form over naming a retained consumer. Naming one would have revived a definition that exists only in superseded lineage text. Nothing was invented.
+
+**A YAML slip, fixed before commit.** The first draft put `: ` inside SP-319's plain-scalar `canonical_text`. `generate` then reported a parse error and 7420 units. The fixed text gives 7421 units, rc 0, and `validate` passes.
+
+### 3. Fresh depth assessment
+
+Files: `reports/event-authority-20261104/depth-b1-seal-families.json` (SHA-256 `4100651156a977284fcf73aca33cede5b4477aef6943d098bd316a004f1a4050`) and `.md`.
+
+**How it was graded.** At `62e4f832f0`, in the 2026-09-24 row format, on the unchanged Step 8 rubric.
+
+**Result.** All 36 cells are PASS with `Plans/` evidence: 31 carried and 5 upgraded. The upgrades are compaction oracles (`64d4567f12`), created producer, consumers and oracles (`a3d6bb616b`, `0ba3ac9019`), and reset producer (`a3d6bb616b`).
+- **Compaction scope.** PASS again only because of step 1.
+- **Evidence.** 191 items, each an exact single-line quote located by script and hashed like `compile_depth42.py`.
+
+**Static checks at that head:**
+- PM7 GUI checker: pass, one compaction family.
+- Shared-runtime command contracts, `validate-pm7-gui-fixtures` and JSON syntax: pass. With the PM7 checker and plan-index validate, that is ATS-040's whole required set.
+- `pm_browser_workspace_created.py` and `_v2.py` (PASS, 3 positives), `pm_browser_workspace_reset.py`, `pm-browser-event-admission.py`: pass.
+- Test suites: PM7 GUI 13 OK, created 65 OK, reset 53 OK, shared admission 38 OK.
+
+### 4. Admission records repointed
+
+`reports/event-authority-20260911/admission-records/{context.compaction.completed,browser.workspace.created,browser.workspace.reset}.json`: only `depth_assessment.path` and `.sha256` change. The script asserts that no other key differs.
+
+**Seal check effect:**
+- `post_august_admitted` goes from 1 to 4;
+- `individual_dispositions_evidence_gap_blocking` clears;
+- compaction leaves the depth sample.
+
+### 5. August ledger rows (deviation: see below)
+
+A receipted row update of the two rows. Records: `ds-step5-august-ledger-application.json` (before and after hashes) and `.md`.
+
+**What changed:**
+- `consumers_checkpoints` is PASS, cited from the Plans:
+  - **layout:** SP-273's reader/projector `home.workspace_layout_event_reader.v1@1.0.0`, its three 1.0.0 consumers, and checkpoint `home_layout_event_reader_checkpoint.v1:…` with CAS, rebuild and the SP-278 nine-field token;
+  - **terminal:** SP-319's reader, no projector, `none_required`, and the step-2 sentence.
+- Every citation is re-anchored to exact quotes at `66a93f80f3`.
+- `provisional` is false, and the census lines follow.
+- `AUG-CP-*` choices, dispositions, buckets and pins are unchanged.
+
+**Line endings.** The ledgers have mixed CRLF/LF endings. My first write normalised them; I restored the files and rewrote preserving each line's ending. Exactly 2 lines change in each ledger.
+
+### 6. Compaction's ledger row
+
+Records: `ds-step6-compaction-ledger-note.json` and `.md`.
+
+**What the note says:**
+- the family was registered in Step 6 (`b240dd93e2`);
+- the production wiring is repaired (`Plans/Wiring_Matrix.production.json:18191`);
+- the DL-077 admission record supersedes this row (`INDIVIDUAL_DISPOSITION_SCHEMA.md:44`).
+
+The disposition `NEEDS_MORE_EVIDENCE` and the evidence cells are kept as the historical July record.
+
+### 7. Exclusions
+
+Records: `ds-step7-exclusions-application.json` and `.md`. Both rows become `RECLASSIFY_TO_EXCLUDED` on the individual row and the census line. Legacy bucket, category and pins are kept, and no denominator removal is claimed.
+
+- **`dashboard.widget_added`.**
+  - UCC-202: "No event named dashboard.widget_added is emitted." (`Plans/UI_Command_Catalog.md:16977`).
+  - UCC's own DL-180 amendment (`:8589`), which amends the stale table cell at `:8586` on the next line.
+  - `Plans/Wiring_Matrix.md:7286`.
+- **`coordination.debug_mirror_exported`.**
+  - SP-339 and DL-270 card 5: "the live mirror files it described are retired, so no new mirror export attempt is recorded" (`Plans/storage-plan.md:553`), and the event "end[s] with them" (`:570`).
+  - An on-request `pm export` failure is reported in its result (`:572`).
+
+**Checks.** The seal check's census counts, partition and exclusion revalidation still pass; `evidence_shape_ok` is true.
+
+### 8. Seal check and the shared Browser suite
+
+**Seal check.** See the Result table. Receipts:
+- `drafts/DS/seal-main-be4766513f-receipt.json`
+- `drafts/DS/seal-branch-head-43d1ab5555-receipt.json`
+
+**Shared Browser suite.** `tests/test_pm_browser_event_admission.py` is editable (`.gitignore:70`, `!/tests/test_pm_browser_event_admission.py`).
+- **Cause.** It failed 30 of 38 in `setUp` on a fingerprint of the 40 pre-Browser registry rows. That fingerprint was last true at `d86090abd9`. It was moved by DL-188's layout 2.0.0 row (`c0d688db9f`, `634412b3ac`) and DL-300's eleven Goal editions (`102a7e99e8`, `5375bfd2a7`).
+- **Fix.** I re-froze only the pin to `2fe49c02…` and wrote the reason beside it.
+- **Still guarded.** The following check is unchanged. On today's rows, `preexisting_preservation` reports no failures and `current_preexisting_rows_match_reviewed_successors` is true.
+- **Result.** 38 OK.
+
+## Deviations from the lane, with reasons
+
+1. **The suite re-freeze (step 8) was committed before step 3.** SP-262, CV-332 and SMPFS-166 name that suite for both Browser families. Grading their oracle cells PASS while it failed 30 of 38 would have rested on D1b's reading that the family-specific units do not name it. Committing the re-freeze first means the assessment is graded on a head where every suite any owner unit names passes.
+2. **Step 5 regrades three ledger cells instead of keeping them PASS.**
+   - **What the lane asked.** Cite the consumers, refresh layout's citations to 2.0.0, and lift provisional. Counterfactual D shows the seal prerequisites met if the other eleven cells stay PASS.
+   - **What today's text says.** Re-reading each cell, three PASS cells written against 1.0.0/1.1.0-era text are false today:
+     - **layout `producer` → FAIL.** SP-330: "The successor slot and receipt schema for v2 writes is not written in this addendum … until it exists no native v2 writer is admitted through those families" (`Plans/storage-plan.md:27503`), and SP-273 calls it "an open item of SP-330" (`:21825`).
+     - **layout `positive_negative_oracles` → UNKNOWN.** The external suite SP-273 pins (`Plans/home_layout_event_contract_fixtures.json:6`) was found on 2026-09-24 to store `redb_snapshot_id`, contradicting DL-076. It is not reachable from Nas1.
+     - **terminal `positive_negative_oracles` → FAIL.** SP-319: "Paired static oracles and closed original/read-result companions remain required" (`:27081`); no fixture, checker or test exists.
+   - **Why.** Keeping them PASS would have made the seal check read complete depth that canon does not support.
+   - **Agreement.** The 2026-09-24 Step 8 assessment and D1b grade the same cells PARTIAL.
+   - **If the lead prefers otherwise.** The alternative is to leave both rows untouched until the three cells are authored.
+
+## Premise checks
+
+| Answer | Today's text | Result |
+|---|---|---|
+| DL-039 AUG-CP-WLC-001: unknowns "until cited from the Plans" (`Decision_Log.md:413`) | Family now at 2.0.0 (DL-188); SP-273's reader and checkpoint carried to v2 writes by its amendment (`storage-plan.md:21825`) | **Holds** for lifting provisional. **Fails** for the lane's implicit premise that the other eleven cells stay PASS: producer and oracles are not PASS at 2.0.0. |
+| DL-039 AUG-CP-TWM-001: "on the same terms" (`:414`) | Feature retired and family withdrawn by DL-181; historical-only | **Holds in its operative terms**: still registered, and consumer, projector and checkpoint now cited. **Premise shifted** from a live family to a withdrawn one; reported to the lead. The oracles cell is not PASS. |
+| DL-039 COMPACT-001: wiring repair (`:410`) | Repaired (`Wiring_Matrix.production.json:18191`) | Holds; used in the step-6 note. |
+| DL-300 as "the one Event Authority grant" (`:21055`) | Registry 2026-11-04.1; compaction row has no `payload_versions` | Holds; basis of step 1. |
+| DL-180, the widget event withdrawn (UCC `:8589`) | UCC-202 current (`:16977`) | Holds; basis of the step-7 exclusion. |
+| DL-270 card 5 / SP-339, mirror retired | `storage-plan.md:553`, `:570`, `:28363` current | Holds; basis of the step-7 exclusion. |
+| DL-077, a recorded post-August admission supersedes the old row (`INDIVIDUAL_DISPOSITION_SCHEMA.md:44`) | Validator `V:1425-1428` unchanged | Holds; basis of steps 4 and 6. |
+| DL-040, compaction bindings and retention (`:429-435`) | ACD-461, SP-259 and SIR-038 unchanged in those parts | Holds. |
+
+## Newly authored bindings
+
+**Second pass:** SP-400, the Home4 v2 slot and receipt contract, newly authored under DL-045 after the search in `ds-p2-home4-binding-search.txt`. Its new names are listed under "Cell 1" above. No consumer, projector, checkpoint, identity recipe or replay mechanic was authored; SP-273's are reused.
+
+**First pass:** none. Step 1 restates the admission state that the registry, SP-259, DL-300 and CV-366 already give. Step 2 states, from existing text, that no consumer operates. No consumer, projector, checkpoint, identity recipe or replay mechanic was authored.
+
+## Ids used
+
+**SP-400** (second pass). It was checked against `Plans/storage-plan.md` on all 505 `origin` branches: SP-400–409 appear nowhere else. The first pass minted none. Unused: SP-401–409, ACD-600–609, SMPFS-300–309, CV-400–409, ATS-200–204.
+
+## Checks run (exit codes)
+
+| Check | Result |
+|---|---|
+| `pm-shard-plans.py --generate` / `--check` (after steps 1 and 2) | pass / pass |
+| `pm-plan-index.py generate` | rc 0 (rc 1 on the first step-2 draft: YAML parse error, fixed before commit) |
+| `pm-plan-index.py validate` (after steps 1 and 2) | rc 0, `status: pass` |
+| `pm-projects-refresh-contracts.py` | rc 0 on `main` and on the branch |
+| `pm-validate-pm7-gui-fixtures.py validate` | rc 0, pass |
+| `pm-shared-runtime-command-contracts.py validate` | rc 0 |
+| `pm-plans-verify.py validate-pm7-gui-fixtures` | rc 0, pass |
+| JSON syntax, `Plans/**/*.json` | pass |
+| `pm_browser_workspace_created.py`, `pm_browser_workspace_created_v2.py`, `pm_browser_workspace_reset.py`, `pm-browser-event-admission.py` | rc 0 each |
+| `tests/test_pm_validate_pm7_gui_fixtures.py` | 13 OK |
+| `tests/test_pm_browser_workspace_created.py` | 65 OK |
+| `tests/test_pm_browser_workspace_reset.py` | 53 OK |
+| `tests/test_pm_browser_event_admission.py` | 38 OK after re-freeze (30 of 38 failed before it) |
+| `tests/test_pm_coordination_events.py` | 14 failures, same set as `main` |
+| `tests/test_event_authority_holding_bucket.py` (after steps 2, 5 and 7) | 2 failures, same set as `main` |
+| Frozen seal check, scratch copy, validator SHA-256 `190a86f2…` unchanged | rc 1 on both: 6 failures on `main`, 4 on the branch |
+
+`pytest` is not installed on Nas1, so the suites ran under `unittest`.
+
+**Not run:**
+- `pm-landing-check.py`, `run-gates` and `audit-governance` are the lead's landing step.
+- **Expected governance staleness for the reseal request:** Spec Lock hashes for `Plans/assistant-chat-design.md` and `Plans/storage-plan.md`. The touched audit ledgers carry no Spec Lock or `.evidence` pin.
+
+## Open items
+
+1. **The DL-300 three.** No admission record; they wait on CC-D1b-1 (before-state form) and CC-D1b-2 (DL-045 scope). Untouched here.
+2. **Layout producer:** done in the second pass (SP-400, `2e5801d7df`). Native installation of the 4.0.0 edges is NOT_RUN.
+3. **Layout oracles:** done in the second pass. The workspace suite was re-frozen as v5 and repinned (`bef4342ecc`). The full-value suite (`7ab4fb00…`) is **not** re-frozen; SP-273 records its stored-token copies as superseded. Re-freeze it if a reviewer prefers that to the note.
+4. **Terminal oracles:** **stopped on the owner question** under "Cell 3" above. Nothing was written.
+5. **Lead decisions.**
+   - Whether to accept step 5's regrade, or revert to untouched rows until items 2–4 land.
+   - How to treat the terminal premise shift (a withdrawn family's provisional state ended under DL-039).
+6. **Two unrefreshed records.**
+   - `individual-disposition/COVERAGE.json` (generated 2026-09-11) still says `provisional_count` 2. The Step 9 batch 1 precedent did not regenerate it either.
+   - The validator's `fresh_census_denominator_not_closed.blocked_by` strings are fixed text and still name the cleared items.
+7. **Two cleanups not done.** Rewording UCC's stale `:8586` effect cell, and sweeping the residual debug-mirror text in CV-310 and the coordination fixtures. Owner text already overrides both.
+8. **Missing memory notes.** `pm-plan-id-allocation.md` and `pm-index-needs-currentness-edition.md` (named in the brief) do not exist on Nas1. The currentness edition was copied and hash-matched as the brief says.
+
+## Files
+
+- `reports/event-authority-20261104/DS.md`: this report.
+- `reports/event-authority-20261104/DS.selfgrade.json`: self-grade of the five touched families, re-graded in review round 1 at `2b671a1605`: compaction, created and reset 12/12, layout 10/12, terminal 10/12 (56 PASS, 4 PARTIAL). At `af9bff39ae` it said layout 12/12 and terminal 11/12; the review rejected both.
+- `reports/event-authority-20261104/ds-fix1-home4-value-reference-search.txt`, `ds-fix1-application-time-correction.{md,json}`, `ds-fix1-terminal-consumer-regrade.{md,json}`, `ds-fix1-layout-regrade.{md,json}` (review round 1)
+- `reports/event-authority-20261104/ds-p2-home4-binding-search.txt`, `ds-p2-layout-suite-refreeze.{md,json}`, `ds-p2-august-regrade-application.{md,json}` (second pass)
+- `reports/event-authority-20261104/depth-b1-seal-families.{json,md}`
+- `reports/event-authority-20261104/ds-step{5,6,7}-*.{json,md}`
+- **Evidence copy:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/`: this report, the self-grade, the seal-check receipts and the check outputs.

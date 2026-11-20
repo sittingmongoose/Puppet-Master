@@ -8,7 +8,8 @@
     "Off": "Off",
     "Auto": "Auto",
     "On": "Always watching"
-   }
+   },
+   "about": "A separate read-only advisor that watches your work and raises concerns. Auto runs it at the moments that usually matter, Always watching checks in all the time, Off turns it off. It never approves, changes or certifies anything, and your work carries on normally if it fails."
   },
   "safety.approvals.bsd-model": {
    "label": "Model it uses",
@@ -53,7 +54,9 @@
    "when": {
     "id": "safety.approvals.bsd-mode",
     "not": "Off"
-   }
+   },
+   "help": "How small a problem has to be before it says something.",
+   "about": "How readily the advisor speaks up. Balanced raises concerns and serious problems but stays quiet about small things."
   },
   "safety.approvals.bsd-catch-up-seconds": {
    "label": "Time to catch up on missed work",
@@ -64,7 +67,8 @@
    "when": {
     "id": "safety.approvals.bsd-mode",
     "not": "Off"
-   }
+   },
+   "about": "How long the advisor may spend catching up on work that happened while it was busy, before it skips ahead to what is happening now."
   },
   "safety.approvals.bsd-cooldown-turns": {
    "label": "Quiet turns after advice",
@@ -76,7 +80,8 @@
    "when": {
     "id": "safety.approvals.bsd-mode",
     "not": "Off"
-   }
+   },
+   "about": "How many turns the advisor stays quiet after speaking, so it does not repeat itself."
   },
   "safety.approvals.bsd-retain-transcript": {
    "label": "Keep the advisor's conversation",
@@ -84,7 +89,8 @@
    "when": {
     "id": "safety.approvals.bsd-mode",
     "not": "Off"
-   }
+   },
+   "about": "Keeps the advisor's own conversation so you can open it and see why it said something."
   },
   "safety.approvals.bsd-self-compact-threshold": {
    "label": "Tidy its own notes when this full",
@@ -97,7 +103,8 @@
    "when": {
     "id": "safety.approvals.bsd-mode",
     "not": "Off"
-   }
+   },
+   "about": "How full the advisor's own context gets before it compacts itself. Its compaction never touches your conversation."
   },
   "safety.approvals.bsd-stage-bindings": {
    "label": "Stages it watches",

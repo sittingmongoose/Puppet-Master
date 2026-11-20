@@ -48,7 +48,7 @@ function actionList(list, menus, opts) {
 function textAct(a, menus, opts) {
   opts = opts || {};
   const el = h('button', Object.assign({ type: 'button', class: ['pmr-b-tact', a.danger && 'is-danger', a.primary && 'is-primary'] }, PMR.actionAttrs(a)),
-    a.icon && opts.icon ? PMR.icon(a.icon) : null, h('span', { text: a.label }));
+    a.icon && opts.icon ? PMR.icon(a.icon) : null, h('span', { class: 'pmr-part-text', text: a.label }));
   if (a.disabled) PMR.hover(el, a.label, a.disabled);
   if (a.menu && menus && menus[a.menu]) {
     el.setAttribute('aria-haspopup', 'menu'); el.setAttribute('data-pmr-nav', 'menu');
@@ -71,7 +71,7 @@ function factEl(f) {
   const label = f[0], value = f[1], opt = f[2] || {};
   const v = h('div', { class: ['pmr-b-fact-v', opt.mono && 'is-mono'] });
   if (opt.state) v.appendChild(PMR.glyph(opt.state));
-  v.appendChild(h('span', { text: plain(value) }));
+  v.appendChild(h('span', { class: 'pmr-part-text', text: plain(value) }));
   return h('div.pmr-b-fact', { 'data-canon': opt.canon || null }, h('div.pmr-b-fact-k', { text: label }), v);
 }
 let discSeq = 0;
@@ -105,7 +105,7 @@ function factItems(items, menus) {
   asList(items).forEach(it => {
     const v = h('div', { class: ['pmr-b-fact-v', it.mono && 'is-mono'] });
     if (it.status) v.appendChild(PMR.glyph(it.status.state));
-    v.appendChild(h('span', { text: asList(it.meta).join(' · ') || (it.status && it.status.word) || '' }));
+    v.appendChild(h('span', { class: 'pmr-part-text', text: asList(it.meta).join(' · ') || (it.status && it.status.word) || '' }));
     const r = h('div.pmr-b-fact', { 'data-canon': it.canon || null }, h('div.pmr-b-fact-k', { text: it.name }), v);
     if (it.actions && it.actions.length) r.appendChild(h('div.pmr-b-fact-acts', it.actions.map(a => textAct(a, menus, { icon: true }))));
     box.appendChild(r);
@@ -117,7 +117,7 @@ function factItems(items, menus) {
 function blockedEl(b, menus) {
   if (!b) return null;
   return h('div.pmr-b-blocked', { 'data-code': b.code || null, 'data-canon': b.canon || null },
-    h('div.pmr-b-blocked-line', PMR.glyph('blocked'), h('span', { text: b.reason })),
+    h('div.pmr-b-blocked-line', PMR.glyph('blocked'), h('span', { class: 'pmr-part-text', text: b.reason })),
     b.allowed && b.allowed.length ? h('div.pmr-b-blocked-acts', b.allowed.map(a => textAct(a, menus, { icon: true }))) : null);
 }
 function noteEl(text, cls) { return text ? h('p', { class: ['pmr-b-note', cls], text }) : null; }
@@ -215,7 +215,7 @@ function section(o) {
 function destRow(o) {
   const att = o.attention;
   const sum = att
-    ? h('span.pmr-b-dest-sum.is-att', { 'data-state': att.state }, PMR.glyph(att.state), h('span', { text: att.text }))
+    ? h('span.pmr-b-dest-sum.is-att', { 'data-state': att.state }, PMR.glyph(att.state), h('span', { class: 'pmr-part-text', text: att.text }))
     : h('span.pmr-b-dest-sum', { text: o.summary || '' });
   const el = h('button', { type: 'button', class: ['pmr-b-dest', 'pmr-cur', o.compact && 'is-compact', o.quiet && 'is-quiet'], 'data-pmr-nav': 'drill', 'data-pmr-nav-id': 'dest|' + o.key, 'data-b-row': o.key, 'data-canon': o.canon || null },
     h('span.pmr-b-tile', PMR.icon(o.icon || 'layers')),
@@ -234,12 +234,12 @@ function itemBody(it, o) {
   const menus = o.menus;
   const out = [];
   if (it.blocked) out.push(blockedEl(it.blocked, menus));
-  if (it.note) out.push(h('div.pmr-b-callout', { 'data-state': (it.status && it.status.state) || 'info' }, PMR.glyph((it.status && it.status.state) || 'info'), h('span', { text: it.note })));
+  if (it.note) out.push(h('div.pmr-b-callout', { 'data-state': (it.status && it.status.state) || 'info' }, PMR.glyph((it.status && it.status.state) || 'info'), h('span', { class: 'pmr-part-text', text: it.note })));
   if (it.preview) out.push(h('div.pmr-b-sub', { text: 'Preview' }), h('pre.pmr-b-preview', { text: it.preview }));
   if (it.ports && it.ports.length) {
     out.push(h('div.pmr-b-sub', { text: it.ports.length === 1 ? 'Port' : 'Ports' }));
     it.ports.forEach(p => out.push(h('div.pmr-b-port', PMR.icon('link', 'pmr-b-port-ico'), h('span.pmr-b-port-v.pmr-num', { text: p.label }),
-      h('button', Object.assign({ type: 'button', class: 'pmr-b-tact' }, PMR.actionAttrs({ cmd: p.cmd, arg: p.arg })), PMR.icon('external'), h('span', { text: 'Open' })))));
+      h('button', Object.assign({ type: 'button', class: 'pmr-b-tact' }, PMR.actionAttrs({ cmd: p.cmd, arg: p.arg })), PMR.icon('external'), h('span', { class: 'pmr-part-text', text: 'Open' })))));
   }
   if (it.metrics && it.metrics.length) out.push(h('div.pmr-b-sub', { text: 'Resources' }), h('div.pmr-b-meters', it.metrics.map(meterEl)));
   const facts = [];
@@ -268,7 +268,7 @@ function itemBody(it, o) {
 /* the status line under an item's title: letter, glyph + word, diff */
 function subLine(it, extra) {
   const kids = [];
-  if (it.letter) kids.push(h('span.pmr-b-letterword', PMR.letterEl(it.letter, it.status && it.status.state), it.status ? h('span', { 'data-state': it.status.state, text: it.status.word }) : null));
+  if (it.letter) kids.push(h('span.pmr-b-letterword', PMR.letterEl(it.letter, it.status && it.status.state), it.status ? h('span', { class: 'pmr-part-text', 'data-state': it.status.state, text: it.status.word }) : null));
   else if (it.status) kids.push(PMR.statusEl(it.status));
   if (it.diff) kids.push(diffEl(it.diff));
   asList(extra).forEach(x => x && kids.push(x));

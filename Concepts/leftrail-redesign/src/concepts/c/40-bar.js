@@ -33,7 +33,7 @@ function cMountBar(bar) {
     const name = C_AB_NAMES[id] || icon.getAttribute('data-pm-hover-label') || icon.getAttribute('title') || id;
     const text = h('span.pmr-c-ab-text', { 'aria-hidden': 'true' },
       h('span.pmr-c-ab-name', { text: name }),
-      info && info.status ? h('span.pmr-c-ab-st', { 'data-state': info.status.state }, info.badge ? cGlyph(info.badge, { loud: true }) : null, h('span', { text: info.status.word })) : null);
+      info && info.status ? h('span.pmr-c-ab-st', { 'data-state': info.status.state }, info.badge ? cGlyph(info.badge, { loud: true }) : null, h('span', { class: 'pmr-part-text', text: info.status.word })) : null);
     icon.appendChild(text);
     added.push(text);
     if (info && info.badge) {

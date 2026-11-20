@@ -1,0 +1,457 @@
+{
+  "source_head": "a76b7e43a301317422dc3b60f00998a09d8381e1",
+  "base": "48dd033447c5feb95866d6978d2cfd70961c5cbb",
+  "checker_exit": 1,
+  "blocking_count": 0,
+  "blocking_items": [],
+  "infrastructure": [],
+  "baseline_currency": {
+    "age_days": 0.16,
+    "ancestor": true,
+    "base": "origin/main",
+    "base_commit": "48dd033447c5feb95866d6978d2cfd70961c5cbb",
+    "baseline_commit": "d28dba72e5d949535c953d8136f940dbde338100",
+    "max_age_days": 7,
+    "reason": "its commit d28dba72e5d9 is an ancestor of the base origin/main (48dd033447c5) and 0.16 days older than it, within 7",
+    "rule_two_applies": true
+  },
+  "baseline_commit": "d28dba72e5d949535c953d8136f940dbde338100",
+  "seconds": 2752.13,
+  "start_available_GiB": 14.708,
+  "max_child_rss_kb": 963252,
+  "memory_mode": "hard_capped_2GiB_no_swap",
+  "memory_limit_bytes": 2147483648,
+  "memory_swap_limit_bytes": 0,
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/run-p2456412-i36010195.scope",
+  "full_worktree": true,
+  "command": [
+    "python3",
+    "scripts/pm-landing-check.py",
+    "--base",
+    "origin/main",
+    "--json",
+    "--keep-check-reports",
+    "/home/sittingmongoose/pm-scratch/ea-int2/checks/landing-dry-20261112T224353Z/subchecks",
+    "--readiness-audit-root",
+    "/home/sittingmongoose/pm-worktrees/int2/Plans/.audits/event-authority-2026-08-13-currentness"
+  ],
+  "environment": {
+    "PYTHONINTMAXSTRDIGITS": "0",
+    "TMPDIR": "/home/sittingmongoose/pm-scratch/ea-int2/tmp"
+  },
+  "checks": {
+    "audit-governance": {
+      "status": "fail",
+      "failure_total": 5984,
+      "baseline_failure_total": 4843
+    },
+    "plan-migration-validate": {
+      "status": "fail",
+      "failure_total": 32464,
+      "baseline_failure_total": 0
+    },
+    "run-gates": {
+      "status": "fail",
+      "failure_total": 5984,
+      "baseline_failure_total": 4843
+    }
+  },
+  "on_branch_groups": [
+    {
+      "check": "audit-governance",
+      "kind": "artifact_hash_stale",
+      "stale": true,
+      "rows": 82
+    },
+    {
+      "check": "audit-governance",
+      "kind": "audit_closure_validator_error",
+      "stale": true,
+      "rows": 75
+    },
+    {
+      "check": "audit-governance",
+      "kind": "buildability_gate_report_stale_or_not_canonical",
+      "stale": true,
+      "rows": 1
+    },
+    {
+      "check": "audit-governance",
+      "kind": "event_authority_currentness_source_drift",
+      "stale": true,
+      "rows": 51
+    },
+    {
+      "check": "audit-governance",
+      "kind": "event_record_spec_lock_hash_stale",
+      "stale": true,
+      "rows": 1
+    },
+    {
+      "check": "audit-governance",
+      "kind": "non_executable_closure_spec_lock_hash_stale",
+      "stale": true,
+      "rows": 1
+    },
+    {
+      "check": "audit-governance",
+      "kind": "pnc019_source_hash_stale",
+      "stale": true,
+      "rows": 10
+    },
+    {
+      "check": "audit-governance",
+      "kind": "stale_batch_report_sha256_after",
+      "stale": true,
+      "rows": 158
+    },
+    {
+      "check": "audit-governance",
+      "kind": "stale_hash",
+      "stale": true,
+      "rows": 24
+    },
+    {
+      "check": "audit-governance",
+      "kind": "storage_value_registry_spec_lock_hash_stale",
+      "stale": true,
+      "rows": 4
+    },
+    {
+      "check": "plan-migration-validate",
+      "kind": "current_snapshot_batch_doc_invalid",
+      "stale": true,
+      "rows": 24
+    },
+    {
+      "check": "plan-migration-validate",
+      "kind": "current_snapshot_coverage_not_exact_same_document_planunit_set",
+      "stale": true,
+      "rows": 2839
+    },
+    {
+      "check": "plan-migration-validate",
+      "kind": "current_snapshot_live_bytes_mismatch",
+      "stale": true,
+      "rows": 64
+    },
+    {
+      "check": "plan-migration-validate",
+      "kind": "current_snapshot_live_line_count_mismatch",
+      "stale": true,
+      "rows": 56
+    },
+    {
+      "check": "plan-migration-validate",
+      "kind": "current_snapshot_live_sha256_mismatch",
+      "stale": true,
+      "rows": 64
+    },
+    {
+      "check": "plan-migration-validate",
+      "kind": "current_snapshot_live_span_metadata_mismatch",
+      "stale": true,
+      "rows": 27067
+    },
+    {
+      "check": "plan-migration-validate",
+      "kind": "current_snapshot_span_sha256_mismatch",
+      "stale": true,
+      "rows": 2302
+    },
+    {
+      "check": "plan-migration-validate",
+      "kind": "stale_batch_report_sha256_after",
+      "stale": true,
+      "rows": 32
+    },
+    {
+      "check": "run-gates",
+      "kind": "artifact_hash_stale",
+      "stale": true,
+      "rows": 82
+    },
+    {
+      "check": "run-gates",
+      "kind": "audit_closure_validator_error",
+      "stale": true,
+      "rows": 33
+    },
+    {
+      "check": "run-gates",
+      "kind": "buildability_gate_report_stale_or_not_canonical",
+      "stale": true,
+      "rows": 1
+    },
+    {
+      "check": "run-gates",
+      "kind": "event_authority_currentness_source_drift",
+      "stale": true,
+      "rows": 51
+    },
+    {
+      "check": "run-gates",
+      "kind": "event_record_spec_lock_hash_stale",
+      "stale": true,
+      "rows": 1
+    },
+    {
+      "check": "run-gates",
+      "kind": "non_executable_closure_spec_lock_hash_stale",
+      "stale": true,
+      "rows": 1
+    },
+    {
+      "check": "run-gates",
+      "kind": "pnc019_source_hash_stale",
+      "stale": true,
+      "rows": 10
+    },
+    {
+      "check": "run-gates",
+      "kind": "stale_batch_report_sha256_after",
+      "stale": true,
+      "rows": 158
+    },
+    {
+      "check": "run-gates",
+      "kind": "stale_hash",
+      "stale": true,
+      "rows": 24
+    },
+    {
+      "check": "run-gates",
+      "kind": "storage_value_registry_spec_lock_hash_stale",
+      "stale": true,
+      "rows": 4
+    }
+  ],
+  "on_branch_rows": 33220,
+  "pre_existing_rows": 0,
+  "new_rows": 32910,
+  "grown_buckets": [
+    {
+      "baseline_count": 2259,
+      "bucket": "audit-governance|evidence|artifact_hash_stale|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+      "count": 2718,
+      "stale": true
+    },
+    {
+      "baseline_count": 3,
+      "bucket": "audit-governance|evidence|missing_ref|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+      "count": 4,
+      "renamed_shard_refs": 1,
+      "stale": true
+    },
+    {
+      "baseline_count": 56,
+      "bucket": "audit-governance|implementation_readiness|event_authority_currentness_source_drift|",
+      "count": 74,
+      "stale": true
+    },
+    {
+      "baseline_count": 3,
+      "bucket": "audit-governance|implementation_readiness|storage_value_registry_spec_lock_hash_stale|Plans/Spec_Lock.json",
+      "count": 5,
+      "stale": true
+    },
+    {
+      "baseline_count": 2259,
+      "bucket": "audit-governance|plan_graph|artifact_hash_stale|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+      "count": 2718,
+      "stale": true
+    },
+    {
+      "baseline_count": 3,
+      "bucket": "audit-governance|plan_graph|missing_ref|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+      "count": 4,
+      "renamed_shard_refs": 1,
+      "stale": true
+    },
+    {
+      "baseline_count": 2259,
+      "bucket": "run-gates|validate_evidence|artifact_hash_stale|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+      "count": 2718,
+      "stale": true
+    },
+    {
+      "baseline_count": 3,
+      "bucket": "run-gates|validate_evidence|missing_ref|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+      "count": 4,
+      "renamed_shard_refs": 1,
+      "stale": true
+    },
+    {
+      "baseline_count": 56,
+      "bucket": "run-gates|validate_implementation_readiness|event_authority_currentness_source_drift|",
+      "count": 74,
+      "stale": true
+    },
+    {
+      "baseline_count": 3,
+      "bucket": "run-gates|validate_implementation_readiness|storage_value_registry_spec_lock_hash_stale|Plans/Spec_Lock.json",
+      "count": 5,
+      "stale": true
+    },
+    {
+      "baseline_count": 2259,
+      "bucket": "run-gates|validate_plan_graph|artifact_hash_stale|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+      "count": 2718,
+      "stale": true
+    },
+    {
+      "baseline_count": 3,
+      "bucket": "run-gates|validate_plan_graph|missing_ref|Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
+      "count": 4,
+      "renamed_shard_refs": 1,
+      "stale": true
+    }
+  ],
+  "grown_subchecks": [
+    {
+      "baseline_reported": 2262,
+      "check": "audit-governance",
+      "keyed_from_export": true,
+      "reported": 2722,
+      "sampled": 100,
+      "stale": false,
+      "subcheck": "evidence",
+      "truncated": false
+    },
+    {
+      "baseline_reported": 84,
+      "check": "audit-governance",
+      "keyed_from_export": true,
+      "reported": 104,
+      "sampled": 100,
+      "stale": true,
+      "subcheck": "implementation_readiness",
+      "truncated": false
+    },
+    {
+      "baseline_reported": 2262,
+      "check": "audit-governance",
+      "keyed_from_export": true,
+      "reported": 2722,
+      "sampled": 100,
+      "stale": false,
+      "subcheck": "plan_graph",
+      "truncated": false
+    },
+    {
+      "baseline_reported": 0,
+      "check": "audit-governance",
+      "keyed_from_export": true,
+      "reported": 195,
+      "sampled": 100,
+      "stale": false,
+      "subcheck": "plan_migration",
+      "truncated": false
+    },
+    {
+      "baseline_reported": 34,
+      "check": "audit-governance",
+      "reported": 40,
+      "sampled": 40,
+      "stale": false,
+      "subcheck": "spec_lock",
+      "truncated": false
+    },
+    {
+      "baseline_reported": 0,
+      "check": "plan-migration-validate",
+      "reported": 32464,
+      "sampled": 32464,
+      "stale": false,
+      "subcheck": "",
+      "truncated": false
+    },
+    {
+      "baseline_reported": 2262,
+      "check": "run-gates",
+      "keyed_from_export": true,
+      "reported": 2722,
+      "sampled": 50,
+      "stale": false,
+      "subcheck": "validate_evidence",
+      "truncated": false
+    },
+    {
+      "baseline_reported": 84,
+      "check": "run-gates",
+      "keyed_from_export": true,
+      "reported": 104,
+      "sampled": 50,
+      "stale": true,
+      "subcheck": "validate_implementation_readiness",
+      "truncated": false
+    },
+    {
+      "baseline_reported": 2262,
+      "check": "run-gates",
+      "keyed_from_export": true,
+      "reported": 2722,
+      "sampled": 50,
+      "stale": false,
+      "subcheck": "validate_plan_graph",
+      "truncated": false
+    },
+    {
+      "baseline_reported": 0,
+      "check": "run-gates",
+      "keyed_from_export": true,
+      "reported": 195,
+      "sampled": 50,
+      "stale": false,
+      "subcheck": "validate_plan_migration",
+      "truncated": false
+    },
+    {
+      "baseline_reported": 34,
+      "check": "run-gates",
+      "reported": 40,
+      "sampled": 40,
+      "stale": false,
+      "subcheck": "verify_spec_lock",
+      "truncated": false
+    }
+  ],
+  "report": "/home/sittingmongoose/pm-scratch/ea-int2/checks/landing-dry-20261112T224353Z/report.json",
+  "report_sha256": "de80df8a91c4080c2fec6fc1e6a3778c2d8dd9fd9c91a5084eb12ce83fb73011",
+  "metadata": "/home/sittingmongoose/pm-scratch/ea-int2/checks/landing-dry-20261112T224353Z/metadata.json",
+  "metadata_sha256": "d6a918fdef19189ed20fc34281eb513f9ed9ff16133f004e2e7f532e808eed05",
+  "stderr": "/home/sittingmongoose/pm-scratch/ea-int2/checks/landing-dry-20261112T224353Z/stderr.log",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "reseal_requested": true,
+  "reseal_performed": false,
+  "baseline_refreshed": false,
+  "status": "COMPLETE_NO_BLOCKERS",
+  "post_dry_main": {
+    "checked_source": "a76b7e43a301317422dc3b60f00998a09d8381e1",
+    "dry_base_at_start": "48dd033447c5feb95866d6978d2cfd70961c5cbb",
+    "origin_main_at_post_dry_inspection": "b4e7a1c63978898b23da167cacfdfac54b2a5c16",
+    "additional_commits": [
+      "b4e7a1c63978898b23da167cacfdfac54b2a5c16 plans: refresh the plan-migration snapshot and the landing-check baseline after Settings batches 2+3"
+    ],
+    "changed_paths": [
+      "Plans/.plan_migration/current_run.json",
+      "Plans/.plan_migration/pds-20261112-005-current-planunit-snapshot/COMPLETE.md",
+      "Plans/.plan_migration/pds-20261112-005-current-planunit-snapshot/anchor_aliases.json",
+      "Plans/.plan_migration/pds-20261112-005-current-planunit-snapshot/batch_report.jsonl",
+      "Plans/.plan_migration/pds-20261112-005-current-planunit-snapshot/coverage_map.jsonl",
+      "Plans/.plan_migration/pds-20261112-005-current-planunit-snapshot/final_validation_summary.json",
+      "Plans/.plan_migration/pds-20261112-005-current-planunit-snapshot/inventory.json",
+      "Plans/.plan_migration/pds-20261112-005-current-planunit-snapshot/original_hashes.json",
+      "Plans/.plan_migration/pds-20261112-005-current-planunit-snapshot/pilot_report.json",
+      "Plans/.plan_migration/pds-20261112-005-current-planunit-snapshot/span_map.jsonl",
+      "Plans/.plan_migration/pds-20261112-005-current-planunit-snapshot/validation_report.json",
+      "reports/landing-checks/baseline.json"
+    ],
+    "owner_docs_or_checker_scripts_changed": [],
+    "disposition": "Post-start main advancement changes only migration snapshot and baseline artifacts. The checked source and its inherited baseline/snapshot were not modified."
+  },
+  "post_dry_main_proof": {
+    "path": "/home/sittingmongoose/pm-scratch/ea-int2/retention4/main-drift-after-dry.json",
+    "sha256": "fdf20efd66d4f940272e44fc845df6ab0cf2e26ebfd084ee26556866a165ca6b"
+  }
+}

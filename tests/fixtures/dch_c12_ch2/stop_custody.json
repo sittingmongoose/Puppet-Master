@@ -1,0 +1,315 @@
+{
+ "authority": "CH2 independently sealed Stop retained store (SP-627/ACD-628, CV-647 one current edition). Each receipt is the one Storage sealed with an original Stop request at write time: its Store, source commitment, the one Stop edition and its pinned schema resources, and the SP-1101 binding. Readers never write here; native authentication and durability remain NOT_RUN.",
+ "custody_stores": [
+  "00000000-0000-4000-8000-000000000001",
+  "00000000-0000-4000-8000-000000000002"
+ ],
+ "receipts": [
+  {
+   "binding": {
+    "event_id": "evt_dch_3a09b42aecb08a5556f9295a59b2685ceef647d7590bc6b4503951fddbbe1b4d",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "0438014bf8b2947a41eda238dc00303351f205ccecfc887697e6f17ba4e99388",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "0438014bf8b2947a41eda238dc00303351f205ccecfc887697e6f17ba4e99388",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_17911bb878dc252f60cbbb5f3921cd3f78f45f76b05bc78819753d80dbe1be9f",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "dch:17911bb878dc252f60cbbb5f3921cd3f78f45f76b05bc78819753d80dbe1be9f",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": "p1",
+    "scope_kind": "project",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "1457d8d55160639f3437fe64ef2b4fb8f426a8f13e445a909478ba3f761b8b34",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "1457d8d55160639f3437fe64ef2b4fb8f426a8f13e445a909478ba3f761b8b34",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_17911bb878dc252f60cbbb5f3921cd3f78f45f76b05bc78819753d80dbe1be9f",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "dch:17911bb878dc252f60cbbb5f3921cd3f78f45f76b05bc78819753d80dbe1be9f",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": "p1",
+    "scope_kind": "project",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "265120bab04d141584e6190a70748417b47b0eb2230d598733d578ef54f43dbc",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "265120bab04d141584e6190a70748417b47b0eb2230d598733d578ef54f43dbc",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_17911bb878dc252f60cbbb5f3921cd3f78f45f76b05bc78819753d80dbe1be9f",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "dch:17911bb878dc252f60cbbb5f3921cd3f78f45f76b05bc78819753d80dbe1be9f",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": "p1",
+    "scope_kind": "project",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "323ba469997549880e5f50bcee6860e9e67b5b71b5ae31403e85393e82ced296",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "323ba469997549880e5f50bcee6860e9e67b5b71b5ae31403e85393e82ced296",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_17911bb878dc252f60cbbb5f3921cd3f78f45f76b05bc78819753d80dbe1be9f",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "dch:17911bb878dc252f60cbbb5f3921cd3f78f45f76b05bc78819753d80dbe1be9f",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": "p1",
+    "scope_kind": "project",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "6e50415ca2e5842b563fce95c5e81aec56023bf3938c8fab7c1c23a8ccd1df1b",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "6e50415ca2e5842b563fce95c5e81aec56023bf3938c8fab7c1c23a8ccd1df1b",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_3a09b42aecb08a5556f9295a59b2685ceef647d7590bc6b4503951fddbbe1b4d",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "88b99b10f1299721828b8f7cc7d63b3a7ea0ec4a9d83b67b990458e0b1b26e68",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "88b99b10f1299721828b8f7cc7d63b3a7ea0ec4a9d83b67b990458e0b1b26e68",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_3a09b42aecb08a5556f9295a59b2685ceef647d7590bc6b4503951fddbbe1b4d",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "92666480bc5ee71fa7dc9e1fed00a55095578fb3c16ddef6d6df38fff7f17038",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "92666480bc5ee71fa7dc9e1fed00a55095578fb3c16ddef6d6df38fff7f17038",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_3a09b42aecb08a5556f9295a59b2685ceef647d7590bc6b4503951fddbbe1b4d",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "b02ba2dbf2e43dcf68a68de0a64d1358d618d79cafb8216af1a56cd1dfbb8c3a",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "b02ba2dbf2e43dcf68a68de0a64d1358d618d79cafb8216af1a56cd1dfbb8c3a",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_3a09b42aecb08a5556f9295a59b2685ceef647d7590bc6b4503951fddbbe1b4d",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "c019bbcea1b2668818ac24350128c448a34173fc5b91434cc4a041c2a97422d2",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "c019bbcea1b2668818ac24350128c448a34173fc5b91434cc4a041c2a97422d2",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_17911bb878dc252f60cbbb5f3921cd3f78f45f76b05bc78819753d80dbe1be9f",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "dch:17911bb878dc252f60cbbb5f3921cd3f78f45f76b05bc78819753d80dbe1be9f",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": "p1",
+    "scope_kind": "project",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "fe2fb7d0005ebe12b83c527550f12b1c5cf8ca327c1744d6c90b4e06464d5b11",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "fe2fb7d0005ebe12b83c527550f12b1c5cf8ca327c1744d6c90b4e06464d5b11",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_163d304fb59372f645326b4876a009c52205c97117c3ff847f7b26f7bec847c0",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "dch:163d304fb59372f645326b4876a009c52205c97117c3ff847f7b26f7bec847c0",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": "p1",
+    "scope_kind": "project",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "0e4d99cdf5c92ccf796b88485756cb2f4e910cd8afeec72dd23c2696c06a329c",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "0e4d99cdf5c92ccf796b88485756cb2f4e910cd8afeec72dd23c2696c06a329c",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_fa6de6a36105854642ecfa740a7770f6d458739c8217cd7c15e62da9d0c4fa15",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "2364eb77f1dac4ef8d38fd8b75953de246fab2449329ae7e5bf047f836f8f980",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "2364eb77f1dac4ef8d38fd8b75953de246fab2449329ae7e5bf047f836f8f980",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_163d304fb59372f645326b4876a009c52205c97117c3ff847f7b26f7bec847c0",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "dch:163d304fb59372f645326b4876a009c52205c97117c3ff847f7b26f7bec847c0",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": "p1",
+    "scope_kind": "project",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "4b5ec4fd19fffa234b055d191e6b7af96cbea518f2228db73dc3f302cd858b74",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "4b5ec4fd19fffa234b055d191e6b7af96cbea518f2228db73dc3f302cd858b74",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_163d304fb59372f645326b4876a009c52205c97117c3ff847f7b26f7bec847c0",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "dch:163d304fb59372f645326b4876a009c52205c97117c3ff847f7b26f7bec847c0",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": "p1",
+    "scope_kind": "project",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "724e54e09e53b86d175a4ca9a0493104b1d0d5b85d3ae39c4942762697f1a395",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "724e54e09e53b86d175a4ca9a0493104b1d0d5b85d3ae39c4942762697f1a395",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_fa6de6a36105854642ecfa740a7770f6d458739c8217cd7c15e62da9d0c4fa15",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "794388735dbdf04a5810cd856975081387bfdf4213122649a4cf06b5f9d51eb0",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "794388735dbdf04a5810cd856975081387bfdf4213122649a4cf06b5f9d51eb0",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_163d304fb59372f645326b4876a009c52205c97117c3ff847f7b26f7bec847c0",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "dch:163d304fb59372f645326b4876a009c52205c97117c3ff847f7b26f7bec847c0",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": "p1",
+    "scope_kind": "project",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "7cdda821e4bd66f867dbffd3126a68f876a0edc8d81a711fcaa110b00e45cc09",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "7cdda821e4bd66f867dbffd3126a68f876a0edc8d81a711fcaa110b00e45cc09",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_fa6de6a36105854642ecfa740a7770f6d458739c8217cd7c15e62da9d0c4fa15",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "c58e770595213c7c25d5c629c361927278b8de6d4f49d6285cdefe1b5f04ed24",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "c58e770595213c7c25d5c629c361927278b8de6d4f49d6285cdefe1b5f04ed24",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+  },
+  {
+   "binding": {
+    "event_id": "evt_dch_fa6de6a36105854642ecfa740a7770f6d458739c8217cd7c15e62da9d0c4fa15",
+    "event_type": "chat.response_stop_requested",
+    "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+    "owner_operation_id": "fixture_operation_id",
+    "project_id": null,
+    "scope_kind": "application",
+    "server_id": "dch-static-oracle",
+    "source_commitment": "fb3a92c1def7b36f6decbc7b0569a77ff1f2d2dc1756212bf81116d8091a2e17",
+    "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+   },
+   "recipe_id": "dch-stop-v1",
+   "resource_manifest_sha256": "ed7fe7492568bd30feae44e74ea1dfd066c9f2395b9d5abe94f71d5ac9502867",
+   "source_value_sha256": "fb3a92c1def7b36f6decbc7b0569a77ff1f2d2dc1756212bf81116d8091a2e17",
+   "storage_instance_id": "00000000-0000-4000-8000-000000000002"
+  }
+ ]
+}

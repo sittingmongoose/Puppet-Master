@@ -1,0 +1,6068 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json",
+  "title": "Source Control prepared event payload, original-fact and checkpoint contracts",
+  "description": "W3B phase 1; newly authored definitions, no registry admission or native implementation.",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[^\\r\\n]+$"
+    },
+    "ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[^\\r\\n]+$"
+    },
+    "sha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "revision": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/git_revision"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/jujutsu_revision"
+        }
+      ]
+    },
+    "generation": {
+      "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/writer_lease/properties/generation"
+    },
+    "payload_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blake3_id",
+        "byte_size",
+        "media_type"
+      ],
+      "properties": {
+        "blake3_id": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "media_type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\r\\n]+$"
+        }
+      }
+    },
+    "durable_generic_token": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "checkpoint_key",
+        "checkpoint_ref",
+        "generation_id",
+        "generation_anchor_sha256",
+        "frontier_revision",
+        "frontier_sha256",
+        "index_dataset_name",
+        "source_selection"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "checkpoint_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "checkpoint_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generation_id": {
+          "type": "string",
+          "pattern": "^eig_[0-9a-f]{64}$"
+        },
+        "generation_anchor_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "frontier_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "frontier_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "index_dataset_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "storage_instance_id",
+            "current_ref",
+            "current_bytes_sha256",
+            "selected_segment_generation",
+            "manifest_ref",
+            "manifest_bytes_sha256",
+            "manifest_generation",
+            "recovery_epoch",
+            "manifest_survivor_prefix_sha256",
+            "retained_inventory_sha256",
+            "durable_watermarks_sha256",
+            "excluded_ranges_sha256",
+            "retired_inputs_sha256"
+          ],
+          "properties": {
+            "storage_instance_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "current_ref": {
+              "const": "storage/seglog/CURRENT"
+            },
+            "current_bytes_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "selected_segment_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "manifest_ref": {
+              "const": "storage/seglog/manifest.v1.msgpack"
+            },
+            "manifest_bytes_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "manifest_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "recovery_epoch": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "manifest_survivor_prefix_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "retained_inventory_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "durable_watermarks_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "excluded_ranges_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "retired_inputs_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        }
+      }
+    },
+    "backend_detected_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "detected_backends",
+        "observation_state",
+        "setup_state_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.backend_detected.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "detected_backends": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+          }
+        },
+        "observation_state": {
+          "enum": [
+            "complete",
+            "partial",
+            "unavailable"
+          ]
+        },
+        "setup_state_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "backend_detected_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/backend_detected_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "backend_detected_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.backend_detected.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.backend.detected"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/backend_detected_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/backend_detected_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "backend_detected_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.backend_detected.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.backend.detected"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.backend_detected.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "backend_selected_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "previous_backend",
+        "selected_backend",
+        "setup_state_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.backend_selected.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "previous_backend": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selected_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "setup_state_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "backend_selected_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/backend_selected_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "backend_selected_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.backend_selected.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.backend.selected"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/backend_selected_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/backend_selected_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "backend_selected_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.backend_selected.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.backend.selected"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.backend_selected.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "checkpoint_created_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "checkpoint_id",
+        "checkpoint_ref",
+        "checkpoint_generation",
+        "checkpoint_revision"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.checkpoint_created.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "checkpoint_id": {
+          "$ref": "#/$defs/id"
+        },
+        "checkpoint_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "checkpoint_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "checkpoint_revision": {
+          "$ref": "#/$defs/revision"
+        }
+      }
+    },
+    "checkpoint_created_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/checkpoint_created_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "checkpoint_created_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.checkpoint_created.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.checkpoint.created"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/checkpoint_created_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/checkpoint_created_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "checkpoint_created_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.checkpoint_created.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.checkpoint.created"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.checkpoint_created.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "checkpoint_restored_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "checkpoint_id",
+        "checkpoint_ref",
+        "checkpoint_generation",
+        "before_revision",
+        "after_revision",
+        "operation_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.checkpoint_restored.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "checkpoint_id": {
+          "$ref": "#/$defs/id"
+        },
+        "checkpoint_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "checkpoint_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "before_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "after_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "operation_receipt_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "checkpoint_restored_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/checkpoint_restored_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "checkpoint_restored_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.checkpoint_restored.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.checkpoint.restored"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/checkpoint_restored_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/checkpoint_restored_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "checkpoint_restored_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.checkpoint_restored.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.checkpoint.restored"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.checkpoint_restored.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "remote_fetch_completed_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "repository_context_ref",
+        "remote_target_ref",
+        "observable_work_id",
+        "before_revision",
+        "after_revision",
+        "operation_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.remote_fetch_completed.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "remote_target_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "observable_work_id": {
+          "$ref": "#/$defs/id"
+        },
+        "before_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "after_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "operation_receipt_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "remote_fetch_completed_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/remote_fetch_completed_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "remote_fetch_completed_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.remote_fetch_completed.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.remote.fetch_completed"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/remote_fetch_completed_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/remote_fetch_completed_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "remote_fetch_completed_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.remote_fetch_completed.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.remote.fetch_completed"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.remote_fetch_completed.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "remote_fetch_started_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "repository_context_ref",
+        "remote_target_ref",
+        "observable_work_id",
+        "before_revision"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.remote_fetch_started.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "remote_target_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "observable_work_id": {
+          "$ref": "#/$defs/id"
+        },
+        "before_revision": {
+          "$ref": "#/$defs/revision"
+        }
+      }
+    },
+    "remote_fetch_started_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/remote_fetch_started_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "remote_fetch_started_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.remote_fetch_started.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.remote.fetch_started"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/remote_fetch_started_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/remote_fetch_started_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "remote_fetch_started_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.remote_fetch_started.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.remote.fetch_started"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.remote_fetch_started.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "remote_publish_completed_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "repository_context_ref",
+        "remote_target_ref",
+        "observable_work_id",
+        "before_revision",
+        "after_revision",
+        "operation_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.remote_publish_completed.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "remote_target_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "observable_work_id": {
+          "$ref": "#/$defs/id"
+        },
+        "before_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "after_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "operation_receipt_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "remote_publish_completed_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/remote_publish_completed_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "remote_publish_completed_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.remote_publish_completed.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.remote.publish_completed"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/remote_publish_completed_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/remote_publish_completed_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "remote_publish_completed_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.remote_publish_completed.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.remote.publish_completed"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.remote_publish_completed.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "remote_publish_started_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "repository_context_ref",
+        "remote_target_ref",
+        "observable_work_id",
+        "before_revision"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.remote_publish_started.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "remote_target_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "observable_work_id": {
+          "$ref": "#/$defs/id"
+        },
+        "before_revision": {
+          "$ref": "#/$defs/revision"
+        }
+      }
+    },
+    "remote_publish_started_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/remote_publish_started_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "remote_publish_started_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.remote_publish_started.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.remote.publish_started"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/remote_publish_started_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/remote_publish_started_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "remote_publish_started_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.remote_publish_started.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.remote.publish_started"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.remote_publish_started.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "remote_sync_completed_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "repository_context_ref",
+        "remote_target_ref",
+        "observable_work_id",
+        "before_revision",
+        "after_revision",
+        "operation_receipt_ref",
+        "sync_variant"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.remote_sync_completed.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "remote_target_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "observable_work_id": {
+          "$ref": "#/$defs/id"
+        },
+        "before_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "after_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "operation_receipt_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "sync_variant": {
+          "enum": [
+            "remote_effect",
+            "local_reconcile_only"
+          ]
+        }
+      }
+    },
+    "remote_sync_completed_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/remote_sync_completed_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "remote_sync_completed_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.remote_sync_completed.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.remote.sync_completed"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/remote_sync_completed_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/remote_sync_completed_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "remote_sync_completed_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.remote_sync_completed.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.remote.sync_completed"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.remote_sync_completed.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "remote_sync_started_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "repository_context_ref",
+        "remote_target_ref",
+        "observable_work_id",
+        "before_revision",
+        "sync_variant"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.remote_sync_started.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "remote_target_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "observable_work_id": {
+          "$ref": "#/$defs/id"
+        },
+        "before_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "sync_variant": {
+          "enum": [
+            "remote_effect",
+            "local_reconcile_only"
+          ]
+        }
+      }
+    },
+    "remote_sync_started_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/remote_sync_started_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "remote_sync_started_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.remote_sync_started.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.remote.sync_started"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/remote_sync_started_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/remote_sync_started_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "remote_sync_started_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.remote_sync_started.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.remote.sync_started"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.remote_sync_started.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "repository_bound_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "repository_context_ref",
+        "binding_ref",
+        "binding_generation",
+        "native_revision"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.repository_bound.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "binding_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "binding_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "native_revision": {
+          "$ref": "#/$defs/revision"
+        }
+      }
+    },
+    "repository_bound_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/repository_bound_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "repository_bound_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.repository_bound.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.repository.bound"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/repository_bound_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/repository_bound_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "repository_bound_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.repository_bound.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.repository.bound"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.repository_bound.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "repository_unbound_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "repository_context_ref",
+        "binding_ref",
+        "binding_generation",
+        "disposition_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.repository_unbound.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "binding_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "binding_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "disposition_receipt_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "repository_unbound_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/repository_unbound_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "repository_unbound_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.repository_unbound.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.repository.unbound"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/repository_unbound_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/repository_unbound_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "repository_unbound_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.repository_unbound.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.repository.unbound"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.repository_unbound.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "status_refreshed_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "repository_context_ref",
+        "status_snapshot_ref",
+        "native_revision",
+        "observation_state"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.status_refreshed.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "status_snapshot_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "native_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "observation_state": {
+          "enum": [
+            "current",
+            "partial",
+            "stale",
+            "unavailable"
+          ]
+        }
+      }
+    },
+    "status_refreshed_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/status_refreshed_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "status_refreshed_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.status_refreshed.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.status.refreshed"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/status_refreshed_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/status_refreshed_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "status_refreshed_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.status_refreshed.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.status.refreshed"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.status_refreshed.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "workspace_created_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "repository_context_ref",
+        "created_workspace_id",
+        "native_revision",
+        "operation_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.workspace_created.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "created_workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "native_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "operation_receipt_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "workspace_created_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/workspace_created_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "workspace_created_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.workspace_created.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.workspace.created"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/workspace_created_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/workspace_created_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "workspace_created_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.workspace_created.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.workspace.created"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.workspace_created.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "workspace_opened_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "repository_context_ref",
+        "opened_workspace_id",
+        "native_revision",
+        "open_result_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.workspace_opened.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "opened_workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "native_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "open_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "workspace_opened_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/workspace_opened_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "workspace_opened_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.workspace_opened.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.workspace.opened"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/workspace_opened_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/workspace_opened_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "workspace_opened_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.workspace_opened.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.workspace.opened"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.workspace_opened.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "workspace_removed_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "repository_context_ref",
+        "removed_workspace_id",
+        "before_revision",
+        "disposition_receipt_ref",
+        "operation_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.workspace_removed.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "removed_workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "before_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "disposition_receipt_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "operation_receipt_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "workspace_removed_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/workspace_removed_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "workspace_removed_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.workspace_removed.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.workspace.removed"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/workspace_removed_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/workspace_removed_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "workspace_removed_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.workspace_removed.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.workspace.removed"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.workspace_removed.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "workspace_switched_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "repository_context_ref",
+        "previous_workspace_id",
+        "selected_workspace_id",
+        "before_revision",
+        "after_revision",
+        "operation_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.workspace_switched.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "previous_workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "selected_workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "before_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "after_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "operation_receipt_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "workspace_switched_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/workspace_switched_payload"
+        },
+        "original_request": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/source_control_command_request_v2"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "workspace_switched_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.workspace_switched.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.workspace.switched"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/workspace_switched_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/workspace_switched_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "workspace_switched_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.workspace_switched.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.workspace.switched"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.workspace_switched.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "writer_lease_granted_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "lease_id",
+        "lease_ref",
+        "holder_ref",
+        "lease_generation",
+        "lease_epoch",
+        "prior_state",
+        "state"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.writer_lease_granted.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "lease_id": {
+          "$ref": "#/$defs/id"
+        },
+        "lease_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "holder_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "lease_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "lease_epoch": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/writer_lease/properties/epoch"
+        },
+        "prior_state": {
+          "enum": [
+            "requested",
+            "reconciled"
+          ]
+        },
+        "state": {
+          "const": "active"
+        }
+      }
+    },
+    "writer_lease_granted_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/writer_lease_granted_payload"
+        },
+        "original_request": {
+          "type": "null"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "writer_lease_granted_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.writer_lease_granted.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.writer_lease.granted"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/writer_lease_granted_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/writer_lease_granted_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "writer_lease_granted_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.writer_lease_granted.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.writer_lease.granted"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.writer_lease_granted.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "writer_lease_lost_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_fact_ref",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "repo_id",
+        "scm_backend",
+        "workspace_id",
+        "lease_id",
+        "lease_ref",
+        "holder_ref",
+        "lease_generation",
+        "lease_epoch",
+        "prior_state",
+        "state",
+        "reconciliation_state"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control_event.writer_lease_lost.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_fact_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/id"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/id"
+        },
+        "scm_backend": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/scm_backend"
+        },
+        "workspace_id": {
+          "$ref": "#/$defs/id"
+        },
+        "lease_id": {
+          "$ref": "#/$defs/id"
+        },
+        "lease_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "holder_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "lease_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "lease_epoch": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/writer_lease/properties/epoch"
+        },
+        "prior_state": {
+          "const": "active"
+        },
+        "state": {
+          "enum": [
+            "released",
+            "expired_pending_reconciliation",
+            "revoked",
+            "quarantined"
+          ]
+        },
+        "reconciliation_state": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/writer_lease/properties/reconciliation_state"
+        }
+      }
+    },
+    "writer_lease_lost_source_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload",
+        "original_request",
+        "native_evidence_refs",
+        "original_owner_result_ref"
+      ],
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/writer_lease_lost_payload"
+        },
+        "original_request": {
+          "type": "null"
+        },
+        "native_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ref"
+          }
+        },
+        "original_owner_result_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "writer_lease_lost_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.writer_lease_lost.fact.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.writer_lease.lost"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "phase": {
+          "enum": [
+            "source_committed",
+            "issued"
+          ]
+        },
+        "source_body": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/writer_lease_lost_source_body"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_body_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/payload_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_append_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "source_body": {
+              "$ref": "#/$defs/writer_lease_lost_source_body"
+            },
+            "source_body_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_body": {
+              "type": "null"
+            },
+            "source_body_ref": {
+              "$ref": "#/$defs/payload_ref"
+            }
+          }
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "issued"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "$ref": "#/$defs/ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "source_committed"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "writer_lease_lost_checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.source_control_event.writer_lease_lost.checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "event_type": {
+          "const": "source_control.writer_lease.lost"
+        },
+        "consumer_id": {
+          "const": "projector.source_control.writer_lease_lost.history.v1"
+        },
+        "consumer_version": {
+          "const": "1.0.0"
+        },
+        "generic_token": {
+          "$ref": "#/$defs/durable_generic_token"
+        },
+        "through_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token/properties/frontier_revision"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_source_fact_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

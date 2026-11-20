@@ -1,0 +1,218 @@
+/* Projects concepts (Opus 5.5): Split v3, "easier to read".
+
+   Jared, 2026-11-10: "I like the new split design ... its a little hard to read, my eyes tend to glaze over when i look
+   at it ... The content is good and the layout is pretty good, its just the details, spacing, etc that need help."
+
+   Split v3 is Split v2's page with the same parts, the same words and the same layout: concepts/c.js draws it and
+   concepts/c.css lays it out as before, and this file only changes how it is set. It replaced Split v2 on 2026-11-11
+   (Jared: "We are replacing v2 with v3"). It applies while <html> carries data-pjx-read="v3", which concepts/c-v3.js
+   sets when it loads.
+
+   What made v2 tiring, and what v3 does about each:
+   1. Every value was bold and sat at the far right of its plate, a long way from its label. v3 puts each value next to
+      its label, left-aligned on one edge per plate; labels are quiet, values are regular weight, and only a value that
+      says something is wrong keeps weight and colour. Bold now means "look here".
+   2. A dashed rule under every row and a box round every choice. v3 separates rows with space, keeps one rule per
+      group, and sets a list of choices as one ruled list instead of a stack of boxes.
+   3. Everything was the same distance from everything else. v3 puts more room between plates and groups than inside
+      them, so what belongs together reads as one block.
+   4. Small capital labels in the code face on every field. v3 keeps them for the page's dividers (the library's
+      machines, the Review's groups) and sets a field's own label in the text face.
+   5. Nine underlined "Change" links down the Review. They stay, quiet, and take their underline when pointed at.
+
+   Rules kept from v2: no :has(), no coloured side bars, no pills, no viewport @media (container queries only), type
+   never under 11 px, colour only for status. Every rule here is anchored on html[data-pjx-read="v3"] #pjxc: one
+   attribute, so it ties with v2's own rules (and wins by coming later) and loses to the looks' rules, which carry two.
+   The one place it reaches outside the page is the dialogs Split opens (.pjx-dlg-back[data-concept="c"]), which take
+   the page's ruled lists and reading size; the chat, its History and Home are never touched.
+
+   What v3 leaves exactly as v2 has it (review r2, N4 and N5): Split lays itself out by its containers' widths
+   (pjxcpage, pjxcsteps, pjxcsec) and sizes some parts for its own gaps. So v3 changes no side padding and no column
+   gap along those widths, and no gap an offset in c.css or np.css is worked out from: the page body's sides, the
+   guided page's questions card and its questions, a plate head's gap, a library row's gap, a fact line's gap. Then
+   every step of Split's layout falls at the window width it was designed for. v3's room comes from vertical space,
+   the plates' own padding and the gaps between plates. */
+
+html[data-pjx-read="v3"] #pjxc.pmu-shell { --v3-gap: 14px; --v3-pad: 18px; --v3-rule: var(--pmu-rule-2, var(--pmu-rule)); }
+
+/* ------------------------------------------------------------------ the library: machines apart, rows with air */
+/* The library has the height of the window and no more, and at 1920 × 1080 in Basic the demo set fills it to the pixel in
+   Split's base layout: every group through Archived shows, with no scrolling (R5.4). So v3's room is moved, not added.
+   The groups stand further apart than in the base layout (18 px and a rule, against 12 px), and the room comes from inside
+   them: a row is 42 px with 2 px between rows (the base layout's 44 and 1), so a machine's Projects read as one block and
+   the machines as separate ones. The list keeps 8 px under its last group, not 16. (Sol max S5, 2026-11-12: the first
+   v3 took 21 px between groups and 46 px rows, and pushed Archived 44 px below the library's edge.) */
+/* a machine's group is one block: a rule and room above it, its head, its line, its Projects */
+html[data-pjx-read="v3"] #pjxc .pjxc-group + .pjxc-group { margin-top: 8px; padding-top: 9px; border-top: 1px solid var(--v3-rule); }
+html[data-pjx-read="v3"] #pjxc .pjxc-ghead { height: 22px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-rows { gap: 2px; }
+/* (the row keeps v2's own column gap: in Retro Light the monospace second line has exactly the room it needs) */
+html[data-pjx-read="v3"] #pjxc .pjxc-row { min-height: 42px; padding-top: 4px; padding-bottom: 4px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-list { padding-bottom: 8px; }
+/* the name leads; its line is lighter, and only a line that needs you keeps colour */
+html[data-pjx-read="v3"] #pjxc .pjxc-row-line { line-height: 16px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-row-line[data-tone="blocked"], html[data-pjx-read="v3"] #pjxc .pjxc-row-line[data-tone="attention"] { font-weight: 500; }
+/* on the chosen row a calm line takes the row's own ink (in Basic Light v2 leaves it dark blue on the blue fill) */
+html[data-pjx-read="v3"] #pjxc .pjxc-row[aria-current="true"] .pjxc-row-line:not([data-tone="blocked"]):not([data-tone="attention"]) { color: color-mix(in srgb, var(--pm-switch-ink-on, var(--pmu-ink)) 86%, transparent); }
+/* Retro and NieR rule their group heads themselves: no second rule above them */
+:is(html[data-theme^="retro"], html[data-o55-nier="on"])[data-pjx-read="v3"] #pjxc .pjxc-group + .pjxc-group { margin-top: 14px; padding-top: 0; border-top: 0; }
+
+/* ------------------------------------------------------------------ the page: head, body, plates */
+html[data-pjx-read="v3"] #pjxc .pjxc-headline { column-gap: 16px; margin-top: 2px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-body { gap: var(--v3-gap); padding-top: 18px; padding-bottom: 40px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-band { gap: 10px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-bento { gap: var(--v3-gap); }
+html[data-pjx-read="v3"] #pjxc .pjxc-flowgrid { gap: var(--v3-gap); }
+/* the guided page's two columns (c.css's own, at its own two steps): the wider gutter is taken from the Review, so the
+   questions' card is exactly as wide as in v2 and np.css's steps (pjxcsteps) fall at the same window widths */
+@container pjxcpage (min-width: 600px) { html[data-pjx-read="v3"] #pjxc .pjxc-flowgrid { grid-template-columns: minmax(0, 1fr) calc(clamp(228px, 36%, 272px) - (var(--v3-gap) - 8px)); } }
+@container pjxcpage (min-width: 1000px) { html[data-pjx-read="v3"] #pjxc .pjxc-flowgrid { grid-template-columns: minmax(0, 1fr) calc(clamp(272px, 32%, 320px) - (var(--v3-gap) - 8px)); } }
+
+/* (the head keeps v2's own gaps: in a narrow pane c.css sizes the titles for a 16 px glyph and a 10 px gap, and sets
+   the row gap, so a different gap here would put the glyph on a line of its own) */
+html[data-pjx-read="v3"] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardhead { padding: 16px var(--v3-pad) 8px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardbody { padding: 6px var(--v3-pad) 16px; gap: 14px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardbody > .pjxc-foot.pmu-cardfoot { margin: auto calc(-1 * var(--v3-pad)) -16px; padding: 12px var(--v3-pad) 14px; gap: 8px; }
+/* a plate's second line is its summary: read the heads and you have the page */
+html[data-pjx-read="v3"] #pjxc .pjxc-plate .pmu-cardsub { font-size: 12.5px; line-height: 18px; color: var(--pmu-ink-2); }
+
+/* facts: the label, then its value beside it. The rows give their two cells to one grid, so every value in a plate
+   starts on the same edge, as close to the labels as the longest label allows. No rule under each row: space does it. */
+html[data-pjx-read="v3"] #pjxc .pjxc-facts.pmu-facts { grid-template-columns: fit-content(46%) minmax(0, 1fr); column-gap: 18px; row-gap: 9px; align-items: baseline; padding: 2px 0; }
+html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-fact { display: contents; }
+html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factl { max-width: none; overflow: visible; white-space: normal; overflow-wrap: break-word; font-size: 13px; line-height: 19px; color: var(--pmu-ink-3); }
+/* (a value is regular weight, 400 exactly: Inter can draw an in-between weight, but Windows paints 480 nearly as heavy
+   as a status value, and Poppins, Plex Mono and the other looks' faces have no weight between 400 and 500, so anything
+   above 400 came out medium there. The value stands out from its label by its ink and its place.) */
+html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factv { min-width: 0; overflow: visible; white-space: normal; overflow-wrap: break-word; text-align: left; text-wrap: pretty; font-size: 13px; line-height: 19px; font-weight: 400; }
+html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-fact[data-tone] .pmu-factv { font-weight: 620; }
+html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factv .pjxc-mid { justify-content: flex-start; }
+/* a value that would not fit in two lines beside its label (a sentence, a long path) goes under the label, the plate
+   wide, instead of wrapping into a narrow column (concepts/c-v3.js marks them from the plate's width) */
+html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-fact[data-v3-long] > .pmu-factl { grid-column: 1 / -1; }
+html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-fact[data-v3-long] > .pmu-factv { grid-column: 1 / -1; margin-top: -7px; max-width: 68ch; }
+/* a plate where most values would wrap (Backup, Where work runs at half width): every label above its value, so the
+   plate reads one way instead of some beside and some under */
+html[data-pjx-read="v3"] #pjxc .pjxc-facts.pmu-facts[data-v3-stack] { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
+html[data-pjx-read="v3"] #pjxc .pjxc-facts[data-v3-stack] .pmu-factl { margin-top: 10px; font-size: 12px; line-height: 16px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-facts[data-v3-stack] .pmu-fact:first-child .pmu-factl { margin-top: 0; }
+html[data-pjx-read="v3"] #pjxc .pjxc-facts[data-v3-stack] .pmu-factv { margin-top: 1px; max-width: 68ch; }
+html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factv :is(.pjxc-code, .pjxc-mid) { font-weight: 400; }
+
+/* Now: what it is doing, then the three things that keep it safe */
+html[data-pjx-read="v3"] #pjxc .pjxc-now { column-gap: 12px; padding: 0 0 2px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-now-text { gap: 2px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-now-text span { font-size: 13px; line-height: 19px; }
+html[data-pjx-read="v3"] #pjxc button.pjxc-safecell { padding: 10px 14px 11px 12px; column-gap: 8px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-safecell .pjx-safe-label { font-size: 12px; line-height: 16px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-safecell .pjx-safe-word { font-size: 13px; line-height: 18px; font-weight: 560; margin-top: 1px; }
+
+/* what Puppet Master says in a plate, and the notices above the plates */
+html[data-pjx-read="v3"] #pjxc .pjxc-say { font-size: 13px; line-height: 19px; max-width: 66ch; text-wrap: pretty; }
+html[data-pjx-read="v3"] #pjxc .pjxc-say.is-hint { font-size: 12.5px; line-height: 18px; }
+html[data-pjx-read="v3"] #pjxc .pjx-notice { padding: 14px 16px; column-gap: 12px; }
+html[data-pjx-read="v3"] #pjxc .pjx-notice-text { font-size: 13px; line-height: 19px; max-width: 66ch; text-wrap: pretty; }
+html[data-pjx-read="v3"] #pjxc .pjx-notice-acts { margin-top: 10px; gap: 8px; }
+
+/* ------------------------------------------------------------------ choices: one ruled list, not a stack of boxes
+   (on the page and in the dialogs Split opens from it: Settle the clash, From a chat, Move a chat) */
+html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-choices.pjx-choices-list { gap: 0; border: var(--pmu-bw, 1px) solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 10px), 10px); overflow: hidden; }
+html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-choices-list > .pjx-choice { min-height: 46px; padding: 8px 12px; border-width: 0; border-top: 1px solid var(--v3-rule); border-radius: 0; column-gap: 12px; }
+html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-choices-list > .pjx-choice:first-child { border-top-color: transparent; border-top-left-radius: inherit; border-top-right-radius: inherit; }
+html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-choices-list > .pjx-choice:last-child { border-bottom-left-radius: inherit; border-bottom-right-radius: inherit; }
+/* the chosen one: its fill and a hairline ring inside the row */
+html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-choices-list > .pjx-choice.is-on { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmu-accent, var(--accent-primary)) 60%, var(--pmu-rule)); }
+html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-choices-list > .pjx-choice:focus-visible { outline-offset: -2px; }
+html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-choices-list .pjx-choice-sub { line-height: 17px; margin-top: 1px; }
+html[data-pjx-read="v3"] #pjxc .pjx-group { gap: 8px; }
+
+/* ------------------------------------------------------------------ New Project: the launcher */
+html[data-pjx-read="v3"] #pjxc .pjxc-ways { gap: 12px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-way-sub { font-size: 13px; line-height: 19px; margin-top: 2px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-try { text-decoration-color: transparent; }
+html[data-pjx-read="v3"] #pjxc .pjxc-try:hover, html[data-pjx-read="v3"] #pjxc .pjxc-try:focus-visible { text-decoration-color: currentColor; }
+
+/* ------------------------------------------------------------------ New Project: the guided page */
+html[data-pjx-read="v3"] #pjxc .pjxc-begins { padding-top: 16px; padding-bottom: 14px; }
+/* "Begins as" and a field's own label: the text face, in sentence case. The small capitals stay for dividers. */
+html[data-pjx-read="v3"] #pjxc .pjxc-begins .pjxc-cap, html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-np-cap { font-family: inherit; font-size: 12.5px; line-height: 17px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--pmu-ink-2); }
+html[data-pjx-read="v3"] #pjxc .pjxc-begins .pjxc-cap { font-weight: 400; color: var(--pmu-ink-3); }
+html[data-pjx-read="v3"] #pjxc .pjxc-stepsin { padding-top: 8px; padding-bottom: 18px; }
+/* answered questions fold to one quiet line each, ruled apart; the open question is the one loud thing */
+html[data-pjx-read="v3"] #pjxc .pjx-np-sec:not([data-state="open"]) + .pjx-np-sec:not([data-state="open"]) { box-shadow: 0 -1px 0 var(--v3-rule); }
+html[data-pjx-read="v3"] #pjxc .pjx-np-head { padding-top: 11px; padding-bottom: 11px; }
+html[data-pjx-read="v3"] #pjxc .pjx-np-sec:not([data-state="open"]) .pjx-np-q { font-size: 14px; line-height: 20px; font-weight: 600; }
+html[data-pjx-read="v3"] #pjxc .pjx-np-sum { line-height: 18px; margin-top: 1px; }
+html[data-pjx-read="v3"] #pjxc .pjx-np-act:not(.is-fold) { font-weight: 500; }
+html[data-pjx-read="v3"] #pjxc .pjx-np-sec[data-state="open"] { margin-top: 8px; margin-bottom: 10px; }
+/* (the answers' left edge is np.css's own at each of its steps: under the question, or flush in a narrow card) */
+html[data-pjx-read="v3"] #pjxc .pjx-np-body { gap: 18px; padding-bottom: 16px; }
+html[data-pjx-read="v3"] #pjxc .pjx-np-lead { font-size: 13px; line-height: 19px; max-width: 62ch; }
+html[data-pjx-read="v3"] #pjxc .pjx-np-group { gap: 8px; }
+html[data-pjx-read="v3"] #pjxc .pjx-np-hint { line-height: 18px; }
+/* the look inside: its lines under their label, with no box of their own */
+html[data-pjx-read="v3"] #pjxc .pjx-np-look { padding: 0; border-color: transparent; background: transparent; gap: 9px; }
+html[data-pjx-read="v3"] #pjxc .pjx-np-lines { gap: 7px; }
+html[data-pjx-read="v3"] #pjxc .pjx-np-line, html[data-pjx-read="v3"] #pjxc .pjx-np-text { font-size: 13px; line-height: 19px; }
+html[data-pjx-read="v3"] #pjxc .pjx-np-foot { padding-top: 12px; border-top-style: solid; border-top-color: var(--v3-rule); }
+
+/* the Review: label over value, pairs apart, groups ruled apart, Change kept quiet */
+html[data-pjx-read="v3"] #pjxc .pjxc-rgroup { padding: 14px 0 12px; border-top: 1px solid var(--v3-rule); }
+html[data-pjx-read="v3"] #pjxc .pjxc-rgroup:first-child { padding-top: 2px; border-top: 0; }
+html[data-pjx-read="v3"] #pjxc .pjxc-rghead { margin-bottom: 8px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-review .pjxc-rrows dt { color: var(--pmu-ink-3); }
+html[data-pjx-read="v3"] #pjxc .pjxc-review .pjxc-rrows dd { font-size: 13px; line-height: 18px; font-weight: 500; margin-top: 1px; margin-bottom: 10px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-review .pjxc-rrows dd:last-child { margin-bottom: 0; }
+html[data-pjx-read="v3"] #pjxc .pjxc-rrows dt .pjx-link { font-size: 12px; font-weight: 400; color: var(--pmu-ink-3); text-decoration-color: transparent; }
+html[data-pjx-read="v3"] #pjxc .pjxc-rrows dt .pjx-link:hover, html[data-pjx-read="v3"] #pjxc .pjxc-rrows dt .pjx-link:focus-visible { color: var(--pmu-ink); text-decoration-color: currentColor; }
+
+/* ------------------------------------------------------------------ the 2026-11-10 fix pass's parts
+   Where work runs: each piece of work is a row in one lightly ruled list. Where it went is a value, so it is regular
+   weight, and only a Computer somebody chose keeps weight and colour. "Run this on…" and "Why this computer" are on
+   every row (and a waiting pin's "Follow the Project's choice" beside them), so each stays a link by its colour and takes its underline when pointed at or focused (the line is kept
+   and only its colour goes, so an off "Run this on…", which fix.css sets with no line at all, still reads as off). */
+html[data-pjx-read="v3"] #pjxc .pjx-wk-rows { margin-top: 2px; border-top-color: var(--v3-rule); }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-row { column-gap: 10px; padding: 10px 0; border-bottom-color: var(--v3-rule); font-size: 13px; line-height: 19px; }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-row:last-child { padding-bottom: 2px; border-bottom-color: transparent; }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-where { font-size: 12.5px; line-height: 18px; }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-to { font-weight: 400; }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-row[data-mode="chosen"] .pjx-wk-to { font-weight: 620; }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-acts { column-gap: 18px; margin-top: 3px; }
+html[data-pjx-read="v3"] #pjxc :is(.pjx-wk-why, .pjx-wk-pin, .pjx-wk-follow) { font-weight: 400; text-decoration-color: transparent; }
+html[data-pjx-read="v3"] #pjxc :is(.pjx-wk-why, .pjx-wk-pin, .pjx-wk-follow):hover, html[data-pjx-read="v3"] #pjxc :is(.pjx-wk-why, .pjx-wk-pin, .pjx-wk-follow):focus-visible { text-decoration-color: currentColor; }
+/* New Project's "Where its work runs": the block keeps its frame, as light as the page's other rules */
+html[data-pjx-read="v3"] #pjxc .pjx-wk-np { gap: 12px; padding: 14px; border-color: var(--v3-rule); }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-allowed { gap: 9px 16px; }
+
+/* the dialogs Split opens (Settle the clash, Why this computer, Start a run, and the ones it had): the page's reading
+   size, more room between a dialog's groups than inside them, and a field's own label in the text face as on the
+   page. Their lists of choices are ruled by the rules above. */
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] .pjx-dlg { --v3-rule: var(--pmu-rule-2, var(--pmu-rule)); }
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] .pjx-q-lead { line-height: 19px; text-wrap: pretty; }
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] :is(.pjx-fact, .pjx-np-line, .pjx-np-text) { font-size: 13px; line-height: 19px; }
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] :is(.pjx-fact-mark, .pjx-np-mk) { height: 19px; }
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] .pjx-facts { gap: 6px; }
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] .pjx-group { margin-top: 18px; }
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] .pjx-group:first-child { margin-top: 0; }
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] .pjx-group-label { margin-bottom: 8px; }
+
+/* ------------------------------------------------------------------ narrower panes: v2's own steps, with v3's proportions */
+@container pjx (max-width: 739.98px) {
+  html[data-pjx-read="v3"] #pjxc .pjxc-body { padding-top: 12px; padding-bottom: 28px; }
+}
+@container pjx (max-width: 420px) {
+  html[data-pjx-read="v3"] #pjxc.pmu-shell { --v3-gap: 10px; --v3-pad: 14px; }
+  html[data-pjx-read="v3"] #pjxc .pjxc-body { padding-top: 10px; padding-bottom: 24px; }
+  html[data-pjx-read="v3"] #pjxc .pjxc-stepsin { padding-top: 4px; padding-bottom: 16px; }
+}
+/* the narrowest pane: a fact's value goes under its label */
+@container pjx (max-width: 319.98px) {
+  html[data-pjx-read="v3"] #pjxc.pmu-shell { --v3-gap: 8px; --v3-pad: 10px; }
+  html[data-pjx-read="v3"] #pjxc .pjxc-body { padding-top: 6px; padding-bottom: 20px; }
+  html[data-pjx-read="v3"] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardhead { padding: 10px 10px 4px; gap: 8px; }
+  html[data-pjx-read="v3"] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardbody { padding: 4px 10px 10px; }
+  html[data-pjx-read="v3"] #pjxc .pjxc-plate.pmu-card[data-head="plate"] > .pmu-cardbody > .pjxc-foot.pmu-cardfoot { margin: auto -10px -10px; padding: 8px 10px 10px; }
+  html[data-pjx-read="v3"] #pjxc .pjxc-facts.pmu-facts { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
+  html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factl { margin-top: 8px; font-size: 12px; line-height: 16px; }
+  html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-fact:first-child .pmu-factl { margin-top: 0; }
+}

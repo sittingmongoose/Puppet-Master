@@ -353,7 +353,7 @@ function mountRun(host, state, api) {
       'data-pm-hover-detail': 'Open their transcript · ' + p.model + ' · ' + STATE_WORD[seatState(p)], 'aria-label': p.role + ', ' + p.model + ', ' + STATE_WORD[seatState(p)] + '. Open their transcript' });
     var pup = puppet(hueOf(run2, p.id), 28);
     pup.appendChild(stateMark(seatState(p)));
-    add(b, [pup, h('b', { text: p.role }), h('small', { text: p.sub || p.model })]);
+    add(b, [pup, h('b', { class: 'pmw-run-role', text: p.role }), h('small', { class: 'pmw-run-sub', text: p.sub || p.model })]);
     b.addEventListener('click', function () { openTranscript(p); });
     return b;
   }
@@ -460,7 +460,7 @@ function mountRun(host, state, api) {
       var stt = isHub ? 'working' : seatState(p);
       var b = h('button', { type: 'button', class: 'pmw-run-trow pmw-cur', 'data-pmh': isHub ? 'off' : 'row', 'data-pm-hover-label': isHub ? p.role : 'Open ' + p.role, 'data-pm-hover-detail': isHub ? (p.does || 'Runs the room') : 'What they are doing, and their messages' }, [
         puppet(isHub ? 0 : hueOf(run, p.id), 22),
-        h('span', { class: 'pmw-run-tname' }, [h('b', { text: p.role }), h('small', { text: isHub ? p.sub : p.full + ' · ' + p.persona })]),
+        h('span', { class: 'pmw-run-tname' }, [h('b', { class: 'pmw-run-role', text: p.role }), h('small', { class: 'pmw-run-sub', text: isHub ? p.sub : p.full + ' · ' + p.persona })]),
         h('span', { class: 'pmw-run-tout' }, [isHub ? null : stateMark(stt), isHub ? (p.does || 'hands out the work and checks it') : STATE_WORD[stt]]),
         h('span', { class: 'pmw-run-tcost', text: money(p.cost) })]);
       if (isHub) b.setAttribute('aria-disabled', 'true');
@@ -544,7 +544,7 @@ function mountRun(host, state, api) {
     if (!L.done) {
       var rows = h('div', { class: 'pmw-run-team is-static' }, run.people.map(function (p) {
         var s = seatState(p);
-        return h('div', { class: 'pmw-run-trow is-static' }, [puppet(hueOf(run, p.id), 22), h('span', { class: 'pmw-run-tname' }, [h('b', { text: p.role }), h('small', { text: p.full })]),
+        return h('div', { class: 'pmw-run-trow is-static' }, [puppet(hueOf(run, p.id), 22), h('span', { class: 'pmw-run-tname' }, [h('b', { class: 'pmw-run-role', text: p.role }), h('small', { class: 'pmw-run-sub', text: p.full })]),
           h('span', { class: 'pmw-run-tout' }, [stateMark(s), s === 'reading' ? 'reading on their own' : s === 'aside' ? 'done; set aside' : 'done reading'])]);
       }));
       var out = [PMW.frames.section('The report isn’t ready yet', null, [h('p', { class: 'pmw-run-lead', text: 'Three reviewers are reading on their own; they can’t see each other’s notes yet.' }), rows])];

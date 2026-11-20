@@ -1,0 +1,29 @@
+{
+ "v": 1,
+ "about": "Settings dialogs that a later, approved design changed, read by settings-confirm-once and settings-dialog-lines. Each entry is explicit and reviewed (never a pattern) and names its reason. retired: a dialog the product no longer offers; a check asserts it is not reachable, and any other base dialog it cannot reach still fails. custom: a design-pinned confirm drawn by its own body rather than PM51.confirm; 'message' is the selector of its one message line, which must show exactly once, readable (11 px or more, 4.5:1 or more against what is painted under it), with no copy in the subtitle or the alert strip. --set dialogEntries=<json>|none in either check names another file or turns this one off.",
+ "retired": [
+  {
+   "title": "Delete all memories?",
+   "why": "FO-167 (Jared's quiet Memory design, approved 2026-11-11, share/puppet-master/2026-11-11-memory-review) removes the Delete all bulk action: the one Memory page deletes one note at a time."
+  },
+  {
+   "title": "Delete “Repository authority order”?",
+   "why": "FO-167 replaces the old per-memory delete (main's 30-memory.js: PM51.confirm(`Delete “${x.title}”?`, 'This removes the memory for good. Forget instead if you might want it back.', 'Delete', ...)) with its one 'Delete this memory?' confirm; the old confirm's words appear nowhere in the FO-167 page."
+  },
+  {
+   "title": "Forget “Repository authority order”?",
+   "why": "The quiet design has no forgetting: main's 30-memory.js ({ label: 'Forget', ..., onClick: () => forget(x) } and PM51.confirm(`Forget “${x.title}”?`, 'The assistant stops using it. It stays under Keeping & privacy for 30 days ...')) is gone from FO-167's 30-memory.js, and its words appear nowhere in the FO-167 page."
+  },
+  {
+   "title": "Reset memory settings?",
+   "why": "The quiet page has no reset: main's 30-memory.js quiet row { label: 'Reset memory settings', action: 'pm51-memory-reset' } and PM51.on('memory-reset', () => PM51.confirm('Reset memory settings?', ...)) are gone from FO-167's 30-memory.js, and neither the action nor the words appear in the FO-167 page."
+  }
+ ],
+ "custom": [
+  {
+   "title": "Delete this memory?",
+   "message": ".mm-confirm-line",
+   "why": "FO-167's delete confirm (mock 05-delete-confirm, approved with the design) is drawn by openDialog (src/settings/managers/30-memory.js deleteDialog): the note quoted, then its one message line, 'Puppet Master stops using it right away. This can't be undone.'"
+  }
+ ]
+}

@@ -109,11 +109,13 @@ PM51.btn = ({ label, action, data, icon: ic, primary, small, ghost, danger, disa
   const lead = LD ? LD.html({ motion: typeof busy === 'string' ? busy : 'swing', px: 14 }) : (ic ? icon(ic) : '');
   return `<button type="button" class="btn pm51-btn${primary ? ' primary' : ''}${small ? ' small' : ''}${ghost ? ' ghost' : ''}${danger ? ' danger' : ''}${cls ? ' ' + cls : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} ${dis} ${title ? `title="${a(title)}"` : ''}>${lead}${label ? `<span>${h(label)}</span>` : ''}</button>`;
 };
-PM51.iconBtn = ({ action, data, icon: ic, label, cls, callback, ui, disabled, reason }) => {
+PM51.iconBtn = ({ action, data, icon: ic, label, cls, callback, ui, disabled, reason, menu }) => {
   const act = disabled ? 'data-action="pm51-disabled"' : (callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`);
   const why = reason || 'Not available here.';
   const dis = disabled ? ` aria-disabled="true" data-pm51-disabled="1" data-disabled-reason="${a(why)}" data-pm-hover-detail="${a(why)}"` : '';
-  return `<button type="button" class="icon-btn pm51-icon-btn${cls ? ' ' + cls : ''}${disabled ? ' is-disabled' : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} aria-label="${a(label || '')}" data-pm-hover-label="${a(label || '')}"${dis}>${icon(ic || 'more')}</button>`;
+  /* menu: the button opens a menu (openMenu marks it expanded while the menu is open, popoutClose collapsed again) */
+  const pop = menu && !disabled ? ' aria-haspopup="menu" aria-expanded="false"' : '';
+  return `<button type="button" class="icon-btn pm51-icon-btn${cls ? ' ' + cls : ''}${disabled ? ' is-disabled' : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} aria-label="${a(label || '')}" data-pm-hover-label="${a(label || '')}"${pop}${dis}>${icon(ic || 'more')}</button>`;
 };
 PM51.link = ({ label, action, data, callback, cls, ui }) => {
   const act = callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`;
@@ -160,22 +162,35 @@ PM51.chipToggle = (label, on, { action, data, label: aria } = {}) => `<button ty
 PM51.tech = text => `<code class="pm51-tech">${h(text)}</code>`;
 
 /* A manager's tabs are a tab list (role, aria-selected, the body as its tab panel); 20-motion.js adds the arrow keys. */
-PM51.page = ({ id, key, tabs, active, body, quiet, cls, ui }) => {
+/* `owns`: the composed placement sections this manager draws itself, one item at a time (an ability's limits inside
+   that ability). Their rows have a home in the manager whichever item is shown, so the fallback card of those rows is
+   never added below an item that draws none of them (lane-aimore 8: a second "Web abilities" card of 11 rows under
+   Browser, and the same for Documents on Media & Output). */
+PM51.page = ({ id, key, tabs, active, body, quiet, cls, ui, owns }) => {
   const tabId = t => `pm51-tab-${a(id)}-${a(t)}`;
   const tabsHtml = tabs && tabs.length ? `<nav class="manager-tabs pm51-tabs" role="tablist" aria-label="Sections">${tabs.map(t => `<button type="button" role="tab" id="${tabId(t.id)}" aria-selected="${t.id === active ? 'true' : 'false'}" aria-controls="pm51-panel-${a(id)}" class="manager-tab${t.id === active ? ' active' : ''}" data-action="pm51-tab" data-manager="${a(id)}" data-tab="${a(t.id)}" ${t.ui || ui ? `data-ui-action-id="${a(t.ui || ui)}"` : ''}>${h(t.label)}</button>`).join('')}</nav>` : '';
   const panel = tabsHtml ? ` role="tabpanel" id="pm51-panel-${a(id)}" aria-labelledby="${tabId(active)}"` : '';
-  return `<div class="manager-page pm51-mgr${tabsHtml ? ' has-manager-tabs' : ''}${cls ? ' ' + cls : ''}" data-manager-key="${a(key || '')}" data-pm51-manager="${a(id)}">${tabsHtml}<div class="manager-body manager-tab-body pm51-body"${panel}><div class="manager-scroll pm51-scroll">${body}${quiet && quiet.length ? PM51.quiet(quiet) : ''}</div></div></div>`;
+  return `<div class="manager-page pm51-mgr${tabsHtml ? ' has-manager-tabs' : ''}${cls ? ' ' + cls : ''}" data-manager-key="${a(key || '')}" data-pm51-manager="${a(id)}"${owns && owns.length ? ` data-pm51-owns="${a(owns.join(' '))}"` : ''}>${tabsHtml}<div class="manager-body manager-tab-body pm51-body"${panel}><div class="manager-scroll pm51-scroll">${body}${quiet && quiet.length ? PM51.quiet(quiet) : ''}</div></div></div>`;
 };
 PM51.section = ({ title, help, action, body, cls, id, tone, data }) => `<section class="panel-card pm51-section${cls ? ' ' + cls : ''}${tone ? ' tone-' + a(tone) : ''}" ${id ? `id="${a(id)}"` : ''} ${dataAttrs(data)}><div class="pm51-section-head"><div class="pm51-section-copy"><h3 class="pm51-section-title">${h(title)}</h3>${help ? `<p class="pm51-section-help">${h(help)}</p>` : ''}</div>${action ? (typeof action === 'string' ? action : PM51.btn(action)) : ''}</div>${body ? `<div class="pm51-section-body">${body}</div>` : ''}</section>`;
 PM51.grid = (cols, ...parts) => `<div class="pm51-grid cols-${a(cols)}">${parts.join('')}</div>`;
-PM51.rows = (rows, { cls } = {}) => `<div class="pm51-rows${cls ? ' ' + cls : ''}">${rows.filter(Boolean).map(r => `<div class="pm51-row${r.cls ? ' ' + r.cls : ''}" ${r.id ? `data-row="${a(r.id)}"` : ''} ${dataAttrs(r.data)}${r.busy ? ' aria-busy="true"' : ''}><div class="pm51-row-copy"><div class="pm51-row-label">${h(r.label)}${r.pill ? ' ' + r.pill : ''}</div>${r.help ? `<div class="pm51-row-help">${h(r.help)}</div>` : ''}</div><div class="pm51-row-control">${r.control || (r.value != null ? `<span class="pm51-row-value${r.muted ? ' is-muted' : ''}">${h(String(r.value))}</span>` : '')}${r.action ? (typeof r.action === 'string' ? r.action : PM51.btn(Object.assign({ small: true }, r.action))) : ''}</div></div>`).join('')}</div>`;
+/* a value with no space in it (a path, an address, a fingerprint): one word, placed by its whole width (FO-173) */
+PM51.oneWord = v => v != null && v !== '' && !/\s/.test(String(v).trim());
+PM51.rows = (rows, { cls } = {}) => `<div class="pm51-rows${cls ? ' ' + cls : ''}">${rows.filter(Boolean).map(r => `<div class="pm51-row${r.cls ? ' ' + r.cls : ''}" ${r.id ? `data-row="${a(r.id)}"` : ''} ${dataAttrs(r.data)}${r.busy ? ' aria-busy="true"' : ''}><div class="pm51-row-copy"><div class="pm51-row-label">${h(r.label)}${r.pill ? ' ' + r.pill : ''}</div>${r.help ? `<div class="pm51-row-help">${h(r.help)}</div>` : ''}</div><div class="pm51-row-control">${r.control || (r.value != null ? `<span class="pm51-row-value${r.muted ? ' is-muted' : ''}${PM51.oneWord(r.value) ? ' pm51-row-word' : ''}">${h(String(r.value))}</span>` : '')}${r.action ? (typeof r.action === 'string' ? r.action : PM51.btn(Object.assign({ small: true }, r.action))) : ''}</div></div>`).join('')}</div>`;
 PM51.stats = items => `<div class="pm51-stats">${items.map(s => `<div class="pm51-stat${s.tone ? ' tone-' + a(s.tone) : ''}"><div class="pm51-stat-label">${h(s.label)}</div><div class="pm51-stat-value">${h(String(s.value))}</div>${s.help ? `<div class="pm51-stat-help">${h(s.help)}</div>` : ''}</div>`).join('')}</div>`;
 PM51.list = (items, { cls } = {}) => `<div class="pm51-list${cls ? ' ' + cls : ''}">${items.filter(Boolean).map(it => `<div class="pm51-item${it.cls ? ' ' + it.cls : ''}${it.action || it.callback ? ' is-clickable' : ''}" ${it.action ? `data-action="${a(it.action)}"` : ''} ${it.callback ? `data-callback="${a(registerAction(it.callback))}"` : ''} ${dataAttrs(it.data)} ${it.action || it.callback ? 'role="button" tabindex="0"' : ''}>${it.avatar ? `<span class="pm51-item-avatar">${it.avatar}</span>` : ''}<div class="pm51-item-copy"><div class="pm51-item-title">${h(it.title)}${it.pill ? ' ' + it.pill : ''}</div>${it.meta ? `<div class="pm51-item-meta">${h(it.meta)}</div>` : ''}${it.sub ? `<div class="pm51-item-sub">${h(it.sub)}</div>` : ''}${it.note ? `<div class="pm51-item-note">${h(it.note)}</div>` : ''}</div><div class="pm51-item-end">${it.end || ''}</div></div>`).join('')}</div>`;
 PM51.steps = (items, { start = 1, cls } = {}) => `<ol class="pm51-steps${cls ? ' ' + cls : ''}">${items.filter(Boolean).map((s, i) => `<li class="pm51-step${s.tone ? ' tone-' + a(s.tone) : ''}${s.done ? ' is-done' : ''}"><span class="pm51-step-n">${s.done ? icon('check') : (i + start)}</span><div class="pm51-step-copy"><div class="pm51-step-title">${h(s.title)}</div>${s.desc ? `<div class="pm51-step-desc">${h(s.desc)}</div>` : ''}</div><div class="pm51-step-end">${s.status ? PM51.pill(s.status, s.tone) : ''}${s.action ? (typeof s.action === 'string' ? s.action : PM51.btn(Object.assign({ small: true }, s.action))) : ''}</div></li>`).join('')}</ol>`;
 PM51.advanced = (body, { label, open, help } = {}) => `<details class="pm51-advanced" ${open ? 'open' : ''}><summary>${icon('chevron')}<span>${h(label || 'Advanced')}</span>${help ? `<small>${h(help)}</small>` : ''}</summary><div class="pm51-advanced-body">${body}</div></details>`;
 PM51.quiet = items => `<div class="pm51-quiet">${items.filter(Boolean).map(i => PM51.link(i)).join('')}</div>`;
 PM51.empty = (title, copy, action) => `<div class="empty-state pm51-empty"><div>${icon('info')}<div class="empty-title">${h(title)}</div>${copy ? `<div class="empty-copy">${h(copy)}</div>` : ''}${action ? `<div class="empty-actions">${PM51.btn(Object.assign({ primary: true }, action))}</div>` : ''}</div></div>`;
-PM51.kv = pairs => `<div class="pm51-kv">${pairs.filter(Boolean).map(([k, v]) => `<div class="pm51-kv-row"><span>${h(k)}</span><span>${v == null ? '—' : h(String(v))}</span></div>`).join('')}</div>`;
+/* A value shown in a scoped row's control with the button that changes it (Media's "Saves to" and Change, a service's
+   "Last check" and Check). The pair wraps on its own: the button drops under the value when both no longer fit on one
+   line, so the value keeps room for its longest word (FO-173). The row's control itself does not wrap, so a dropdown
+   and its neighbour elsewhere keep their one line. A one-word value is marked like PM51.rows' (pm51-row-word). */
+PM51.valueWith = (text, btn, cls) => `<span class="o55-value-with"><span class="pm51-row-value${cls ? ' ' + a(cls) : ''}${PM51.oneWord(text) ? ' pm51-row-word' : ''}">${h(text)}</span>${btn ? PM51.btn(Object.assign({ small: true }, btn)) : ''}</span>`;
+/* A value with no space in it (a path, an address, a fingerprint) is one word: it goes beside its key whole or takes a
+   line of its own (FO-173: "Backups/Puppet-Master" broke after its hyphen in a 131px column with a 263px row). */
+PM51.kv = pairs => `<div class="pm51-kv">${pairs.filter(Boolean).map(([k, v]) => { const t = v == null ? '—' : String(v); return `<div class="pm51-kv-row"><span>${h(k)}</span><span${/\s/.test(t.trim()) ? '' : ' class="pm51-kv-word"'}>${h(t)}</span></div>`; }).join('')}</div>`;
 PM51.note = (text, tone) => `<p class="pm51-note${tone ? ' tone-' + a(tone) : ''}">${icon(tone === 'attention' ? 'alert' : 'info')}<span>${h(text)}</span></p>`;
 PM51.field = (label, control, help) => `<label class="pm51-field"><span class="pm51-field-label">${h(label)}</span>${control}${help ? `<span class="pm51-field-help">${h(help)}</span>` : ''}</label>`;
 PM51.initials = name => String(name || '?').split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
@@ -211,7 +226,7 @@ PM51.listDetail = ({ id, rosterId, rosterTitle, count, add, filter, items, detai
     <div class="roster-list">${items.map(it => `<button type="button" class="resource-row${it.selected ? ' active' : ''}" data-action="${a(it.action || selectAction || 'pm51-select')}" data-manager="${a(id)}" data-id="${a(it.id)}" ${dataAttrs(it.data)} aria-current="${it.selected ? 'true' : 'false'}"><span class="resource-avatar">${it.avatar || h(PM51.initials(it.title))}</span><span class="resource-row-copy"><span class="resource-row-name">${h(it.title)}</span><span class="resource-row-meta">${h(it.meta || '')}${it.pill ? ' ' + it.pill : ''}</span></span>${it.tone ? PM51.dot(it.tone) : ''}</button>`).join('')}</div>
   </aside>
   <section class="resource-detail pm51-detail">
-    <div class="resource-head pm51-detail-head"><button type="button" class="icon-btn pm51-roster-toggle" data-action="pm51-toggle-roster" aria-label="Show list">${icon('menu')}</button><div class="resource-head-main"><div class="pm51-detail-title">${h(detail.title)}${detail.pill ? ' ' + detail.pill : ''}</div>${detail.subtitle ? `<div class="pm51-detail-sub">${h(detail.subtitle)}</div>` : ''}</div><div class="pm51-detail-actions">${detail.primary ? PM51.btn(Object.assign({ primary: true }, detail.primary)) : ''}${detail.menu ? PM51.iconBtn({ icon: 'more', label: 'More actions', callback: detail.menu }) : ''}</div></div>
+    <div class="resource-head pm51-detail-head"><button type="button" class="icon-btn pm51-roster-toggle" data-action="pm51-toggle-roster" aria-label="Show list">${icon('menu')}</button><div class="resource-head-main"><div class="pm51-detail-title">${h(detail.title)}${detail.pill ? ' ' + detail.pill : ''}</div>${detail.subtitle ? `<div class="pm51-detail-sub">${h(detail.subtitle)}</div>` : ''}</div><div class="pm51-detail-actions">${detail.primary ? PM51.btn(Object.assign({ primary: true }, detail.primary)) : ''}${detail.menu ? PM51.iconBtn({ icon: 'more', label: 'More actions', callback: detail.menu, menu: true }) : ''}</div></div>
     <div class="resource-content pm51-detail-content">${detail.body}</div>
   </section>
 </div>`;
@@ -220,8 +235,13 @@ PM51.listDetail = ({ id, rosterId, rosterTitle, count, add, filter, items, detai
 /* Popouts live in document.body (position:fixed) so #pm-settings-portals' overflow:hidden and the
    root's contain never clip them. Nothing in body gets the engine's event routing (ownsEvent), so
    the engine owns its listeners here; the motion is PM6_SPROUT's, the one menu sprout (base/script/pm7-sprout.js,
-   its classes in pm7-sprout.css: six --pm6-sprout-* vars, is-open / is-closing). */
+   its classes in pm7-sprout.css: six --pm6-sprout-* vars, is-open / is-closing). In Glass each one is a floating glass
+   sheet: data-lg-surface="menu" is the Liquid Glass layer's owner opt-in (its CONTRACT.md), so it blurs what is behind it
+   like the app's other menus instead of showing the page through its thin plate (FO-144). */
 let pmActive = null, popSeq = 0;
+/* Where a popout's anchor was when it was placed: a scroll that leaves the anchor where it was does not touch the popout
+   (FO-147). */
+const anchorAt = anchor => { if (!anchor || !anchor.getBoundingClientRect) return null; const r = anchor.getBoundingClientRect(); return { left: r.left, top: r.top }; };
 const POP_ID = () => 'pm51-pop-' + (++popSeq);
 /* The corner a popout grows from, as Settings' popouts have always had it (the owner takes it as an input). The side is
    the one positionPopout put it on (data-sprout: t below its trigger, b above); across, it is the corner nearest the
@@ -358,7 +378,7 @@ function filterOptions(entry) {
 }
 function openListPopout({ anchor, trigger, options, current, search, title, width, onCommit, kind = 'dropdown' }) {
   popoutClose({ restoreFocus: false });
-  const pop = document.createElement('div'); pop.className = 'pm51-popout pm51-dd-list'; pop.id = POP_ID(); pop.setAttribute('role', 'listbox'); pop.tabIndex = -1; pop.dataset.portalDisplay = 'block';
+  const pop = document.createElement('div'); pop.className = 'pm51-popout pm51-dd-list'; pop.id = POP_ID(); pop.setAttribute('role', 'listbox'); pop.tabIndex = -1; pop.dataset.portalDisplay = 'block'; pop.setAttribute('data-lg-surface', 'menu');
   const groups = [], seen = new Map();
   /* a held-back choice that asks for it (why) says its reason under its name, once for a run held back for the same reason */
   options.forEach((o, i) => { const g = o.group || ''; if (!seen.has(g)) { seen.set(g, groups.length); groups.push({ name: g, items: [] }); } const prev = options[i - 1];
@@ -371,7 +391,7 @@ function openListPopout({ anchor, trigger, options, current, search, title, widt
   document.body.appendChild(pop);
   const entry = { kind, el: pop, trigger, anchor, options, current, onCommit, active: -1, searchInput: pop.querySelector('input'), typeBuf: '', typeAt: 0, returnFocus: trigger, align: 'left', width: Math.max(width || 0, search ? 280 : 220, anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect().width : 0) };
   pmActive = entry;
-  positionPopout(pop, anchor, { width: entry.width });
+  positionPopout(pop, anchor, { width: entry.width }); entry.at = anchorAt(anchor);
   sproutOpen(pop, anchor);
   if (trigger && trigger.setAttribute) { trigger.setAttribute('aria-expanded', 'true'); trigger.setAttribute('aria-controls', pop.id); }
   const selIdx = options.findIndex(o => String(o.value) === String(current));
@@ -403,7 +423,7 @@ PM51.pick = (anchor, { title = '', current = null, items = [], search = true, wi
 openMenu = function (anchor, items, title = '') {
   if (pmActive && pmActive.kind === 'menu' && anchor && pmActive.anchor === anchor) { popoutClose({ restoreFocus: true }); return null; }
   popoutClose({ restoreFocus: false });
-  const pop = document.createElement('div'); pop.className = 'pm51-popout pm51-menu'; pop.id = POP_ID(); pop.setAttribute('role', 'menu'); pop.dataset.portalDisplay = 'block';
+  const pop = document.createElement('div'); pop.className = 'pm51-popout pm51-menu'; pop.id = POP_ID(); pop.setAttribute('role', 'menu'); pop.dataset.portalDisplay = 'block'; pop.setAttribute('data-lg-surface', 'menu');
   pop.innerHTML = (title ? `<div class="pm51-popout-title">${h(title)}</div>` : '') + (items || []).map((it, i) => {
     if (!it) return '';
     if (it.separator) return '<div class="pm51-popout-sep" role="separator"></div>';
@@ -413,7 +433,10 @@ openMenu = function (anchor, items, title = '') {
   document.body.appendChild(pop);
   const entry = { kind: 'menu', el: pop, trigger: anchor, anchor, items, returnFocus: captureTransientFocus(anchor) || anchor, align: 'right', width: 0 };
   pmActive = entry; menuAnchorEl = anchor || null;
-  positionPopout(pop, anchor, { align: 'right' });
+  positionPopout(pop, anchor, { align: 'right' }); entry.at = anchorAt(anchor);
+  /* the button says it opens a menu and that the menu is open (N-4: popoutClose wrote aria-expanded="false" on a button
+     that had never said it was expanded, so the same button read differently before and after its first use) */
+  if (anchor && anchor.setAttribute) { anchor.setAttribute('aria-haspopup', 'menu'); anchor.setAttribute('aria-expanded', 'true'); anchor.setAttribute('aria-controls', pop.id); }
   sproutOpen(pop, anchor);
   pop.addEventListener('click', e => {
     const b = e.target.closest('.pm51-menu-item'); if (!b) return; e.preventDefault();
@@ -484,9 +507,19 @@ assistantPick = function (anchor, kind, current, onPick) {
   /* A scroll closes a menu (or moves a popout) only when it can move what the popout hangs from: the page, or a scroller
      that holds the anchor. Another scroller elsewhere (the chat's transcript following its stream, a list beside it)
      moves nothing under the menu, and closing on it shut the Add account menu just after it opened (FO-123 / batch 10
-     landing: the chat's dock auto-scrolled at that moment). */
+     landing: the chat's dock auto-scrolled at that moment). FO-147: a list on a page that is not showing, or the Home
+     editor laying itself out again about 1.5 s after load, closed a menu just opened in Settings the same way. Even a
+     scroll that could move the anchor leaves the popout alone when the anchor stayed where it was placed (a button on
+     a bar that stays put while the page under it scrolls); one that did move it closes a menu (it would float away
+     from its button) and moves a list with it. */
   const pm51ScrollMoves = (p, t) => !p.anchor || t === document || t === document.documentElement || t === document.body || !t.contains || t.contains(p.anchor);
-  document.addEventListener('scroll', e => { const p = pmActive; if (!p) return; if (p.el.contains(e.target)) return; if (!pm51ScrollMoves(p, e.target)) return; if (p.kind === 'menu' || !p.anchor || !p.anchor.isConnected) { popoutClose({ restoreFocus: false }); return; } positionPopout(p.el, p.anchor, { align: p.align, width: p.width }); }, true);
+  document.addEventListener('scroll', e => {
+    const p = pmActive; if (!p) return; if (p.el.contains(e.target)) return; if (!pm51ScrollMoves(p, e.target)) return;
+    const anchor = p.anchor && p.anchor.isConnected ? p.anchor : null;
+    if (anchor) { const now = anchorAt(anchor); if (p.at && now && Math.abs(now.left - p.at.left) < 0.5 && Math.abs(now.top - p.at.top) < 0.5) return; }
+    if (p.kind === 'menu' || !anchor) { popoutClose({ restoreFocus: false }); return; }
+    positionPopout(p.el, anchor, { align: p.align, width: p.width }); p.at = anchorAt(anchor);
+  }, true);
   window.addEventListener('resize', () => popoutClose({ restoreFocus: false }));
   document.addEventListener('focusin', e => { const p = pmActive; if (!p) return; if (p.el.contains(e.target) || e.target === p.trigger || (p.anchor && p.anchor.contains && p.anchor.contains(e.target))) return; popoutClose({ restoreFocus: false }); });
 })();
@@ -525,7 +558,7 @@ PM51.settingRows = (ids, { title, help, overrides = {}, cls, id: sectionId } = {
     if (override.control || override.label) pm51RowOverrides[id] = override;
     let setting = f.setting;
     if (override.control) setting = Object.assign({}, setting, { control: override.control });
-    if (override.label) setting = Object.assign({}, setting, { label: override.label });
+    if (override.label) setting = Object.assign({}, setting, { label: override.label, o55Label: override.label });
     const section = f.section && f.section.inline ? f.section : Object.assign({ inline: true }, f.section || { id: 'manual', label: title || '' });
     return renderSettingRow(setting, section, f.workspace);
   }).filter(Boolean).join('');
@@ -744,7 +777,10 @@ PM51.refresh = function (wsId, { swap = true } = {}) {
   if (!body || !ws) { saveState(); renderApp({ soft: !state.home }); return; }
   PM51.commitBody(body, renderContinuousWorkspaceBody(ws, domain));
   body.dataset.workspaceMounted = 'true';
-  body.querySelectorAll('.manager-section').forEach(sec => sec.classList.add('section-block', 'is-revealed'));
+  /* Reduced Motion, the system's or the app's own: a section is simply there (armSectionReveal leaves it so), never
+     entered by a refresh (FO-130, astra-review-l1s); a section the commit kept is not entered in any mode (28-in-place.js) */
+  const still = motionReduced() || document.documentElement.getAttribute('data-motion') === 'reduced';
+  body.querySelectorAll('.manager-section').forEach(sec => { sec.classList.add('section-block', 'is-revealed'); if (still) sec.classList.add('pm51-instant'); });
   body.querySelectorAll('.pm51-settings-inline .settings-section').forEach(sec => sec.classList.add('section-block', 'is-revealed', 'pm51-instant'));
   PM51.applyFilters(body);
   try { syncDetailButtonStates(); } catch (e) { /* inspector chrome is cosmetic here */ }
@@ -764,7 +800,20 @@ PM51.on('noop', () => {});
 PM51.on('disabled', el => { showToast('Not available', el.dataset.disabledReason || 'This cannot be changed here.', 'info', 2600); });
 /* Narrow hosts: the roster becomes an off-canvas list toggled from the detail head. */
 PM51.on('toggle-roster', el => { state.resourceRosterOpen = !state.resourceRosterOpen; const body = el.closest('.manager-body'); if (body) body.classList.toggle('roster-open', state.resourceRosterOpen); });
-const applyRosterFilter = el => { const list = el.closest('.resource-roster')?.querySelector('.roster-list'); if (!list) return; const q = String(el.value || '').toLowerCase(); list.querySelectorAll('.resource-row').forEach(row => { row.hidden = !!q && !row.textContent.toLowerCase().includes(q); }); };
+const applyRosterFilter = el => {
+  const roster = el.closest('.resource-roster'), list = roster?.querySelector('.roster-list'); if (!list) return;
+  const q = String(el.value || '').toLowerCase(), rows = [...list.querySelectorAll('.resource-row')];
+  rows.forEach(row => { row.hidden = !!q && !row.textContent.toLowerCase().includes(q); });
+  const empty = !!q && !rows.some(row => !row.hidden);
+  let message = roster.querySelector('.pm51-filter-empty');
+  if (!message) {
+    message = document.createElement('div'); message.className = 'pm51-popout-empty pm51-filter-empty';
+    message.textContent = el.placeholder === 'Filter services' ? 'No services match. Clear the filter to see everything.' : 'No matches. Clear the filter to see everything.';
+    list.before(message);
+  }
+  message.hidden = !empty;
+  const title = roster.querySelector('.roster-title'); if (title) title.hidden = empty;
+};
 PM51.applyFilters = scope => { (scope || root).querySelectorAll('input[data-action="pm51-filter"]').forEach(el => { const stored = (PM51.s().filters || {})[ds(el, 'manager')]; if (stored != null && el.value !== stored) el.value = stored; if (el.value) applyRosterFilter(el); }); };
 PM51.onInput('filter', el => { PM51.s().filters = PM51.s().filters || {}; PM51.s().filters[ds(el, 'manager')] = el.value; applyRosterFilter(el); });
 
@@ -795,7 +844,8 @@ PM51.onInput('filter', el => { PM51.s().filters = PM51.s().filters || {}; PM51.s
   const proj = find('projects');
   if (proj) { proj.workspaces = proj.workspaces.filter(w => w.id !== 'project-sync'); proj.summary = 'All project settings, history, and artifacts.'; }
   const mem = find('memory');
-  if (mem) { mem.workspaces = mem.workspaces.filter(w => w.id !== 'owners'); mem.summary = 'Context, memories, Goals, personas, and crews.'; }
+  /* FO-167 (2026-11-12): the quiet Memory page is called Memory (PACKET: the Context & Memory launcher, kept as Memory) */
+  if (mem) { mem.workspaces = mem.workspaces.filter(w => w.id !== 'owners'); const cm = mem.workspaces.find(w => w.id === 'context-memory'); if (cm) cm.label = 'Memory'; mem.summary = 'Memory, Goals, personas, and crews.'; }
   const src = find('source');
   if (src) { const sm = src.workspaces.find(w => w.id === 'source-manager'); if (sm) sm.label = 'Source Control'; src.summary = 'Version history, code services, repositories, and safety.'; }
   const ai = find('ai'); if (ai) ai.summary = 'AI services, web and media abilities, and the Back Seat Driver.';
@@ -813,7 +863,7 @@ const INTROS = {
   mcp: 'Connect outside tools and services the assistant can call.',
   commands: 'Type / commands and press keys to do things faster.',
   testing: 'Decide how your work gets checked and how you debug it.',
-  'context-memory': 'What the assistant remembers about you and this workspace.',
+  'context-memory': 'What Puppet Master remembers between chats.',
   goals: 'Templates and rules for jobs the assistant runs on its own.',
   personas: 'The characters the assistant can play, alone or as a team.',
   'source-manager': 'Keep version history and connect the code services you use.',
@@ -1005,7 +1055,8 @@ function pm51PlaceInline(workspace, html) {
   const activeBtn = page.querySelector('.pm51-tabs .manager-tab.active');
   const activeTab = activeBtn ? activeBtn.dataset.tab : (PM51.tab(workspace.id, pm51DefaultTabs[workspace.id]) || null);
   const present = id => !!tpl.content.querySelector(`#setting-${cssEscape(id)}, [data-setting-id="${cssEscape(id)}"]`);
-  const forTab = all.filter(s => !s.tab || !activeTab || s.tab === activeTab).filter(s => !s.composed || !s.settings.some(x => present(x.id)));
+  const owns = (page.dataset.pm51Owns || '').split(' ').filter(Boolean);
+  const forTab = all.filter(s => !s.tab || !activeTab || s.tab === activeTab).filter(s => !s.composed || !(owns.includes(s.id) || s.settings.some(x => present(x.id))));
   const visible = manual ? [] : forTab.filter(s => !s.advanced);
   const advanced = forTab.filter(s => s.advanced || (manual && s.composed));
   const children = () => [...scroll.children];
@@ -1157,7 +1208,10 @@ Object.entries(PLACEMENT.pages || {}).forEach(([id, p]) => { if (p && p.intro) I
 
 /* Navigation: a section or setting on another tab switches the tab before the mount; scrolling to a
    section on a tab that is not rendered switches and re-renders synchronously first. */
-const pm51OpenAdvancedFor = node => { const d = node && node.closest('details.pm51-advanced'); if (d && !d.open) d.open = true; };
+const pm51OpenAdvancedFor = node => {
+  const d = node && node.closest('details.pm51-advanced');
+  if (d && !d.open) { if (PM51.fillDisclosure) PM51.fillDisclosure(d); d.open = true; }
+};
 const pm51OriginalNavigate = navigate;
 navigate = function (domainId, workspaceId, options = {}) {
   const meta = options && options.section ? pm51SectionMeta[options.section] : null;

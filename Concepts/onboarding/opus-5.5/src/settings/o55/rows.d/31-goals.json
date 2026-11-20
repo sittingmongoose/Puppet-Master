@@ -347,7 +347,11 @@
   },
   "planning.verification.goal-auto-resume": {
    "label": "Pick up where it left off",
-   "help": "After a restart or a lost connection, from the last saved point."
+   "help": "After a restart or a lost connection, from the last saved point.",
+   "when": {
+    "id": "planning.verification.goal-checkpoint-cadence",
+    "not": "never"
+   }
   }
  }
 }

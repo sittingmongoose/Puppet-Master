@@ -169,10 +169,13 @@
   };
 
   /* opts.scope: 'app' when Settings opens it (All terminals for that visit); left out, it opens on the scope last
-     picked for this terminal, This terminal at first */
+     picked for this terminal, This terminal at first. opts.returnFocus: Settings opens it over its own page, and a
+     close gives the focus back there (a function giving the element, FO-148) rather than to this terminal on a page
+     that is not showing */
   T.View.prototype.openAppearance = function (opts) {
     if (this.pop) { this.closeAppearance(); return; }
-    T.AppearancePopover.open(this.root, Object.assign({ surface: 'terminal', view: this }, opts && opts.scope ? { scope: opts.scope } : {}));
+    T.AppearancePopover.open(this.root, Object.assign({ surface: 'terminal', view: this }, opts && opts.scope ? { scope: opts.scope } : {},
+      opts && typeof opts.returnFocus === 'function' ? { returnFocus: opts.returnFocus } : {}));
   };
 
   /* noFocus: the view is going away (dispose), so the focus is left where it is */
@@ -186,8 +189,12 @@
     else { pop.inert = true; pop.setAttribute('aria-hidden', 'true'); if (noFocus) pop.remove(); else T.Motion.leave(pop, function () { pop.remove(); }); }
     if (this._popOutside) document.removeEventListener('mousedown', this._popOutside, true);
     var done = this._apOnClose; this._apOnClose = null;
+    var back = this._apReturn; this._apReturn = null;
     if (done) { try { done(); } catch (e) { console.error('[pmt] appearance onClose failed', e); } }
-    if (!noFocus) this.focus();
+    if (noFocus) return;
+    var to = null; if (back) { try { to = back(); } catch (e) { to = null; } }
+    if (back) { if (to && to.isConnected && typeof to.focus === 'function') to.focus({ preventScroll: true }); }
+    else this.focus();
   };
 
   /* the scheme rows and swatches, for any surface that lists the catalog */

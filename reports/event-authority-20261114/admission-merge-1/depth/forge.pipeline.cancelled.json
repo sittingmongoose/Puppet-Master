@@ -1,0 +1,325 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-1",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-15.75",
+  "sha256": "a25dce4e8345f21e7266ec652648ccd2bf8ed94f3c4df37ba90f1bb4b13b8eab",
+  "family_count": 121,
+  "row_pointer": "#/families/120"
+ },
+ "base_commit": "03a09c66360991e5fb7b5620a84bc85b681e3635",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "forge.pipeline.cancelled",
+   "family_id": "event-family-forge-pipeline-cancelled",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-15.75 as #/families/120 (canonical row SHA-256 28c6aa90ef1dd2ea856ba20f9b8f78f4a39ed80824aadc61340bb16f0d10ac9c); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/120",
+       "line_start": 8342,
+       "line_end": 8422,
+       "quote": "\"event_type\": \"forge.pipeline.cancelled\"",
+       "quote_line": 8345,
+       "file_sha256": "a25dce4e8345f21e7266ec652648ccd2bf8ed94f3c4df37ba90f1bb4b13b8eab",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1210 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1210",
+       "line_start": 2337,
+       "line_end": 2337,
+       "quote": "canonical_text: 'Newly authored owner contract for forge.pipeline.cancelled@1.0.0 under deck-2 9.a A (DL-450), preserving",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1210, Plans/Forge_Integrations.md:2330-2496",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1210 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1210",
+       "line_start": 2360,
+       "line_end": 2360,
+       "quote": "Producer and order: ForgePipelineObserver.commit_cancelled@1.0.0 accepts only the actual native owner result/observation,",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1210, Plans/Forge_Integrations.md:2330-2496",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1210 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1210",
+       "line_start": 2370,
+       "line_end": 2370,
+       "quote": "Closed payload: Plans/event_payloads/forge/forge_pipeline_cancelled.schema.json# selects pm.event_payload.forge_pipeline_cancelled.v1@1.0.0;",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1210, Plans/Forge_Integrations.md:2330-2496",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1210 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1210",
+       "line_start": 2379,
+       "line_end": 2379,
+       "quote": "Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1210, Plans/Forge_Integrations.md:2330-2496",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1210 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1210",
+       "line_start": 2387,
+       "line_end": 2387,
+       "quote": "Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1210, Plans/Forge_Integrations.md:2330-2496",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Bound to DL-455 (E-CARDS-3 item 3.a) as the landed Storage third-sitting assignment states: Project RP-OPERATIONAL-2555D@1.0.0, application RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; anchor finish entry under the Storage Project first-save anchor adapter (Project); creation (application); 220,752,000 s. Source/checkpoint policies stay SP-bound. Native expiry and counting NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1210",
+       "line_start": 2396,
+       "line_end": 2396,
+       "quote": "Retention (DL-455, E-CARDS-3 item 3.a, applied as the landed Storage third-sitting assignment states): Project",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1210, Plans/Forge_Integrations.md:2330-2496",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      },
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1210",
+       "line_start": 2490,
+       "line_end": 2490,
+       "quote": "- RP-OPERATIONAL-2555D@1.0.0",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1210, Plans/Forge_Integrations.md:2330-2496",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1210 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1210",
+       "line_start": 2410,
+       "line_end": 2410,
+       "quote": "Custody/redaction: forge_pipeline_cancelled_source is canonical non-rebuildable identity/source-lineage, coherently",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1210, Plans/Forge_Integrations.md:2330-2496",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1210 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1210",
+       "line_start": 2351,
+       "line_end": 2351,
+       "quote": "Semantics and transitions: The exact provider pipeline attempt is observed terminal cancelled. The terminal result",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1210, Plans/Forge_Integrations.md:2330-2496",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-1210 refines recipe/issuance/membership dependencies and the exact count/resume contract; existing family consumer/SP-278 binding remains explicit. Native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1210",
+       "line_start": 2420,
+       "line_end": 2420,
+       "quote": "Consumer/checkpoint: newly bind Actions & Pipelines cancellation-history reader as consumer.forge.pipeline.cancelled.history@1.0.0,",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1210, Plans/Forge_Integrations.md:2330-2496",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1210",
+       "line_start": 48085,
+       "line_end": 48085,
+       "quote": "Generation invariants for forge.pipeline.cancelled: correct ID recipes, actual seed-issuance provenance,",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1210, Plans/storage-plan.md:47963-48152",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1210",
+       "line_start": 48030,
+       "line_end": 48030,
+       "quote": "The forge.pipeline.cancelled count-equality oracle uses a completely covered prefix with one exact",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1210, Plans/storage-plan.md:47963-48152",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1210 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1210",
+       "line_start": 2427,
+       "line_end": 2427,
+       "quote": "Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1210, Plans/Forge_Integrations.md:2330-2496",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executed_static_oracle",
+     "finding": "scripts/pm_w3a_forge_events.py runs this family in both scopes: 28 positives (append, settle, retry, publish, stage, read, replay, withdraw; both scopes) and 593 to 667 negatives, every reachable row of its tables refused first by its own single-defect witness (all 35 families: 980 positives, 21,829 negatives, 21,409 single-defect, 420 labelled multi-defect). Guard tables on the gated tool 004bdedd63: 592 tables, 2,101 rows, 2,100 proved; the one unproved row PM01_pack_media is entailed by the source-row pending_intent_ref pattern and sits alone in its own table; lane matrix 0, masked 0. Numbers: shared calls at every integer slot; shared corpus 140/140 direct and 1,624/1,624 complete-checker routes, 0 untracked; --self-test --scope numbers pass; no crash on 4,400-digit integers. Timestamps: CV-1101 date_time with the event_record / storage_utc_z owner profiles. Retained reads select only from the one sealed SP-1101 receipt. Native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1210",
+       "line_start": 2437,
+       "line_end": 2437,
+       "quote": "Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1210, Plans/Forge_Integrations.md:2330-2496",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}

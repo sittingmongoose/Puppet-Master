@@ -4,7 +4,7 @@ Source: `Plans/Shared_Integration_Runtime.md`
 
 Source lines: L827-L1101
 
-Source SHA256: `bb9f233ffd1699001f2844d3b00ebda83049f6c86d3489a4e899d4e5ec416c12`
+Source SHA256: `418802295a5d15e05c1c0eb0bc7e58a9bc652a93726ff12320572c63f400c458`
 
 ---
 
@@ -90,7 +90,7 @@ These are required adapter and measurement boundaries under the one `RuntimeReso
 - Sockets, process pipes, PTYs, and high-concurrency file operations use completion-based asynchronous I/O and do not allocate one thread per handle. The admitted packet does not freeze `IOCP` or a particular wait API as a product contract.
 - Normal filesystem watching uses `ReadDirectoryChangesW`; NTFS USN data is optional acceleration for overflow, recovery, or long disconnect and always retains a normal fallback.
 - Latency-critical controls use high QoS; maintenance uses EcoQoS or equivalent efficiency policy.
-- Startup, input-to-paint, provider receive-to-paint, storage, Git, process launch, Browser lifecycle, queues, and Goal phases emit ETW/WPR/WPA-compatible instrumentation. Resource evidence measures the total process tree rather than the primary process alone.
+- Startup, input-to-paint, provider receive-to-paint, storage, Git, process launch, Browser lifecycle, queues, and workflow stages emit ETW/WPR/WPA-compatible instrumentation. Resource evidence measures the total process tree rather than the primary process alone.
 - Large processor-group systems are supported and third-party pool assumptions are tested without indiscriminate affinity.
 - Native and standalone Windows are complete execution hosts with WSL off. WSL is an optional selectable execution backend and cannot be a hidden prerequisite or substitute for native Windows proof.
 

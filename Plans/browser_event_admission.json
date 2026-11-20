@@ -50,7 +50,7 @@
   "global_event_denominator": "UNKNOWN_OPEN",
   "known37_assignment_disposition": "Historical RET-K37-ASSIGNMENT-001 is unchanged. The thirty-nine-family fingerprint was re-frozen on 2026-09-23 after six landed goal v3 adoptions (3890d86c70, 5fc9747b6f, 1136661ddc, e686963ad5, a3c511657f, f6350caf27) changed upstream goal rows; membership and order are unchanged. Neither describes admission of these fifty-three prepared contracts. The separately approved compaction-completion family is retained.",
   "physical_record_admission": "SP-266 separately defines only the derived browser_workspace_created_index_checkpoint. Payload owner-record refs, Browser session/profile and other canonical Browser records still require their own storage-family admission before native persistence.",
-  "claim_boundary": "Row-local static contract admission only. browser.workspace.created has its reviewed SMPFS-167/SP-266 binding and exact central row; the other52 remain prepared_not_admitted and quarantined. Each later family requires its own complete owner/Storage contract, product gates, exact schemas, semantic checks, root review and separate landing. Only the separately registered SP-266 derived checkpoint is added; no canonical Browser owner record, native producer, runtime durability/security, billing, benchmark, readiness, global currentness or seal is proved.",
+  "claim_boundary": "All 53 listed families are admitted_static_contract in the central registry. Their exact per-family authority bindings govern static admission; runtime producers remain unimplemented_not_proven.",
   "source_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
   "validation_command": "python3 scripts/pm-browser-event-admission.py",
   "rows": [
@@ -155,8 +155,8 @@
       "event_type": "browser.workspace.closed",
       "family_id": "event-family-browser-workspace-closed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-workspace-closed",
       "producer_component": "BrowserRuntimeService.workspace",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "Workspace closure is confirmed; UI disappearance or a close request alone is insufficient.",
@@ -179,6 +179,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2500",
+        "Plans/Contracts_V0.md#CV-2500",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -194,14 +196,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_workspace_closed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2500"
     },
     {
       "event_type": "browser.page.created",
       "family_id": "event-family-browser-page-created",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-page-created",
       "producer_component": "BrowserRuntimeService.pages",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A new page is bound to its exact ordinary workspace and initial page generation.",
@@ -226,6 +229,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2501",
+        "Plans/Contracts_V0.md#CV-2501",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -241,14 +246,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_page_created",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2501"
     },
     {
       "event_type": "browser.page.activated",
       "family_id": "event-family-browser-page-activated",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-page-activated",
       "producer_component": "BrowserRuntimeService.pages",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "Explicit page activation commits the selected page identity without retargeting another page.",
@@ -273,6 +279,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2502",
+        "Plans/Contracts_V0.md#CV-2502",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -288,14 +296,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_page_activated",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2502"
     },
     {
       "event_type": "browser.page.closed",
       "family_id": "event-family-browser-page-closed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-page-closed",
       "producer_component": "BrowserRuntimeService.pages",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "The exact page is closed and its mutation authority is no longer usable.",
@@ -320,6 +329,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2503",
+        "Plans/Contracts_V0.md#CV-2503",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -335,14 +346,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_page_closed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2503"
     },
     {
       "event_type": "browser.controller_lease.granted",
       "family_id": "event-family-browser-controller-lease-granted",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-controller-lease-granted",
       "producer_component": "BrowserRuntimeService.controller",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A fenced ordinary-page lease grant commits the exact holder, generation, and epoch.",
@@ -367,6 +379,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2504",
+        "Plans/Contracts_V0.md#CV-2504",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -382,14 +396,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_controller_lease_granted",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2504"
     },
     {
       "event_type": "browser.controller_lease.renewed",
       "family_id": "event-family-browser-controller-lease-renewed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-controller-lease-renewed",
       "producer_component": "BrowserRuntimeService.controller",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "The same current holder renews the exact lease under generation/epoch CAS.",
@@ -414,6 +429,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2505",
+        "Plans/Contracts_V0.md#CV-2505",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -429,14 +446,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_controller_lease_renewed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2505"
     },
     {
       "event_type": "browser.controller_lease.lost",
       "family_id": "event-family-browser-controller-lease-lost",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-controller-lease-lost",
       "producer_component": "BrowserRuntimeService.controller",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "The owner fences a lost or expired lease; no further action is authorized by the old fence.",
@@ -461,6 +479,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2506",
+        "Plans/Contracts_V0.md#CV-2506",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -476,14 +496,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_controller_lease_lost",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2506"
     },
     {
       "event_type": "browser.controller_lease.takeover_requested",
       "family_id": "event-family-browser-controller-lease-takeover-requested",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-controller-lease-takeover-requested",
       "producer_component": "BrowserRuntimeService.controller",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "An explicit takeover request is recorded without granting the requester mutation authority.",
@@ -508,6 +529,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2507",
+        "Plans/Contracts_V0.md#CV-2507",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -523,14 +546,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_controller_lease_takeover_requested",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2507"
     },
     {
       "event_type": "browser.controller_lease.takeover_completed",
       "family_id": "event-family-browser-controller-lease-takeover-completed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-controller-lease-takeover-completed",
       "producer_component": "BrowserRuntimeService.controller",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "The old holder is fenced and the new exact holder/epoch is committed.",
@@ -555,6 +579,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2508",
+        "Plans/Contracts_V0.md#CV-2508",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -570,14 +596,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_controller_lease_takeover_completed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2508"
     },
     {
       "event_type": "browser.navigation.generation_changed",
       "family_id": "event-family-browser-navigation-generation-changed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-navigation-generation-changed",
       "producer_component": "BrowserRuntimeService.pages",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "Navigation commits a new page generation; stale action/representation identities are rejected.",
@@ -602,6 +629,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2509",
+        "Plans/Contracts_V0.md#CV-2509",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -617,14 +646,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_navigation_generation_changed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2509"
     },
     {
       "event_type": "browser.document.generation_changed",
       "family_id": "event-family-browser-document-generation-changed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-document-generation-changed",
       "producer_component": "BrowserRuntimeService.pages",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A document change advances the page generation and invalidates prior representation identities.",
@@ -649,6 +679,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2510",
+        "Plans/Contracts_V0.md#CV-2510",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -664,14 +696,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_document_generation_changed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2510"
     },
     {
       "event_type": "browser.representation.captured",
       "family_id": "event-family-browser-representation-captured",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-representation-captured",
       "producer_component": "BrowserRuntimeService.representation",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A bounded representation is produced for an exact page generation with explicit coverage.",
@@ -696,6 +729,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2511",
+        "Plans/Contracts_V0.md#CV-2511",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -711,14 +746,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_representation_captured",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2511"
     },
     {
       "event_type": "browser.representation.delta_created",
       "family_id": "event-family-browser-representation-delta-created",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-representation-delta-created",
       "producer_component": "BrowserRuntimeService.representation",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A bounded delta is produced against an admitted current base representation.",
@@ -743,6 +779,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2512",
+        "Plans/Contracts_V0.md#CV-2512",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -758,14 +796,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_representation_delta_created",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2512"
     },
     {
       "event_type": "browser.representation.queried",
       "family_id": "event-family-browser-representation-queried",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-representation-queried",
       "producer_component": "BrowserRuntimeService.representation",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A bounded local query completes against the admitted page-generation index.",
@@ -790,6 +829,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2513",
+        "Plans/Contracts_V0.md#CV-2513",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -805,14 +846,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_representation_queried",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2513"
     },
     {
       "event_type": "browser.representation.invalidated",
       "family_id": "event-family-browser-representation-invalidated",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-representation-invalidated",
       "producer_component": "BrowserRuntimeService.representation",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A specific representation becomes invalid and cannot be presented as current.",
@@ -837,6 +879,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2514",
+        "Plans/Contracts_V0.md#CV-2514",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -852,14 +896,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_representation_invalidated",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2514"
     },
     {
       "event_type": "browser.script.compile_started",
       "family_id": "event-family-browser-script-compile-started",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-script-compile-started",
       "producer_component": "BrowserRuntimeService.compiler",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A bounded compile request enters the compiler; no browser or ProgramWorkspace effect has begun.",
@@ -882,6 +927,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2515",
+        "Plans/Contracts_V0.md#CV-2515",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -897,14 +944,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_script_compile_started",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2515"
     },
     {
       "event_type": "browser.script.compiled",
       "family_id": "event-family-browser-script-compiled",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-script-compiled",
       "producer_component": "BrowserRuntimeService.compiler",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "Compilation passes parse/type/name/effect/capability/permission/limit preflight and yields the hashed program.",
@@ -927,6 +975,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2516",
+        "Plans/Contracts_V0.md#CV-2516",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -942,14 +992,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_script_compiled",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2516"
     },
     {
       "event_type": "browser.script.compile_failed",
       "family_id": "event-family-browser-script-compile-failed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-script-compile-failed",
       "producer_component": "BrowserRuntimeService.compiler",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "Compilation fails with typed diagnostics and no browser, file, process, lease, capture, or workspace effect.",
@@ -972,6 +1023,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2517",
+        "Plans/Contracts_V0.md#CV-2517",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -987,14 +1040,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_script_compile_failed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2517"
     },
     {
       "event_type": "browser.execution_strategy.selected",
       "family_id": "event-family-browser-execution-strategy-selected",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-execution-strategy-selected",
       "producer_component": "BrowserRuntimeService.routing",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "The owner selects requested/effective strategy from current capability, permission, and budget evidence.",
@@ -1015,6 +1069,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2518",
+        "Plans/Contracts_V0.md#CV-2518",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1030,14 +1086,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_execution_strategy_selected",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2518"
     },
     {
       "event_type": "browser.execution_strategy.fallback_selected",
       "family_id": "event-family-browser-execution-strategy-fallback-selected",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-execution-strategy-fallback-selected",
       "producer_component": "BrowserRuntimeService.routing",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A disclosed authorized fallback is selected without widening source, target, capture, or permission.",
@@ -1058,6 +1115,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2519",
+        "Plans/Contracts_V0.md#CV-2519",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1073,14 +1132,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_execution_strategy_fallback_selected",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2519"
     },
     {
       "event_type": "browser.program.started",
       "family_id": "event-family-browser-program-started",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-started",
       "producer_component": "BrowserRuntimeService.program",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A preflighted program starts with current subject, workspace revision, lease, and budgets.",
@@ -1109,6 +1169,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2520",
+        "Plans/Contracts_V0.md#CV-2520",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1124,14 +1186,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_started",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2520"
     },
     {
       "event_type": "browser.program.checkpointed",
       "family_id": "event-family-browser-program-checkpointed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-checkpointed",
       "producer_component": "BrowserRuntimeService.program",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A durable checkpoint records completed effects, pending segments, workspace revision, and finalized artifacts.",
@@ -1160,6 +1223,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2521",
+        "Plans/Contracts_V0.md#CV-2521",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1175,14 +1240,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_checkpointed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2521"
     },
     {
       "event_type": "browser.program.paused",
       "family_id": "event-family-browser-program-paused",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-paused",
       "producer_component": "BrowserRuntimeService.program",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "Pause reaches a safe owned boundary and preserves completed effects and pending continuation.",
@@ -1211,6 +1277,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2522",
+        "Plans/Contracts_V0.md#CV-2522",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1226,14 +1294,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_paused",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2522"
     },
     {
       "event_type": "browser.program.resumed",
       "family_id": "event-family-browser-program-resumed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-resumed",
       "producer_component": "BrowserRuntimeService.program",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "The same program resumes only after current checkpoint, permission, target, and generation revalidation.",
@@ -1262,6 +1331,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2523",
+        "Plans/Contracts_V0.md#CV-2523",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1277,14 +1348,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_resumed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2523"
     },
     {
       "event_type": "browser.program.completed",
       "family_id": "event-family-browser-program-completed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-completed",
       "producer_component": "BrowserRuntimeService.program",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "The owner records completed program execution; this is not a test verdict.",
@@ -1313,6 +1385,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2524",
+        "Plans/Contracts_V0.md#CV-2524",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1328,14 +1402,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_completed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2524"
     },
     {
       "event_type": "browser.program.failed",
       "family_id": "event-family-browser-program-failed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-failed",
       "producer_component": "BrowserRuntimeService.program",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "The owner records failure with no-effect or reconciled-effect disposition and safe next action.",
@@ -1364,6 +1439,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2525",
+        "Plans/Contracts_V0.md#CV-2525",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1379,14 +1456,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_failed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2525"
     },
     {
       "event_type": "browser.program.cancelled",
       "family_id": "event-family-browser-program-cancelled",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-cancelled",
       "producer_component": "BrowserRuntimeService.program",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "Cancellation is confirmed at a safe boundary with completed effects and artifact finalization retained.",
@@ -1415,6 +1493,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2526",
+        "Plans/Contracts_V0.md#CV-2526",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1430,14 +1510,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_cancelled",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2526"
     },
     {
       "event_type": "browser.program.segment.started",
       "family_id": "event-family-browser-program-segment-started",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-segment-started",
       "producer_component": "BrowserRuntimeService.program",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A dependency-admitted bounded segment starts at its exact expected ProgramWorkspace revision.",
@@ -1467,6 +1548,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2527",
+        "Plans/Contracts_V0.md#CV-2527",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1482,14 +1565,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_segment_started",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2527"
     },
     {
       "event_type": "browser.program.segment.checkpointed",
       "family_id": "event-family-browser-program-segment-checkpointed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-segment-checkpointed",
       "producer_component": "BrowserRuntimeService.program",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A segment checkpoint commits its effect/workspace boundary and continuation reference.",
@@ -1519,6 +1603,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2528",
+        "Plans/Contracts_V0.md#CV-2528",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1534,14 +1620,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_segment_checkpointed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2528"
     },
     {
       "event_type": "browser.program.segment.completed",
       "family_id": "event-family-browser-program-segment-completed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-segment-completed",
       "producer_component": "BrowserRuntimeService.program",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "The segment completes with an explicit resulting workspace revision and completed-action identities.",
@@ -1571,6 +1658,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2529",
+        "Plans/Contracts_V0.md#CV-2529",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1586,14 +1675,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_segment_completed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2529"
     },
     {
       "event_type": "browser.program.segment.failed",
       "family_id": "event-family-browser-program-segment-failed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-segment-failed",
       "producer_component": "BrowserRuntimeService.program",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "The segment fails with typed no-effect or reconciled-effect disposition and retry safety.",
@@ -1623,6 +1713,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2530",
+        "Plans/Contracts_V0.md#CV-2530",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1638,14 +1730,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_segment_failed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2530"
     },
     {
       "event_type": "browser.program.segment.timed_out",
       "family_id": "event-family-browser-program-segment-timed-out",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-segment-timed-out",
       "producer_component": "BrowserRuntimeService.program",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "The segment reaches its time budget and records stopped, reconciled, or unknown effects explicitly.",
@@ -1675,6 +1768,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2531",
+        "Plans/Contracts_V0.md#CV-2531",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1690,14 +1785,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_segment_timed_out",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2531"
     },
     {
       "event_type": "browser.program.timeout.stopped",
       "family_id": "event-family-browser-program-timeout-stopped",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-timeout-stopped",
       "producer_component": "BrowserRuntimeService.program",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "Timeout cleanup confirms stopped effects; completed work and captures remain attributable.",
@@ -1726,6 +1822,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2532",
+        "Plans/Contracts_V0.md#CV-2532",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1741,14 +1839,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_timeout_stopped",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2532"
     },
     {
       "event_type": "browser.program.timeout.effects_reconciled",
       "family_id": "event-family-browser-program-timeout-effects-reconciled",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-timeout-effects-reconciled",
       "producer_component": "BrowserRuntimeService.program",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "Timeout effects are explicitly reconciled before any policy permits a retry.",
@@ -1777,6 +1876,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2533",
+        "Plans/Contracts_V0.md#CV-2533",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1792,14 +1893,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_timeout_effects_reconciled",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2533"
     },
     {
       "event_type": "browser.program.timeout.effect_state_unknown",
       "family_id": "event-family-browser-program-timeout-effect-state-unknown",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-timeout-effect-state-unknown",
       "producer_component": "BrowserRuntimeService.program",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "Timeout leaves effect state unknown and retry is prohibited pending explicit reconciliation.",
@@ -1828,6 +1930,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2534",
+        "Plans/Contracts_V0.md#CV-2534",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1843,14 +1947,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_timeout_effect_state_unknown",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2534"
     },
     {
       "event_type": "browser.program_workspace.created",
       "family_id": "event-family-browser-program-workspace-created",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-workspace-created",
       "producer_component": "BrowserRuntimeService.program_workspace",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A typed durable ProgramWorkspace is created without materializing a host directory.",
@@ -1874,6 +1979,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2535",
+        "Plans/Contracts_V0.md#CV-2535",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1889,14 +1996,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_workspace_created",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2535"
     },
     {
       "event_type": "browser.program_workspace.updated",
       "family_id": "event-family-browser-program-workspace-updated",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-workspace-updated",
       "producer_component": "BrowserRuntimeService.program_workspace",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A permitted bounded local operation CAS-commits a new workspace revision.",
@@ -1920,6 +2028,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2536",
+        "Plans/Contracts_V0.md#CV-2536",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1935,14 +2045,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_workspace_updated",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2536"
     },
     {
       "event_type": "browser.program_workspace.checkpointed",
       "family_id": "event-family-browser-program-workspace-checkpointed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-workspace-checkpointed",
       "producer_component": "BrowserRuntimeService.program_workspace",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A durable workspace checkpoint commits the exact current revision and reference set.",
@@ -1966,6 +2077,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2537",
+        "Plans/Contracts_V0.md#CV-2537",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -1981,14 +2094,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_workspace_checkpointed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2537"
     },
     {
       "event_type": "browser.program_workspace.spilled",
       "family_id": "event-family-browser-program-workspace-spilled",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-workspace-spilled",
       "producer_component": "BrowserRuntimeService.program_workspace",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "Large typed values spill through authorized artifact/storage ownership with bounded references.",
@@ -2012,6 +2126,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2538",
+        "Plans/Contracts_V0.md#CV-2538",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -2027,14 +2143,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_workspace_spilled",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2538"
     },
     {
       "event_type": "browser.program_workspace.closed",
       "family_id": "event-family-browser-program-workspace-closed",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-workspace-closed",
       "producer_component": "BrowserRuntimeService.program_workspace",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "The exact workspace closes after required checkpoint/artifact disposition is recorded.",
@@ -2058,6 +2175,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2539",
+        "Plans/Contracts_V0.md#CV-2539",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -2073,14 +2192,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_program_workspace_closed",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2539"
     },
     {
       "event_type": "browser.screenshot.model_attachment_selected",
       "family_id": "event-family-browser-screenshot-model-attachment-selected",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-screenshot-model-attachment-selected",
       "producer_component": "BrowserRuntimeService.routing",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A screenshot attachment choice passes permission, redaction, capability, and model-output budget policy.",
@@ -2105,6 +2225,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2540",
+        "Plans/Contracts_V0.md#CV-2540",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -2120,14 +2242,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_screenshot_model_attachment_selected",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2540"
     },
     {
       "event_type": "browser.screenshot.skipped",
       "family_id": "event-family-browser-screenshot-skipped",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-screenshot-skipped",
       "producer_component": "BrowserRuntimeService.routing",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "Model screenshot attachment is skipped for an explicit policy/capability/budget/result reason.",
@@ -2152,6 +2275,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2541",
+        "Plans/Contracts_V0.md#CV-2541",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -2167,14 +2292,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_screenshot_skipped",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2541"
     },
     {
       "event_type": "browser.route.fetch_selected",
       "family_id": "event-family-browser-route-fetch-selected",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-route-fetch-selected",
       "producer_component": "BrowserRuntimeService.routing",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "Public static content selects the authorized Search/Fetch/Site Reader route before browser escalation.",
@@ -2195,6 +2321,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2542",
+        "Plans/Contracts_V0.md#CV-2542",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -2210,14 +2338,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_route_fetch_selected",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2542"
     },
     {
       "event_type": "browser.route.browser_escalated",
       "family_id": "event-family-browser-route-browser-escalated",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-route-browser-escalated",
       "producer_component": "BrowserRuntimeService.routing",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "An explicit authorized need escalates the same source to Browser without hidden authority widening.",
@@ -2238,6 +2367,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2543",
+        "Plans/Contracts_V0.md#CV-2543",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -2253,14 +2384,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_route_browser_escalated",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2543"
     },
     {
       "event_type": "browser.routine.generated",
       "family_id": "event-family-browser-routine-generated",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-routine-generated",
       "producer_component": "BrowserRuntimeService.routines",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A versioned provenance-bearing routine is generated only after a validated task result.",
@@ -2282,6 +2414,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2544",
+        "Plans/Contracts_V0.md#CV-2544",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -2297,14 +2431,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_routine_generated",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2544"
     },
     {
       "event_type": "browser.routine.validated",
       "family_id": "event-family-browser-routine-validated",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-routine-validated",
       "producer_component": "BrowserRuntimeService.routines",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "Declared fixtures validate the exact routine/API/capability hashes without claiming empirical savings.",
@@ -2326,6 +2461,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2545",
+        "Plans/Contracts_V0.md#CV-2545",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -2341,14 +2478,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_routine_validated",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2545"
     },
     {
       "event_type": "browser.routine.promoted",
       "family_id": "event-family-browser-routine-promoted",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-routine-promoted",
       "producer_component": "BrowserRuntimeService.routines",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "Explicit promotion admits the exact scoped, reversible, validated routine version.",
@@ -2370,6 +2508,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2546",
+        "Plans/Contracts_V0.md#CV-2546",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -2385,14 +2525,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_routine_promoted",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2546"
     },
     {
       "event_type": "browser.routine.invalidated",
       "family_id": "event-family-browser-routine-invalidated",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-routine-invalidated",
       "producer_component": "BrowserRuntimeService.routines",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "API, capability, fixture, policy, or provenance drift invalidates the exact routine version.",
@@ -2414,6 +2555,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2547",
+        "Plans/Contracts_V0.md#CV-2547",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -2429,14 +2572,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_routine_invalidated",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2547"
     },
     {
       "event_type": "browser.routine.disabled",
       "family_id": "event-family-browser-routine-disabled",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-routine-disabled",
       "producer_component": "BrowserRuntimeService.routines",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "The exact routine is disabled with an explicit reason and no implied permission change.",
@@ -2458,6 +2602,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2548",
+        "Plans/Contracts_V0.md#CV-2548",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -2473,14 +2619,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_routine_disabled",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2548"
     },
     {
       "event_type": "browser.session.reconstructed_on_host",
       "family_id": "event-family-browser-session-reconstructed-on-host",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-session-reconstructed-on-host",
       "producer_component": "BrowserRuntimeService.handoff",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "After source fencing and effect reconciliation, state is reconstructed on the authorized target Host; no live process migrates.",
@@ -2503,6 +2650,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2549",
+        "Plans/Contracts_V0.md#CV-2549",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -2518,14 +2667,15 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_session_reconstructed_on_host",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2549"
     },
     {
       "event_type": "browser.session.interrupted",
       "family_id": "event-family-browser-session-interrupted",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-session-interrupted",
       "producer_component": "BrowserRuntimeService.handoff",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "The session is interrupted with explicit effect/recovery state; no automatic success or unsafe replay follows.",
@@ -2548,6 +2698,8 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-2550",
+        "Plans/Contracts_V0.md#CV-2550",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
@@ -2563,7 +2715,8 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_session_interrupted",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2550"
     }
   ],
   "command_event_bindings": [
@@ -2781,5 +2934,7 @@
       "handler_proof": "required_separately_before_runtime_enablement"
     }
   ],
-  "maximum_payload_utf8_bytes": 65536
+  "maximum_payload_utf8_bytes": 65536,
+  "inline_payload_canonical_msgpack_bytes": 16384,
+  "governed_body_route_ref": "Plans/Contracts_V0.md#EventRecord"
 }

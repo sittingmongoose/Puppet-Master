@@ -1,0 +1,1358 @@
+[
+ {
+  "id": "EV01-input-array",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "$root": []
+  },
+  "maintain": [],
+  "target": "EV01_input_object",
+  "extra": {}
+ },
+ {
+  "id": "EV02-context-array",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "context": []
+  },
+  "maintain": [],
+  "target": "EV02_context_object",
+  "extra": {}
+ },
+ {
+  "id": "EV03-payload-string",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "payload": "payload"
+  },
+  "maintain": [],
+  "target": "EV03_payload_object",
+  "extra": {}
+ },
+ {
+  "id": "RO02-original-replay-only",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "original/event/replay_policy": "projector_replay_only"
+  },
+  "maintain": [],
+  "target": "RO02_original_policy",
+  "extra": {}
+ },
+ {
+  "id": "RO03-carrier-replay-only",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "replay_policy": "projector_replay_only"
+  },
+  "maintain": [],
+  "target": "RO03_carrier_policy",
+  "extra": {}
+ },
+ {
+  "id": "RO05-context-envelope-replay-only",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "context/envelope_replay_policy": "projector_replay_only"
+  },
+  "maintain": [],
+  "target": "RO05_context_envelope_policy",
+  "extra": {}
+ },
+ {
+  "id": "OD01-outcome-integral-float",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "original-retry"
+  ],
+  "operation": "recover",
+  "changes": {
+   "outcome/payload/step_revision": 1.0
+  },
+  "maintain": [],
+  "target": "OD01_outcome_v1",
+  "extra": {}
+ },
+ {
+  "id": "RC02-result-receipt-copy",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "original-retry"
+  ],
+  "operation": "recover",
+  "changes": {
+   "issued_result/first_append_receipt/commit_group_id": "group:ds15:2"
+  },
+  "maintain": [],
+  "target": "RC02_result_receipt",
+  "extra": {}
+ },
+ {
+  "id": "EN16-retry-event-id",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "original-retry"
+  ],
+  "operation": "recover",
+  "changes": {
+   "envelope/event_id": "event:live_step_updated:2"
+  },
+  "maintain": [],
+  "target": "EN16_event_id",
+  "extra": {}
+ },
+ {
+  "id": "PAYLOAD_V1-original-payload-integral-float",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "original-retry"
+  ],
+  "operation": "recover",
+  "changes": {
+   "original/payload/step_revision": 1.0
+  },
+  "maintain": [],
+  "target": "PAYLOAD_V1_numbers",
+  "extra": {}
+ },
+ {
+  "id": "ORIGINAL_EVENT-original-event-integral-float",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "original-retry"
+  ],
+  "operation": "recover",
+  "changes": {
+   "original/event/payload/step_revision": 1.0
+  },
+  "maintain": [],
+  "target": "ORIGINAL_EVENT_numbers",
+  "extra": {}
+ },
+ {
+  "id": "ENVELOPE_V1-retained-envelope-integral-float",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "envelope/payload/step_revision": 1.0
+  },
+  "maintain": [],
+  "target": "ENVELOPE_V1_numbers",
+  "extra": {}
+ },
+ {
+  "id": "CONTEXT_RETAINED-session-state-type",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "read-current"
+  ],
+  "operation": "read",
+  "changes": {
+   "context/session_state": 7
+  },
+  "maintain": [],
+  "target": "CONTEXT_RETAINED_schema",
+  "extra": {}
+ },
+ {
+  "id": "CONTEXT_V1-original-session-state-type",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "original-retry"
+  ],
+  "operation": "recover",
+  "changes": {
+   "original_context/session_state": 7
+  },
+  "maintain": [],
+  "target": "CONTEXT_V1_schema",
+  "extra": {}
+ },
+ {
+  "id": "CP01-checkpoint-lone-surrogate",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-checkpoint"
+  ],
+  "operation": "checkpoint_boundary",
+  "changes": {
+   "checkpoint/scope/user_id": "\ud800"
+  },
+  "maintain": [],
+  "target": "CP01_encodable",
+  "extra": {}
+ },
+ {
+  "id": "CP02-checkpoint-over-16384",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-checkpoint"
+  ],
+  "operation": "checkpoint_boundary",
+  "changes": {
+   "checkpoint/index_read_token/index_dataset_name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  },
+  "maintain": [],
+  "target": "CP02_size_limit",
+  "extra": {}
+ },
+ {
+  "id": "PRIOR-prior-state-enum",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-full-prior-cas"
+  ],
+  "operation": "checkpoint",
+  "changes": {
+   "stored_previous/state": "bogus"
+  },
+  "maintain": [
+   "cas"
+  ],
+  "target": "PRIOR_CHECKPOINT_schema",
+  "extra": {}
+ },
+ {
+  "id": "CN07-prior-generation",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-full-prior-cas"
+  ],
+  "operation": "checkpoint",
+  "changes": {
+   "stored_previous/index_read_token/generation_id": "eig_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "maintain": [
+   "prior_refs",
+   "cas"
+  ],
+  "target": "CN07_prior_generation",
+  "extra": {}
+ },
+ {
+  "id": "CN08-prior-anchor",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-full-prior-cas"
+  ],
+  "operation": "checkpoint",
+  "changes": {
+   "stored_previous/index_read_token/generation_anchor_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+  },
+  "maintain": [
+   "cas"
+  ],
+  "target": "CN08_prior_anchor",
+  "extra": {}
+ },
+ {
+  "id": "CN09-prior-project",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-full-prior-cas"
+  ],
+  "operation": "checkpoint",
+  "changes": {
+   "stored_previous/project_id": "other_project_id"
+  },
+  "maintain": [
+   "cas"
+  ],
+  "target": "CN09_prior_project",
+  "extra": {}
+ },
+ {
+  "id": "CN10-prior-scope",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-full-prior-cas"
+  ],
+  "operation": "checkpoint",
+  "changes": {
+   "stored_previous/scope/user_id": "user:2"
+  },
+  "maintain": [
+   "cas"
+  ],
+  "target": "CN10_prior_scope",
+  "extra": {}
+ },
+ {
+  "id": "CN11-prior-not-current",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-full-prior-cas"
+  ],
+  "operation": "checkpoint",
+  "changes": {
+   "stored_previous/state": "withdrawn"
+  },
+  "maintain": [
+   "cas"
+  ],
+  "target": "CN11_prior_current",
+  "extra": {}
+ },
+ {
+  "id": "BS02-record-duplicate-key",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {},
+  "maintain": [
+   "record_text_duplicate"
+  ],
+  "target": "BS02_record_json",
+  "extra": {}
+ },
+ {
+  "id": "BS14-input-scope",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "application_source/original_input/scope/server_id": "server:app:2"
+  },
+  "maintain": [
+   "owner_record",
+   "source"
+  ],
+  "target": "BS14_input_scope",
+  "extra": {
+   "record_changes": {
+    "original_input_body/scope/server_id": "server:app:2"
+   }
+  }
+ },
+ {
+  "id": "BS15-input-profile",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "application_source/original_input/profile_id": "profile:2"
+  },
+  "maintain": [
+   "owner_record",
+   "source"
+  ],
+  "target": "BS15_input_profile",
+  "extra": {
+   "record_changes": {
+    "original_input_body/profile_id": "profile:2"
+   }
+  }
+ },
+ {
+  "id": "BS16-input-workspace",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "application_source/original_input/workspace_id": "workspace:app:2"
+  },
+  "maintain": [
+   "owner_record",
+   "source"
+  ],
+  "target": "BS16_input_workspace",
+  "extra": {
+   "record_changes": {
+    "original_input_body/workspace_id": "workspace:app:2"
+   }
+  }
+ },
+ {
+  "id": "BS17-input-session",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "application_source/original_input/session_refs": [
+    "browser:2"
+   ]
+  },
+  "maintain": [
+   "owner_record",
+   "source"
+  ],
+  "target": "BS17_input_session",
+  "extra": {
+   "record_changes": {
+    "original_input_body/session_refs": [
+     "browser:2"
+    ]
+   }
+  }
+ },
+ {
+  "id": "BS18-input-transition-source",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "application_source/original_input/transition_source_ref": "capture:original:2"
+  },
+  "maintain": [
+   "owner_record",
+   "source"
+  ],
+  "target": "BS18_input_transition_source",
+  "extra": {
+   "record_changes": {
+    "original_input_body/transition_source_ref": "capture:original:2"
+   }
+  }
+ },
+ {
+  "id": "BS21-output-scope",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "application_source/original_output/scope/server_id": "server:app:2"
+  },
+  "maintain": [
+   "owner_record",
+   "source"
+  ],
+  "target": "BS21_output_scope",
+  "extra": {
+   "record_changes": {
+    "original_output_body/scope/server_id": "server:app:2"
+   }
+  }
+ },
+ {
+  "id": "BS22-output-profile",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "application_source/original_output/profile_id": "profile:2"
+  },
+  "maintain": [
+   "owner_record",
+   "source"
+  ],
+  "target": "BS22_output_profile",
+  "extra": {
+   "record_changes": {
+    "original_output_body/profile_id": "profile:2"
+   }
+  }
+ },
+ {
+  "id": "BS23-output-workspace",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "application_source/original_output/workspace_id": "workspace:app:2"
+  },
+  "maintain": [
+   "owner_record",
+   "source"
+  ],
+  "target": "BS23_output_workspace",
+  "extra": {
+   "record_changes": {
+    "original_output_body/workspace_id": "workspace:app:2"
+   }
+  }
+ },
+ {
+  "id": "BS25-output-transition-source",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "application_source/original_output/transition_source_ref": "capture:original:2"
+  },
+  "maintain": [
+   "owner_record",
+   "source"
+  ],
+  "target": "BS25_output_transition_source",
+  "extra": {
+   "record_changes": {
+    "original_output_body/transition_source_ref": "capture:original:2"
+   }
+  }
+ },
+ {
+  "id": "BS26-output-controller-evidence",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "application_source/original_output/controller_evidence/revision": 2
+  },
+  "maintain": [
+   "owner_record",
+   "source"
+  ],
+  "target": "BS26_output_controller_evidence",
+  "extra": {}
+ },
+ {
+  "id": "BS29-stage-method",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "$stage/owner_method_id": "owner.browser.transition.application@2.0.0"
+  },
+  "maintain": [
+   "owner_record",
+   "source"
+  ],
+  "target": "BS29_stage_method",
+  "extra": {}
+ },
+ {
+  "id": "BS30-stage-request",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "$stage/request_ref": "request:2"
+  },
+  "maintain": [
+   "owner_record",
+   "source"
+  ],
+  "target": "BS30_stage_request",
+  "extra": {}
+ },
+ {
+  "id": "BS31-stage-result",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "$stage/result_ref": "result:2"
+  },
+  "maintain": [
+   "owner_record",
+   "source"
+  ],
+  "target": "BS31_stage_result",
+  "extra": {}
+ },
+ {
+  "id": "EA03-install-source-type",
+  "family": "catalog.install.started",
+  "parent": [
+   "sem",
+   "r7-application-install-payload"
+  ],
+  "operation": "payload",
+  "changes": {
+   "application_source/server_id": 7,
+   "original/application_source/server_id": 7
+  },
+  "maintain": [],
+  "target": "EA03_source_types",
+  "extra": {}
+ },
+ {
+  "id": "ID03-application-identity-without-custody",
+  "family": "browser.context_captured",
+  "parent": [
+   "pred",
+   "identity",
+   "valid-transition"
+  ],
+  "operation": null,
+  "changes": {
+   "application_source": null
+  },
+  "maintain": [],
+  "target": "ID03_application_custody",
+  "extra": {}
+ },
+ {
+  "id": "TV11-dev-dap-unverified",
+  "family": "dev.session.started",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "context/dap_state_after": "other",
+   "context/dap_transition_ref": "dap:transition:1",
+   "context/dap_owner_verified": false
+  },
+  "maintain": [],
+  "target": "TV11_dap_owner_verified",
+  "extra": {}
+ },
+ {
+  "id": "TV14-dev-link-thread",
+  "family": "dev.session.started",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "context/links/thread_id": "thread:other"
+  },
+  "maintain": [],
+  "target": "TV14_link_thread",
+  "extra": {}
+ },
+ {
+  "id": "TV15-dev-link-tab",
+  "family": "dev.session.started",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "context/links/workspace_tab_id": "tab:other"
+  },
+  "maintain": [],
+  "target": "TV15_link_tab",
+  "extra": {}
+ },
+ {
+  "id": "TV16-dev-link-terminal",
+  "family": "dev.session.started",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "context/links/terminal_session_id": "terminal:other"
+  },
+  "maintain": [],
+  "target": "TV16_link_terminal",
+  "extra": {}
+ },
+ {
+  "id": "TLC04-live-summary",
+  "family": "live.session.completed",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "context/finalization/summary_ref": "summary:other"
+  },
+  "maintain": [],
+  "target": "TLC04_summary",
+  "extra": {}
+ },
+ {
+  "id": "TLC05-live-checks",
+  "family": "live.session.completed",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "context/finalization/checks_ref": "checks:other"
+  },
+  "maintain": [],
+  "target": "TLC05_checks",
+  "extra": {}
+ },
+ {
+  "id": "TP10-preview-stopped-unsettled",
+  "family": "preview.session.stopped",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "context/managed_resources_settled": false
+  },
+  "maintain": [],
+  "target": "TP10_stopped_settled",
+  "extra": {}
+ },
+ {
+  "id": "TP11-preview-refresh-state",
+  "family": "preview.session.refreshed",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "context/session_state": "created"
+  },
+  "maintain": [],
+  "target": "TP11_refresh_state",
+  "extra": {}
+ },
+ {
+  "id": "TP12-preview-not-refreshable",
+  "family": "preview.session.refreshed",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "context/refreshable": false
+  },
+  "maintain": [],
+  "target": "TP12_refreshable",
+  "extra": {}
+ },
+ {
+  "id": "TP13-preview-refresh-uncommitted",
+  "family": "preview.session.refreshed",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "context/refresh_committed": false
+  },
+  "maintain": [],
+  "target": "TP13_refresh_committed",
+  "extra": {}
+ },
+ {
+  "id": "TP14-preview-revision",
+  "family": "preview.session.refreshed",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "context/previous_revision": 99
+  },
+  "maintain": [],
+  "target": "TP14_revision",
+  "extra": {}
+ },
+ {
+  "id": "TP18-preview-filemanager-session",
+  "family": "preview.session.refreshed",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "payload/refresh_origin": "filemanager.preview_refresh"
+  },
+  "maintain": [],
+  "target": "TP18_filemanager_no_session",
+  "extra": {}
+ },
+ {
+  "id": "CE01-prior-without-earlier-match",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-full-prior-cas"
+  ],
+  "operation": "checkpoint",
+  "changes": {
+   "selected_source/rows/0/event_type": "other.event"
+  },
+  "maintain": [],
+  "target": "CE01_prior_earlier",
+  "extra": {}
+ },
+ {
+  "id": "VV01-value-lone-surrogate",
+  "family": "shared",
+  "parent": [
+   "value",
+   "Plans/ds15_browser_capture_chip_v2.schema.json"
+  ],
+  "operation": null,
+  "changes": {
+   "value/scope/user_id": "\ud800"
+  },
+  "maintain": [],
+  "target": "VV01_encodable",
+  "extra": {}
+ },
+ {
+  "id": "DE02-original-event-type",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "payload",
+  "changes": {
+   "original/event/event_type": "catalog.update.completed"
+  },
+  "maintain": [],
+  "target": "DE02_original_type",
+  "extra": {}
+ },
+ {
+  "id": "DE04-envelope-policy",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {
+   "envelope/replay_policy": "append_once"
+  },
+  "maintain": [],
+  "target": "DE04_envelope_dedupe",
+  "extra": {}
+ },
+ {
+  "id": "DE05-original-policy",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {
+   "original/event/replay_policy": "append_once"
+  },
+  "maintain": [],
+  "target": "DE05_original_dedupe",
+  "extra": {}
+ },
+ {
+  "id": "DE07-envelope-project",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {
+   "envelope/project_id": "other_project_id"
+  },
+  "maintain": [],
+  "target": "DE07_project",
+  "extra": {}
+ },
+ {
+  "id": "DE08-envelope-payload-copy",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {
+   "envelope/payload/target_version": "3.0.0"
+  },
+  "maintain": [],
+  "target": "DE08_payload_copy",
+  "extra": {}
+ },
+ {
+  "id": "DE09-envelope-thread",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {
+   "envelope/thread_id": "thread:other"
+  },
+  "maintain": [],
+  "target": "DE09_thread",
+  "extra": {}
+ },
+ {
+  "id": "DE10-envelope-run",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {
+   "envelope/run_id": "run:other"
+  },
+  "maintain": [],
+  "target": "DE10_no_run",
+  "extra": {}
+ },
+ {
+  "id": "DE11-context-scope",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {
+   "context/scope/user_id": "user:2"
+  },
+  "maintain": [],
+  "target": "DE11_context_scope",
+  "extra": {}
+ },
+ {
+  "id": "DE13-payload-lone-surrogate",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {
+   "payload/scope/user_id": "\ud800",
+   "envelope/payload/scope/user_id": "\ud800",
+   "context/scope/user_id": "\ud800"
+  },
+  "maintain": [],
+  "target": "DE13_payload_encodable",
+  "extra": {}
+ },
+ {
+  "id": "ER01-record-payload",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {},
+  "maintain": [
+   "deck2_record"
+  ],
+  "target": "ER01_record_payload",
+  "extra": {
+   "record_changes": {
+    "payload/target_version": "3.0.0"
+   }
+  }
+ },
+ {
+  "id": "ER03-record-scope",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {},
+  "maintain": [
+   "deck2_record"
+  ],
+  "target": "ER03_record_scope",
+  "extra": {
+   "record_changes": {
+    "scope/user_id": "user:2"
+   }
+  }
+ },
+ {
+  "id": "ER04-record-original-transition",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "recover",
+  "changes": {},
+  "maintain": [
+   "deck2_record"
+  ],
+  "target": "ER04_record_original_transition",
+  "extra": {
+   "record_changes": {
+    "transition/stage": "effective"
+   }
+  }
+ },
+ {
+  "id": "ER07-record-current-transition",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {
+   "context/transition/stage": "effective"
+  },
+  "maintain": [],
+  "target": "ER07_record_current_transition",
+  "extra": {}
+ },
+ {
+  "id": "ER09-application-source",
+  "family": "browser.context_shared",
+  "parent": [
+   "deck2",
+   "application"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {
+   "application_source/server_id": "server:other"
+  },
+  "maintain": [],
+  "target": "ER09_app_source",
+  "extra": {}
+ },
+ {
+  "id": "EN06-envelope-project",
+  "family": "live.step.updated",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "envelope/project_id": "other_project_id"
+  },
+  "maintain": [],
+  "target": "EN06_project",
+  "extra": {}
+ },
+ {
+  "id": "VV03-dap-project",
+  "family": "shared",
+  "parent": [
+   "value",
+   "Plans/ds15_dev_session_record_v2.schema.json",
+   "workflow-and-real-subordinate-dap"
+  ],
+  "operation": null,
+  "changes": {
+   "value/dap/project_id": "other_project_id"
+  },
+  "maintain": [],
+  "target": "VV03_dap_project",
+  "extra": {}
+ },
+ {
+  "id": "ER08-record-operation",
+  "family": "browser.context_shared",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {},
+  "maintain": [
+   "deck2_record"
+  ],
+  "target": "ER08_record_operation",
+  "extra": {
+   "record_changes": {
+    "original_operation_id": "operation:other"
+   }
+  }
+ },
+ {
+  "id": "ER10-original-application-source",
+  "family": "browser.context_shared",
+  "parent": [
+   "deck2",
+   "application"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {
+   "original/application_source/server_id": "server:other"
+  },
+  "maintain": [],
+  "target": "ER10_app_original_source",
+  "extra": {}
+ },
+ {
+  "id": "EB21-carrier-without-bank",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "payload",
+  "changes": {
+   "owner_records": {
+    "$delete": true
+   }
+  },
+  "maintain": [],
+  "target": "EB21_bank_present",
+  "extra": {}
+ },
+ {
+  "id": "D2_OWNER_RECORDS-bank-value-type",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "payload",
+  "changes": {
+   "owner_records/extra": 5
+  },
+  "maintain": [],
+  "target": "D2_OWNER_RECORDS_schema",
+  "extra": {}
+ },
+ {
+  "id": "OR02-record-invalid-json",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {},
+  "maintain": [
+   "deck2_record_text_invalid"
+  ],
+  "target": "OR02_record_json",
+  "extra": {}
+ },
+ {
+  "id": "D2_SOURCE-record-missing-member",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "envelope_boundary",
+  "changes": {},
+  "maintain": [
+   "deck2_record"
+  ],
+  "target": "D2_SOURCE_schema",
+  "extra": {
+   "record_changes": {
+    "committed": {
+     "$delete": true
+    }
+   }
+  }
+ },
+ {
+  "id": "D2_CONTEXT_RETAINED-session-class-type",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "read",
+  "changes": {
+   "context/session_security_class": 7
+  },
+  "maintain": [],
+  "target": "D2_CONTEXT_RETAINED_schema",
+  "extra": {}
+ },
+ {
+  "id": "PG03-context-scope",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "payload",
+  "changes": {
+   "context/scope/user_id": "user:2"
+  },
+  "maintain": [],
+  "target": "PG03_scope",
+  "extra": {}
+ },
+ {
+  "id": "TS07-clone-without-source",
+  "family": "tool.custom_headless.skipped",
+  "parent": [
+   "deck2",
+   "clone_new_id"
+  ],
+  "operation": "payload",
+  "changes": {
+   "context/transition/source_project_id": null
+  },
+  "maintain": [],
+  "target": "TS07_fresh_source",
+  "extra": {}
+ },
+ {
+  "id": "TC15-update-effective-rule",
+  "family": "catalog.update.started",
+  "parent": [
+   "deck2",
+   "project"
+  ],
+  "operation": "payload",
+  "changes": {
+   "payload/effective_version": "2.0.0",
+   "context/transition/effective_version": "2.0.0"
+  },
+  "maintain": [],
+  "target": "TC15_effective_rule",
+  "extra": {}
+ },
+ {
+  "id": "CQ01-request-owner-rules",
+  "family": "catalog.update.started",
+  "parent": [
+   "policy",
+   null
+  ],
+  "operation": null,
+  "changes": {
+   "transition/owner_rules_satisfied": false
+  },
+  "maintain": [],
+  "target": "CQ01_owner_rules",
+  "extra": {}
+ },
+ {
+  "id": "CQ04-request-update-not-verified",
+  "family": "catalog.update.started",
+  "parent": [
+   "policy",
+   null
+  ],
+  "operation": null,
+  "changes": {
+   "transition/effective_version": "2.0.0"
+  },
+  "maintain": [],
+  "target": "CQ04_update_verified",
+  "extra": {}
+ },
+ {
+  "id": "CQ05-request-update-not-installed",
+  "family": "catalog.update.started",
+  "parent": [
+   "policy",
+   null
+  ],
+  "operation": null,
+  "changes": {
+   "transition/installed_available": false
+  },
+  "maintain": [],
+  "target": "CQ05_update_installed",
+  "extra": {}
+ },
+ {
+  "id": "D2_TRANSITION-request-missing-member",
+  "family": "catalog.update.started",
+  "parent": [
+   "policy",
+   null
+  ],
+  "operation": null,
+  "changes": {
+   "transition/queued": {
+    "$delete": true
+   }
+  },
+  "maintain": [],
+  "target": "D2_TRANSITION_schema",
+  "extra": {}
+ }
+]

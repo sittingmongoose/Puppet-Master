@@ -536,7 +536,7 @@
   function fitLater(body) {
     if (fitQueue.indexOf(body) < 0) fitQueue.push(body);
     if (fitAgain.indexOf(body) < 0) fitAgain.push(body);
-    if (!fitScheduled && !C.fitDefer) { fitScheduled = true; (window.queueMicrotask || function (f) { Promise.resolve().then(f); })(function () { fitScheduled = false; fitFlush(); }); }
+    if (!fitScheduled && !C.fitDefer) { fitScheduled = true; (window.queueMicrotask || function (f) { Promise.resolve().then(f); })(function () { fitScheduled = false; if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(fitQueued)) return; fitFlush(); }); }
     /* once more in the next frame: meters and charts finish their own layout after the render, and wrapped text can then
        push a foot past the body (a one-off frame, never a loop) */
     /* (engine 21:26Z request: during an arrival or room change this frame is the next slice's frame and its read forced a
@@ -558,8 +558,12 @@
   });
   /* the settled pass runs in idle slices of about 8 ms (NOTES3-perf C1: never a whole-board pass in a moment); over every
      shown board (D10 7.1) */
+  /* FO-188: while a look is revealed over the onboarding window (PM_LOOK_HOLD, the onboarding's 11-motion-start.js) these
+     fits wait for the reveal's end */
+  function fitQueued() { if (fitQueue.length) fitFlush(); }
   function fitSettled() {
     fitSettleT = 0;
+    if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(fitSettled)) return;
     var bodies = shownBodies();
     var idle = window.requestIdleCallback || function (f) { return setTimeout(function () { f({ timeRemaining: function () { return 8; } }); }, 16); };
     (function step(deadline) {
@@ -743,7 +747,8 @@
     if (line) {
       if (!line.hasAttribute('data-pm-hover-foldbase')) line.setAttribute('data-pm-hover-foldbase', line.getAttribute('data-pm-hover-detail') || '');
       var base = line.getAttribute('data-pm-hover-foldbase');
-      line.setAttribute('data-pm-hover-label', line.getAttribute('data-pm-hover-label') && base ? line.getAttribute('data-pm-hover-label') : C.FOLD_LABEL);
+      var label = line.getAttribute('data-pm-hover-label') && base ? line.getAttribute('data-pm-hover-label') : C.FOLD_LABEL;
+      if (line.getAttribute('data-pm-hover-label') !== label) line.setAttribute('data-pm-hover-label', label);
       line.setAttribute('data-pm-hover-detail', rows.concat(base ? [base] : [], notes).join('; '));
       return;
     }
@@ -1282,7 +1287,8 @@
         body.innerHTML = '<div class="pmu-kpi is-wide"' + tileHover + '><div class="pmu-kpimain">' + head + subEl + (trend ? '<div class="pmu-kpitrend"></div>' : '') + foot + '</div>' +
           '<div class="pmu-kpiside">' + factsHtml + moreHtml + '</div></div>';
       } else {
-        body.innerHTML = '<div class="pmu-kpi"' + tileHover + '>' + head + subEl + factsHtml + moreHtml + (trend ? '<div class="pmu-kpitrend"></div>' : '') + foot + '</div>';
+        var html = '<div class="pmu-kpi"' + tileHover + '>' + head + subEl + factsHtml + moreHtml + (trend ? '<div class="pmu-kpitrend"></div>' : '') + foot + '</div>';
+        if (body.innerHTML !== html) body.innerHTML = html;
       }
       var sp = body.querySelector('.pmu-kpispark, .pmu-kpitrend');
       if (sp) C.chart(body, 'spark', sp, { values: m.spark.values, idx: m.spark.idx || 0, tk: m.spark.tk }, { label: ctx.def.title + ' trend' });
@@ -1482,7 +1488,7 @@
       rows0.slice(0, k1.length - 1).forEach(function (r, j) {
         var d = drows[j + 1]; if (!d || r.innerHTML === d.innerHTML) return;
         r.innerHTML = d.innerHTML;
-        ['data-pm-hover-label', 'data-pm-hover-detail', 'data-tone'].forEach(function (a) { if (d.hasAttribute(a)) r.setAttribute(a, d.getAttribute(a)); else r.removeAttribute(a); });
+        ['data-pm-hover-label', 'data-pm-hover-detail', 'data-tone'].forEach(function (a) { var value = d.getAttribute(a); if (r.getAttribute(a) !== value) { if (value === null) r.removeAttribute(a); else r.setAttribute(a, value); } });
       });
       var m0 = list.querySelector(':scope > .pmu-more'), m1 = dl.querySelector(':scope > .pmu-more');
       if (m0 && m1) { m0.textContent = m1.textContent; ['data-pm-hover-label', 'data-pm-hover-detail'].forEach(function (a) { if (m1.hasAttribute(a)) m0.setAttribute(a, m1.getAttribute(a)); }); }

@@ -1,0 +1,2051 @@
+{
+ "qualification": "TEST_ONLY",
+ "note": "Static require() sites; dynamic codes matched by their literal suffix. Feed to scripts/pm_guard_isolation.py in the shared sweep; no local removal engine.",
+ "sites": [
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 48,
+   "expr": "code",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 306,
+   "expr": "'context/workgraph_sha256'",
+   "literal": "context/workgraph_sha256",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 395,
+   "expr": "'binder/passive_unbound_selector'",
+   "literal": "binder/passive_unbound_selector",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 439,
+   "expr": "where + '/pack_value_hash'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 447,
+   "expr": "'selector/cell_present'",
+   "literal": "selector/cell_present",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 448,
+   "expr": "'selector/cell_value'",
+   "literal": "selector/cell_value",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 458,
+   "expr": "where + '/selector_type'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 459,
+   "expr": "where + '/selector_storage'",
+   "literal": null,
+   "negatives": [
+    "S1/d01_head_selector_foreign_storage"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 461,
+   "expr": "where + '/selector_unresolved'",
+   "literal": null,
+   "negatives": [
+    "S1/seven_input_selector_target_deleted"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 462,
+   "expr": "where + '/selector_hash'",
+   "literal": null,
+   "negatives": [
+    "S1/activation_source_selector_substituted",
+    "S1/seven_input_selector_substituted"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 480,
+   "expr": "'reopen/unissued'",
+   "literal": "reopen/unissued",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 512,
+   "expr": "'reopen/custody_hash'",
+   "literal": "reopen/custody_hash",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 579,
+   "expr": "'v7/no_network'",
+   "literal": "v7/no_network",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 584,
+   "expr": "'v7/edge_target_unique'",
+   "literal": "v7/edge_target_unique",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 586,
+   "expr": "'v7/companion_unique'",
+   "literal": "v7/companion_unique",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_world.py",
+   "line": 605,
+   "expr": "'v7/undeclared_cross_realm_reference'",
+   "literal": "v7/undeclared_cross_realm_reference",
+   "negatives": [
+    "S2/v7_companion_edge_not_declared"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 172,
+   "expr": "'birth/descriptor_profile'",
+   "literal": "birth/descriptor_profile",
+   "negatives": [
+    "S2/v7_descriptor_with_old_profile_header"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 173,
+   "expr": "'birth/descriptor_cell'",
+   "literal": "birth/descriptor_cell",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 224,
+   "expr": "'native/current_unavailable'",
+   "literal": "native/current_unavailable",
+   "negatives": [
+    "S1/native_current_pointer_deleted"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 227,
+   "expr": "'native/body_unavailable'",
+   "literal": "native/body_unavailable",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 232,
+   "expr": "'native/start_control_unavailable'",
+   "literal": "native/start_control_unavailable",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 338,
+   "expr": "'goal/original_withdrawn'",
+   "literal": "goal/original_withdrawn",
+   "negatives": [
+    "S4/goal_original_tombstoned_after_generic"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 390,
+   "expr": "'d01/original_withdrawn'",
+   "literal": "d01/original_withdrawn",
+   "negatives": [
+    "S4/d01_original_withdrawn_before_current_read"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 794,
+   "expr": "'start/handles_type'",
+   "literal": "start/handles_type",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 796,
+   "expr": "'start/missing_participant/' + name",
+   "literal": null,
+   "negatives": [
+    "S1/missing_participant_d01",
+    "S1/missing_participant_seven_input"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 798,
+   "expr": "'start/handle_shape/' + name",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 801,
+   "expr": "'start/future_or_foreign_source/' + '",
+   "literal": null,
+   "negatives": [
+    "S1/future_receipt_at_entry"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 809,
+   "expr": "'start/request_scope'",
+   "literal": "start/request_scope",
+   "negatives": [
+    "S1/request_scope_foreign"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 811,
+   "expr": "'start/descriptor_profile'",
+   "literal": "start/descriptor_profile",
+   "negatives": [
+    "S2/old_birth_enrollment_into_v7_coordinator"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 812,
+   "expr": "'start/descriptor_methods'",
+   "literal": "start/descriptor_methods",
+   "negatives": [
+    "S1/descriptor_issuer_method"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 815,
+   "expr": "'start/descriptor_schema_pin'",
+   "literal": "start/descriptor_schema_pin",
+   "negatives": [
+    "S1/descriptor_schema_pin_substituted"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 816,
+   "expr": "'start/descriptor_goal_pin'",
+   "literal": "start/descriptor_goal_pin",
+   "negatives": [
+    "S1/descriptor_goal_pin"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 820,
+   "expr": "'start/descriptor_installed'",
+   "literal": "start/descriptor_installed",
+   "negatives": [
+    "S1/descriptor_reinstalled_after_issue"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 822,
+   "expr": "'start/descriptor_before_birth'",
+   "literal": "start/descriptor_before_birth",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 823,
+   "expr": "'start/birth_descriptor'",
+   "literal": "start/birth_descriptor",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 826,
+   "expr": "'start/revision_conflict'",
+   "literal": "start/revision_conflict",
+   "negatives": [
+    "S1/equal_retry_new_operation_after_commit"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 828,
+   "expr": "'start/native_activation'",
+   "literal": "start/native_activation",
+   "negatives": [
+    "S1/native_activation_state"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 829,
+   "expr": "'start/native_control_join'",
+   "literal": "start/native_control_join",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 831,
+   "expr": "'start/native_identity'",
+   "literal": "start/native_identity",
+   "negatives": [
+    "S1/native_identity"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 833,
+   "expr": "'start/d01_scope'",
+   "literal": "start/d01_scope",
+   "negatives": [
+    "S1/d01_scope"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 834,
+   "expr": "'start/d01_current_body'",
+   "literal": "start/d01_current_body",
+   "negatives": [
+    "S1/d01_current_body_stale"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 835,
+   "expr": "'start/d01_current_control'",
+   "literal": "start/d01_current_control",
+   "negatives": [
+    "S1/d01_current_control"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 840,
+   "expr": "'start/d01_pointer'",
+   "literal": "start/d01_pointer",
+   "negatives": [
+    "S1/d01_pointer_copy"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 843,
+   "expr": "'start/run_cancellation_null'",
+   "literal": "start/run_cancellation_null",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 847,
+   "expr": "'start/start_control_birth'",
+   "literal": "start/start_control_birth",
+   "negatives": [
+    "S1/start_control_concurrent_writer"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 848,
+   "expr": "'start/start_control_epoch'",
+   "literal": "start/start_control_epoch",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 849,
+   "expr": "'start/start_control_committed'",
+   "literal": "start/start_control_committed",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 851,
+   "expr": "'start/initial_origin_method'",
+   "literal": "start/initial_origin_method",
+   "negatives": [
+    "S1/initial_origin_method"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 852,
+   "expr": "'start/initial_origin_key'",
+   "literal": "start/initial_origin_key",
+   "negatives": [
+    "S1/initial_origin_key"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 853,
+   "expr": "'start/initial_origin_record'",
+   "literal": "start/initial_origin_record",
+   "negatives": [
+    "S1/initial_origin_record"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 855,
+   "expr": "'start/initial_origin_owner'",
+   "literal": "start/initial_origin_owner",
+   "negatives": [
+    "S1/initial_origin_owner_epoch"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 858,
+   "expr": "'start/graph_identity'",
+   "literal": "start/graph_identity",
+   "negatives": [
+    "S1/graph_identity"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 859,
+   "expr": "'start/graph_commitment'",
+   "literal": "start/graph_commitment",
+   "negatives": [
+    "S1/graph_commitment_mismatch"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 862,
+   "expr": "'start/required_set_graph'",
+   "literal": "start/required_set_graph",
+   "negatives": [
+    "S1/required_set_graph_selector"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 866,
+   "expr": "'start/born_membership'",
+   "literal": "start/born_membership",
+   "negatives": [
+    "S1/born_worknode_missing"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 868,
+   "expr": "'start/receipt_membership'",
+   "literal": "start/receipt_membership",
+   "negatives": [
+    "S1/receipt_membership"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 871,
+   "expr": "'start/born_worknode_custody'",
+   "literal": "start/born_worknode_custody",
+   "negatives": [
+    "S1/born_worknode_substituted_at_rest"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 874,
+   "expr": "'start/receipt_born_key'",
+   "literal": "start/receipt_born_key",
+   "negatives": [
+    "S1/receipt_born_key"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 875,
+   "expr": "'start/receipt_born_hash'",
+   "literal": "start/receipt_born_hash",
+   "negatives": [
+    "S1/receipt_born_hash_substituted"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 876,
+   "expr": "'start/staging_entrypoints'",
+   "literal": "start/staging_entrypoints",
+   "negatives": [
+    "S1/staging_entrypoints_mismatch"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 878,
+   "expr": "'start/staging_required_set'",
+   "literal": "start/staging_required_set",
+   "negatives": [
+    "S1/staging_required_set_selector"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 880,
+   "expr": "'start/staging_not_released'",
+   "literal": "start/staging_not_released",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 881,
+   "expr": "'start/activation_receipt_required_set'",
+   "literal": "start/activation_receipt_required_set",
+   "negatives": [
+    "S1/activation_receipt_required_set"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 883,
+   "expr": "'start/activation_receipt_graph'",
+   "literal": "start/activation_receipt_graph",
+   "negatives": [
+    "S1/activation_receipt_graph"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 885,
+   "expr": "'start/activation_receipt_staging'",
+   "literal": "start/activation_receipt_staging",
+   "negatives": [
+    "S1/activation_receipt_staging"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 887,
+   "expr": "'start/activation_receipt_receipts'",
+   "literal": "start/activation_receipt_receipts",
+   "negatives": [
+    "S1/activation_receipt_member_dropped"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 891,
+   "expr": "'start/readiness'",
+   "literal": "start/readiness",
+   "negatives": [
+    "S1/readiness_unsatisfied"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 893,
+   "expr": "'start/goal_scope'",
+   "literal": "start/goal_scope",
+   "negatives": [
+    "S1/goal_scope"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 895,
+   "expr": "'start/goal_association'",
+   "literal": "start/goal_association",
+   "negatives": [
+    "S1/goal_association_other_run"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 897,
+   "expr": "'start/goal_association_member'",
+   "literal": "start/goal_association_member",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 901,
+   "expr": "'start/goal_run_source'",
+   "literal": "start/goal_run_source",
+   "negatives": [
+    "S1/goal_run_source_substituted"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 904,
+   "expr": "'start/goal_binding_transaction'",
+   "literal": "start/goal_binding_transaction",
+   "negatives": [
+    "S1/goal_binding_transaction"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 905,
+   "expr": "'start/goal_no_effective_stop'",
+   "literal": "start/goal_no_effective_stop",
+   "negatives": [
+    "S1/goal_stop_latched"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 906,
+   "expr": "'start/goal_active'",
+   "literal": "start/goal_active",
+   "negatives": [
+    "S1/goal_not_active"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 908,
+   "expr": "'start/runtime_actor'",
+   "literal": "start/runtime_actor",
+   "negatives": [
+    "S1/runtime_actor_empty"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 973,
+   "expr": "'start/pending_other_operation'",
+   "literal": "start/pending_other_operation",
+   "negatives": [
+    "S1/second_operation_while_candidate_pending"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 984,
+   "expr": "'start/replay_only_not_appendable'",
+   "literal": "start/replay_only_not_appendable",
+   "negatives": [
+    "S1/producer_replay_only_policy"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1002,
+   "expr": "'start/idempotency_conflict'",
+   "literal": "start/idempotency_conflict",
+   "negatives": [
+    "S1/same_operation_altered_source_argument_conflict"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1004,
+   "expr": "'start/pending_other_operation'",
+   "literal": "start/pending_other_operation",
+   "negatives": [
+    "S1/second_operation_while_candidate_pending"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1022,
+   "expr": "'start/dedupe_unavailable'",
+   "literal": "start/dedupe_unavailable",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1025,
+   "expr": "'start/stored_producer'",
+   "literal": "start/stored_producer",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1051,
+   "expr": "'producer/scope'",
+   "literal": "producer/scope",
+   "negatives": [
+    "S1/producer_project_scope"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1052,
+   "expr": "'producer/run'",
+   "literal": "producer/run",
+   "negatives": [
+    "S1/producer_run_envelope"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1053,
+   "expr": "'producer/goal'",
+   "literal": "producer/goal",
+   "negatives": [
+    "S1/producer_goal"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1054,
+   "expr": "'producer/goal_revision'",
+   "literal": "producer/goal_revision",
+   "negatives": [
+    "S1/producer_goal_revision"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1056,
+   "expr": "'producer/expected_revision'",
+   "literal": "producer/expected_revision",
+   "negatives": [
+    "S1/producer_expected_revision"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1058,
+   "expr": "'producer/after_revision'",
+   "literal": "producer/after_revision",
+   "negatives": [
+    "S1/producer_revision_step"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1059,
+   "expr": "'producer/workgraph'",
+   "literal": "producer/workgraph",
+   "negatives": [
+    "S1/producer_workgraph_ref"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1060,
+   "expr": "'producer/activation_receipt'",
+   "literal": "producer/activation_receipt",
+   "negatives": [
+    "S1/producer_activation_receipt_ref"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1062,
+   "expr": "'producer/request_membership'",
+   "literal": "producer/request_membership",
+   "negatives": [
+    "S1/producer_request_membership"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1065,
+   "expr": "'producer/actor'",
+   "literal": "producer/actor",
+   "negatives": [
+    "S1/producer_actor_changed"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1066,
+   "expr": "'producer/time_copy'",
+   "literal": "producer/time_copy",
+   "negatives": [
+    "S1/producer_time_copy"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1067,
+   "expr": "'producer/correlation'",
+   "literal": "producer/correlation",
+   "negatives": [
+    "S1/producer_correlation_envelope"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1069,
+   "expr": "'producer/' + k",
+   "literal": null,
+   "negatives": [
+    "S1/producer_activation_receipt_ref",
+    "S1/producer_actor_changed",
+    "S1/producer_correlation_envelope",
+    "S1/producer_effective_account",
+    "S1/producer_effective_model",
+    "S1/producer_event_id_substituted",
+    "S1/producer_expected_revision",
+    "S1/producer_expected_revision_string",
+    "S1/producer_goal",
+    "S1/producer_goal_revision",
+    "S1/producer_key_copy_split",
+    "S1/producer_key_substituted",
+    "S1/producer_project_scope",
+    "S1/producer_request_membership",
+    "S1/producer_revision_step",
+    "S1/producer_run_envelope",
+    "S1/producer_thread",
+    "S1/producer_time_copy",
+    "S1/producer_workgraph_ref",
+    "S1/producer_write_mode",
+    "S1/same_operation_altered_runtime_vs_prepared_submission",
+    "S2/v7_producer_wrong_payload_header"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1072,
+   "expr": "'producer/' + k",
+   "literal": null,
+   "negatives": [
+    "S1/producer_activation_receipt_ref",
+    "S1/producer_actor_changed",
+    "S1/producer_correlation_envelope",
+    "S1/producer_effective_account",
+    "S1/producer_effective_model",
+    "S1/producer_event_id_substituted",
+    "S1/producer_expected_revision",
+    "S1/producer_expected_revision_string",
+    "S1/producer_goal",
+    "S1/producer_goal_revision",
+    "S1/producer_key_copy_split",
+    "S1/producer_key_substituted",
+    "S1/producer_project_scope",
+    "S1/producer_request_membership",
+    "S1/producer_revision_step",
+    "S1/producer_run_envelope",
+    "S1/producer_thread",
+    "S1/producer_time_copy",
+    "S1/producer_workgraph_ref",
+    "S1/producer_write_mode",
+    "S1/same_operation_altered_runtime_vs_prepared_submission",
+    "S2/v7_producer_wrong_payload_header"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1073,
+   "expr": "'producer/write_mode'",
+   "literal": "producer/write_mode",
+   "negatives": [
+    "S1/producer_write_mode"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1074,
+   "expr": "'producer/thread'",
+   "literal": "producer/thread",
+   "negatives": [
+    "S1/producer_thread"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1077,
+   "expr": "'producer/idempotency_key'",
+   "literal": "producer/idempotency_key",
+   "negatives": [
+    "S1/producer_key_substituted"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1078,
+   "expr": "'producer/key_copy'",
+   "literal": "producer/key_copy",
+   "negatives": [
+    "S1/producer_key_copy_split"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1079,
+   "expr": "'producer/event_id'",
+   "literal": "producer/event_id",
+   "negatives": [
+    "S1/producer_event_id_substituted"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1321,
+   "expr": "'start/dedupe_unavailable'",
+   "literal": "start/dedupe_unavailable",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1323,
+   "expr": "'start/dedupe_unavailable'",
+   "literal": "start/dedupe_unavailable",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1355,
+   "expr": "'recover/no_write'",
+   "literal": "recover/no_write",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1375,
+   "expr": "'lower/argument_hash'",
+   "literal": "lower/argument_hash",
+   "negatives": [
+    "S1/lower_publisher_commit_argument_hash"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1377,
+   "expr": "'lower/d01_held_start'",
+   "literal": "lower/d01_held_start",
+   "negatives": [
+    "S1/lower_d01_held_start"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1378,
+   "expr": "'lower/native_candidates'",
+   "literal": "lower/native_candidates",
+   "negatives": [
+    "S1/lower_native_candidates"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1382,
+   "expr": "'lower/after_body'",
+   "literal": "lower/after_body",
+   "negatives": [
+    "S1/lower_after_body_rederived"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1383,
+   "expr": "'lower/after_control'",
+   "literal": "lower/after_control",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1385,
+   "expr": "'lower/candidate_body'",
+   "literal": "lower/candidate_body",
+   "negatives": [
+    "S1/lower_candidate_body"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1386,
+   "expr": "'lower/candidate_control'",
+   "literal": "lower/candidate_control",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1388,
+   "expr": "'lower/commit_candidate'",
+   "literal": "lower/commit_candidate",
+   "negatives": [
+    "S1/lower_publisher_commit_candidate_join"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1389,
+   "expr": "'lower/control_commit'",
+   "literal": "lower/control_commit",
+   "negatives": [
+    "S1/lower_control_commit"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1391,
+   "expr": "'lower/origin_commit'",
+   "literal": "lower/origin_commit",
+   "negatives": [
+    "S1/lower_origin_commit"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1393,
+   "expr": "'lower/origin_control'",
+   "literal": "lower/origin_control",
+   "negatives": [
+    "S1/lower_origin_control"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1397,
+   "expr": "'lower/event_commitment'",
+   "literal": "lower/event_commitment",
+   "negatives": [
+    "S1/lower_event_commitment"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1398,
+   "expr": "'lower/d01_cause'",
+   "literal": "lower/d01_cause",
+   "negatives": [
+    "S1/lower_d01_cause"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1401,
+   "expr": "'lower/reservation_receipted'",
+   "literal": "lower/reservation_receipted",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_start.py",
+   "line": 1404,
+   "expr": "'lower/native_cas_body'",
+   "literal": "lower/native_cas_body",
+   "negatives": [
+    "S1/stale_native_cas_before_publication"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 74,
+   "expr": "where + '/control_missing'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 77,
+   "expr": "where + '/no_committed_start'",
+   "literal": null,
+   "negatives": [
+    "S4/retained_before_any_start"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 82,
+   "expr": "where + '/origin_missing'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 87,
+   "expr": "where + '/d01_missing'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 91,
+   "expr": "where + '/initial_origin_missing'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 101,
+   "expr": "where + '/first_custody_missing'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 112,
+   "expr": "'retained/birth_unissued'",
+   "literal": "retained/birth_unissued",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 258,
+   "expr": "where + '/relation/' + (failed[0] if failed else '')",
+   "literal": null,
+   "negatives": [
+    "S1/producer_correlation_envelope"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 343,
+   "expr": "where + '/frame_hash'",
+   "literal": null,
+   "negatives": [
+    "S4/inspect_original_corrupt_original_frame"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 461,
+   "expr": "'representation/operation_size'",
+   "literal": "representation/operation_size",
+   "negatives": [
+    "S6/still_oversize_compact_operation_refused"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 472,
+   "expr": "'representation/operation_size'",
+   "literal": "representation/operation_size",
+   "negatives": [
+    "S6/still_oversize_compact_operation_refused"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 481,
+   "expr": "'representation/metadata_has_no_event'",
+   "literal": "representation/metadata_has_no_event",
+   "negatives": [
+    "S6/metadata_pack_embeds_event"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 486,
+   "expr": "'representation/record_equal'",
+   "literal": "representation/record_equal",
+   "negatives": [
+    "S6/inline_record_substituted"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 488,
+   "expr": "'representation/event_identity/' + field",
+   "literal": null,
+   "negatives": [
+    "S6/event_identity_sequence_substituted"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 489,
+   "expr": "'representation/commitment'",
+   "literal": "representation/commitment",
+   "negatives": [
+    "S6/false_commitment"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 491,
+   "expr": "'representation/commitment_recomputed'",
+   "literal": "representation/commitment_recomputed",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 493,
+   "expr": "'representation/key'",
+   "literal": "representation/key",
+   "negatives": [
+    "S6/row_key_substituted"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 494,
+   "expr": "'representation/storage'",
+   "literal": "representation/storage",
+   "negatives": [
+    "S6/row_storage_substituted"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 497,
+   "expr": "'representation/deterministic_kind'",
+   "literal": "representation/deterministic_kind",
+   "negatives": [
+    "S6/reference_chosen_when_inline_fits"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 511,
+   "expr": "'representation/checkpoint_operation_size'",
+   "literal": "representation/checkpoint_operation_size",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 516,
+   "expr": "'representation/checkpoint_operation_size'",
+   "literal": "representation/checkpoint_operation_size",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 522,
+   "expr": "'checkpoint/storage'",
+   "literal": "checkpoint/storage",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 524,
+   "expr": "'checkpoint/key'",
+   "literal": "checkpoint/key",
+   "negatives": [
+    "S5/checkpoint_key_substituted"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 525,
+   "expr": "'checkpoint/scope'",
+   "literal": "checkpoint/scope",
+   "negatives": [
+    "S5/checkpoint_scope_substituted"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 527,
+   "expr": "'checkpoint/deterministic_kind'",
+   "literal": "checkpoint/deterministic_kind",
+   "negatives": [
+    "S6/checkpoint_reference_when_inline_fits"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 572,
+   "expr": "'projector/not_installed'",
+   "literal": "projector/not_installed",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 579,
+   "expr": "where + '/projector_withdrawn'",
+   "literal": null,
+   "negatives": [
+    "S4/projector_withdrawn_after_original_helper",
+    "S5/writer_cutoff_after_withdrawal"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 607,
+   "expr": "'projector/generation_limit'",
+   "literal": "projector/generation_limit",
+   "negatives": [
+    "S5/fourth_generation_slot_refused",
+    "S5/held_retired_generation_not_removed"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 646,
+   "expr": "'projector/no_checkpoint'",
+   "literal": "projector/no_checkpoint",
+   "negatives": [
+    "S5/replay_without_checkpoint"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 648,
+   "expr": "'projector/generation_state'",
+   "literal": "projector/generation_state",
+   "negatives": [
+    "S5/replay_into_retired_generation"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 654,
+   "expr": "'projector/' + (result['halt'][0] if result['halt'] else 'halt')",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 655,
+   "expr": "'projector/no_start'",
+   "literal": "projector/no_start",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 663,
+   "expr": "'projector/row_rederive'",
+   "literal": "projector/row_rederive",
+   "negatives": [
+    "S5/caller_computed_row_afterimage"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 690,
+   "expr": "'projector/transaction_id'",
+   "literal": "projector/transaction_id",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 702,
+   "expr": "'cutover/unknown_generation'",
+   "literal": "cutover/unknown_generation",
+   "negatives": [
+    "S5/cutover_unknown_generation"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 705,
+   "expr": "'cutover/incomplete_coverage'",
+   "literal": "cutover/incomplete_coverage",
+   "negatives": [
+    "S5/cutover_before_replay",
+    "S5/premature_cutover_incomplete_coverage"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 709,
+   "expr": "'cutover/row_missing'",
+   "literal": "cutover/row_missing",
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 725,
+   "expr": "where + '/no_checkpoint'",
+   "literal": null,
+   "negatives": [
+    "S5/replay_without_checkpoint"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 728,
+   "expr": "where + '/row_missing'",
+   "literal": null,
+   "negatives": [
+    "S4/historical_row_deleted"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 729,
+   "expr": "where + '/row_checkpoint_join'",
+   "literal": null,
+   "negatives": [
+    "S4/row_without_checkpoint_join"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 760,
+   "expr": "where + '/request_scope'",
+   "literal": null,
+   "negatives": [
+    "S1/request_scope_foreign",
+    "S4/request_scope_foreign"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 788,
+   "expr": "where + '/reader_withdrawn'",
+   "literal": null,
+   "negatives": [
+    "S4/historical_reader_withdrawn",
+    "S4/reader_withdrawn_before_final_release"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 790,
+   "expr": "where + '/reader_withdrawn_final'",
+   "literal": null,
+   "negatives": [
+    "S4/reader_withdrawn_before_final_release"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 792,
+   "expr": "where + '/passive_effect'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 812,
+   "expr": "where + '/generic_row_missing'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 814,
+   "expr": "where + '/generic_custody'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 816,
+   "expr": "where + '/generic_event'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 822,
+   "expr": "where + '/no_projector'",
+   "literal": null,
+   "negatives": [
+    "S4/current_without_projector"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 834,
+   "expr": "where + '/native_advanced'",
+   "literal": null,
+   "negatives": [
+    "S4/current_after_lawful_native_advance",
+    "S4/native_advance_after_projection_helper",
+    "S4/native_advance_before_final_release"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 835,
+   "expr": "where + '/native_status'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 837,
+   "expr": "where + '/native_body_join'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 839,
+   "expr": "where + '/start_control_current'",
+   "literal": null,
+   "negatives": [
+    "S4/current_start_control_changed"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 842,
+   "expr": "where + '/d01_pointer_current'",
+   "literal": null,
+   "negatives": [
+    "S4/current_d01_pointer_moved"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 856,
+   "expr": "where + '/goal_stopped'",
+   "literal": null,
+   "negatives": [
+    "S4/stop_after_current_start_helper",
+    "S4/stop_before_final_release"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 857,
+   "expr": "where + '/goal_association'",
+   "literal": null,
+   "negatives": [
+    "S1/goal_association_other_run"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 859,
+   "expr": "where + '/goal_state'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 870,
+   "expr": "where + '/final_fence'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 884,
+   "expr": "where + '/final_fence'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 886,
+   "expr": "where + '/final_generic'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 902,
+   "expr": "where + '/final_fence'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 904,
+   "expr": "where + '/final_projection'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 917,
+   "expr": "where + '/incomplete_coverage'",
+   "literal": null,
+   "negatives": [
+    "S5/cutover_before_replay",
+    "S5/premature_cutover_incomplete_coverage"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 920,
+   "expr": "where + '/stale_generic_token'",
+   "literal": null,
+   "negatives": [
+    "S4/stale_generic_token_after_new_row"
+   ]
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 928,
+   "expr": "where + '/final_original'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 930,
+   "expr": "where + '/final_generic'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 932,
+   "expr": "where + '/final_projection'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 933,
+   "expr": "where + '/final_current_start'",
+   "literal": null,
+   "negatives": []
+  },
+  {
+   "file": "pm_goal_dg_s_readers.py",
+   "line": 934,
+   "expr": "where + '/final_current_goal'",
+   "literal": null,
+   "negatives": []
+  }
+ ],
+ "guard_map": {
+  "birth/descriptor_profile": [
+   "S2/v7_descriptor_with_old_profile_header"
+  ],
+  "checkpoint/deterministic_kind": [
+   "S6/checkpoint_reference_when_inline_fits"
+  ],
+  "checkpoint/key": [
+   "S5/checkpoint_key_substituted"
+  ],
+  "checkpoint/scope": [
+   "S5/checkpoint_scope_substituted"
+  ],
+  "cutover/incomplete_coverage": [
+   "S5/cutover_before_replay",
+   "S5/premature_cutover_incomplete_coverage"
+  ],
+  "cutover/unknown_generation": [
+   "S5/cutover_unknown_generation"
+  ],
+  "goal/original_withdrawn": [
+   "S4/goal_original_tombstoned_after_generic"
+  ],
+  "issue/activation_receipt/schema/record/integrity_checks/graph_integrity_valid:const": [
+   "S1/activation_integrity_false"
+  ],
+  "issue/required_set/schema/record/worknode_requests/active_required_request_refs:minItems": [
+   "S1/request_membership_empty"
+  ],
+  "lower/after_body": [
+   "S1/lower_after_body_rederived"
+  ],
+  "lower/argument_hash": [
+   "S1/lower_publisher_commit_argument_hash"
+  ],
+  "lower/candidate_body": [
+   "S1/lower_candidate_body"
+  ],
+  "lower/commit_candidate": [
+   "S1/lower_publisher_commit_candidate_join"
+  ],
+  "lower/control_commit": [
+   "S1/lower_control_commit"
+  ],
+  "lower/d01_cause": [
+   "S1/lower_d01_cause"
+  ],
+  "lower/d01_held_start": [
+   "S1/lower_d01_held_start"
+  ],
+  "lower/event_commitment": [
+   "S1/lower_event_commitment"
+  ],
+  "lower/native_candidates": [
+   "S1/lower_native_candidates"
+  ],
+  "lower/native_cas_body": [
+   "S1/stale_native_cas_before_publication"
+  ],
+  "lower/origin_commit": [
+   "S1/lower_origin_commit"
+  ],
+  "lower/origin_control": [
+   "S1/lower_origin_control"
+  ],
+  "original/handle_type": [
+   "S1/transport_dict_for_handle"
+  ],
+  "original/issuer": [
+   "S1/handle_from_other_owner",
+   "S1/unregistered_owner_same_id"
+  ],
+  "pack/unavailable": [
+   "S6/event_pack_foreign_store",
+   "S6/event_pack_withdrawn",
+   "S6/source_pack_withdrawn_before_final_release"
+  ],
+  "payload/numrule/payload_digest": [
+   "S6/event_pack_corrupt_at_rest"
+  ],
+  "payload/numrule/payload_size": [
+   "S6/false_byte_size"
+  ],
+  "producer/activation_receipt": [
+   "S1/producer_activation_receipt_ref"
+  ],
+  "producer/actor": [
+   "S1/producer_actor_changed"
+  ],
+  "producer/after_revision": [
+   "S1/producer_revision_step"
+  ],
+  "producer/correlation": [
+   "S1/producer_correlation_envelope"
+  ],
+  "producer/effective_account_ref": [
+   "S1/producer_effective_account"
+  ],
+  "producer/effective_model_ref": [
+   "S1/producer_effective_model",
+   "S1/same_operation_altered_runtime_vs_prepared_submission"
+  ],
+  "producer/event_id": [
+   "S1/producer_event_id_substituted"
+  ],
+  "producer/expected_revision": [
+   "S1/producer_expected_revision"
+  ],
+  "producer/goal": [
+   "S1/producer_goal"
+  ],
+  "producer/goal_revision": [
+   "S1/producer_goal_revision"
+  ],
+  "producer/idempotency_key": [
+   "S1/producer_key_substituted"
+  ],
+  "producer/key_copy": [
+   "S1/producer_key_copy_split"
+  ],
+  "producer/request_membership": [
+   "S1/producer_request_membership"
+  ],
+  "producer/run": [
+   "S1/producer_run_envelope"
+  ],
+  "producer/scope": [
+   "S1/producer_project_scope"
+  ],
+  "producer/thread": [
+   "S1/producer_thread"
+  ],
+  "producer/time_copy": [
+   "S1/producer_time_copy"
+  ],
+  "producer/workgraph": [
+   "S1/producer_workgraph_ref"
+  ],
+  "project/pending_custody": [
+   "S3/pending_first_custody_halts"
+  ],
+  "project/projector_withdrawn": [
+   "S5/writer_cutoff_after_withdrawal"
+  ],
+  "projector/generation_limit": [
+   "S5/fourth_generation_slot_refused",
+   "S5/held_retired_generation_not_removed"
+  ],
+  "projector/generation_state": [
+   "S5/replay_into_retired_generation"
+  ],
+  "projector/no_checkpoint": [
+   "S5/replay_without_checkpoint"
+  ],
+  "projector/reducer/unsupported_same_run:goal_run.blocked": [
+   "S5/replay_halts_on_unsupported_row"
+  ],
+  "projector/row_rederive": [
+   "S5/caller_computed_row_afterimage"
+  ],
+  "read/event_unavailable": [
+   "S5/original_source_loss_unavailable_not_no_start"
+  ],
+  "read/frame_hash": [
+   "S4/inspect_original_corrupt_original_frame"
+  ],
+  "read_current/d01_pointer_current": [
+   "S4/current_d01_pointer_moved"
+  ],
+  "read_current/final/goal_stopped": [
+   "S4/stop_before_final_release"
+  ],
+  "read_current/final/native_advanced": [
+   "S4/native_advance_before_final_release"
+  ],
+  "read_current/goal_stopped": [
+   "S4/stop_after_current_start_helper"
+  ],
+  "read_current/native_advanced": [
+   "S4/current_after_lawful_native_advance",
+   "S4/native_advance_after_projection_helper"
+  ],
+  "read_current/no_projector": [
+   "S4/current_without_projector"
+  ],
+  "read_current/projector_withdrawn": [
+   "S4/projector_withdrawn_after_original_helper"
+  ],
+  "read_current/reader_withdrawn_final": [
+   "S4/reader_withdrawn_before_final_release"
+  ],
+  "read_current/request_scope": [
+   "S4/request_scope_foreign"
+  ],
+  "read_current/stale_generic_token": [
+   "S4/stale_generic_token_after_new_row"
+  ],
+  "read_current/start_control_current": [
+   "S4/current_start_control_changed"
+  ],
+  "read_historical/reader_withdrawn": [
+   "S4/historical_reader_withdrawn"
+  ],
+  "read_historical/row_checkpoint_join": [
+   "S4/row_without_checkpoint_join"
+  ],
+  "read_historical/row_missing": [
+   "S4/historical_row_deleted"
+  ],
+  "read_retained_native/retained/no_committed_start": [
+   "S4/retained_before_any_start"
+  ],
+  "reducer/second_start": [
+   "S3/second_start_same_run_halts"
+  ],
+  "reducer/start_without_retained_native": [
+   "S3/start_row_without_retained_native_start"
+  ],
+  "reducer/unsupported_same_run:goal_run.blocked": [
+   "S3/unsupported_same_run_row_halts"
+  ],
+  "representation/commitment": [
+   "S6/false_commitment"
+  ],
+  "representation/deterministic_kind": [
+   "S6/reference_chosen_when_inline_fits"
+  ],
+  "representation/event_identity/sequence_id": [
+   "S6/event_identity_sequence_substituted"
+  ],
+  "representation/event_pack/numrule/physical_noncanonical": [
+   "S6/event_pack_noncanonical"
+  ],
+  "representation/key": [
+   "S6/row_key_substituted"
+  ],
+  "representation/metadata_has_no_event": [
+   "S6/metadata_pack_embeds_event"
+  ],
+  "representation/operation_size": [
+   "S6/still_oversize_compact_operation_refused"
+  ],
+  "representation/record_equal": [
+   "S6/inline_record_substituted"
+  ],
+  "representation/row/schema/content:oneOf": [
+   "S6/false_media_type"
+  ],
+  "representation/storage": [
+   "S6/row_storage_substituted"
+  ],
+  "s2/cast/schema/candidate/schema_id:const": [
+   "S2/cast_old_profile_retained_into_v7_root",
+   "S2/cast_v7_retained_into_old_root"
+  ],
+  "source/custody_commitment": [
+   "S3/substituted_value_commitment_halts"
+  ],
+  "source/custody_receipt": [
+   "S3/substituted_first_custody_halts"
+  ],
+  "source/frame/payload_crc": [
+   "S3/malformed_off_run_frame_halts"
+  ],
+  "source/frame/sequence_progression": [
+   "S3/reordered_frames_refused"
+  ],
+  "source/gap_inventory": [
+   "S3/unproven_gap_refused"
+  ],
+  "source/segment_inventory": [
+   "S3/false_empty_inventory"
+  ],
+  "source/storage_instance": [
+   "S3/wrong_storage_source"
+  ],
+  "start/activation_receipt_graph": [
+   "S1/activation_receipt_graph"
+  ],
+  "start/activation_receipt_receipts": [
+   "S1/activation_receipt_member_dropped"
+  ],
+  "start/activation_receipt_required_set": [
+   "S1/activation_receipt_required_set"
+  ],
+  "start/activation_receipt_staging": [
+   "S1/activation_receipt_staging"
+  ],
+  "start/born_membership": [
+   "S1/born_worknode_missing"
+  ],
+  "start/born_worknode_custody": [
+   "S1/born_worknode_substituted_at_rest"
+  ],
+  "start/d01_current_body": [
+   "S1/d01_current_body_stale"
+  ],
+  "start/d01_current_control": [
+   "S1/d01_current_control"
+  ],
+  "start/d01_pointer": [
+   "S1/d01_pointer_copy"
+  ],
+  "start/d01_scope": [
+   "S1/d01_scope"
+  ],
+  "start/descriptor_goal_pin": [
+   "S1/descriptor_goal_pin"
+  ],
+  "start/descriptor_installed": [
+   "S1/descriptor_reinstalled_after_issue"
+  ],
+  "start/descriptor_methods": [
+   "S1/descriptor_issuer_method"
+  ],
+  "start/descriptor_profile": [
+   "S2/old_birth_enrollment_into_v7_coordinator"
+  ],
+  "start/descriptor_schema_pin": [
+   "S1/descriptor_schema_pin_substituted"
+  ],
+  "start/future_or_foreign_source/first_append_receipt": [
+   "S1/future_receipt_at_entry"
+  ],
+  "start/goal_active": [
+   "S1/goal_not_active"
+  ],
+  "start/goal_association": [
+   "S1/goal_association_other_run"
+  ],
+  "start/goal_binding_transaction": [
+   "S1/goal_binding_transaction"
+  ],
+  "start/goal_no_effective_stop": [
+   "S1/goal_stop_latched"
+  ],
+  "start/goal_run_source": [
+   "S1/goal_run_source_substituted"
+  ],
+  "start/goal_scope": [
+   "S1/goal_scope"
+  ],
+  "start/graph_commitment": [
+   "S1/graph_commitment_mismatch"
+  ],
+  "start/graph_identity": [
+   "S1/graph_identity"
+  ],
+  "start/idempotency_conflict": [
+   "S1/same_operation_altered_source_argument_conflict"
+  ],
+  "start/initial_origin_key": [
+   "S1/initial_origin_key"
+  ],
+  "start/initial_origin_method": [
+   "S1/initial_origin_method"
+  ],
+  "start/initial_origin_owner": [
+   "S1/initial_origin_owner_epoch"
+  ],
+  "start/initial_origin_record": [
+   "S1/initial_origin_record"
+  ],
+  "start/missing_participant/d01_current": [
+   "S1/missing_participant_d01"
+  ],
+  "start/missing_participant/input:model_resolution": [
+   "S1/missing_participant_seven_input"
+  ],
+  "start/native_activation": [
+   "S1/native_activation_state"
+  ],
+  "start/native_identity": [
+   "S1/native_identity"
+  ],
+  "start/pending_other_operation": [
+   "S1/second_operation_while_candidate_pending"
+  ],
+  "start/producer/schema/payload/expected_goal_run_revision:type": [
+   "S1/producer_expected_revision_string"
+  ],
+  "start/producer/schema/payload_schema_id:const": [
+   "S2/v7_producer_wrong_payload_header"
+  ],
+  "start/readiness": [
+   "S1/readiness_unsatisfied"
+  ],
+  "start/receipt_born_hash": [
+   "S1/receipt_born_hash_substituted"
+  ],
+  "start/receipt_born_key": [
+   "S1/receipt_born_key"
+  ],
+  "start/receipt_membership": [
+   "S1/receipt_membership"
+  ],
+  "start/replay_only_not_appendable": [
+   "S1/producer_replay_only_policy"
+  ],
+  "start/request_scope": [
+   "S1/request_scope_foreign"
+  ],
+  "start/required_set_graph": [
+   "S1/required_set_graph_selector"
+  ],
+  "start/revision_conflict": [
+   "S1/equal_retry_new_operation_after_commit"
+  ],
+  "start/runtime_actor": [
+   "S1/runtime_actor_empty"
+  ],
+  "start/source_selector/activation:certified_graph/selector_hash": [
+   "S1/activation_source_selector_substituted"
+  ],
+  "start/source_selector/input:native_compile/selector_hash": [
+   "S1/seven_input_selector_substituted"
+  ],
+  "start/staging_entrypoints": [
+   "S1/staging_entrypoints_mismatch"
+  ],
+  "start/staging_required_set": [
+   "S1/staging_required_set_selector"
+  ],
+  "start/start_control_birth": [
+   "S1/start_control_concurrent_writer"
+  ],
+  "tx/cas_version": [
+   "S5/stale_checkpoint_cas"
+  ],
+  "v7/undeclared_cross_realm_reference": [
+   "S2/v7_companion_edge_not_declared"
+  ],
+  "d01/original_withdrawn": [
+   "S4/d01_original_withdrawn_before_current_read"
+  ],
+  "native/current_unavailable": [
+   "S1/native_current_pointer_deleted"
+  ],
+  "producer/write_mode": [
+   "S1/producer_write_mode"
+  ],
+  "start/d01_head_body/selector_storage": [
+   "S1/d01_head_selector_foreign_storage"
+  ],
+  "start/source_selector/input:native_compile/selector_unresolved": [
+   "S1/seven_input_selector_target_deleted"
+  ]
+ }
+}

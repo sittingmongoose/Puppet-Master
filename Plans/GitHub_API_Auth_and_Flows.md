@@ -1134,3 +1134,177 @@ negative_constraints:
   - Do not emit unredacted output/network errors to events, Usage, Chat, logs, or receipts.
   - Do not claim runtime dispatch, handler implementation, external effects, or security proof from static Plans/schema/fixtures.
 ```
+
+
+<a id="GAAAF-077"></a>
+### GAAAF-077 - auth.github.authenticated prepared event contract
+
+```yaml
+plan_unit_id: GAAAF-077
+unit_type: contract
+status: accepted
+owner_doc: Plans/GitHub_API_Auth_and_Flows.md
+canonical_text: >-
+  auth.github.authenticated prepared event contract. This is a newly authored owner contract under DL-045, prepared without admission.
+gui_related: false
+gui_classification_reason: Defines persisted contract behavior and no visual presentation.
+depends_on: [DL-045, SP-670]
+unblocks: []
+acceptance_criteria:
+- Exact-family schema and semantic checks pass; no event is emitted before separate admission.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/GitHub_API_Auth_and_Flows.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+**Newly authored owner contract for `auth.github.authenticated` at payload version `1.0.0`.** Search: exact token in live top-level Plans Markdown/JSON/JSONL, then this owner, Contracts EventRecord/AuthEvent, Storage SP-278/SP-286/SP-291/SP-336 and storage_value_registry. Existing semantic condition is retained; no exact closed payload, producer receipt binding, identity recipe or named operating consumer was found. Reuse the generic index and first-receipt custody. Per-family search matches and source hashes are pinned in the DG6B report. This draft admits nothing; `auth.github.authenticated` remains non-emitting until separate registration and retention resolution.
+
+Producer: **github_api OAuth token-success handler**. Pending auth reaches authenticated only after the OS credential store confirms the token write; no token is copied into event storage. The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_authenticated` (closed root; no extension map). Storage `SP-670` below is this family's own persistence contract. `subject_ref` identifies the original pending auth flow/account binding or plugin operation subject, never a display login or mutable plugin label. The `revision` is the observed operation revision; it cannot be advanced by retry. Actor identity comes from authenticated command/runtime custody, not a payload assertion.
+
+Do not add UI, auth providers, hooks, permissions or command behavior from this draft. Original bodies stay with the existing credential/plugin owner. Evidence refs are resolved only through current owner authorization. Event text contains metadata and refs, never raw prompts, hook output, token/device_code secrets or credential values. This contract does not assign retention or deletion policy.
+
+
+
+<a id="GAAAF-078"></a>
+### GAAAF-078 - auth.github.device_code.issued prepared event contract
+
+```yaml
+plan_unit_id: GAAAF-078
+unit_type: contract
+status: accepted
+owner_doc: Plans/GitHub_API_Auth_and_Flows.md
+canonical_text: >-
+  auth.github.device_code.issued prepared event contract. This is a newly authored owner contract under DL-045, prepared without admission.
+gui_related: false
+gui_classification_reason: Defines persisted contract behavior and no visual presentation.
+depends_on: [DL-045, SP-670]
+unblocks: []
+acceptance_criteria:
+- Exact-family schema and semantic checks pass; no event is emitted before separate admission.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/GitHub_API_Auth_and_Flows.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+**Newly authored owner contract for `auth.github.device_code.issued` at payload version `1.0.0`.** Search: exact token in live top-level Plans Markdown/JSON/JSONL, then this owner, Contracts EventRecord/AuthEvent, Storage SP-278/SP-286/SP-291/SP-336 and storage_value_registry. Existing semantic condition is retained; no exact closed payload, producer receipt binding, identity recipe or named operating consumer was found. Reuse the generic index and first-receipt custody. Per-family search matches and source hashes are pinned in the DG6B report. This draft admits nothing; `auth.github.device_code.issued` remains non-emitting until separate registration and retention resolution.
+
+Producer: **github_api device-code response handler**. A successful device-code response creates the non-secret pending auth record before presentation. Keep device_code in credential custody; the event carries only its ref, never user_code or verification content. The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_device_code_issued` (closed root; no extension map). Storage `SP-670` below is this family's own persistence contract. `subject_ref` identifies the original pending auth flow/account binding or plugin operation subject, never a display login or mutable plugin label. The `revision` is the observed operation revision; it cannot be advanced by retry. Actor identity comes from authenticated command/runtime custody, not a payload assertion.
+
+Do not add UI, auth providers, hooks, permissions or command behavior from this draft. Original bodies stay with the existing credential/plugin owner. Evidence refs are resolved only through current owner authorization. Event text contains metadata and refs, never raw prompts, hook output, token/device_code secrets or credential values. This contract does not assign retention or deletion policy.
+
+
+
+<a id="GAAAF-079"></a>
+### GAAAF-079 - auth.github.disconnected prepared event contract
+
+```yaml
+plan_unit_id: GAAAF-079
+unit_type: contract
+status: accepted
+owner_doc: Plans/GitHub_API_Auth_and_Flows.md
+canonical_text: >-
+  auth.github.disconnected prepared event contract. This is a newly authored owner contract under DL-045, prepared without admission.
+gui_related: false
+gui_classification_reason: Defines persisted contract behavior and no visual presentation.
+depends_on: [DL-045, SP-670]
+unblocks: []
+acceptance_criteria:
+- Exact-family schema and semantic checks pass; no event is emitted before separate admission.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/GitHub_API_Auth_and_Flows.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+**Newly authored owner contract for `auth.github.disconnected` at payload version `1.0.0`.** Search: exact token in live top-level Plans Markdown/JSON/JSONL, then this owner, Contracts EventRecord/AuthEvent, Storage SP-278/SP-286/SP-291/SP-336 and storage_value_registry. Existing semantic condition is retained; no exact closed payload, producer receipt binding, identity recipe or named operating consumer was found. Reuse the generic index and first-receipt custody. Per-family search matches and source hashes are pinned in the DG6B report. This draft admits nothing; `auth.github.disconnected` remains non-emitting until separate registration and retention resolution.
+
+Producer: **github_api disconnect handler**. An authenticated account is disconnected only after the existing credential-owner disconnect result is durable. This event records that result; it does not define token deletion, remote revocation, or new account removal policy. The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_disconnected` (closed root; no extension map). Storage `SP-670` below is this family's own persistence contract. `subject_ref` identifies the original pending auth flow/account binding or plugin operation subject, never a display login or mutable plugin label. The `revision` is the observed operation revision; it cannot be advanced by retry. Actor identity comes from authenticated command/runtime custody, not a payload assertion.
+
+Do not add UI, auth providers, hooks, permissions or command behavior from this draft. Original bodies stay with the existing credential/plugin owner. Evidence refs are resolved only through current owner authorization. Event text contains metadata and refs, never raw prompts, hook output, token/device_code secrets or credential values. This contract does not assign retention or deletion policy.
+
+
+
+<a id="GAAAF-080"></a>
+### GAAAF-080 - auth.github.failed prepared event contract
+
+```yaml
+plan_unit_id: GAAAF-080
+unit_type: contract
+status: accepted
+owner_doc: Plans/GitHub_API_Auth_and_Flows.md
+canonical_text: >-
+  auth.github.failed prepared event contract. This is a newly authored owner contract under DL-045, prepared without admission.
+gui_related: false
+gui_classification_reason: Defines persisted contract behavior and no visual presentation.
+depends_on: [DL-045, SP-670]
+unblocks: []
+acceptance_criteria:
+- Exact-family schema and semantic checks pass; no event is emitted before separate admission.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/GitHub_API_Auth_and_Flows.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+**Newly authored owner contract for `auth.github.failed` at payload version `1.0.0`.** Search: exact token in live top-level Plans Markdown/JSON/JSONL, then this owner, Contracts EventRecord/AuthEvent, Storage SP-278/SP-286/SP-291/SP-336 and storage_value_registry. Existing semantic condition is retained; no exact closed payload, producer receipt binding, identity recipe or named operating consumer was found. Reuse the generic index and first-receipt custody. Per-family search matches and source hashes are pinned in the DG6B report. This draft admits nothing; `auth.github.failed` remains non-emitting until separate registration and retention resolution.
+
+Producer: **github_api device-flow failure handler**. The pending flow stops on expired_token, unsupported_grant_type, incorrect_client_credentials, incorrect_device_code or access_denied. authorization_pending and slow_down are polling outcomes, not terminal failures. Network/rate-limited recovery follows the existing auth owner. The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_failed` (closed root; no extension map). Storage `SP-670` below is this family's own persistence contract. `subject_ref` identifies the original pending auth flow/account binding or plugin operation subject, never a display login or mutable plugin label. The `revision` is the observed operation revision; it cannot be advanced by retry. Actor identity comes from authenticated command/runtime custody, not a payload assertion.
+
+Do not add UI, auth providers, hooks, permissions or command behavior from this draft. Original bodies stay with the existing credential/plugin owner. Evidence refs are resolved only through current owner authorization. Event text contains metadata and refs, never raw prompts, hook output, token/device_code secrets or credential values. This contract does not assign retention or deletion policy.
+
+
+
+<a id="GAAAF-081"></a>
+### GAAAF-081 - auth.github.token.polling prepared event contract
+
+```yaml
+plan_unit_id: GAAAF-081
+unit_type: contract
+status: accepted
+owner_doc: Plans/GitHub_API_Auth_and_Flows.md
+canonical_text: >-
+  auth.github.token.polling prepared event contract. This is a newly authored owner contract under DL-045, prepared without admission.
+gui_related: false
+gui_classification_reason: Defines persisted contract behavior and no visual presentation.
+depends_on: [DL-045, SP-670]
+unblocks: []
+acceptance_criteria:
+- Exact-family schema and semantic checks pass; no event is emitted before separate admission.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/GitHub_API_Auth_and_Flows.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+**Newly authored owner contract for `auth.github.token.polling` at payload version `1.0.0`.** Search: exact token in live top-level Plans Markdown/JSON/JSONL, then this owner, Contracts EventRecord/AuthEvent, Storage SP-278/SP-286/SP-291/SP-336 and storage_value_registry. Existing semantic condition is retained; no exact closed payload, producer receipt binding, identity recipe or named operating consumer was found. Reuse the generic index and first-receipt custody. Per-family search matches and source hashes are pinned in the DG6B report. This draft admits nothing; `auth.github.token.polling` remains non-emitting until separate registration and retention resolution.
+
+Producer: **github_api device-flow poll response handler**. Only a live unexpired pending flow may poll. authorization_pending preserves cadence; slow_down increases it by exactly five seconds before the next request. This history records a completed polling observation, never instructs replay to send a request. The payload is exactly `Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_token_polling` (closed root; no extension map). Storage `SP-670` below is this family's own persistence contract. `subject_ref` identifies the original pending auth flow/account binding or plugin operation subject, never a display login or mutable plugin label. The `revision` is the observed operation revision; it cannot be advanced by retry. Actor identity comes from authenticated command/runtime custody, not a payload assertion.
+
+Do not add UI, auth providers, hooks, permissions or command behavior from this draft. Original bodies stay with the existing credential/plugin owner. Evidence refs are resolved only through current owner authorization. Event text contains metadata and refs, never raw prompts, hook output, token/device_code secrets or credential values. This contract does not assign retention or deletion policy.

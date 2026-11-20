@@ -1061,20 +1061,17 @@
       "target_contract_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
     },
     "memory-context-instructions": {
-      "title": "Memory, Context, and Instructions",
-      "purpose": "Assistant memory, prompt context, rules, retention, and history policy.",
+      "title": "Memory",
+      "purpose": "Saved notes on one shared page: view, Add, Edit, Delete and Archived at This project or Every project. Written instructions, context controls and history stay in their own owners.",
       "owner_refs": [
-        "Plans/assistant-memory-subsystem.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/storage-plan.md"
+        "Plans/assistant-memory-subsystem.md"
       ],
       "owner_disposition": "owner_route_aggregate",
       "route_ref": "route:settings/memory-context-instructions",
       "search_aliases": [
         "memory",
-        "context",
-        "instructions",
-        "history"
+        "saved notes",
+        "archived notes"
       ],
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],

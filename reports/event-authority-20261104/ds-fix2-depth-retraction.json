@@ -1,0 +1,37 @@
+{
+  "application_id": "EA-B1-DS-FIX2-DEPTH-RETRACTION",
+  "applied_at_utc": "2026-11-04T21:22:29.120457+00:00",
+  "applied_on_revision": "093d102406a3368f246eb255ecc92f3db5a0d2b7",
+  "review": "DS-SOL2-03 / Ruling 2",
+  "registration_history_changed": false,
+  "membership_decisions_changed": false,
+  "frozen_validator_changed": false,
+  "note": "Retracts complete-depth proof, keeps the same assessment path with honest PARTIAL cells. Old assessment remains in git history; no substitute assessment is used. Only depth_assessment changes in admission records.",
+  "files": [
+    {
+      "path": "reports/event-authority-20261104/depth-b1-seal-families.json",
+      "before_sha256": "4100651156a977284fcf73aca33cede5b4477aef6943d098bd316a004f1a4050",
+      "after_sha256": "116bc685e4f1cf62f7acae66dded955bf6ab0dbb233de670950791e5ee7f70b5"
+    },
+    {
+      "path": "reports/event-authority-20261104/DS.selfgrade.json",
+      "before_sha256": "fa5e2a64452eedec989b8f877d46db248b901048b2e743288e787cfe742cac48",
+      "after_sha256": "cca84356ade6b32ea93e44128e4e1db76dad660b503f9a0667b205589b9d4c60"
+    },
+    {
+      "path": "reports/event-authority-20260911/admission-records/context.compaction.completed.json",
+      "before_sha256": "1c845dce2dfbc10972a529f59478bb46e8857438c41a5cfa80f4f429d99a4ca6",
+      "after_sha256": "3e09c1b907309d2574cd61dcb6fb8f9af2fe978a3930444a82634dfee8e709eb"
+    },
+    {
+      "path": "reports/event-authority-20260911/admission-records/browser.workspace.created.json",
+      "before_sha256": "4c849bc0bc1745f5cfab907520c361f3555b53c2eea71c929c8a680136a58ef0",
+      "after_sha256": "592be4c8a49015a528d29a7b6287cb8ee436ba204177a1980c640fcee08f0727"
+    },
+    {
+      "path": "reports/event-authority-20260911/admission-records/browser.workspace.reset.json",
+      "before_sha256": "5515b8b14a6a7ebc8a8445cc257f8ba136263f4ca6f8374cefc462c6ed6c08da",
+      "after_sha256": "c805a70111b9255d10c2626e267c8db20098ba05fe7ec3a25093892684a7ed17"
+    }
+  ]
+}

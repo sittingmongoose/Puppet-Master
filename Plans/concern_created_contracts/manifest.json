@@ -1,0 +1,20 @@
+{
+  "admission": "ABSENT; no writes or checkpoints",
+  "families": [
+    {
+      "event_type": "concern.created",
+      "slug": "concern_created",
+      "sp": "SP-666",
+      "cv": "CV-686",
+      "ats": "ATS-334",
+      "semantic_owner": "Plans/Orchestrator_Page.md#OP-004",
+      "payload_schema": "Plans/event_payloads/concern/concern_created.schema.json",
+      "operation": "concern_created_operation",
+      "checkpoint": "concern_created_checkpoint",
+      "command": "cmd.concern.create",
+      "handler": "handlers::concern::create",
+      "outcome": "register (prepared)",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION"
+    }
+  ]
+}

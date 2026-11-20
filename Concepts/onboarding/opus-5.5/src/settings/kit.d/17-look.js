@@ -34,6 +34,15 @@ const o55On = v => v === true || v === 'true' || v === 'On';
 
 /* ---------- the override sheet: font sizes, line heights and durations, scaled ---------------------------------------- */
 let o55ScaleKey = '', o55ScaleSheet = null, o55ScaleRules = null;
+/* FO-153: most of the app's motion names its times through custom properties (transition: opacity var(--motion-fast)
+   var(--k3-ease-out)). A shorthand that holds a var() leaves its longhands empty in the CSSOM, so those rules (572 on the
+   page) were never scaled and Animation speed changed almost nothing. Such a shorthand is scaled as written: each time
+   in it, a literal or a var() of a custom property that holds a time anywhere (O55_TIME_VARS), becomes that time times
+   the speed, in the rule's own selector. The custom properties themselves are left as they are, since scripts read some
+   of them and Element.animate already scales what a script plays; a time that already carries a speed of its own
+   (Usage's calc(<ms> * var(--pmu-speed))) is left as it is. */
+const O55_TIME = /^-?(?:\d+\.?\d*|\.\d+)m?s$/;
+const O55_TIME_VARS = new Set();
 function o55CollectScalable() {
   if (o55ScaleRules) return o55ScaleRules;
   const out = [];
@@ -41,6 +50,19 @@ function o55CollectScalable() {
     for (const r of rules) {
       if (r.type === 1 && r.style) {
         const pick = {};
+        for (let i = 0; i < r.style.length; i++) {
+          const n = r.style[i]; if (n.charCodeAt(0) !== 45 || n.charCodeAt(1) !== 45) continue;
+          const v = r.style.getPropertyValue(n).trim();
+          if (v && o55SplitTop(v).every(x => O55_TIME.test(x))) O55_TIME_VARS.add(n);
+        }
+        /* every transition and animation shorthand, scaled or not (transition: none too), in the page's order: the sheet
+           restates each rule at the end of the page, so a later rule of the same weight (a "transition: none" for a
+           state) must be restated after it again or the restated one would win. The shorthands come first in a rule,
+           so a longhand declared beside one keeps its place after it */
+        for (const sh of ['transition', 'animation']) {
+          const v = r.style.getPropertyValue(sh);
+          if (v) pick[sh] = [v.trim(), r.style.getPropertyPriority(sh)];
+        }
         for (const p of ['font-size', 'line-height', 'transition-duration', 'transition-delay', 'animation-duration']) {
           const v = r.style.getPropertyValue(p); if (!v || /^(normal|inherit|initial|unset|revert|0s?|auto)$/.test(v.trim())) continue;
           pick[p] = [v.trim(), r.style.getPropertyPriority(p)];
@@ -60,7 +82,18 @@ function o55CollectScalable() {
   return (o55ScaleRules = out);
 }
 const o55SplitTop = v => { const parts = []; let depth = 0, cur = ''; for (const ch of v) { if (ch === '(') depth++; if (ch === ')') depth--; if (ch === ',' && !depth) { parts.push(cur.trim()); cur = ''; } else cur += ch; } parts.push(cur.trim()); return parts; };
+/* the words of one shorthand item, split at top-level white space (a function's arguments stay with it) */
+const o55Words = v => { const out = []; let depth = 0, cur = ''; for (const ch of v) { if (ch === '(') depth++; if (ch === ')') depth--; if (/\s/.test(ch) && !depth) { if (cur) out.push(cur); cur = ''; } else cur += ch; } if (cur) out.push(cur); return out; };
+/* one word of a transition or animation shorthand, times k when it is a time (FO-153) */
+function o55ScaledWord(w, k) {
+  if (O55_TIME.test(w)) { const m = /^(-?[\d.]+)(m?s)$/.exec(w), n = parseFloat(m[1]); return n === 0 ? w : `${Math.round(n * k * 1000) / 1000}${m[2]}`; }
+  if (!/^(?:var|calc)\(/.test(w) || /--[\w-]*speed\b/.test(w)) return w;
+  const vars = w.match(/var\(\s*--[\w-]+/g) || [];
+  const timed = vars.some(x => O55_TIME_VARS.has(x.replace(/^var\(\s*/, ''))) || /(?:^|[\s(,])-?(?:\d+\.?\d*|\.\d+)m?s\b/.test(w.replace(/^var\(\s*--[\w-]+\s*,?/, ''));
+  return timed ? `calc(${w} * ${k})` : w;
+}
 function o55ScaledValue(p, v, k) {
+  if (p === 'transition' || p === 'animation') return o55SplitTop(v).map(item => o55Words(item).map(w => o55ScaledWord(w, k)).join(' ')).join(', ');
   if (p === 'line-height' && /^[\d.]+$/.test(v)) return `calc(${v} * ${k})`;
   if (p === 'font-size' && /^(?:larger|smaller|x*-?small|medium|x*-?large|\d+(?:\.\d+)?%|[\d.]+em)$/.test(v)) return null; // relative: follows the parent
   if (/^(?:transition-(?:duration|delay)|animation-duration)$/.test(p)) return o55SplitTop(v).map(x => (/^0(?:\.0+)?m?s$/.test(x) ? x : `calc(${x} * ${k})`)).join(', ');
@@ -72,7 +105,7 @@ function o55PaintScales(text, line, speed) {
   /* a transition's delay scales with its duration, so a late fade or a visibility deadline keeps its place in the motion
      it belongs to (the menu sprout's close: its 175 ms fade delay and 220 ms visibility deadline against its 220 ms
      collapse) */
-  const k = { 'font-size': text, 'line-height': line, 'transition-duration': speed, 'transition-delay': speed, 'animation-duration': speed };
+  const k = { 'font-size': text, 'line-height': line, 'transition-duration': speed, 'transition-delay': speed, 'animation-duration': speed, transition: speed, animation: speed };
   const blocks = [];
   for (const r of o55CollectScalable()) {
     const decl = Object.entries(r.pick).filter(([p]) => k[p] !== 1).map(([p, [v, imp]]) => { const s = o55ScaledValue(p, v, k[p]); return s ? `${p}:${s}${imp ? ' !important' : ''}` : ''; }).filter(Boolean).join(';');
@@ -154,7 +187,11 @@ function o55AccentTokens(html, chosen, light) {
   }
   html.setAttribute('data-o55-accent', String(chosen).toLowerCase());
   const lum = to.map(c => { const x = c / 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); });
-  put('--o55-on-accent', 0.2126 * lum[0] + 0.7152 * lum[1] + 0.0722 * lum[2] > 0.4 ? '#101114' : '#fff');
+  const L = 0.2126 * lum[0] + 0.7152 * lum[1] + 0.0722 * lum[2];
+  put('--o55-on-accent', L > 0.4 ? '#101114' : '#fff');
+  /* the words on the switcher's chosen block (B-7, styles.d/12-look.css): black or white, whichever reads better on the
+     chosen accent (at least 5:1 for each choice; Violet in dark themes is 5.2:1 in black and 4.2:1 in white) */
+  put('--o55-on-switch', (L + 0.05) / 0.05 >= 1.05 / (L + 0.05) ? '#000000' : '#ffffff');
 }
 
 /* ---------- tokens and attributes ------------------------------------------------------------------------------------ */
@@ -207,7 +244,10 @@ function o55ApplyLook() {
   attr('data-o55-scan', scan == null || Number(scan) <= 0 ? null : 'on');
   /* Text size, Line spacing, Animation speed */
   const fs = o55Px(V('general.visual.font-size')), lh = o55Px(V('general.visual.line-height'));
+  const speedWas = o55SpeedFactor;
   o55SpeedFactor = O55_SPEED[V('general.visual.animation-speed')] || 1;
+  /* owners that keep the speed themselves (Usage's --pmu-speed, read once per look) take the new one now (FO-153) */
+  if (o55SpeedFactor !== speedWas) { try { window.dispatchEvent(new CustomEvent('pm-animation-speed', { detail: { factor: o55SpeedFactor } })); } catch (e) { /* no listener */ } }
   o55PaintScales(fs ? Math.round(fs / 14 * 1000) / 1000 : 1, lh ? Math.round(lh / 1.4 * 1000) / 1000 : 1, o55SpeedFactor);
   /* Show names next to those icons: the rail's own expand state */
   o55SyncRail();

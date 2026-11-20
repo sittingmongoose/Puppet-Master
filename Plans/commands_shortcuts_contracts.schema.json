@@ -199,7 +199,6 @@
       "required": [
         "persona",
         "mode",
-        "model",
         "permissionsProfile"
       ],
       "properties": {
@@ -216,14 +215,11 @@
             }
           ]
         },
-        "model": {
-          "$ref": "#/$defs/nullable_non_empty_string"
-        },
         "permissionsProfile": {
           "$ref": "#/$defs/nullable_non_empty_string"
         }
       },
-      "description": "GUI-shaped overrides; file mapping (persona_override/mode_override/model_override/permissions_profile_override) is owned by section 3.2 prose."
+      "description": "GUI-shaped active overrides: Persona, mode and permissionsProfile. MD2 NEITHER retires saved model/model_override; compatibility readers retain source for inspection and omit retired fields on new owner writes."
     },
     "draft_content": {
       "type": "object",

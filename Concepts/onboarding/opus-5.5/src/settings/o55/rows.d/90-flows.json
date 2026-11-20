@@ -69,26 +69,16 @@
     "kind": "list",
     "icon": "shield",
     "listTitle": "Debug automation is active until 3:00 PM",
+    "itemsFrom": {
+     "setting": "safety.approvals.debug-grant-scope",
+     "on": ["Allowed without asking", "Until 3:00 PM"],
+     "off": ["Asks you each time", "Asks"]
+    },
     "items": [
      {
-      "label": "Restart the app under test",
-      "help": "Allowed without asking",
-      "value": "Until 3:00 PM"
-     },
-     {
-      "label": "Attach a debugger",
-      "help": "Allowed without asking",
-      "value": "Until 3:00 PM"
-     },
-     {
-      "label": "Change files",
-      "help": "Still asks you each time",
+      "label": "Riskier changes",
+      "help": "Still asks you each time, one by one",
       "value": "Asks"
-     },
-     {
-      "label": "Reach the network",
-      "help": "Blocked while debugging",
-      "value": "Blocked"
      }
     ]
    }

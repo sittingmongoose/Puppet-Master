@@ -119,25 +119,29 @@
 
   /* ---------- the Customize screen from Settings: the Terminal look group's owner line ----------
      Settings' rows set one field at a time; the terminal's Customize screen shows them on a live preview. Its button
-     goes Home and opens the screen on the terminal in view (the one last typed in), in "All terminals", the scope these
-     rows hold. With no terminal on Home it opens one first. */
+     opens the screen over Settings, as the Editor look group's does (25-editor-look.js), on the terminal last typed in,
+     in "All terminals", the scope these rows hold; a close gives the focus back to the button, on the same row. It used
+     to go Home and leave you there after Done (FO-148). With no terminal on Home it opens one there first. */
   const look = PLACEMENT && PLACEMENT.sections && PLACEMENT.sections['editor-terminal-look'];
   if (look && !look.owner) look.owner = { text: 'See every look option on a live terminal, with a preview, in the terminal’s Customize screen.', buttons: [{ label: 'Open Customize', action: 'pm51-o55-terminal-customize' }] };
-  PM51.on('o55-terminal-customize', () => {
+  PM51.on('o55-terminal-customize', el => {
     const P = window.PMT;
     if (!P || typeof P.sessions !== 'function' || typeof P.view !== 'function') { showToast('Not available', 'The terminal is not loaded on this page.', 'warning', 3600); return; }
-    const home = document.getElementById('tab-dashboard'); if (home) home.click();
-    const shown = () => P.sessions().map(s => P.view(s.id)).filter(v => v && v.root && v.root.isConnected && v.root.getBoundingClientRect().width > 0)
+    /* the button, or the same button drawn again by a row refresh while the screen was open */
+    const btn = el && el.closest ? el.closest('[data-action="pm51-o55-terminal-customize"]') : null;
+    const returnFocus = () => (btn && btn.isConnected ? btn : document.querySelector('#pm-settings-root [data-action="pm51-o55-terminal-customize"]'));
+    /* the terminal last typed in, whether or not Home is showing (the screen has its own live preview) */
+    const last = () => P.sessions().map(s => P.view(s.id)).filter(v => v && v.root && v.root.isConnected && typeof v.openAppearance === 'function')
       .sort((a, b) => (b.lastInput || 0) - (a.lastInput || 0))[0];
+    /* All terminals for this visit; the scope picked on the terminal's own screen stays as it was for its menu */
+    const go = v => { if (!v.pop) v.openAppearance({ scope: 'app', returnFocus }); };
+    const now = last(); if (now) { go(now); return; }
+    try { if (window.PM_HOME && typeof window.PM_HOME.open === 'function') window.PM_HOME.open({ kind: 'terminal' }); } catch (e) { /* said below */ }
     let tries = 0;
-    const go = () => {
-      const v = shown();
-      /* All terminals for this visit; the scope picked on the terminal's own screen stays as it was for its menu */
-      if (v && typeof v.openAppearance === 'function') { if (!v.pop) v.openAppearance({ scope: 'app' }); return; }
-      if (tries === 3 && typeof P.open === 'function') P.open({ kind: 'terminal' });
-      if (++tries < 30) setTimeout(go, 100); else showToast('No terminal to show', 'Open a terminal on Home, then choose Appearance in its menu.', 'info', 3600);
-    };
-    setTimeout(go, 80);
+    (function wait() {
+      const v = last(); if (v) { go(v); return; }
+      if (++tries < 30) setTimeout(wait, 100); else showToast('No terminal to show', 'Open a terminal on Home, then choose Appearance in its menu.', 'info', 3600);
+    })();
   });
 
   /* ---------- retired words and rows (Jared, 2026-10-16), read once wherever Settings takes its values ----------

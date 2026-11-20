@@ -71,7 +71,7 @@ function jjIco(name, cls) {
   if (g && G && G.has(g)) raw = G.icon(g, JJ_SIZE[cls] || 14, 'nx-r-' + (PMR.neonRole[name] || 'concept'));
   if (!raw) {
     raw = JJ_SVG[name]
-      ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + JJ_SVG[name] + '</svg>'
+      ? '<svg class="pm-isvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + JJ_SVG[name] + '</svg>'
       : (typeof window.PMIcon === 'function' ? window.PMIcon(name) : '');
   }
   i.innerHTML = raw || '';
@@ -565,7 +565,7 @@ function jjBuildStrip() {
   const strip = jh('div', { class: 'pm-segtab d-jj-strip', role: 'tablist', 'aria-label': 'Jujutsu views', style: '--cat:var(--cat-blue)' },
     JJ_TABS.map(t => {
       const b = jh('button', { type: 'button', class: 'pm-segtab-item', role: 'tab', id: 'd-jj-tab-' + t.id, 'data-jj-tab': t.id, 'aria-controls': 'd-jj-pane-' + t.id, 'aria-selected': 'false', tabindex: '-1' },
-        jjIco(t.icon), jh('span', { text: t.label }));
+        jjIco(t.icon), jh('span', { class: 'pm-segtab-lbl', text: t.label }));
       PMR.hover(b, t.label);
       return b;
     }));

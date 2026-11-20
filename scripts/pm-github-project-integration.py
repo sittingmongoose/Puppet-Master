@@ -19,6 +19,7 @@ from pm_emit_only_event_contract import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
+from pm_pnc019_currentness import event_authority_denominator_status  # noqa: E402 - the denominator state comes from the installed edition
 PAYLOAD = "Plans/github_project_event_payloads.schema.json"
 ADMISSION = "Plans/github_project_event_admission.json"
 EVENTS = {
@@ -216,7 +217,7 @@ def validate():
             if not any(item in errors for item in (expected if isinstance(expected, list) else [expected])):
                 failures.append({"case": case["case_id"], "mutation": mutation["name"], "errors": errors})
             negatives += 1
-    return {"schema_id": "pm.github_project_integration_report.v2", "status": "fail" if failures else "pass", "positive_events": 2, "negative_cases": negatives, "admitted_events": 0, "event_disposition": DISPOSITION, "event_persistence_authorized": False, "registry_families": len(families), "native_handler_proven": False, "global_event_denominator": "UNKNOWN_OPEN", "governance_sealed": False, "failures": failures}
+    return {"schema_id": "pm.github_project_integration_report.v2", "status": "fail" if failures else "pass", "positive_events": 2, "negative_cases": negatives, "admitted_events": 0, "event_disposition": DISPOSITION, "event_persistence_authorized": False, "registry_families": len(families), "native_handler_proven": False, "global_event_denominator": event_authority_denominator_status(ROOT), "governance_sealed": False, "failures": failures}
 
 
 if __name__ == "__main__":

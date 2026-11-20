@@ -12,7 +12,8 @@ html[data-o55-nier-parts~="headers"] #panel-usage :is(.pmu-agday header, .pmu-ld
 html[data-o55-nier="on"] #panel-usage :is(.pmu-agtime, .pmu-ltime, .pmu-kpivalue, .pmu-bigval, .pmu-qused, .pmu-tcell[data-mono]) { font-family: "PM NieR Mono", var(--pmu-mono); }
 html[data-o55-nier="on"] #panel-usage :is(.pmu-textbtn, .pmu-tsearch, .pmu-tfilter, .pmu-lrow, .pmu-agline, .pmu-wswitch-track, .pmu-wswitch-track > i, .pmu-natrack, .pmu-mpbar, .pmu-mpbar i, .pmu-key) { border-radius: 0; }
 html[data-o55-nier="on"] #panel-usage .pmu-textbtn { border-color: var(--o55-nier-ink); color: var(--o55-nier-ink); }
-html[data-o55-nier="on"] #panel-usage .pmu-textbtn:hover:not([disabled]) { background: var(--o55-nier-ink); color: var(--o55-nier-paper, var(--pmu-card)); }
+/* (:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) on the in-board :hover rules below: the wheel pause, 20-board.css PERF-USAGE-HOVER) */
+html[data-o55-nier="on"] #panel-usage .pmu-textbtn:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)):not([disabled]) { background: var(--o55-nier-ink); color: var(--o55-nier-paper, var(--pmu-card)); }
 html[data-o55-nier="on"] #panel-usage .pmu-wswitch.on .pmu-wswitch-track { background: var(--o55-nier-ink); }
 html[data-o55-nier="on"] #panel-usage .pmu-wswitch-track > i { transition-timing-function: steps(3, end); }
 html[data-o55-nier="on"] #panel-usage :is(.pmu-key, .pmu-mpbar i) { background: var(--o55-nier-ink); }
@@ -22,7 +23,7 @@ html[data-o55-nier="on"] #panel-usage .pmu-mpbar i[data-tk="cw"], html[data-o55-
 html[data-o55-nier="on"] #panel-usage .pmu-mpbar i[data-tk="rsn"], html[data-o55-nier="on"] #panel-usage .pmu-key[data-tk="rsn"] { background: repeating-linear-gradient(0deg, var(--o55-nier-ink) 0 1px, transparent 1px 4px); }
 /* under NieR the plate head shows only the state glyph; the word stays in the meta line (DESIGN-SPEC 10.5) */
 html[data-o55-nier-parts~="headers"] #panel-usage .pmu-card[data-kind="provider"] .pmu-cardmeta .pmu-acstate b { display: none; }
-html[data-o55-nier="on"] #panel-usage .pmu-row:hover, html[data-o55-nier="on"] #panel-usage .pmu-lrow:hover, html[data-o55-nier="on"] #panel-usage .pmu-agline:hover { background: rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .08); }
+html[data-o55-nier="on"] #panel-usage .pmu-row:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), html[data-o55-nier="on"] #panel-usage .pmu-lrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), html[data-o55-nier="on"] #panel-usage .pmu-agline:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .08); }
 
 /* POLISH2 content (WOW round, 2026-10-02): a tile has no subtitle line, so its head rule sat on the caps title
    (LOOK-REVIEW-2 8); the head keeps 7 px under the title box for the rule */

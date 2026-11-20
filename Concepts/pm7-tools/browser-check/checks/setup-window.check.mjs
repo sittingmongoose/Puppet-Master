@@ -5,7 +5,10 @@
 // At every state each scroller is wheeled from top to bottom, and every line of text the window shows is read from painted
 // pixels: its darkest stem against its own local ground (the commonest colour in the line's box), 4.5:1 at every size
 // (F3-654); a token pair can say a colour passes where the painted text does not (FO-21: the token instructions, read at
-// 3.2:1); the main action's words count once it can be pressed. Also per step: no overflow or clipped text (t.noOverflow on
+// 3.2:1); the main action's words count once it can be pressed. Each reading's boxes are re-read after the pixel
+// capture and must agree exactly: a scroll or reflow that moved the window between them is retried briefly and then
+// fails as 'geometry moved' — never a contrast from moved boxes (FO-233: a frame that moved once read 1.3:1).
+// Also per step: no overflow or clipped text (t.noOverflow on
 // the window). A native crop of the token step, scrolled to its instructions, per look.
 // Fail closed (Sol F3): per look the window must name Sign in › Git access › Check, the walk must visit all three in order
 // and end with the window finished by its last action, the token instructions must have been read and cropped, and each
@@ -72,7 +75,11 @@ export default async function (t) {
 		if (t.args.selftest) await f.evaluate((how) => { const w = document.querySelector('.o55g-win'); if (how === 'empty') { w.querySelectorAll('.o55g-layer, .o55g-main, .o55g-card').forEach((e) => { e.innerHTML = ''; }); } w.querySelectorAll('.o55g-foot .btn.o55g-primary').forEach((e) => e.remove()); }, String(t.args.selftest));
 		// every line of text the window shows now, from the painted pixels of the window
 		const readVisible = async (label) => {
-			const runs = await f.evaluate(() => {
+			// FO-233: the boxes and the pixels must come from one settled frame. The boxes are read again after the
+			// capture, and a contrast is taken only when the two reads agree exactly; a scroll or reflow that moved the
+			// window in between is retried a bounded number of times and then fails as 'geometry moved' — a contrast
+			// from moved boxes is never reported.
+			const readBoxes = () => f.evaluate(() => {
 				const w = document.querySelector('.o55g-win'); if (!w) return null;
 				const wb = w.getBoundingClientRect(), out = [];
 				const walker = document.createTreeWalker(w, NodeFilter.SHOW_TEXT);
@@ -93,22 +100,35 @@ export default async function (t) {
 				}
 				return { rect: { x: Math.max(0, wb.left), y: Math.max(0, wb.top), width: Math.min(wb.width, innerWidth - Math.max(0, wb.left)), height: Math.min(wb.height, innerHeight - Math.max(0, wb.top)) }, ox: Math.max(0, wb.left) - wb.left, oy: Math.max(0, wb.top) - wb.top, runs: out };
 			});
-			if (!runs) return;
-			const png = decodePng(await t.page.screenshot({ clip: runs.rect }));
-			for (const run of runs.runs) {
-				const x0 = Math.max(0, Math.round(run.x - runs.ox)), y0 = Math.max(0, Math.round(run.y - runs.oy)), x1 = Math.min(png.width, Math.round(run.x - runs.ox + run.w)), y1 = Math.min(png.height, Math.round(run.y - runs.oy + run.h));
-				if (x1 - x0 < 3 || y1 - y0 < 4) continue;
-				// the local ground: the commonest colour in the line's box (16 levels a channel), averaged
-				const buckets = new Map();
-				for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const i = (y * png.width + x) * 4, k = (png.data[i] >> 4) << 8 | (png.data[i + 1] >> 4) << 4 | (png.data[i + 2] >> 4); const b = buckets.get(k) || [0, 0, 0, 0]; b[0] += png.data[i]; b[1] += png.data[i + 1]; b[2] += png.data[i + 2]; b[3]++; buckets.set(k, b); }
-				let top = null; for (const b of buckets.values()) if (!top || b[3] > top[3]) top = b;
-				const ground = [top[0] / top[3], top[1] / top[3], top[2] / top[3]];
-				// the darkest stem: the pixel that stands furthest from that ground
-				let best = 1, stem = ground;
-				for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const i = (y * png.width + x) * 4, px = [png.data[i], png.data[i + 1], png.data[i + 2]], cr = ratio(px, ground); if (cr > best) { best = cr; stem = px; } }
-				if (!stepLines.has(curStep)) stepLines.set(curStep, new Set()); stepLines.get(curStep).add(run.key);
-				const was = seen.get(run.key);
-				if (!was || best < was.cr) seen.set(run.key, { cr: best, text: run.text, cls: run.cls, size: run.size, font: run.font, weight: run.weight, color: run.color, stem: stem.map(Math.round), ground: ground.map(Math.round), where: label });
+			// the frame's identity: the window clip and every line's box, exactly as the two reads saw them
+			const frameOf = (r) => JSON.stringify([r.rect, r.ox, r.oy, r.runs.map((u) => [u.key, u.x, u.y, u.w, u.h])]);
+			for (let attempt = 1; ; attempt++) {
+				const runs = await readBoxes();
+				if (!runs) return;
+				const png = decodePng(await t.page.screenshot({ clip: runs.rect }));
+				const after = await readBoxes();
+				if (!after) return;
+				if (frameOf(runs) !== frameOf(after)) {
+					if (attempt >= 3) { bad.push(`${look}: geometry moved between the box read and the pixel capture (${label}); no contrast taken (FO-233)`); return; }
+					await f.waitForTimeout(250);
+					continue;
+				}
+				for (const run of runs.runs) {
+					const x0 = Math.max(0, Math.round(run.x - runs.ox)), y0 = Math.max(0, Math.round(run.y - runs.oy)), x1 = Math.min(png.width, Math.round(run.x - runs.ox + run.w)), y1 = Math.min(png.height, Math.round(run.y - runs.oy + run.h));
+					if (x1 - x0 < 3 || y1 - y0 < 4) continue;
+					// the local ground: the commonest colour in the line's box (16 levels a channel), averaged
+					const buckets = new Map();
+					for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const i = (y * png.width + x) * 4, k = (png.data[i] >> 4) << 8 | (png.data[i + 1] >> 4) << 4 | (png.data[i + 2] >> 4); const b = buckets.get(k) || [0, 0, 0, 0]; b[0] += png.data[i]; b[1] += png.data[i + 1]; b[2] += png.data[i + 2]; b[3]++; buckets.set(k, b); }
+					let top = null; for (const b of buckets.values()) if (!top || b[3] > top[3]) top = b;
+					const ground = [top[0] / top[3], top[1] / top[3], top[2] / top[3]];
+					// the darkest stem: the pixel that stands furthest from that ground
+					let best = 1, stem = ground;
+					for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const i = (y * png.width + x) * 4, px = [png.data[i], png.data[i + 1], png.data[i + 2]], cr = ratio(px, ground); if (cr > best) { best = cr; stem = px; } }
+					if (!stepLines.has(curStep)) stepLines.set(curStep, new Set()); stepLines.get(curStep).add(run.key);
+					const was = seen.get(run.key);
+					if (!was || best < was.cr) seen.set(run.key, { cr: best, text: run.text, cls: run.cls, size: run.size, font: run.font, weight: run.weight, color: run.color, stem: stem.map(Math.round), ground: ground.map(Math.round), where: label });
+				}
+				return;
 			}
 		};
 		// each scroller in the window, wheeled from its top to its bottom, read at every stop

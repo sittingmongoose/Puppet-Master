@@ -29,7 +29,9 @@
  *     finished. A no-op on main, which draws no svg.nx.
  *   - the live node passes four pixel claims that are true of both: (i) a rim
  *     pixel within 30 of --pm-step at one of the four compass points, 1-2 px
- *     inside the box; (ii) strokeCore at --pm-step >= 6; (iii) the fill band at
+ *     inside the box; (ii) strokeCore at --pm-step >= 16, read in the glyph's own
+ *     box (FO-157: the ring symbol, or the node's svg before FO-120), so a rim
+ *     in the same hue can no longer stand in for the glyph; (iii) the fill band at
  *     least 60 from --pm-step, skipped when the declared fill IS the phase hue
  *     (main); (iv) the rim at least 40 from the card. All four run in every
  *     theme of the list; under NieR (an ink block with a paper glyph, nier.css)
@@ -161,6 +163,11 @@ async function freezeNx(page) {
    glyph target. NieR (nier.css) paints the live node as an ink block with a
    paper glyph, so there the rim target is the declared border and the glyph
    target the node's ink; everywhere else both are --pm-step. */
+/* (ii)'s minimum, in full-ink pixels of the glyph's own box (FO-157, Windows RTX 3090, 1440x900 @1x, ten looks,
+   standalone and PM7-hosted): the pre-FO-120 control and the fix read 32-45 in every look; FO-120 as landed (the
+   wrapper's forwards-filled scale left the glyph on a resampled layer) read 0-21, NieR 0-1; a hidden symbol and a
+   0.5-unit hairline read 0. Half the lowest sound reading, so a soft, hairline or missing glyph fails in any look. */
+const GLYPH_CORE_MIN = 16;
 async function liveNodeClaims(page, nier) {
   await freezeNx(page);
   const loc = page.locator('.orbit-node.live').first();
@@ -199,12 +206,20 @@ async function liveNodeClaims(page, nier) {
        of the box, where readPixels samples a filled node) */
     return { best, band: at(cx, Math.min(H - 1, Math.max(3, Math.round(H * 0.12)))) };
   }, { u: 'data:image/png;base64,' + buf.toString('base64'), rimT: want.rimT });
-  const sc = await strokeCore(page, clip, want.glyphT);
+  /* (ii) reads the glyph's own box (FO-157), never the whole node: outside NieR the rim is drawn in the same
+     phase hue, so a whole-node crop counted the rim and passed with a glyph that never reached its colour. The
+     glyph is the ring symbol's wrapper (FO-120) or, on a build before it, the node's own svg; 1 px of margin. */
+  const gb = await page.evaluate(() => {
+    const g = document.querySelector('.orbit-node.live .orbit-node-symbol') || document.querySelector('.orbit-node.live > svg');
+    const r = g && g.getBoundingClientRect();
+    return r && { x: r.x - 1, y: r.y - 1, width: r.width + 2, height: r.height + 2 };
+  });
+  const sc = gb ? await strokeCore(page, clipOf(gb), want.glyphT) : { core: 0, missing: 'no live glyph' };
   const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
   const filled = dist(want.fill, want.glyphT) <= 12;
   return {
     rim: { pass: px.best.d <= 30, at: px.best.where, painted: px.best.p, target: want.rimT, delta: +px.best.d.toFixed(1) },
-    core: { pass: sc.core >= 6, core: sc.core, target: want.glyphT },
+    core: { pass: sc.core >= GLYPH_CORE_MIN, core: sc.core, of: sc.px, min: GLYPH_CORE_MIN, target: want.glyphT, ...(sc.missing ? { missing: sc.missing } : {}) },
     band: { pass: filled || dist(px.band, want.glyphT) >= 60, skipped: filled, painted: px.band, target: want.glyphT, delta: +dist(px.band, want.glyphT).toFixed(1) },
     card: { pass: dist(px.best.p, want.card) >= 40, rim: px.best.p, card: want.card, delta: +dist(px.best.p, want.card).toFixed(1) },
     fillBand: { declared: want.fill, painted: px.band, delta: +dist(px.band, want.fill).toFixed(1) }
@@ -462,7 +477,7 @@ await safe('Orbit: every node hit-tests to itself and paints', async () => {
       lc.fillBand.delta <= 12, { ...lc.fillBand, readPixelsBand: px.band, readPixelsVsDeclared: +dist(got, want.fill).toFixed(1) });
     check('the live node crop carries real ink, not a flat block', px.inkShare >= 0.08 && px.distinct >= 8, px);
     check('(i) the live node has a rim pixel in its phase hue (delta <= 30, a compass point 1-2 px inside)', lc.rim.pass, lc.rim);
-    check('(ii) the live node paints its phase hue with a fully-covered core (strokeCore >= 6)', lc.core.pass, lc.core);
+    check('(ii) the live node paints its phase hue with a fully-covered core (strokeCore >= ' + GLYPH_CORE_MIN + ' in the glyph box)', lc.core.pass, lc.core);
     check('(iii) the fill band is not the phase hue (delta >= 60; skipped when the fill IS the hue)', lc.band.pass, lc.band);
     check('(iv) the live node\'s rim stands off the card (delta >= 40)', lc.card.pass, lc.card);
   } else bad('no .orbit-node.live to sample');
@@ -763,6 +778,7 @@ await safe('Orbit: geometry is derived from the container, not hardcoded', async
 await safe('Orbit: renders in all 8 themes with no overflow and no console noise', async () => {
   const themes = await page.evaluate(() => window.PM56_DATA.themes.map(t => t.id));
   const bad_ = [], claims = { rim: [], core: [], band: [], card: [] };
+  const cores = [];   /* (ii) per look, for the record when it passes */
   for (const t of themes) {
     await page.evaluate(id => window.PM56_TEST.setTheme(id), t);
     await orbit(page, 7);
@@ -772,7 +788,10 @@ await safe('Orbit: renders in all 8 themes with no overflow and no console noise
     if (await page.evaluate(() => { const n = document.querySelector('.orbit-node.live.open'), c = document.querySelector('.orbit-core'); if (n && c) c.click(); return !!n; })) await page.waitForTimeout(700);
     const lc = await liveNodeClaims(page, /^nier/.test(t));
     if (!lc) claims.rim.push({ theme: t, missing: true });
-    else for (const k of ['rim', 'core', 'band', 'card']) if (!lc[k].pass) claims[k].push({ theme: t, ...lc[k] });
+    else {
+      cores.push(t + ':' + lc.core.core + '/' + lc.core.of);
+      for (const k of ['rim', 'core', 'band', 'card']) if (!lc[k].pass) claims[k].push({ theme: t, ...lc[k] });
+    }
     await page.evaluate(() => { const b = document.querySelector('.orbit-node[data-value="7"]'); if (b) b.click(); });
     await page.waitForTimeout(520);
     /* Opening the panel grows the card by ~250px, which pushes the orbit past
@@ -805,7 +824,7 @@ await safe('Orbit: renders in all 8 themes with no overflow and no console noise
   }
   check('8 themes: node painted + hit-testable, nothing escapes the card, no page overflow', bad_.length === 0, bad_.length ? bad_ : themes.length + ' themes clean');
   check(themes.length + ' themes: (i) the live node\'s rim reads its phase hue (NieR: its declared rim)', claims.rim.length === 0, claims.rim.length ? claims.rim : themes.join(','));
-  check(themes.length + ' themes: (ii) the live glyph has a fully-covered core in its phase hue (NieR: its ink)', claims.core.length === 0, claims.core.length ? claims.core : themes.join(','));
+  check(themes.length + ' themes: (ii) the live glyph has a fully-covered core in its phase hue (NieR: its ink)', claims.core.length === 0, claims.core.length ? { failing: claims.core, all: cores.join(' ') } : cores.join(' ') + ' (min ' + GLYPH_CORE_MIN + ')');
   check(themes.length + ' themes: (iii) the fill band is not the glyph hue, unless the node is filled with it', claims.band.length === 0, claims.band.length ? claims.band : themes.join(','));
   check(themes.length + ' themes: (iv) the live node\'s rim stands off the card (delta >= 40)', claims.card.length === 0, claims.card.length ? claims.card : themes.join(','));
   await page.evaluate(() => window.PM56_TEST.setTheme('basic-dark'));

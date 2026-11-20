@@ -47,12 +47,12 @@ B.panels.docker = (function () {
         const val = k => ((facts.find(f => f[0] === k) || [])[1] || '');
         /* one line names where Docker runs; the labelled facts live in "Readiness and context" */
         const where = [val('Execution Host').replace(/\s*\(.*\)$/, ''), val('Execution Environment').split(' · ')[0], val('Source Location')].filter(Boolean).join(' · ');
-        const whereEl = h('div.pmr-b-ident-line.pmr-b-where1', { 'data-canon': l0.canon || null }, h('span', { text: where }));
+        const whereEl = h('div.pmr-b-ident-line.pmr-b-where1', { 'data-canon': l0.canon || null }, h('span', { class: 'pmr-part-text', text: where }));
         if (l0.hover) PMR.hover(whereEl, l0.hover.label, l0.hover.detail);
         const ident = h('div.pmr-b-block.pmr-b-ident',
           h('div.pmr-b-ident-line', trig, B.panels.docker.state(st)),
           whereEl,
-          h('div.pmr-b-ident-line.pmr-b-counts', { 'data-canon': l1.canon || null }, h('span', { text: l1.text.replace(/^Ready · /, '') })),
+          h('div.pmr-b-ident-line.pmr-b-counts', { 'data-canon': l1.canon || null }, h('span', { class: 'pmr-part-text', text: l1.text.replace(/^Ready · /, '') })),
           disclosure('Readiness and context', factList(facts, { key: 'docker-where' }), { navId: 'docker-where' }));
         const vs = panel.views;
         const dest = v => {

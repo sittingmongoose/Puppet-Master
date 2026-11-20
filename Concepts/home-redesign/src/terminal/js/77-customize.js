@@ -303,8 +303,9 @@
     var html = '';
     html += '<div class="pmt-cz-scrim" data-act="scrim" aria-hidden="true"><i class="pmt-cz-sh"></i><i class="pmt-cz-sh"></i><i class="pmt-cz-sh"></i><i class="pmt-cz-sh"></i></div><div class="pmt-cz-frame" aria-hidden="true"><span class="pmt-cz-framelabel">This terminal</span></div>';
     /* data-lg-surface="menu": the Liquid Glass layer's opt-in for a floating sheet (its CONTRACT.md); data-lg-dense: a
-       large dialog full of text takes its heavier tint (both inert without Liquid Glass) */
-    html += '<section class="pmt-cz-dialog" role="dialog" aria-modal="true" aria-labelledby="pmt-cz-title" aria-describedby="pmt-cz-lead" tabindex="-1" data-lg-surface="menu" data-lg-dense>';
+       large dialog full of text takes its heavier tint (both inert without Liquid Glass). aria-modal is the shown
+       screen's alone (reveal sets it, a close takes it away): a parked screen is no open modal (FO-145) */
+    html += '<section class="pmt-cz-dialog" role="dialog" aria-labelledby="pmt-cz-title" aria-describedby="pmt-cz-lead" tabindex="-1" data-lg-surface="menu" data-lg-dense>';
     html += '<header class="pmt-cz-head"><div class="pmt-cz-titles"><p class="pmt-cz-kicker"><span>' + esc('Customize · ' + label) + '</span></p>' +
       '<h2 class="pmt-cz-title" id="pmt-cz-title">Terminal appearance</h2>' +
       '<p class="pmt-cz-lead" id="pmt-cz-lead">Pick what you want to change. The preview and this terminal show it at once, and it is saved.</p></div>' +
@@ -323,7 +324,7 @@
       '<form class="pmt-cz-psave" data-psave hidden><input type="text" class="pmt-cz-pname-in" data-pname maxlength="40" autocomplete="off" spellcheck="false" aria-label="Preset name" placeholder="Name this look"' + NOTAG + '>' +
       '<button type="submit" class="pmt-textbtn pmt-cz-psave-go"' + NOTAG + '>Save</button><button type="button" class="pmt-textbtn" data-act="preset-cancel"' + NOTAG + '>Cancel</button></form>' +
       '<div class="pmt-cz-sets" role="group" aria-label="Built-in presets">' + SETS.map(function (s) {
-        return '<button type="button" class="pmt-cz-set" aria-pressed="false" data-set="' + s.id + '" data-pmh="tile"' + NOTAG + '><span>' + esc(s.label) + '</span><small>' + esc(s.help) + '</small></button>';
+        return '<button type="button" class="pmt-cz-set" aria-pressed="false" data-set="' + s.id + '" data-pmh="tile"' + NOTAG + '><span>' + esc(s.label) + '</span><small class="pmt-cz-small">' + esc(s.help) + '</small></button>';
       }).join('') + '</div>' +
       '<div class="pmt-cz-mylist" role="group" aria-label="Your presets" data-presets hidden></div>' +
       '<p class="pmt-cz-pnote" data-pnote role="status" hidden></p></div>' +
@@ -339,7 +340,7 @@
       '<div class="pmt-cz-dock" data-dock hidden aria-hidden="true"><span class="pmt-cz-docktitle">Preview</span><div class="pmt-cz-dockbox" data-dock-box></div></div></nav>';
     /* colours */
     html += '<section class="pmt-cz-group" data-group="colors" aria-labelledby="pmt-cz-g-colors">' + ghead('colors', 'Colors', 'One catalog with the code editor. Hover a scheme to see it here and on the terminal; click to keep it.') +
-      '<div class="pmt-cz-findrow"><input class="pmt-cz-search pmt-pop-search" type="search" placeholder="Find a scheme" aria-label="Find a scheme"' + NOTAG + '><span class="pmt-cz-findn" data-find-n></span></div>' +
+      '<div class="pmt-cz-findrow"><input class="pmt-cz-search pmt-pop-search" type="search" placeholder="Find a scheme" aria-label="Find a scheme"' + NOTAG + '><span class="pmt-cz-findn" data-find-n role="status" aria-live="polite" aria-atomic="true"></span></div>' +
       '<div class="pmt-cz-tiles pmt-cz-schemes" role="radiogroup" aria-label="Colour scheme">' + schemeTiles() + '</div>' +
       '<div class="pmt-cz-row">' + chip('schemePair', 'Switch with light and dark', 'A scheme you pick swaps for its family’s other version when the app changes mode.') +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Minimum text contrast</span>' + seg('minContrast', [[1, 'Off'], [3, '3:1'], [4.5, '4.5:1'], [7, '7:1']], 'Minimum text contrast') +
@@ -528,6 +529,9 @@
     var overlay = document.getElementById('pmw-overlay') || document.body;
     var root = el('div', 'pmt-cz pmt-calm pmt-cz-parked');
     root.setAttribute('aria-hidden', 'true');
+    /* parked: out of the focus order, hit testing and find-in-page as a whole, as the editor's screen is (FO-145: a parked
+       screen read as an open modal dialog that nothing made inert) */
+    root.inert = true;
     root.setAttribute('data-pmw-overlay', 'terminal-appearance');
     root.innerHTML = skeleton(v, staged);
     if (!staged) overlay.appendChild(root);
@@ -660,7 +664,7 @@
         gSig = sig;
         var fl = ['follow'].concat(G.forLook(R.lookKey).map(function (id) { return (G.isGradient(id) ? 'g:' : 'i:') + id; })).slice(0, 6);
         root.querySelector('[data-forlook]').innerHTML = fl.map(function (gv) { return groundTile(gv, gv === 'follow' ? 'Look’s own' : G.name(gv.slice(2)), th); }).join('');
-        root.querySelector('[data-forlook-label]').textContent = 'Suggested for ' + (LOOK_NAMES[R.lookKey] || 'this look');
+        setText(root.querySelector('[data-forlook-label]'), 'Suggested for ' + (LOOK_NAMES[R.lookKey] || 'this look'));
         var same = ownIsTheme();
         var tiles = gcat === 'plain' ? PLAIN.filter(function (p) { return !(same && p[0] === 'theme'); }).map(function (p) { return groundTile(p[0], p[1], th); }) :
           gcat === 'yours' ? [groundTile('custom', 'Your picture', th, A().pictureName(val('bgImageData') || '') || 'Choose one…')] :
@@ -685,17 +689,17 @@
       [].forEach.call(root.querySelectorAll('[data-key="ground"]'), function (b) { setA(b, 'aria-checked', String(b.getAttribute('data-value') === now)); });
       [].forEach.call(root.querySelectorAll('[data-gcat]'), function (b) { setA(b, 'aria-selected', String(b.getAttribute('data-gcat') === gcat)); });
       var custom = now === 'custom', design = now.indexOf(':') === 1;
-      root.querySelector('[data-gctl="solid"]').hidden = now !== 'solid';
-      root.querySelector('[data-gctl="yours"]').hidden = !custom;
-      root.querySelector('[data-gctl="design"]').hidden = !design;
+      setHidden(root.querySelector('[data-gctl="solid"]'), now !== 'solid');
+      setHidden(root.querySelector('[data-gctl="yours"]'), !custom);
+      setHidden(root.querySelector('[data-gctl="design"]'), !design);
       /* a design's own controls: Size for patterns, Motion for any that moves, whatever its kind */
       var did = design ? now.slice(2) : '', moves = !!did && !!G.motion(did);
       [].forEach.call(root.querySelectorAll('[data-gctl-sub]'), function (s) { var sub = s.getAttribute('data-gctl-sub');
-        s.hidden = !(sub === 'moving' ? moves : sub === 'pattern' ? !!did && G.sized(did) : sub === cat0); });
-      root.querySelector('[data-bezel-more]').hidden = val('bezel') === 'off';
+        setHidden(s, !(sub === 'moving' ? moves : sub === 'pattern' ? !!did && G.sized(did) : sub === cat0)); });
+      setHidden(root.querySelector('[data-bezel-more]'), val('bezel') === 'off');
       /* Reflection: the material's own level named; none for NieR's ink frame, which reflects nothing */
       var rf = reflect(R), rtxt = rf.own ? rf.name + '’s own is ' + rf.own.charAt(0).toUpperCase() + rf.own.slice(1) + '.' : '';
-      root.querySelector('[data-reflect-field]').hidden = !rf.own;
+      setHidden(root.querySelector('[data-reflect-field]'), !rf.own);
       var rw = root.querySelector('[data-reflect-why]'); if (rw.textContent !== rtxt) rw.textContent = rtxt;
     }
     /* the pictures paintGround puts in its tiles (the look's suggestions, then the category shown), painted ahead of
@@ -747,7 +751,7 @@
       var sig = JSON.stringify(list) + '|' + renaming + '|' + JSON.stringify(mineNow) + '|' + eff().look.mode + '|' + eff().lookKey;
       if (sig === presetSig) return;
       presetSig = sig;
-      box.hidden = !list.length;
+      setHidden(box, !list.length);
       box.innerHTML = list.map(function (p) {
         var on = sameFields(mineNow, p.fields), n = Object.keys(p.fields).length;
         var label = renaming === p.id ? '<input type="text" class="pmt-cz-pname-in" data-rename="' + esc(p.id) + '" value="' + esc(p.name) + '" maxlength="40" autocomplete="off" spellcheck="false" aria-label="New name for ' + esc(p.name) + '"' + NOTAG + '>' :
@@ -755,7 +759,7 @@
         return '<div class="pmt-cz-mycard" data-pid="' + esc(p.id) + '">' +
           (renaming === p.id ? '<div class="pmt-cz-set pmt-cz-myset">' + presetArt(v, p.fields) + label + '</div>' :
           '<button type="button" class="pmt-cz-set pmt-cz-myset" aria-pressed="' + on + '" data-preset="' + esc(p.id) + '" data-pmh="tile"' + tagged('Put on ' + p.name, n ? n + (n === 1 ? ' choice' : ' choices') + '; everything else follows the look' : 'Everything follows the look') + '>' +
-            presetArt(v, p.fields) + label + '<small>' + (n ? n + (n === 1 ? ' choice' : ' choices') : 'The look’s own') + '</small></button>') +
+            presetArt(v, p.fields) + label + '<small class="pmt-cz-small">' + (n ? n + (n === 1 ? ' choice' : ' choices') : 'The look’s own') + '</small></button>') +
           '<span class="pmt-cz-pacts"><button type="button" class="pmt-pop-x pmt-cz-pact" data-act="preset-rename" data-pid="' + esc(p.id) + '" aria-label="Rename ' + esc(p.name) + '"' + NOTAG + '><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13l.6-2.6L10.5 3.5l2 2-6.9 6.9z M9.4 4.6l2 2"/></svg></button>' +
           '<button type="button" class="pmt-pop-x pmt-cz-pact" data-act="preset-delete" data-pid="' + esc(p.id) + '" aria-label="Delete ' + esc(p.name) + '"' + NOTAG + '><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></span></div>';
       }).join('');
@@ -763,7 +767,7 @@
     }
     function presetNote(text, undo) {
       var n = root.querySelector('[data-pnote]');
-      n.hidden = !text;
+      setHidden(n, !text);
       n.innerHTML = text ? esc(text) + (undo ? ' <button type="button" class="pmt-textbtn" data-act="preset-undo"' + NOTAG + '>Undo</button>' : '') : '';
     }
     function presetSaveOpen() {
@@ -792,6 +796,11 @@
 
     /* ---- painting: every control shows this scope's value ---- */
     var setA = function (e, n, x) { if (e.getAttribute(n) !== x) e.setAttribute(n, x); };
+    /* hidden and texts written only when they differ, like setA: the screen redraws itself unseen after a look change (its
+       first frame must already be right), and that redraw rewrote about 170 values it already held (tabindex, hidden,
+       the sliders' outputs), each a restyle and a wake for every DOM watcher of the page (pm7-perf lane K) */
+    function setHidden(e, h) { h = !!h; if (e.hidden !== h) e.hidden = h; }
+    function setText(e, s) { if (e.textContent !== s) e.textContent = s; }
     function fmt(key, x) {
       if (x === null || x === undefined || x === '') return '';
       if (key === 'lineHeight') return Number(x).toFixed(2) + '×';
@@ -804,9 +813,9 @@
     }
     function paint() {
       var R = eff(), fx = R.effects, look = R.lookKey, isNier = !!R.look.nier;
-      root.setAttribute('data-pmt-look', isNier ? 'nier' : look);
-      root.setAttribute('data-pmt-mode', R.look.mode === 'light' ? 'light' : 'dark');
-      root.setAttribute('data-scope', scope);
+      setA(root, 'data-pmt-look', isNier ? 'nier' : look);
+      setA(root, 'data-pmt-mode', R.look.mode === 'light' ? 'light' : 'dark');
+      setA(root, 'data-scope', scope);
       /* the effect pictures are drawn in this scope's own scheme */
       if (R.theme) {
         root.style.setProperty('--pmt-cz-sfg', T.color.toHex(R.theme.fg));
@@ -858,7 +867,7 @@
         /* and while they are spaced the switch is not offered: either position would draw the same (Q15 #6) */
         if (key === 'ligatures') setA(c, 'aria-disabled', String(ligBlocked));
         c.classList.toggle('pmt-cz-is-mine', mine(key));
-        var box = c.parentNode, more = box.querySelector('.pmt-cz-chipmore'); if (more) more.hidden = !o;
+        var box = c.parentNode, more = box.querySelector('.pmt-cz-chipmore'); if (more) setHidden(more, !o);
         box.classList.toggle('pmt-cz-lit', o);
       });
       var bi = root.querySelector('input[data-key="burnIn"]'); if (bi) bi.checked = !!val('burnIn');
@@ -877,13 +886,13 @@
       sl = []; for (k = floor; k <= 0.9 + 1e-6; k += 0.05) sl.push(Math.round(k * 100) / 100);
       if (!sl.length) sl = [Math.min(1, Math.round((bgR.floor || 0.9) * 100) / 100)];
       setStops(root.querySelector('input[data-key="bgDim"]'), sl);
-      root.querySelector('[data-slider="bgDim"]').hidden = sl.length < 2;
+      setHidden(root.querySelector('[data-slider="bgDim"]'), sl.length < 2);
       /* under a heavy dim a picture keeps less of itself, so fewer of its steps can be told apart: from 85 % only full
          colour or grey, and from 90 % (a scheme with no contrast to spare) colour hardly shows and blur has two steps */
       var pdim = bgR.custom ? bgR.dim || 0 : 0;
       setStops(root.querySelector('input[data-key="bgDesat"]'), pdim >= 0.85 ? [0, 1] : [0, 0.5, 1]);
       setStops(root.querySelector('input[data-key="bgBlur"]'), pdim >= 0.9 ? [0, 12] : [0, 3, 6, 12, 24]);
-      root.querySelector('[data-slider="bgDesat"]').hidden = pdim >= 0.9;
+      setHidden(root.querySelector('[data-slider="bgDesat"]'), pdim >= 0.9);
       note('[data-dim-why]', bgR.custom && sl.length < 2 ? 'Dim stays at ' + Math.round(sl[0] * 100) + ' %: any less and this picture would hide the text.' +
         (pdim >= 0.9 ? ' So little of it shows that its colour hardly changes, so Less colour is not offered.' : '') : '');
       /* Glass's opacity: the least, its own (0.74 dark, 0.7 light) and solid. Glass light's terminal lies on glass of its
@@ -902,28 +911,28 @@
         var autoDim = key === 'bgDim' && (x === null || x === undefined);
         if (autoDim) x = R.background && typeof R.background.dim === 'number' ? R.background.dim : 0.45;
         if (document.activeElement !== r) rangeShow(r, x);
-        var out = r.parentNode.querySelector('output'); if (out) out.textContent = (autoDim ? 'Auto · ' : '') + fmt(key, document.activeElement === r ? rangeValue(r) : x);
+        var out = r.parentNode.querySelector('output'); if (out) setText(out, (autoDim ? 'Auto · ' : '') + fmt(key, document.activeElement === r ? rangeValue(r) : x));
         r.closest('[data-slider]').classList.toggle('pmt-cz-is-mine', mine(key));
       });
-      var fs = root.querySelector('[data-out="fontSize"]'); if (fs) fs.textContent = fmt('fontSize', R.font.size);
+      var fs = root.querySelector('[data-out="fontSize"]'); if (fs) setText(fs, fmt('fontSize', R.font.size));
       [].forEach.call(root.querySelectorAll('[data-step]'), function (b) { setA(b, 'aria-disabled', String(nextSize(R, parseFloat(b.getAttribute('data-step')) < 0 ? -1 : 1) === null)); });
       setA(root.querySelector('[data-act="default"][data-key="fontSize"]'), 'aria-disabled', String(!mine('fontSize')));
       var col = root.querySelector('input[data-key="bgColor"]'), bgc = val('bgColor') || (R.theme ? A().solidDefault(R.theme) : '#000000');
       if (col && document.activeElement !== col) col.value = bgc;
-      var bo = root.querySelector('[data-out="bgColor"]'); if (bo) bo.textContent = bgc;
+      var bo = root.querySelector('[data-out="bgColor"]'); if (bo) setText(bo, bgc);
       /* what shows when (SSYS-051's visibility rule, kept for the person's sake: a hidden part keeps its value) */
       var ground = val('background');
       /* the background group's tiles wait for its own build step while it is out of the layout (buildSlices) */
       if (!groundLater) paintGround(R);
-      root.querySelector('[data-slider="opacity"]').hidden = look !== 'glass' || opacityOff;
-      root.querySelector('[data-axes]').hidden = R.font.id !== 'sixtyfour';
+      setHidden(root.querySelector('[data-slider="opacity"]'), look !== 'glass' || opacityOff);
+      setHidden(root.querySelector('[data-axes]'), R.font.id !== 'sixtyfour');
       /* weights the face has */
       var FD = A().fontDef(R.font.id), wr = FD && FD.weights;
-      [].forEach.call(root.querySelectorAll('[data-key="fontWeight"]'), function (b) { var n = Number(b.getAttribute('data-value')); b.hidden = !wr || n < wr[0] || n > wr[1] || !!wrep[n]; });
+      [].forEach.call(root.querySelectorAll('[data-key="fontWeight"]'), function (b) { var n = Number(b.getAttribute('data-value')); setHidden(b, !wr || n < wr[0] || n > wr[1] || !!wrep[n]); });
       var nw = wr ? Object.keys(wrep).length : 0;
       var why = root.querySelector('[data-weight-why]'), wtxt = wr ? (nw ? 'Only the weights ' + R.font.label + ' has on this computer.' : '') : R.font.label + ' comes in one weight.';
       if (why.textContent !== wtxt) why.textContent = wtxt;
-      root.querySelector('[data-seg="fontWeight"]').hidden = !wr;
+      setHidden(root.querySelector('[data-seg="fontWeight"]'), !wr);
       /* thumbnails that follow the look and the scheme */
       var follow = A().scheme(A().LOOKS[look][R.look.mode === 'light' ? 'light' : 'dark']);
       var fa = root.querySelector('[data-follow-art]'); if (follow && fa.getAttribute('data-for') !== follow.id) { fa.innerHTML = schemeArt(follow); fa.setAttribute('data-for', follow.id); }
@@ -936,8 +945,8 @@
       if (pn.textContent !== pname) pn.textContent = pname;
       /* a face from this computer, named by Settings */
       var lfBox = root.querySelector('[data-local-face]');
-      lfBox.hidden = !R.font.local;
-      if (R.font.local) lfBox.textContent = R.font.label + (R.font.local.installed ? ' (from Settings, on this computer)' : ' (from Settings)');
+      setHidden(lfBox, !R.font.local);
+      if (R.font.local) setText(lfBox, R.font.label + (R.font.local.installed ? ' (from Settings, on this computer)' : ' (from Settings)'));
       /* notes */
       note('[data-note-face]', R.font.local && !R.font.local.installed ? R.font.label + ' is not on this computer, so JetBrains Mono shows in its place.' :
         R.font.axes && R.font.axes.unavailable ? 'This browser cannot set Sixtyfour’s axes, so its default draws.' : '');
@@ -959,31 +968,31 @@
       note('[data-note-side]', tabN ? 'This terminal keeps ' + (tabN === 1 ? 'one choice of its own, which stays' : tabN + ' choices of its own, which stay') + ' on top of All terminals on it. The preview shows All terminals.' : '');
       var ew = root.querySelector('[data-effects-why]'), etext = val('effects') === 'follow' ? 'The look’s own: ' + lookEffects(R) + '. Turning one on or off switches to Custom.' : val('effects') === 'off' ? 'No effects in this scope.' : '';
       if (ew.textContent !== etext) ew.textContent = etext;
-      root.querySelector('[data-act="degauss"]').hidden = look !== 'retro' || isNier;
+      setHidden(root.querySelector('[data-act="degauss"]'), look !== 'retro' || isNier);
       /* the preview's caption, also its text alternative */
       var desc = (R.scheme ? R.scheme.name : '') + ', ' + R.font.label + ' ' + (Math.round(R.font.size * 100) / 100) + ' px, ' + (R.opts.cursor.shape) + ' cursor' + (fx.off || !(fx.scanlines.on || fx.glow.on || fx.crt) ? '' : ', ' + lookEffects(R));
       var pd = root.querySelector('[data-pv-desc]'); if (pd.textContent !== desc) pd.textContent = desc;
-      root.querySelector('[data-pv-box]').setAttribute('aria-label', 'Preview: ' + desc);
+      setA(root.querySelector('[data-pv-box]'), 'aria-label', 'Preview: ' + desc);
       /* counts: the meter, each group, the footer, the quick sets */
       var mineKeys = COUNTED.filter(mine), n = mineKeys.length;
       [].forEach.call(root.querySelectorAll('.pmt-cz-cells > i'), function (c, i) { c.classList.toggle('pmt-cz-on', mine(COUNTED[i])); });
       var mn = root.querySelector('[data-meter-n]'), mt = n ? n + (n === 1 ? ' change' : ' changes') : 'The look’s own';
       if (mn.textContent !== mt) mn.textContent = mt;
-      root.querySelector('[data-meter-scope]').textContent = scope === 'tab' ? 'This terminal' : 'All terminals';
+      setText(root.querySelector('[data-meter-scope]'), scope === 'tab' ? 'This terminal' : 'All terminals');
       GROUPS.forEach(function (g) {
         var k = GROUP_KEYS[g[0]].filter(mine).length, t = k ? k + ' changed' : '';
         var c = root.querySelector('[data-count="' + g[0] + '"]'); if (c.textContent !== t) c.textContent = t;
         var nv = root.querySelector('[data-navn="' + g[0] + '"]'); if (nv.textContent !== (k ? String(k) : '')) nv.textContent = k ? String(k) : '';
-        root.querySelector('[data-act="group-reset"][data-group="' + g[0] + '"]').hidden = !k;
+        setHidden(root.querySelector('[data-act="group-reset"][data-group="' + g[0] + '"]'), !k);
       });
       var ft = root.querySelector('[data-foot-n]'), ftt = n ? n + (n === 1 ? ' change from the look in ' : ' changes from the look in ') + (scope === 'tab' ? 'this terminal' : 'all terminals') : 'Following the look';
       if (ft.textContent !== ftt) ft.textContent = ftt;
-      var rb = root.querySelector('[data-act="reset"]'); rb.textContent = scope === 'tab' ? 'Reset this terminal' : 'Reset all terminals'; setA(rb, 'aria-disabled', String(!n));
+      var rb = root.querySelector('[data-act="reset"]'); setText(rb, scope === 'tab' ? 'Reset this terminal' : 'Reset all terminals'); setA(rb, 'aria-disabled', String(!n));
       [].forEach.call(root.querySelectorAll('[data-set]'), function (b) { setA(b, 'aria-pressed', String(setPressed(b.getAttribute('data-set'), mineKeys))); });
       /* the scope's reason */
       var sw = root.querySelector('[data-scope-why]'), swt = scope === 'app' ? (A().settingsReady() ? 'Saved in this project’s Settings' : 'Saved on this computer') : 'Saved with this tab';
       if (sw.textContent !== swt) sw.textContent = swt;
-      root.querySelector('.pmt-cz-framelabel').textContent = scope === 'tab' ? 'This terminal' : 'This terminal, like all terminals';
+      setText(root.querySelector('.pmt-cz-framelabel'), scope === 'tab' ? 'This terminal' : 'This terminal, like all terminals');
       paintPresets();
       roving();
       fitNow();
@@ -993,7 +1002,7 @@
       if (fx.scanlines.on) l.push('scanlines'); if (fx.glow.on) l.push('glow'); if (fx.crt) l.push('full CRT'); if (fx.dim > 0) l.push('dimming');
       return l.length ? l.join(', ') : 'none';
     }
-    function note(sel, text) { var e = root.querySelector(sel); e.hidden = !text; if (e.textContent !== text) e.textContent = text; }
+    function note(sel, text) { var e = root.querySelector(sel); setHidden(e, !text); if (e.textContent !== text) e.textContent = text; }
     function setPressed(id, mineKeys) {
       var s = SETS.filter(function (x) { return x.id === id; })[0]; if (!s) return false;
       if (!s.patch) return mineKeys.length === 0;
@@ -1019,9 +1028,10 @@
       /* the scrim around the terminal's rectangle (none when it is not on screen) */
       var s = root.querySelectorAll('.pmt-cz-scrim > i'), x0 = hole ? Math.max(0, r.left) : 0, y0 = hole ? Math.max(0, r.top) : 0, x1 = hole ? Math.min(W, r.right) : 0, y1 = hole ? Math.min(H, r.bottom) : 0;
       var rects = hole ? [[0, 0, W, y0], [0, y1, W, H - y1], [0, y0, x0, y1 - y0], [x1, y0, W - x1, y1 - y0]] : [[0, 0, W, H], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
-      rects.forEach(function (q, i) { s[i].style.cssText = 'left:' + q[0] + 'px;top:' + q[1] + 'px;width:' + Math.max(0, q[2]) + 'px;height:' + Math.max(0, q[3]) + 'px'; });
-      var fr = root.querySelector('.pmt-cz-frame'); fr.hidden = !hole;
-      if (hole) fr.style.cssText = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px';
+      // only what differs (the unseen redraw after a look change put the four shades where they were)
+      rects.forEach(function (q, i) { var css = 'left:' + q[0] + 'px;top:' + q[1] + 'px;width:' + Math.max(0, q[2]) + 'px;height:' + Math.max(0, q[3]) + 'px'; if (s[i].__czCss !== css) { s[i].style.cssText = css; s[i].__czCss = css; } });
+      var fr = root.querySelector('.pmt-cz-frame'); setHidden(fr, !hole);
+      if (hole) { var fcss = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px'; if (fr.__czCss !== fcss) { fr.style.cssText = fcss; fr.__czCss = fcss; } }
       root.classList.toggle('pmt-cz-narrow', narrow);
       syncDock();
       fitNow();
@@ -1163,11 +1173,11 @@
       var ql = String(q || '').trim().toLowerCase(), n = 0, fam = null, famHas = false;
       var items = root.querySelectorAll('.pmt-cz-schemes > *');
       [].forEach.call(items, function (x) {
-        if (x.classList.contains('pmt-cz-fam')) { if (fam) fam.hidden = !famHas; fam = x; famHas = false; return; }
+        if (x.classList.contains('pmt-cz-fam')) { if (fam) setHidden(fam, !famHas); fam = x; famHas = false; return; }
         var hit = !ql || (x.getAttribute('data-name') || '').indexOf(ql) >= 0;
-        x.hidden = !hit; if (hit) { n++; famHas = true; }
+        setHidden(x, !hit); if (hit) { n++; famHas = true; }
       });
-      if (fam) fam.hidden = !famHas;
+      if (fam) setHidden(fam, !famHas);
       var fn = root.querySelector('[data-find-n]'); fn.textContent = ql ? (n ? n + (n === 1 ? ' scheme' : ' schemes') : 'No scheme matches') : '';
     }
     /* a scheme previews when the pointer rests on it (hover intent, 110 ms) or the arrow keys reach it; leaving the
@@ -1246,7 +1256,7 @@
     function roving() {
       [].forEach.call(root.querySelectorAll('[role="radiogroup"]'), function (g) {
         var opts = g.querySelectorAll('[role="radio"]'), chosen = g.querySelector('[role="radio"][aria-checked="true"]:not([hidden])') || [].filter.call(opts, function (o) { return !o.hidden; })[0];
-        [].forEach.call(opts, function (o) { o.tabIndex = o === chosen ? 0 : -1; });
+        [].forEach.call(opts, function (o) { var ti = o === chosen ? '0' : '-1'; if (o.getAttribute('tabindex') !== ti) o.setAttribute('tabindex', ti); });
       });
     }
 
@@ -1343,6 +1353,12 @@
        its idle-warm queue (PM_WARM, 11-motion-start.js) the drawing is a step on it after the quiet time, admitted and
        judged as every warm step is, instead of this screen's own idle wait */
     var WARM_SETTLE_MS = 3000, WARM_IDLE_MS = 45, WARM_LATEST_MS = 10000, warmJob = 0, warmStep = 0, warmWait = 0, warmSince = 0, offWarm = null;
+    /* between a short idle slot and the next try it waits on a timer, 400 ms doubling to 2 s as PM_WARM's own retry
+       does (11-motion-start.js): asking for the next idle callback from inside a short one ran it about 110 times a
+       second at 0.85 ms each, for up to 10 s after every look or size change, on a page drawing frames (lane A,
+       2026-11-10). warmPause is that timer, kept apart from warmJob so a cancel never hands a timer id to
+       cancelIdleCallback */
+    var warmPause = 0, warmBack = 0;
     /* changed: something it shows may have changed while nothing watched it (kept from a terminal that went), so it
        draws again before it shows */
     var changed = false;
@@ -1353,7 +1369,16 @@
       if (settling()) { warmSoon(); return; }
       if (deadline === 'queue') { warmDraw(); return; }
       if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < WARM_IDLE_MS && T.util.now() - warmSince < WARM_LATEST_MS) {
-        warmJob = requestIdleCallback(warm, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - warmSince)) });
+        warmBack = warmBack ? Math.min(2000, warmBack * 2) : 400;
+        /* the last wait ends at the backstop, and the callback after it draws whatever slot it gets. Never a zero wait: an
+           idle callback asked for from a timer can run again in the same short idle period, back to back (tried: 480 a
+           second in the last second before the backstop) */
+        var wait = Math.max(16, Math.min(warmBack, WARM_LATEST_MS - (T.util.now() - warmSince)));
+        warmPause = setTimeout(function () {
+          warmPause = 0;
+          if (!closed || disposed) return;
+          warmJob = requestIdleCallback(warm, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - warmSince)) });
+        }, wait);
         return;
       }
       warmDraw();
@@ -1444,6 +1469,7 @@
     }
     function warmCancel() {
       clearTimeout(warmWait); warmWait = 0;
+      clearTimeout(warmPause); warmPause = 0;
       if (warmStep && window.PM_WARM) window.PM_WARM.cancel(warmStep);
       if (warmJob) { if (window.cancelIdleCallback) cancelIdleCallback(warmJob); clearTimeout(warmJob); }
       warmJob = warmStep = 0;
@@ -1453,7 +1479,7 @@
        profile, the queue's session stop): the screen still has to be up to date when it shows */
     function warmIdle() { warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: WARM_LATEST_MS }) : setTimeout(warm, 300); }
     function warmQueue() {
-      warmSince = T.util.now();
+      warmSince = T.util.now(); warmBack = 0;
       if (window.PM_WARM && !window.PM_WARM.state().off) {
         var id = warmStep = window.PM_WARM.add({ owner: 'terminal', name: 'customize:catch-up', run: function () { warm('queue'); return null; },
           until: function () { return closed && !disposed; },
@@ -1503,9 +1529,10 @@
       endPreview(); detach();
       if (renaming) presetRenameEnd(false, false);
       if (preview) { preview.stopDemo(); if (pv) pv.onHide(); }
-      root.setAttribute('aria-hidden', 'true');
+      root.setAttribute('aria-hidden', 'true'); dialog.removeAttribute('aria-modal');
       root.classList.remove('pmt-cz-in', 'pmt-cz-unveil');
-      function park() { if (closing === visit && !disposed) { root.classList.add('pmt-cz-parked'); parkedWatch(true); } }
+      /* inert again with the class that hides its contents: one restyle of the screen, not two */
+      function park() { if (closing === visit && !disposed) { root.inert = true; root.classList.add('pmt-cz-parked'); parkedWatch(true); } }
       if (noFocus) park(); else T.Motion.leave(root, park);
     };
     function dispose() {
@@ -1530,7 +1557,7 @@
     function dockTo(on) {
       if (!pv || !!on === !dock.hidden) return;
       (on ? dockBox : homeBox).appendChild(pv.root);
-      dock.hidden = !on; root.classList.toggle('pmt-cz-docked', !!on);
+      setHidden(dock, !on); root.classList.toggle('pmt-cz-docked', !!on);
       if (on) T.Motion.play(dock);
       pv.layout(true); preview.select();
     }
@@ -1590,12 +1617,13 @@
       if (v.pop && v.pop !== root) v.closeAppearance(true);
       v.pop = root;
       v._apOnClose = typeof opts.onClose === 'function' ? opts.onClose : null;
+      v._apReturn = typeof opts.returnFocus === 'function' ? opts.returnFocus : null;
       scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
       closed = false;
       /* something changed while it was parked and its catch-up has not run yet (a look just switched, a screen kept from a
          terminal that went): drawn in the click, the browser would style and lay it out there, holding the menu
          (P2-02, F1A on the P1000) */
-      var owed = changed || !!(warmWait || warmJob || warmStep) || building || fitIds.length > 0;
+      var owed = changed || !!(warmWait || warmJob || warmStep || warmPause) || building || fitIds.length > 0;
       rasterCancel(); fitCancel();
       parkedWatch(false);
       var showing = ++visit;
@@ -1622,10 +1650,12 @@
       function reveal() {
         requestAnimationFrame(function () {
           if (closed || showing !== visit) return;
+          /* no longer inert in the frame that already restyles every element in it (the unveil) */
+          root.inert = false;
           root.classList.add('pmt-cz-unveil');
           requestAnimationFrame(function () {
             if (closed || showing !== visit) return;
-            root.removeAttribute('aria-hidden');
+            root.removeAttribute('aria-hidden'); dialog.setAttribute('aria-modal', 'true');
             root.classList.remove('pmt-cz-parked', 'pmt-cz-unveil');
             T.Motion.play(root, 'pmt-cz-in');
             setTimeout(function () {
@@ -1765,13 +1795,18 @@
     /* built in a really idle moment where it can (an idle period of 45 ms or more: nothing is drawing frames), never under
        a cover or a switch; after 4 s it takes the next idle moment, since a page with motion of its own never fully rests
        and a screen built late only makes the first click pay for it */
-    var since = T.util.now();
+    var since = T.util.now(), back = 0;
     var build = function (deadline, staged) {
       prepStep = 0;
       if ((prepared && !prepared.kept) || v.pop || !v.root.isConnected) { if (!prepared || prepared.kept) prepareLater(1500); return; }
       if (pageSettling()) { prepareLater(1500); return; }
+      /* a short slot waits on a timer before it asks again (400 ms doubling, never past the 4 s backstop), as the parked
+         catch-up's warm() does, rather than asking for the next idle callback from inside this one (lane A, 2026-11-10) */
       if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < 45 && T.util.now() - since < 4000) {
-        requestIdleCallback(build, { timeout: Math.max(500, 4000 - (T.util.now() - since)) }); return;
+        back = back ? Math.min(2000, back * 2) : 400;
+        setTimeout(function () { requestIdleCallback(build, { timeout: Math.max(500, 4000 - (T.util.now() - since)) }); },
+          Math.max(16, Math.min(back, 4000 - (T.util.now() - since))));
+        return;
       }
       try { open(v, { prepare: true, staged: !!staged }); } catch (e) { console.error('[pmt] the Customize screen could not be prepared', e); }
     };

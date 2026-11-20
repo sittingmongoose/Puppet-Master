@@ -1,0 +1,699 @@
+{
+  "input_head": "7df14a3015a78aadd39f360df4ea3049016cdbf5",
+  "families": 19,
+  "serial": [
+    {
+      "family": "auth.github.authenticated",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "auth.github.authenticated"
+      ],
+      "exit": 0,
+      "seconds": 6.94,
+      "available_gib": 8
+    },
+    {
+      "family": "auth.github.authenticated",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "auth.github.authenticated",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/auth_github_authenticated.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 41.51,
+      "available_gib": 8
+    },
+    {
+      "family": "auth.github.device_code.issued",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "auth.github.device_code.issued"
+      ],
+      "exit": 0,
+      "seconds": 6.13,
+      "available_gib": 7
+    },
+    {
+      "family": "auth.github.device_code.issued",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "auth.github.device_code.issued",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/auth_github_device_code_issued.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 34.53,
+      "available_gib": 7
+    },
+    {
+      "family": "auth.github.disconnected",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "auth.github.disconnected"
+      ],
+      "exit": 0,
+      "seconds": 6.82,
+      "available_gib": 10
+    },
+    {
+      "family": "auth.github.disconnected",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "auth.github.disconnected",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/auth_github_disconnected.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 36.14,
+      "available_gib": 10
+    },
+    {
+      "family": "auth.github.failed",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "auth.github.failed"
+      ],
+      "exit": 0,
+      "seconds": 6.41,
+      "available_gib": 11
+    },
+    {
+      "family": "auth.github.failed",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "auth.github.failed",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/auth_github_failed.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 33.94,
+      "available_gib": 11
+    },
+    {
+      "family": "auth.github.token.polling",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "auth.github.token.polling"
+      ],
+      "exit": 0,
+      "seconds": 6.72,
+      "available_gib": 12
+    },
+    {
+      "family": "auth.github.token.polling",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "auth.github.token.polling",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/auth_github_token_polling.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 34.29,
+      "available_gib": 12
+    },
+    {
+      "family": "plugin.hook.blocked",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "plugin.hook.blocked"
+      ],
+      "exit": 0,
+      "seconds": 6.21,
+      "available_gib": 10
+    },
+    {
+      "family": "plugin.hook.blocked",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "plugin.hook.blocked",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/plugin_hook_blocked.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 38.39,
+      "available_gib": 10
+    },
+    {
+      "family": "plugin.hook.error",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "plugin.hook.error"
+      ],
+      "exit": 0,
+      "seconds": 6.98,
+      "available_gib": 11
+    },
+    {
+      "family": "plugin.hook.error",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "plugin.hook.error",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/plugin_hook_error.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 41.65,
+      "available_gib": 11
+    },
+    {
+      "family": "plugin.hook.invoked",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "plugin.hook.invoked"
+      ],
+      "exit": 0,
+      "seconds": 8.15,
+      "available_gib": 9
+    },
+    {
+      "family": "plugin.hook.invoked",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "plugin.hook.invoked",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/plugin_hook_invoked.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 44.41,
+      "available_gib": 9
+    },
+    {
+      "family": "plugin.load_failed",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "plugin.load_failed"
+      ],
+      "exit": 0,
+      "seconds": 7.97,
+      "available_gib": 7
+    },
+    {
+      "family": "plugin.load_failed",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "plugin.load_failed",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/plugin_load_failed.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 44.07,
+      "available_gib": 7
+    },
+    {
+      "family": "plugin.loaded",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "plugin.loaded"
+      ],
+      "exit": 0,
+      "seconds": 7.88,
+      "available_gib": 8
+    },
+    {
+      "family": "plugin.loaded",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "plugin.loaded",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/plugin_loaded.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 44.7,
+      "available_gib": 8
+    },
+    {
+      "family": "plugin.permission.override",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "plugin.permission.override"
+      ],
+      "exit": 0,
+      "seconds": 8.09,
+      "available_gib": 7
+    },
+    {
+      "family": "plugin.permission.override",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "plugin.permission.override",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/plugin_permission_override.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 41.27,
+      "available_gib": 7
+    },
+    {
+      "family": "plugin.tool.collision",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "plugin.tool.collision"
+      ],
+      "exit": 0,
+      "seconds": 6.24,
+      "available_gib": 13
+    },
+    {
+      "family": "plugin.tool.collision",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "plugin.tool.collision",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/plugin_tool_collision.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 35.46,
+      "available_gib": 13
+    },
+    {
+      "family": "plugin.tool.registered",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "plugin.tool.registered"
+      ],
+      "exit": 0,
+      "seconds": 6.08,
+      "available_gib": 15
+    },
+    {
+      "family": "plugin.tool.registered",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "plugin.tool.registered",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/plugin_tool_registered.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 33.22,
+      "available_gib": 15
+    },
+    {
+      "family": "persona.created",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "persona.created"
+      ],
+      "exit": 0,
+      "seconds": 11.38,
+      "available_gib": 18
+    },
+    {
+      "family": "persona.created",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "persona.created",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/persona_created.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 84.42,
+      "available_gib": 18
+    },
+    {
+      "family": "persona.deleted",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "persona.deleted"
+      ],
+      "exit": 0,
+      "seconds": 9.74,
+      "available_gib": 14
+    },
+    {
+      "family": "persona.deleted",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "persona.deleted",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/persona_deleted.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 84.96,
+      "available_gib": 14
+    },
+    {
+      "family": "persona.exported",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "persona.exported"
+      ],
+      "exit": 0,
+      "seconds": 9.44,
+      "available_gib": 13
+    },
+    {
+      "family": "persona.exported",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "persona.exported",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/persona_exported.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 86.23,
+      "available_gib": 13
+    },
+    {
+      "family": "persona.imported",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "persona.imported"
+      ],
+      "exit": 0,
+      "seconds": 9.77,
+      "available_gib": 10
+    },
+    {
+      "family": "persona.imported",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "persona.imported",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/persona_imported.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 86.31,
+      "available_gib": 10
+    },
+    {
+      "family": "persona.selected",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "persona.selected"
+      ],
+      "exit": 0,
+      "seconds": 13.67,
+      "available_gib": 11
+    },
+    {
+      "family": "persona.selected",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "persona.selected",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/persona_selected.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 127.73,
+      "available_gib": 11
+    },
+    {
+      "family": "persona.updated",
+      "kind": "checker",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-event-contracts.py",
+        "--family",
+        "persona.updated"
+      ],
+      "exit": 0,
+      "seconds": 9.44,
+      "available_gib": 12
+    },
+    {
+      "family": "persona.updated",
+      "kind": "proof",
+      "command": [
+        "python3",
+        "scripts/pm-dg6b-guard-proof.py",
+        "--family",
+        "persona.updated",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/persona_updated.proof.json"
+      ],
+      "exit": 0,
+      "seconds": 89.83,
+      "available_gib": 12
+    }
+  ],
+  "additional": [
+    {
+      "label": "standing-types",
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/standing-types.py"
+      ],
+      "exit": 0,
+      "seconds": 58.2,
+      "available_gib": 15
+    },
+    {
+      "label": "cli-types",
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/cli-types.py"
+      ],
+      "exit": 0,
+      "seconds": 362.71,
+      "available_gib": 12
+    },
+    {
+      "label": "preservation",
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/preservation-citations.py"
+      ],
+      "exit": 0,
+      "seconds": 2.38,
+      "available_gib": 14
+    },
+    {
+      "label": "projects-refresh",
+      "command": [
+        "python3",
+        "scripts/pm-projects-refresh-contracts.py"
+      ],
+      "exit": 0,
+      "seconds": 43.44,
+      "available_gib": 13
+    },
+    {
+      "label": "github-integration",
+      "command": [
+        "python3",
+        "scripts/pm-github-project-integration.py",
+        "check"
+      ],
+      "exit": 0,
+      "seconds": 5.26,
+      "available_gib": 13
+    },
+    {
+      "label": "primary-catalog",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pm_primary_command_catalog.py"
+      ],
+      "exit": 0,
+      "seconds": 50.78,
+      "available_gib": 13
+    },
+    {
+      "label": "shard-check",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit": 0,
+      "seconds": 25.95,
+      "available_gib": 14
+    },
+    {
+      "label": "index-validate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit": 1,
+      "seconds": 52.46,
+      "available_gib": 13
+    },
+    {
+      "label": "storage-profiles",
+      "command": [
+        "python3",
+        "scripts/pm-storage-profile-check.py"
+      ],
+      "exit": 1,
+      "seconds": 0.61,
+      "available_gib": 9
+    },
+    {
+      "label": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.9,
+      "available_gib": 9
+    },
+    {
+      "label": "preservation-type-exact",
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/preservation-citations.py"
+      ],
+      "exit": 0,
+      "seconds": 2.93
+    }
+  ],
+  "guard_summary": {
+    "status": "pass",
+    "input_head": "7df14a3015a78aadd39f360df4ea3049016cdbf5",
+    "review_round": 7,
+    "native_execution": "NOT_RUN",
+    "families": 19,
+    "guard_sets": 734,
+    "distinct_runtime_sites": 58,
+    "distinct_exact_schema_keyword_locations": 500,
+    "complete_path_negatives": 3262,
+    "positive_controls": 3262,
+    "complete_path_matrix_evaluations": 128633,
+    "duplicate_sets": 390,
+    "detached_schema_proof_evaluations": 0,
+    "unexpected_flips_or_survivors": 0,
+    "restored_full_checkers": 19,
+    "independent_standing_type_probes": 2399,
+    "full_cli_required_nonzero_exits": 76,
+    "complete_table": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix7/guard-removal-full.json.gz",
+      "sha256": "e1b6f91418b29329fdcc93c8d4c189c016190ee9a3cd9e4a73e5140f181cfbf3",
+      "uncompressed_sha256": "614e45977ce443282b4398e2947822a4f2ec41b07f30092a0ffde785e99757ad"
+    }
+  },
+  "native_execution": "NOT_RUN",
+  "integration_notes": {
+    "index_status": "fail",
+    "index_failure_count": 22,
+    "index_summary": {
+      "acceptance_unit_count": 29958,
+      "coverage_status": "pass",
+      "node_readiness_status": "blocked_runtime_certification_incomplete",
+      "plan_unit_count": 7447
+    },
+    "storage_status": "fail",
+    "storage_error_count": 41,
+    "note": "C7-N1/C7-N2 unchanged older-lane integration results; no unrelated repair or reseal."
+  }
+}

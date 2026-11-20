@@ -1,0 +1,203 @@
+{
+  "schema_id": "pm.event_authority.w3g.payload_schema_resources.v1",
+  "network_fallback": false,
+  "resources": [
+    {
+      "path": "Plans/shared_integration_runtime.schema.json",
+      "declared_schema_id": "pm.shared_integration_runtime.command_contracts.schema.v1",
+      "retrieval_uris": [
+        "pm.shared_integration_runtime.command_contracts.schema.v1",
+        "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json"
+      ],
+      "sha256": "0e41d89065463e0581357a514ad3d2510d6db8a3e9356dcd23f717f5db4118f5"
+    },
+    {
+      "path": "Plans/working_notebook_contracts.schema.json",
+      "declared_schema_id": "https://puppet-master.local/schemas/working_notebook_contracts.schema.json",
+      "retrieval_uris": [
+        "https://puppet-master.local/schemas/working_notebook_contracts.schema.json",
+        "https://puppetmaster.local/Plans/working_notebook_contracts.schema.json"
+      ],
+      "sha256": "af48d54168b2b4569727aa5c0cb35a64887531cd2fdb05b8ad110708184e5608"
+    },
+    {
+      "path": "Plans/external_research_contracts.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/external_research/1.0.0/external_research_contracts.schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/external_research/1.0.0/external_research_contracts.schema.json",
+        "https://puppetmaster.local/Plans/external_research_contracts.schema.json"
+      ],
+      "sha256": "a0f9d164f319747f8ec07c971b64da51b98ce93f2a6a1571baf3d880446bf4ce"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/assistant_plan_build_started.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/assistant_plan_build_started/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/assistant_plan_build_started/1.0.0/schema.json"
+      ],
+      "sha256": "1fd46b717fae33bf0d27e91593dfc3206ab7a026d14863d79e7d056ce2742096"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/assistant_plan_cancelled.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/assistant_plan_cancelled/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/assistant_plan_cancelled/1.0.0/schema.json"
+      ],
+      "sha256": "7b56fa9294a73222486c99d4f3ae2af287ceefa620ff6ff481b3d48ed14386cb"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/assistant_plan_completed.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/assistant_plan_completed/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/assistant_plan_completed/1.0.0/schema.json"
+      ],
+      "sha256": "3fb0995c490ed20dcce1c4237b6acff574d219cd1f483185d2c15f1eb955bbcd"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/assistant_plan_created.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/assistant_plan_created/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/assistant_plan_created/1.0.0/schema.json"
+      ],
+      "sha256": "3ae6f359b4901618bd969a6ebefa63a11b6303f6edaff527380bf005db8ca3d5"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/assistant_plan_exported.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/assistant_plan_exported/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/assistant_plan_exported/1.0.0/schema.json"
+      ],
+      "sha256": "82afd63eae106fd4a7926df89e8f7ffb5ba9e6cc0cbba3a924980eedde0ec17c"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/assistant_plan_version_created.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/assistant_plan_version_created/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/assistant_plan_version_created/1.0.0/schema.json"
+      ],
+      "sha256": "414a4f64987b744f13a2b6ba44b7dc17067d9a08be09282ab7f7acdf7749d81b"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/assistant_plan_wizard_handoff_created.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/assistant_plan_wizard_handoff_created/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/assistant_plan_wizard_handoff_created/1.0.0/schema.json"
+      ],
+      "sha256": "e81c14e2d42c44123aff9397a863bcc7a6966d17a60270da1aaa07bf2abe7d78"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/external_research_budget_denied.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/external_research_budget_denied/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/external_research_budget_denied/1.0.0/schema.json"
+      ],
+      "sha256": "9ba2dabc5b050bfeebf3f719cdb4fc5c30e20c3d77d4abd3f90ee65a149b38df"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/external_research_finding_classified.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/external_research_finding_classified/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/external_research_finding_classified/1.0.0/schema.json"
+      ],
+      "sha256": "d381daddcb7d616e1c893a30b51bd7f2572b0e7684d724e734f8e3b93c3d1cc6"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/external_research_job_terminal.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/external_research_job_terminal/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/external_research_job_terminal/1.0.0/schema.json"
+      ],
+      "sha256": "f14a2a67d52a917d9aac84b6407949765bab4ea94bf8e572d263f6ba1722b524"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/external_research_packet_delivered.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/external_research_packet_delivered/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/external_research_packet_delivered/1.0.0/schema.json"
+      ],
+      "sha256": "f16e0f15ffb87b5c91e720278db2c0f74ceac880f22cd47fe0de70af5982b73c"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/external_research_topic_started.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/external_research_topic_started/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/external_research_topic_started/1.0.0/schema.json"
+      ],
+      "sha256": "75c97b410eb506e0a52138ef8823d130746fe05506ce8f80dc5aad945f23e072"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/goal_paused.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/goal_paused/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/goal_paused/1.0.0/schema.json"
+      ],
+      "sha256": "80077642e7c7845660832bfbde7adb2b80cfa4c4b1d10013f5e650640c27c92c"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/goal_resumed.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/goal_resumed/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/goal_resumed/1.0.0/schema.json"
+      ],
+      "sha256": "ebfadabcd2c01f2db8e44b8781cffcc6d441467c75d63c5a59e6f5fec665366b"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/notebook_checkpoint_committed.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/notebook_checkpoint_committed/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/notebook_checkpoint_committed/1.0.0/schema.json"
+      ],
+      "sha256": "92613b276c40e37e48d9faf844b5ecd8cde715e0d9980eb9182309c60daabad8"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/notebook_checkpoint_failed.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/notebook_checkpoint_failed/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/notebook_checkpoint_failed/1.0.0/schema.json"
+      ],
+      "sha256": "42b0e42f049fb16892a35b09bf0dc1877634e41a29f83eea311579f5998b6cf4"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/notebook_entry_committed.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/notebook_entry_committed/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/notebook_entry_committed/1.0.0/schema.json"
+      ],
+      "sha256": "a161e89e9b2486a6d1304cae816b4fc245ddc12890bc3ec110de1cef635d00e9"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/notebook_entry_superseded.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/notebook_entry_superseded/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/notebook_entry_superseded/1.0.0/schema.json"
+      ],
+      "sha256": "27b452210616fa0d0c5fbe91fb2cd31145f69f6ba653337b6876a03707ffa2ad"
+    },
+    {
+      "path": "Plans/event_authority_w3g/payloads/notebook_transition_state_changed.schema.json",
+      "declared_schema_id": "https://puppetmaster.local/schemas/event-authority-w3g/notebook_transition_state_changed/1.0.0/schema.json",
+      "retrieval_uris": [
+        "https://puppetmaster.local/schemas/event-authority-w3g/notebook_transition_state_changed/1.0.0/schema.json"
+      ],
+      "sha256": "911fb0bbca4716cd4542d52120df7a9cd0ffab6339886f817549bdaf0f66410b"
+    }
+  ],
+  "note": "Phase-1 resource seeds plus explicit complete offline canonical discovery and exact-ID symbolic value-schema resolution. Phase-2 resolver implementation remains deferred.",
+  "offline_discovery": {
+    "roots": [
+      "Plans/**/*.schema.json"
+    ],
+    "registration": [
+      "Register every complete canonical schema by its actual top-level $id.",
+      "Also register canonical filename retrieval URI https://puppetmaster.local/Plans/<filename>, including nested relative paths as needed by actual refs.",
+      "Resolve relative refs from the referring resource base; preserve declared $id scope. Refuse ambiguous URI registrations with different bytes."
+    ],
+    "closure": "Eagerly traverse every $ref and branch within each selected schema/selector and every recursively reached definition, including branches no fixture visits. Register the complete canonical referenced resource under its actual $id and retrieval URI. Registration alone does not select unrelated definitions outside that closure. Missing, ambiguous or unresolved reachable resources fail closed before any effect; no network lookup. The resources list is a hash-pinned seed list, not the complete closure.",
+    "phase": 2
+  },
+  "symbolic_value_schema_refs": {
+    "notation": "Plans/storage_value_registry.json#/families/<family_id>/value_schema",
+    "resolution": "The inherited families collection is an array. Look up the exact unique family_id in that array, then select its value_schema and resolve its refs in the same offline registry. Missing or duplicate family IDs refuse. Never feed the symbolic path to an ordinary JSON Pointer resolver or silently pick an array position.",
+    "shared_registry_modified": false
+  }
+}

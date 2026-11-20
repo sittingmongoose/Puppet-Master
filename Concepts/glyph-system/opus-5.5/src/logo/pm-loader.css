@@ -4,6 +4,23 @@
  * pm-loader.js finds it, and stays unseen until it is armed; armed, it fades in already in the shared clock's phase. */
 .pml-ld { display: inline-block; flex: none; width: var(--pml-size, 1em); height: var(--pml-size, 1em); vertical-align: -.18em; line-height: 0; color: inherit; contain: layout style; }
 .pml-ld > .pml { display: block; width: 100%; height: 100%; }
+/* The phase pm-loader.js writes on the loader (the periods and delays of Pip's parts) reaches only the svg and the parts
+   that read it, and the groups between them: registered as not inherited, and taken by those elements alone. Inherited,
+   a start (every time a loader comes back on screen, a tab is shown or a busy spell ends) restyled every element of the
+   drawing: a pixel loader is 118 to 240 elements, a dozen of which move (pm7-perf lane I: 17 loaders, 2,132 elements in
+   one frame of a Home tab switch). The values each part reads are the same, so the motion is the same. NieR's own
+   properties (--pml-k, --pml-ndelay, --pml-sdelay, --pml-nbdelay) stay inherited: their part is one span and its
+   pseudo-elements, which inherit from it. */
+@property --pml-dur { syntax: '*'; inherits: false; }
+@property --pml-delay { syntax: '*'; inherits: false; }
+@property --pml-rdur { syntax: '*'; inherits: false; }
+@property --pml-rdelay { syntax: '*'; inherits: false; }
+@property --pml-bdur { syntax: '*'; inherits: false; }
+@property --pml-bdelay { syntax: '*'; inherits: false; }
+@property --pml-kdelay { syntax: '*'; inherits: false; }
+.pml-ld > .pml, .pml-ld > .pml :is(.pml-fr, .pml-fr-rest, .pml-fr-rctl, .pml-fr-rlid, .pml-str, .pml-pup, .pml-face, .pml-eyes, .pml-blink, .pml-dot2, .pml-dot3, .pml-dot4, .pml-ctl) {
+  --pml-dur: inherit; --pml-delay: inherit; --pml-rdur: inherit; --pml-rdelay: inherit; --pml-bdur: inherit; --pml-bdelay: inherit; --pml-kdelay: inherit;
+}
 .pml-ld:not([data-pml-run]) { animation: pml-arm 1ms; }
 .pml-ld:not([data-pml-run]) > .pml { opacity: 0; }
 .pml-ld[data-pml-run="on"]:not([data-pml-in]) > .pml { animation: pml-ld-in 160ms ease-out; }

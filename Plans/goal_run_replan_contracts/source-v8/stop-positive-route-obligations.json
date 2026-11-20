@@ -1,0 +1,194 @@
+{
+  "status": "COMPLETE_SOURCE_OBLIGATIONS_NOT_INSTANCES",
+  "review_findings": [
+    "S-FIRST-STOP-ACQUISITION",
+    "S-READBACK-RELEASED-IDLE"
+  ],
+  "review_manifest_sha256": "cc383394d5d9fd411edfbb5970ff23a0db71abcf482111c748e70d77cb768e94",
+  "schema": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json",
+  "protocol": "STOP-PROTOCOL.md R02-R08",
+  "obligations": [
+    {
+      "id": "FIRST-REPLAN-CLAIMED",
+      "trigger": "Genuine current Goal Stop; actual authentic Replan claimed slot has never been revoked and has no PublicationControl.",
+      "whole_input_roots": [
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/GoalStoppedCurrentAcquisition",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ClaimedOrdinaryPhase",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationSource",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationCandidate"
+      ],
+      "whole_result_roots": [
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationPublication",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/StopAcceptedRevocation"
+      ],
+      "original_positive_obligations": [
+        "Full original Goal CurrentGoalStopArgument including SourceAudit; full actual before-slot guard/journal and coherent CurrentSource.",
+        "Goal-only acquisition asserts no prior slot revocation; held lower source is complete without future afterimages.",
+        "Actual lower Executor invalidates real capabilities and same-transaction D01/Storage publish first revoked Slot/revision/origin while control stays null."
+      ],
+      "forbidden_shortcuts": [
+        "No prior revoked slot required.",
+        "No already_execution_revoked from Goal Stop alone.",
+        "No invented prepare/control/native cancel/D06."
+      ],
+      "source_review": "PENDING_INDEPENDENT_REVIEW",
+      "instances": "NOT_RUN",
+      "native": "NOT_RUN"
+    },
+    {
+      "id": "FIRST-REPLAN-PREPARED",
+      "trigger": "Genuine current Goal Stop; actual authentic prepared Replan slot/control have not been revoked.",
+      "whole_input_roots": [
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/GoalStoppedCurrentAcquisition",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/StopPhase",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationSource",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationCandidate"
+      ],
+      "whole_result_roots": [
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationPublication",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/StopAcceptedRevocation"
+      ],
+      "original_positive_obligations": [
+        "Full actual original prepared/current phase and nonnull original control; complete actual native/all-generation/effect source.",
+        "Independent Goal-only acquisition precedes lower publication; final native revalidation after all helpers.",
+        "Publish only original slot custody; preserve actual original control and native/attempt/effect facts."
+      ],
+      "forbidden_shortcuts": [
+        "No caller phase choice.",
+        "No new result admitted as an input.",
+        "No cancellation substitution."
+      ],
+      "source_review": "PENDING_INDEPENDENT_REVIEW",
+      "instances": "NOT_RUN",
+      "native": "NOT_RUN"
+    },
+    {
+      "id": "FIRST-CERTIFIED-HELD",
+      "trigger": "Genuine current Goal Stop; authentic certified claimed or prepared slot has not been revoked.",
+      "whole_input_roots": [
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/GoalStoppedCurrentAcquisition",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/StopPhase",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationSource"
+      ],
+      "whole_result_roots": [
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationPublication",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/StopAcceptedRevocation"
+      ],
+      "original_positive_obligations": [
+        "Original certified empty birth control before arm or genuine prepared control afterwards.",
+        "Full original current D01/Goal/Start/native/effect sources and actual original guard.",
+        "Real lower invalidation and exact existing slot coissuance."
+      ],
+      "forbidden_shortcuts": [
+        "No fake Replan null control for certified.",
+        "No certified release assumed."
+      ],
+      "source_review": "PENDING_INDEPENDENT_REVIEW",
+      "instances": "NOT_RUN",
+      "native": "NOT_RUN"
+    },
+    {
+      "id": "REPEATED-HELD",
+      "trigger": "Authentic current held/recovering slot with surviving immutable original revoked revision/origin and currently effective original Goal Stop.",
+      "whole_input_roots": [
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationSource",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/HeldExecutionRevocationReadbackSource",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/SlotRevocationCustody"
+      ],
+      "whole_result_roots": [
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationReadback",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/StopRevocationReadback"
+      ],
+      "original_positive_obligations": [
+        "Authenticate prior actual immutable revoked SlotRevision and original record_stop origin, full owner/operation/transaction joins and actual current native invalidation.",
+        "Acquire complete current held native phase independently; already result discloses original custody."
+      ],
+      "forbidden_shortcuts": [
+        "No new runtime effects or slot issuance from a repeated read.",
+        "No historical native return reconstruction.",
+        "Goal Stop alone is insufficient for already status."
+      ],
+      "source_review": "PENDING_INDEPENDENT_REVIEW",
+      "instances": "NOT_RUN",
+      "native": "NOT_RUN"
+    },
+    {
+      "id": "READBACK-RELEASED-IDLE-REPLAN",
+      "trigger": "Original replan recovery/release genuinely advanced current slot to coherent idle; immutable original Stop revision/origin survive and current Goal Stop still applies.",
+      "whole_input_roots": [
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ReleasedIdleExecutionRevocationReadbackSource",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/OriginalCurrentRelease",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ReleasedIdleGuard",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ReadStopInput",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/SlotRevocationCustody"
+      ],
+      "whole_result_roots": [
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationReadback",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/StopRevocationReadback"
+      ],
+      "original_positive_obligations": [
+        "Full independent current Goal/Start/native/scheduler/all-generation/effect source and coherent current D01.",
+        "Actual current idle slot has nonnull original last-release operation/selector; genuine original full released Replan control/receipt and original native issuances match it.",
+        "Original revoked immutable revision/origin scope and held operation match the genuine released operation; current native invalidation remains effective."
+      ],
+      "forbidden_shortcuts": [
+        "No obsolete mutable slot body or historical held source.",
+        "No native issuer return, original native cancel or SchedulerStop requirement for limited readback.",
+        "No D06 substitute, new durable record or retention policy."
+      ],
+      "source_review": "PENDING_INDEPENDENT_REVIEW",
+      "instances": "NOT_RUN",
+      "native": "NOT_RUN"
+    },
+    {
+      "id": "READBACK-RELEASED-IDLE-CERTIFIED",
+      "trigger": "Original certified recovery/release genuinely advanced current slot to coherent idle; immutable original Stop revision/origin survive and current Goal Stop still applies.",
+      "whole_input_roots": [
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ReleasedIdleExecutionRevocationReadbackSource",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/OriginalCurrentRelease",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ReleasedIdleGuard",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ReadStopInput",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/SlotRevocationCustody"
+      ],
+      "whole_result_roots": [
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationReadback",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/StopRevocationReadback"
+      ],
+      "original_positive_obligations": [
+        "Full independent current Goal/Start/native/scheduler/all-generation/effect source and coherent current D01.",
+        "Actual current idle slot has nonnull original last-release operation/selector; genuine original full certified GuardReleased match it.",
+        "Original revoked immutable revision/origin scope and held operation match the genuine released operation; current native invalidation remains effective."
+      ],
+      "forbidden_shortcuts": [
+        "No obsolete mutable slot body or historical held source.",
+        "No native issuer return, original native cancel or SchedulerStop requirement for limited readback.",
+        "No D06 substitute, new durable record or retention policy."
+      ],
+      "source_review": "PENDING_INDEPENDENT_REVIEW",
+      "instances": "NOT_RUN",
+      "native": "NOT_RUN"
+    },
+    {
+      "id": "TRUTHFUL-UNAVAILABLE",
+      "trigger": "Any original current phase/source/Goal authority/custody/release/native capability check is missing, inconsistent, disposed or unavailable.",
+      "whole_input_roots": [
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ReadStopInput"
+      ],
+      "whole_result_roots": [
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/CombinedStopReadResult",
+        "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationMethodResult"
+      ],
+      "original_positive_obligations": [
+        "Return the appropriate existing unavailable outcome for the unprovable limited fact.",
+        "Independent original Goal Stop remains effective; missing source never enables execution."
+      ],
+      "forbidden_shortcuts": [
+        "No fabricated original material, permanent retention mandate, current phase or lower success."
+      ],
+      "source_review": "PENDING_INDEPENDENT_REVIEW",
+      "instances": "NOT_RUN",
+      "native": "NOT_RUN"
+    }
+  ]
+}

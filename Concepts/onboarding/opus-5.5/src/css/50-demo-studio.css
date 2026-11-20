@@ -57,10 +57,14 @@
 #o55-demo .pmds-entry-world::before { content: "\00b7"; margin-right: 7px; }
 #o55-demo .pmds-entry:focus-visible { outline: 2px solid var(--pmds-acc); outline-offset: 2px; }
 /* the sliders mark: its two knobs slide apart on hover and while the Studio is open, and slide in as the sheet opens */
+/* The hover and focus rules below name their marks by class (rect.pmds-knob, i.pmds-a-step, b.pmds-a-cta; same specificity
+   as `.pmds-ico-studio rect`, `.pmds-a-steps i`, `.pmds-a-copy b`): a bare tag after :hover or :focus-visible goes into the
+   one :hover set Chrome keeps for the whole page, so every hover change anywhere restyled every rect, i and b below it
+   (lane J, 2026-11-11; build lint: tools/invalidation_sets.py). */
 #o55-demo .pmds-ico-studio rect { transition: translate 260ms cubic-bezier(.3, 1.4, .5, 1); }
-#o55-demo .pmds-entry:is(:hover, [aria-expanded="true"]) .pmds-ico-studio rect:nth-of-type(1),
+#o55-demo .pmds-entry:is(:hover, [aria-expanded="true"]) rect.pmds-knob:nth-of-type(1),
 #o55-demo .pmds-sheet:not([hidden]) .pmds-brandmark .pmds-ico-studio rect:nth-of-type(1) { translate: -4px 0; }
-#o55-demo .pmds-entry:is(:hover, [aria-expanded="true"]) .pmds-ico-studio rect:nth-of-type(2),
+#o55-demo .pmds-entry:is(:hover, [aria-expanded="true"]) rect.pmds-knob:nth-of-type(2),
 #o55-demo .pmds-sheet:not([hidden]) .pmds-brandmark .pmds-ico-studio rect:nth-of-type(2) { translate: 5px 0; }
 #o55-demo .pmds-sheet:not([hidden]) .pmds-brandmark .pmds-ico-studio rect { transition-delay: 160ms; transition-duration: 520ms; }
 #o55-demo[data-o55-narrow] .pmds-entry { width: 20px; height: 44px; padding: 0; justify-content: center; border-left: 0; border-radius: 0 var(--pmds-ctl) var(--pmds-ctl) 0; }
@@ -259,11 +263,11 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 #o55-demo .pmds-a-steps { position: absolute; left: 50%; bottom: 13px; display: flex; gap: 5px; translate: -50% 0; }
 #o55-demo .pmds-a-steps i { width: 18px; height: 5px; background: var(--a-soft); transition: background-color 160ms ease; }
 #o55-demo .pmds-a-steps i:nth-child(-n + 2) { background: var(--a-tone); }
-#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-steps i { background: var(--a-tone); }
-#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-steps i:nth-child(3) { transition-delay: 90ms; }
-#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-steps i:nth-child(4) { transition-delay: 180ms; }
-#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-steps i:nth-child(5) { transition-delay: 270ms; }
-#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-copy b { animation: pmds-a-press 900ms 300ms ease both; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) i.pmds-a-step { background: var(--a-tone); }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) i.pmds-a-step:nth-child(3) { transition-delay: 90ms; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) i.pmds-a-step:nth-child(4) { transition-delay: 180ms; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) i.pmds-a-step:nth-child(5) { transition-delay: 270ms; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) b.pmds-a-cta { animation: pmds-a-press 900ms 300ms ease both; }
 @keyframes pmds-a-press { 0%, 100% { scale: 1; } 40% { scale: .86; } 60% { scale: 1.08; } }
 /* the tour: a spotlight with its callout moving across a small app */
 #o55-demo .pmds-a-app { position: absolute; inset: 14px 22px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 6px; }
@@ -298,7 +302,7 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 @keyframes pmds-a-call { 0%, 100% { translate: 0 0; } 40%, 65% { translate: -78px 34px; } }
 #o55-demo .pmds-page[data-pmds-section="start"] .pmds-a-layer { animation: pmds-a-stack 1500ms 700ms cubic-bezier(.45, 0, .2, 1) both; }
 @keyframes pmds-a-stack { 40%, 60% { translate: 0 0; rotate: 0deg; } }
-#o55-demo .pmds-tile:is(:hover, :focus-visible) :is(.pmds-a-steps i, .pmds-a-spot, .pmds-a-call, .pmds-a-layer) { animation: none; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) :is(i.pmds-a-step, .pmds-a-spot, .pmds-a-call, .pmds-a-layer) { animation: none; }
 
 /* choices: a square mark and two lines */
 #o55-demo .pmds-choices { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }

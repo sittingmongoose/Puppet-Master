@@ -91,7 +91,7 @@ FAMILY_SPECS: tuple[FamilySpec, ...] = (
     shared("conditional_rule_intervention_receipt", "conditional_rule_intervention_receipt.v1:{project_id}:{receipt_id}", "#12-time-traveling-conditional-rules", "ConditionalRuleEngine", ("Prompt Pipeline", "Usage", "audit")),
     shared("runtime_resource_lease", "runtime_resource_lease.v1:{lease_id}", "#91-leasecoordinator", "LeaseCoordinator", ("RuntimeResourceGovernor", "DebugSessionBroker", "EvalSessionBroker", "MCP", "worktrees", "testing")),
     shared("bsd_runtime_record", "bsd_runtime_record.v1:{project_id}:{assignment_id}:{attempt_id}", "#13-back-seat-driver", "BackSeatDriverService", ("Chat", "Usage", "Settings", "operational awareness")),
-    shared("dev_session_record", "dev_session_record.v1:{project_id}:{dev_session_id}", "#101-debugsession", "DebugSessionBroker", ("Testing and Debug", "Runtime Artifacts", "restart recovery"), retention="RP-DEBUG-30D"),
+    FamilySpec("dev_session_record", ROOT / "Plans/ds15_dev_session_record_v2.schema.json", "dev_session_record", "dev_session_record.v1:{project_id}:{dev_session_id}", "Plans/storage-plan.md#SP-655", ("Section15 managed developer-workflow service", "DebugSessionBroker"), ("Developer workflow", "Testing and Debug", "Runtime Artifacts", "restart recovery"), "RP-DEBUG-30D", True),
     shared("eval_session_record", "eval_session_record.v1:{project_id}:{eval_session_id}", "#102-evalsession", "EvalSessionBroker", ("Tools", "Runtime Artifacts", "restart recovery"), retention="RP-DEBUG-30D"),
     shared("thread_command_outbox_record", "thread_command_outbox_record.v1:{project_id}:{thread_id}:{command_instance_id}", "#6-cross-platform-thread-command-outbox", "ThreadCommandOutbox", ("Chat", "Goal controls", "thread projections", "Usage"), retention="RP-DELIVERY-365D"),
     shared("replay_snapshot_checkpoint", "replay_snapshot_checkpoint.v1:{environment_id}:{domain}:{checkpoint_id}", "#7-cursor-replay-snapshot-live-buffering-and-coalescing", "ProjectionReplayCoordinator", ("domain projectors", "Doctor", "operational awareness"), retention="RP-PROJECTION-3GEN", canonical=False, storage_kind="redb_checkpoint"),
@@ -150,7 +150,7 @@ def bundled_value_schema(spec: FamilySpec) -> dict[str, Any]:
     definition = copy.deepcopy(schema["$defs"][spec.definition_name])
     bundle = {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "$id": f"https://puppetmaster.local/schemas/storage_value/{spec.family_id}/1.0.0/{spec.family_id}.schema.json",
+        "$id": f"https://puppetmaster.local/schemas/storage_value/{spec.family_id}/{definition["properties"]["schema_version"]["const"]}/{spec.family_id}.schema.json",
         **definition,
         "$defs": transitive_definitions(schema, spec.definition_name),
     }
@@ -189,10 +189,10 @@ def disposition_fields(spec: FamilySpec, source_refs: list[str]) -> dict[str, An
         data_loss = False
     return {
         "migration_disposition": {
-            "mode": "compatibility_read_only" if legacy_full_thread_reader else "current_schema",
+            "mode": "coordinator_copy_forward" if spec.family_id == "dev_session_record" else "compatibility_read_only" if legacy_full_thread_reader else "current_schema",
             "canonical_write_key_only": True,
             "compatibility_keys_read_only": legacy_full_thread_reader,
-            "ambiguity_policy": "fail_closed" if legacy_full_thread_reader else "not_applicable",
+            "ambiguity_policy": "fail_closed" if legacy_full_thread_reader or spec.family_id == "dev_session_record" else "not_applicable",
             "source_refs": source_refs,
         },
         "restore_disposition": {
@@ -259,7 +259,7 @@ def family_row(spec: FamilySpec) -> dict[str, Any]:
             if legacy_full_thread_reader
             else list(spec.consumers)
         ),
-        "schema_version": "1.0.0",
+        "schema_version": properties.get("schema_version", {}).get("const", "1.0.0"),
         "encoding": "messagepack_canonical",
         "required_fields": required,
         "optional_fields": optional,
@@ -271,7 +271,7 @@ def family_row(spec: FamilySpec) -> dict[str, Any]:
             else "StorageMigrationCoordinator creates or copy-forwards this exact-key family transactionally, validates the bundled owner schema and backup/rebuild basis, records verification, and writes the store version last. No lazy rewrite-on-read or SQLite path is permitted."
         ),
         **disposition_fields(spec, source_refs),
-        "retention_compaction": (
+        "retention_compaction": {'dev_session_record': 'DL-506 (retention deck 4 Q7 option A): RP-DEBUG-30D@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.', 'ds15_preview_subject_ui_state': 'DL-505 (retention deck 4 Q6 option A): RP-CONFIG-CURRENT@1.0.0. Existing policy anchors, counts, overflow, holds and required dependencies apply; no event admission or native activation follows.'}.get(spec.family_id) or (
             "Retain under the named policy and stronger holds until a verified successor migration receipt permits ordinary expiry; compaction cannot reinterpret or rewrite a legacy row in place."
             if legacy_full_thread_reader
             else "Retain under the named policy and stronger holds. Compaction preserves identity, generation/epoch, terminal truth, source/currentness refs, and recovery evidence; canonical records are never reconstructed from a UI projection."

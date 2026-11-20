@@ -1026,6 +1026,410 @@ The companion typed artifacts `Plans/assistant_plan_runtime_contracts.schema.jso
 
 Recovery invariants that bind this owner: every asynchronous Start command is idempotent; a double-click cannot create two Plan builds or two schedules; restart restores the active Plan, its control state, its run, and its To-Do binding; a replayed result returns the original object and receipt IDs with no second side effect; projection delay renders as pending or reconciling rather than false failure; and a stale or missing record fails closed with an exact reason.
 
+<!-- W3G phase 1 owner block: newly authored, prepared without admission. -->
+
+### APR-1500 - assistant_plan.build_started: prepared event contract
+
+```yaml
+plan_unit_id: APR-1500
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: Newly authored owner contract for assistant_plan.build_started alone under deck-2 9.a A (DL-450);
+  prepared without admission. The current Plan control build becomes building after exact-version admission. Exactly
+  one new PlanRun freezes the approved version/hash; Crew, Goal association and To-Dos commit under their existing
+  atomic owners. An existing paused/waiting run resuming is not another build_started.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Assistant_Plan_Runtime.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- assistant_plan.build_started
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** AssistantPlanRuntime build admission for cmd.chat.plan.build or cmd.chat.plan.build_with_crew; Scheduling may invoke that same owner for one admitted occurrence. Reuse APR-008, APR-011, APR-073/074, PGOAL-003..006 and the complete native AssistantPlanRecord/PlanRun, approved revision, To-Do mapping and applicable Crew/Goal/schedule original result. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1500 selects `Plans/event_authority_w3g/payloads/assistant_plan_build_started.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and application are distinct new selectors; app has real Server/Computer/thread and null Project. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. The current Plan control build becomes building after exact-version admission. Exactly one new PlanRun freezes the approved version/hash; Crew, Goal association and To-Dos commit under their existing atomic owners. An existing paused/waiting run resuming is not another build_started.
+
+**Replay, consumer and checkpoints.** SP-1500 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.assistant_plan.build_started.history.v1@1.0.0` is the sole newly authored family history reader for Assistant Chat Plan history and exact-version details. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1500 binds retention as `RP-RUNTIME-365D@1.0.0`. Case L-3 Runtime/run/node/attempt; this exact event requires a real admitted PlanRun and its original completion anchor. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1260` and the `assistant_plan.build_started` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1500, ContractName:Plans/storage-plan.md#SP-1500
+
+### APR-1501 - assistant_plan.cancelled: prepared event contract
+
+```yaml
+plan_unit_id: APR-1501
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: Newly authored owner contract for assistant_plan.cancelled alone under deck-2 9.a A (DL-450); prepared
+  without admission. An unfinished control build or building becomes canceled. If a run exists, its safe-stop, cancelled
+  state, epoch fence and exact schedule/quota invalidation must be settled by their original owners before publication.
+  A pre-Build cancellation has no fabricated PlanRun. A waiting safe stop, failed attempt or unknown cancellation
+  is not completed cancellation.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Assistant_Plan_Runtime.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- assistant_plan.cancelled
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** AssistantPlanRuntime cmd.chat.plan.cancel and the exact explicit-new-Plan replacement cancellation path. Reuse APR-005, APR-010, APR-017, APR-074 and PFAIL-003..009 original Plan/cancel/PlanRun/epoch/schedule-quota settlement. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1501 selects `Plans/event_authority_w3g/payloads/assistant_plan_cancelled.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and application are distinct new selectors; app has real Server/Computer/thread and null Project. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. An unfinished control build or building becomes canceled. If a run exists, its safe-stop, cancelled state, epoch fence and exact schedule/quota invalidation must be settled by their original owners before publication. A pre-Build cancellation has no fabricated PlanRun. A waiting safe stop, failed attempt or unknown cancellation is not completed cancellation.
+
+**Replay, consumer and checkpoints.** SP-1501 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.assistant_plan.cancelled.history.v1@1.0.0` is the sole newly authored family history reader for Assistant Chat Plan history and exact-version details. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1501 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17646): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1260` and the `assistant_plan.cancelled` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1501, ContractName:Plans/storage-plan.md#SP-1501
+
+### APR-1502 - assistant_plan.completed: prepared event contract
+
+```yaml
+plan_unit_id: APR-1502
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: Newly authored owner contract for assistant_plan.completed alone under deck-2 9.a A (DL-450); prepared
+  without admission. The original building control becomes completed only when the exact frozen Plan completion
+  predicate, required To-Dos, admitted work and any scoped PlanUnits are resolved. Failed, paused, blocked, waiting
+  and cancelled work cannot supply completion. No provider final message is a completion receipt.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Assistant_Plan_Runtime.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- assistant_plan.completed
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** AssistantPlanRuntime final Plan completion owner, never a provider callback acting alone. Reuse APR-008/010, PFAIL-003..009, PPROG-001..018, APR-073/074 original PlanRun completion and To-Do/approved-step/scoped-bundle evidence. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1502 selects `Plans/event_authority_w3g/payloads/assistant_plan_completed.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and application are distinct new selectors; app has real Server/Computer/thread and null Project. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. The original building control becomes completed only when the exact frozen Plan completion predicate, required To-Dos, admitted work and any scoped PlanUnits are resolved. Failed, paused, blocked, waiting and cancelled work cannot supply completion. No provider final message is a completion receipt.
+
+**Replay, consumer and checkpoints.** SP-1502 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.assistant_plan.completed.history.v1@1.0.0` is the sole newly authored family history reader for Assistant Chat Plan history and exact-version details. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1502 binds retention as `RP-RUNTIME-365D@1.0.0`. Case L-3 Runtime/run/node/attempt; the required real PlanRun terminal record supplies the original run-completion anchor. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1260` and the `assistant_plan.completed` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1502, ContractName:Plans/storage-plan.md#SP-1502
+
+### APR-1503 - assistant_plan.created: prepared event contract
+
+```yaml
+plan_unit_id: APR-1503
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: Newly authored owner contract for assistant_plan.created alone under deck-2 9.a A (DL-450); prepared
+  without admission. Birth is version 1 with the selected legal strategy/backend. The retained thread has at most
+  one unfinished Plan across both scopes. Explicit replacement first settles its predecessor cancellation; no two
+  current slots. Creation does not build, create a NamedPlan or admit product planning.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Assistant_Plan_Runtime.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- assistant_plan.created
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** AssistantPlanRuntime cmd.chat.plan.create after its actual one-current-slot admission. Reuse APR-001/002/005, APR-073/074, exact AssistantPlanRecord and first document revision under the direct or ledger-bound source owner. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1503 selects `Plans/event_authority_w3g/payloads/assistant_plan_created.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and application are distinct new selectors; app has real Server/Computer/thread and null Project. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. Birth is version 1 with the selected legal strategy/backend. The retained thread has at most one unfinished Plan across both scopes. Explicit replacement first settles its predecessor cancellation; no two current slots. Creation does not build, create a NamedPlan or admit product planning.
+
+**Replay, consumer and checkpoints.** SP-1503 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.assistant_plan.created.history.v1@1.0.0` is the sole newly authored family history reader for Assistant Chat Plan history and exact-version details. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1503 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17646): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1260` and the `assistant_plan.created` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1503, ContractName:Plans/storage-plan.md#SP-1503
+
+### APR-1504 - assistant_plan.exported: prepared event contract
+
+```yaml
+plan_unit_id: APR-1504
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: Newly authored owner contract for assistant_plan.exported alone under deck-2 9.a A (DL-450); prepared
+  without admission. Export records the exact version/hash and actual produced artifact. It changes neither the
+  source revision nor Build control. Opening a print window, a failed PDF, cancellation and an unusable temporary
+  window produce no exported success event (DL-259 FX-1).
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Assistant_Plan_Runtime.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- assistant_plan.exported
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** AssistantPlanRuntime cmd.chat.plan.export after the artifact/export owner returns its actual successful result. Reuse APR-003, PPROG-015..016, PDET-009..012 and the original artifact export receipt of the exact immutable revision. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1504 selects `Plans/event_authority_w3g/payloads/assistant_plan_exported.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and application are distinct new selectors; app has real Server/Computer/thread and null Project. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. Export records the exact version/hash and actual produced artifact. It changes neither the source revision nor Build control. Opening a print window, a failed PDF, cancellation and an unusable temporary window produce no exported success event (DL-259 FX-1).
+
+**Replay, consumer and checkpoints.** SP-1504 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.assistant_plan.exported.history.v1@1.0.0` is the sole newly authored family history reader for Assistant Chat Plan history and exact-version details. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1504 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17646): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1260` and the `assistant_plan.exported` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1504, ContractName:Plans/storage-plan.md#SP-1504
+
+### APR-1505 - assistant_plan.version_created: prepared event contract
+
+```yaml
+plan_unit_id: APR-1505
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: Newly authored owner contract for assistant_plan.version_created alone under deck-2 9.a A (DL-450);
+  prepared without admission. The same Plan gets version previous_version+1 and an exact parent revision/hash link.
+  Approved prior bytes, Plan/thread/Project/creation identity, strategy and backend remain immutable. Building work
+  first reaches its owner safe stop; pending exact-version schedules are invalidated through Scheduling without
+  retargeting.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Assistant_Plan_Runtime.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- assistant_plan.version_created
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** AssistantPlanRuntime cmd.chat.plan.request_revision after agent-mediated full revision commit. Reuse APR-004/005/073 and original immutable PlanDocumentRevision plus its exact parent/current-slot result. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1505 selects `Plans/event_authority_w3g/payloads/assistant_plan_version_created.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and application are distinct new selectors; app has real Server/Computer/thread and null Project. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. The same Plan gets version previous_version+1 and an exact parent revision/hash link. Approved prior bytes, Plan/thread/Project/creation identity, strategy and backend remain immutable. Building work first reaches its owner safe stop; pending exact-version schedules are invalidated through Scheduling without retargeting.
+
+**Replay, consumer and checkpoints.** SP-1505 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.assistant_plan.version_created.history.v1@1.0.0` is the sole newly authored family history reader for Assistant Chat Plan history and exact-version details. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1505 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17646): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1260` and the `assistant_plan.version_created` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1505, ContractName:Plans/storage-plan.md#SP-1505
+
+### APR-1506 - assistant_plan.wizard_handoff_created: prepared event contract
+
+```yaml
+plan_unit_id: APR-1506
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: Newly authored owner contract for assistant_plan.wizard_handoff_created alone under deck-2 9.a A
+  (DL-450); prepared without admission. An explicit person-started exact-version handoff records the genuine Wizard
+  intake identity. An application source requires explicit real-Project selection/conversion and fresh destination
+  permission. Cancel leaves the source intact. Intake bypasses PRD Builder and starts no Orchestrator before Wizard
+  approval and compilation.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The complete original source satisfies the exact family transition and admission predicate.
+- Retry returns the original result without a new effect; inspection never becomes action authority.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Assistant_Plan_Runtime.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: event_contract_draft
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- assistant_plan.wizard_handoff_created
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+**Producer and original source.** AssistantPlanRuntime records the successful PlanningWizard intake returned to explicit cmd.chat.plan.send_to_planning_wizard. Reuse APR-012, APR-074 and Planning_Wizard intake original handoff receipt with exact source Plan revision/hash and real destination Project. Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply.
+
+**Payload and scope.** CV-1506 selects `Plans/event_authority_w3g/payloads/assistant_plan_wizard_handoff_created.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and application are distinct new selectors; app has real Server/Computer/thread and null Project. Payload identity must match the native source and Contracts_V0 EventRecord. Payloads carry refs/hashes and closed scalar facts, never Plan documents, notebook bodies, research propositions, Goal objective text, secrets or private content. An explicit person-started exact-version handoff records the genuine Wizard intake identity. An application source requires explicit real-Project selection/conversion and fresh destination permission. Cancel leaves the source intact. Intake bypasses PRD Builder and starts no Orchestrator before Wizard approval and compilation.
+
+**Replay, consumer and checkpoints.** SP-1506 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original eleven receipt fields and whole original EventRecord commitment. `reader.assistant_plan.wizard_handoff_created.history.v1@1.0.0` is the sole newly authored family history reader for Assistant Chat Plan history and exact-version details. It adopts SP-278's `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0` and exact generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}` / `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. This family intentionally has no persisted filtered projection or private checkpoint. Its reader scans the entire captured generic global range, filters this exact event/scope/subject, returns authenticated observations, and holds only the current read's ten-field token. Any stored resume token has only SP-278/DL-076's nine durable fields, never redb_snapshot_id. Only the generic projector advances its existing checkpoint, atomically with rows under full CAS. Empty matching results still require complete examined coverage; missing source is unavailable. History cannot drive another command, notification, provider request, charge, note write, resume, completion or approval.
+
+**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache or supplied success boolean. Resolve the full named native source using its selected exact schema/codec; independently compare all copied identities, state, version, revision, refs and hashes at entry and after returning helpers, immediately before append/release. Source bodies remain with their existing owners and lifetimes. A valid retained original is inspected against its authenticated original edition without reacquiring mutable current source state; current access/deletion/withdrawal checks still apply. SP-1506 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17646): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes. No reference extends the linked body's retention. Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cutoff through existing Storage migration/registry ownership. Current consumption of the withdrawn selector stops; held/staged/current generic index generations cannot bypass it. Rebuild the generic index only from surviving authentic originals under SP-278; never rewrite event bytes, relabel an old schema, rehash a retained original, revive purged content or infer an absent admission. Retained audit uses its original edition and current access/hold/deletion policy, explicitly disclosing a withdrawn/unsupported selector as unavailable rather than executing it. Future/unknown editions fail closed. No family is admitted by this phase.
+
+**Criterion 12.** `ATS-1260` and the `assistant_plan.wizard_handoff_created` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared guard-isolation proof are phase 2; criterion 12 remains PARTIAL.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1506, ContractName:Plans/storage-plan.md#SP-1506
+
 ## 4. Integration Surfaces
 
 ### Planning Wizard handoff and NamedPlan promotion
@@ -1935,6 +2339,9 @@ negative_constraints:
 - No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9/W2 and APR-1130 complete original Plan association/pending/effect/result mapping. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 ## Wand Modules Redesign Addendum (2026-09-27)
 
 The 2026-09-27 redesign of the Puppet Master 5.6 Pro wand modules (design spec §8.1, §8.8 and §8.15, frozen at `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md`, SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`) redraws the Plan card's schedule line and the Crew sheet opened from a Plan. This addendum records what those surfaces must keep of this runtime's contract. It changes no Build label, no admission rule and no command. The Crew sheet itself, its fields and its copy are owned by `Plans/Collaborative_Workflows.md`; windows, timers and the frozen topology snapshot by `Plans/Scheduling_and_Quota_Resume.md` (PSCHED-001..003).
@@ -2227,3 +2634,127 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md#APR-074, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-367, ContractName:Plans/Contracts_V0.md#CV-368, ContractName:Plans/storage-plan.md#SP-350, ContractName:Plans/storage-plan.md#SP-352
+
+## DG-OWN-C original source and boundary contracts (2026-11-05)
+
+### APR-1130 - Goal cancellation migration of existing Plan association
+
+```yaml
+plan_unit_id: APR-1130
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal.cancelled, M2-M9 adopts APR-017
+  complete actual AssistantPlanRecord, PlanRun, seven-field GoalPlanBinding, approved version/hash, original
+  origin/effect/result and every pending joint issue before SP-305 enrollment. A completed/failed/cancelled
+  Run remains its actual original state and never implies no association. Preserve unknown effects; only the
+  actual Plan owner can reconcile or settle them. Existing joint Plan/Goal/Scheduler exclusion and Stop priority
+  stay mandatory.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- APR-017
+- SP-1131
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Assistant_Plan_Runtime.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal cancellation migration of existing Plan association). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+## APR-1550 — `assistant_plan.schedule_invalidated`: newly authored owner contract, prepared without admission
+
+```yaml
+plan_unit_id: APR-1550
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: 'For exactly assistant_plan.schedule_invalidated@1.0.0, the adjacent twelve-criterion contract binds
+  the already specified fact: A genuinely committed new Plan version invalidates that Plan’s pending exact-version
+  binding. Preserve the old binding as audit; never silently rebind to the new version. This records the Plan-side
+  fact, not the Scheduling owner’s distinct execution_window.invalidated. No timer, schedule opening, unchanged
+  revision or Build completion emits it. Newly authored technical bindings follow deck-1 4b A (DL-411) and the documented
+  exact-family search. Registry membership stays absent; criterion 12 remains PARTIAL until phase 2.'
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- APR-003
+- APR-017
+- APR-073
+- SQR-003
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Assistant_Plan_Runtime.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- assistant_plan.schedule_invalidated
+- prepared_without_admission
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Assistant_Plan_Runtime.md
+```
+
+1. **Membership/version.** `assistant_plan.schedule_invalidated@1.0.0` is a candidate only, with no registry append, admission record or native writer. All current paths return `missing_event_registration` until this exact family/source edition is admitted; siblings grant nothing.
+2. **Owner.** This unit owns the semantic fact: A genuinely committed new Plan version invalidates that Plan’s pending exact-version binding. Preserve the old binding as audit; never silently rebind to the new version. This records the Plan-side fact, not the Scheduling owner’s distinct execution_window.invalidated. No timer, schedule opening, unchanged revision or Build completion emits it. Reuse APR-003, APR-017, APR-073, SQR-003; payload binding is CV-1550, persistence is SP-1550.
+3. **Producer.** Sole producer `AssistantPlanRuntime::commit_document_revision` calls `storage.w3h.assistant_plan_schedule_invalidated.append.v1@1.0.0`. Source is the original AssistantPlan document-version commit and its exact schedule binding; original Project APR-017/SP-306 custody or APR-073/CV-366 application edition. The source adapter methods `prepare_assistant_plan_schedule_invalidated`, `commit_assistant_plan_schedule_invalidated`, `resolve_assistant_plan_schedule_invalidated_original` are newly authored interfaces of that owner, not installed handlers. Verify actual before/after source identity, genuine original receipt/result and permissions before committing the existing owner effect plus its publication journal atomically; save the exact semantic envelope and payload once. Drain the pending event via ordinary Storage append, explicitly adopting SP-286/CV-339 first-AppendReceipt **full-value v2** custody and SP-336/347 durability classes; then CAS prepared→appended→settled using the exact prior whole journal value. Domain success acknowledgement waits for the original body result and first event receipt; dependent dispatch/terminal publication waits for required receipts. A crash after body commit preserves the body and pending publication, never rolls it back or repeats the domain effect. The missing-registration gate acts before new event preparation and confers no native authority on existing result-only paths.
+4. **Payload.** `Plans/event_payloads/w3h/assistant_plan_schedule_invalidated.schema.json#/$defs/payload` is this family’s closed 1.0.0 schema. Every source field is compared to the genuine original owner result, not a caller-supplied matching snapshot. Required source refs resolve to exact original typed records/results at one consistent snapshot; a ref, hash or all-true assertion alone proves no acceptance. Current numeric/format rules come from EventRecord/CV-317, original source owners and the reviewed shared number/time foundation at phase 2; no new numeric limit or timestamp grammar is authored here. No objective/message/To-Do/compose/env-file body or secret is copied.
+5. **Scope/identity.** Scope is `application_or_project`. `project_id`, actual Server and thread match the original source and EventRecord; absent Project means explicit application only where an app source is selected, never dangling Project or current focus. For the app pause source thread remains null and no fake thread/Computer/roots request is required. The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `assistant_plan.schedule_invalidated` and exact `plan_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). Fields already present in the envelope are adopted by reference to Contracts_V0.md#EventRecord, never replaced by a local envelope.
+6. **Replay/idempotency.** Freeze `replay_policy=dedupe_by_idempotency_key` and Contracts’ exact producer-semantic digest over only its named caller fields. Current write/retry refuses `projector_replay_only` as `replay_only_not_appendable` before success. Same identity/same digest resolves the original complete event and first receipt via `storage.first_append_receipt.resolve.v2`, even after current source state advances; changed digest conflicts, unavailable authoritative dedupe returns `dedupe_unavailable` with no new effect. Do not compare Storage sequence/timestamps as caller semantics. Missing delivered work after confirmed older restore stays unavailable; a new event ID never reconstructs a missing original operation. Event replay cannot rerun commands, timers, Compose, turns, effects, Usage charges or notifications.
+7. **Retention.** Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G18` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master project data removes this audit history under existing holds; Remove project from list, deleting a described object or deleting its chat does not. Application records retain the existing app-root custody/deletion rules, never a fabricated Project. Disk pressure refuses new records. Referenced bodies retain their own policies and access; this content-free event grants no longer retention or access to them. The canonical publication journal adopts this same `RP-AUTHORITY-INDEFINITE@1.0.0` assignment and all original pending/result/backup/hold dependencies under `SP-1550`; it is never a disposable index or independently expiring copy. SP-286 receipt custody keeps its own policy.
+8. **Redaction/custody.** Use `secret_refs_only` for current events; verify all refs with the original owner’s access and no-secret rules. The sole native adapter must prove actual original issuance, full scope/key/source joins and complete before/after facts, not a copied source view. Storage owns canonical seglog, publication journal, first receipt/full-value proof and a coherent backup/restore closure with pending owner effect/result; restore fences unresolved origin or tombstone state. Reads recheck current permission/deletion while authenticating original admission/recipe/receipt. They may show a valid retained fact after its live object changes or is gone, with unavailable linked body disclosed; they never reconstruct the body or require current state to equal a historical state. Unavailable or invalid source custody returns typed refusal, never fabricated empty success.
+9. **Transitions.** A genuinely committed new Plan version invalidates that Plan’s pending exact-version binding. Preserve the old binding as audit; never silently rebind to the new version. This records the Plan-side fact, not the Scheduling owner’s distinct execution_window.invalidated. No timer, schedule opening, unchanged revision or Build completion emits it. Extra family-specific predicates: version_change: new version must differ from the bound original version; binding_join: schedule belongs to this exact Plan/version/hash; no_rebind: binding is invalidated and old target remains unchanged. False/no-op/rejected results emit no successful mutation fact. Compound owner changes preserve all required facts and canonical visibility atomically; no partly admitted subset claims to be complete. Cross-owner original records remain owned by their respective source owners.
+10. **Consumers/checkpoints.** The exact read-only operating consumer is `storage.w3h.assistant_plan_schedule_invalidated.recovery_read.v1@1.0.0`, called by `AssistantPlanRuntime` for existing original-result/restart inspection; it never reconstructs or changes canonical domain state from events. It explicitly adopts SP-278 and `reader.storage.event_record_index@1.0.0`: resolve CURRENT, authentic root/generation/anchor/frontier/dataset and complete source selection in one live transaction, authenticate the complete captured range and every matching source/payload, then filter exact partition+`assistant_plan.schedule_invalidated`. Unsupported/corrupt/missing source is unavailable, never skipped as empty. SP-278 alone owns the generic checkpoint’s whole-value CAS, monotonic frontier and rebuild. This read-only family owns **no projector, projection or independent durable checkpoint** (`checkpoint_disposition=none_required`): zero durable reader effects. Any persisted SP-278 token remains its nine durable fields (DL-076); join the transaction’s live redb_snapshot_id only in memory and revalidate the complete live token after every helper immediately before disclosure. Empty verified range, zero matching events and missing coverage are distinct. Reader withdrawal fences interpretation. No current continuation/dispatch authority comes from this history read.
+11. **Compatibility/withdrawal.** No alias, automatic legacy converter or historical emission is asserted for this newly prepared family. Preserve actual old admitted shapes and original recipes only when authenticated original issuance selects them; schema/version/recipe/source substitution or unknown selection refuses. Unsupported future versions never mutate. Writer withdrawal first cuts off this exact family/source edition under append lock, fences new prepares and append drains, and preserves pending accepted effects as unresolved custody. Exact retained-result lookup is read-only and needs authorized retained admission. Reader withdrawal stops interpretation and generic-index filtered reads for this family; it never deletes source or dedupe/receipt custody. Generic-index rebuilding excludes withdrawn interpretation and carries truthful coverage; re-enablement needs explicit reviewed version/source adoption, not a replay alias. Current live guards do not retroactively invalidate otherwise valid retained originals.
+12. **Oracles.** `assistant_plan.schedule_invalidated` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authority-20261105/W3H-oracle-plan.json`. Every planned negative starts from a valid case and changes one input invariant, with all unrelated derived values recomputed. No oracle implementation or guard-removal proof is claimed in phase 1: criterion 12 **PARTIAL**, native **NOT_RUN**. Phase 2 adopts the reviewed shared numeric/time helper and shared guard-isolation tool before Sol/Astra review.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Contracts_V0.md#CV-1550, ContractName:Plans/storage-plan.md#SP-1550, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286

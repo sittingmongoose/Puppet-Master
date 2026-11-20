@@ -1,0 +1,115 @@
+{
+  "schema_id": "pm.ds.fix2.verification_summary.v1",
+  "source_revision": "9f83b5ed566206585dcff5a22ac4db94feaf3cee",
+  "boundary_positive_count": 24,
+  "boundary_negative_count": 46,
+  "boundary_guard_groups_pass": 10,
+  "boundary_guard_groups_partial": 2,
+  "whole_lane_source_guards": 525,
+  "guards_with_observed_flips": 62,
+  "whole_lane_proof_complete": false,
+  "baseline_negative_count": 194,
+  "baseline_failures": [],
+  "native_execution": "NOT_RUN",
+  "files": {
+    "fix2-round2-oracles.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-round2-oracles.json",
+      "sha256": "2a6e39bd41842753ce3a67d9f2f09f5f32f53cc57aac22a7f2e2927bdbd2fdd5"
+    },
+    "fix2-whole-guard-removal.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-whole-guard-removal.json",
+      "sha256": "d9fd863fd6313536906d55e0238a7998cdbfe63f08f6313ee15bf3ac2ed4b546"
+    },
+    "fix2-round2-selftest.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-round2-selftest.json",
+      "sha256": "adb0cc18f76b044551256025223bc81ce6042953801565935189d20538ef7dfd"
+    },
+    "fix2-guard-audit-selftest.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-guard-audit-selftest.json",
+      "sha256": "88bc6ef62d8fd76d5461b45d3157d744e5add184e007777a5078abee9e7223ba"
+    },
+    "fix2-browser-owner-tests.log": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-browser-owner-tests.log",
+      "sha256": "aa3c2e4897e94b5624dd954926cb299927679a3ac244b2ace5fe2535a08222a4"
+    },
+    "fix2-browser-admission-tests.log": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-browser-admission-tests.log",
+      "sha256": "d42afeb938b95d3838a6c91f7fdb564c5ead221f880966db05906e6298681fa0"
+    },
+    "fix2-pm7-tests.log": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-pm7-tests.log",
+      "sha256": "eb3a94d8a1563003436d19d6cae82712f69ad7034d4bb88243ea9bbf9f035c5b"
+    },
+    "fix2-browser-created.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-browser-created.json",
+      "sha256": "7245ec2c38512ef09f190afbccd3420871c5bf320219a02d49a373953f74a8e7"
+    },
+    "fix2-browser-created-v2.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-browser-created-v2.json",
+      "sha256": "740073c15af6a91105b7ba5384c196910a7201da04314ea7585fc6294b5c9b5c"
+    },
+    "fix2-browser-reset.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-browser-reset.json",
+      "sha256": "7565a740738cd9d9353c491872d74c9abef2c64217d96ec629eb2b42266462ed"
+    },
+    "fix2-browser-admission.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-browser-admission.json",
+      "sha256": "c8c8a795d92bc4f9cfc05125a85b541b54b21af920bb359a4a6d172aaab7cf65"
+    },
+    "fix2-home4.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-home4.json",
+      "sha256": "9505f8b20c343849aac1735bfe6be6fb0d19cecb798d6af02b8523f5c5e80649"
+    },
+    "fix2-home4-selftest.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-home4-selftest.json",
+      "sha256": "71b03406e0e355f4cfba34acdcc0ddc8f691d6b589e9734e02ae7ae0be692491"
+    },
+    "fix2-cycle1-preservation.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-cycle1-preservation.json",
+      "sha256": "ca9b81b63040864cdb30890c22fd37248536596a0729b66f05e5a7a4da036d21"
+    },
+    "fix2-pm7.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-pm7.json",
+      "sha256": "0899c91c86ddb2aa15d84c28fdab44708dfed6b294f89e537e8997e4a35c45d0"
+    },
+    "fix2-shared-runtime.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-shared-runtime.json",
+      "sha256": "23d91842a2e61212529455a39674a20c5c1842d37eafc3d1cd8548aeb18f992b"
+    },
+    "fix2-pm7-gate.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-pm7-gate.json",
+      "sha256": "c6e08c4fa0d27a12252d7bba84f1842d6fc97a6a82dcefd3523c97be96d3d60b"
+    },
+    "fix2-shards-check.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-shards-check.json",
+      "sha256": "695c9deda2a5c4fc86fbb855223f1e463d00c0c9fdf27103427d3cb7f41177ad"
+    },
+    "fix2-index-validate.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-index-validate.json",
+      "sha256": "72300aec2acddf124db2a25e3290e747e7df1dc7c38b75f1b828408592195027"
+    },
+    "fix2-final-meta.txt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/fix2-final-meta.txt",
+      "sha256": "60019b6c6d2225eb97864c5a2902eb693e261595b235d23d5a876f522ebf3373"
+    },
+    "seal-fix2-before-093d102406-receipt.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/seal-fix2-before-093d102406-receipt.json",
+      "sha256": "13896c59be110dee594a14a6dfd6d99734d7b8e4cf0ab9f04fe70fd85c6518de"
+    },
+    "seal-fix2-after-9f83b5ed56-receipt.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/seal-fix2-after-9f83b5ed56-receipt.json",
+      "sha256": "5399a6087b12b1bff37b15ca28f995449b4884b0c0b7357d2121f9c3175cdce5"
+    }
+  },
+  "source_sha256": {
+    "scripts/pm_home_layout_v2_slot_receipt.py": "19e57ae7e8bd94f2c71361fe035076df342b46031ad1e3476b3a145e2d52af68",
+    "scripts/pm_browser_workspace_created.py": "019306fde93fa1c1694055c6823848c3719af4d26d30c0cec43f0d3be014402a",
+    "scripts/pm_browser_workspace_created_v2.py": "0bbf46b8c7155853df786aaebac0a71f80c8e4e757f4e129365d1ce3322c3e4a",
+    "scripts/pm_browser_workspace_reset.py": "ad62427b8c6989210f8a990e9768351bb594e0afc65368bbb9a28b78449de5fe",
+    "scripts/pm_event_authority_ds_round2.py": "ba275afdd90b9568b3604c512721f18fe692672ab3b4f4497fe080b49be7e2d2",
+    "scripts/pm_ds_guard_removal.py": "0e389d8ee69279f6143ba0800a81e85b57768cb83b60e70dc545337686fcd364",
+    "scripts/pm_event_payload_route.py": "c223943b9d28f76b211af96ad828489efe13db2a545c69e26aac8d62a765efae",
+    "scripts/pm-browser-event-admission.py": "f3675b236d72ee01c82cf72b1a37588e79a9752896be2a3c2b946e30d5646655"
+  },
+  "provided_nonflipping_guard_control_refused": true
+}

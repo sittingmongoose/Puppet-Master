@@ -1,0 +1,376 @@
+{
+  "schema_id": "pm.dm.round8_checks.v1",
+  "code_head": "e8dda799efde63628c8c902f313a608aae0e64be",
+  "status": "PASS_WITH_INDEX_INTEGRATION_QUALIFICATION",
+  "native_execution": "NOT_RUN",
+  "baseline_assertions": {
+    "format.applied": 6771,
+    "lsp.server.lifecycle_changed": 6825,
+    "model.catalog_refreshed": 6987,
+    "subagent.context_rehydrated": 7196,
+    "subagent.context_shrunk": 7221,
+    "project.added": 6725,
+    "project.created": 6729,
+    "git.clone.completed": 6798
+  },
+  "total_assertions": 55252,
+  "differential_invalid_retries_fixed": 16,
+  "authentic_foreign_pairs_refused": 56,
+  "selected_guard_rows": 32,
+  "unique_negative_inventory": 23235,
+  "per_family_negative_observations": 93640,
+  "runs": [
+    {
+      "family": "format.applied",
+      "kind": "regressions",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/regressions.py",
+        "format.applied"
+      ],
+      "exit_code": 0,
+      "seconds": 0.676,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/format_applied-regressions.log"
+    },
+    {
+      "family": "format.applied",
+      "kind": "baseline",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "exit_code": 0,
+      "seconds": 29.761,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/format_applied-baseline.log"
+    },
+    {
+      "family": "format.applied",
+      "kind": "selected-guards",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-guard-audit.py",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/format_applied-guards.json",
+        "^retry\\.(envelope_identity|envelope_version|family|schema)$"
+      ],
+      "exit_code": 0,
+      "seconds": 30.451,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/format_applied-selected-guards.log"
+    },
+    {
+      "family": "lsp.server.lifecycle_changed",
+      "kind": "regressions",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/regressions.py",
+        "lsp.server.lifecycle_changed"
+      ],
+      "exit_code": 0,
+      "seconds": 0.813,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/lsp_server_lifecycle_changed-regressions.log"
+    },
+    {
+      "family": "lsp.server.lifecycle_changed",
+      "kind": "baseline",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "exit_code": 0,
+      "seconds": 29.372,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/lsp_server_lifecycle_changed-baseline.log"
+    },
+    {
+      "family": "lsp.server.lifecycle_changed",
+      "kind": "selected-guards",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-guard-audit.py",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/lsp_server_lifecycle_changed-guards.json",
+        "^retry\\.(envelope_identity|envelope_version|family|schema)$"
+      ],
+      "exit_code": 0,
+      "seconds": 35.355,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/lsp_server_lifecycle_changed-selected-guards.log"
+    },
+    {
+      "family": "model.catalog_refreshed",
+      "kind": "regressions",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/regressions.py",
+        "model.catalog_refreshed"
+      ],
+      "exit_code": 0,
+      "seconds": 0.605,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/model_catalog_refreshed-regressions.log"
+    },
+    {
+      "family": "model.catalog_refreshed",
+      "kind": "baseline",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "exit_code": 0,
+      "seconds": 31.019,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/model_catalog_refreshed-baseline.log"
+    },
+    {
+      "family": "model.catalog_refreshed",
+      "kind": "selected-guards",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-guard-audit.py",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/model_catalog_refreshed-guards.json",
+        "^retry\\.(envelope_identity|envelope_version|family|schema)$"
+      ],
+      "exit_code": 0,
+      "seconds": 35.357,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/model_catalog_refreshed-selected-guards.log"
+    },
+    {
+      "family": "subagent.context_rehydrated",
+      "kind": "regressions",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/regressions.py",
+        "subagent.context_rehydrated"
+      ],
+      "exit_code": 0,
+      "seconds": 0.735,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/subagent_context_rehydrated-regressions.log"
+    },
+    {
+      "family": "subagent.context_rehydrated",
+      "kind": "baseline",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "exit_code": 0,
+      "seconds": 34.044,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/subagent_context_rehydrated-baseline.log"
+    },
+    {
+      "family": "subagent.context_rehydrated",
+      "kind": "selected-guards",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-guard-audit.py",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/subagent_context_rehydrated-guards.json",
+        "^retry\\.(envelope_identity|envelope_version|family|schema)$"
+      ],
+      "exit_code": 0,
+      "seconds": 38.623,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/subagent_context_rehydrated-selected-guards.log"
+    },
+    {
+      "family": "subagent.context_shrunk",
+      "kind": "regressions",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/regressions.py",
+        "subagent.context_shrunk"
+      ],
+      "exit_code": 0,
+      "seconds": 0.92,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/subagent_context_shrunk-regressions.log"
+    },
+    {
+      "family": "subagent.context_shrunk",
+      "kind": "baseline",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "exit_code": 0,
+      "seconds": 33.783,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/subagent_context_shrunk-baseline.log"
+    },
+    {
+      "family": "subagent.context_shrunk",
+      "kind": "selected-guards",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-guard-audit.py",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/subagent_context_shrunk-guards.json",
+        "^retry\\.(envelope_identity|envelope_version|family|schema)$"
+      ],
+      "exit_code": 0,
+      "seconds": 38.339,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/subagent_context_shrunk-selected-guards.log"
+    },
+    {
+      "family": "project.added",
+      "kind": "regressions",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/regressions.py",
+        "project.added"
+      ],
+      "exit_code": 0,
+      "seconds": 0.812,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/project_added-regressions.log"
+    },
+    {
+      "family": "project.added",
+      "kind": "baseline",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "exit_code": 0,
+      "seconds": 28.378,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/project_added-baseline.log"
+    },
+    {
+      "family": "project.added",
+      "kind": "selected-guards",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-guard-audit.py",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/project_added-guards.json",
+        "^retry\\.(envelope_identity|envelope_version|family|schema)$"
+      ],
+      "exit_code": 0,
+      "seconds": 31.245,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/project_added-selected-guards.log"
+    },
+    {
+      "family": "project.created",
+      "kind": "regressions",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/regressions.py",
+        "project.created"
+      ],
+      "exit_code": 0,
+      "seconds": 0.7,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/project_created-regressions.log"
+    },
+    {
+      "family": "project.created",
+      "kind": "baseline",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "exit_code": 0,
+      "seconds": 28.028,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/project_created-baseline.log"
+    },
+    {
+      "family": "project.created",
+      "kind": "selected-guards",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-guard-audit.py",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/project_created-guards.json",
+        "^retry\\.(envelope_identity|envelope_version|family|schema)$"
+      ],
+      "exit_code": 0,
+      "seconds": 30.262,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/project_created-selected-guards.log"
+    },
+    {
+      "family": "git.clone.completed",
+      "kind": "regressions",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/regressions.py",
+        "git.clone.completed"
+      ],
+      "exit_code": 0,
+      "seconds": 0.723,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/git_clone_completed-regressions.log"
+    },
+    {
+      "family": "git.clone.completed",
+      "kind": "baseline",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "exit_code": 0,
+      "seconds": 29.52,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/git_clone_completed-baseline.log"
+    },
+    {
+      "family": "git.clone.completed",
+      "kind": "selected-guards",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-guard-audit.py",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/git_clone_completed-guards.json",
+        "^retry\\.(envelope_identity|envelope_version|family|schema)$"
+      ],
+      "exit_code": 0,
+      "seconds": 31.25,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/git_clone_completed-selected-guards.log"
+    }
+  ],
+  "source_scope": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/source-scope.json",
+    "sha256": "608488fc6310c1d7f8489d1eb5b98e47b97c3cc3feead6996604b86e35ead744"
+  },
+  "ordinary_checks": {
+    "shards": {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "status": "pass",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/shard-check.json",
+      "failures": []
+    },
+    "index": {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit_code": 1,
+      "status": "fail",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix8/index-validate.json",
+      "failures": [
+        {
+          "actual_stable_sha256": "be74079c4e4e56663e2a8cd17394ff5a7b9330ecc8c31d73bda6c1b00df29c93",
+          "error": "stale_generated_index_artifact",
+          "expected_stable_sha256": "009903b5aff474ad52cca731fe226a9929fdc2611f0f5eea8fa6e2667ec97824",
+          "path": "Plans/.plan_index/node_readiness_report.json"
+        }
+      ]
+    }
+  },
+  "scope": "All family repairs and selected narrow guards pass; ordinary index currentness is a separate integration qualification."
+}

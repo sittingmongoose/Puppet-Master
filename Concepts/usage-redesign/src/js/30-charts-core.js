@@ -269,6 +269,9 @@
 
   /* number roll: from the value on screen to the new one (first time from 0), tabular, no overshoot. The element keeps
      the shown value in data-shown so a later change counts from it (DESIGN-SPEC 8.5, A1 8.1). */
+  /* a text written only when it differs (a count that lands on the value it shows, a decode's settled frames): a write of
+     the same text still replaces the node, restyles and wakes every DOM watcher of the page (pm7-perf lane K) */
+  function setText(el, s) { if (el.firstElementChild || el.textContent !== s) el.textContent = s; }
   charts.roll = function (el, to, format, opts) {
     if (!el) return null;
     opts = opts || {};
@@ -280,15 +283,15 @@
     if (!finite(to)) { el.textContent = opts.missing || '-'; el.removeAttribute('data-shown'); return null; }
     el.setAttribute('data-shown', String(to));
     /* a quiet entrance writes its numbers final (WOW-SPEC-3 3.3: supporting values never roll on an entrance) */
-    if (reduced() || from === to || opts.instant || opts.quiet || (first && quietNow())) { el.textContent = opts.finalText != null ? opts.finalText : format(to); return null; }
+    if (reduced() || from === to || opts.instant || opts.quiet || (first && quietNow())) { setText(el, opts.finalText != null ? opts.finalText : format(to)); return null; }
     /* every roll is an odometer since the WOW round (WOW-SPEC 3.1, 3.6; PMU.film.odometer): digit columns on the compositor */
     if (opts.finalText == null && PMU.film && PMU.film.odometer) {
       el._pmuRoll = PMU.film.odometer(el, to, format, { from: first ? null : from, change: !first, delay: opts.delay || 0, dur: opts.dur, spins: opts.spins });
       return el._pmuRoll;
     }
-    el.textContent = format(from);
-    el._pmuRoll = tw(opts.dur || (first ? 1000 : 520), 'count', function (k) { el.textContent = format(k >= 1 ? to : from + (to - from) * k); },
-      function () { el._pmuRoll = null; el.textContent = opts.finalText != null ? opts.finalText : format(to); }, opts.delay || 0);
+    setText(el, format(from));
+    el._pmuRoll = tw(opts.dur || (first ? 1000 : 520), 'count', function (k) { setText(el, format(k >= 1 ? to : from + (to - from) * k)); },
+      function () { el._pmuRoll = null; setText(el, opts.finalText != null ? opts.finalText : format(to)); }, opts.delay || 0);
     return el._pmuRoll;
   };
   /* value-change pulse (WOW-SPEC 3.6): the reading flashes once (a pre-painted glow layer, opacity only) and a light
@@ -934,9 +937,11 @@
     return PMU.motion.tween({ from: 0, to: 1, dur: dur || 420, delay: delay || 0, ease: 'linear',
       step: function (v, t) {
         var x = t == null ? v : t, k = 1 - Math.pow(1 - x, 3);
-        jobs.forEach(function (j) { j.el.setAttribute('d', pathFrom(j.sk, j.a.map(function (a0, i) { return a0 + (j.b[i] - a0) * k; }))); });
+        /* a stepped voice (NieR) holds k between steps: the same d is not written again (208 same-value writes in two
+           beats on NieR Dark Home, pm7-perf lane K) */
+        jobs.forEach(function (j) { var d = pathFrom(j.sk, j.a.map(function (a0, i) { return a0 + (j.b[i] - a0) * k; })); if (j.el.getAttribute('d') !== d) j.el.setAttribute('d', d); });
       },
-      done: function () { jobs.forEach(function (j) { j.el.setAttribute('d', j.d1); }); } });
+      done: function () { jobs.forEach(function (j) { if (j.el.getAttribute('d') !== j.d1) j.el.setAttribute('d', j.d1); }); } });
   };
   /* marks that ride a morphing path (Jared 2026-10-09, item 3: a dot "doesn't follow its line"). A path morphs by a JS
      tween (the area and line morphs, livePatchSvg, the spark), stepping k = ease-out cubic of its linear t on the rAF

@@ -32,7 +32,9 @@
   const selected = (kind, list) => list.find(x => x.id === PM51.sel(ID + '-' + kind)) || list[0];
   const slug = name => String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'tool';
   const uniqueId = (kind, base) => { let id = base, n = 2; while (byId(kind, id)) id = base + '-' + n++; return id; };
-  const pillFor = x => !isOn(x) ? PM51.pill('Off') : x.status === 'ready' ? PM51.pill('Ready') : x.status === 'attention' ? PM51.pill('Needs attention') : x.status === 'setup' ? PM51.pill('Not checked yet') : PM51.statusPill(x.status);
+  /* one word for one state, in the list and in the detail: an entry that lost contact "Needs a restart" (it read "Needs
+     attention" here and "Needs a restart" beside it, lane-code 2026-11-11); one restarting says so while it waits */
+  const pillFor = x => restarting.has(x.id) ? PM51.waiting('Restarting…') : !isOn(x) ? PM51.pill('Off') : x.status === 'ready' ? PM51.pill('Ready') : x.status === 'attention' ? PM51.pill('Needs a restart', 'attention') : x.status === 'setup' ? PM51.pill('Not checked yet') : PM51.statusPill(x.status);
   const toneFor = x => !isOn(x) ? 'off' : x.status === 'ready' ? 'ready' : x.status === 'attention' ? 'attention' : 'neutral';
   const statusText = (x, runningWord) => !isOn(x) ? 'Off · not used in this project' : x.status === 'ready' ? runningWord : x.status === 'attention' ? 'Needs a restart' : 'Not checked yet';
   const actionRow = (...buttons) => `<div class="pm51-toolchain-actions">${buttons.join('')}</div>`;
@@ -175,8 +177,8 @@
         title: s.name, subtitle: `${s.language} · ${sourceLabel(s.source)}`, pill: pillFor(s),
         primary: { label: 'Edit', icon: 'edit', action: 'pm51-toolchain-edit-lsp', data: { id: s.id } },
         menu: anchor => PM51.menu(anchor, [
-          { label: 'Restart', icon: 'refresh', onClick: () => PM51.toast(`Restarting ${s.name}`, 'Example only: language servers run in the real app.', 'info') },
-          { label: 'Restart all language servers', icon: 'refresh', onClick: () => PM51.toast('Restarting every language server', 'The usual fix when highlights or errors get stuck. Example only.', 'info') },
+          { label: 'Restart', icon: 'refresh', onClick: () => restartLsps([s]) },
+          { label: 'Restart all language servers', icon: 'refresh', onClick: () => restartLsps(tc().lsps) },
           { label: isOn(s) ? 'Turn off' : 'Turn on', icon: isOn(s) ? 'pause' : 'play', onClick: () => { s.enabled = !isOn(s); saveState(); PM51.refresh(ID, { swap: false }); } },
           { label: 'View logs', icon: 'terminal', onClick: () => openLogs('lsps', s.id) },
           { separator: true },
@@ -456,6 +458,20 @@
     out.innerHTML = PM51.status(tone === 'attention' ? 'Not yet' : 'Answered', tone || 'ready') + `<span>${h(text)}</span>`;
     if (scroll) out.scrollIntoView({ block: 'nearest', behavior: motionReduced() ? 'auto' : 'smooth' });
   }
+  /* Restart (a server's menu), Restart all, and the "Restart language servers" steps (rows.d lsp-restart, its flow's end):
+     each server that is on restarts, says "Restarting…" while it does, and answers again, so a "Needs a restart" clears.
+     They only showed a toast and the state stayed (lane-code, 2026-11-11). Example data: nothing runs in this preview. */
+  const restarting = new Set();   /* ids restarting now: never saved with the entries */
+  function restartLsps(list) {
+    const on = (list || []).filter(x => isOn(x) && !restarting.has(x.id)); if (!on.length) { PM51.toast('Nothing to restart', 'Every language server here is off.', 'info'); return; }
+    on.forEach(x => restarting.add(x.id)); PM51.refresh(ID, { swap: false });
+    window.setTimeout(() => {
+      on.forEach(x => { restarting.delete(x.id); x.status = 'ready'; x.lastTest = 'Restarted just now'; });
+      saveState(); PM51.refresh(ID, { swap: false });
+      PM51.toast(on.length === 1 ? `${on[0].name} restarted` : `${on.length} language servers restarted`, on.length === 1 ? 'It answers again.' : 'They answer again.', 'success');
+    }, motionReduced() ? 0 : 900);
+  }
+  window.addEventListener('pm51-flow-done', e => { if (e.detail && e.detail.id === S.lspRestart) restartLsps(tc().lsps); });
   const toolById = id => { for (const l of LANGS) for (const t of l.lsps.concat(l.formatters)) if (t.id === id) return t; return null; };
   PM51.on('toolchain-path-browse', el => {
     const block = el.closest('.tt-path'); if (!block) return; const input = block.querySelector('.tt-path-input'); const t = toolById(block.dataset.tool);
@@ -626,4 +642,49 @@
       + PM51.panelSection('Adding one', '<p class="pm51-ps-text">Add walks you through it: the language, the tool most people use for it, where the program comes from (already on this computer, installed for you, or one you point to), which files it handles, and any start options.</p>')
       + PM51.panelSection('Good to know', '<p class="pm51-ps-text">Removing a tool here only takes it off the list. Nothing is uninstalled from your computer.</p>')
   }));
+  /* Connect Docker Hub (code.execution.dockerhub-signin; canon: "Sign in via browser, test that saved credentials still
+     work, or clear them"). The access token has one home, the row "Docker Hub access token"; this panel follows "How to
+     sign in to Docker Hub": Sign in in the browser signs in there, Paste an access token checks or clears the token saved
+     in that row. (B11 D4, R2: the panel was a user name and token form of its own whatever the method, so after
+     connecting with a token the token row still offered "Add key", and choosing the browser changed nothing.) */
+  const HUB = { method: 'code.execution.dockerhub-auth-method', token: 'code.execution.dockerhub-token', signin: 'code.execution.dockerhub-signin' };
+  const hubKeys = () => (PM51.s().o55Keys = PM51.s().o55Keys || {});
+  const hubState = () => (PM51.s().dockerHub = PM51.s().dockerHub || {});
+  const hubNow = () => new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  function dockerHubConnect() {
+    const browser = PM51.value(HUB.method) === 'Browser Sign-In', hub = hubState(), saved = !!hubKeys()[HUB.token];
+    const how = PM51.kv([['How you sign in', browser ? 'Sign in in the browser' : 'Paste an access token'], ['Change it with', 'How to sign in to Docker Hub']]);
+    if (browser) {
+      const wrap = PM51.panel({
+        title: 'Connect Docker Hub', eyebrow: 'Docker Hub', icon: 'user', status: hub.browser ? { label: 'Signed in', tone: 'ready' } : { label: 'Not signed in', tone: 'off' },
+        summary: 'You sign in on hub.docker.com in your browser. Puppet Master keeps the sign-in, never your password, and checks which accounts and teams you may publish under.',
+        body: PM51.panelSection('Sign-in', how + (hub.browser ? PM51.note(`Signed in at ${hub.browser}.`, 'info') : ''))
+          + (hub.browser ? PM51.panelSection('Clear it', PM51.btn({ label: 'Clear the sign-in', small: true, danger: true, icon: 'trash', action: 'pm51-toolchain-dockerhub-clear' }), 'Publishing stops until you sign in again.') : ''),
+        primaryLabel: hub.browser ? 'Check the sign-in' : 'Sign in in the browser',
+        onPrimary: () => { const was = !!hub.browser; hub.browser = hubNow(); saveState(); PM51.toast(was ? 'Docker Hub sign-in works' : 'Docker Hub connected', 'Publishing can use your account. Example only: nothing left this preview.', 'info'); }
+      });
+      return !!wrap;
+    }
+    const wrap = PM51.panel({
+      title: 'Connect Docker Hub', eyebrow: 'Docker Hub', icon: 'user', status: saved ? { label: 'Token saved', tone: 'ready' } : { label: 'No token yet', tone: 'off' },
+      summary: saved ? 'Checks that the access token saved under "Docker Hub access token" still works, and refreshes which accounts and teams you may publish under.' : 'You sign in with an access token. Add it under "Docker Hub access token" first; this button then checks that it works.',
+      body: PM51.panelSection('Access token', how + PM51.kv([['Docker Hub access token', saved ? 'Saved securely' : 'Not added yet']]) + (hub.checked ? PM51.note(`Last checked at ${hub.checked}.`, 'info') : ''))
+        + (saved ? PM51.panelSection('Clear it', PM51.btn({ label: 'Clear the token', small: true, danger: true, icon: 'trash', action: 'pm51-toolchain-dockerhub-clear' }), 'Publishing stops until you add a token again.') : ''),
+      primaryLabel: saved ? 'Check the token' : 'Add the token',
+      onPrimary: () => {
+        if (!saved) { closeOverlay(false); const found = findSettingGlobal(HUB.token); if (found && typeof o55KeyPanel === 'function') window.setTimeout(() => o55KeyPanel(found), 0); return; }
+        hub.checked = hubNow(); saveState(); PM51.toast('Docker Hub token works', 'Publishing can use your account. Example only: nothing left this preview.', 'info');
+      }
+    });
+    return !!wrap;
+  }
+  PM51.on('toolchain-dockerhub-connect', () => dockerHubConnect());
+  PM51.on('toolchain-dockerhub-clear', () => {
+    const browser = PM51.value(HUB.method) === 'Browser Sign-In';
+    PM51.confirm(browser ? 'Clear the Docker Hub sign-in?' : 'Clear the Docker Hub token?', 'Publishing to Docker Hub stops until you connect again.', 'Clear', () => {
+      if (browser) delete hubState().browser; else { delete hubKeys()[HUB.token]; delete hubState().checked; }
+      saveState(); closeOverlay(false); refreshSettingRow(HUB.token); PM51.toast(browser ? 'Sign-in cleared' : 'Token cleared', 'Docker Hub');
+    }, true);
+  });
 })();
+

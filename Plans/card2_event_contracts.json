@@ -1,0 +1,196 @@
+{
+  "schema_id": "pm.card2.event_contracts.v1",
+  "schema_version": "1.0.0",
+  "admission": "No central registry membership or writer permission is granted. Six drafts only.",
+  "families": [
+    {
+      "event_type": "browser.session.created",
+      "family_revision": "1.0.0",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "semantic_unit": "SMPFS-244",
+      "storage_unit": "SP-760",
+      "contract_unit": "CV-780",
+      "payload_schema_ref": "Plans/card2_event_payloads.schema.json#/$defs/browser_session_created",
+      "payload_schema_id": "pm.browser.session.created.payload.v1",
+      "application_payload_schema_id": "pm.browser.session.created.payload.application.v1",
+      "scope_policy": "application_or_project",
+      "commands": [
+        "cmd.browser.open_workspace_preview",
+        "cmd.browser.open_detached_preview"
+      ],
+      "reader_id": "reader.browser.session.created.history",
+      "reader_version": "1.0.0",
+      "projector_id": "projector.storage.event_record_index",
+      "projector_version": "1.0.0",
+      "family_checkpoint_disposition": "none_required",
+      "generic_checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
+      "retention_policy_ref": {
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "retention_assignment_source": "2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults",
+      "prepare_only": true,
+      "replay_policy": "dedupe_by_idempotency_key",
+      "retention_assignment_group": "G10: browser.session.created"
+    },
+    {
+      "event_type": "browser.session.state_changed",
+      "family_revision": "1.0.0",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "semantic_unit": "SMPFS-245",
+      "storage_unit": "SP-761",
+      "contract_unit": "CV-781",
+      "payload_schema_ref": "Plans/card2_event_payloads.schema.json#/$defs/browser_session_state_changed",
+      "payload_schema_id": "pm.browser.session.state_changed.payload.v1",
+      "application_payload_schema_id": "pm.browser.session.state_changed.payload.application.v1",
+      "scope_policy": "application_or_project",
+      "commands": [
+        "cmd.browser.open_workspace_preview",
+        "cmd.browser.open_detached_preview",
+        "cmd.browser.detach_browser_tab",
+        "cmd.browser.reopen",
+        "cmd.browser.retry"
+      ],
+      "reader_id": "reader.browser.session.state_changed.history",
+      "reader_version": "1.0.0",
+      "projector_id": "projector.storage.event_record_index",
+      "projector_version": "1.0.0",
+      "family_checkpoint_disposition": "none_required",
+      "generic_checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
+      "retention_policy_ref": {
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "retention_assignment_source": "2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults",
+      "prepare_only": true,
+      "replay_policy": "dedupe_by_idempotency_key",
+      "retention_assignment_group": "G10: browser.session.state_changed"
+    },
+    {
+      "event_type": "browser.session.closed",
+      "family_revision": "1.0.0",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "semantic_unit": "SMPFS-246",
+      "storage_unit": "SP-762",
+      "contract_unit": "CV-782",
+      "payload_schema_ref": "Plans/card2_event_payloads.schema.json#/$defs/browser_session_closed",
+      "payload_schema_id": "pm.browser.session.closed.payload.v1",
+      "application_payload_schema_id": "pm.browser.session.closed.payload.application.v1",
+      "scope_policy": "application_or_project",
+      "commands": [
+        "cmd.browser.keep_closed"
+      ],
+      "reader_id": "reader.browser.session.closed.history",
+      "reader_version": "1.0.0",
+      "projector_id": "projector.storage.event_record_index",
+      "projector_version": "1.0.0",
+      "family_checkpoint_disposition": "none_required",
+      "generic_checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
+      "retention_policy_ref": {
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "retention_assignment_source": "2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults",
+      "prepare_only": true,
+      "replay_policy": "dedupe_by_idempotency_key",
+      "retention_assignment_group": "G10: browser.session.closed"
+    },
+    {
+      "event_type": "browser.session.promoted",
+      "family_revision": "1.0.0",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "semantic_unit": "SMPFS-247",
+      "storage_unit": "SP-763",
+      "contract_unit": "CV-783",
+      "payload_schema_ref": "Plans/card2_event_payloads.schema.json#/$defs/browser_session_promoted",
+      "payload_schema_id": "pm.browser.session.promoted.payload.v1",
+      "application_payload_schema_id": "pm.browser.session.promoted.payload.application.v1",
+      "scope_policy": "application_or_project",
+      "commands": [
+        "cmd.browser.promote_to_normal_browsing"
+      ],
+      "reader_id": "reader.browser.session.promoted.history",
+      "reader_version": "1.0.0",
+      "projector_id": "projector.storage.event_record_index",
+      "projector_version": "1.0.0",
+      "family_checkpoint_disposition": "none_required",
+      "generic_checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
+      "retention_policy_ref": {
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "retention_assignment_source": "2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults",
+      "prepare_only": true,
+      "replay_policy": "dedupe_by_idempotency_key",
+      "retention_assignment_group": "G10: browser.session.promoted"
+    },
+    {
+      "event_type": "browser.session.takeover_state_changed",
+      "family_revision": "1.0.0",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "semantic_unit": "SMPFS-248",
+      "storage_unit": "SP-764",
+      "contract_unit": "CV-784",
+      "payload_schema_ref": "Plans/card2_event_payloads.schema.json#/$defs/browser_session_takeover_state_changed",
+      "payload_schema_id": "pm.browser.session.takeover_state_changed.payload.v1",
+      "application_payload_schema_id": "pm.browser.session.takeover_state_changed.payload.application.v1",
+      "scope_policy": "application_or_project",
+      "commands": [
+        "cmd.browser.take_over",
+        "cmd.browser.pause_agent",
+        "cmd.browser.let_agent_continue",
+        "cmd.browser.stop_agent_keep_browser"
+      ],
+      "reader_id": "reader.browser.session.takeover_state_changed.history",
+      "reader_version": "1.0.0",
+      "projector_id": "projector.storage.event_record_index",
+      "projector_version": "1.0.0",
+      "family_checkpoint_disposition": "none_required",
+      "generic_checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
+      "retention_policy_ref": {
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "retention_assignment_source": "2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults",
+      "prepare_only": true,
+      "replay_policy": "dedupe_by_idempotency_key",
+      "retention_assignment_group": "G10: browser.session.takeover_state_changed"
+    },
+    {
+      "event_type": "memory.gist_state_changed",
+      "family_revision": "1.0.0",
+      "semantic_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "semantic_unit": "AMS-130",
+      "storage_unit": "SP-765",
+      "contract_unit": "CV-785",
+      "payload_schema_ref": "Plans/card2_event_payloads.schema.json#/$defs/memory_gist_state_changed",
+      "payload_schema_id": "pm.memory.gist_state_changed.payload.v1",
+      "application_payload_schema_id": "pm.memory.gist_state_changed.payload.application.v1",
+      "scope_policy": "application_or_project",
+      "commands": [
+        "cmd.chat.memory.verify",
+        "cmd.chat.memory.edit",
+        "cmd.chat.memory.pin",
+        "cmd.chat.memory.discard",
+        "RealMemoryProvider.upsert_gist",
+        "RealMemoryProvider.set_verification_state",
+        "RealMemoryProvider.record_access",
+        "RealMemoryProvider.delete_gist"
+      ],
+      "reader_id": "reader.memory.gist_state_changed.history",
+      "reader_version": "1.0.0",
+      "projector_id": "projector.storage.event_record_index",
+      "projector_version": "1.0.0",
+      "family_checkpoint_disposition": "none_required",
+      "generic_checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
+      "retention_policy_ref": {
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "retention_assignment_source": "2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults",
+      "prepare_only": true,
+      "replay_policy": "dedupe_by_idempotency_key",
+      "retention_assignment_group": "G03: memory.gist_state_changed"
+    }
+  ]
+}

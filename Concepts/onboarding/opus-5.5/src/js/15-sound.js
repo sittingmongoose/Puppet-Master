@@ -2167,7 +2167,9 @@
            cuts the last one.
        hush()                     stops the line now
        timing(text, o)            -> { ms, cps }, never sounds
-       vocal(name, o) -> bool     a scripted non-verbal sound: wake, sleep, think, happy, wink, alert, cheer, crew
+       vocal(name, o) -> bool     a scripted non-verbal sound: wake, sleep, think, happy, wink, alert, cheer, crew;
+                                  o.sample: a click asked for this one to hear it (Customize Pip's "Hear Pip's chirp",
+                                  B-12): the sound switch and the holds still decide, the part it previews does not
        voiceOf(look?)             -> the voice id for a look (default: the painted one, PMLogo.look())
        allowed(where?)            -> may Pip sound there now (switch, gesture, part, holds)
        hold(name, on) / held()    a named extra mute for Pip's voice, kits and music
@@ -2406,7 +2408,8 @@
       if (V.vib) { const l = c.createOscillator(), lg = c.createGain(); l.frequency.value = V.vib[0]; lg.gain.value = V.vib[1]; l.connect(lg); pitched.forEach((o) => lg.connect(o.detune)); l.start(t0); l.stop(stopAt); oscs.push(l); }
       if (V.kind === 'formant' || V.kind === 'chirp') {
         const ns = c.createBufferSource(); ns.buffer = noiseBuf(c); ns.loop = true; nbp = c.createBiquadFilter(); nbp.type = 'bandpass'; nbp.Q.value = 1.2; nbp.frequency.value = 2500;
-        ng = c.createGain(); ng.gain.setValueAtTime(0, t0); ns.connect(nbp); nbp.connect(ng); ng.connect(out); ns.start(t0, VR()); ns.stop(stopAt); oscs.push(ns);
+        // Consonant targets include pre-roll before t0; a future initial zero would override that first attack.
+        ng = c.createGain(); ng.gain.value = 0; ns.connect(nbp); nbp.connect(ng); ng.connect(out); ns.start(t0, VR()); ns.stop(stopAt); oscs.push(ns);
       }
       const peak = V.gain;
       if (V.kind === 'pulse') {
@@ -2545,7 +2548,7 @@
     }
     function vocal(name, opts) {
       const o = opts || {}, vk = o.voice && VOX[o.voice] ? o.voice : voiceOf(o.look);
-      if (!VS[name] || !allowed(o.where)) return false;
+      if (!VS[name] || !(o.sample ? soundOn() : allowed(o.where))) return false;
       hush();
       return speak(() => scriptFor(vk, name), vk, name, o);
     }

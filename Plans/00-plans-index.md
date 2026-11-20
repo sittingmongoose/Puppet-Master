@@ -65,7 +65,7 @@
 
 - 2026-09-28 (historical; superseded by Q22, Jared 2026-10-30, DL-257): the original three-row NieR override was admitted at 916 rows. Current canon selects NieR as the fifth family and retains its 29-part/background Adjust editor; the old boolean is migration-only. The accepted local fonts, original ink scenes, motion limits and single sound owner remain.
 - 2026-09-28: User-approved inventory wave: `Plans/settings_inventory.json` admits thirteen Git and SSH rows the Settings guided set-ups write (913 rows; `Plans/FinalGUISpec.md#F3-441` amendment, `Plans/Settings_System.md` section 10): the Git name and email, how Git signs in and its key per code service, commit signing and its key, big-file storage with its size and types, the default ignore list, protected branches, the SSH key list and each server's sign-in. The Settings concept also adopts DL-107 and DL-108 (chat sounds on, Queue as the busy-send default) from the inventory.
-- 2026-09-28: Settings review round 3 recorded in `Plans/Settings_System.md` (presentation section, subsection 10, `SSYS-042`): Settings sets defaults and runs guided set-ups and does no live work, so Goals in Settings is defaults, templates, recovery and checks with Goals started in the assistant chat or the Planning Wizard, and one chat's actions live in that chat's menu; every listed set-up (language servers, formatters, test, debug and permission profiles, servers, SSH computers and keys, ways in from away, moving a workspace, settings transfer, code services, Git) runs in the onboarding wizard's form; a permission profile carries its four answers and its own rules, which form the profile layer above the project's rules (`Plans/Permissions_System.md#PRECEDENCE-LAYERS`); one shared SSH key list; the Git and SSH rows stay concept-stage proposals until admitted.
+- 2026-09-28 (historical Goals templates/recovery/checks presentation superseded by DL-478, 2026-11-12): Settings review round 3 recorded in `Plans/Settings_System.md` (presentation section, subsection 10, `SSYS-042`): Settings sets defaults and runs guided set-ups and does no live work, so Goals in Settings is defaults, templates, recovery and checks with Goals started in the assistant chat or the Planning Wizard, and one chat's actions live in that chat's menu; every listed set-up (language servers, formatters, test, debug and permission profiles, servers, SSH computers and keys, ways in from away, moving a workspace, settings transfer, code services, Git) runs in the onboarding wizard's form; a permission profile carries its four answers and its own rules, which form the profile layer above the project's rules (`Plans/Permissions_System.md#PRECEDENCE-LAYERS`); one shared SSH key list; the Git and SSH rows stay concept-stage proposals until admitted.
 - 2026-09-27: Packet-sweep repairs reconcile Named Plan consumer scope and child-parent joins, optional Azure team-project human-only official administration (`ADO-008`), non-Tour Ready navigation to Planning Wizard, typed command/preview/verification mappings, WSL and execution assurance, and durable internal application-update scheduling. Current owner documents and companion fixtures remain authoritative; the selected concept demonstrates their GUI behavior. Static fixtures and concept checks do not admit native handlers, storage writers or production events. See `reports/packet-repairs-20260927/README.md` for the bounded repair and verification record.
 
 
@@ -464,7 +464,7 @@ ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Pl
 Packet `PM-WNC-2026-09-05-v1` (work item `wnc-20260905`) uses this owner split:
 - `Plans/Working_Notebook.md` owns Working Notebook semantics: notebook identity and the closed scope kinds `thread | worker_lineage | coordinator_run | participant | shared_slice`, the typed entry envelope and epistemic/freshness vocabulary, CAS revisions and idempotency, the resume capsule content contract, notebook checkpoint content, materiality-triggered capture, explicit sharing and derivation restrictions, promotion requests through destination owners, validity/staleness, lifecycle/retention, and the four deferred storage-value families (with `Plans/storage-plan.md` SP-255..257 and `Plans/storage_value_registry.json`).
 - `Plans/Prompt_Pipeline.md` (PP-084..090) owns context-assembly policy for continuity: the five distinct context operations, proactive fresh-window request/admission lifecycle, checkpoint reserve inside the existing one admission budget, reconstruction from current owner state, read-only continuation, fallback, thrash prevention, and replay-safe tool-result shaping.
-- `Plans/Tools.md` (T-183/184) owns the agent tool contracts `chatread`, `notebook_search`, `notebook_read`, `notebook_write`, `notebook_supersede`, and `fresh_context_request`; `Plans/Shared_Integration_Runtime.md` (SIR-036/037) owns transition runtime reconciliation and host-lease fencing; `Plans/CLI_Bridged_Providers.md` (CBP-030/031) owns one-effective-controller strategy and honest observability; `Plans/usage-feature.md` (UF-099..101) owns occupancy/cumulative/quota distinctions, helper attribution, and exactly-once accounting; `Plans/assistant-memory-subsystem.md` (AMS-044..046) owns per-claim verification and the Assistant-only memory boundary; `Plans/Permissions_System.md` (PS-140/141) owns derived-content restriction propagation and note-data authority rules.
+- `Plans/Tools.md` (T-183/184) owns the agent tool contracts `chatread`, `notebook_search`, `notebook_read`, `notebook_write`, `notebook_supersede`, and `fresh_context_request`; `Plans/Shared_Integration_Runtime.md` (SIR-036/037) owns transition runtime reconciliation and host-lease fencing; `Plans/CLI_Bridged_Providers.md` (CBP-030/031) owns one-effective-controller strategy and honest observability; `Plans/usage-feature.md` (UF-099..101) owns occupancy/cumulative/quota distinctions, helper attribution, and exactly-once accounting; `Plans/assistant-memory-subsystem.md` (AMS-044..046) owns per-claim support and authorized helper reads with private app-thread separation; `Plans/Permissions_System.md` (PS-140/141) owns derived-content restriction propagation and note-data authority rules.
 - Consumers keep their own surfaces: `Plans/assistant-chat-design.md` (ACD-449..451), `Plans/Orchestrator_Page.md` (OP-035), `Plans/orchestrator-subagent-integration.md` (OSI-436/437), `Plans/Collaborative_Workflows.md` (CWR-012/013), `Plans/agent-rules-context.md` (ARC-037), `Plans/Settings_System.md` (SSYS-029), `Plans/Backup_Restore_System.md` (BRS-020), `Plans/UI_Command_Catalog.md` (UCC-158), `Plans/UI_Wiring_Rules.md` (UIW-019), and the workflow/authority owners (GRS-057, EP-115, APR-013, TDR-010, PLS-022, SQR-008, RM-052, MS-138, MI-043, F2-210, RAP-055, MA-072, BSD-025, PJCT-006, PSB-006, SRV-014, PRDB-012, PWIZ-026).
 - `Plans/Automated_Testing_System.md` / `ATS-046` owns the static contract-fixture validation family (`validate-working-notebook-contracts`). Static validation only: runtime, recovery, security, visual, and performance proof remains NOT_RUN; no WorkNodes, NodeSeeds, executable queues, or readiness unlocks.
 
@@ -496,8 +496,8 @@ The Plans-to-code handoff packet compiled from `pldg-20260617-001-plans-to-code-
 - `Plans/Plan_To_Node_Compilation.md` owns the design-only PlanCompileRun state machine, low-context stage cards, non-executable NodeSeed candidate and review contracts, WorkGraph draft and WorkNode request contracts, handoff matrix, schema boundary, shared compiler core, Codex bootstrap adapter, and native Puppet Master adapter.
 - `Plans/Automated_Testing_System.md` owns Test Capability Discovery, Test Harness Probe, Test Strategy v2, WorkNode test binding, Test Run Receipt, test oracle policy, platform adapter policy, automated visual/browser/device evidence policy, and test-gap blockers.
 - `Plans/Executor_Protocol.md` owns ExecutorIntakeReport, WorkNode request acceptance, runnable dispatch boundary, source-control/model/test/authority preflights, failure signatures, loop breakers, PlanChangeDetected handling, and execution receipt chain.
-- `Plans/Goal_Runtime_System.md` owns future Planning Wizard approval trigger semantics after explicit enablement, hands-off autonomy policy, HITL consumption boundary, and GoalCompletionReceipt completion certification.
-- `Plans/Models_System.md` owns the six user-facing model settings: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model, plus model resolution receipt semantics. There is no user-facing Executor Model setting.
+- `Plans/Goal_Runtime_System.md` owns future Planning Wizard approval trigger semantics after explicit enablement, hands-off autonomy policy, and HITL consumption boundary.
+- `Plans/Models_System.md` owns the seven plans-to-code model controls in the one defaults list: Default Model, Overseer Model, Worker Model, Low-Effort Worker Model (Easy, routine jobs), GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model, plus model resolution receipt semantics. There is no user-facing Executor Model setting.
 - `Plans/Orchestrator_Page.md` and `Plans/FinalGUISpec.md` own the seven-tab Orchestrator shell, visible Plan Compile tab, animated node-factory UX, Settings placement, progress/status projection, and separation from existing execution views.
 - `Plans/WorktreeGitImprovement.md`, `Plans/FileSafe.md`, and `Plans/GitHub_Integration.md` own worktree allocation, safe points, rollback, FileSafe guard inputs, and optional GitHub promotion/output after Executor intake.
 - `Plans/Project_Output_Artifacts.md` and `Plans/Runtime_Artifacts_Panel.md` own packaged receipt artifacts and user-visible evidence projection without becoming runtime truth.
@@ -529,9 +529,9 @@ ContractRef: ContractName:Plans/PRD_Builder.md, ContractName:Plans/Planning_Wiza
 ### Native Goal Runtime Map (2026-06-16)
 
 The native Goal Runtime packet uses the following owner split:
-- `Plans/Goal_Runtime_System.md` owns native Goal Mode runtime/control-plane behavior, invisible/internal goals, durable goal state, scheduler updates, attachments, weak-model safety, child goals, write authority, completion receipts, verifier/adjudicator policy, approval-boundary invocation, and runtime evidence requirements.
-- `Plans/assistant-chat-design.md` owns visible Assistant Chat Goal UI and thread-surface behavior, including activation, status, task tracker, controls, evidence/activity display, completion reports, and collapsible child-goal details.
-- `Plans/FinalGUISpec.md` owns Settings GUI placement for the separate Goal Mode worker model and verifier/adjudicator model selectors.
+- `Plans/Goal_Runtime_System.md` owns the stable text objective, durable host continuation, current Goal state, change authority, the initiating chat model/persona boundary, evidence-gated completion, and pause/stop behavior under GRS-048 through GRS-054; DL-478 retires the old Goal role, child-goal, template and certification flow.
+- `Plans/assistant-chat-design.md` owns visible Assistant Chat Goal UI and thread-surface behavior, including activation, status, task tracker, controls, evidence/activity display, and completion reports.
+- `Plans/FinalGUISpec.md` owns Settings GUI placement for shared Default models; the separate Goal Mode model selectors are retired (F3-393, DL-478).
 - `Plans/Planning_Wizard.md` owns current Planning Wizard flow semantics for future invisible Goal Mode ledger-to-Plans transfer. `Plans/chain-wizard-flexibility.md` remains a legacy compatibility/source-lineage consumer only; this compile does not revive Chain Wizard as current product terminology.
 - `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, and `Plans/Permissions_System.md` own shared envelope, persistence, and approval-scope registration needed by Goal Runtime data shapes while `Plans/Goal_Runtime_System.md` keeps behavior semantics.
 - `Plans/Runtime_Artifacts_Panel.md` consumes Goal Runtime evidence and receipt identities for browsing, retention visibility, and redaction surfaces; `Plans/Project_Output_Artifacts.md` remains a project-output package boundary reference, not a Goal Runtime evidence owner.
@@ -728,9 +728,9 @@ PROC-008 is closed only by the exact owner text and machine contracts cited abov
 | `orchestrator-subagent-integration.md` | Main run loop policy: tiers, subagents, wiring validation | Registry-driven Persona set (canonical list §4: Phase, Task lang/domain/framework, Subtask, Iteration, Cross-phase including `explorer` and `requirements-quality-reviewer`). DRY:DATA:subagent_registry; task tool (Tools.md §3.6) validates against this list. Persona definitions, storage, schema, and injection: `Plans/Personas.md` (SSOT). Treat platform specifics as Provider concerns. |
 | `interview-subagent-integration.md` | Interview phases + subagent use | `Plans/interview-subagent-integration.md` owns interview-phase subagent use. Phase assignments use the registry-driven Persona set; cross-phase (`ux-researcher`, `knowledge-synthesizer`, `explorer`, `requirements-quality-reviewer`, etc.). Mirrors orchestrator patterns at interview-phase boundaries. Persona injection per `Plans/Personas.md` §5.2. `context-manager` is source-lineage/import seed vocabulary, not a PM Persona catalog entry. |
 | `assistant-chat-design.md` | Assistant/Chat UX and modes | Canonical for chat/thread/session navigation, PM-native Ask/Plan semantics, slash-command behavior, shared question flows, activity transparency, `/web`, `/skill`, and plan/TODO semantics. |
-| `assistant-memory-subsystem.md` | Assistant-only memory continuity subsystem | Canonical SSOT for Assistant memory boundary, per-project memory stores (`assistant_memory.redb` + lexical/semantic indexes), decay scoring, capsule/retrieval budgets, and maintenance operations. Explicitly separate from rules pipeline contracts. |
+| `assistant-memory-subsystem.md` | Memory: reusable notes and authorized helper reads | Canonical SSOT for the shared Memory page, This project / Every project notes, private app-thread separation, owner writes/read-only helper access, local `assistant_memory.redb` and lexical/semantic indexes, internal fading/budgets and held archive-only upkeep. Separate from written rules and task notes. |
 | `FinalGUISpec.md` | Shared GUI contract (Slint desktop, Leptos web) and theme contract | Canonical UI source for application shell/layout/view placement, shared theme palettes/tokens (one design-token source generating Slint theme globals and CSS custom properties), the Skia renderer extensions (F3-582), the Leptos web client (F3-583), provider-neutral Actions & Pipelines, Backup/Recovery and PM-connector projections, chat widgets/activity cards/plan tracker, Agent Config placement, browser/terminal surfaces, and Expert/ELI5 presentation. Domain owners retain runtime truth; `Settings_System.md` owns the Settings shell and routing. Also storage health and last-verified-backup display (F3-457, F3-528), the record inspector (F3-666) and chat load-older paging (F3-667). |
-| `Settings_System.md` | Canonical Settings System | Sole owner for exact K3 Tome Tabs Settings geometry, project-bound ordinary-setting persistence, 1010-ID inventory consumption, search/facets/virtualization, atomic mutation/default restore, detached Project transfer, manager grammar, and provider/backup/connector owner projections. Retained domain owners keep runtime truth. |
+| `Settings_System.md` | Canonical Settings System | Sole owner for exact K3 Tome Tabs Settings geometry, project-bound ordinary-setting persistence, live inventory consumption from `Plans/settings_inventory.json`, search/facets/virtualization, atomic mutation/default restore, detached Project transfer, manager grammar, and provider/backup/connector owner projections. Retained domain owners keep runtime truth. |
 | `Project_System.md` | Project identity and lifecycle | Owns Project registration, create/open/archive/remove/restore/delete-data boundaries, typed Project records, and Project-facing backup/history/restore-as-new consumption; it does not own source-control engines, Vault movement, or backup execution. |
 | `Server_System.md` | Server identity, catalog, trust, pairing, endpoints, and lifecycle | Sole Server identity and trust owner, including backup-continuity and remote-endpoint provenance consumption; discovery never implies consent or trust. |
 | `Remote_Access_System.md` | Remote route policy and continuity | Owns private/public route configuration, the PM-owned Go tsnet connector, durable connector authorization, availability, migration, testing, and exact-return continuity while Server System retains identity/trust. |
@@ -754,7 +754,7 @@ PROC-008 is closed only by the exact owner text and machine contracts cited abov
 | `Plan_Document_System.md` | Standardized Plan docs and PlanUnit contract | Canonical for Plan doc layout, PlanUnit fields including `gui_related: true|false`, owner adjudication metadata, lossless Plan conversion proof, generated PlanUnit indexes, node-readiness metadata, deterministic semantic finding keys, and repair closure matrix validation. |
 | `Plan_To_Node_Compilation.md` | PlanUnit index and node-readiness boundary | Canonical for future PlanUnit-to-NodeSeed-to-WorkNode compiler inputs and the current readiness-only boundary. It does not create WorkNodes, executable build tasks, or NodeSeed candidates until the compiler contract is complete and the `PNC-019` executable lifecycle certification harness has passed with recorded evidence. |
 | `Bootstrap_Planning_Migration.md` | Bootstrap ledger migration and governance seal workflow | Canonical for AGENTS trigger use, Codex Goal-phase migration, less-than-4,000-character goal prompt posture, controlled Plan conversion batches, Spec Lock seal timing, and retired prompt-packet/tranche experiment exclusions. |
-| `Goal_Runtime_System.md` | Native Goal Mode runtime/control-plane system | Canonical owner for native Goal Runtime state, scheduler/replan behavior, invisible and visible goal execution semantics, child goals, write authority, completion receipts, evidence/certification, weak-model safety, verifier/adjudicator policy, approval-boundary invocation, and goal task templates. |
+| `Goal_Runtime_System.md` | Native Goal Mode runtime/control-plane system | Canonical owner for the stable objective, durable host continuation, current Goal state, change authority, initiating chat model/persona boundary, evidence-gated completion and pause/stop behavior (GRS-048 through GRS-054). The old child-goal, role, template and certification flow is retired by DL-478. |
 | `human-in-the-loop.md` | HITL semantics at tier boundaries | Canonical for pause-for-approval toggles + tier boundary meaning |
 | `FileSafe.md` | Safe-edit guards + context compilation | Canonical blocked destructive-command behavior and restore-before-rerun integration; maps to central tool policy + patch pipeline. |
 | `Prompt_Pipeline.md` | Prompt assembly pipeline + compaction contract | SSOT for prompt assembly stage ordering and compaction/rotation contracts (pairs with FileSafe Part B for compilation details). |
@@ -783,11 +783,11 @@ PROC-008 is closed only by the exact owner text and machine contracts cited abov
 | `Run_Modes.md` | Canonical run-mode definitions + CLI-bridged strategy selection | SSOT for Mode enum (ask/plan/regular/yolo), HTE vs DAE strategy selection, budget defaults, kill conditions, outcome taxonomy, and mode-specific context-management deltas. |
 | `Personas.md` | Canonical Persona system definitions | SSOT for Persona vs Agent vs Subagent definitions, storage layout (`.puppet-master/personas/` + `~/.config/puppet-master/personas/` plus PM-owned built-ins), PERSONA.md schema (YAML frontmatter + body), validation rules, protected core IDs (`assistant`, `general-purpose`, `overseer`, `bash`, `teacher`, `collaborator`, `researcher`, `deep-researcher`, `explorer`), the explicit non-core `Document Writer` boundary, Agent Config > Personas management rules, prompt visibility, specialty curation, context-injection rules, and registry relationship. |
 | `Permissions_System.md` | Canonical permission system definitions | SSOT for permission actions (`allow`/`ask`/`deny`), multi-layer precedence (mode > session > Persona > project > global > defaults), PM-native Ask/Plan mode semantics, granular rules (wildcard syntax, last-match-wins), special guards (`doom_loop`, `external_directory`), question/TODO/web tool defaults, `.env` deny rules, resolution algorithm, TOML persistence, permission profiles, and GUI requirements (Settings > Permissions). |
-| `Commands_System.md` | Canonical User Commands system | SSOT for User Commands (user-authored command presets): definitions (User Command vs UICommand distinction), storage layout (`.puppet-master/commands/` + `~/.config/puppet-master/commands/`), command schema (YAML frontmatter + Markdown template body), template syntax (`$ARGUMENTS`, `$N`, `@path`, `` !`cmd` ``), execution semantics (subtask, Persona/mode/model overrides), reserved built-in slash-command collision rules, permissions integration, GUI requirements (Settings > Rules & Commands > Commands), and dry-run preview. |
+| `Commands_System.md` | Canonical User Commands system | SSOT for User Commands (user-authored command presets): definitions (User Command vs UICommand distinction), storage layout (`.puppet-master/commands/` + `~/.config/puppet-master/commands/`), command schema (YAML frontmatter + Markdown template body), template syntax (`$ARGUMENTS`, `$N`, `@path`, `` !`cmd` ``), execution semantics (subtask and Persona/mode controls; MD2 retires command-saved model overrides as inert compatibility reads; model/depth comes from the common defaults list or explicit run picker), reserved built-in slash-command collision rules, permissions integration, GUI requirements (Settings > Rules & Commands > Commands), and dry-run preview. |
 | `Skills_System.md` | Canonical skills system | SSOT for skill discovery/storage roots, SKILL.md schema (frontmatter + body), validation rules, permission integration, Persona skill refs (`default_skill_refs`), runtime surface (via `skill` tool), and GUI requirements under Agent Config > Skills. |
 | `Plugins_System.md` | Canonical plugin system | SSOT for plugin discovery (internal/project/global/config paths), load order (deterministic), plugin context, 10 hook events with typed I/O and return enums, compaction hook (InjectContext/ReplacePrompt), custom tool registration with collision policy, structured plugin logging, GUI requirements (Settings > Plugins), and OpenCode baseline/deltas. |
 | `Formatters_System.md` | Canonical formatter system | SSOT for formatter lifecycle (HTE-only, triggered on File.Edited), built-in formatter table (21 formatters), per-formatter config (disabled/command/environment/extensions, `$FILE` placeholder), evidence tracking via `format.applied` events, GUI requirements (Settings > Formatters), and OpenCode baseline/deltas. |
-| `Models_System.md` | Canonical model system | SSOT for canonical model ID (`provider_id/model_id`), 6-level selection priority, model options (per-provider+model), per-Persona model overrides (`default_model`/`default_variant` in PERSONA.md frontmatter), variants (built-in default/fast/powerful + custom + disabling + cycling), canonical media model alias table (§6.8: Nano Banana, Nano Banana Pro, Veo fast, TTS flash, TTS pro), GUI requirements (Settings > Models, Chat model picker, variant picker), and OpenCode baseline/deltas. |
+| `Models_System.md` | Canonical model system | SSOT for canonical model ID (`provider_id/model_id`), 6-level selection priority, model options (per-provider+model), MD2 retirement of per-Persona model/provider/preset/depth fields (`default_model`/`default_variant` and companions remain inert compatibility reads; use the common defaults list or explicit run picker), variants (built-in default/fast/powerful + custom + disabling + cycling), canonical media model alias table (§6.8: Nano Banana, Nano Banana Pro, Veo fast, TTS flash, TTS pro), GUI requirements (Settings > Models, Chat model picker, variant picker), and OpenCode baseline/deltas. |
 | `Media_Generation_and_Capabilities.md` | Media generation and capability system SSOT | Canonical for `capabilities.get` (internal tool returning all media + provider-tool capabilities with enabled/disabled + disabled_reason + setup hints), `media.generate` (uniform media generation interface with per-request `model_override`, artifact-path output, route-specific provider/model generated-media capabilities, artifact-path output, and stable error codes), natural-language slot extraction grammar, capability picker dropdown UI/UX, OpenAI/Codex subscription and API-key image routes, MiniMax Image-01, Gemini Direct where verified, provider-specific gated/unsupported rows, and media alias resolution. Cursor image-input proof and media aliases such as Nano Banana are not provider availability proof without route/catalog/artifact evidence. |
 | `OpenCode_Coverage_Matrix.md` | OpenCode-to-SSOT coverage audit | Audit of all OpenCode-derived capabilities (extraction §7A–§7H) vs Puppet Master SSOT docs. Coverage matrix, DRY authority audit, GUI/config wiring audit, and mandatory fix list (anchors/subsections). |
 | `Wiring_Matrix.md` | Wiring matrix template + examples | Canonical routing for UI command producer/consumer mappings and required runtime/browser/dev/catalog wiring coverage; example/template posture is subordinate to the canonical runtime wiring sections. |
@@ -4223,7 +4223,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
 canonical_text: >-
-  Plans/00-plans-index.md registers the Native Goal Runtime owner split compiled from ledger pldg-20260616-001-goal-runtime-system. Plans/Goal_Runtime_System.md owns native Goal Mode runtime/control-plane behavior; assistant-chat-design owns visible Assistant Chat Goal UI and thread surfaces; FinalGUISpec owns Settings GUI placement for separate worker and verifier/adjudicator model selectors; Planning_Wizard owns current Planning Wizard flow semantics while chain-wizard-flexibility remains a legacy compatibility/source-lineage consumer; Contracts_V0, storage-plan, and Permissions_System own shared envelope, persistence, and approval-scope registration; Runtime_Artifacts_Panel consumes Goal Runtime evidence/receipt identities while Project_Output_Artifacts remains a project-output boundary reference only; Models_System and Multi-Account own concrete model/account resolution, while provider-specific docs such as Provider_OpenCode own existing provider capability/model discovery surfaces and do not define Goal Runtime provider-default tier mappings unless promoted by a later provider hook; Planning_Ledger_System, Plan_Document_System, and Plan_To_Node_Compilation retain ledger, PlanUnit, generated index, and readiness-only compiler boundaries.
+  Plans/00-plans-index.md registers the Native Goal Runtime owner split compiled from ledger pldg-20260616-001-goal-runtime-system. Plans/Goal_Runtime_System.md owns native Goal Mode runtime/control-plane behavior; assistant-chat-design owns visible Assistant Chat Goal UI and thread surfaces; FinalGUISpec owns shared Default models placement; separate Goal model selectors are retired by DL-478; Planning_Wizard owns current Planning Wizard flow semantics while chain-wizard-flexibility remains a legacy compatibility/source-lineage consumer; Contracts_V0, storage-plan, and Permissions_System own shared envelope, persistence, and approval-scope registration; Runtime_Artifacts_Panel consumes Goal Runtime evidence/receipt identities while Project_Output_Artifacts remains a project-output boundary reference only; Models_System and Multi-Account own concrete model/account resolution, while provider-specific docs such as Provider_OpenCode own existing provider capability/model discovery surfaces and do not define Goal Runtime provider-default tier mappings unless promoted by a later provider hook; Planning_Ledger_System, Plan_Document_System, and Plan_To_Node_Compilation retain ledger, PlanUnit, generated index, and readiness-only compiler boundaries.
 gui_related: false
 gui_classification_reason: This unit records index owner routing metadata; GUI owner docs are referenced but not implemented here.
 depends_on:
@@ -4269,8 +4269,6 @@ preserved_exact_tokens:
   - "Goal_Runtime_System.md"
   - "Native Goal Runtime Map"
   - "pldg-20260616-001-goal-runtime-system"
-  - "worker model"
-  - "verifier/adjudicator model"
   - "chain-wizard-flexibility.md"
   - "Contracts_V0.md"
   - "storage-plan.md"
@@ -4312,21 +4310,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
 canonical_text: >-
-  Plans/00-plans-index.md registers the Orchestrator Goal Runtime Flow owner split. Goal_Runtime_System owns the shared Goal Runtime engine, which supplies a stable objective and durable host continuation; Orchestrator_Page owns GoalRun control and projection; Executor_Protocol owns WorkNode readiness, backoff, capacity, dispatch, retries, failure classification, and verification repair-loop policy; orchestrator-subagent-integration owns bounded SubagentWave and parent/child supervision; Plan_To_Node_Compilation owns runtime-object and compiler-boundary readiness without creating WorkNodes; Contracts_V0, storage-plan, Permissions_System, Models_System, Multi-Account, provider-specific docs, Planning_Ledger_System, and Plan_Document_System own their contract, persistence, approval, model/account/provider, ledger, and PlanUnit/index boundaries. Run_Graph_View, FinalGUISpec, Assistant Chat, Planning Wizard (legacy Chain Wizard compatibility), Runtime Artifacts, WorktreeGitImprovement, UI_Command_Catalog, Wiring_Matrix, usage-feature, and Glossary consume or mirror the flow through their owner surfaces, and consumer mirrors may retain old fixed-hierarchy labels only as compatibility/search aliases while owner docs keep active terminology on GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, and Receipt. Compile-readiness records may state accepted recommendations, no remaining open design questions, and live repo backlink audit requirements for ledger-to-Plans compile, but not direct implementation readiness. The pre-seal compile phase may regenerate allowed Plans/.plan_index outputs only; a later explicit governance seal may refresh Spec_Lock, generated shards, evidence bundles, plan_graph, and auto_decisions without creating NodeSeeds, WorkNodes, executable queues, final node manifests, final build tasks, production build tasks, or final node queues.
+  Plans/00-plans-index.md registers the Orchestrator Goal Runtime Flow owner split. Goal_Runtime_System owns the shared Goal Runtime engine, which supplies a stable objective and durable host continuation; Orchestrator_Page owns the Orchestrator projection; Executor_Protocol owns WorkNode readiness, backoff, capacity, dispatch, retries, failure classification; orchestrator-subagent-integration owns ordinary subagent supervision; Plan_To_Node_Compilation owns runtime-object and compiler-boundary readiness without creating WorkNodes; Contracts_V0, storage-plan, Permissions_System, Models_System, Multi-Account, provider-specific docs, Planning_Ledger_System, and Plan_Document_System own their contract, persistence, approval, model/account/provider, ledger, and PlanUnit/index boundaries. Run_Graph_View, FinalGUISpec, Assistant Chat, Planning Wizard (legacy Chain Wizard compatibility), Runtime Artifacts, WorktreeGitImprovement, UI_Command_Catalog, Wiring_Matrix, usage-feature, and Glossary consume or mirror the flow through their owner surfaces, and consumer mirrors may retain old fixed-hierarchy labels only as compatibility/search aliases while DL-478 retires the old GoalRun, SubagentWave and VerificationCycle flow; those names remain historical/source-lineage vocabulary only. Compile-readiness records may state accepted recommendations, no remaining open design questions, and live repo backlink audit requirements for ledger-to-Plans compile, but not direct implementation readiness. The pre-seal compile phase may regenerate allowed Plans/.plan_index outputs only; a later explicit governance seal may refresh Spec_Lock, generated shards, evidence bundles, plan_graph, and auto_decisions without creating NodeSeeds, WorkNodes, executable queues, final node manifests, final build tasks, production build tasks, or final node queues.
 gui_related: false
 gui_classification_reason: This unit records canonical owner routing metadata; GUI docs are referenced as consumers but not implemented here.
 depends_on:
   - 0PI-055
-  - GRS-026
-  - OP-022
-  - EP-098
   - PNC-009
   - PDS-006
 unblocks: []
 acceptance_criteria:
   - The index names the Orchestrator Goal Runtime Flow owner docs and consumer docs.
   - Executor scheduler truth remains separate from Orchestrator projection/control truth.
-  - Capability lane, model, account/provider, permission, storage, receipt, GUI, chat, chain-wizard, runtime-artifact, ledger, PlanUnit, and compiler-boundary owner docs are recorded without taking over Goal Runtime behavior.
+  - Model, account/provider, permission, storage, receipt, GUI, chat, chain-wizard, runtime-artifact, ledger, PlanUnit, and compiler-boundary owner docs are recorded without reviving the retired Goal flow.
   - Consumer mirrors may retain old fixed-hierarchy labels only as compatibility/search aliases; they do not preserve stale tier labels as active canonical runtime semantics.
   - Compile-readiness records can preserve accepted recommendations, no remaining open design questions, and live repo backlink audit requirements without authorizing direct code implementation.
   - The index preserves the no-WorkNode, no-NodeSeed, no-executable-queue, no-final-node-manifest, no-final-build-task, no-production-build-task boundary across compile, indexing, and governance seal phases.
@@ -4387,18 +4382,14 @@ source_lineage:
 preserved_exact_tokens:
   - "Orchestrator Goal Runtime Flow"
   - "GoalRun"
-  - "WorkGraph"
   - "SubagentWave"
   - "VerificationCycle"
   - "WorkNode"
-  - "agent_role"
-  - "Receipt"
   - "compatibility/search aliases"
   - "ledger-to-Plans compile"
   - "accepted"
   - "no remaining open design questions"
   - "live repo backlink audit"
-  - "capability_lane"
   - "write_mode"
   - "pending governance seal"
   - "Spec_Lock"
@@ -4535,9 +4526,8 @@ plan_unit_id: 0PI-058
 unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
-canonical_text: >-
-  Plans/00-plans-index.md records the Plans-to-code handoff owner split without re-owning behavior. Plan_To_Node_Compilation owns design-only PlanCompileRun, stage cards, NodeSeed candidate, WorkGraph draft, WorkNode request, handoff matrix, and schema boundary. Automated_Testing_System owns automated test discovery, harness, strategy, binding, receipts, oracles, adapters, and test-gap blockers. Executor_Protocol owns intake, dispatch boundary, preflights, loop breakers, PlanChangeDetected handling, and execution receipts. Goal_Runtime_System owns future Planning Wizard trigger semantics after explicit enablement, autonomy/HITL boundary consumption, and GoalCompletionReceipt certification. Models_System owns six model settings and model resolution receipts. Orchestrator_Page and FinalGUISpec own the seven-tab Orchestrator shell, visible Plan Compile tab, and Settings projection. WorktreeGitImprovement, FileSafe, and GitHub_Integration own source-control execution contracts. Project_Output_Artifacts and Runtime_Artifacts_Panel own packaged receipt artifacts and evidence projection. Contracts_V0 owns shared envelopes and the design-only schema draft. Planning_Ledger_System and Plan_Document_System own matrix compile inputs and reference-scan gates.
-  The index records backlinks, index docs, UI command docs, and crosswalks as reference-scan consumers, and preserves the boundary: Do not update only the obvious owner docs while leaving stale references in consumer/index/UI docs. It also preserves: Do not do an uncontrolled whole-repo rename as part of this compile; do not leave direct contradictions in touched sections.
+canonical_text: |-
+  Plans/00-plans-index.md records the Plans-to-code handoff owner split without re-owning behavior. Plan_To_Node_Compilation owns design-only PlanCompileRun, stage cards, NodeSeed candidate, WorkGraph draft, WorkNode request, handoff matrix, and schema boundary. Automated_Testing_System owns automated test discovery, harness, strategy, binding, receipts, oracles, adapters, and test-gap blockers. Executor_Protocol owns intake, dispatch boundary, preflights, loop breakers, PlanChangeDetected handling, and execution receipts. Goal_Runtime_System owns future Planning Wizard trigger semantics after explicit enablement and autonomy/HITL boundary consumption. Models_System owns the model-default controls and model resolution receipts. Orchestrator_Page and FinalGUISpec own the seven-tab Orchestrator shell, visible Plan Compile tab, and Settings projection. WorktreeGitImprovement, FileSafe, and GitHub_Integration own source-control execution contracts. Project_Output_Artifacts and Runtime_Artifacts_Panel own packaged receipt artifacts and evidence projection. Contracts_V0 owns shared envelopes and the design-only schema draft. Planning_Ledger_System and Plan_Document_System own matrix compile inputs and reference-scan gates. The index records backlinks, index docs, UI command docs, and crosswalks as reference-scan consumers, and preserves the boundary: Do not update only the obvious owner docs while leaving stale references in consumer/index/UI docs. It also preserves: Do not do an uncontrolled whole-repo rename as part of this compile; do not leave direct contradictions in touched sections.
 gui_related: false
 gui_classification_reason: This unit records owner routing in the canonical index; it does not implement the visible UI.
 depends_on:
@@ -4547,7 +4537,6 @@ depends_on:
   - EP-099
   - EP-103
   - GRS-028
-  - GRS-030
   - MS-110
   - OP-023
   - F3-397
@@ -5002,6 +4991,7 @@ source_lineage:
 - Concepts/PMConcept.html#composer-chip
 - Concepts/PMConcept.html#activity-card
 - Concepts/PMConcept.html#requested-effective-model
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0007
 - atom-0008
@@ -5079,33 +5069,29 @@ preserved_exact_tokens:
 - runtime popovers
 - activity cards
 negative_constraints:
-- Do not treat later miscellaneous items as already specified by this first item.
-- Do not collapse PRD Builder outputs, Planning Wizard outputs, Plan packs, and runtime artifacts into an anonymous
-  flat document list.
-- Do not treat mutable draft projections as the same thing as immutable approved packs or historical snapshots.
-- Do not show historical runs as ambiguous text summaries without stable run identity.
-- Do not lose links to artifacts, evidence, ledger records, usage, or receipts when a run becomes historical.
-- Do not let non-vision models guess image contents when a bridge is available.
-- Do not treat image input as image generation.
-- Do not compile this requirement to canonical Plans without a future explicit compile request.
-- Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases
-  in Personas.md.
-- Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only.
-- Do not treat PMConcept.html as final or canonical UI truth.
-- Do not copy the concept HTML/CSS directly into canonical Plans or implementation.
-- Do not let the concept override accepted ledger decisions or canonical Plans owner docs during a future compile.
-- Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher.
-- Do not lose Teacher persona/model/source/context disclosure when launching from a help icon or summon phrase.
-- Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant.
-- Do not use PMConcept History table columns as the final complete schema when accepted ledger History atoms specify
-  deeper document/run/package comparison.
-- Do not let concept-only tab naming override future canonical owner placement.
-- Do not make vision bridge artifacts feel like detached plugin output.
-- Do not hide requested/effective model or fallback state when the bridge uses a separate vision-capable route.
-- Do not replace accepted PM-owned permission/disclosure behavior with PMConcept demo-only controls.
-- Do not freeze PMConcept colors, CSS, demo data, or HTML class names as canonical implementation details.
-- Do not use PMConcept visual inspiration to skip responsive, accessibility, overflow, or actual Slint/Rust feasibility
-  checks.
+  - "Do not treat later miscellaneous items as already specified by this first item."
+  - "Do not collapse PRD Builder outputs, Planning Wizard outputs, Plan packs, and runtime artifacts into an anonymous flat document list."
+  - "Do not treat mutable draft projections as the same thing as immutable approved packs or historical snapshots."
+  - "Do not show historical runs as ambiguous text summaries without stable run identity."
+  - "Do not lose links to artifacts, evidence, ledger records, usage, or receipts when a run becomes historical."
+  - "Do not let non-vision models guess image contents when a bridge is available."
+  - "Do not treat image input as image generation."
+  - "Do not compile this requirement to canonical Plans without a future explicit compile request."
+  - "Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases in Personas.md."
+  - "Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only."
+  - "Do not treat PMConcept.html as final or canonical UI truth."
+  - "Do not copy the concept HTML/CSS directly into canonical Plans or implementation."
+  - "Do not let the concept override accepted ledger decisions or canonical Plans owner docs during a future compile."
+  - "Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher."
+  - "Keep Teacher Persona/model and capacity/cost/compaction information when launching from Help or a summon; ordinary PM task evidence stays attributable, without memory-use citations, context inspection or per-run source receipts."
+  - "Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant."
+  - "Do not use PMConcept History table columns as the final complete schema when accepted ledger History atoms specify deeper document/run/package comparison."
+  - "Do not let concept-only tab naming override future canonical owner placement."
+  - "Do not make vision bridge artifacts feel like detached plugin output."
+  - "Do not hide requested/effective model or fallback state when the bridge uses a separate vision-capable route."
+  - "Do not replace accepted PM-owned permission/disclosure behavior with PMConcept demo-only controls."
+  - "Do not freeze PMConcept colors, CSS, demo data, or HTML class names as canonical implementation details."
+  - "Do not use PMConcept visual inspiration to skip responsive, accessibility, overflow, or actual Slint/Rust feasibility checks."
 owner_hints:
 - Plans/PRD_Builder.md
 - Plans/Planning_Wizard.md
@@ -6262,7 +6248,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
 canonical_text: |-
-  Current ownership routes are: SSYS-002/059–065 and DR-084/085 for Settings classification/resolution, writers, detached copy and presentation; SRV-016/017 for same-owner settings follow and app work Computer custody, RAS for existing routes; MA-074/MACS-006 for destination readiness/protected app auth; Models MS-005/099/100 for its accepted scoped-owner tier edition with explicit no-Persona/no-stage Conservative rule. q-035 is resolved in live canon and source-memory ledgers remain unchanged.
+  Current ownership routes are: SSYS-002/059–065 and DR-084/085 for Settings classification/resolution, writers, detached copy and presentation; SRV-016/017 for same-owner settings follow and app work Computer custody, RAS for existing routes; MA-074/MACS-006 for destination readiness/protected app auth; Models §2 and MS-005/099/100 for the current fixed order: explicit run choice, scoped build-owner policy, surface/stage built-in default, eligible manually selected account default, This project, then Everywhere/factory. Conservative is retained only in versioned historical decoding; no Persona or command owns a model. q-035 is resolved in live canon and source-memory ledgers remain unchanged.
 
   ACD-508–511 owns No project/place/folder, explicit reads/requests and conversion; T-185/186/187 and PS-145 own access, roots and computer use. GRS-086/087, CWR-045 and OSI-439/440 own app Goal/Crew/continuity/coordination and immutable conversion. APR-073/074, PLS-024, PDS-023 and SQR-019/020 own app Plan/Deep Plan, exact scheduled targets and independent operational pause; ordinary Assistant scoped bundles do not create product Plans or WorkNodes. Only Planning Wizard, PRD Builder and Orchestrator retain no-project workflow gates; real Project-target/capability checks remain distinct.
 
@@ -6334,3 +6320,9 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-059, ContractName:Plans/assistant-chat-design.md#ACD-508, ContractName:Plans/Goal_Runtime_System.md#GRS-086, ContractName:Plans/Assistant_Plan_Runtime.md#APR-073, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-019, ContractName:Plans/Project_System.md#PJCT-009, ContractName:Plans/Permissions_System.md#PS-147, ContractName:Plans/Contracts_V0.md#CV-365, ContractName:Plans/storage-plan.md#SP-348
+
+## Memory and Goals owner alignment — 2026-11-12
+
+DL-475 closes DL-474's Q2 questions. Memory is a single searchable saved-note page shared with the chat sheet, with This project and Every project levels, Add/Edit/Delete, Archived and one switch. AMS-026 permits read-only Project and personal notes for Crews, reviews and chat helpers; private app-thread memory and source restrictions remain. AMS-014/044 own user-statement support, AMS-010/141 durable deletion and non-resurrection, and AMS-022/141 retained maintenance holds. Settings_System owns retired-key compatibility and live census by settings_inventory.settings. Goals use their initiating chat Persona/model, never use Crews, finish on proof under existing pauses, and may be started as separate Goals by Crews/plans/reviews with no parent edge.
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-475, ContractName:Plans/assistant-memory-subsystem.md#AMS-026, ContractName:Plans/assistant-memory-subsystem.md#AMS-141, ContractName:Plans/Settings_System.md#SSYS-040, ContractName:Plans/Goal_Runtime_System.md#GRS-046, ContractName:Plans/Goal_Runtime_System.md#GRS-052

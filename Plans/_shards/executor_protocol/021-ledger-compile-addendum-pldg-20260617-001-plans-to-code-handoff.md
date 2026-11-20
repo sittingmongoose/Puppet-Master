@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L6156-L6464
+Source lines: L6146-L6454
 
-Source SHA256: `0b05561f1eb83bf6b273023ae1ca8d3237cbaa391f7182dcb36ea7e21539ad2a`
+Source SHA256: `5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732`
 
 ---
 
@@ -21,7 +21,7 @@ canonical_text: >-
     WorkNode requests become runnable only after Executor intake validates graph integrity, source-control requirements, test bindings, model routing, authority requirements, readiness prerequisites, and scheduler metadata. ExecutorIntakeReport is the boundary artifact proving that a WorkNodeRequest was accepted, rejected, or blocked. The strict runtime contract packet defines non-executable WorkGraph draft and WorkNodeRequest shapes before dispatch; Executor owns runnable dispatch, ready-state evaluation, capacity-aware scheduling, retry/backoff, blocked-state recovery, and failure-class recovery after explicit runtime enablement and accepted intake.
 gui_related: false
 gui_classification_reason: Intake, scheduling, retry, and blocked recovery are runtime protocol behavior, not visual presentation.
-depends_on: [EP-098, PNC-013]
+depends_on: [PNC-013]
 unblocks: [EP-100, EP-101, EP-102, GRS-030]
 acceptance_criteria:
   - WorkNodeRequest records cannot bypass Executor intake.

@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L7174-L7890
+Source lines: L7388-L8122
 
-Source SHA256: `59ed224d15e3e1a8b69889f2cbb2bb3390f5053a1b3f899f5b3cb443b6427170`
+Source SHA256: `459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47`
 
 ---
 
@@ -495,6 +495,9 @@ negative_constraints:
 - No WorkNode/NodeSeed/runtime/readiness/event-depth/global safe-stop or governance claim from source adoption.
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2, GRS-1131 and SP-1133 for its actual original Workflow cancellation source and M2-M9 migration custody. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 ContractRef: ContractName:Plans/goal_runtime_workflow_cancel_contracts.schema.json, ContractName:Plans/goal_workflow_cancel_schema_resources.json, ContractName:Plans/goal_workflow_cancel_contracts/entry-boundaries.json, ContractName:Plans/goal_workflow_cancel_contracts/methods.json, ContractName:Plans/goal_workflow_cancel_contracts/numeric-paths.json, ContractName:Plans/goal_workflow_cancel_contracts/physical-profiles.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json
 
 
@@ -532,7 +535,6 @@ gui_related: false
 gui_classification_reason: Defines original runtime source, custody, replay and retention contracts without a visual surface.
 split_recommended: false
 depends_on:
-- GRS-026
 - GRS-031
 - SP-214
 - EP-118
@@ -543,6 +545,8 @@ acceptance_criteria:
 - The mandatory durable projection has complete atomic generation/checkpoint ownership.
 - Source definitions do not claim installed native authority, Event depth or runtime execution.
 validation_surfaces:
+- Plans/goal_current_writer_oracle_fixtures.json
+- python3 scripts/pm_goal_current_writer_oracles.py
 - Plans/goal_run_started_consumer_contracts/consumer.schema.json
 - Plans/goal_run_started_consumer_contracts/methods.json
 - Plans/goal_run_started_consumer_contracts/physical-families.json
@@ -569,6 +573,11 @@ source_lineage:
 source_atom_ids: []
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly `goal_run.started` adopts `GRS-1132`, `SP-1134` and `ATS-1118` with complete original `W3` boundaries in `Plans/goal_own_c_contracts/protocol.md`. This is newly authored contract work; the full inherited-root oracle corpus remains an explicit integration obligation, not native execution evidence.
+
+
+
+Amended 2026-11-04 (DL-045 depth): writer cutoff, reader withdrawal and rebuild fences for goal_run.started v3 follow SP-424.
 
 ### GRS-080 - Positive original cancelled-v3 semantics and bounded read roles
 
@@ -606,7 +615,6 @@ gui_related: false
 gui_classification_reason: Original runtime custody and derived source currentness contract without visual presentation.
 split_recommended: false
 depends_on:
-- GRS-026
 - GRS-031
 - SP-214
 - EP-118
@@ -618,6 +626,8 @@ acceptance_criteria:
 - Existing started-v3 profiles and methods remain unchanged, with explicit fresh combined generation/cutover.
 - Source adoption does not qualify installed native authority, Event depth, runtime or governance.
 validation_surfaces:
+- Plans/goal_current_writer_oracle_fixtures.json
+- python3 scripts/pm_goal_current_writer_oracles.py
 - Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json
 - Plans/goal_run_cancelled_consumer_contracts/cancelled-causal-arguments.schema.json
 - Plans/goal_run_cancelled_consumer_contracts/goal-arguments.schema.json
@@ -647,6 +657,11 @@ source_lineage:
 source_atom_ids: []
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly `goal_run.cancelled` adopts `GRS-1133`, `SP-1135` and `ATS-1118` with complete original `W4` boundaries in `Plans/goal_own_c_contracts/protocol.md`. This is newly authored contract work; the full inherited-root oracle corpus remains an explicit integration obligation, not native execution evidence.
+
+
+
+Amended 2026-11-04 (DL-045 depth): writer cutoff, reader withdrawal and rebuild fences for goal_run.cancelled v3 follow SP-425.
 
 ### GRS-081 - Original Workflow Goal cancellation private current inspection
 
@@ -723,5 +738,8 @@ negative_constraints:
 - No native writer/capability, projector/checkpoint, Event depth or runtime qualification
   from source adoption.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2, GRS-1131 and SP-1133 for its complete private current-inspection entry/helper/final boundaries. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-078, ContractName:Plans/Shared_Integration_Runtime.md#SIR-052, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/Backup_Restore_System.md#BRS-026, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json, ContractName:Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json

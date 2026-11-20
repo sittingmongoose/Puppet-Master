@@ -1,0 +1,1684 @@
+{
+  "version": 2,
+  "method": "B: guard tables",
+  "status": "PASS",
+  "caught": 335,
+  "skipped": 0,
+  "traps": [
+    {
+      "id": "table-single-swaps",
+      "expected": "PASS: two independent predicates, exact peer tags and full restoration",
+      "caught": true
+    },
+    {
+      "id": "two-defect-negative",
+      "expected": "off-diagonal y failure: x negative also changes y",
+      "caught": true
+    },
+    {
+      "id": "predicate-checks-two-fields",
+      "expected": "off-diagonal x failure on the isolated y witness",
+      "caught": true
+    },
+    {
+      "id": "masked-stale-copy",
+      "expected": "off-diagonal copy failure: synchronized source copy left stale",
+      "caught": true
+    },
+    {
+      "id": "missing-negative",
+      "expected": "y guard is unproved even though every supplied negative flips",
+      "caught": true
+    },
+    {
+      "id": "missing-table-entry",
+      "expected": "runtime unknown guard is never a product refusal",
+      "caught": true
+    },
+    {
+      "id": "duplicate-distinct-invariants",
+      "expected": "shared code/site is not same field and predicate",
+      "caught": true
+    },
+    {
+      "id": "duplicate-without-proof",
+      "expected": "empty duplicate evidence fails closed",
+      "caught": true
+    },
+    {
+      "id": "genuine-duplicate",
+      "expected": "PASS: each single cut retains defect, each remaining site refuses, joint cut flips, upper peer stays",
+      "caught": true
+    },
+    {
+      "id": "duplicate-weaker-impostor",
+      "expected": "a weaker row does not reject the duplicate witness by itself",
+      "caught": true
+    },
+    {
+      "id": "static-inline-raise",
+      "expected": "static raise outside guard predicate is an untracked site",
+      "caught": true
+    },
+    {
+      "id": "static-inline-return-false",
+      "expected": "static return outside guard predicate is an untracked site",
+      "caught": true
+    },
+    {
+      "id": "static-inline-return-none",
+      "expected": "static return outside guard predicate is an untracked site",
+      "caught": true
+    },
+    {
+      "id": "static-inline-bare-return",
+      "expected": "static return outside guard predicate is an untracked site",
+      "caught": true
+    },
+    {
+      "id": "static-inline-return-zero",
+      "expected": "static return outside guard predicate is an untracked site",
+      "caught": true
+    },
+    {
+      "id": "static-inline-assert",
+      "expected": "static assert outside guard predicate is an untracked site",
+      "caught": true
+    },
+    {
+      "id": "static-inline-append",
+      "expected": "static mutation_or_error_write outside guard predicate is an untracked site",
+      "caught": true
+    },
+    {
+      "id": "static-inline-extend",
+      "expected": "static mutation_or_error_write outside guard predicate is an untracked site",
+      "caught": true
+    },
+    {
+      "id": "static-inline-augassign",
+      "expected": "static mutation_or_error_write outside guard predicate is an untracked site",
+      "caught": true
+    },
+    {
+      "id": "static-inline-slice-write",
+      "expected": "static mutation_or_error_write outside guard predicate is an untracked site",
+      "caught": true
+    },
+    {
+      "id": "static-inline-item-write",
+      "expected": "static mutation_or_error_write outside guard predicate is an untracked site",
+      "caught": true
+    },
+    {
+      "id": "static-inline-unlisted-helper",
+      "expected": "static call_review outside guard predicate is an untracked site",
+      "caught": true
+    },
+    {
+      "id": "runtime-inline-raise",
+      "expected": "runtime untracked_refusal despite explicit static plumbing declaration",
+      "caught": true
+    },
+    {
+      "id": "runtime-inline-false",
+      "expected": "runtime untracked_rejecting_return despite explicit static plumbing declaration",
+      "caught": true
+    },
+    {
+      "id": "runtime-inline-none",
+      "expected": "runtime untracked_rejecting_return despite explicit static plumbing declaration",
+      "caught": true
+    },
+    {
+      "id": "runtime-inline-zero",
+      "expected": "runtime untracked_rejecting_return despite explicit static plumbing declaration",
+      "caught": true
+    },
+    {
+      "id": "runtime-inline-assert",
+      "expected": "runtime untracked_refusal despite explicit static plumbing declaration",
+      "caught": true
+    },
+    {
+      "id": "runtime-system-exit",
+      "expected": "runtime untracked_refusal despite explicit static plumbing declaration",
+      "caught": true
+    },
+    {
+      "id": "exception-counted-as-refusal",
+      "expected": "caught exception / rejecting Outcome is untracked, never a tagged guard",
+      "caught": true
+    },
+    {
+      "id": "forged-runtime-tag",
+      "expected": "forged tag rejected by issuance identity",
+      "caught": true
+    },
+    {
+      "id": "swallowed-table-refusal",
+      "expected": "table issuance cannot be swallowed into acceptance",
+      "caught": true
+    },
+    {
+      "id": "predicate-exception",
+      "expected": "exception in a registered predicate remains a checker error",
+      "caught": true
+    },
+    {
+      "id": "predicate-invalid-return",
+      "expected": "boolean predicate result is not the refusal code protocol",
+      "caught": true
+    },
+    {
+      "id": "predicate-input-mutation",
+      "expected": "predicate input mutation fails purity check",
+      "caught": true
+    },
+    {
+      "id": "shared-context",
+      "expected": "factory reuses mutable state across cases",
+      "caught": true
+    },
+    {
+      "id": "shared-list",
+      "expected": "factory reuses mutable state across cases",
+      "caught": true
+    },
+    {
+      "id": "shared-predicate-default",
+      "expected": "mutable predicate default survives factory boundaries",
+      "caught": true
+    },
+    {
+      "id": "same-code-different-tags",
+      "expected": "PASS: refusal code equality does not merge guard identity",
+      "caught": true
+    },
+    {
+      "id": "transitive-import-hidden-refusal",
+      "expected": "static scan reaches repository helper imported through a second module",
+      "caught": true
+    },
+    {
+      "id": "star-import-fail-closed",
+      "expected": "star import prevents certifying the source closure",
+      "caught": true
+    },
+    {
+      "id": "dynamic-import-fail-closed",
+      "expected": "dynamic import is not a static closure",
+      "caught": true
+    },
+    {
+      "id": "implicit-refusal-return",
+      "expected": "implicit None fallthrough is inventoried",
+      "caught": true
+    },
+    {
+      "id": "stale-non-guard-declaration",
+      "expected": "non-guard declarations must match exactly one live site",
+      "caught": true
+    },
+    {
+      "id": "original-set-observation",
+      "expected": "PASS: original set observation is preserved; no state copy",
+      "caught": true
+    },
+    {
+      "id": "retired-C4-tuple-comparison",
+      "expected": "static return; no rewrite or clone can grant broad credit",
+      "caught": true
+    },
+    {
+      "id": "retired-A3-chained-comparison",
+      "expected": "static return; no rewrite or clone can grant broad credit",
+      "caught": true
+    },
+    {
+      "id": "retired-C4-while-refusal",
+      "expected": "static return; no rewrite or clone can grant broad credit",
+      "caught": true
+    },
+    {
+      "id": "retired-C5-conditioned-assertion",
+      "expected": "static assert; no rewrite or clone can grant broad credit",
+      "caught": true
+    },
+    {
+      "id": "retired-C6-early-success-suffix",
+      "expected": "static assert; no rewrite or clone can grant broad credit",
+      "caught": true
+    },
+    {
+      "id": "retired-A3-returned-local",
+      "expected": "static return; no rewrite or clone can grant broad credit",
+      "caught": true
+    },
+    {
+      "id": "retired-A3-conditional-return",
+      "expected": "static return; no rewrite or clone can grant broad credit",
+      "caught": true
+    },
+    {
+      "id": "original-code-observation",
+      "expected": "PASS: untouched checker code identity and bytes stay original under a table swap",
+      "caught": true
+    },
+    {
+      "id": "original-runtime-default",
+      "expected": "PASS: runtime default is original; source defaults are never reevaluated",
+      "caught": true
+    },
+    {
+      "id": "shared-imported-state",
+      "expected": "mutable repository-module state cannot bypass factory freshness",
+      "caught": true
+    },
+    {
+      "id": "factory-rebuilds-per-input-state",
+      "expected": "PASS: factory(value) reconstructs state separately for every case/predicate/cut",
+      "caught": true
+    },
+    {
+      "id": "factory-cannot-repair-fixture",
+      "expected": "factory mutation of the frozen negative fails closed",
+      "caught": true
+    },
+    {
+      "id": "schema-required-members",
+      "expected": "PASS: removing required x retains required y",
+      "caught": true
+    },
+    {
+      "id": "schema-independent-bounds",
+      "expected": "PASS: minimum and maximum are distinct rows",
+      "caught": true
+    },
+    {
+      "id": "schema-type-preserves-enum",
+      "expected": "PASS: type cut retains membership for correctly typed values",
+      "caught": true
+    },
+    {
+      "id": "schema-legacy-contains-06",
+      "expected": "PASS: legacy contains has an implicit existential count guard",
+      "caught": true
+    },
+    {
+      "id": "schema-legacy-contains-07",
+      "expected": "PASS: legacy contains has an implicit existential count guard",
+      "caught": true
+    },
+    {
+      "id": "schema-conditional-peers",
+      "expected": "PASS: string/null branch type cuts retain the other branch",
+      "caught": true
+    },
+    {
+      "id": "schema-non-type-inventory",
+      "expected": "unsupported pattern stays unclassified; bounds do not disappear",
+      "caught": true
+    },
+    {
+      "id": "schema-negated-routing",
+      "expected": "negated applicability is unclassified",
+      "caught": true
+    },
+    {
+      "id": "schema-compound-pattern",
+      "expected": "whole regex clause cuts never receive credit",
+      "caught": true
+    },
+    {
+      "id": "schema-unknown-vocabulary",
+      "expected": "unknown assertion form fails closed even in a dormant definition",
+      "caught": true
+    },
+    {
+      "id": "schema-dormant-dangling-ref",
+      "expected": "every reference resolves eagerly, including unused definitions",
+      "caught": true
+    },
+    {
+      "id": "schema-shared-ref-occurrences",
+      "expected": "PASS: the same referenced schema still has separate field occurrences",
+      "caught": true
+    },
+    {
+      "id": "finite-memory-thresholds",
+      "expected": "all 15 nonfinite public thresholds refuse",
+      "caught": true
+    },
+    {
+      "id": "memory-fresh-sample-resume",
+      "expected": "fresh samples pause and recheck before resume",
+      "caught": true
+    },
+    {
+      "id": "rewrite-clone-backend-retired",
+      "expected": "AstGuards and CodeSite no longer exist in the credit path",
+      "caught": true
+    },
+    {
+      "id": "B1-same-line",
+      "expected": "B1-same-line fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B1-separate-line",
+      "expected": "B1-separate-line fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B2-class-state",
+      "expected": "B2-class-state fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B2-bound-builtin-receiver",
+      "expected": "B2-bound-builtin-receiver fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-actual-sys-path",
+      "expected": "B3-actual-sys-path fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-ordinary-path-control",
+      "expected": "B3-ordinary-path-control fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-cached-origin-conflict",
+      "expected": "B3-cached-origin-conflict fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-aliased-importlib-predicate",
+      "expected": "B3-aliased-importlib-predicate fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-module-assignment-alias",
+      "expected": "B3-module-assignment-alias fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-builtin-alias",
+      "expected": "B3-builtin-alias fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-builtin-assignment-alias",
+      "expected": "B3-builtin-assignment-alias fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-runpy-module-alias",
+      "expected": "B3-runpy-module-alias fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-runpy-from-alias",
+      "expected": "B3-runpy-from-alias fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-predicate-local-alias",
+      "expected": "B3-predicate-local-alias fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B3-package-relative-context",
+      "expected": "B3-package-relative-context fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B4-dict-order",
+      "expected": "B4-dict-order fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B4-alias-topology",
+      "expected": "B4-alias-topology fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B4-context-order",
+      "expected": "B4-context-order fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B4-temporary-restored-input",
+      "expected": "B4-temporary-restored-input fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B4-mutating-helper",
+      "expected": "B4-mutating-helper fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B4-dormant-mutation",
+      "expected": "B4-dormant-mutation fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B5-direct-independent",
+      "expected": "B5-direct-independent fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B5-direct-duplicate",
+      "expected": "B5-direct-duplicate fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B5-nested-table-control",
+      "expected": "B5-nested-table-control fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B5-alias-call",
+      "expected": "B5-alias-call fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B5-checker-direct-entry",
+      "expected": "B5-checker-direct-entry fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B5-bound-alias-call",
+      "expected": "B5-bound-alias-call fails closed for its named reason, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "B1-exact-exception-propagation",
+      "expected": "B1-exact-exception-propagation enforces its own named boundary",
+      "caught": true
+    },
+    {
+      "id": "B1-exception-object-reraise",
+      "expected": "B1-exception-object-reraise enforces its own named boundary",
+      "caught": true
+    },
+    {
+      "id": "B2-uncertifiable-slotted-state",
+      "expected": "B2-uncertifiable-slotted-state enforces its own named boundary",
+      "caught": true
+    },
+    {
+      "id": "B5-private-test-entry",
+      "expected": "B5-private-test-entry enforces its own named boundary",
+      "caught": true
+    },
+    {
+      "id": "B4-factory-order-repair",
+      "expected": "B4-factory-order-repair enforces its own named boundary",
+      "caught": true
+    },
+    {
+      "id": "B4-uncertified-builtin-binding",
+      "expected": "A noncanonical builtin binding in a dormant predicate path fails purity certification, with zero credit",
+      "caught": true
+    },
+    {
+      "id": "C3-shared-global-scalar-binding",
+      "expected": "State certification refuses shared-global-scalar-binding with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C3-shared-nonlocal-scalar-binding",
+      "expected": "State certification refuses shared-nonlocal-scalar-binding with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C3-shared-factory-list",
+      "expected": "State certification refuses shared-factory-list with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C3-shared-factory-changes-enforcement",
+      "expected": "State certification refuses shared-factory-changes-enforcement with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C3-predicate-global-scalar-mutation",
+      "expected": "State certification refuses predicate-global-scalar-mutation with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C3-shared-slotted-closure",
+      "expected": "State certification refuses shared-slotted-closure with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C3-shared-slotted-global-control",
+      "expected": "State certification refuses shared-slotted-global-control with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C3-inline-conversion",
+      "expected": "Dormant operation fails the static allowlist without a hidden-path witness.",
+      "caught": true
+    },
+    {
+      "id": "C3-inline-lookup",
+      "expected": "Dormant operation fails the static allowlist without a hidden-path witness.",
+      "caught": true
+    },
+    {
+      "id": "C3-inline-unpacking",
+      "expected": "Dormant operation fails the static allowlist without a hidden-path witness.",
+      "caught": true
+    },
+    {
+      "id": "C3-dormant-missing-table-entry",
+      "expected": "Dormant operation fails the static allowlist without a hidden-path witness.",
+      "caught": true
+    },
+    {
+      "id": "C3-readonly-scalar-constant",
+      "expected": "readonly-scalar-constant enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-external-function-global",
+      "expected": "external-function-global enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-external-function-closure",
+      "expected": "external-function-closure enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-factory-output-equivalence",
+      "expected": "factory-output-equivalence enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-dormant-attribute",
+      "expected": "dormant-attribute enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-dormant-comparison",
+      "expected": "dormant-comparison enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-dormant-unlisted-call",
+      "expected": "dormant-unlisted-call enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-dynamic-table-name",
+      "expected": "dynamic-table-name enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-reviewed-reset-control",
+      "expected": "reviewed-reset-control enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-ineffective-reset",
+      "expected": "ineffective-reset enforces its specified certification boundary.",
+      "caught": true
+    },
+    {
+      "id": "C3-os-temp-scratch",
+      "expected": "Default self-test scratch uses the operating system temporary directory.",
+      "caught": true
+    },
+    {
+      "id": "C3-dormant-unbound-local",
+      "expected": "Unproven operation remains a static obligation even on an unvisited path.",
+      "caught": true
+    },
+    {
+      "id": "C3-dormant-dict-key",
+      "expected": "Unproven operation remains a static obligation even on an unvisited path.",
+      "caught": true
+    },
+    {
+      "id": "C3-dormant-invalid-construction",
+      "expected": "Unproven operation remains a static obligation even on an unvisited path.",
+      "caught": true
+    },
+    {
+      "id": "C3-snapshot-scalar-topology",
+      "expected": "Snapshots retain scalar alias topology and detect equal-value shared rebinding, while erasing fresh identities.",
+      "caught": true
+    },
+    {
+      "id": "C4-hidden-invariant-constructor",
+      "expected": "Invariant validation on data is an obligation even when the field read is declared; otherwise a blank y raises untagged.",
+      "caught": true
+    },
+    {
+      "id": "C4-valid-invariant-constructor",
+      "expected": "PASS: literal nonblank Invariant arguments cannot reach its validation, so no declaration is needed.",
+      "caught": true
+    },
+    {
+      "id": "C4-blank-invariant-literal",
+      "expected": "A blank literal is not a valid Invariant argument; it stays an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C4-nonstring-invariant-literal",
+      "expected": "A non-string literal is not a valid Invariant argument; it stays an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C4-invariant-name-argument",
+      "expected": "A non-literal Invariant argument is an obligation even when its current value is valid.",
+      "caught": true
+    },
+    {
+      "id": "C4-guard-shadowed-predicate",
+      "expected": "A local name shadowing a module predicate does not prove Guard receives a callable.",
+      "caught": true
+    },
+    {
+      "id": "C4-hidden-unary-string",
+      "expected": "Unary minus on a string literal raises; a constant operand does not prove the operation total.",
+      "caught": true
+    },
+    {
+      "id": "C4-hidden-float-invert",
+      "expected": "Invert on a float literal raises; it is certified only for int literals.",
+      "caught": true
+    },
+    {
+      "id": "C4-hidden-none-plus",
+      "expected": "Unary plus on None raises; it is certified only for int and float literals.",
+      "caught": true
+    },
+    {
+      "id": "C4-hidden-bytes-minus",
+      "expected": "Unary minus on bytes raises.",
+      "caught": true
+    },
+    {
+      "id": "C4-uncertified-unary-forms",
+      "expected": "Valid operands outside the certified operator and type pairs are still obligations.",
+      "caught": true
+    },
+    {
+      "id": "C4-unary-numeric-control",
+      "expected": "PASS: certified operator and literal type pairs need no declaration.",
+      "caught": true
+    },
+    {
+      "id": "C4-table-foreign-value",
+      "expected": "require is total only on the bound root; a foreign value raises the protocol error.",
+      "caught": true
+    },
+    {
+      "id": "C4-table-foreign-context",
+      "expected": "require is total only with the Case context; a foreign context raises the protocol error.",
+      "caught": true
+    },
+    {
+      "id": "C4-table-validate-without-schema",
+      "expected": "validate can raise on a missing schema, an undeclared root or an unattributable refusal, so it is always an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C4-table-rebound-receiver",
+      "expected": "A rebinding of table disproves the receiver; the attribute read and the call are obligations.",
+      "caught": true
+    },
+    {
+      "id": "C4-engine-missing-member",
+      "expected": "A reviewed call does not prove the callee read; a name absent from the engine is an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C4-engine-alias-shadowed",
+      "expected": "A local rebinding of the alias disproves the engine constructor.",
+      "caught": true
+    },
+    {
+      "id": "C4-default-argument-name",
+      "expected": "A default runs in the enclosing scope; its own parameter name does not bind it.",
+      "caught": true
+    },
+    {
+      "id": "C4-function-scope-import",
+      "expected": "A function-scope import runs module code on the visited path; only an executed module-scope import is automatic.",
+      "caught": true
+    },
+    {
+      "id": "C4-deleted-name",
+      "expected": "A deleted name has no dominating binding.",
+      "caught": true
+    },
+    {
+      "id": "C4-star-type-argument",
+      "expected": "Star arguments can select another type() form or arity; only a single plain argument is total.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-subscript",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-comparison",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-fstring",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-binop",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-boolop",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-len",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-isinstance",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-int",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-getattr-on-literal",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-dict-star",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-literal-set-star",
+      "expected": "Literal operands do not make this form total; it remains an obligation outside predicates.",
+      "caught": true
+    },
+    {
+      "id": "C4-shadowed-exception-class",
+      "expected": "A local rebinding of a builtin exception name makes the handler match raise.",
+      "caught": true
+    },
+    {
+      "id": "C4-handler-name-implicit-delete",
+      "expected": "A handler target is deleted when the handler ends; an earlier sibling binding does not dominate the later read.",
+      "caught": true
+    },
+    {
+      "id": "C4-except-star",
+      "expected": "except* has its own runtime matching failures, so try-star is an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C4-private-builtins-binding",
+      "expected": "Rebinding __builtins__ removes the names the certified read relies on; the binding and the read are obligations.",
+      "caught": true
+    },
+    {
+      "id": "C4-read-before-nested-def",
+      "expected": "A nested definition makes the name local to the checker, so a module binding of the same name does not dominate the earlier read.",
+      "caught": true
+    },
+    {
+      "id": "C4-read-before-local-import",
+      "expected": "A function-scope import makes the name local, so a module binding of the same name does not dominate the earlier read.",
+      "caught": true
+    },
+    {
+      "id": "C4-mixed-text-dict-keys",
+      "expected": "Equal-hash str and bytes keys compare during construction, which -bb makes an error, so the display is an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C4-remaining-automatic-forms-control",
+      "expected": "PASS: every remaining written automatic form is accepted with no declaration, so the table describes live behavior.",
+      "caught": true
+    },
+    {
+      "id": "C4-allowlist-written-reasons",
+      "expected": "Every automatic form and allowlisted constructor carries a written totality reason.",
+      "caught": true
+    },
+    {
+      "id": "C4-constructor-hook-audit",
+      "expected": "Only Guard and Invariant have validation hooks; Guard.id and GuardTable.guards are read-only properties that construction never reads; a new hook must change the written argument.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-is-not-method-binding",
+      "expected": "A class binding does not certify a method read: the read stays an obligation with zero credit, and the original raises when visited.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-visited",
+      "expected": "Visiting the same method read raises NameError: refused at runtime as well as statically, with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C6-enclosing-binding-for-method-control",
+      "expected": "The same method with a genuine enclosing-function binding passes both routes automatically.",
+      "caught": true
+    },
+    {
+      "id": "C6-enclosing-binding-with-class-attribute-control",
+      "expected": "A method read resolves past the class attribute to the genuine enclosing binding, automatically.",
+      "caught": true
+    },
+    {
+      "id": "C6-module-binding-beats-class-attribute-control",
+      "expected": "A method read resolves past the class attribute to the module binding, automatically.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-nested-def",
+      "expected": "A def inside a method cannot see the class binding either.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-lambda",
+      "expected": "A lambda in a class body cannot see the class binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-list-comprehension-result",
+      "expected": "A comprehension result in a class body cannot see the class binding, inlined or not.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-comprehension-condition",
+      "expected": "A comprehension condition in a class body cannot see the class binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-second-iterable",
+      "expected": "Only the first iterable runs in the class scope; the second cannot see the class binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-binding-generator-result",
+      "expected": "A generator result in a class body cannot see the class binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-outer-class-binding-in-nested-class",
+      "expected": "A nested class body cannot see the outer class binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-read-skips-enclosing-function",
+      "expected": "A class-body read of a name the class binds later goes to globals and builtins, never to the enclosing function.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-default-before-class-binding",
+      "expected": "A method default runs in the class body. The class binds the name later, so the read goes to globals and builtins, not the enclosing function.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-first-iterable-control",
+      "expected": "The first iterable runs in the class scope, so an earlier class binding certifies the read.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-body-read-control",
+      "expected": "An earlier class binding certifies a read in the class body itself.",
+      "caught": true
+    },
+    {
+      "id": "C6-method-default-control",
+      "expected": "A method default runs in the class scope, so an earlier class binding certifies it.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-free-read-control",
+      "expected": "A class body reads a name it does not bind from the enclosing function.",
+      "caught": true
+    },
+    {
+      "id": "C6-comprehension-later-target-iterable",
+      "expected": "A later comprehension target makes the name comprehension-local, so the enclosing binding does not certify an earlier iterable.",
+      "caught": true
+    },
+    {
+      "id": "C6-comprehension-later-target-condition",
+      "expected": "A later comprehension target makes the name comprehension-local, so the enclosing binding does not certify an earlier condition.",
+      "caught": true
+    },
+    {
+      "id": "C6-comprehension-target-does-not-leak",
+      "expected": "A comprehension target is not bound in the function after the comprehension.",
+      "caught": true
+    },
+    {
+      "id": "C6-generator-target-does-not-leak",
+      "expected": "A generator target is not bound in the function after the generator.",
+      "caught": true
+    },
+    {
+      "id": "C6-comprehension-result-control",
+      "expected": "A comprehension result reads its own target, automatically.",
+      "caught": true
+    },
+    {
+      "id": "C6-comprehension-first-iterable-control",
+      "expected": "The first iterable reads the enclosing binding, even when the target reuses the name.",
+      "caught": true
+    },
+    {
+      "id": "C6-global-skips-enclosing-function",
+      "expected": "A global declaration makes the read global, so an enclosing binding does not certify it, even with the declaration reviewed.",
+      "caught": true
+    },
+    {
+      "id": "C6-global-module-binding-control",
+      "expected": "A global declaration with a real module binding certifies the read.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-global-skips-enclosing-function",
+      "expected": "A global declaration in a class body reads the module namespace, not the enclosing function.",
+      "caught": true
+    },
+    {
+      "id": "C6-class-global-does-not-reach-method",
+      "expected": "A class-level global declaration does not reach a method: its read is the enclosing cell, which is not yet bound.",
+      "caught": true
+    },
+    {
+      "id": "C6-nonlocal-binding-after-call",
+      "expected": "A nonlocal read needs a binding before the nested function exists.",
+      "caught": true
+    },
+    {
+      "id": "C6-nonlocal-enclosing-control",
+      "expected": "A nonlocal read of a binding made before the def is certified.",
+      "caught": true
+    },
+    {
+      "id": "C6-type-params-keep-class-exclusion",
+      "expected": "A generic method still cannot see the class binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-type-parameter-read-is-an-obligation",
+      "expected": "A read of a type parameter resolves to its annotation scope, which has no written totality argument.",
+      "caught": true
+    },
+    {
+      "id": "C6-type-bound-read-is-an-obligation",
+      "expected": "A lazily evaluated type-parameter bound is an obligation, even with an enclosing binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-type-alias-read-is-an-obligation",
+      "expected": "A lazily evaluated type alias value is an obligation, even with an enclosing binding.",
+      "caught": true
+    },
+    {
+      "id": "C6-generic-closure-control",
+      "expected": "A generic function reads a genuine enclosing binding through its type-parameter scope.",
+      "caught": true
+    },
+    {
+      "id": "C6-handler-target-in-closure",
+      "expected": "A closure can outlive the handler, which deletes its target when it ends.",
+      "caught": true
+    },
+    {
+      "id": "C6-nested-handler-deletes-target",
+      "expected": "A nested handler with the same target deletes it before the later read.",
+      "caught": true
+    },
+    {
+      "id": "C6-handler-deletes-loop-target",
+      "expected": "A handler in the loop body deletes the loop target before the later read.",
+      "caught": true
+    },
+    {
+      "id": "C6-handler-own-body-control",
+      "expected": "A read in the handler own body is certified.",
+      "caught": true
+    },
+    {
+      "id": "C6-private-name-in-method",
+      "expected": "The compiler mangles __hidden in a method, so the module binding of that spelling does not certify it.",
+      "caught": true
+    },
+    {
+      "id": "C6-private-name-in-class-body",
+      "expected": "The compiler mangles __hidden in a class body, so the module binding of that spelling does not certify it.",
+      "caught": true
+    },
+    {
+      "id": "C6-private-name-outside-class-control",
+      "expected": "Outside a class a __hidden name is not mangled, so the module binding certifies it.",
+      "caught": true
+    },
+    {
+      "id": "C6-annotation-local-name-is-an-obligation",
+      "expected": "An annotation naming a function-local binding has no written argument: evaluation is deferred or absent, and no scope for it is certified.",
+      "caught": true
+    },
+    {
+      "id": "C6-annotation-builtin-control",
+      "expected": "An annotation naming a builtin no scope in the file rebinds stays automatic.",
+      "caught": true
+    },
+    {
+      "id": "C6-identity-graph-collision-pair",
+      "expected": "Equal inputs and equal context values that differ only in being the stable module object fingerprint differently, and their unchanged checkers differ: refusal versus accept. Fresh identities stay erased.",
+      "caught": true
+    },
+    {
+      "id": "C6-noncausal-flip-context-scalar",
+      "expected": "On the executed cut build alone the context stops being the module token. The unchanged predicate would already accept, so that flip is not caused by the cut: no credit.",
+      "caught": true
+    },
+    {
+      "id": "C6-noncausal-flip-context-container",
+      "expected": "The same schedule with an equal tuple that is not the module tuple: no credit.",
+      "caught": true
+    },
+    {
+      "id": "C6-noncausal-flip-closure-scalar",
+      "expected": "The same schedule through a closure the checker compares with the module token: no credit.",
+      "caught": true
+    },
+    {
+      "id": "C6-stable-shared-identity-control",
+      "expected": "A context that is always the module token proves normally.",
+      "caught": true
+    },
+    {
+      "id": "C6-fresh-equal-context-control",
+      "expected": "A context that is always a fresh equal value proves normally: fresh identities stay erased.",
+      "caught": true
+    },
+    {
+      "id": "C6-fresh-container-holding-shared-value-control",
+      "expected": "A fresh container that always holds the module token proves normally.",
+      "caught": true
+    },
+    {
+      "id": "C6-uncertifiable-case-global-fails-closed",
+      "expected": "A predicate from a module outside the anchored graph brings in a global that cannot be certified: the relation fails closed with no credit. (Tool batch 2: random, since json is now a certified immutable binding under C8-U2.)",
+      "caught": true
+    },
+    {
+      "id": "C7-enum-duplicate-member-dormant",
+      "expected": "An Enum class body binds names through _EnumDict.__setitem__, which raises on a duplicate member: each class-body name operation is an obligation with zero credit, and the original raises when visited.",
+      "caught": true
+    },
+    {
+      "id": "C7-enum-duplicate-member-visited",
+      "expected": "Visiting the same Enum duplicate raises TypeError: refused at runtime as well as statically, with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-enum-sunder-name-dormant",
+      "expected": "An Enum class body refuses a reserved _sunder_ name with ValueError: an obligation with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-enum-method-redefines-member-dormant",
+      "expected": "A def in an Enum body binds its name through the same mapping, which raises on a redefined member: the def is an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C7-repository-metaclass-prepare-dormant",
+      "expected": "A repository metaclass whose __prepare__ mapping raises on a duplicate: the keyword class body names are obligations, and the original raises.",
+      "caught": true
+    },
+    {
+      "id": "C7-plain-class-duplicate-binding-control",
+      "expected": "A class with no bases, keywords or decorators binds into a plain dict: the same duplicate binding stays automatic and runs on both routes.",
+      "caught": true
+    },
+    {
+      "id": "C7-decorated-class-name-is-an-obligation",
+      "expected": "A decorated class is not plain by the rule, so its body names are obligations; nothing raises on this path.",
+      "caught": true
+    },
+    {
+      "id": "C7-class-with-base-name-is-an-obligation",
+      "expected": "Any base, even object, makes the class body names obligations; nothing raises on this path.",
+      "caught": true
+    },
+    {
+      "id": "C7-global-handler-reset-seam-dormant",
+      "expected": "A handler target under global deletes the module binding when the handler ends. The live namespace at scan time held the name; the read is now an obligation with zero credit, and the original raises NameError.",
+      "caught": true
+    },
+    {
+      "id": "C7-global-handler-reset-seam-visited",
+      "expected": "Visiting the same handler deletes the module binding and the read raises NameError: refused at runtime as well as statically.",
+      "caught": true
+    },
+    {
+      "id": "C7-global-handler-without-seam-dormant",
+      "expected": "The same handler without a reviewed reset: the global writes and the read are all sites, as at the base.",
+      "caught": true
+    },
+    {
+      "id": "C7-local-handler-target-deleted",
+      "expected": "A local handler target is deleted when the handler ends: the later read stays an obligation, as at the base.",
+      "caught": true
+    },
+    {
+      "id": "C7-module-loop-target-is-an-obligation",
+      "expected": "A module binding made by a for target is not a single unconditional binding: an obligation, although the loop ran here.",
+      "caught": true
+    },
+    {
+      "id": "C7-module-empty-loop-target",
+      "expected": "A for target over an empty iterable never binds: the read raises NameError and is refused.",
+      "caught": true
+    },
+    {
+      "id": "C7-module-walrus-binding-is-an-obligation",
+      "expected": "A module binding made by an assignment expression is excluded: an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C7-module-double-binding-is-an-obligation",
+      "expected": "A module that binds the name twice is excluded, even though both bindings ran: an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C7-module-conditional-binding-is-an-obligation",
+      "expected": "A binding inside a module-level if is conditional: an obligation, although it ran here.",
+      "caught": true
+    },
+    {
+      "id": "C7-module-forward-binding-is-an-obligation",
+      "expected": "A module binding after the statement holding the read is excluded: an obligation, although the module finished loading.",
+      "caught": true
+    },
+    {
+      "id": "C7-module-single-binding-control",
+      "expected": "One top-level unconditional assignment before the def certifies the read.",
+      "caught": true
+    },
+    {
+      "id": "C7-recursive-module-function-control",
+      "expected": "A recursive read in the body of an undecorated module def is certified.",
+      "caught": true
+    },
+    {
+      "id": "C7-loader-name-control",
+      "expected": "A read of __name__, set by the import system before the body runs, stays automatic.",
+      "caught": true
+    },
+    {
+      "id": "C7-builtin-name-control",
+      "expected": "A read of a builtin the module never binds stays automatic.",
+      "caught": true
+    },
+    {
+      "id": "C7-unnamed-helper-module-state",
+      "expected": "A helper module the scan covers but checker_modules does not name keeps a counter that skips the guard on the cut run: the unwatched module fails closed with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-named-helper-module-state",
+      "expected": "The same helper named in checker_modules is watched, and its counter fails the state snapshot.",
+      "caught": true
+    },
+    {
+      "id": "C7-counter-gate-skips-cut-guard",
+      "expected": "A counter outside every watched module skips the guard on the cut run of its own negative: the acceptance does not come from the cut, so the trace check fails it closed as noncausal_flip with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-random-gate-skips-cut-guard",
+      "expected": "The global random generator, seeded for a fixed schedule, skips the guard on the cut run: noncausal_flip with zero credit, whatever the source of the nondeterminism.",
+      "caught": true
+    },
+    {
+      "id": "C7-random-gate-skips-cut-guard-seed13",
+      "expected": "Another review seed whose schedule skips the guard on the cut run: noncausal_flip with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-random-gate-skips-cut-guard-seed20",
+      "expected": "Another review seed whose schedule skips the guard on the cut run: noncausal_flip with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-random-gate-skips-cut-guard-seed22",
+      "expected": "Another review seed whose schedule skips the guard on the cut run: noncausal_flip with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-random-gate-skips-cut-guard-seed34",
+      "expected": "Another review seed whose schedule skips the guard on the cut run: noncausal_flip with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-random-gate-skips-cut-guard-seed37",
+      "expected": "Another review seed whose schedule skips the guard on the cut run: noncausal_flip with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-path-diverges-before-cut-guard",
+      "expected": "The cut run reaches the cut guard by another path, skipping a guard the baseline ran before it: noncausal_flip with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-counter-gate-changes-control-path",
+      "expected": "The guard is skipped on a control cut run: the outcome is the same, but the path changed, so guard_trace_changed withholds credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-counter-gate-changes-restoration-path",
+      "expected": "The guard is skipped on a restoration run: the two uncut runs disagree, so guard_trace_changed withholds credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-counter-gate-never-skips-control",
+      "expected": "The same counter never reaches its limit: every trace agrees and the guard proves normally.",
+      "caught": true
+    },
+    {
+      "id": "C7-eval-read-tuple-index",
+      "expected": "A read of eval or __builtins__ that reaches a call the scan cannot see is a dynamic-code error a NonGuard cannot waive.",
+      "caught": true
+    },
+    {
+      "id": "C7-eval-read-dict-lookup",
+      "expected": "A read of eval or __builtins__ that reaches a call the scan cannot see is a dynamic-code error a NonGuard cannot waive.",
+      "caught": true
+    },
+    {
+      "id": "C7-eval-read-lambda-return",
+      "expected": "A read of eval or __builtins__ that reaches a call the scan cannot see is a dynamic-code error a NonGuard cannot waive.",
+      "caught": true
+    },
+    {
+      "id": "C7-eval-read-builtins-subscript",
+      "expected": "A read of eval or __builtins__ that reaches a call the scan cannot see is a dynamic-code error a NonGuard cannot waive.",
+      "caught": true
+    },
+    {
+      "id": "C7-eval-read-walrus",
+      "expected": "A read of eval or __builtins__ that reaches a call the scan cannot see is a dynamic-code error a NonGuard cannot waive.",
+      "caught": true
+    },
+    {
+      "id": "C7-eval-read-default",
+      "expected": "A read of eval or __builtins__ that reaches a call the scan cannot see is a dynamic-code error a NonGuard cannot waive.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-module-control",
+      "expected": "C8-U2: json and re bound once at module level and never written through certify; the row is credited.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-module-read-control",
+      "expected": "C8-U2: module.attribute reads of a certified module in the checker are plumbing a reviewer declares; the module itself certifies.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-write-through",
+      "expected": "C8-U2: json.dumps = ... on a dormant path is an unwaivable write through a certified module.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-setattr",
+      "expected": "C8-U2: setattr(re, ...) on a dormant path is an unwaivable write through a certified module.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-dict-write",
+      "expected": "C8-U2: json.__dict__[...] = ... on a dormant path writes the module's namespace: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-alias",
+      "expected": "C8-U2: aliasing a certified module to a writable name lets it be written through elsewhere: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-passed-on",
+      "expected": "C8-U2: passing a certified module to another function lets the callee write through it: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-rebound",
+      "expected": "C8-U2: a certified module name rebound by a dormant global assignment is not bound once: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-stdlib-not-allowlisted",
+      "expected": "C8-U2: random keeps result-affecting module state, so it is not on the list and still fails certification.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-typing-future-control",
+      "expected": "C8-U2: typing special forms and the annotations future feature certify; postponed annotations are never evaluated.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-typing-lazy-annotations",
+      "expected": "C8-U2: without the future import a 3.14 annotation is a lazy __annotate__ graph that runs code when read: still refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-typing-forged-annotate",
+      "expected": "C8-U2: a postponed-annotation function whose __annotate__ was replaced by code that reads names is not the compiler's own: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-typing-form-write",
+      "expected": "C8-U2: writing an attribute of a certified typing form on a dormant path is refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-literal-control",
+      "expected": "C8-U2: a top-level str Enum with literal members only certifies, statically and in the snapshot.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-member-read-control",
+      "expected": "C8-U2: reading a literal Enum member in the checker (declared plumbing) certifies; the member is fixed.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-custom-new",
+      "expected": "C8-U2: an Enum with its own __new__ is not literal: it fails certification.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-missing",
+      "expected": "C8-U2: an Enum with _missing_ maps unknown values by code: it fails certification.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-generate-next-value",
+      "expected": "C8-U2: an Enum with its own _generate_next_value_ is not literal: it fails certification.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-metaclass",
+      "expected": "C8-U2: an Enum built by another metaclass runs that metaclass: it fails certification.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-nonliteral-member",
+      "expected": "C8-U2: an Enum member holding a list is not an immutable literal: it fails certification.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-write-through",
+      "expected": "C8-U2: writing an attribute onto a literal Enum on a dormant path is an unwaivable write.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-enum-passed-on",
+      "expected": "C8-U2: passing a literal Enum class to another function lets it be written through: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-frozen-dataclass-refused",
+      "expected": "C8-U2: a frozen dataclass is not certified (its class graph is external machinery); the guide gives the restructure pattern.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-data-import-control",
+      "expected": "C8-U2: from consts import TERMINAL (a single literal tuple) reaches no code of consts, so consts is not scanned and the row is credited.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-data-import-mutable",
+      "expected": "C8-U2: a from-imported list is mutable state of consts: consts is scanned and, unnamed, fails.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-data-import-function",
+      "expected": "C8-U2: a from-imported function is code of consts: consts is scanned and, unnamed, fails.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-data-import-rebound",
+      "expected": "C8-U2: a constant consts rebinds on a dormant path is not a single literal binding: consts is scanned.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U2-data-import-computed",
+      "expected": "C8-U2: a constant computed by a call is not a literal: consts is scanned.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U4-re-compile-control",
+      "expected": "C8-U4: re.compile is resolved by its binding origin, not by its leaf name; a compiled pattern is immutable.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U4-builtin-compile-dynamic",
+      "expected": "C8-U4: the builtin compile stays dynamic code on a dormant path.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U4-compile-unknown-receiver",
+      "expected": "C8-U4: compile on a receiver that is not the re module stays dynamic.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U4-re-rebound-compile",
+      "expected": "C8-U4: a name re that something other than import re also binds is not the re module: its compile stays dynamic.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U4-error-named-literal-control",
+      "expected": "C8-U4: FAILED_REASONS = (literals) at module scope, bound once, is not an error write.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U4-error-named-list",
+      "expected": "C8-U4: a module-level error-named list is mutable: still an error-write obligation.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U4-error-named-rebound",
+      "expected": "C8-U4: an error-named constant rebound on a dormant path is not bound once: still an obligation.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U3-count-control",
+      "expected": "C8-U3: one NonGuard with count=2 declares both identical forward reads; the row is credited.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U3-count-too-high",
+      "expected": "C8-U3: a count that does not match the identical sites exactly fails.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U3-count-zero",
+      "expected": "C8-U3: a count below one is an invalid declaration.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G1-T11-private-entries",
+      "expected": "C8-G1 (cycle-8 T11): cut detection through table._entries hides an inline refusal; the private read is unwaivable.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G1-T11b-forged-trace",
+      "expected": "C8-G1 (cycle-8 T11b): a forged trace entry through table._calls is unwaivable, and the trace no longer lives on the table.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G1-table-dict",
+      "expected": "C8-G1: table.__dict__ on a dormant path reaches every private member: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G1-engine-private",
+      "expected": "C8-G1: g._always_pass (any g._* name) on a dormant path is refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G1-private-by-string",
+      "expected": "C8-G1: object.__getattribute__(table, '_calls') names a private member by string: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G1-engine-trace-store",
+      "expected": "C8-G1: g._GUARD_TRACES, the engine-owned trace store, is out of reach.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G2-T10-gettrace",
+      "expected": "C8-G2 (cycle-8 T10, as written there: sys imported in the checker): sys.gettrace() tells the tool's run from production; it is now a dynamic, unwaivable name.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G2-getprofile",
+      "expected": "C8-G2: sys.getprofile() is a harness detector of the same kind.",
+      "caught": true
+    },
+    {
+      "id": "TB2-G3-repeats-observed",
+      "expected": "C8-G3: with baseline_repeats=3 every case is run four times uncut before any cut, and the JSON reports each case's observed runs.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U1-untraced-callee-temporary",
+      "expected": "C8-U1: a C-level append restored before the predicate returns is seen at the checkpoint after the call, exactly as the per-instruction check saw it.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U1-subscript-store-temporary",
+      "expected": "C8-U1: a subscript store undone by a delete before return is seen at the checkpoint after the store.",
+      "caught": true
+    },
+    {
+      "id": "TB2-U1-inplace-temporary",
+      "expected": "C8-U1: an in-place += on an input list, undone before return, is seen at the checkpoint after the binary operation.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-kwlist-read",
+      "expected": "T48 (TOOLBATCH2 pre-check finding 3): keyword.kwlist is a list a case can write and a later case read while the certified module looks unchanged; a module.attr read of a certified module must hand out an immutable or certified value.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-algorithms-available-read",
+      "expected": "T48: hashlib.algorithms_available is a set: mutable public data of a certified module, refused.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-default-encoder-read",
+      "expected": "T48: json._default_encoder is an instance whose fields set json.dumps's defaults: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-default-decoder-read",
+      "expected": "T48: json._default_decoder is an instance whose fields set json.loads's defaults: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-template-class-read",
+      "expected": "T48: string.Template is a Python class (its delimiter and pattern are class attributes a case could set): refused.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-textwrapper-class-read",
+      "expected": "T48: textwrap.TextWrapper is a Python class: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-jsondecodeerror-class-read",
+      "expected": "T48: json.JSONDecodeError is a Python class (mutable); only classes CPython marks immutable are accepted.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-enum-member-read",
+      "expected": "T48: an Enum member is an instance that accepts new attributes (re.I.x = 1 succeeds): refused.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-certified-values-control",
+      "expected": "T48 controls: a str and a float literal, builtin functions of a module (math.sqrt, hashlib.sha256), standard-library functions (json.dumps, textwrap.dedent) and two classes CPython marks immutable (itertools.chain, operator.itemgetter, the stated widening) still certify.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-R1b-kwlist-noop-reset",
+      "expected": "T48 (pre-check finding 3, R1b): a no-op reset declared as the seam of a keyword.kwlist write lets a cross-case write earn credit while the certified module looks unchanged (in a fresh process x-bad alone is accepted). The seam's write reaches a certified binding: refused, before the factory runs.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-R3-setattr-json-never-runs",
+      "expected": "T48 (the pre-check's observation): setattr(json, 'dumps', len) in the checker is an unwaivable external_binding_write; the engine runs no case after it, so the engine's own json.dumps is never replaced.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-setattr-json-in-factory-never-runs",
+      "expected": "T48: the same write in the factory body: found by the table-independent scan before the factory first runs, so the factory never executes either.",
+      "caught": true
+    },
+    {
+      "id": "TB4-T61-G07-textwrap-re-cache",
+      "expected": "T61 (REVIEW-etools-tb3-opus finding 1, G07): the predicate reads textwrap.re._cache and the armed control fills re's compile cache (re.compile, a declared call), so x-bad alone is accepted only after the control ran: a chain from a certified module reaches shared state past its first hop. textwrap.re hands out a module: refused before import (external_binding_chain_read), no factory and no case.",
+      "caught": true
+    },
+    {
+      "id": "TB4-T61-G07b-textwrap-re-all-iadd",
+      "expected": "T61 (G07b): the predicate reads textwrap.re.__all__ and the armed control appends to it through __iadd__. Refused before import (a module hop and a dunder hop), no factory and no case.",
+      "caught": true
+    },
+    {
+      "id": "TB4-T61-G07c-alias-noop-reset",
+      "expected": "T61 (G07c): textwrap.re.__all__ bound to a local name, appended to, and declared as a reset seam over a no-op reset. The chain read itself is refused before import, so the alias and the seam never matter.",
+      "caught": true
+    },
+    {
+      "id": "TB4-T61-G10-re-functools-all",
+      "expected": "T61 (G10): re.functools.__all__ read by the predicate and appended to by the armed control. re.functools hands out a module: refused before import.",
+      "caught": true
+    },
+    {
+      "id": "TB4-T61-G11-dumps-globals",
+      "expected": "T61 (G11): json.dumps.__globals__ is json's own namespace; the armed control wrote 'tb3_armed' into it and the predicate read it. A dunder at the second hop: refused before import, and json never gains the name.",
+      "caught": true
+    },
+    {
+      "id": "TB4-T61-G08-module-level-write",
+      "expected": "T61 (REVIEW-etools-tb3-opus finding 2, G08): json.tb3_review_marker = 1 at the checker's top level ran at import, before the static stop. The checker's text is now scanned before it is imported: refused (external_binding_write), nothing imported, and json never gains the name.",
+      "caught": true
+    },
+    {
+      "id": "TB4-T61-chain-control",
+      "expected": "T61 controls: chains past a certified module's first hop that reach only immutable things still certify: a method of a str (string.ascii_letters.upper, a descriptor of an immutable class), a class method of an immutable class (itertools.chain.from_iterable) and a method of a float (math.pi.is_integer).",
+      "caught": true
+    }
+  ]
+}

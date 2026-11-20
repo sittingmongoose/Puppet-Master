@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2396-L15243
+Source lines: L2837-L15687
 
-Source SHA256: `46b65fa5cef7d5b67ad27e23a573b372e74628124d8a2210af1f16d9011b6b4e`
+Source SHA256: `8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537`
 
 ---
 
@@ -1575,6 +1575,7 @@ canonical_text: >-
   separate reader/source-lineage compatibility; JSON diagnostics remain non-authoritative mirrors. Amended
   2026-10-31 (DL-270): SP-335 compresses sealed segments as whole blocks in a sealed container (SP-346), SP-347 adds the group commit control frame, and SP-339 retires the always-on JSON
   mirrors; the active segment keeps flags zero.
+  SP-1100 preserves the exact physical numeric/profile domain and original payload bytes; CV-1100 qualifies only the selected semantic preimage, and SP-1101 authenticates frozen original-recipe selection for retained reads and retries.
 gui_related: false
 gui_classification_reason: "This unit preserves backend on-disk seglog wire-format requirements."
 split_recommended: false
@@ -6514,8 +6515,6 @@ preserved_exact_tokens:
 - preview.session.started
 - preview.session.stopped
 - preview.session.refreshed
-- browser.session.navigated
-- browser.session.resized
 - browser.context_captured
 negative_constraints: []
 preserved_contractrefs: []
@@ -12809,7 +12808,11 @@ unit_type: compatibility_disposition
 status: retired
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  SP-001 is retired as active source-preserving product coverage after Phase 2B batch 180. storage-plan-S0001 through S0127 are covered by fine-grained SP-002 through SP-212 or explicit split coverage, while storage-plan-S0128 through S0130 are generated PlanUnits and Migration Coverage audit material. SP-001 remains only a generated-artifact residual for migration lineage and must not override implementation-facing Storage Plan units.
+  SP-001 is retired as active source-preserving product coverage after Phase 2B batch 180.
+  storage-plan-S0001 through S0127 are covered by fine-grained SP-002 through SP-212 or explicit split
+  coverage, while storage-plan-S0128 through S0130 are generated PlanUnits and Migration Coverage audit
+  material. SP-001 remains only a generated-artifact residual for migration lineage and must not override
+  implementation-facing Storage Plan units.
 gui_related: true
 gui_classification_reason: >-
   The retired generated residual preserves GUI-bearing historical bridge metadata from storage-plan-S0129, but the live SP-001 disposition is migration/audit lineage rather than product GUI coverage.

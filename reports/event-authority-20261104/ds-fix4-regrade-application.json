@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.ds.fix4.assessment_update.v1",
+  "applied_at_utc": "2026-11-05T08:22:28.632095+00:00",
+  "source_revision": "f479a6eaee994bbc34b14395aedf7a56c124b46e",
+  "base_revision": "57c28f706e10dd9f7c6b13ed5e962de74e9a6ea5",
+  "purpose": "Required self-regrade and re-anchoring after rebase. All sixty criterion statuses unchanged; no admission, registry or historical receipt rewrite.",
+  "files": [
+    {
+      "path": "reports/event-authority-20261104/DS.selfgrade.json",
+      "before_sha256": "1f3f589822fadf6ed95c1bd23d27b1f75e3eef41d19c92a4fa6b244f6db128d4",
+      "after_sha256": "829a7d36e0a5c7db374d5d0ba9172a069b1dad7ca6a1967909d8196278e5bdd1"
+    }
+  ],
+  "current_selfgrade_citations": 294,
+  "reanchored_citations": 127,
+  "replacement_quotes": 3,
+  "grades": [
+    {
+      "event_type": "context.compaction.completed",
+      "before_pass_count": 11,
+      "after_pass_count": 11
+    },
+    {
+      "event_type": "browser.workspace.created",
+      "before_pass_count": 11,
+      "after_pass_count": 11
+    },
+    {
+      "event_type": "browser.workspace.reset",
+      "before_pass_count": 11,
+      "after_pass_count": 11
+    },
+    {
+      "event_type": "workspace.layout_changed",
+      "before_pass_count": 11,
+      "after_pass_count": 11
+    },
+    {
+      "event_type": "terminal.workgroup_moved",
+      "before_pass_count": 10,
+      "after_pass_count": 10
+    }
+  ],
+  "preserved_assessment": {
+    "path": "reports/event-authority-20261104/depth-b1-seal-families.json",
+    "sha256": "535b9ea34754b03edb19e15e67650e13546fb8345ae5a8121f1646e87c9ff035"
+  },
+  "owner_re_adjudication": {
+    "ACD-461": "Stronger Project-only/app non-emission contract; same criterion statuses.",
+    "CV-329": "Stronger Project-only envelope consumer; app candidate/receipts explicitly confer no admitted sibling or event replay/checkpoint. Same criterion statuses."
+  }
+}

@@ -1,40 +1,40 @@
 # Shard Index: Plans/Multi-Account.md
 
-Generated: 2026-11-04T16:52:04Z
+Generated: 2026-11-13T15:35:54Z
 
-Source SHA256: `20bc6cdaf237934560a847048ee0b4cd0bec2fca90152d0fb6a88a474bceb2af`
+Source SHA256: `5428a3a6244d5d451d2b68857de5b7035b2d85ba353dd0f9f19a8a0c9c51240d`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `6ac82465ff0b20f35f8f6c25dbeb4a4999e9d9ae2034dcb6df31269c9a4082a5`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L19 `8cc350f19922a61cab4e2ac653878d77264cfb8aaa6ad2c7831a562c9acc8e21`
-- [003 - 1. Purpose and scope](003-1.-purpose-and-scope.md) L21-L65 `cdbfef09a88337d7bdb04c17faee089bb6020b22cc9c11dc8623db6966d52e86`
-- [004 - 2. References](004-2.-references.md) L66-L78 `43b2659d2e43ff69f82f69d69e49cb2dc19058a2a2ea89941ac0cf44d4786ee8`
-- [005 - Canonical data-shape reconciliation](005-canonical-data-shape-reconciliation.md) L80-L107 `df7137cdd15a5a2eb3637143e590f1f7fd6369a105d0c3f759432a3c2ae914f6`
-- [006 - 3. Assessment: what we have and gaps (filled)](006-3.-assessment-what-we-have-and-gaps-filled.md) L109-L358 `f590357da99baae91622037eebfab120078a580a4664feb6da81c3148bf9acba`
-- [007 - 5. Auto-rotation](007-5.-auto-rotation.md) L359-L424 `367f10036817ed226b962271e35f928712c2872aaabd3002ad885a90818669af`
-- [008 - 6. Provider-specific behavior](008-6.-provider-specific-behavior.md) L425-L486 `5f05ee33fc9ab3133be4653652b782aef93db7f89da444116a3098c3a60cf856`
-- [009 - 7. Runner / orchestration contract](009-7.-runner-orchestration-contract.md) L487-L523 `24174a7bf315a4c5c72800ad3ac663a2a75c5f4eb6ee54eb0ec8df3ca69133e4`
-- [010 - 8. Usage and pick-best](010-8.-usage-and-pick-best.md) L524-L546 `05f46b27e73ba2061bd4889fae01d005dde5c929f3c6750c0b428d85fab63466`
-- [011 - 9. GUI requirements (UX only)](011-9.-gui-requirements-ux-only.md) L547-L739 `aa2fcf166fe95cd5e69555759e26c05c8a5d08952f9f7fd199a3eefc64e312c5`
-- [012 - 10. Phase 2 (native auth) -- when available](012-10.-phase-2-native-auth-when-available.md) L740-L749 `0d006e3a5227d222a54b25cbef70d2633fc23173d4c6de077bc3ff037595636a`
-- [013 - 11. Open points for implementer](013-11.-open-points-for-implementer.md) L751-L756 `5c2d15e8a8200f21f60b66ef3dbd914779dcf8219b238a2835ccd281448b2185`
-- [014 - Operational Identity Addendum for GitHub Actions and Docker Manager (2026-03-12)](014-operational-identity-addendum-for-github-actions-and-docker-mana.md) L757-L771 `878289d9d8a68c3f92f25febe462f4776d3c316ad6cb95cdb6e7314c95bdccd8`
-- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L773-L777 `cf7d16bcf1341300bdee8e3829bc7204c494e8198fcdbdd1a89f4f25dac3ea75`
-- [016 - PlanUnits](016-planunits.md) L779-L838 `535348a7ab1ec5ff4ecdf236a3a9322dd4744fe2e3d04044757d2fdfbf556e57`
-- [017 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](017-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L840-L4881 `c977389156ec787803c7bb44627fae842d54ef3b06fa0e8377d5e0f16375c1c0`
-- [018 - Migration Coverage](018-migration-coverage.md) L4883-L4893 `8cabd242048c4da06cbce26dba808d2fcbb49634316e8b527313acdc7a1b460b`
-- [019 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L4896-L4948 `8b48bcf7d934a5315279bdc6bdcffcf340af0eb239687d950a51fb6646585dfe`
-- [020 - Ledger Compile Addendum - pldg-20260629-001-feature-name](020-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L4950-L5065 `b0e1e948bc06bc475e14a3e28782e5f74584a2ce30a8f38b54c602f8c7f84676`
-- [021 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](021-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L5067-L5151 `add960e79cfb2198470dc07115e5e15a3b1d41445331c9051e23ee0c0720b8ae`
-- [022 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](022-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L5153-L5222 `6bb6983eebf5ca760dd764f5f286c22e3e0ec879d25563bd6baef87ef38b3cfa`
-- [023 - FABLE Residual Multi-Account Contract Cleanup Addendum - 2026-07-07](023-fable-residual-multi-account-contract-cleanup-addendum-2026-07-0.md) L5224-L5285 `cf700bd4d94355065c54291a0865544b34dd4b6f70225e569bb214ba1d9bf4a5`
-- [024 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](024-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L5287-L5291 `994e5342c4e171f65a71e4a8561f4a23b58e752c8998179162f3f302ce481871`
-- [025 - Usage GUI Propagation Addendum - 2026-07-09](025-usage-gui-propagation-addendum-2026-07-09.md) L5293-L5362 `419398aa9055c0aca1e170da18387422558615fcfba89bcbcbcff38b553e9593`
-- [026 - `run.started` Multi-Account owner join](026-run.started-multi-account-owner-join.md) L5365-L5371 `6d1079b0b73ad98e3bc83199fb39476c85db7267c1d818e72738e60b885ef884`
-- [027 - Remaining Runtime Integration Addendum - Provider Installation And Credential Custody (2026-08-13)](027-remaining-runtime-integration-addendum-provider-installation-and.md) L5373-L5500 `2c305378032b7cb5fc95431fb17c92750f35f09dde29cb6d0b267dca2b7332f0`
-- [028 - Server command-gap owner closure - authentication-profile management (2026-09-01)](028-server-command-gap-owner-closure-authentication-profile-manageme.md) L5502-L5542 `ea426d0d0c7a29b3e493bad5ad3fbaa7738cd63dc3ec079de57492b7067b94b8`
-- [029 - Notebook Account Boundary Addendum (2026-09-05)](029-notebook-account-boundary-addendum-2026-09-05.md) L5544-L5587 `169ef97bb1b64b8cf6dfe9a0b93195c9ff4239894fe24a160d5b03993c0d7292`
-- [030 - Per-Provider Auto-Switch Addendum (2026-10-09)](030-per-provider-auto-switch-addendum-2026-10-09.md) L5589-L5854 `f0251ff9a66fb45dd892229316374928608f66deee1bd6c731ff227c8eb74bfb`
+- [001 - Preamble](001-preamble.md) L1-L1 `3678c43c08d23b9fb2bff35c42d0a9f12d292121dbcfe2d6bdbe56bf29448ae0`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L19 `4ba939d2b7d83ccb1e576d1d21d32ea2b6ef07525117174b6afb97517f9e86ed`
+- [003 - 1. Purpose and scope](003-1.-purpose-and-scope.md) L21-L65 `f9b05dc84829ef5858049849bb01284e5864697b346a2421b306bc1036f2b6a8`
+- [004 - 2. References](004-2.-references.md) L66-L78 `4ff03fbee78102ac5cb50055762e09d10abee6899ea4c96d5870cb19d610eae6`
+- [005 - Canonical data-shape reconciliation](005-canonical-data-shape-reconciliation.md) L80-L107 `72e79f3b409a327bb66b8c0fc0b9b4fff5f7bb2e3c2afb4b6e5f4e85d6aa2d54`
+- [006 - 3. Assessment: what we have and gaps (filled)](006-3.-assessment-what-we-have-and-gaps-filled.md) L109-L359 `edaedc9c2680758b0e0726c80bc0def3d71b62a17486139d6168eddb526e4d7f`
+- [007 - 5. Auto-rotation](007-5.-auto-rotation.md) L360-L425 `a81a605111333086cde8b1ea2d42015dd4fa4deb2cc15fce2647d0e8d242863a`
+- [008 - 6. Provider-specific behavior](008-6.-provider-specific-behavior.md) L426-L487 `eb878844b1e0c88471b73797129cc18c1671c7d7cf93dc14b8c95f3c6de135f5`
+- [009 - 7. Runner / orchestration contract](009-7.-runner-orchestration-contract.md) L488-L524 `aa1f069e5ff13e5b9a989a6cbd7a831eca58a8ad40cdf03c3423fc5ed0ef71b2`
+- [010 - 8. Usage and pick-best](010-8.-usage-and-pick-best.md) L525-L547 `067ac6f5e5584b3a4648fa4adb67d6b626d489979b1fa63f338156bf08769050`
+- [011 - 9. GUI requirements (UX only)](011-9.-gui-requirements-ux-only.md) L548-L743 `7e28125e44da1020b59719f4b6669aa744c2f52750a9894ae33ed35e96b98bb5`
+- [012 - 10. Phase 2 (native auth) -- when available](012-10.-phase-2-native-auth-when-available.md) L744-L753 `16356aed0b43eb8391b8cd8cf8b7aad6b98d6629827fd554c3d532b67262b466`
+- [013 - 11. Open points for implementer](013-11.-open-points-for-implementer.md) L755-L760 `61eb5a7ec370755bde65843349fb6d7080ab83736c7626c9ccf258292fcbeb85`
+- [014 - Operational Identity Addendum for GitHub Actions and Docker Manager (2026-03-12)](014-operational-identity-addendum-for-github-actions-and-docker-mana.md) L761-L775 `eb97968b63b1b40388aed44801376792512648349a75e8d794380f44ebe22c9c`
+- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L777-L781 `34170f47488a14397e50f9929086f8a23c358bc3a5243bf6d8b93fac35f491c2`
+- [016 - PlanUnits](016-planunits.md) L783-L842 `7d5c8274e628fb848316a184a53f124ff7cbfcb0c77c5c5aef54d267b359afb1`
+- [017 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](017-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L844-L4895 `7ed31a24cc53d9974d0eaa87cdf8e8de9439b75f6ab879b348278ae9229f9910`
+- [018 - Migration Coverage](018-migration-coverage.md) L4897-L4907 `d8f92f99bc80f2663aa5278750ac519a3dc6f62f0cd71d841714fe6b1dda8865`
+- [019 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L4910-L4962 `354a4fb112fe775ce6dea295417f059c8f67895c30b9e730b46940943b7c1686`
+- [020 - Ledger Compile Addendum - pldg-20260629-001-feature-name](020-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L4964-L5079 `777a7bc3405b904c41d24f042df5082012d3d22a7cb5f4ca1ecc73e47f3b247c`
+- [021 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](021-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L5081-L5165 `3ef794f127ff665410f6de48fb25936d938bdee0071777b925c66ca769383100`
+- [022 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](022-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L5167-L5236 `b6f91eb583e33260d317040297f9d906fd37ef257c6c68d6e4edf64cac415056`
+- [023 - FABLE Residual Multi-Account Contract Cleanup Addendum - 2026-07-07](023-fable-residual-multi-account-contract-cleanup-addendum-2026-07-0.md) L5238-L5299 `e1306de79f10b4c35d88c7e9dd49f8d52ffd02ec9d605f79e6a5bcbbc9501a09`
+- [024 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](024-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L5301-L5305 `2cb5b94bbf77bf0a76d6669dff3bc60fd7561b843eafab53a8e548168e3c239c`
+- [025 - Usage GUI Propagation Addendum - 2026-07-09](025-usage-gui-propagation-addendum-2026-07-09.md) L5307-L5376 `c02bae9cc3902b641524428760df2e81a8e8bc94e4f595bacd7f0d87bd6f07ab`
+- [026 - `run.started` Multi-Account owner join](026-run.started-multi-account-owner-join.md) L5379-L5385 `bef3711e06a0c9e431fc7171bd3451734c81f42bcf919ce97cabf4ec9c2a7b63`
+- [027 - Remaining Runtime Integration Addendum - Provider Installation And Credential Custody (2026-08-13)](027-remaining-runtime-integration-addendum-provider-installation-and.md) L5387-L5514 `4fa9b6d43bca0011c4186b87ffe1eef18e9560f895a8c05c979429da006fad58`
+- [028 - Server command-gap owner closure - authentication-profile management (2026-09-01)](028-server-command-gap-owner-closure-authentication-profile-manageme.md) L5516-L5556 `b9aa74d17fa23a0fcfdbd223896c49a79df1d36caff7349f3c4438c620aea974`
+- [029 - Notebook Account Boundary Addendum (2026-09-05)](029-notebook-account-boundary-addendum-2026-09-05.md) L5558-L5601 `9a9efd84ee76b6697df805c2617a32f9b47b461a3dd80c4f37897354969e0b0e`
+- [030 - Per-Provider Auto-Switch Addendum (2026-10-09)](030-per-provider-auto-switch-addendum-2026-10-09.md) L5603-L5868 `61e46295809f8b5ec6df5292b366a1ad27ff44fa7412d6a34b9ec8e00b1fa357`

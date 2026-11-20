@@ -1314,7 +1314,7 @@
     var e=eligible(r),pr=progress(r);
     return '<article class="system-card plan-doc plan-preview pd-'+esc(r.status)+'" data-k="plan-preview-'+esc(r.plan_id)+'" data-plan-id="'+esc(r.plan_id)+'">'+
       '<div class="plan-preview-kicker">'+ICON.plan+'<span>Plan</span><span>V'+r.version+' · '+esc(r.strategy)+'</span></div>'+
-      '<button class="plan-preview-open" data-action="pd-info" data-id="'+esc(r.plan_id)+'"><strong>'+esc(r.title)+'</strong>'+(summary?'<span>'+esc(summary)+'</span>':'')+'</button>'+
+      '<button class="plan-preview-open" data-action="pd-info" data-id="'+esc(r.plan_id)+'"><strong class="plan-preview-title">'+esc(r.title)+'</strong>'+(summary?'<span>'+esc(summary)+'</span>':'')+'</button>'+
       (window.PM56_SCHED?.planSummary(r.plan_id)||'')+
       '<p class="plan-preview-meta"><span>'+steps(body(r)).length+(steps(body(r)).length===1?' step':' steps')+'</span><span>'+esc(BUILD_STATUS[r.status]||r.status)+'</span></p>'+
       '<div class="pd-foot pmx-actions">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-open-version','Open plan',r.plan_id,' data-version="'+r.version+'"')+

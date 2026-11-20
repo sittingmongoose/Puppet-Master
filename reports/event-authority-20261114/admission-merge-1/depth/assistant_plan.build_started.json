@@ -1,0 +1,295 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-1",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-15.36",
+  "sha256": "fb6a2a17c4c6fdbe9f97ce5c59222c870a3ca5cffc8d422949d4a7c769720c1e",
+  "family_count": 82,
+  "row_pointer": "#/families/81"
+ },
+ "base_commit": "03a09c66360991e5fb7b5620a84bc85b681e3635",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "assistant_plan.build_started",
+   "family_id": "event-family-assistant-plan-build-started",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-15.36 as #/families/81 (canonical row SHA-256 1aeb855343797f2c1db1d5449c24cd1d93aa4e5ab011c69232e86e6692bfbf41); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/81",
+       "line_start": 5454,
+       "line_end": 5538,
+       "quote": "\"event_type\": \"assistant_plan.build_started\"",
+       "quote_line": 5457,
+       "file_sha256": "fb6a2a17c4c6fdbe9f97ce5c59222c870a3ca5cffc8d422949d4a7c769720c1e",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This exact newly authored owner unit governs this family; its own CV/SP companions bind the technical contract.",
+     "evidence": [
+      {
+       "path": "Plans/Assistant_Plan_Runtime.md",
+       "unit": "APR-1500",
+       "line_start": 1034,
+       "line_end": 1034,
+       "quote": "plan_unit_id: APR-1500",
+       "quote_check": "exact",
+       "quote_scope": "unit APR-1500, Plans/Assistant_Plan_Runtime.md:1031-1087",
+       "file_sha256": "193a9cfcb89a791de13e0b573c853f07d7c3fc0d7200bea90b930ffc1249c51c"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact original owning command/emitter, complete native source/result, ordering and first-receipt custody are specified. Native implementation remains unavailable until original owner and admission prerequisites exist.",
+     "evidence": [
+      {
+       "path": "Plans/Assistant_Plan_Runtime.md",
+       "unit": "APR-1500",
+       "line_start": 1076,
+       "line_end": 1076,
+       "quote": "**Producer and original source.** AssistantPlanRuntime build admission for cmd.chat.plan.build or cmd.chat.plan.build_with_crew; Scheduling may invoke that same owner for one admitted occurr",
+       "quote_check": "exact",
+       "quote_scope": "unit APR-1500, Plans/Assistant_Plan_Runtime.md:1031-1087",
+       "file_sha256": "193a9cfcb89a791de13e0b573c853f07d7c3fc0d7200bea90b930ffc1249c51c"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Distinct closed Project/application selectors (where applicable) resolve; all 19 payload files pass structural schema validation and eager reference resolution.",
+     "evidence": [
+      {
+       "path": "Plans/Assistant_Plan_Runtime.md",
+       "unit": "APR-1500",
+       "line_start": 1078,
+       "line_end": 1078,
+       "quote": "**Payload and scope.** CV-1500 selects `Plans/event_authority_w3g/payloads/assistant_plan_build_started.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.jso",
+       "quote_check": "exact",
+       "quote_scope": "unit APR-1500, Plans/Assistant_Plan_Runtime.md:1031-1087",
+       "file_sha256": "193a9cfcb89a791de13e0b573c853f07d7c3fc0d7200bea90b930ffc1249c51c"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact source/envelope/scope/subject joins and per-family immutable original operation identity/key recipes adopt CV-317/CV-366 without a local number/timestamp implementation.",
+     "evidence": [
+      {
+       "path": "Plans/Assistant_Plan_Runtime.md",
+       "unit": "APR-1500",
+       "line_start": 1078,
+       "line_end": 1078,
+       "quote": "**Payload and scope.** CV-1500 selects `Plans/event_authority_w3g/payloads/assistant_plan_build_started.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.jso",
+       "quote_check": "exact",
+       "quote_scope": "unit APR-1500, Plans/Assistant_Plan_Runtime.md:1031-1087",
+       "file_sha256": "193a9cfcb89a791de13e0b573c853f07d7c3fc0d7200bea90b930ffc1249c51c"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Original operation/result and first receipt replay never reexecute work; changed semantic request conflicts and historical read is separate from current append.",
+     "evidence": [
+      {
+       "path": "Plans/Assistant_Plan_Runtime.md",
+       "unit": "APR-1500",
+       "line_start": 1080,
+       "line_end": 1080,
+       "quote": "**Replay, consumer and checkpoints.** SP-1500 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original el",
+       "quote_check": "exact",
+       "quote_scope": "unit APR-1500, Plans/Assistant_Plan_Runtime.md:1031-1087",
+       "file_sha256": "193a9cfcb89a791de13e0b573c853f07d7c3fc0d7200bea90b930ffc1249c51c"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Case L-3 Runtime/run/node/attempt; this exact event requires a real admitted PlanRun and its original completion anchor.",
+     "evidence": [
+      {
+       "path": "Plans/Assistant_Plan_Runtime.md",
+       "unit": "APR-1500",
+       "line_start": 1082,
+       "line_end": 1082,
+       "quote": "RP-RUNTIME-365D@1.0.0`. Case L-3 Runtime/run/node/attempt; this exact event requires a real admitted PlanRun and its original completion anchor. No reference extends the linked body's retent",
+       "quote_check": "exact",
+       "quote_scope": "unit APR-1500, Plans/Assistant_Plan_Runtime.md:1031-1087",
+       "file_sha256": "193a9cfcb89a791de13e0b573c853f07d7c3fc0d7200bea90b930ffc1249c51c"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Whole original source/result and first full-value receipt, no-body/ref-only disclosure, coherent backup/restore and read-time restrictions are bound without retaining source content by reference.",
+     "evidence": [
+      {
+       "path": "Plans/Assistant_Plan_Runtime.md",
+       "unit": "APR-1500",
+       "line_start": 1082,
+       "line_end": 1082,
+       "quote": "**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache ",
+       "quote_check": "exact",
+       "quote_scope": "unit APR-1500, Plans/Assistant_Plan_Runtime.md:1031-1087",
+       "file_sha256": "193a9cfcb89a791de13e0b573c853f07d7c3fc0d7200bea90b930ffc1249c51c"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The current Plan control build becomes building after exact-version admission. Exactly one new PlanRun freezes the approved version/hash; Crew, Goal association and To-Dos commit under their existing atomic owners. An existing paused/waiting run resuming is not another build_started.",
+     "evidence": [
+      {
+       "path": "Plans/Assistant_Plan_Runtime.md",
+       "unit": "APR-1500",
+       "line_start": 1039,
+       "line_end": 1039,
+       "quote": "The current Plan control build becomes building after exact-version admission. Exactly",
+       "quote_check": "exact",
+       "quote_scope": "unit APR-1500, Plans/Assistant_Plan_Runtime.md:1031-1087",
+       "file_sha256": "193a9cfcb89a791de13e0b573c853f07d7c3fc0d7200bea90b930ffc1249c51c"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact named passive family reader adopts SP-278 generic projector/checkpoint and full captured-range semantics. It owns no persisted filtered projection or private checkpoint.",
+     "evidence": [
+      {
+       "path": "Plans/Assistant_Plan_Runtime.md",
+       "unit": "APR-1500",
+       "line_start": 1080,
+       "line_end": 1080,
+       "quote": "reader.assistant_plan.build_started.history.v1@1.0.0` is the sole newly authored family history reader for Assistant Chat Plan history and exact-version details. It adopts SP-278's `projecto",
+       "quote_check": "exact",
+       "quote_scope": "unit APR-1500, Plans/Assistant_Plan_Runtime.md:1031-1087",
+       "file_sha256": "193a9cfcb89a791de13e0b573c853f07d7c3fc0d7200bea90b930ffc1249c51c"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Original recipe/edition dispatch, writer cutoff, reader withdrawal and authentic generic rebuild fences are explicit. Future/unknown/withdrawn selectors are unavailable.",
+     "evidence": [
+      {
+       "path": "Plans/Assistant_Plan_Runtime.md",
+       "unit": "APR-1500",
+       "line_start": 1082,
+       "line_end": 1082,
+       "quote": "Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cut",
+       "quote_check": "exact",
+       "quote_scope": "unit APR-1500, Plans/Assistant_Plan_Runtime.md:1031-1087",
+       "file_sha256": "193a9cfcb89a791de13e0b573c853f07d7c3fc0d7200bea90b930ffc1249c51c"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Executable synthetic oracle (native NOT_RUN): 42 positives and 512 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
+     "evidence": [
+      {
+       "path": "Plans/Assistant_Plan_Runtime.md",
+       "unit": "APR-1500",
+       "line_start": 1084,
+       "line_end": 1084,
+       "quote": "**Criterion 12.** `ATS-1260` and the `assistant_plan.build_started` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fi",
+       "quote_check": "exact",
+       "quote_scope": "unit APR-1500, Plans/Assistant_Plan_Runtime.md:1031-1087",
+       "file_sha256": "193a9cfcb89a791de13e0b573c853f07d7c3fc0d7200bea90b930ffc1249c51c"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,78 @@
+{
+  "schema_id": "pm.assurance.dch_stop_retirement_application.v1",
+  "base_commit": "e34286958a9045ed9fc5fc95a4e23294bbcf1686",
+  "authority_refs": [
+    "DL-406",
+    "DL-427"
+  ],
+  "registry_changed": false,
+  "admission_written": false,
+  "applications": [
+    {
+      "event_type": "chat_run.cancel_requested",
+      "outcome": "conditional_exclusion_retirement",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "application_status": "retirement_specified_cutover_pending",
+      "owner_ref": "Plans/storage-plan.md#SP-628",
+      "replacement": "chat.response_stop_requested",
+      "authority_refs": [
+        "DL-406",
+        "DL-427"
+      ],
+      "conditions": {
+        "replacement_contract_specified": false,
+        "replacement_storage_materialized": false,
+        "native_restart_verified": "NOT_RUN",
+        "native_recovery_verified": "NOT_RUN",
+        "queue_and_three_second_barriers_preserved": true
+      },
+      "historical_bytes": "Retain original bytes/identities/schema/meaning and original retention/access/deletion rules; read-only compatibility, no rewriting/reminting.",
+      "denominator_change": false,
+      "definition_status": "Field/identity/transition/custody mechanics specified; saved-record retention and storage materialization still pending."
+    },
+    {
+      "event_type": "chat_run.cancelled",
+      "outcome": "conditional_exclusion_retirement",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "application_status": "retirement_specified_cutover_pending",
+      "owner_ref": "Plans/storage-plan.md#SP-628",
+      "replacement": "assistant_turn_stop_outcome.outcome=cancelled",
+      "authority_refs": [
+        "DL-406",
+        "DL-427"
+      ],
+      "conditions": {
+        "replacement_contract_specified": false,
+        "replacement_storage_materialized": false,
+        "native_restart_verified": "NOT_RUN",
+        "native_recovery_verified": "NOT_RUN",
+        "queue_and_three_second_barriers_preserved": true
+      },
+      "historical_bytes": "Retain original bytes/identities/schema/meaning and original retention/access/deletion rules; read-only compatibility, no rewriting/reminting.",
+      "denominator_change": false,
+      "definition_status": "Field/identity/transition/custody mechanics specified; saved-record retention and storage materialization still pending."
+    },
+    {
+      "event_type": "chat_run.cancel_timeout",
+      "outcome": "conditional_exclusion_retirement",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "application_status": "retirement_specified_cutover_pending",
+      "owner_ref": "Plans/storage-plan.md#SP-628",
+      "replacement": "assistant_turn_stop_outcome.outcome=timeout",
+      "authority_refs": [
+        "DL-406",
+        "DL-427"
+      ],
+      "conditions": {
+        "replacement_contract_specified": false,
+        "replacement_storage_materialized": false,
+        "native_restart_verified": "NOT_RUN",
+        "native_recovery_verified": "NOT_RUN",
+        "queue_and_three_second_barriers_preserved": true
+      },
+      "historical_bytes": "Retain original bytes/identities/schema/meaning and original retention/access/deletion rules; read-only compatibility, no rewriting/reminting.",
+      "denominator_change": false,
+      "definition_status": "Field/identity/transition/custody mechanics specified; saved-record retention and storage materialization still pending."
+    }
+  ]
+}

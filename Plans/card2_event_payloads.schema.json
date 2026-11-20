@@ -1,0 +1,1535 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/card2-event-payloads/1.0.0",
+  "description": "Prepared unique closed metadata roots; not registry admission. All identifier patterns additionally require recursive full-match validation in the owner oracle.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/browser_session_created"
+    },
+    {
+      "$ref": "#/$defs/browser_session_state_changed"
+    },
+    {
+      "$ref": "#/$defs/browser_session_closed"
+    },
+    {
+      "$ref": "#/$defs/browser_session_promoted"
+    },
+    {
+      "$ref": "#/$defs/browser_session_takeover_state_changed"
+    },
+    {
+      "$ref": "#/$defs/memory_gist_state_changed"
+    }
+  ],
+  "$defs": {
+    "browser_session_created": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "computer_id",
+        "server_id",
+        "storage_instance_id",
+        "owner_operation_id",
+        "browser_session_id",
+        "revision_before",
+        "revision_after",
+        "before_record_ref",
+        "after_record_ref",
+        "changed_fields",
+        "ts",
+        "workspace_id",
+        "previous_session_class",
+        "session_class",
+        "previous_takeover_state",
+        "takeover_state",
+        "previous_lifecycle_state",
+        "lifecycle_state",
+        "owner_change_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "enum": [
+            "pm.browser.session.created.payload.v1",
+            "pm.browser.session.created.payload.application.v1"
+          ]
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "enum": [
+            "project",
+            "application"
+          ]
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 96,
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "thread_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 96,
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "computer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid",
+          "minLength": 36,
+          "maxLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "browser_session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "revision_before": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "revision_after": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615
+        },
+        "before_record_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 192,
+              "pattern": "^[A-Za-z0-9_.:/-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192,
+          "pattern": "^[A-Za-z0-9_.:/-]+$"
+        },
+        "changed_fields": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "created",
+              "lifecycle_state",
+              "session_class",
+              "takeover_state",
+              "workspace_tab_id",
+              "preview_subject_id",
+              "requested_browser_runtime",
+              "effective_browser_runtime",
+              "requested_capabilities",
+              "effective_capabilities",
+              "capability_degradations",
+              "blocked_actions",
+              "permission_tier",
+              "profile_scope",
+              "restore_policy",
+              "url",
+              "viewport",
+              "scroll_position",
+              "zoom_level",
+              "dev_tools_open",
+              "last_error",
+              "reopen_outcome"
+            ]
+          }
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 64
+        },
+        "workspace_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "previous_session_class": {
+          "anyOf": [
+            {
+              "enum": [
+                "workspace_preview",
+                "detached_preview",
+                "automation_session",
+                "normal_browsing"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "session_class": {
+          "enum": [
+            "workspace_preview",
+            "detached_preview",
+            "automation_session",
+            "normal_browsing"
+          ]
+        },
+        "previous_takeover_state": {
+          "anyOf": [
+            {
+              "enum": [
+                "none",
+                "offered",
+                "paused_for_user",
+                "promoted",
+                "stopped_keep_browser"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "takeover_state": {
+          "enum": [
+            "none",
+            "offered",
+            "paused_for_user",
+            "promoted",
+            "stopped_keep_browser"
+          ]
+        },
+        "previous_lifecycle_state": {
+          "anyOf": [
+            {
+              "enum": [
+                "open",
+                "closed"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lifecycle_state": {
+          "enum": [
+            "open",
+            "closed"
+          ]
+        },
+        "owner_change_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        }
+      }
+    },
+    "browser_session_state_changed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "computer_id",
+        "server_id",
+        "storage_instance_id",
+        "owner_operation_id",
+        "browser_session_id",
+        "revision_before",
+        "revision_after",
+        "before_record_ref",
+        "after_record_ref",
+        "changed_fields",
+        "ts",
+        "workspace_id",
+        "previous_session_class",
+        "session_class",
+        "previous_takeover_state",
+        "takeover_state",
+        "previous_lifecycle_state",
+        "lifecycle_state",
+        "owner_change_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "enum": [
+            "pm.browser.session.state_changed.payload.v1",
+            "pm.browser.session.state_changed.payload.application.v1"
+          ]
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "enum": [
+            "project",
+            "application"
+          ]
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 96,
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "thread_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 96,
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "computer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid",
+          "minLength": 36,
+          "maxLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "browser_session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "revision_before": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "revision_after": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615
+        },
+        "before_record_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 192,
+              "pattern": "^[A-Za-z0-9_.:/-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192,
+          "pattern": "^[A-Za-z0-9_.:/-]+$"
+        },
+        "changed_fields": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "created",
+              "lifecycle_state",
+              "session_class",
+              "takeover_state",
+              "workspace_tab_id",
+              "preview_subject_id",
+              "requested_browser_runtime",
+              "effective_browser_runtime",
+              "requested_capabilities",
+              "effective_capabilities",
+              "capability_degradations",
+              "blocked_actions",
+              "permission_tier",
+              "profile_scope",
+              "restore_policy",
+              "url",
+              "viewport",
+              "scroll_position",
+              "zoom_level",
+              "dev_tools_open",
+              "last_error",
+              "reopen_outcome"
+            ]
+          }
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 64
+        },
+        "workspace_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "previous_session_class": {
+          "anyOf": [
+            {
+              "enum": [
+                "workspace_preview",
+                "detached_preview",
+                "automation_session",
+                "normal_browsing"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "session_class": {
+          "enum": [
+            "workspace_preview",
+            "detached_preview",
+            "automation_session",
+            "normal_browsing"
+          ]
+        },
+        "previous_takeover_state": {
+          "anyOf": [
+            {
+              "enum": [
+                "none",
+                "offered",
+                "paused_for_user",
+                "promoted",
+                "stopped_keep_browser"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "takeover_state": {
+          "enum": [
+            "none",
+            "offered",
+            "paused_for_user",
+            "promoted",
+            "stopped_keep_browser"
+          ]
+        },
+        "previous_lifecycle_state": {
+          "anyOf": [
+            {
+              "enum": [
+                "open",
+                "closed"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lifecycle_state": {
+          "enum": [
+            "open",
+            "closed"
+          ]
+        },
+        "owner_change_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        }
+      }
+    },
+    "browser_session_closed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "computer_id",
+        "server_id",
+        "storage_instance_id",
+        "owner_operation_id",
+        "browser_session_id",
+        "revision_before",
+        "revision_after",
+        "before_record_ref",
+        "after_record_ref",
+        "changed_fields",
+        "ts",
+        "workspace_id",
+        "previous_session_class",
+        "session_class",
+        "previous_takeover_state",
+        "takeover_state",
+        "previous_lifecycle_state",
+        "lifecycle_state",
+        "owner_change_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "enum": [
+            "pm.browser.session.closed.payload.v1",
+            "pm.browser.session.closed.payload.application.v1"
+          ]
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "enum": [
+            "project",
+            "application"
+          ]
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 96,
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "thread_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 96,
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "computer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid",
+          "minLength": 36,
+          "maxLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "browser_session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "revision_before": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "revision_after": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615
+        },
+        "before_record_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 192,
+              "pattern": "^[A-Za-z0-9_.:/-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192,
+          "pattern": "^[A-Za-z0-9_.:/-]+$"
+        },
+        "changed_fields": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "created",
+              "lifecycle_state",
+              "session_class",
+              "takeover_state",
+              "workspace_tab_id",
+              "preview_subject_id",
+              "requested_browser_runtime",
+              "effective_browser_runtime",
+              "requested_capabilities",
+              "effective_capabilities",
+              "capability_degradations",
+              "blocked_actions",
+              "permission_tier",
+              "profile_scope",
+              "restore_policy",
+              "url",
+              "viewport",
+              "scroll_position",
+              "zoom_level",
+              "dev_tools_open",
+              "last_error",
+              "reopen_outcome"
+            ]
+          }
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 64
+        },
+        "workspace_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "previous_session_class": {
+          "anyOf": [
+            {
+              "enum": [
+                "workspace_preview",
+                "detached_preview",
+                "automation_session",
+                "normal_browsing"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "session_class": {
+          "enum": [
+            "workspace_preview",
+            "detached_preview",
+            "automation_session",
+            "normal_browsing"
+          ]
+        },
+        "previous_takeover_state": {
+          "anyOf": [
+            {
+              "enum": [
+                "none",
+                "offered",
+                "paused_for_user",
+                "promoted",
+                "stopped_keep_browser"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "takeover_state": {
+          "enum": [
+            "none",
+            "offered",
+            "paused_for_user",
+            "promoted",
+            "stopped_keep_browser"
+          ]
+        },
+        "previous_lifecycle_state": {
+          "anyOf": [
+            {
+              "enum": [
+                "open",
+                "closed"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lifecycle_state": {
+          "enum": [
+            "open",
+            "closed"
+          ]
+        },
+        "owner_change_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        }
+      }
+    },
+    "browser_session_promoted": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "computer_id",
+        "server_id",
+        "storage_instance_id",
+        "owner_operation_id",
+        "browser_session_id",
+        "revision_before",
+        "revision_after",
+        "before_record_ref",
+        "after_record_ref",
+        "changed_fields",
+        "ts",
+        "workspace_id",
+        "previous_session_class",
+        "session_class",
+        "previous_takeover_state",
+        "takeover_state",
+        "previous_lifecycle_state",
+        "lifecycle_state",
+        "owner_change_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "enum": [
+            "pm.browser.session.promoted.payload.v1",
+            "pm.browser.session.promoted.payload.application.v1"
+          ]
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "enum": [
+            "project",
+            "application"
+          ]
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 96,
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "thread_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 96,
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "computer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid",
+          "minLength": 36,
+          "maxLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "browser_session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "revision_before": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "revision_after": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615
+        },
+        "before_record_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 192,
+              "pattern": "^[A-Za-z0-9_.:/-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192,
+          "pattern": "^[A-Za-z0-9_.:/-]+$"
+        },
+        "changed_fields": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "created",
+              "lifecycle_state",
+              "session_class",
+              "takeover_state",
+              "workspace_tab_id",
+              "preview_subject_id",
+              "requested_browser_runtime",
+              "effective_browser_runtime",
+              "requested_capabilities",
+              "effective_capabilities",
+              "capability_degradations",
+              "blocked_actions",
+              "permission_tier",
+              "profile_scope",
+              "restore_policy",
+              "url",
+              "viewport",
+              "scroll_position",
+              "zoom_level",
+              "dev_tools_open",
+              "last_error",
+              "reopen_outcome"
+            ]
+          }
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 64
+        },
+        "workspace_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "previous_session_class": {
+          "anyOf": [
+            {
+              "enum": [
+                "workspace_preview",
+                "detached_preview",
+                "automation_session",
+                "normal_browsing"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "session_class": {
+          "enum": [
+            "workspace_preview",
+            "detached_preview",
+            "automation_session",
+            "normal_browsing"
+          ]
+        },
+        "previous_takeover_state": {
+          "anyOf": [
+            {
+              "enum": [
+                "none",
+                "offered",
+                "paused_for_user",
+                "promoted",
+                "stopped_keep_browser"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "takeover_state": {
+          "enum": [
+            "none",
+            "offered",
+            "paused_for_user",
+            "promoted",
+            "stopped_keep_browser"
+          ]
+        },
+        "previous_lifecycle_state": {
+          "anyOf": [
+            {
+              "enum": [
+                "open",
+                "closed"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lifecycle_state": {
+          "enum": [
+            "open",
+            "closed"
+          ]
+        },
+        "owner_change_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        }
+      }
+    },
+    "browser_session_takeover_state_changed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "computer_id",
+        "server_id",
+        "storage_instance_id",
+        "owner_operation_id",
+        "browser_session_id",
+        "revision_before",
+        "revision_after",
+        "before_record_ref",
+        "after_record_ref",
+        "changed_fields",
+        "ts",
+        "workspace_id",
+        "previous_session_class",
+        "session_class",
+        "previous_takeover_state",
+        "takeover_state",
+        "previous_lifecycle_state",
+        "lifecycle_state",
+        "owner_change_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "enum": [
+            "pm.browser.session.takeover_state_changed.payload.v1",
+            "pm.browser.session.takeover_state_changed.payload.application.v1"
+          ]
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "enum": [
+            "project",
+            "application"
+          ]
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 96,
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "thread_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 96,
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "computer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid",
+          "minLength": 36,
+          "maxLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "browser_session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "revision_before": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "revision_after": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615
+        },
+        "before_record_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 192,
+              "pattern": "^[A-Za-z0-9_.:/-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192,
+          "pattern": "^[A-Za-z0-9_.:/-]+$"
+        },
+        "changed_fields": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "created",
+              "lifecycle_state",
+              "session_class",
+              "takeover_state",
+              "workspace_tab_id",
+              "preview_subject_id",
+              "requested_browser_runtime",
+              "effective_browser_runtime",
+              "requested_capabilities",
+              "effective_capabilities",
+              "capability_degradations",
+              "blocked_actions",
+              "permission_tier",
+              "profile_scope",
+              "restore_policy",
+              "url",
+              "viewport",
+              "scroll_position",
+              "zoom_level",
+              "dev_tools_open",
+              "last_error",
+              "reopen_outcome"
+            ]
+          }
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 64
+        },
+        "workspace_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "previous_session_class": {
+          "anyOf": [
+            {
+              "enum": [
+                "workspace_preview",
+                "detached_preview",
+                "automation_session",
+                "normal_browsing"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "session_class": {
+          "enum": [
+            "workspace_preview",
+            "detached_preview",
+            "automation_session",
+            "normal_browsing"
+          ]
+        },
+        "previous_takeover_state": {
+          "anyOf": [
+            {
+              "enum": [
+                "none",
+                "offered",
+                "paused_for_user",
+                "promoted",
+                "stopped_keep_browser"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "takeover_state": {
+          "enum": [
+            "none",
+            "offered",
+            "paused_for_user",
+            "promoted",
+            "stopped_keep_browser"
+          ]
+        },
+        "previous_lifecycle_state": {
+          "anyOf": [
+            {
+              "enum": [
+                "open",
+                "closed"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lifecycle_state": {
+          "enum": [
+            "open",
+            "closed"
+          ]
+        },
+        "owner_change_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        }
+      }
+    },
+    "memory_gist_state_changed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "computer_id",
+        "server_id",
+        "storage_instance_id",
+        "owner_operation_id",
+        "gist_id",
+        "revision_before",
+        "revision_after",
+        "before_record_ref",
+        "after_record_ref",
+        "changed_fields",
+        "ts",
+        "source",
+        "operation",
+        "previous_verification_state",
+        "verification_state",
+        "previous_pinned",
+        "pinned",
+        "evidence_refs",
+        "owner_change_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "enum": [
+            "pm.memory.gist_state_changed.payload.v1",
+            "pm.memory.gist_state_changed.payload.application.v1"
+          ]
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope_kind": {
+          "enum": [
+            "project",
+            "application"
+          ]
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 96,
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "thread_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 96,
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "computer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid",
+          "minLength": 36,
+          "maxLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "gist_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "revision_before": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "revision_after": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615
+        },
+        "before_record_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 192,
+              "pattern": "^[A-Za-z0-9_.:/-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192,
+          "pattern": "^[A-Za-z0-9_.:/-]+$"
+        },
+        "changed_fields": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "kind",
+              "status",
+              "pinned",
+              "verification_state",
+              "half_life_days",
+              "tags",
+              "claims",
+              "summary",
+              "details",
+              "evidence_refs",
+              "source",
+              "last_access_at",
+              "access_count",
+              "embedding_version",
+              "embed_text_hash",
+              "text_hash",
+              "claim_support",
+              "currentness",
+              "created_at",
+              "updated_at",
+              "deleted",
+              "run_id",
+              "thread_id"
+            ]
+          },
+          "description": "Exact set of changed canonical semantic fields from authenticated complete before/after MemoryGist facts; absence differs from null. Revision is checked separately. Never a selected subset."
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 64
+        },
+        "source": {
+          "enum": [
+            "AutoRunBoundary",
+            "AutoMilestone",
+            "UserManual",
+            "Import"
+          ]
+        },
+        "operation": {
+          "enum": [
+            "verify",
+            "edit",
+            "pin",
+            "unpin",
+            "discard",
+            "automatic"
+          ]
+        },
+        "previous_verification_state": {
+          "anyOf": [
+            {
+              "enum": [
+                "Unverified",
+                "Verified",
+                "Discarded"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verification_state": {
+          "enum": [
+            "Unverified",
+            "Verified",
+            "Discarded"
+          ]
+        },
+        "previous_pinned": {
+          "type": "boolean"
+        },
+        "pinned": {
+          "type": "boolean"
+        },
+        "evidence_refs": {
+          "description": "Complete ordered owner evidence pointers, without a count cap. If the full inline body would exceed 16 KiB, use the SP-337 collection descriptor; resolve the exact canonical MessagePack array before source equality, support and delta checks.",
+          "anyOf": [
+            {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 192,
+                "pattern": "^[A-Za-z0-9_.:/-]+$"
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "size_bytes",
+                "media_type"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$",
+                  "minLength": 64,
+                  "maxLength": 64
+                },
+                "size_bytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 18446744073709551615
+                },
+                "media_type": {
+                  "const": "application/vnd.puppetmaster.memory-evidence-refs+msgpack"
+                }
+              }
+            }
+          ]
+        },
+        "owner_change_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        }
+      }
+    }
+  }
+}

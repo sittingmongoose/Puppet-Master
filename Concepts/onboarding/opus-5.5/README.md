@@ -31,6 +31,8 @@ python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # markers, patches,
 The `--no-usage` / `--no-home` private reference builds were retired on 2026-10-18; `usage_boot.mjs` compares against
 the published `Concepts/PMConcept7.html` from a git ref (`--base-ref`, default `origin/main`) instead.
 
+The build needs a full repository checkout including `Plans/settings_inventory.json`; a Concepts-only checkout fails fast. Verify both: `python3 -B Concepts/onboarding/opus-5.5/tools/build_clean_checkout.test.py`.
+
 `build.py` assembles the live `base/manifest.json` sources. Edit the shell in `base/` (markup in
 `shell.html`, block bodies in `style/` and `script/`); see `base/README.md` for source ownership.
 The one-time split reproduced the historical `b3888fad…` input. Its legacy strip, shell fixes,
@@ -76,6 +78,15 @@ editing a D source without rebuilding PMConcept7 fails the check. D's sources an
 hooks are kit source: `.pmr-cur` in `nier_registry.py`'s cursor defaults and the `.pmr-lock` branch of
 `retChoose` in `src/settings/kit.d/19-nier-parts.js`.
 
+A CSS comment ends at its first `*/`, so a comment that writes a glob or a path — `(width/height/min-*/ overflow)` —
+closes early and its own remaining words become a selector prelude: the browser drops the whole rule after them, with
+no console error and no visible invalid rule in the CSSOM. FO-166 (2026-11-12) found PM6's `.pm-home-surface` rule
+lost that way in `base/style/pm6-css-dashboard.css`. `tools/css_comment_lint.py` (in `lint_sources()` for
+`base/style/` and `src/`, and over the built page's `<style>` bodies in `check()`) tokenizes the text the way a
+browser does and fails on every `*/` left in code, naming the line the comment ended early on and the stray `*/`
+after it. Run it alone with `python3 Concepts/onboarding/opus-5.5/tools/css_comment_lint.py --check`; `--selftest`
+checks the detector itself.
+
 `Concepts/PMConcept7.html` is published only from this generator (2026-09-26 user direction). Plain `build.py` and
 `--publish-pm7` both write only that page (2026-10-20); `--check` fails while it is missing or differs from a fresh
 build by even one byte. The
@@ -116,6 +127,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 
 | Tool | Use |
 |---|---|
+| `tools/cursor_picker_colours.check.mjs` | The cursor pickers: `--set expect` is the hash of the page that was navigated, the full intended URL, taken from that navigation's response, so a right hash fetched from `--set server` cannot pass a different origin's page of the same name. When the browser no longer holds that response (the real 40 MB page), the hash is a fetch of the loaded URL itself. |
 | `tools/scenarios.mjs <out> [--only ids] [--theme t] [--snaps]` | Acceptance scenarios by real clicks; `--snaps` photographs every screen reached. |
 | `tools/owner_fixtures.mjs` | Test-only owner-result fixtures used by the scenarios: explicit request-bound claim/bootstrap/pair/trust, GitHub terminal creation, and protected Recovery Kit/policy results. Missing or mismatched proof must stay pending. |
 | `tools/schema_check.py validate <drafts.json>` / `coverage [--check]` | jsonschema validation of captured drafts against `Plans/product_onboarding_contracts.schema.json`; coverage table. |

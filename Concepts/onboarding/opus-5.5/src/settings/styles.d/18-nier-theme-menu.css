@@ -88,7 +88,7 @@ html[data-o55-nier] .o55nc-pop-eye {
   gap: 9px;
   margin: 0 0 6px;
   padding: 3px 0 3px 9px;
-  font: 500 10.5px/1.2 var(--mono-font, ui-monospace, monospace);
+  font: 500 11px/1.2 var(--mono-font, ui-monospace, monospace);
   letter-spacing: .26em;
   color: var(--o55-nier-ink);
   background: linear-gradient(currentColor, currentColor) 0 0 / 1px 100% no-repeat, linear-gradient(currentColor, currentColor) 0 0 / 4px 1px no-repeat,
@@ -143,7 +143,7 @@ html[data-o55-nier-parts~="headers"] .o55nc-pop-head { border-bottom-color: var(
 }
 .o55nc-pop-foot .o55nc-pop-done:hover { background: color-mix(in srgb, var(--accent-primary) 86%, var(--background)); }
 html[data-o55-nier] .o55nc-pop-foot .o55nc-pop-done { border-color: var(--o55-nier-ink); background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-radius: 0; }
-html[data-o55-nier-parts~="headers"] .o55nc-pop-foot .o55nc-pop-done { font: 500 10.5px/1.2 var(--mono-font); letter-spacing: .22em; text-transform: uppercase; }
+html[data-o55-nier-parts~="headers"] .o55nc-pop-foot .o55nc-pop-done { font: 500 11px/1.2 var(--mono-font); letter-spacing: .22em; text-transform: uppercase; }
 html[data-motion="reduced"] .o55nc-pop-scrim,
 html[data-motion="reduced"] .o55nc-pop-dialog { transition: none; }
 @media (prefers-reduced-motion: reduce) {

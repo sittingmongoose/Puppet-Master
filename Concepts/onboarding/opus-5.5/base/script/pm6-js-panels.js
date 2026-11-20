@@ -823,7 +823,7 @@
     item.innerHTML = '<span class="pm6-tb-project-tile" aria-hidden="true">' + projectEsc(projectMonogram(info.name)) + '</span>' +
       '<span class="pm6-tb-project-text"><b class="pm6-tb-project-name">' + projectEsc(info.name) + '</b>' +
       (where ? '<small class="pm6-tb-project-path">' + projectEsc(where) + '</small>' : '') + '</span>' +
-      '<span class="pm6-tb-project-state" aria-hidden="true">' + (st.key && G && G.calm ? G.calm(st.key, 12) + '<span>' + projectEsc(word) + '</span>' : '') + '</span>';
+      '<span class="pm6-tb-project-state" aria-hidden="true">' + (st.key && G && G.calm ? G.calm(st.key, 12) + '<span class="pm6-tb-project-state-word">' + projectEsc(word) + '</span>' : '') + '</span>';
     return item;
   }
   function renderProjectAll(item) {

@@ -1,0 +1,165 @@
+{
+ "schema_id": "pm.goal_run_replan.v8_adoption.v1",
+ "status": "canonical_source_adoption_prepared_native_installation_not_run",
+ "owner_refs": [
+  "Plans/Executor_Protocol.md#EP-3100",
+  "Plans/Executor_Protocol.md#EP-3101",
+  "Plans/Goal_Runtime_System.md#GRS-3100",
+  "Plans/Goal_Runtime_System.md#GRS-3101",
+  "Plans/Contracts_V0.md#CV-3100",
+  "Plans/Contracts_V0.md#CV-3101",
+  "Plans/storage-plan.md#SP-3100",
+  "Plans/storage-plan.md#SP-3101",
+  "Plans/storage-plan.md#SP-3102",
+  "Plans/Automated_Testing_System.md#ATS-3100"
+ ],
+ "profile_id": "pm.executor.workflow_source.all_writers.v8",
+ "frozen_source": {
+  "root": "/mnt/Cursor/PM-Experiments/goal-replan-combined-source-20260921/v3/",
+  "manifest_sha256": "9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+  "manifest_members": 1580,
+  "frozen_status": "FROZEN_AUTHORED_STOP_V3_PHASE_CORRECTION_PENDING_INDEPENDENT_REVIEW (the frozen STATUS.json is never edited; acceptance is recorded here)",
+  "preimage_path": "Plans/goal_run_replan_contracts/source-v8/installed-profile-preimage.json",
+  "preimage_sha256": "2d69459c1e5ff9c39c3ed234f8b21cd68621b9420b80c1ac9442794a1e4e4155",
+  "frozen_installed_contract_digest": "2d69459c1e5ff9c39c3ed234f8b21cd68621b9420b80c1ac9442794a1e4e4155",
+  "frozen_digest_rule": "sha256 of exact preimage file UTF-8 bytes, including final LF",
+  "whole_members": 1502
+ },
+ "acceptance": {
+  "review": "/mnt/Cursor/PM-Experiments/goal-replan-combined-root-review-20260921/v3/REVIEW.md",
+  "review_sha256": "8579efa736d7cc738fab299cc5339f6178f53aca37f6912ef0f3f557a5e3643b",
+  "verdict": "ACCEPT_WITH_NOTES",
+  "reviewer": "independent Sol 6.1 max review, 2026-11-14",
+  "scope": "Accepts the frozen source proposal, not installation, native cancellation, runtime behaviour or Event depth. Prior findings S-ISSUER, S-CLAIMED, S-FIRST-STOP-ACQUISITION and S-READBACK-RELEASED-IDLE are discharged; T-REPLAY is a nonblocking tooling advisory (correction C8)."
+ },
+ "placement": {
+  "dir": "Plans/goal_run_replan_contracts/source-v8/",
+  "placed_members": 74,
+  "rule": "Placed members are byte-identical copies at their package-relative paths; each equals its manifest entry and, where listed, its preimage whole_members entry. The other preimage whole members (composition banks, inputs, originals) are not copied into this repository: they resolve only against frozen_source.root, each authenticated by its preimage sha256 before use. They are never resolved against canon, a shared checkout or a newer same-ID resource, and a missing or unequal external member makes installation unavailable, never substituted.",
+  "external_whole_members": 1433
+ },
+ "fresh_birth": {
+  "rule": "Only a genuine original Workflow birth installs v8. WorkflowBirth.writer_contract is the v8 constant; WorkflowBirth.installed_contract_digest and combined Enrollment installed_descriptor_sha256 equal the canon adoption digest in adoption-digest.txt. The frozen digest alone never authorizes a birth, because it selects the draft delivery profile (C1). No v3, v6 or v7 birth and no all_writers.stop_block.v1 birth is enrolled, upgraded, cast or late-enrolled; their profiles, keys, headers and generations stay exact.",
+  "isolated_predecessors": [
+   "pm.executor.workflow_source.all_writers.v3",
+   "pm.executor.workflow_source.all_writers.v6",
+   "pm.executor.workflow_source.all_writers.v7",
+   "pm.executor.workflow_source.all_writers.stop_block.v1"
+  ]
+ },
+ "descriptor": {
+  "rule": "The canon adoption descriptor is the JSON object adoption_descriptor below with canon_members filled by the source check; its digest is SHA-256 of the sorted-key compact UTF-8 JSON preimage without prefix or trailing LF (CV-352 profile-digest rule). The frozen descriptor keeps its own pretty-printed-bytes rule. The two digests are distinct and never substituted for each other or for any v6 or v7 birth digest.",
+  "canon_member_paths": [
+   "Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json",
+   "Plans/goal_run_replan_contracts/payload-correspondence.json",
+   "Plans/goal_run_replan_contracts/consumer-bindings.json",
+   "Plans/goal_run_replan_contracts/projection.schema.json",
+   "Plans/goal_run_replan_contracts/physical-families.json",
+   "Plans/goal_run_replan_contracts/cancellation-dependencies.json"
+  ]
+ },
+ "writer": {
+  "principal": "owner.executor.workflow_run.replan.v1",
+  "owner": "Plans/Executor_Protocol.md#EP-3101",
+  "methods_in_order": [
+   "draft.replan.prepare.v3",
+   "draft.replan.apply_native.v3",
+   "draft.replan.finalize_producer.v3",
+   "draft.replan.append_original.v3",
+   "draft.replan.complete.v3",
+   "draft.replan.observe.v3",
+   "draft.replan.read_original.v3",
+   "draft.replan.release.v3"
+  ],
+  "recovery_and_projection": [
+   "draft.replan.reconcile.v3",
+   "draft.replan.project.v3"
+  ],
+  "birth_participant": "draft.replan.enroll_profile.v3",
+  "rule": "Method IDs are the exact frozen v8 identities; the draft. prefix is part of the frozen method namespace, not a status, and no method is renamed. The principal names the one Workflow writer that may append goal_run.replanned; every other route stays refused by RequiredOtherWorkflowWriterSource=false (EP-118)."
+ },
+ "corrections": [
+  {
+   "id": "C1",
+   "title": "Payload successor",
+   "frozen": "inputs/replan-v3/delivery-profile.json selects the draft clock-split payload",
+   "canon": "delivery profile pm.goal_run_replanned.delivery.v3 selects pm.goal_runtime_event.goal_run_replanned.schema.v3 (payload-correspondence.json)",
+   "owner": "CV-3100",
+   "review_item": 2
+  },
+  {
+   "id": "C2",
+   "title": "Idempotency preimage",
+   "frozen": "thirteen-member preimage with expected_goal_revision",
+   "canon": "twelve-member GRS-079 v3 key family preimage",
+   "owner": "SP-3100",
+   "review_item": 2
+  },
+  {
+   "id": "C3",
+   "title": "Descriptor representation",
+   "frozen": "pretty-printed preimage file bytes including LF",
+   "canon": "CV-352 sorted-key compact JSON over adoption_descriptor; both digests kept distinct",
+   "owner": "EP-3100",
+   "review_item": 1
+  },
+  {
+   "id": "C4",
+   "title": "Append durability precedence",
+   "frozen": "two-barrier and first-mint text (PROTOCOL.md, coordinator/protocol.md, replan/protocol.md)",
+   "canon": "SP-336 per-class sync and full flush, SP-347 group commit control frame and exact receipt reconstruction govern every v8 append; barrier-class custody precedes dependent publication; no manifest barrier, missing receipt or supplied never-issued flag mints custody",
+   "owner": "SP-3101",
+   "review_item": 5
+  },
+  {
+   "id": "C5",
+   "title": "Numbers, date-time and retained recipes",
+   "frozen": "source codecs and format strings",
+   "canon": "CV-1100 numbers, CV-1101 date-time profiles and SP-1101 sealed write-time recipe selection at every source, Event, checkpoint and retry boundary; no global cap, no binary64 narrowing, no timestamp rewrite, no current-then-legacy probing, no caller-selected recipe",
+   "owner": "CV-3101",
+   "review_item": 6
+  },
+  {
+   "id": "C6",
+   "title": "Goal body physical edition",
+   "frozen": "Goal body and control read through their JSON-canonical v2 wrappers",
+   "canon": "the current Goal body physical edition DL-270/SP-339 selects (canonical MessagePack under the new schema version with its registered migration edge); GRS-064 semantic inputs unchanged; no header alias and no old-body archive",
+   "owner": "SP-3101",
+   "review_item": 4
+  },
+  {
+   "id": "C7",
+   "title": "Cancel action routes to D06",
+   "frozen": "next_action cancel maps to cancelled (D-R19)",
+   "canon": "the Replan writer refuses to publish next_action cancel; the cancelled successor comes only from the genuine D06 route and goal_run.cancelled v3 (GRS-080, cancellation-dependencies.json)",
+   "owner": "GRS-3100",
+   "review_item": 7
+  },
+  {
+   "id": "C8",
+   "title": "Replay recipe (T-REPLAY)",
+   "frozen": "authoring-reproduction-boundary.json lists compose_whole_banks.py among deterministic checks",
+   "canon": "the frozen whole bytes are authoritative; adoption checks authenticate frozen members by hash and never replay compose_whole_banks.py or refresh the descriptor; a future replay must preserve the frozen ledger or define a stable traversal order before a newly reviewed descriptor is produced",
+   "owner": "EP-3100",
+   "review_item": "T-REPLAY"
+  },
+  {
+   "id": "C9",
+   "title": "Unified run history",
+   "frozen": "schemas/replan-consumer.v4.schema.json is a separate started/cancelled/replanned projector",
+   "canon": "one GRS-3101/SP-3102 reducer branch composes started, replanned, certified and cancelled rows for v8 births inside the mandatory full-prefix projection; the frozen projector is source lineage and draft_replan_projection_checkpoint is superseded by goal_run_history_v8_checkpoint",
+   "owner": "GRS-3101",
+   "review_item": 3
+  }
+ ],
+ "review_items": {
+  "1": "EP-3100 (fresh profile, placement, representation C3, predecessor isolation, certified producer_source.v3 component and source-control and header dependencies by full original-scope correspondence)",
+  "2": "EP-3101 named writer; GRS-3100 and CV-3100 explicit successor C1/C2; SP-3100 identity, lost acknowledgement; GRS-3100 six D-R19 mappings, cancel C7, blocked and stopped resume",
+  "3": "GRS-3101 and SP-3102 unified run history C9 with consumer-bindings.json",
+  "4": "SP-3101 Storage roles, custody, lifetime and C6",
+  "5": "SP-3101 durability and restore C4",
+  "6": "CV-3101 numbers, date-time and retained recipes C5",
+  "7": "EP-3101 and cancellation-dependencies.json",
+  "8": "ATS-3100 executable owner and family checks"
+ }
+}

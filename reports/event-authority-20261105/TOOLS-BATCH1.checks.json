@@ -1,0 +1,1328 @@
+{
+  "tool_batch": 1,
+  "branch": "plans/tools-batch1-20261105",
+  "base": "451738fc0b869f5958d205e96b513af5290f7e5f",
+  "implementation": "266482160bc860da29a0b6632edcb63bfbbcaa7d",
+  "status": "PASS_LOCAL_VERIFICATION",
+  "independent_review": "NOT_RUN",
+  "T9": {
+    "vacuous": "fixed",
+    "reviewed_token_exemptions": "fixed",
+    "per_atom_targets": "supported",
+    "existing_grs027_ledger": {
+      "status": "vacuous",
+      "exit": 2,
+      "targets": 0,
+      "records": 0,
+      "tokens": 0,
+      "registries_checked": 0
+    },
+    "explicit_empty_override": {
+      "status": "vacuous_allowed_by_--allow-empty",
+      "exit": 0
+    },
+    "structured_dispositions": "fixed",
+    "review_driver": {
+      "active_with_exemption": 1,
+      "unchanged_held_with_exemption": 1,
+      "unchanged_retired_with_exemption": 1
+    },
+    "structured_driver": {
+      "active_with_exemption": 1,
+      "held_with_exemption": 0,
+      "retired_with_exemption": 0
+    },
+    "coverage": "atom-to-existing-owner mappings",
+    "required_atoms_file": "enforced",
+    "owner_uniqueness": "per definition"
+  },
+  "T8": {
+    "guard_tool_head": "7bcf23d4d527e6e31a55dd36d9e71d096584a6e9",
+    "witness_flat_distribution": "PASS",
+    "mount_unavailable": "PASS",
+    "scratch_override": "PASS",
+    "dependencies": "Python standard library; Git for --base and self-test"
+  },
+  "regressions": {
+    "caught": 126,
+    "total": 126,
+    "normal": "pass",
+    "optimized": "pass",
+    "standalone": "pass",
+    "added_this_round": 23,
+    "new_regressions_failing_on_base_tool": 18
+  },
+  "assertions": 863,
+  "tests": [
+    {
+      "id": "nonempty-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "api-relative-ledger-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "missing-target-list-is-vacuous",
+      "expected_status": "vacuous",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "empty-queue-is-vacuous",
+      "expected_status": "vacuous",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "explicit-allow-empty",
+      "expected_status": "vacuous_allowed_by_--allow-empty",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "unscoped-reference-copy-is-not-a-target-finding",
+      "expected_status": "vacuous_allowed_by_--allow-empty",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "missing-owner-is-not-a-pass",
+      "expected_status": "vacuous_with_findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "allow-empty-cannot-waive-findings",
+      "expected_status": "vacuous_with_findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "retired-token-without-review-still-fails",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "held-token-without-review-still-fails",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "reviewed-retired-token-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "reviewed-held-token-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-reason",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-reviewed_by",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-review_ref",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-disposition",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-token",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-atom_id",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-queue_id",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-target_plan_unit_ids",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-exemption-review_ref-escape",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-review-status",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-review-linked_atom_ids",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-review-exact_tokens",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "invalid-review-exact_tokens-string",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "same-token-active-label-is-not-a-disposition",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "same-token-active-disposition-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "missing-disposition-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "held-record-cannot-support-retired-exemption",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-for-another-token-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-for-another-atom-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-for-another-queue-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-for-another-scope-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-wider-than-exemption-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "two-entries-for-one-scope-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "unknown-disposition-value-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-without-schema-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-without-targets-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "disposition-list-must-be-a-list",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "accepted-active-elsewhere-conflicts",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "accepted-held-in-another-file-conflicts",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "conflict-in-another-queue-item-still-conflicts",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "overlapping-scope-conflicts",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "malformed-accepted-record-elsewhere-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "pending-record-is-not-a-conflict-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "agreeing-accepted-record-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "other-atom-active-is-not-a-conflict-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "other-token-active-is-not-a-conflict-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "active-in-another-owner-is-not-a-conflict-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "retired-in-one-owner-keeps-the-other-owner-required",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "exemption-reports-its-accepted-disposition",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "overlapping-exemptions-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "canonical-self-review-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "record-cone-escape-refused",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "retirement-cannot-waive-active-token",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "retirement-cannot-waive-registry-hygiene",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "registry-is-not-prose-inline",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "registry-is-not-prose-block",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "per-atom-targets-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "per-atom-targets-cannot-borrow-peer",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "exemption-is-not-token-wide",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "prose-and-registry-must-share-owner",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "unchanged-repair-is-not-a-pass",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "changed-repair-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "new-unit-repair-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "digit-prefix-repair-is-not-skipped",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "invalid-base-is-read-error",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "unknown-source-atom-is-read-error",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "target-with-no-source-atoms-is-vacuous",
+      "expected_status": "vacuous",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "target-with-no-source-atoms-explicit-override",
+      "expected_status": "vacuous_allowed_by_--allow-empty",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "every-atom-explicitly-uncompiled-is-vacuous",
+      "expected_status": "vacuous",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "every-atom-uncompiled-explicit-override",
+      "expected_status": "vacuous_allowed_by_--allow-empty",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "registry-only-scope-keeps-its-hygiene-finding",
+      "expected_status": "vacuous_with_findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "allow-empty-cannot-waive-registry-only-finding",
+      "expected_status": "vacuous_with_findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "decision-only-mapping-is-vacuous",
+      "expected_status": "vacuous",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "atom-mapped-only-to-a-missing-owner",
+      "expected_status": "vacuous_with_findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "missing-required-atoms-file-is-input-error",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "allow-empty-cannot-waive-missing-atoms-file",
+      "expected_status": "error",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": true
+    },
+    {
+      "id": "present-empty-atoms-file-is-vacuous-not-missing",
+      "expected_status": "vacuous",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "partial-scope-stays-pass-and-disclosed-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "compiled-atom-with-empty-token-list-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "compiled-atom-without-token-field-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "duplicate-heading-in-one-document",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "duplicate-heading-cannot-hide-a-registry-error",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "duplicate-fence-in-one-document",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "second-metadata-fence-under-one-heading",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "heading-and-a-fence-in-another-section",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "fence-before-its-heading-is-independent",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "multi-id-fence-is-ambiguous",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "cross-document-duplicate-names-both-places",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "metadata-fence-under-a-deeper-subheading-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "hash-comment-in-a-fence-keeps-the-section-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "single-heading-with-its-own-fence-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "unterminated-own-fence-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "single-headless-fence-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "another-units-fence-inside-a-section-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "untargeted-duplicate-is-not-a-finding-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "decision-log-number-reuse-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "unchanged-short-id-repair-is-not-a-pass",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "changed-short-id-repair-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "one-digit-id-repair-is-not-skipped",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "short-id-named-but-not-targeted-fires",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "unresolved-short-candidate-id-is-disclosed-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "dl-same-document-repeat-is-disclosed",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "dl-same-document-same-decision-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "dl-repair-planunit-only-change-is-a-repair",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "dl-repair-log-only-change-is-reported",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "dl-repair-with-no-occurrence-changed-fires",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "nonexistent-two-digit-repair-id-fires",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "nonexistent-one-digit-repair-id-fires",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "nonexistent-three-digit-repair-id-fires-control",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "ledger-candidate-id-is-set-aside-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "correction-finding-id-is-set-aside-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "quoted-plan-unit-id-is-a-definition",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "single-quoted-plan-unit-id-is-a-definition",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "quoted-own-metadata-fence-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "tilde-fence-is-a-definition",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "tilde-own-metadata-fence-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "heading-without-separator-is-refused",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "level-five-heading-is-refused",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "level-one-heading-is-refused",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "unparsed-plan-unit-id-line-is-refused",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "dotted-sub-id-heading-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "decision-addendum-heading-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    },
+    {
+      "id": "own-fence-under-subheading-registry-is-checked",
+      "expected_status": "findings",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "caught": true
+    },
+    {
+      "id": "own-fence-under-subheading-supplies-registry-control",
+      "expected_status": "pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "caught": true
+    }
+  ],
+  "commands": [
+    {
+      "name": "self-test",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/witness/scripts/pm-ledger-compile-witness.py",
+        "--self-test",
+        "--json"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 1.654,
+      "stdout": "cision_units\": [],\n        \"schema_id\": \"pm.ledger_compile_witness.v2\",\n        \"status\": \"pass\",\n        \"summary\": {\n          \"atoms_reaching_an_owner\": 1,\n          \"declared_target_plan_units\": 1,\n          \"item_tokens\": 1,\n          \"item_tokens_exempted\": 0,\n          \"named_but_not_targeted\": 0,\n          \"named_but_unchanged_since_base\": 0,\n          \"records\": 0,\n          \"records_firing\": 0,\n          \"registries_checked\": 1,\n          \"registry_entries_absent_already_at_base\": 0,\n          \"registry_entries_absent_from_text\": 0,\n          \"repeated_decision_units\": 0,\n          \"repeated_decision_units_with_different_titles\": 0,\n          \"tokens_missing_from_prose\": 0,\n          \"tokens_missing_from_registry\": 0,\n          \"tokens_only_in_companion_outputs\": 0,\n          \"units_with_registry_entries_absent_from_text\": 0,\n          \"unsupported_definition_forms\": 0\n        },\n        \"token_exemptions\": [],\n        \"vacuity_reason\": null,\n        \"vacuous\": false,\n        \"witness_exact_tokens\": [\n          {\n            \"atom\": \"atom-1\",\n            \"exempt_owner_units\": {},\n            \"exempted\": false,\n            \"fires\": false,\n            \"in_companion_outputs_only\": false,\n            \"owner_units\": [\n              \"AA-001\"\n            ],\n            \"queue_id\": \"q-1\",\n            \"required_owner_units\": [\n              \"AA-001\"\n            ],\n            \"token\": \"live token\",\n            \"units_with_both\": [\n              \"AA-001\"\n            ],\n            \"units_with_token_in_prose\": [\n              \"AA-001\"\n            ],\n            \"units_with_token_in_registry\": [\n              \"AA-001\"\n            ]\n          }\n        ],\n        \"witness_registry_hygiene\": [\n          {\n            \"absent_already_at_base\": null,\n            \"entries_absent_from_unit_text\": [],\n            \"fires\": false,\n            \"registry_entries\": 1,\n            \"unit\": \"AA-001\"\n          }\n        ],\n        \"witness_repairs_vs_targets\": []\n      }\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "name": "self-test-optimized",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-O",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/witness/scripts/pm-ledger-compile-witness.py",
+        "--self-test",
+        "--json"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 1.919,
+      "stdout": "cision_units\": [],\n        \"schema_id\": \"pm.ledger_compile_witness.v2\",\n        \"status\": \"pass\",\n        \"summary\": {\n          \"atoms_reaching_an_owner\": 1,\n          \"declared_target_plan_units\": 1,\n          \"item_tokens\": 1,\n          \"item_tokens_exempted\": 0,\n          \"named_but_not_targeted\": 0,\n          \"named_but_unchanged_since_base\": 0,\n          \"records\": 0,\n          \"records_firing\": 0,\n          \"registries_checked\": 1,\n          \"registry_entries_absent_already_at_base\": 0,\n          \"registry_entries_absent_from_text\": 0,\n          \"repeated_decision_units\": 0,\n          \"repeated_decision_units_with_different_titles\": 0,\n          \"tokens_missing_from_prose\": 0,\n          \"tokens_missing_from_registry\": 0,\n          \"tokens_only_in_companion_outputs\": 0,\n          \"units_with_registry_entries_absent_from_text\": 0,\n          \"unsupported_definition_forms\": 0\n        },\n        \"token_exemptions\": [],\n        \"vacuity_reason\": null,\n        \"vacuous\": false,\n        \"witness_exact_tokens\": [\n          {\n            \"atom\": \"atom-1\",\n            \"exempt_owner_units\": {},\n            \"exempted\": false,\n            \"fires\": false,\n            \"in_companion_outputs_only\": false,\n            \"owner_units\": [\n              \"AA-001\"\n            ],\n            \"queue_id\": \"q-1\",\n            \"required_owner_units\": [\n              \"AA-001\"\n            ],\n            \"token\": \"live token\",\n            \"units_with_both\": [\n              \"AA-001\"\n            ],\n            \"units_with_token_in_prose\": [\n              \"AA-001\"\n            ],\n            \"units_with_token_in_registry\": [\n              \"AA-001\"\n            ]\n          }\n        ],\n        \"witness_registry_hygiene\": [\n          {\n            \"absent_already_at_base\": null,\n            \"entries_absent_from_unit_text\": [],\n            \"fires\": false,\n            \"registry_entries\": 1,\n            \"unit\": \"AA-001\"\n          }\n        ],\n        \"witness_repairs_vs_targets\": []\n      }\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "name": "unit-tests",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "tests.test_pm_ledger_compile_witness"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/witness",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 0.235,
+      "stdout": "",
+      "stderr": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.085s\n\nOK\n"
+    },
+    {
+      "name": "new-regressions-on-base-tool",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/old-witness/scripts/pm-ledger-compile-witness.py",
+        "--self-test",
+        "--json"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 2,
+      "expected_exit": [
+        2
+      ],
+      "seconds": 1.399,
+      "stdout": "    \"queue_id\": \"q-1\"\n          }\n        ],\n        \"atoms_without_owner_targets\": [],\n        \"base\": null,\n        \"configuration_findings\": [],\n        \"documents\": [\n          \"owners.md\"\n        ],\n        \"ledger_id\": \"ledger\",\n        \"schema_id\": \"pm.ledger_compile_witness.v2\",\n        \"status\": \"findings\",\n        \"summary\": {\n          \"atoms_reaching_an_owner\": 1,\n          \"declared_target_plan_units\": 1,\n          \"item_tokens\": 1,\n          \"item_tokens_exempted\": 0,\n          \"named_but_not_targeted\": 0,\n          \"named_but_unchanged_since_base\": 0,\n          \"records\": 0,\n          \"records_firing\": 0,\n          \"registries_checked\": 1,\n          \"registry_entries_absent_already_at_base\": 0,\n          \"registry_entries_absent_from_text\": 0,\n          \"tokens_missing_from_prose\": 0,\n          \"tokens_missing_from_registry\": 1,\n          \"tokens_only_in_companion_outputs\": 0,\n          \"units_with_registry_entries_absent_from_text\": 0\n        },\n        \"token_exemptions\": [],\n        \"vacuity_reason\": null,\n        \"vacuous\": false,\n        \"witness_exact_tokens\": [\n          {\n            \"atom\": \"atom-1\",\n            \"exempt_owner_units\": {},\n            \"exempted\": false,\n            \"fires\": true,\n            \"in_companion_outputs_only\": false,\n            \"owner_units\": [\n              \"AA-001\"\n            ],\n            \"queue_id\": \"q-1\",\n            \"required_owner_units\": [\n              \"AA-001\"\n            ],\n            \"token\": \"live token\",\n            \"units_with_both\": [],\n            \"units_with_token_in_prose\": [\n              \"AA-001\"\n            ],\n            \"units_with_token_in_registry\": []\n          }\n        ],\n        \"witness_registry_hygiene\": [\n          {\n            \"absent_already_at_base\": null,\n            \"entries_absent_from_unit_text\": [],\n            \"fires\": false,\n            \"registry_entries\": 0,\n            \"unit\": \"AA-001\"\n          }\n        ],\n        \"witness_repairs_vs_targets\": []\n      }\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "name": "new/cycle5/witness-adjacent",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/new/cycle5/witness-adjacent.py"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 0.155,
+      "stdout": "active False 2 findings\nactive True 1 error\nheld False 2 findings\nheld True 1 error\nledger_retired False 2 findings\nledger_retired True 1 error\n",
+      "stderr": ""
+    },
+    {
+      "name": "new/cycle5/witness-adjacent-structured",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/new/cycle5/witness-adjacent-structured.py"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 0.175,
+      "stdout": "active False 2 findings\nactive True 1 error\nheld False 2 findings\nheld True 0 pass\nledger_retired False 2 findings\nledger_retired True 0 pass\n",
+      "stderr": ""
+    },
+    {
+      "name": "new/cycle6/witness-probes",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/new/cycle6/witness-probes.py"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 0.262,
+      "stdout": "uts': 0, 'units_with_registry_entries_absent_from_text': 1, 'unsupported_definition_forms': 0}\nregistry-only-token-inline 2 findings {'atoms_reaching_an_owner': 1, 'declared_target_plan_units': 1, 'item_tokens': 1, 'item_tokens_exempted': 0, 'named_but_not_targeted': 0, 'named_but_unchanged_since_base': 0, 'records': 0, 'records_firing': 0, 'registries_checked': 1, 'registry_entries_absent_already_at_base': 0, 'registry_entries_absent_from_text': 1, 'repeated_decision_units': 0, 'repeated_decision_units_with_different_titles': 0, 'tokens_missing_from_prose': 1, 'tokens_missing_from_registry': 0, 'tokens_only_in_companion_outputs': 0, 'units_with_registry_entries_absent_from_text': 1, 'unsupported_definition_forms': 0}\nunchanged-repair-control 2 findings {'atoms_reaching_an_owner': 1, 'declared_target_plan_units': 1, 'item_tokens': 1, 'item_tokens_exempted': 0, 'named_but_not_targeted': 0, 'named_but_unchanged_since_base': 1, 'records': 1, 'records_firing': 1, 'registries_checked': 1, 'registry_entries_absent_already_at_base': 0, 'registry_entries_absent_from_text': 0, 'repeated_decision_units': 0, 'repeated_decision_units_with_different_titles': 0, 'tokens_missing_from_prose': 0, 'tokens_missing_from_registry': 0, 'tokens_only_in_companion_outputs': 0, 'units_with_registry_entries_absent_from_text': 0, 'unsupported_definition_forms': 0}\nunchanged-repair-unit-two-digit-id 2 findings {'atoms_reaching_an_owner': 1, 'declared_target_plan_units': 1, 'item_tokens': 1, 'item_tokens_exempted': 0, 'named_but_not_targeted': 0, 'named_but_unchanged_since_base': 1, 'records': 1, 'records_firing': 1, 'registries_checked': 1, 'registry_entries_absent_already_at_base': 0, 'registry_entries_absent_from_text': 0, 'repeated_decision_units': 0, 'repeated_decision_units_with_different_titles': 0, 'tokens_missing_from_prose': 0, 'tokens_missing_from_registry': 0, 'tokens_only_in_companion_outputs': 0, 'units_with_registry_entries_absent_from_text': 0, 'unsupported_definition_forms': 0}\n",
+      "stderr": ""
+    },
+    {
+      "name": "new/cycle7/witness_adjacent",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/new/cycle7/witness_adjacent.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/witness",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/new/cycle7/witness-adjacent.json",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/c7-new"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 0.52,
+      "stdout": "    exit=2 expected=2 status=findings cfg=['ambiguous_owner_unit'] w1=[] err=\nOK  own-fence-under-subheading-ghost-registry            exit=2 expected=None status=findings cfg=[] w1=[] err=\nOK  heading-inside-code-fence                            exit=2 expected=None status=findings cfg=['ambiguous_owner_unit'] w1=[] err=\nOK  untargeted-duplicate-control                         exit=0 expected=0 status=pass cfg=[] w1=[] err=\nOK  dl-same-doc-plus-cross-doc                           exit=2 expected=2 status=findings cfg=['ambiguous_owner_unit'] w1=[] err=\nOK  dl-same-doc-different-decisions                      exit=0 expected=None status=pass cfg=[] w1=[] err=\nOK  dl-repair-only-planunit-changed                      exit=0 expected=None status=pass cfg=[] w1=[(['DL-059'], [], [], [])] err=\nOK  dl-repair-only-log-changed                           exit=0 expected=None status=pass cfg=[] w1=[(['DL-059'], [], [], [])] err=\nOK  dl-repair-neither-changed                            exit=2 expected=2 status=findings cfg=[] w1=[(['DL-059'], [], [], ['DL-059'])] err=\nOK  repair-names-nonexistent-3digit                      exit=2 expected=2 status=findings cfg=[] w1=[(['AA-999'], [], ['AA-999'], [])] err=\nOK  repair-names-nonexistent-2digit                      exit=2 expected=None status=findings cfg=[] w1=[(['AA-99'], [], ['AA-99'], [])] err=\nOK  repair-names-nonexistent-1digit                      exit=2 expected=None status=findings cfg=[] w1=[(['ZZ-9'], [], ['ZZ-9'], [])] err=\nOK  repair-names-only-candidate-id                       exit=0 expected=0 status=pass cfg=[] w1=[([], ['RT-01'], [], [])] err=\nOK  repair-names-short-defined-untargeted                exit=2 expected=2 status=findings cfg=[] w1=[(['AB-02'], [], ['AB-02'], [])] err=\nOK  repair-names-dotted-subid                            exit=0 expected=0 status=pass cfg=[] w1=[(['AA-001'], [], [], [])] err=\nOK  heading-dotted-id-not-definition                     exit=0 expected=None status=pass cfg=[] w1=[] err=\n",
+      "stderr": ""
+    },
+    {
+      "name": "new/real-ledgers",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/new/ledger-scan.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/witness/scripts/pm-ledger-compile-witness.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/real",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/new/real-ledgers.json"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 10.046,
+      "stdout": "Counter({'vacuous': 18, 'findings': 11, 'no-queue': 5, 'error': 3, 'pass': 2})\n",
+      "stderr": ""
+    },
+    {
+      "name": "base/cycle5/witness-adjacent",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/base/cycle5/witness-adjacent.py"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 0.165,
+      "stdout": "active False 2 findings\nactive True 1 error\nheld False 2 findings\nheld True 1 error\nledger_retired False 2 findings\nledger_retired True 1 error\n",
+      "stderr": ""
+    },
+    {
+      "name": "base/cycle5/witness-adjacent-structured",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/base/cycle5/witness-adjacent-structured.py"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 0.157,
+      "stdout": "active False 2 findings\nactive True 1 error\nheld False 2 findings\nheld True 0 pass\nledger_retired False 2 findings\nledger_retired True 0 pass\n",
+      "stderr": ""
+    },
+    {
+      "name": "base/cycle6/witness-probes",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/base/cycle6/witness-probes.py"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 0.274,
+      "stdout": "declared_target_plan_units': 1, 'item_tokens': 1, 'item_tokens_exempted': 1, 'named_but_not_targeted': 0, 'named_but_unchanged_since_base': 0, 'records': 0, 'records_firing': 0, 'registries_checked': 1, 'registry_entries_absent_already_at_base': 0, 'registry_entries_absent_from_text': 1, 'tokens_missing_from_prose': 0, 'tokens_missing_from_registry': 0, 'tokens_only_in_companion_outputs': 0, 'units_with_registry_entries_absent_from_text': 1}\nregistry-only-token-inline 2 findings {'atoms_reaching_an_owner': 1, 'declared_target_plan_units': 1, 'item_tokens': 1, 'item_tokens_exempted': 0, 'named_but_not_targeted': 0, 'named_but_unchanged_since_base': 0, 'records': 0, 'records_firing': 0, 'registries_checked': 1, 'registry_entries_absent_already_at_base': 0, 'registry_entries_absent_from_text': 1, 'tokens_missing_from_prose': 1, 'tokens_missing_from_registry': 0, 'tokens_only_in_companion_outputs': 0, 'units_with_registry_entries_absent_from_text': 1}\nunchanged-repair-control 2 findings {'atoms_reaching_an_owner': 1, 'declared_target_plan_units': 1, 'item_tokens': 1, 'item_tokens_exempted': 0, 'named_but_not_targeted': 0, 'named_but_unchanged_since_base': 1, 'records': 1, 'records_firing': 1, 'registries_checked': 1, 'registry_entries_absent_already_at_base': 0, 'registry_entries_absent_from_text': 0, 'tokens_missing_from_prose': 0, 'tokens_missing_from_registry': 0, 'tokens_only_in_companion_outputs': 0, 'units_with_registry_entries_absent_from_text': 0}\nunchanged-repair-unit-two-digit-id 2 findings {'atoms_reaching_an_owner': 1, 'declared_target_plan_units': 1, 'item_tokens': 1, 'item_tokens_exempted': 0, 'named_but_not_targeted': 0, 'named_but_unchanged_since_base': 1, 'records': 1, 'records_firing': 1, 'registries_checked': 1, 'registry_entries_absent_already_at_base': 0, 'registry_entries_absent_from_text': 0, 'tokens_missing_from_prose': 0, 'tokens_missing_from_registry': 0, 'tokens_only_in_companion_outputs': 0, 'units_with_registry_entries_absent_from_text': 0}\n",
+      "stderr": ""
+    },
+    {
+      "name": "base/cycle7/witness_adjacent",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/base/cycle7/witness_adjacent.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/base-witness",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/base/cycle7/witness-adjacent.json",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/c7-base"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 0.45,
+      "stdout": "                 exit=2 expected=2 status=findings cfg=['ambiguous_owner_unit'] w1=[] err=\nOK  own-fence-under-subheading-ghost-registry            exit=0 expected=None status=pass cfg=[] w1=[] err=\nOK  heading-inside-code-fence                            exit=2 expected=None status=findings cfg=['ambiguous_owner_unit'] w1=[] err=\nOK  untargeted-duplicate-control                         exit=0 expected=0 status=pass cfg=[] w1=[] err=\nOK  dl-same-doc-plus-cross-doc                           exit=2 expected=2 status=findings cfg=['ambiguous_owner_unit'] w1=[] err=\nOK  dl-same-doc-different-decisions                      exit=0 expected=None status=pass cfg=[] w1=[] err=\nOK  dl-repair-only-planunit-changed                      exit=2 expected=None status=findings cfg=[] w1=[(['DL-059'], [], [], ['DL-059'])] err=\nOK  dl-repair-only-log-changed                           exit=0 expected=None status=pass cfg=[] w1=[(['DL-059'], [], [], [])] err=\nOK  dl-repair-neither-changed                            exit=2 expected=2 status=findings cfg=[] w1=[(['DL-059'], [], [], ['DL-059'])] err=\nOK  repair-names-nonexistent-3digit                      exit=2 expected=2 status=findings cfg=[] w1=[(['AA-999'], [], ['AA-999'], [])] err=\nOK  repair-names-nonexistent-2digit                      exit=0 expected=None status=pass cfg=[] w1=[([], ['AA-99'], [], [])] err=\nOK  repair-names-nonexistent-1digit                      exit=0 expected=None status=pass cfg=[] w1=[([], ['ZZ-9'], [], [])] err=\nOK  repair-names-only-candidate-id                       exit=0 expected=0 status=pass cfg=[] w1=[([], ['RT-01'], [], [])] err=\nOK  repair-names-short-defined-untargeted                exit=2 expected=2 status=findings cfg=[] w1=[(['AB-02'], [], ['AB-02'], [])] err=\nOK  repair-names-dotted-subid                            exit=0 expected=0 status=pass cfg=[] w1=[(['AA-001'], [], [], [])] err=\nOK  heading-dotted-id-not-definition                     exit=0 expected=None status=pass cfg=[] w1=[] err=\n",
+      "stderr": ""
+    },
+    {
+      "name": "base/real-ledgers",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/base/ledger-scan.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/base-witness/scripts/pm-ledger-compile-witness.py",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/real",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/base/real-ledgers.json"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 6.396,
+      "stdout": "Counter({'vacuous': 18, 'findings': 11, 'no-queue': 5, 'error': 3, 'pass': 2})\n",
+      "stderr": ""
+    },
+    {
+      "name": "standalone-witness",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/new/cycle6/standalone.py",
+        "witness"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 1.497,
+      "stdout": "cision_units\": [],\n        \"schema_id\": \"pm.ledger_compile_witness.v2\",\n        \"status\": \"pass\",\n        \"summary\": {\n          \"atoms_reaching_an_owner\": 1,\n          \"declared_target_plan_units\": 1,\n          \"item_tokens\": 1,\n          \"item_tokens_exempted\": 0,\n          \"named_but_not_targeted\": 0,\n          \"named_but_unchanged_since_base\": 0,\n          \"records\": 0,\n          \"records_firing\": 0,\n          \"registries_checked\": 1,\n          \"registry_entries_absent_already_at_base\": 0,\n          \"registry_entries_absent_from_text\": 0,\n          \"repeated_decision_units\": 0,\n          \"repeated_decision_units_with_different_titles\": 0,\n          \"tokens_missing_from_prose\": 0,\n          \"tokens_missing_from_registry\": 0,\n          \"tokens_only_in_companion_outputs\": 0,\n          \"units_with_registry_entries_absent_from_text\": 0,\n          \"unsupported_definition_forms\": 0\n        },\n        \"token_exemptions\": [],\n        \"vacuity_reason\": null,\n        \"vacuous\": false,\n        \"witness_exact_tokens\": [\n          {\n            \"atom\": \"atom-1\",\n            \"exempt_owner_units\": {},\n            \"exempted\": false,\n            \"fires\": false,\n            \"in_companion_outputs_only\": false,\n            \"owner_units\": [\n              \"AA-001\"\n            ],\n            \"queue_id\": \"q-1\",\n            \"required_owner_units\": [\n              \"AA-001\"\n            ],\n            \"token\": \"live token\",\n            \"units_with_both\": [\n              \"AA-001\"\n            ],\n            \"units_with_token_in_prose\": [\n              \"AA-001\"\n            ],\n            \"units_with_token_in_registry\": [\n              \"AA-001\"\n            ]\n          }\n        ],\n        \"witness_registry_hygiene\": [\n          {\n            \"absent_already_at_base\": null,\n            \"entries_absent_from_unit_text\": [],\n            \"fires\": false,\n            \"registry_entries\": 1,\n            \"unit\": \"AA-001\"\n          }\n        ],\n        \"witness_repairs_vs_targets\": []\n      }\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "name": "standalone-strict-witness",
+      "argv": [
+        "/usr/bin/python3",
+        "-I",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5/new/cycle7/standalone_strict.py",
+        "witness",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/flat-witness"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 1.452,
+      "stdout": "cision_units\": [],\n        \"schema_id\": \"pm.ledger_compile_witness.v2\",\n        \"status\": \"pass\",\n        \"summary\": {\n          \"atoms_reaching_an_owner\": 1,\n          \"declared_target_plan_units\": 1,\n          \"item_tokens\": 1,\n          \"item_tokens_exempted\": 0,\n          \"named_but_not_targeted\": 0,\n          \"named_but_unchanged_since_base\": 0,\n          \"records\": 0,\n          \"records_firing\": 0,\n          \"registries_checked\": 1,\n          \"registry_entries_absent_already_at_base\": 0,\n          \"registry_entries_absent_from_text\": 0,\n          \"repeated_decision_units\": 0,\n          \"repeated_decision_units_with_different_titles\": 0,\n          \"tokens_missing_from_prose\": 0,\n          \"tokens_missing_from_registry\": 0,\n          \"tokens_only_in_companion_outputs\": 0,\n          \"units_with_registry_entries_absent_from_text\": 0,\n          \"unsupported_definition_forms\": 0\n        },\n        \"token_exemptions\": [],\n        \"vacuity_reason\": null,\n        \"vacuous\": false,\n        \"witness_exact_tokens\": [\n          {\n            \"atom\": \"atom-1\",\n            \"exempt_owner_units\": {},\n            \"exempted\": false,\n            \"fires\": false,\n            \"in_companion_outputs_only\": false,\n            \"owner_units\": [\n              \"AA-001\"\n            ],\n            \"queue_id\": \"q-1\",\n            \"required_owner_units\": [\n              \"AA-001\"\n            ],\n            \"token\": \"live token\",\n            \"units_with_both\": [\n              \"AA-001\"\n            ],\n            \"units_with_token_in_prose\": [\n              \"AA-001\"\n            ],\n            \"units_with_token_in_registry\": [\n              \"AA-001\"\n            ]\n          }\n        ],\n        \"witness_registry_hygiene\": [\n          {\n            \"absent_already_at_base\": null,\n            \"entries_absent_from_unit_text\": [],\n            \"fires\": false,\n            \"registry_entries\": 1,\n            \"unit\": \"AA-001\"\n          }\n        ],\n        \"witness_repairs_vs_targets\": []\n      }\n    }\n  ]\n}\n",
+      "stderr": "DENIED_ATTEMPTS 0 []\n"
+    },
+    {
+      "name": "standalone-scratch",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/flat-witness/pm-ledger-compile-witness.py",
+        "--self-test",
+        "--scratch",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/scratch-override",
+        "--json"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 1.615,
+      "stdout": "cision_units\": [],\n        \"schema_id\": \"pm.ledger_compile_witness.v2\",\n        \"status\": \"pass\",\n        \"summary\": {\n          \"atoms_reaching_an_owner\": 1,\n          \"declared_target_plan_units\": 1,\n          \"item_tokens\": 1,\n          \"item_tokens_exempted\": 0,\n          \"named_but_not_targeted\": 0,\n          \"named_but_unchanged_since_base\": 0,\n          \"records\": 0,\n          \"records_firing\": 0,\n          \"registries_checked\": 1,\n          \"registry_entries_absent_already_at_base\": 0,\n          \"registry_entries_absent_from_text\": 0,\n          \"repeated_decision_units\": 0,\n          \"repeated_decision_units_with_different_titles\": 0,\n          \"tokens_missing_from_prose\": 0,\n          \"tokens_missing_from_registry\": 0,\n          \"tokens_only_in_companion_outputs\": 0,\n          \"units_with_registry_entries_absent_from_text\": 0,\n          \"unsupported_definition_forms\": 0\n        },\n        \"token_exemptions\": [],\n        \"vacuity_reason\": null,\n        \"vacuous\": false,\n        \"witness_exact_tokens\": [\n          {\n            \"atom\": \"atom-1\",\n            \"exempt_owner_units\": {},\n            \"exempted\": false,\n            \"fires\": false,\n            \"in_companion_outputs_only\": false,\n            \"owner_units\": [\n              \"AA-001\"\n            ],\n            \"queue_id\": \"q-1\",\n            \"required_owner_units\": [\n              \"AA-001\"\n            ],\n            \"token\": \"live token\",\n            \"units_with_both\": [\n              \"AA-001\"\n            ],\n            \"units_with_token_in_prose\": [\n              \"AA-001\"\n            ],\n            \"units_with_token_in_registry\": [\n              \"AA-001\"\n            ]\n          }\n        ],\n        \"witness_registry_hygiene\": [\n          {\n            \"absent_already_at_base\": null,\n            \"entries_absent_from_unit_text\": [],\n            \"fires\": false,\n            \"registry_entries\": 1,\n            \"unit\": \"AA-001\"\n          }\n        ],\n        \"witness_repairs_vs_targets\": []\n      }\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "name": "grs027-current",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/witness/scripts/pm-ledger-compile-witness.py",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "--root",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/real",
+        "--json"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 2,
+      "expected_exit": [
+        2
+      ],
+      "seconds": 0.856,
+      "stdout": "    },\n    {\n      \"atom\": \"atom-0102\",\n      \"queue_id\": \"pcq-0001\"\n    },\n    {\n      \"atom\": \"atom-0103\",\n      \"queue_id\": \"pcq-0001\"\n    },\n    {\n      \"atom\": \"atom-0104\",\n      \"queue_id\": \"pcq-0001\"\n    }\n  ],\n  \"base\": null,\n  \"configuration_findings\": [],\n  \"documents\": [\n    \"Plans/00-plans-index.md\",\n    \"Plans/Contracts_V0.md\",\n    \"Plans/Executor_Protocol.md\",\n    \"Plans/FinalGUISpec.md\",\n    \"Plans/Goal_Runtime_System.md\",\n    \"Plans/Models_System.md\",\n    \"Plans/Orchestrator_Page.md\",\n    \"Plans/Permissions_System.md\",\n    \"Plans/Plan_Document_System.md\",\n    \"Plans/Plan_To_Node_Compilation.md\",\n    \"Plans/Planning_Ledger_System.md\",\n    \"Plans/Run_Graph_View.md\",\n    \"Plans/Runtime_Artifacts_Panel.md\",\n    \"Plans/WorktreeGitImprovement.md\",\n    \"Plans/assistant-chat-design.md\",\n    \"Plans/chain-wizard-flexibility.md\",\n    \"Plans/chain-wizard.md\",\n    \"Plans/orchestrator-subagent-integration.md\",\n    \"Plans/storage-plan.md\"\n  ],\n  \"ledger_id\": \"pldg-20260616-002-orchestrator-goal-runtime-flow\",\n  \"repeated_decision_units\": [],\n  \"schema_id\": \"pm.ledger_compile_witness.v2\",\n  \"status\": \"vacuous\",\n  \"summary\": {\n    \"atoms_reaching_an_owner\": 0,\n    \"declared_target_plan_units\": 0,\n    \"item_tokens\": 0,\n    \"item_tokens_exempted\": 0,\n    \"named_but_not_targeted\": 0,\n    \"named_but_unchanged_since_base\": 0,\n    \"records\": 0,\n    \"records_firing\": 0,\n    \"registries_checked\": 0,\n    \"registry_entries_absent_already_at_base\": 0,\n    \"registry_entries_absent_from_text\": 0,\n    \"repeated_decision_units\": 0,\n    \"repeated_decision_units_with_different_titles\": 0,\n    \"tokens_missing_from_prose\": 0,\n    \"tokens_missing_from_registry\": 0,\n    \"tokens_only_in_companion_outputs\": 0,\n    \"units_with_registry_entries_absent_from_text\": 0,\n    \"unsupported_definition_forms\": 0\n  },\n  \"token_exemptions\": [],\n  \"vacuity_reason\": \"no_owner_targets\",\n  \"vacuous\": true,\n  \"witness_exact_tokens\": [],\n  \"witness_registry_hygiene\": [],\n  \"witness_repairs_vs_targets\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "name": "grs027-explicit-empty",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/witness/scripts/pm-ledger-compile-witness.py",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
+        "--root",
+        "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/real",
+        "--allow-empty",
+        "--json"
+      ],
+      "cwd": "/tmp/claude-1000/-home-sittingmongoose--t3-worktrees-PuppetMaster-t3-41a5f751/13ca91ad-5bcb-412d-b6e6-75f8229099e0/scratchpad/wit-checks/other-project",
+      "exit": 0,
+      "expected_exit": [
+        0
+      ],
+      "seconds": 0.828,
+      "stdout": ": \"atom-0102\",\n      \"queue_id\": \"pcq-0001\"\n    },\n    {\n      \"atom\": \"atom-0103\",\n      \"queue_id\": \"pcq-0001\"\n    },\n    {\n      \"atom\": \"atom-0104\",\n      \"queue_id\": \"pcq-0001\"\n    }\n  ],\n  \"base\": null,\n  \"configuration_findings\": [],\n  \"documents\": [\n    \"Plans/00-plans-index.md\",\n    \"Plans/Contracts_V0.md\",\n    \"Plans/Executor_Protocol.md\",\n    \"Plans/FinalGUISpec.md\",\n    \"Plans/Goal_Runtime_System.md\",\n    \"Plans/Models_System.md\",\n    \"Plans/Orchestrator_Page.md\",\n    \"Plans/Permissions_System.md\",\n    \"Plans/Plan_Document_System.md\",\n    \"Plans/Plan_To_Node_Compilation.md\",\n    \"Plans/Planning_Ledger_System.md\",\n    \"Plans/Run_Graph_View.md\",\n    \"Plans/Runtime_Artifacts_Panel.md\",\n    \"Plans/WorktreeGitImprovement.md\",\n    \"Plans/assistant-chat-design.md\",\n    \"Plans/chain-wizard-flexibility.md\",\n    \"Plans/chain-wizard.md\",\n    \"Plans/orchestrator-subagent-integration.md\",\n    \"Plans/storage-plan.md\"\n  ],\n  \"ledger_id\": \"pldg-20260616-002-orchestrator-goal-runtime-flow\",\n  \"repeated_decision_units\": [],\n  \"schema_id\": \"pm.ledger_compile_witness.v2\",\n  \"status\": \"vacuous_allowed_by_--allow-empty\",\n  \"summary\": {\n    \"atoms_reaching_an_owner\": 0,\n    \"declared_target_plan_units\": 0,\n    \"item_tokens\": 0,\n    \"item_tokens_exempted\": 0,\n    \"named_but_not_targeted\": 0,\n    \"named_but_unchanged_since_base\": 0,\n    \"records\": 0,\n    \"records_firing\": 0,\n    \"registries_checked\": 0,\n    \"registry_entries_absent_already_at_base\": 0,\n    \"registry_entries_absent_from_text\": 0,\n    \"repeated_decision_units\": 0,\n    \"repeated_decision_units_with_different_titles\": 0,\n    \"tokens_missing_from_prose\": 0,\n    \"tokens_missing_from_registry\": 0,\n    \"tokens_only_in_companion_outputs\": 0,\n    \"units_with_registry_entries_absent_from_text\": 0,\n    \"unsupported_definition_forms\": 0\n  },\n  \"token_exemptions\": [],\n  \"vacuity_reason\": \"no_owner_targets\",\n  \"vacuous\": true,\n  \"witness_exact_tokens\": [],\n  \"witness_registry_hygiene\": [],\n  \"witness_repairs_vs_targets\": []\n}\n",
+      "stderr": ""
+    }
+  ],
+  "evidence": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH1/fix5",
+  "protected_paths_changed": [],
+  "live_ledger_changes": [],
+  "findings": {
+    "W7-1": {
+      "status": "fixed",
+      "commit": "266482160bc860da29a0b6632edcb63bfbbcaa7d"
+    },
+    "W7-2": {
+      "status": "fixed",
+      "commit": "266482160bc860da29a0b6632edcb63bfbbcaa7d"
+    },
+    "W7-3": {
+      "status": "fixed",
+      "commit": "266482160bc860da29a0b6632edcb63bfbbcaa7d"
+    },
+    "W7-4": {
+      "status": "fixed",
+      "commit": "266482160bc860da29a0b6632edcb63bfbbcaa7d"
+    }
+  },
+  "real_ledgers": {
+    "statuses": {
+      "no-queue": 5,
+      "vacuous": 18,
+      "error": 3,
+      "findings": 11,
+      "pass": 2
+    },
+    "changed_from_base_tool": 0,
+    "repeated_decision_disclosures": {
+      "pldg-20260917-001-jujutsu-continuation4-corrections": [
+        3,
+        0
+      ],
+      "pldg-20260918-001-azure-devops-corrections": [
+        6,
+        4
+      ],
+      "pldg-20260927-005-wand-chat-gui-contract": [
+        15,
+        1
+      ]
+    }
+  }
+}

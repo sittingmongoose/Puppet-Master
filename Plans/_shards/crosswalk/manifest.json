@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-09T02:41:36Z",
+  "generated_at_utc": "2026-11-12T13:55:25Z",
   "index_path": "Plans/_shards/crosswalk/00-index.md",
-  "index_sha256": "b341e14274576b7236db74c934c17998e69ebb0676b68012d40e62f77210230f",
+  "index_sha256": "521d62f176477907d8a28189a19244aba6f21cf7b8e0259727cc7e464efaa47e",
   "manifest_path": "Plans/_shards/crosswalk/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/crosswalk/001-preamble.md",
-      "sha256": "f66e677eb1c7a5329bc1bc9b82a6f9713eaf57cd10ec74e6bd8edf77689a5101",
+      "sha256": "d98cde523e71100f7ac9f27db2d79f863d352480181d94903b4c18189146ceea",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/crosswalk/002-canonical-owner-section-requirements.md",
-      "sha256": "997095a25069ae1c7270b26ef5bbc9bee2c8788aab777962f49f1a09042444e5",
+      "sha256": "b229b7ed755be0c872f059d9c6437d149c87cb6e2964dc08403ad89bb6c30276",
       "shard_id": "002",
       "source_line_end": 23,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/crosswalk/003-0.-scope.md",
-      "sha256": "ce6649f41dab8cedbe43f40325c243ae94c6571cd3e06c79f5e8b759cff0d0db",
+      "sha256": "a3d6a1d1ddc1763152c306fa17c01adcc903859691f06dc798242b35d3e27da9",
       "shard_id": "003",
       "source_line_end": 31,
       "source_line_start": 25,
@@ -35,7 +35,7 @@
     {
       "heading": "1. Precedence (anti-drift)",
       "path": "Plans/_shards/crosswalk/004-1.-precedence-anti-drift.md",
-      "sha256": "1e12a5918cc98adcf03945672e83638ef5b6e1798bb4088921000835c80f2d60",
+      "sha256": "ad8defbb84add106f88202c0d3c1444567d423e07ccaa748898a792b88db6afd",
       "shard_id": "004",
       "source_line_end": 50,
       "source_line_start": 33,
@@ -44,7 +44,7 @@
     {
       "heading": "2. Primitive index (definitions are DRY)",
       "path": "Plans/_shards/crosswalk/005-2.-primitive-index-definitions-are-dry.md",
-      "sha256": "82b6c54cc778358e53ee9574c94c1078282550527ac6c9c644ae59e884a0f751",
+      "sha256": "72437df178d2199d8edc8b12ae7a8b3a39daec45fba86a9160db7e1fc75a8282",
       "shard_id": "005",
       "source_line_end": 384,
       "source_line_start": 52,
@@ -53,7 +53,7 @@
     {
       "heading": "References",
       "path": "Plans/_shards/crosswalk/006-references.md",
-      "sha256": "ed085a1c9519e8b7f38332a0f045a7e0a26dac46b9b5d02709d74026b3595635",
+      "sha256": "6086e34a9629c145095251e85230e918e3ac1a6a74bdb71702e3317d525a6fa2",
       "shard_id": "006",
       "source_line_end": 459,
       "source_line_start": 386,
@@ -62,7 +62,7 @@
     {
       "heading": "Recovery Terminology Canonical Alignment (2026-03-08)",
       "path": "Plans/_shards/crosswalk/007-recovery-terminology-canonical-alignment-2026-03-08.md",
-      "sha256": "94983611d5fc6b3b321bc2e5b5c4f13289c8ad0f3025be01a9a96c7e36634f01",
+      "sha256": "b9632d13926635165f6e65a9f446ed2555ee781b9e469fd5bed8f2e87cd17ee2",
       "shard_id": "007",
       "source_line_end": 472,
       "source_line_start": 461,
@@ -71,7 +71,7 @@
     {
       "heading": "Runtime Scheduler / Recovery Ownership and Precedence",
       "path": "Plans/_shards/crosswalk/008-runtime-scheduler-recovery-ownership-and-precedence.md",
-      "sha256": "24155c4127b7d026ae5c34d7bd3d33b83a0ed1f38bee89870493358b0a4f6551",
+      "sha256": "d500dc4916749206d217bd3d388f349c8ccb97c5731aa64f54ac1b7aa6f34980",
       "shard_id": "008",
       "source_line_end": 490,
       "source_line_start": 473,
@@ -80,7 +80,7 @@
     {
       "heading": "Source Control, Actions & Pipelines, and Docker Manager Ownership Addendum (2026-03-12; scoped supersession 2026-09-01)",
       "path": "Plans/_shards/crosswalk/009-source-control-actions-pipelines-and-docker-manager-ownership-ad.md",
-      "sha256": "de4ede3a6315c35f2848851074c0bcc62828d31195bfddc7f4ffe351281aefd1",
+      "sha256": "338afc9199765151445f567dc8762275dde54e6c8af783040d4c5dcfde6d913f",
       "shard_id": "009",
       "source_line_end": 560,
       "source_line_start": 492,
@@ -89,7 +89,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/crosswalk/010-owner-consumer-map.md",
-      "sha256": "b24f98c9f11557a41fcdd64bb88adabf25bdda68806f0510833b3ddc62612c9f",
+      "sha256": "a53a9c0fe2825e98e293dcfc31615d3b96c9f81efd414fdab029f54804a8f49a",
       "shard_id": "010",
       "source_line_end": 566,
       "source_line_start": 562,
@@ -98,7 +98,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/crosswalk/011-planunits.md",
-      "sha256": "aa8845d033f92546b7f4c95cd36a11c3aeab6accc7ef2d1e937be02166bb9590",
+      "sha256": "1540ce443a58af1a04db015bf7a8c20eac68c6fc3a3ff810b96323282bc386bf",
       "shard_id": "011",
       "source_line_end": 3238,
       "source_line_start": 568,
@@ -107,7 +107,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/crosswalk/012-migration-coverage.md",
-      "sha256": "a6ffc3ea384b461b7d223f9d3c123c128e2f60509624508fd91746c0b2aa6cf0",
+      "sha256": "92742b6d983d3030eee2b43687907b9c7b1c159d8d4ea3579144dfa8821db2e3",
       "shard_id": "012",
       "source_line_end": 3250,
       "source_line_start": 3240,
@@ -116,7 +116,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-001",
       "path": "Plans/_shards/crosswalk/013-ledger-compile-addendum-pldg-20260614-001.md",
-      "sha256": "47d7f46977b130ba6d4d1ae91a8036aefb6b3ff7dfd06f025a946064f0290045",
+      "sha256": "1b921098fda634883a47480df35734f7854244c58ec477703b0750d5867fcfbf",
       "shard_id": "013",
       "source_line_end": 3289,
       "source_line_start": 3252,
@@ -125,7 +125,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/crosswalk/014-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "9c84ce23ab5e9efc5c608b434cb68cb247057d65c12345a127b58ec9d2faae26",
+      "sha256": "fd0b3a2e47e0df617ae89fbd2d6c0eb1a52b43271889d236764a45bc4e442a65",
       "shard_id": "014",
       "source_line_end": 3367,
       "source_line_start": 3292,
@@ -134,7 +134,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/crosswalk/015-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "cd7a59152df64c8832df653781660e27628e849cb8da6e8263bea94dff1c894d",
+      "sha256": "ccf78b5d5f5da20f47e3b0bd35bc1be5de092d6eb270321197671aed1e1bbece",
       "shard_id": "015",
       "source_line_end": 3373,
       "source_line_start": 3369,
@@ -143,7 +143,7 @@
     {
       "heading": "Touch Closure Authority Addendum - 2026-09-01",
       "path": "Plans/_shards/crosswalk/016-touch-closure-authority-addendum-2026-09-01.md",
-      "sha256": "76fd1a98eb7cdedabb301d378a72fcc33452b8b601e6fd7f0bf8026e4a0f2860",
+      "sha256": "139c82085dbfa79b260110f8226e6bc901166c65e845b03d8ecd8b6ba855af8f",
       "shard_id": "016",
       "source_line_end": 3436,
       "source_line_start": 3375,
@@ -152,7 +152,7 @@
     {
       "heading": "Forge/Backup/tsnet Owner And Route Reconciliation Addendum - 2026-09-01",
       "path": "Plans/_shards/crosswalk/017-forge-backup-tsnet-owner-and-route-reconciliation-addendum-2026-.md",
-      "sha256": "9ac79cc02aa87e18f71057f506738288184f719f414bcf30804df0aa8803672d",
+      "sha256": "0f31fdd572bf3d7969de1ecd35cbc661503b93f6ee16b7d08f6ac4a9706caa25",
       "shard_id": "017",
       "source_line_end": 3512,
       "source_line_start": 3438,
@@ -161,7 +161,7 @@
     {
       "heading": "Puppet Master Assistant Redesign Ownership Routing - 2026-09-03",
       "path": "Plans/_shards/crosswalk/018-puppet-master-assistant-redesign-ownership-routing-2026-09-03.md",
-      "sha256": "8154ecb561a9577124df5a8f971a6049d282486f02843ca3f14bc06529c703ea",
+      "sha256": "2b8ef5423ed5beeac909016e7a6f0c98a31720d7fa451a0e5f1718c0239358a4",
       "shard_id": "018",
       "source_line_end": 3535,
       "source_line_start": 3514,
@@ -170,7 +170,7 @@
     {
       "heading": "DL-180 to DL-185 \u2014 Who Owns The Home Panels, Tabs And Terminal Now (2026-10-09)",
       "path": "Plans/_shards/crosswalk/019-dl-180-to-dl-185-who-owns-the-home-panels-tabs-and-terminal-now-.md",
-      "sha256": "e76436bcf5df34d68022ff528ef8e8f374fbcef9b1dbbe0fc4293f15ab9583b0",
+      "sha256": "a2502e27f71c12602090ff81243970d028a827335b7ea8840920fcb926f03e15",
       "shard_id": "019",
       "source_line_end": 3642,
       "source_line_start": 3537,
@@ -180,6 +180,6 @@
   "source": {
     "line_count": 3642,
     "path": "Plans/Crosswalk.md",
-    "sha256": "a2f410e0730caa718b4834830bbfada7b565b067a5207e049348df4d07d5bf9e"
+    "sha256": "2ab27e2c80bf1dccd3906a987fa207e103af8679f2ed73bbf5e7ffe49fc0007b"
   }
 }

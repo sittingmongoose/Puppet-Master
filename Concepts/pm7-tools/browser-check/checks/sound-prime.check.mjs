@@ -39,6 +39,9 @@ export default async function(t){
  cdp.on('Runtime.executionContextsCleared',()=>contexts.clear());
  await cdp.send('Runtime.enable');await cdp.send('Page.enable');
  await cdp.send('Page.addScriptToEvaluateOnNewDocument',{source:'('+probe.toString()+')()'});
+ // A fresh normal browser has no requested app frame yet (SOL-L1C-T2): load the page first, so the frame lookup
+ // below finds the app target. The probe above is armed from this first document already.
+ if(!sandbox)await t.page.goto(target.href);
  // Navigate the app target only; the approved wrapper and its flags stay.
  const {frameTree}=await cdp.send('Page.getFrameTree');
  // In-process iframes share their parent's CDP target; choose the actual app

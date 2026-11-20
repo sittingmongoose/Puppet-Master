@@ -1,0 +1,919 @@
+[
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/manifest.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/manifest.json",
+    "sha256": "91e18f5cf3a5e1f14b99c3b52d77156be44ae0a6b61911efe752794399e75ff3",
+    "bytes": 14897
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/manifest.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/manifest.json",
+    "sha256": "eb4441c1c0a904f946a54436185dac919a3cbba6efe069c94aa664e184e5374d",
+    "bytes": 99438
+  },
+  {
+    "label": "scope",
+    "path": "inputs/scope/manifest.json",
+    "original_path": "/mnt/Cursor/PM-Experiments/goal-replan-combined-scope-adjudication-20260921/v1/manifest.json",
+    "sha256": "dbb39600e2d0c620b0de063bf9579e2a451f1acd3126c707250e4c4f980ae2e1",
+    "bytes": 384
+  },
+  {
+    "label": "scope",
+    "path": "inputs/scope/ADJUDICATION.md",
+    "original_path": "/mnt/Cursor/PM-Experiments/goal-replan-combined-scope-adjudication-20260921/v1/ADJUDICATION.md",
+    "sha256": "1e2a9747323a0c6021e07564885f117d02c9b74dea9838d5ac45ae3caa12db40",
+    "bytes": 5713
+  },
+  {
+    "label": "scope",
+    "path": "inputs/scope/source-evidence.json",
+    "original_path": "/mnt/Cursor/PM-Experiments/goal-replan-combined-scope-adjudication-20260921/v1/source-evidence.json",
+    "sha256": "bad1b628da0d3d9c548d32f8c7d0f026a7579f48e9b42ce1a4401c2ae1a2a525",
+    "bytes": 10094
+  },
+  {
+    "label": "scope-addendum",
+    "path": "inputs/scope-addendum/manifest.json",
+    "original_path": "/mnt/Cursor/PM-Experiments/goal-replan-combined-scope-adjudication-20260921/addendum-001/manifest.json",
+    "sha256": "4e1d3da2c7a03b30fd97050a59a6c14f6ef41f6a43090b1f16e7910b742e3960",
+    "bytes": 231
+  },
+  {
+    "label": "scope-addendum",
+    "path": "inputs/scope-addendum/correction.json",
+    "original_path": "/mnt/Cursor/PM-Experiments/goal-replan-combined-scope-adjudication-20260921/addendum-001/correction.json",
+    "sha256": "8fcd840504c463cdd55f854726fb303fe9974f3f1a2a1f14561cee58eae504ea",
+    "bytes": 1083
+  },
+  {
+    "label": "plan",
+    "path": "inputs/plan/manifest.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-replan-prebirth-composition-plan-20260921/v1/manifest.json",
+    "sha256": "21e672cadbb9bf45bc49ed8146398fa316a4f59f563417fb65155c528cedfba2",
+    "bytes": 27491
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/installed-profile-digest.txt",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/installed-profile-digest.txt",
+    "sha256": "b1f8655b2aff07e01d2199f94666abcc044eefcd4b8f5a244d2080424c5fc1d4",
+    "bytes": 65
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/protocol.md",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/protocol.md",
+    "sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+    "bytes": 39451
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/phase-boundaries.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/phase-boundaries.json",
+    "sha256": "2051bdf65c434e4a385c48717c7d3eb469bfa23227ea2e554b98f63dad478887",
+    "bytes": 19199
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/whole-inherited-contracts.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/whole-inherited-contracts.json",
+    "sha256": "f2ba0a0e1a46064d1a4ed49271fc359da34f61873da527893a86e374df9abc5e",
+    "bytes": 4727
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/original-reference-routing.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/original-reference-routing.json",
+    "sha256": "e246b9c2ea22bfeacc23b4c6c96db902fa2f492bb58718aa38afab4bbca8e514",
+    "bytes": 3395
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/README.md",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/README.md",
+    "sha256": "b6f081a0aad23fc52ff16745e6e9311bf3ca68d2b983a2eac7111344921c380d",
+    "bytes": 5385
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody-map.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody-map.json",
+    "sha256": "b4acdc00e9aaec346a34f80ba6f9323c039edf7b7417da7c755a9cff55db9040",
+    "bytes": 11226
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/profile-dag-check.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/profile-dag-check.json",
+    "sha256": "e363dc60abc3343f93b523a014e94b25006d9d260914ba6503950094c2151e95",
+    "bytes": 402918
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-participants.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-participants.json",
+    "sha256": "d55fd2a116d4a4c1b7da37134901e13063cd2b1aeb9c7b35715ce9b4b103f354",
+    "bytes": 10262
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/physical-retention-install.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/physical-retention-install.json",
+    "sha256": "2b51e263bae7f779bdff522b1d374d2651f0fc739fb063b5cad4c30811b21130",
+    "bytes": 7871
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/before-after.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/before-after.json",
+    "sha256": "1cbaedcaacef9ca1b284d64392bc3bc2449cac547718644af45a322569979e24",
+    "bytes": 1269
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/participant-method-tuples.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/participant-method-tuples.json",
+    "sha256": "4c9c24f5822a833c2b2d6bda7e5aaabcbc3a1f1f38ebcef63fb5a8d9110af76a",
+    "bytes": 375384
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/methods.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/methods.json",
+    "sha256": "aa6d683e414cc7a0119acd6f7bf630f3533db6a94113be081945bf0c4c0e257d",
+    "bytes": 54713
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/commitment-domains.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/commitment-domains.json",
+    "sha256": "0382f823c4db4a4a6137071354344ebead91513a66a557ea659d5612472360b6",
+    "bytes": 4393
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/dependencies.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/dependencies.json",
+    "sha256": "38ddea77b08d92ad9b2a83203729fb1e73bbb6d9bc6bb4253aa353402edc894b",
+    "bytes": 846
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/method-root-bindings.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/method-root-bindings.json",
+    "sha256": "d61069e21b95a74050e7ef78be4aae84ca8833d40c4b54632989a682c260c8c0",
+    "bytes": 404675
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/checks.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/checks.json",
+    "sha256": "cce76bd7cfa386635ccf9009da3818762ec2fe1e7a35412fde875e70f9795276",
+    "bytes": 453
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/installed-profile.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/installed-profile.json",
+    "sha256": "f01e9f3f6089813d74a56a636cfde1b68faac9189670c52695b9c32560d1f22f",
+    "bytes": 8234
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/source-citations.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/source-citations.json",
+    "sha256": "9da62e752b0631dae4c5f912573bd530720604d0c8401535fa5d8e245a700bf1",
+    "bytes": 242213
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/correction-evidence.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/correction-evidence.json",
+    "sha256": "e09d77eee033a50a7409c27950a9d60a63ae57236eeaafa64a3960f6f297aeb4",
+    "bytes": 1201
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/resource-realms.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/resource-realms.json",
+    "sha256": "09d0a9a50f52460ab74498db45eebf384ab51c55554104549067d35de9af5200",
+    "bytes": 403053
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/physical-contracts.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/physical-contracts.json",
+    "sha256": "d7b7fee9c1bb95b72877430e0887fc316ecde1f570a3ca7c0a0e4aecbc3d8b15",
+    "bytes": 8803
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/protocol.md",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/protocol.md",
+    "sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054",
+    "bytes": 71464
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/literal-resource-realms.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/literal-resource-realms.json",
+    "sha256": "264a3519c4863650a0def9271a5ba6b53209414b24f3f57d34b622313f9d9323",
+    "bytes": 398051
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/identity-map.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/identity-map.json",
+    "sha256": "c690b822c7d83fb88fa97bcea192402df4c041f6c6b274f164ea68b7582809b9",
+    "bytes": 13591
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/methods.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/methods.json",
+    "sha256": "b701cbab89146fb5103e957d7173e55ced79f91c318524d4e627c2b823042bc0",
+    "bytes": 26208
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/commitment-domains.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/commitment-domains.json",
+    "sha256": "b4b54fa50a0da4c2c0fd0cb7a800e85add86ae056ffec357364f0476f7f2ad13",
+    "bytes": 9231
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/native-field-map.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/native-field-map.json",
+    "sha256": "3dd640512f1472457a75fae3094e885d3165b66959500048851e5a040ec81cce",
+    "bytes": 21952
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/stored-profile-routes.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/stored-profile-routes.json",
+    "sha256": "4c312e56189ec132bec087cf56e486c8b17997c75a6920e327e924ef7d345d70",
+    "bytes": 60438
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/fresh-profile-methods.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/fresh-profile-methods.json",
+    "sha256": "f23bee216c0871c7d5205c85bf2706eedc8c778a59fc84958199709dcf981cea",
+    "bytes": 181220
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/first-attempt-stage-map.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/first-attempt-stage-map.json",
+    "sha256": "3f75795716df0c1aea3691e4d8a7ebc487210fa46ac8958c6b39f12d6d9e144d",
+    "bytes": 4160
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/schemas/coordinator.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/schemas/coordinator.v1.schema.json",
+    "sha256": "274bb7363140e13769bd75a1fdf6eaa6688f2d8699b271182fc90bce0ee88140",
+    "bytes": 54273
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/schemas/append-phase.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/schemas/append-phase.v1.schema.json",
+    "sha256": "81958febf169253ce6349c29ddf2bde98df5182df1c2aa74a01d7be72ac316fd",
+    "bytes": 2435
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/schemas/identity.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/schemas/identity.v1.schema.json",
+    "sha256": "c684141ada201397dce84c6f738c89b15d5951466804b185308e3edc92e12212",
+    "bytes": 4222
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/producer-v2/installed-profile-digest.txt",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/producer-v2/installed-profile-digest.txt",
+    "sha256": "5c4e7fef2f2a933643aa1009c201d83b9e43aa7074708f715b147dfb70b0b514",
+    "bytes": 65
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/producer-v2/protocol.md",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/producer-v2/protocol.md",
+    "sha256": "02434e35116950935b412a0b0b1b0c414e811d3259d4f69d756028a09fc0ab1d",
+    "bytes": 28898
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/producer-v2/methods.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/producer-v2/methods.json",
+    "sha256": "bf82bcf31ba15a10ccb33cebecae6e89e217bdf706b6dc7bc007ce7acbf02877",
+    "bytes": 33513
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/producer-v2/whole-source-bindings.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/producer-v2/whole-source-bindings.json",
+    "sha256": "ed094c21a84870702682a520a5c5a0b01d4e3a231ebebfd3f073c0d51f2fabe1",
+    "bytes": 6438
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/producer-v2/installed-profile.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/producer-v2/installed-profile.json",
+    "sha256": "45ddbcd5dfb0e61bdd6c855ff59e164453ec5f81461bdaa3ad7946e2a492e46f",
+    "bytes": 7116
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/filesafe-effect-sources.v2.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/filesafe-effect-sources.v2.schema.json",
+    "sha256": "cb4e863836060ba06c8c17c8a3c3cc791aae93409a0cdc339984278cbb128354",
+    "bytes": 39616
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/safestop-start-arguments.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/safestop-start-arguments.v1.schema.json",
+    "sha256": "8d8b15144fdbf04adba95ab6992767fb0450b3f980a886fc0366f34fd3221637",
+    "bytes": 1968
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/filesafe-injective-key-sources.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/filesafe-injective-key-sources.v1.schema.json",
+    "sha256": "8a42fa18bbe6ffb9d3a87f037b85c3fa380e0aae0269a0aa4aa9dd713f52eec0",
+    "bytes": 40008
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/workflow-cancel-disposition.v3.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/workflow-cancel-disposition.v3.schema.json",
+    "sha256": "44bae9a5df18ca8e368b276c6e167645705dc63d6ec2f71c7aaa2f7e2c2aea9e",
+    "bytes": 39356
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/process-shutdown-sources.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/process-shutdown-sources.v1.schema.json",
+    "sha256": "e0dcd4d5e782cd6344a3039b922a61fddf560a2bd9ec76b7ca2fdcda648959e0",
+    "bytes": 98084
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/process-normalized-producer.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/process-normalized-producer.v1.schema.json",
+    "sha256": "a1e9a055f48c4917adcbce9fe9cf240363e429a5d0fd9dd3806eaaf0a7ecfd47",
+    "bytes": 9080
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-seglog-manifest.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-seglog-manifest.v1.schema.json",
+    "sha256": "51b95bc7346c643a21a7f10791c2f78258dfad95d4e44777abba2ba238b02c49",
+    "bytes": 17685
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/workflow-sources.v3.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/workflow-sources.v3.schema.json",
+    "sha256": "2b5107675393d694299efb0de9acbf2f19de169dfed2dcd53b0013328129fc54",
+    "bytes": 79478
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/workflow-sources.v2.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/workflow-sources.v2.schema.json",
+    "sha256": "f03fb4a96cc262274ce9d6413daf368fcaae93a7f8c797bb2990a1f69304d453",
+    "bytes": 45553
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/safestop-current-goal-arguments.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/safestop-current-goal-arguments.v1.schema.json",
+    "sha256": "3eaa8578efff917e8665efee8bd808a47d18c4e87704b11c75aafe45acafa39e",
+    "bytes": 2441
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-safestop.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-safestop.v1.schema.json",
+    "sha256": "46b7e64d3c2fbfafcc5d66ab28c3f12d91b6523bdf57a31ac53db5eb2c6a9d90",
+    "bytes": 38658
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-arguments.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-arguments.v1.schema.json",
+    "sha256": "8064368badc33286a0a871695b670c854e7bcde30090da5c3389c3ec174bda63",
+    "bytes": 4885
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json",
+    "sha256": "062e302fe0805f330c99c470df5c20cc247de7032cb424eecca2844b1b2f700e",
+    "bytes": 3002
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-event-append-custody.v2.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-event-append-custody.v2.schema.json",
+    "sha256": "505bdb5d702546637b80dfddc1d7f32abe411665f88ca193ca5af105c6b69a31",
+    "bytes": 20165
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/bounded-safestop.v2.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/bounded-safestop.v2.schema.json",
+    "sha256": "a500726cbf15548663c03f80a13353a9674f5677201e4018fc0a5b90cc54d338",
+    "bytes": 107719
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/safestop-original-start.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/safestop-original-start.v1.schema.json",
+    "sha256": "a738fbb17ad658417a472a1d670205d2c401be236dd6865af5c5d5b4f797de18",
+    "bytes": 108702
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-seglog-current.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-seglog-current.v1.schema.json",
+    "sha256": "f5b1f19aee3876e6c8fdc4ac8418c10941f13e7a56741f31056d2eb37bac9c7f",
+    "bytes": 922
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-mcp-lifecycle.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-mcp-lifecycle.v1.schema.json",
+    "sha256": "081d50dbaef96ce8c5e56b8bc743752943920b9727fdba03583592c6904dcef6",
+    "bytes": 5646
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json",
+    "sha256": "b6d192c96c552880e7f5e8041c12888e2c3f016076c3aeaef7661c74dbca1e47",
+    "bytes": 5203
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/owner-source-custody/Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/owner-source-custody/Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json",
+    "sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+    "bytes": 125623
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/schemas/workflow-start-arguments.v6.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/schemas/workflow-start-arguments.v6.schema.json",
+    "sha256": "3f9b2fc8d768d462db1b4ac950854e0d7f2fc13982e0bbc1422e5ecb81bdbd88",
+    "bytes": 4120
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/schemas/workflow-start-custody.v6.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/schemas/workflow-start-custody.v6.schema.json",
+    "sha256": "9209a5b923cb279c4176ccf3b648a8381c4afae541220cd397329558db5266d2",
+    "bytes": 44259
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/schemas/workflow-cancel-positive-arguments.v2.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/schemas/workflow-cancel-positive-arguments.v2.schema.json",
+    "sha256": "ec8c346caffabb0bbb06285197e5ed04bfb44ffa8b6dfa02a038aef8a5b9bdd8",
+    "bytes": 4910
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/schemas/workflow-standard-certification-argument.v4.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/schemas/workflow-standard-certification-argument.v4.schema.json",
+    "sha256": "830d20024033a6e1edc32c847363a523a44fe47acd2abcd84413f8a58f4131fa",
+    "bytes": 6672
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/schemas/safestop-start-arguments.v2.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/schemas/safestop-start-arguments.v2.schema.json",
+    "sha256": "5431b28e798b726aef7994ae46e51df164ed4c1719317f14bc2a07fda544f24a",
+    "bytes": 1968
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/schemas/workflow-standard-current-source.v4.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/schemas/workflow-standard-current-source.v4.schema.json",
+    "sha256": "7bd88c4a7cc2b7f32af173d18c470d64e13e296170e358fcd39fe8e64b6bbbb0",
+    "bytes": 101666
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/schemas/workflow-standard-event-prerequisite.v4.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/schemas/workflow-standard-event-prerequisite.v4.schema.json",
+    "sha256": "ab8350e1f7b60c2c8b37fcb3ddb29da43a003d5b032aef145a0b220ef47f6274",
+    "bytes": 6581
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/schemas/workflow-original-start.v6.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/schemas/workflow-original-start.v6.schema.json",
+    "sha256": "3b345f46b139e2f0d53614f1e2276308737aa7e15f0dd1733aac9f696755d0ed",
+    "bytes": 79884
+  },
+  {
+    "label": "certified-v2",
+    "path": "inputs/certified-v2/native-v7/schemas/workflow-cancel-start-profile.v6.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/native-v7/schemas/workflow-cancel-start-profile.v6.schema.json",
+    "sha256": "f3dfe92c5943e1ddeeab334c41834357cef97c3715f8232dc5828cde99df68ca",
+    "bytes": 38600
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/origin-issuer-contracts.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/origin-issuer-contracts.json",
+    "sha256": "f08abdca35c4b81e2ea5470870c117c82c52dc05b3a9a8510f2a19cd140e7f30",
+    "bytes": 17091
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/goal-run-replanned-clock-split.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/goal-run-replanned-clock-split.schema.json",
+    "sha256": "0e1e3720b2ce869563be2757e0524bb8dde866e37e5e65bd870bd71e30038fa1",
+    "bytes": 20205
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/source-stage-map.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/source-stage-map.json",
+    "sha256": "d520b39063da55b44ae114c3deb6ca5145f70ee0a438362acec6251427321258",
+    "bytes": 9235
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/executor-replan-observer.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/executor-replan-observer.schema.json",
+    "sha256": "a656671fca002eef6d79c66b8416afe1c563be20a48e8af433f075bca1f56b46",
+    "bytes": 96281
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/replan-consumer.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/replan-consumer.schema.json",
+    "sha256": "3cab8fcb75328515857d38511bd3c50a61489451cf90a33f400cd36de5d74a18",
+    "bytes": 74354
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/replan-source.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/replan-source.schema.json",
+    "sha256": "696ef667fda1c828b6062b0c768f27450811f52d3fb4f8707aae771f79f03f78",
+    "bytes": 353795
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/birth-native-correspondence.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/birth-native-correspondence.json",
+    "sha256": "80fcb8312bf61b0e92ed92719f432938036faa4ac70c03892ce1b136a4b27f12",
+    "bytes": 14174
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/new-definition-index.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/new-definition-index.json",
+    "sha256": "afa18de9b1da29bd4917be57c88a3192520170bc4108c2d5de2fa2d45373adc8",
+    "bytes": 6684
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/draft-resource-map.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/draft-resource-map.json",
+    "sha256": "7a57cc6f271d808a1148e4fc2f4fd7c34b34bd243eaf3686a7a9231a7f3ce67a",
+    "bytes": 337578
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/whole-definition-evidence.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/whole-definition-evidence.json",
+    "sha256": "89d8592bd6b0080723e9fcdf099bfa52e90333be6c5a68eaa0beb202482402dd",
+    "bytes": 9902081
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/revision-findings.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/revision-findings.json",
+    "sha256": "6cda7ea676deeb3b97f00e4abb3be8374e836b9d4ea393980620c977b877a3f8",
+    "bytes": 1054
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/REPRODUCE.md",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/REPRODUCE.md",
+    "sha256": "8c7c2758c65acf4987a66586a4fb130d7935c7e78fc5802a933821967df785dc",
+    "bytes": 732
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/exact-passages.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/exact-passages.json",
+    "sha256": "0a12ade59b4774f245eaccf70b1f6fb5daa6ae2a2000900b6dce10b5c36df715",
+    "bytes": 1358578
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/schema-composition-features.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/schema-composition-features.json",
+    "sha256": "8aadaed44c2adb04694bc31e057f5f4d1e5ee9abf116f029b08a6d796240be12",
+    "bytes": 594
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/source-pins.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/source-pins.json",
+    "sha256": "63a867b1c3b2344994baff5130d55dc52ec0ca6ed538f0d7cf6788c7da63643f",
+    "bytes": 59502
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/v3-repair-check-results.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/v3-repair-check-results.json",
+    "sha256": "52ce22c4e418ff33d664f2704ef56f8f6dce5f19e32cc6afe332517508d7b825",
+    "bytes": 1129
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/role-source-index.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/role-source-index.json",
+    "sha256": "e320a7ec22bc4d1904d26b31dcfad733eb1f1148566d7f83ed08936de654e7e9",
+    "bytes": 1994
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/resource-reference-inventory.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/resource-reference-inventory.json",
+    "sha256": "f51c1cfc842c8fbc1f6828002bef6cf4d22be90e0e7f64c443ea0523b01b3555",
+    "bytes": 2186525
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/delivery-profile.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/delivery-profile.json",
+    "sha256": "f0b4f1704059437123c04180e4ab993f7da15aa680cecb63da352fdc5fcae921",
+    "bytes": 690
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/static-check-results.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/static-check-results.json",
+    "sha256": "246568bddb340673b619534388e2ba5620e3bdb1d07d282a6ba2555dc9384623",
+    "bytes": 4005
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/resource-differences.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/resource-differences.json",
+    "sha256": "9f94191b797ae104ee87604974d3ad93485f82e1f36b939df9e230ea9c82db91",
+    "bytes": 1750
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/producer-commitments.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/producer-commitments.json",
+    "sha256": "7964ec7f0849086db4ca2b9d1dd77e1c909f353f91e8616dfc0ae73d4f2986b3",
+    "bytes": 1876
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/realm-mapping-evidence.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/realm-mapping-evidence.json",
+    "sha256": "13258128031e7fab0f3f2493e549cbcd986bb395d0193162e92ea7e0980a57b2",
+    "bytes": 723526
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/commitment-order.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/commitment-order.json",
+    "sha256": "3bc1518713c70a79249596970b00f78aa367010f414888c4f1a2cefe79b77043",
+    "bytes": 7265
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/STATUS.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/STATUS.json",
+    "sha256": "c26bb8b6e96bb5f372831648930f9132b04165905e8010f45785e1bd09ccaefe",
+    "bytes": 1005
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/v3-whole-root-deltas.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/v3-whole-root-deltas.json",
+    "sha256": "41c898aa16eb0d68dd2918dba803dd4386e612b89b08ca1015a85441d979ffb0",
+    "bytes": 314699
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/methods.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/methods.json",
+    "sha256": "2c6db0621576c8fa74069dc1c6a47c148b77ddc5569b171022d20ba322146d4f",
+    "bytes": 23901
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/physical-families.draft.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/physical-families.draft.json",
+    "sha256": "a9479869c0c6fdd2933d83abb71a87fa3d8ec7206cef20ec3379c42b4d868d78",
+    "bytes": 25988
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/source-role-evidence.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/source-role-evidence.json",
+    "sha256": "e47f3825d4031737d457a3589cec856630a651b08879e9102d74ddb5db628e49",
+    "bytes": 1494818
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/PROTOCOL.md",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/PROTOCOL.md",
+    "sha256": "32fb52c7cd28933f8594a51d00306ebed282796bc8fc250af2b223752c8015f8",
+    "bytes": 44172
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/predecessor-preservation.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/predecessor-preservation.json",
+    "sha256": "52fd2e5d4f04d4496503cee169b5d1cf4a39de6268e67e0f696e74ddd90ecb37",
+    "bytes": 347
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/all-writer-adoption.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/all-writer-adoption.json",
+    "sha256": "5c59cc6fa0bfe4309ccfc11b1e40ed870c20e11ce04007b0b11c8769d96aad1c",
+    "bytes": 1842
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/method-root-closure.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/method-root-closure.json",
+    "sha256": "7e8bfedb90a7da48cc252134e2cfa3303fec2d45b5ba9bbba035496e369be7b0",
+    "bytes": 24121
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/composition/authoring-roots/replan-source.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/composition/authoring-roots/replan-source.schema.json",
+    "sha256": "901d26d53de5f531fa60221af88f7b8db04a973086bb4f6906d915cea669bb31",
+    "bytes": 320795
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/composition/authoring-roots/executor-replan-observer.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/composition/authoring-roots/executor-replan-observer.schema.json",
+    "sha256": "dc3ad86fad86bfd6a0594cea8a7e856a16978e13bcc3dcdb126ba960a7833565",
+    "bytes": 90019
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/composition/root-import-bindings.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/composition/root-import-bindings.json",
+    "sha256": "3247aa9c64bbcd5af45c63574a5dd630d1c5bc2eac4a3b0f030dc959ee255884",
+    "bytes": 542380
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/composition/root-transform-ledger.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/composition/root-transform-ledger.json",
+    "sha256": "17afba4f9f3490408a98d277283630612d38d0d61c89051c442168ffe7d0274f",
+    "bytes": 220849
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/composition/original-banks.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/composition/original-banks.json",
+    "sha256": "78784e8308cd9eb8ad350c06a1a043fde369203c2e42fbf97c006c0f6d49a116",
+    "bytes": 1050146
+  },
+  {
+    "label": "plan",
+    "path": "inputs/plan/PLAN.md",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-replan-prebirth-composition-plan-20260921/v1/PLAN.md",
+    "sha256": "fcc273e95c2e32a4cfa1b1d902593777b10b41eee67706ac4790e3518683ae3c",
+    "bytes": 21475
+  },
+  {
+    "label": "plan",
+    "path": "inputs/plan/whole-resource-change-plan.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-replan-prebirth-composition-plan-20260921/v1/whole-resource-change-plan.json",
+    "sha256": "480751e273a6bb2909ccabaf4523859ff37a9ae474348227734cf47e2eecb1f5",
+    "bytes": 35858
+  },
+  {
+    "label": "plan",
+    "path": "inputs/plan/whole-method-occurrences.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-replan-prebirth-composition-plan-20260921/v1/whole-method-occurrences.json",
+    "sha256": "44dc1ea3c145ca898a7b4100402d0988d5c00814b4981579975abcdd6d639b83",
+    "bytes": 683876
+  },
+  {
+    "label": "plan",
+    "path": "inputs/plan/source-citations.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-replan-prebirth-composition-plan-20260921/v1/source-citations.json",
+    "sha256": "8c46e1d89385fe8bd8f503c5502d3c2a907d1a6f8bb467b2a25a45e20bb0771b",
+    "bytes": 271210
+  },
+  {
+    "label": "plan",
+    "path": "inputs/plan/missing-original-source-definitions.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-replan-prebirth-composition-plan-20260921/v1/missing-original-source-definitions.json",
+    "sha256": "5fab056c2519f8a11ffa90a333a76b976c53019eec711012608188f57fe767c8",
+    "bytes": 5336
+  },
+  {
+    "label": "plan",
+    "path": "inputs/plan/composition-dag-plan.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-replan-prebirth-composition-plan-20260921/v1/composition-dag-plan.json",
+    "sha256": "6eb58e992e0ad2ac48d2f79a74e2900dbf5799893142cca20f73a979af086fa7",
+    "bytes": 4460
+  },
+  {
+    "label": "plan",
+    "path": "inputs/plan/whole-reference-impact.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-replan-prebirth-composition-plan-20260921/v1/whole-reference-impact.json",
+    "sha256": "960ac94f23f698593f435893a7c2f820bc63d6502eb44f2f417248bc3ef4f111",
+    "bytes": 491653
+  },
+  {
+    "label": "producer-original",
+    "path": "inputs/producer-original/assignment-invocation.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-source-contract-20260920/v1/schemas/assignment-invocation.v1.schema.json",
+    "sha256": "37d7482694855e6505b860358dbee074b69c51bba6662a172e24df2689ab37cd",
+    "bytes": 34675
+  },
+  {
+    "label": "producer-original",
+    "path": "inputs/producer-original/original-sources.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-source-contract-20260920/v1/schemas/original-sources.v1.schema.json",
+    "sha256": "6b19f24a3d923923a70084d5f1a16a2b3fc4af62fa211ef8e7f39a0c867187cf",
+    "bytes": 23104
+  },
+  {
+    "label": "producer-original",
+    "path": "inputs/producer-original/producer-source.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-source-contract-20260920/v1/schemas/producer-source.v1.schema.json",
+    "sha256": "6c552dbe5556163397ef40b9377831bda27d2455220f61f5d79214ebe1368284",
+    "bytes": 11623
+  },
+  {
+    "label": "producer-original",
+    "path": "inputs/producer-original/producer-submission.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-source-contract-20260920/v1/schemas/producer-submission.v1.schema.json",
+    "sha256": "24300fe310faeec412a362a39128d870f57a4b19ba82affce7f7c1a59daccc0e",
+    "bytes": 8725
+  },
+  {
+    "label": "producer-original",
+    "path": "inputs/producer-original/resolver-references.v1.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-source-contract-20260920/v1/schemas/resolver-references.v1.schema.json",
+    "sha256": "ecaf63c9c68140ee698e219c02cb953b0900bc5cd082e5f8a9c2c7498593b704",
+    "bytes": 35316
+  },
+  {
+    "label": "producer-original",
+    "path": "inputs/producer-original/native-participants.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-source-contract-20260920/v1/native-participants.json",
+    "sha256": "d0bddd86f2ea4c91c7898c08d1110995f08e2dfd62084913d316b463dbc64748",
+    "bytes": 5805
+  },
+  {
+    "label": "producer-original",
+    "path": "inputs/producer-original/physical-retention-install.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-source-contract-20260920/v1/physical-retention-install.json",
+    "sha256": "7384988a5eef52fc00bbc6d34a9c5fe0ae400954fca70c517db111329d4ea67d",
+    "bytes": 1955
+  },
+  {
+    "label": "producer-original",
+    "path": "inputs/producer-original/commitment-domains.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-source-contract-20260920/v1/commitment-domains.json",
+    "sha256": "3ceb8b8e3d2b2ae846cf4801526f966761a22fc0819baf3c334bb7e336bb1701",
+    "bytes": 2846
+  },
+  {
+    "label": "producer-original",
+    "path": "inputs/producer-original/whole-field-bindings.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-certified-producer-source-contract-20260920/v1/whole-field-bindings.json",
+    "sha256": "3e5c0607e05739633b089a836058f47cc558de87946ddfb990a1382755a1896e",
+    "bytes": 77181
+  },
+  {
+    "label": "replan-v3",
+    "path": "inputs/replan-v3/composition/authoring-roots/replan-consumer.schema.json",
+    "original_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/composition/authoring-roots/replan-consumer.schema.json",
+    "sha256": "f225be4289b1e7e4c2eab71fd23794a609692b3bbdeae8f1e90069b040d50f22",
+    "bytes": 65838
+  }
+]

@@ -142,7 +142,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         primary: { label: 'Edit', icon: 'edit', action: 'pm51-goals-template-edit', data: { id: t.id } },
         menu: anchor => menu(anchor, [
           { label: 'Duplicate', icon: 'copy', onClick: () => { const copy = clone(t); copy.id = newId('template'); copy.name = t.name + ' copy'; templates().push(copy); PM51.setSel(ID, copy.id); saveState(); refresh(); PM51.toast('Template duplicated', copy.name); } },
-          { label: 'Export', icon: 'download', meta: 'Share it with another workspace', onClick: () => exportTemplate(t) },
+          { label: 'Export', icon: 'download', meta: 'Share it with another project', onClick: () => exportTemplate(t) },
           { separator: true },
           { label: 'Delete', icon: 'trash', danger: true, onClick: () => PM51.confirm(`Delete “${t.name}”?`, 'Goals already started from it are not affected.', 'Delete', () => { const i = templates().indexOf(t); if (i >= 0) templates().splice(i, 1); PM51.setSel(ID, (templates()[0] || {}).id); saveState(); refresh(); PM51.toast('Template deleted', t.name, 'warning'); }, true) }
         ], t.name),

@@ -1,0 +1,7 @@
+{
+  "delivery_profile": "draft.original_replan_clock_split.20260921.v3",
+  "payload_schema_ref": "https://puppetmaster.local/drafts/goal_run_replanned_clock_split_20260921.v4.schema.json",
+  "payload_schema_version": "pm.goal_runtime_event.goal_run_replanned.schema.v3.draft.20260921",
+  "rule": "CompletionRecord.delivery_profile equals ProducerIntent.delivery_profile and selects this complete payload contract for WholeProducerSubmission.payload and the authentic Event payload; compare the full original submitted/append-read value. This is a profile selection, not an added Event or payload property. No historical v2 translation or field is implied.",
+  "admission": "NOT_ADMITTED"
+}

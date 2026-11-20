@@ -7,7 +7,9 @@
    Dark's tertiary ink 4.32 on its raised surface (question numbers, counts). */
 
 /* the secondary line of a hovered, focused or current menu row (on the hover and pressed fills) */
-html:not([data-o55-nier="on"]) .pm56-host[data-theme] .menu-item:is(.active, :hover, :focus-visible) .menu-copy > span {
+/* (the line named class-first, span.menu-sub, which every menu row's builder now writes; same specificity as `> span`: a
+   bare span after :hover / .active / :focus-visible put the tag into Chrome's page-wide sets, lane J 2026-11-11) */
+html:not([data-o55-nier="on"]) .pm56-host[data-theme] .menu-item:is(.active, :hover, :focus-visible) .menu-copy > :where(.menu-sub):is(span) {
   color: color-mix(in srgb, var(--text) 40%, var(--muted));
 }
 /* the transcript's people family (turn-stage.css): its warm band under the kicker and the body */

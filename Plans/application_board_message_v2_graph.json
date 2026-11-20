@@ -1,0 +1,164 @@
+{
+  "schema_id": "pm.application_board_message.source_graph.v2",
+  "schema_version": "2.0.0",
+  "resources": [
+    {
+      "path": "Plans/application_board_message_v2.schema.json",
+      "schema_uri": "https://puppetmaster.local/schemas/application-board-message/2.0.0/schema.json",
+      "sha256": "5242d3930f1deeb367d87debd6bf6de8d087cc79b71a02e95271026e03aa2dc9"
+    },
+    {
+      "path": "Plans/application_workflow_contracts.schema.json",
+      "schema_uri": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json",
+      "sha256": "2cf0d5972765362907d6d4eb05eb7bc0f06cdf5e15d6a89e777f38f4b7ebab82"
+    },
+    {
+      "path": "Plans/shared_integration_runtime.schema.json",
+      "schema_uri": "pm.shared_integration_runtime.command_contracts.schema.v1",
+      "sha256": "0e41d89065463e0581357a514ad3d2510d6db8a3e9356dcd23f717f5db4118f5"
+    },
+    {
+      "path": "Plans/coordination_projection_contracts.schema.json",
+      "schema_uri": "https://puppetmaster.local/schemas/coordination_projection_contracts/1.0.0/coordination_projection_contracts.schema.json",
+      "sha256": "1cdcc256711d9ca0fb607a74144ea81e9e185bbc907b650262ade7cac92b1ee8"
+    }
+  ],
+  "methods": [
+    {
+      "interface_id": "storage.coordination_append.application@2.0.0",
+      "owner_doc": "Plans/Contracts_V0.md#CV-740",
+      "source_root_ref": "Plans/application_board_message_v2.schema.json#/$defs/OriginalCoordinationAppendSourceV2",
+      "input_root_ref": "Plans/application_board_message_v2.schema.json#/$defs/AgentMessageApplicationV2",
+      "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1",
+      "current_or_retained_role": "original_current_and_retained_exact"
+    }
+  ],
+  "graphs": [
+    {
+      "graph_id": "app.coordination_append.v2",
+      "scope_kind": "application",
+      "participating_method_ids": [
+        "storage.coordination_append.application@2.0.0"
+      ],
+      "ordered_role_edges": [
+        {
+          "from_role": "original_intent",
+          "to_role": "accepted_original_source",
+          "interface_id": "storage.coordination_append.application@2.0.0",
+          "input_root_ref": "Plans/application_board_message_v2.schema.json#/$defs/AgentMessageApplicationV2",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "accepted_original_source",
+          "to_role": "current_owner_and_stop_fence",
+          "interface_id": "storage.coordination_append.application@2.0.0",
+          "input_root_ref": "Plans/application_board_message_v2.schema.json#/$defs/AgentMessageApplicationV2",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "current_owner_and_stop_fence",
+          "to_role": "canonical_pending_or_reservation",
+          "interface_id": "storage.coordination_append.application@2.0.0",
+          "input_root_ref": "Plans/application_board_message_v2.schema.json#/$defs/AgentMessageApplicationV2",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "canonical_pending_or_reservation",
+          "to_role": "owner_commit",
+          "interface_id": "storage.coordination_append.application@2.0.0",
+          "input_root_ref": "Plans/application_board_message_v2.schema.json#/$defs/AgentMessageApplicationV2",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "owner_commit",
+          "to_role": "event_append_if_admitted",
+          "interface_id": "storage.coordination_append.application@2.0.0",
+          "input_root_ref": "Plans/application_board_message_v2.schema.json#/$defs/AgentMessageApplicationV2",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "event_append_if_admitted",
+          "to_role": "first_receipt_custody",
+          "interface_id": "storage.coordination_append.application@2.0.0",
+          "input_root_ref": "Plans/application_board_message_v2.schema.json#/$defs/AgentMessageApplicationV2",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "first_receipt_custody",
+          "to_role": "immutable_terminal_result",
+          "interface_id": "storage.coordination_append.application@2.0.0",
+          "input_root_ref": "Plans/application_board_message_v2.schema.json#/$defs/AgentMessageApplicationV2",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "immutable_terminal_result",
+          "to_role": "canonical_or_derived_read",
+          "interface_id": "storage.coordination_append.application@2.0.0",
+          "input_root_ref": "Plans/application_board_message_v2.schema.json#/$defs/AgentMessageApplicationV2",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "canonical_or_derived_read",
+          "to_role": "coherent_backup_restore",
+          "interface_id": "storage.coordination_append.application@2.0.0",
+          "input_root_ref": "Plans/application_board_message_v2.schema.json#/$defs/AgentMessageApplicationV2",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        },
+        {
+          "from_role": "coherent_backup_restore",
+          "to_role": "retention_release",
+          "interface_id": "storage.coordination_append.application@2.0.0",
+          "input_root_ref": "Plans/application_board_message_v2.schema.json#/$defs/AgentMessageApplicationV2",
+          "output_root_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1"
+        }
+      ],
+      "physical_family_ids": [
+        "crew_board_message_application_v2"
+      ],
+      "event_selectors": [
+        "crew.board_message_posted@1.0.0",
+        "crew.board_message_read@1.0.0",
+        "crew.board_messages_archived@1.0.0"
+      ],
+      "reader_ids": [
+        "reader.orchestrator.crew_board_message_posted.history.v1@1.0.0"
+      ],
+      "backup_restore_owner_refs": [
+        "Plans/Backup_Restore_System.md#BRS-033"
+      ],
+      "retention_policy_refs": [
+        "RP-COORDINATION-180D"
+      ],
+      "adoption_disposition": "specified_unimplemented"
+    }
+  ],
+  "physical_selection": {
+    "family_id": "crew_board_message_application_v2",
+    "wrapper_root_ref": "Plans/application_board_message_v2.schema.json#/$defs/CrewBoardMessageStorageApplicationV2",
+    "codec_id": "pm.crew_board_message.application.physical_messagepack.v2",
+    "codec_algorithm": "pm.application.physical_messagepack.v1",
+    "key_prefix": "crew_board_message.application.v2",
+    "semantic_hash_kind": "accepted_source",
+    "physical_hash": "sha256_exact_complete_wrapper_messagepack",
+    "payload_hash": "SP-337 BLAKE3 exact UTF-8 bytes"
+  },
+  "read_backup_restore": {
+    "canonical_reader_id": "storage.crew_board_message.read.application@2.0.0",
+    "backup_method_id": "storage.crew_board_message.backup.application@2.0.0",
+    "restore_method_id": "storage.crew_board_message.restore.application@2.0.0",
+    "wrapper_root_ref": "Plans/application_board_message_v2.schema.json#/$defs/CrewBoardMessageStorageApplicationV2",
+    "source_root_ref": "Plans/application_board_message_v2.schema.json#/$defs/OriginalCoordinationAppendSourceV2",
+    "owner_ref": "Plans/storage-plan.md#SP-723",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "same_source_access_deletion_hold_fences": true
+  },
+  "compatibility": {
+    "historical_v1_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/AgentMessageApplicationV1",
+    "historical_v1_source_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalCoordinationAppendSource",
+    "historical_v1_wrapper_ref": "Plans/application_workflow_contracts.schema.json#/$defs/CrewBoardMessageStorageApplicationV1",
+    "v1_upgrade": "unavailable_without_genuine_original_headers",
+    "withdrawal": "fence exact v2 writer, settle original full receipts, fence exact v2 reader/publication before successor; retain original V1/V2 bytes and independent generic index"
+  },
+  "adoption_disposition": "specified_unimplemented",
+  "graph_sha256": "afc924bea14ef8aee759f25030a85cb85899b302c7d90b50a367bbd2f792e0df"
+}

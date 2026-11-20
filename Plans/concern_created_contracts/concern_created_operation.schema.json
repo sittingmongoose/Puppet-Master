@@ -1,0 +1,914 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.storage_value.concern_created_operation.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "storage_instance_id",
+    "project_id",
+    "scope_partition",
+    "operation_digest",
+    "event_id",
+    "idempotency_key",
+    "request_digest",
+    "state",
+    "original_command",
+    "payload",
+    "prior_record",
+    "candidate_record",
+    "owner_commit_ref",
+    "result_ref",
+    "dispatch_receipt_ref",
+    "original_append_result_ref"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.storage_value.concern_created_operation.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "storage_instance_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope_partition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operation_digest": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "request_digest": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "state": {
+      "enum": [
+        "prepared",
+        "committed",
+        "settled"
+      ]
+    },
+    "original_command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "handler_target",
+        "project_id",
+        "actor_ref",
+        "creator_kind",
+        "authority_basis_ref",
+        "permission_snapshot_ref",
+        "currentness_basis_ref",
+        "title_ref",
+        "subject_ref",
+        "scope_ref",
+        "run_ref",
+        "severity",
+        "category",
+        "owner_kind",
+        "owner_ref",
+        "source_refs",
+        "evidence_refs",
+        "artifact_refs",
+        "lineage_refs",
+        "visibility_level",
+        "attention_level",
+        "chatworthy",
+        "blocking_effect_ref",
+        "origin",
+        "correlation_id",
+        "idempotency_key",
+        "ts"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.concern.create"
+        },
+        "handler_target": {
+          "const": "handlers::concern::create"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        "creator_kind": {
+          "enum": [
+            "Runtime",
+            "Package Overseer",
+            "Seam Overseer",
+            "Corroboration",
+            "Graph Patch"
+          ]
+        },
+        "authority_basis_ref": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        "currentness_basis_ref": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        "title_ref": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        "subject_ref": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        "scope_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 320,
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "run_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 320,
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "error",
+            "critical"
+          ]
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[a-z][a-z0-9_]*$(?![\\s\\S])"
+        },
+        "owner_kind": {
+          "enum": [
+            "Runtime",
+            "Package Overseer",
+            "Seam Overseer",
+            "Corroboration",
+            "Graph Patch",
+            "Recovery",
+            "User",
+            "External Resource"
+          ]
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "maxItems": 64,
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "maxItems": 64,
+          "uniqueItems": true
+        },
+        "artifact_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "maxItems": 64,
+          "uniqueItems": true
+        },
+        "lineage_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "maxItems": 64,
+          "uniqueItems": true
+        },
+        "visibility_level": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attention_level": {
+          "type": "string",
+          "minLength": 1
+        },
+        "chatworthy": {
+          "type": "boolean"
+        },
+        "blocking_effect_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 320,
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "origin": {
+          "enum": [
+            "orchestrator",
+            "concern_center",
+            "dashboard",
+            "api"
+          ]
+        },
+        "correlation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "payload": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$comment": "Static payload shape only. The owner/runtime must prove the source sighting is authoritative and actor_ref equals the authorized creator identity. This schema grants no append or dispatch authority.",
+      "title": "concern.created payload",
+      "description": "Closed project-scoped payload that creates one durable concern record at revision one from explicit source references.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "concern_id",
+        "concern_revision",
+        "concern_record_ref",
+        "actor_ref",
+        "created_by_ref",
+        "currentness_basis_ref",
+        "source_refs",
+        "state",
+        "category",
+        "severity",
+        "owner_kind",
+        "owner_ref",
+        "origin",
+        "handler_target",
+        "command_id",
+        "correlation_id",
+        "idempotency_key",
+        "ts"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.concern_event.concern_created.schema.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "concern_id": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "concern_revision": {
+          "const": 1,
+          "type": "integer"
+        },
+        "concern_record_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "created_by_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "currentness_basis_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/payload_non_empty_ref_array"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/payload_ref_array"
+        },
+        "state": {
+          "const": "active"
+        },
+        "reason_code": {
+          "$ref": "#/$defs/payload_reason_code"
+        },
+        "category": {
+          "$ref": "#/$defs/payload_reason_code"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "error",
+            "critical"
+          ]
+        },
+        "owner_kind": {
+          "$ref": "#/$defs/payload_owner_kind"
+        },
+        "owner_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "scope_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "run_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "origin": {
+          "$ref": "#/$defs/payload_origin"
+        },
+        "handler_target": {
+          "const": "handlers::concern::create"
+        },
+        "command_id": {
+          "const": "cmd.concern.create"
+        },
+        "correlation_id": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "prior_record": {
+      "type": "null"
+    },
+    "candidate_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record_id",
+        "record_kind",
+        "concern_id",
+        "project_id",
+        "revision",
+        "concern_category",
+        "severity",
+        "status",
+        "owner_kind",
+        "owner_ref",
+        "creator_ref",
+        "created_by_kind",
+        "created_by_ref",
+        "subject_ref",
+        "source_event_refs",
+        "evidence_refs",
+        "artifact_refs",
+        "lineage_refs",
+        "summary",
+        "created_at",
+        "updated_at",
+        "visibility_level",
+        "attention_level",
+        "chatworthy",
+        "blocking_effect_ref",
+        "resolution_kind",
+        "resolver_ref",
+        "resolved_at",
+        "run_ref",
+        "scope_ref",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.concern_record.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record_kind": {
+          "const": "concern"
+        },
+        "concern_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "concern_category": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "^[a-z][a-z0-9_]*$(?![\\s\\S])"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "error",
+            "critical"
+          ]
+        },
+        "status": {
+          "enum": [
+            "active",
+            "acknowledged",
+            "resolved",
+            "dismissed"
+          ]
+        },
+        "owner_kind": {
+          "enum": [
+            "Runtime",
+            "Package Overseer",
+            "Seam Overseer",
+            "Corroboration",
+            "Graph Patch",
+            "Recovery",
+            "User",
+            "External Resource"
+          ]
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        "creator_ref": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        "created_by_kind": {
+          "enum": [
+            "Runtime",
+            "Package Overseer",
+            "Seam Overseer",
+            "Corroboration",
+            "Graph Patch"
+          ]
+        },
+        "created_by_ref": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        "subject_ref": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        "source_event_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "maxItems": 64,
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "maxItems": 64,
+          "uniqueItems": true
+        },
+        "artifact_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "maxItems": 64,
+          "uniqueItems": true
+        },
+        "lineage_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "maxItems": 64,
+          "uniqueItems": true
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "visibility_level": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attention_level": {
+          "type": "string",
+          "minLength": 1
+        },
+        "chatworthy": {
+          "type": "boolean"
+        },
+        "blocking_effect_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 320,
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resolution_kind": {
+          "enum": [
+            null,
+            "fixed",
+            "accepted_risk",
+            "superseded",
+            "merged",
+            "split",
+            "invalidated",
+            "obsoleted_by_patch",
+            "obsoleted_by_recovery"
+          ]
+        },
+        "resolver_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 320,
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resolved_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "run_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 320,
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scope_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 320,
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "redaction_profile": {
+          "const": "secret_refs_only"
+        }
+      }
+    },
+    "owner_commit_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "result_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dispatch_receipt_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "original_append_result_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 320,
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "payload_non_empty_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+    },
+    "payload_non_secret_ref": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 320,
+      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+    },
+    "payload_reason_code": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z][a-z0-9_]*$(?![\\s\\S])"
+    },
+    "payload_origin": {
+      "enum": [
+        "orchestrator",
+        "concern_center",
+        "dashboard",
+        "api"
+      ]
+    },
+    "payload_owner_kind": {
+      "enum": [
+        "Runtime",
+        "Package Overseer",
+        "Seam Overseer",
+        "Corroboration",
+        "Graph Patch",
+        "Recovery",
+        "User",
+        "External Resource"
+      ]
+    },
+    "payload_ref_array": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/payload_non_secret_ref"
+      },
+      "maxItems": 64,
+      "uniqueItems": true
+    },
+    "payload_non_empty_ref_array": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/payload_non_secret_ref"
+      },
+      "minItems": 1,
+      "maxItems": 64,
+      "uniqueItems": true
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "prepared"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "owner_commit_ref": {
+            "type": "null"
+          },
+          "result_ref": {
+            "type": "null"
+          },
+          "dispatch_receipt_ref": {
+            "type": "null"
+          },
+          "original_append_result_ref": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "committed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "owner_commit_ref": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "result_ref": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "dispatch_receipt_ref": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "original_append_result_ref": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "settled"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "owner_commit_ref": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "result_ref": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "dispatch_receipt_ref": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          },
+          "original_append_result_ref": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 320,
+            "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+          }
+        }
+      }
+    }
+  ]
+}

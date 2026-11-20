@@ -1,0 +1,39 @@
+{
+  "admission": "ABSENT; no writes or checkpoints",
+  "families": [
+    {
+      "event_type": "panel.redocked",
+      "slug": "panel_redocked",
+      "sp": "SP-664",
+      "cv": "CV-684",
+      "f3": "F3-704",
+      "ats": "ATS-334",
+      "payload_schema": "Plans/event_payloads/panel_redocked_v2.schema.json",
+      "operation": "panel_redocked_operation",
+      "checkpoint": "panel_redocked_checkpoint",
+      "command": "cmd.panel.redock",
+      "handler": "handlers::panel::redock",
+      "outcome": "register (prepared)",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_host": "detached_window",
+      "target_host": "chat_column"
+    },
+    {
+      "event_type": "panel.undocked",
+      "slug": "panel_undocked",
+      "sp": "SP-665",
+      "cv": "CV-685",
+      "f3": "F3-705",
+      "ats": "ATS-334",
+      "payload_schema": "Plans/event_payloads/panel_undocked_v2.schema.json",
+      "operation": "panel_undocked_operation",
+      "checkpoint": "panel_undocked_checkpoint",
+      "command": "cmd.panel.undock",
+      "handler": "handlers::panel::undock",
+      "outcome": "register (prepared)",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "source_host": "chat_column",
+      "target_host": "detached_window"
+    }
+  ]
+}

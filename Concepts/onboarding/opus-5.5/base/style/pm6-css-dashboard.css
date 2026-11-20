@@ -712,7 +712,7 @@ html.pm6-dash-dragging .pm6-dash-card:hover { transform: none; }
 body.pm-home-dragging .pm-home-host,
 body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
 /* A claimed surface keeps its OWN PM6 layout. Only placement-level properties
-   are asserted here; the former blanket !important wall (width/height/min-*/
+   are asserted here; the former blanket !important wall (width/height/min-* /
    overflow) is what broke chat sizing, clipped every resizer grab strip, and
    cut the dashboard's container-query scroller. */
 .pm-home-surface {

@@ -3858,6 +3858,81 @@
           }
         ]
       }
+    },
+    {
+      "case_id": "projection_agent_terminal_application",
+      "definition": "agent_terminalApplicationV1",
+      "value": {
+        "event_type": "coordination.agent_crashed",
+        "outcome": "heartbeat_expired",
+        "occurred_at_utc": "2026-09-25T04:17:00Z"
+      }
+    },
+    {
+      "case_id": "checkpoint_withdrawn",
+      "definition": "checkpoint",
+      "value": {
+        "schema_id": "pm.storage_value.coordination_projector_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "publication_id": "pub_fixture_2",
+        "project_id": "project_fixture_alpha",
+        "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+        "scope_partition": "project~cHJvamVjdF9maXh0dXJlX2FscGhh",
+        "projector_id": "storage.coordination_projector.v1",
+        "projector_version": "1.0.0",
+        "admitted_event_types": [
+          "coordination.agent_aborted",
+          "coordination.agent_crashed",
+          "coordination.agent_file_ownership_updated",
+          "coordination.agent_operation_updated",
+          "coordination.agent_registered",
+          "coordination.agent_status_updated",
+          "coordination.agent_unregistered"
+        ],
+        "index_read_token": {
+          "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+          "checkpoint_key": "event_record_index_checkpoint.v1:4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+          "checkpoint_ref": "checkpoints/event_record_index_checkpoint.v1",
+          "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "generation_anchor_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "frontier_revision": 12,
+          "frontier_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "index_dataset_name": "event_record_index.v2@eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source_selection": {
+            "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "selected_segment_generation": 4,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "manifest_generation": 4,
+            "recovery_epoch": 3,
+            "manifest_survivor_prefix_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "retained_inventory_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "durable_watermarks_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "excluded_ranges_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+            "retired_inputs_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        },
+        "first_retained_sequence_id": 0,
+        "index_through_sequence_id": 47,
+        "source_cursor": {
+          "segment_generation": 4,
+          "segment_name": "seg-000004-00000000000000000000.active",
+          "byte_offset": 9120,
+          "frame_end_offset": 9344,
+          "last_sequence_id": 47,
+          "last_event_id": "evt_coordination_de33f051abe5db623debf4397a24a1996e2378492c117f7a13277f046fba2904"
+        },
+        "filter_complete": true,
+        "state": "withdrawn",
+        "health": "healthy",
+        "updated_at_utc": "2026-09-25T04:06:00Z",
+        "withdrawn_at_utc": "2026-09-25T04:06:00Z",
+        "published_at_utc": "2026-09-25T03:00:00Z",
+        "hold_refs": [],
+        "retired_generations": []
+      }
     }
   ],
   "invalid_projection_values": [
@@ -4279,6 +4354,54 @@
         "publication_id"
       ],
       "expected_rejection": "schema"
+    },
+    {
+      "case_id": "agent_terminal_occurred_hour_24",
+      "base_case_id": "projection_agent_crashed",
+      "definition": "agent_projection",
+      "patch": {
+        "terminal": {
+          "event_type": "coordination.agent_crashed",
+          "outcome": "heartbeat_expired",
+          "occurred_at_utc": "2026-09-25T24:00:00Z"
+        }
+      },
+      "remove": [],
+      "expected_rejection": "projection_timestamp"
+    },
+    {
+      "case_id": "agent_terminal_occurred_trailing_lf",
+      "base_case_id": "projection_agent_crashed",
+      "definition": "agent_projection",
+      "patch": {
+        "terminal": {
+          "event_type": "coordination.agent_crashed",
+          "outcome": "heartbeat_expired",
+          "occurred_at_utc": "2026-09-25T04:17:00Z\n"
+        }
+      },
+      "remove": [],
+      "expected_rejection": "projection_timestamp"
+    },
+    {
+      "case_id": "agent_terminal_application_occurred_hour_24",
+      "base_case_id": "projection_agent_terminal_application",
+      "definition": "agent_terminalApplicationV1",
+      "patch": {
+        "occurred_at_utc": "2026-09-25T24:00:00Z"
+      },
+      "remove": [],
+      "expected_rejection": "projection_timestamp"
+    },
+    {
+      "case_id": "checkpoint_withdrawn_at_hour_24",
+      "base_case_id": "checkpoint_withdrawn",
+      "definition": "checkpoint",
+      "patch": {
+        "withdrawn_at_utc": "2026-09-25T24:00:00Z"
+      },
+      "remove": [],
+      "expected_rejection": "projection_timestamp"
     }
   ],
   "required_native_oracles": [

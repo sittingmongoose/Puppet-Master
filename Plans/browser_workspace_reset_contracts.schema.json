@@ -34,7 +34,7 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 512,
-      "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*$",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*(?![\\s\\S])",
       "not": {
         "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
       }
@@ -233,7 +233,7 @@
         },
         "scope_partition": {
           "type": "string",
-          "pattern": "^project~[A-Za-z0-9_-]+$"
+          "pattern": "^project~[A-Za-z0-9_-]+(?![\\s\\S])"
         },
         "projector_id": {
           "const": "storage.browser_workspace_reset_index.v1"
@@ -462,7 +462,7 @@
         },
         "scope_partition": {
           "type": "string",
-          "pattern": "^project~[A-Za-z0-9_-]+$"
+          "pattern": "^project~[A-Za-z0-9_-]+(?![\\s\\S])"
         },
         "projector_id": {
           "const": "storage.browser_workspace_reset_index.v1"

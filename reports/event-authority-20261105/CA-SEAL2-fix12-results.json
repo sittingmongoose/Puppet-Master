@@ -1,0 +1,515 @@
+{
+  "schema_id": "pm.assurance.ca_seal2.fix12.v1",
+  "base_commit": "f82245a2631e491d5ec3d7b262599bb56d659dcc",
+  "code_commits": [
+    "85c5e37b465a0b5335a8052313dbda0c9f18f6dd",
+    "9ff9856c03e86d1752a7bbf4f892af1361e40672",
+    "57d161f483b9c5caa1b90d5bf19a163dd8035464",
+    "011e0ea92679631674f34975f259dcab7e1a26af"
+  ],
+  "validator_sha256": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+  "checker_sha256": "dddefd702999b296cd23cb5312739823286577716803d428b0f0741bf5ff8a77",
+  "coverage_sha256": "04aa0cdf5aaf1a4d8c693230ae18bf046a47c4fad67a0e11ec6bbc79122d6c89",
+  "python": "3.14.4",
+  "corpus": {
+    "passed": 239,
+    "checks": 239,
+    "original_map": true,
+    "replay_caches": false,
+    "scratch_copy_passed": 239,
+    "scratch_copy_checks": 239,
+    "verified_sources": 597,
+    "prior_tests_retained": 220,
+    "new_tests": [
+      "negative_binding_alias_method_new_function",
+      "negative_binding_duplicate_def_admission_record_problems",
+      "negative_binding_duplicate_def_build_receipt",
+      "negative_binding_evidence_fields_truncation",
+      "negative_binding_globals_write_new_function",
+      "negative_binding_module_alias_write",
+      "negative_binding_module_class_body",
+      "negative_binding_star_import",
+      "negative_census_arithmetic_augassign_add",
+      "negative_census_arithmetic_unary_usub",
+      "negative_changed_module_new_constant",
+      "negative_changed_new_function_dict_spread",
+      "negative_frozen_comment_inserted",
+      "negative_frozen_round9_gate_deleted",
+      "negative_nodes_untouched_function_respaced",
+      "negative_random_single_line_edits",
+      "positive_imported_bindings_match_ast",
+      "positive_module_scope_rules_on_V_and_CA_SEAL",
+      "positive_total_table_controls"
+    ],
+    "changed_prior_result_records": []
+  },
+  "findings": {
+    "CA2-C12-B01": "fixed: every module-level name bound exactly once (CA-SEAL names included); top_functions() refuses a second def wherever the checker builds a name map; the main guard must be the last module statement; the corpus checks that the imported module runs the one binding",
+    "CA2-C12-B02": "fixed: every line of a function new since CA-SEAL is an inserted line, so every node there has a census or changed-line row; every other positioned node of V has a node row",
+    "CA2-C12-N01": "fixed: line pins of the frozen validator; every inserted, changed, deleted or replaced line relative to it needs a reviewed record",
+    "CA2-C12-N02": "fixed: the module body only declares; writes to module objects (directly, through aliases, from functions, lambdas, class bodies and comprehensions), mutating methods of module containers, import *, namespace builtins and unused dunders are refused before any row is read",
+    "CA2-C12-N03": "fixed: arithmetic and set operators are census rows (no excluded class); reason text corrected",
+    "CA2-C12-N04": "fixed: node_text() blanks only statement-list fields; Lambda and module-level IfExp controls",
+    "CA2-C12-N05": "fixed: main's recount seam located from the AST; the parent assertion runs inside record(); insertion probes read the one binding"
+  },
+  "table": {
+    "positioned_nodes": 10941,
+    "by_row_kind": {
+      "census anchor": 1585,
+      "changed-line row": 1436,
+      "node row": 7920
+    },
+    "positionless_nodes": 6048,
+    "pinned_lines": 2361,
+    "frozen_line_records": 0,
+    "walker_rows": 327,
+    "census_rows": 1756,
+    "changed_line_rows": 1436,
+    "historical_records": 2,
+    "node_rows": 7920,
+    "rows_by_outcome": {
+      "data": 7992,
+      "frozen-input only": 88,
+      "implied": 28,
+      "killed by": 433,
+      "non-predicate data operation": 899,
+      "preserved August predicate": 620,
+      "same-predicate duplicate": 6,
+      "structural": 508,
+      "unchanged August truth carrier": 865
+    },
+    "census_outcomes": {
+      "non-predicate data operation": 883,
+      "preserved August predicate": 620,
+      "killed by": 200,
+      "implied": 8,
+      "same-predicate duplicate": 3,
+      "structural": 4,
+      "frozen-input only": 38
+    },
+    "changed_line_outcomes": {
+      "data": 1307,
+      "structural": 129
+    },
+    "node_row_outcomes": {
+      "data": 6685,
+      "structural": 370,
+      "unchanged August truth carrier": 865
+    },
+    "ast_classes": {
+      "python_version": "3.14.4",
+      "classes": 133,
+      "by_category": {
+        "truth-carrying": 53,
+        "data": 27,
+        "structural": 29,
+        "refused when present": 24
+      },
+      "table_sha256": "0f535cde772782f223114eaa4bca3e5eb2835be62cedc74cfd6993ab7bb2455f"
+    }
+  },
+  "committed_rows": {
+    "rows_before": 1944,
+    "same_site_ids_kept": true,
+    "rows_with_changed_fields": [],
+    "new_census_rows": {
+      "BinOp(Div)": 80,
+      "BinOp(Sub)": 31,
+      "BinOp(Add)": 27,
+      "AugAssign(Add)": 1
+    },
+    "changed_line_rows_kept": 188,
+    "changed_line_rows_now_census_rows": [
+      [
+        810,
+        "BinOp",
+        "HOME / 'recount'"
+      ],
+      [
+        810,
+        "BinOp",
+        "HOME / 'recount' / 'OUTCOMES.json'"
+      ]
+    ],
+    "new_changed_line_rows": 1248,
+    "new_node_rows": 7920
+  },
+  "random_edits": {
+    "corpus_control": {
+      "edits": 200,
+      "failed_with_table_unchanged": 200
+    },
+    "replay": {
+      "edits": 400,
+      "seeds": [
+        20261106,
+        20261107
+      ],
+      "per_seed": 200,
+      "by_kind": {
+        "insert": 100,
+        "delete": 100,
+        "change": 100,
+        "swap": 100
+      },
+      "unchanged": {
+        "FAIL frozen lines": 379,
+        "FAIL module-level binding refused": 21
+      },
+      "metadata_only": {
+        "FAIL frozen lines": 190,
+        "FAIL module-level binding refused": 10
+      },
+      "line_records_forged": {
+        "ast identical: PASS": 8,
+        "ast changed, pure deletion: PASS": 14,
+        "ast identical: FAIL coverage sites": 21,
+        "ast changed: FAIL changed-line nodes": 18,
+        "ast changed: FAIL coverage sites": 75,
+        "ast changed, pure deletion: FAIL node rows": 10,
+        "ast changed, pure deletion: FAIL coverage sites": 22,
+        "ast changed: FAIL module-level binding refused": 9,
+        "ast identical: FAIL changed-line nodes": 9,
+        "ast identical: FAIL node rows": 8,
+        "ast identical: FAIL preserved occurrence": 2,
+        "ast changed, pure deletion: FAIL module-level binding refused": 1,
+        "ast identical, pure deletion: PASS": 2,
+        "ast changed, pure deletion: FAIL preserved occurrence": 1
+      },
+      "every_row_forged": {
+        "PASS": 160,
+        "FAIL node rows": 30,
+        "FAIL module-level binding refused": 10
+      },
+      "seconds": 1265,
+      "pure_deletions_judged_by_line_records": {
+        "count": 14,
+        "all_pure_deletions": true,
+        "rows_dropped_by_rebase": [
+          3,
+          3,
+          3,
+          3,
+          4,
+          5,
+          5,
+          5,
+          5,
+          6,
+          8,
+          8,
+          8,
+          13
+        ],
+        "metadata_only_refusals": {
+          "FAIL frozen lines": 14
+        }
+      }
+    }
+  },
+  "node_audit": {
+    "positioned_nodes": 10941,
+    "census_rows": 1756,
+    "census_anchor_nodes": 1585,
+    "changed_line_rows": 1436,
+    "node_rows": 7920,
+    "uncovered": [],
+    "covered_twice": [],
+    "node_rows_whose_start_line_differs_from_cited_ca_seal_line": [],
+    "line_pins_equal_frozen": true,
+    "line_pins": 2361,
+    "node_rows_outcome_not_their_class_category": [],
+    "parser_callback_keywords_outside_census": 3
+  },
+  "corpus_probes": {
+    "negative_binding_alias_method_new_function": true,
+    "negative_binding_duplicate_def_admission_record_problems": true,
+    "negative_binding_duplicate_def_build_receipt": true,
+    "negative_binding_evidence_fields_truncation": true,
+    "negative_binding_globals_write_new_function": true,
+    "negative_binding_module_alias_write": true,
+    "negative_binding_module_class_body": true,
+    "negative_binding_star_import": true,
+    "negative_census_arithmetic_augassign_add": true,
+    "negative_census_arithmetic_unary_usub": true,
+    "negative_changed_module_new_constant": true,
+    "negative_changed_new_function_dict_spread": true,
+    "negative_frozen_comment_inserted": true,
+    "negative_frozen_round9_gate_deleted": true,
+    "negative_nodes_untouched_function_respaced": true,
+    "negative_random_single_line_edits": true
+  },
+  "replays": {
+    "astra6_insertions": [
+      {
+        "label": "isinstance_assignment",
+        "missing": 1,
+        "refused": "AssertionError: frozen lines missing=['frozen:68bd6be641363a"
+      },
+      {
+        "label": "boolean_bitand_assignment",
+        "missing": 1,
+        "refused": "AssertionError: frozen lines missing=['frozen:df7117b25ae001"
+      },
+      {
+        "label": "bare_name_filter",
+        "missing": 1,
+        "refused": "AssertionError: frozen lines missing=['frozen:49224117045a19"
+      },
+      {
+        "label": "unknown_call",
+        "missing": 1,
+        "refused": "AssertionError: frozen lines missing=['frozen:89ad411cf2841e"
+      },
+      {
+        "label": "known_predicate_call",
+        "missing": 1,
+        "refused": "AssertionError: frozen lines missing=['frozen:163a815d4faa2b"
+      }
+    ],
+    "cycle10_adjacent": [
+      {
+        "label": "tuple",
+        "missing": 1,
+        "refused": "FAIL missing identities"
+      },
+      {
+        "label": "attribute",
+        "missing": 0,
+        "refused": "FAIL module-level binding refused {\"bind"
+      },
+      {
+        "label": "subscript",
+        "missing": 1,
+        "refused": "FAIL missing identities"
+      },
+      {
+        "label": "xor",
+        "missing": 1,
+        "refused": "FAIL missing identities"
+      },
+      {
+        "label": "walrus_comprehension",
+        "missing": 2,
+        "refused": "FAIL missing identities"
+      },
+      {
+        "label": "any_generator",
+        "missing": 2,
+        "refused": "FAIL missing identities"
+      },
+      {
+        "label": "all_generator",
+        "missing": 2,
+        "refused": "FAIL missing identities"
+      },
+      {
+        "label": "default_argument",
+        "missing": 2,
+        "refused": "FAIL missing identities"
+      },
+      {
+        "label": "lambda",
+        "missing": 1,
+        "refused": "FAIL missing identities"
+      },
+      {
+        "label": "alias",
+        "missing": 1,
+        "refused": "FAIL missing identities"
+      }
+    ],
+    "cycle10_rebinding_witness": {
+      "metadata_only": "FAIL: frozen lines missing=['frozen:ca34",
+      "rows_forged": "FAIL: preserved occurrence mismatch"
+    },
+    "astra6_hidden_builder": {
+      "coverage": "FAIL: frozen lines missing=['frozen:60a24942751e1391aca46362",
+      "corpus_passed": 236,
+      "corpus_checks": 239,
+      "failed": [
+        "positive_complete_predicate_coverage",
+        "negative_frozen_round9_gate_deleted",
+        "negative_frozen_comment_inserted"
+      ],
+      "restored": {
+        "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+        "reports/event-authority-20261105/CA-SEAL2-coverage.json": "04aa0cdf5aaf1a4d8c693230ae18bf046a47c4fad67a0e11ec6bbc79122d6c89",
+        "reports/event-authority-20261105/seal-check-recount-receipt.json": "899661007cdeb012ec5254d63c36629d41dd1adafd958fb9de9ebdcb6b3739da"
+      }
+    },
+    "cycle11_hidden_augassign": {
+      "forms": [
+        {
+          "statement": "overall_pass |= {\"review_extra\": False, **named}[\"review_extra\"]",
+          "round10": "PASS",
+          "round12": "FAIL: frozen lines missing=['f",
+          "round12_line_records_forged": "FAIL: coverage sites missing=['supplemen"
+        },
+        {
+          "statement": "overall_pass &= {\"review_extra\": False, **named}[\"review_extra\"]",
+          "round10": "PASS",
+          "round12": "FAIL: frozen lines missing=['f",
+          "round12_line_records_forged": "FAIL: coverage sites missing=['supplemen"
+        },
+        {
+          "statement": "overall_pass ^= {\"review_extra\": False, **named}[\"review_extra\"]",
+          "round10": "PASS",
+          "round12": "FAIL: frozen lines missing=['f",
+          "round12_line_records_forged": "FAIL: coverage sites missing=['supplemen"
+        }
+      ],
+      "corpus_passed": 236,
+      "corpus_checks": 239,
+      "failed": [
+        "positive_complete_predicate_coverage",
+        "negative_frozen_round9_gate_deleted",
+        "negative_frozen_comment_inserted"
+      ],
+      "direct_witness": {
+        "with_trigger": {
+          "intact_pass": false,
+          "edited_pass": true
+        },
+        "without_trigger": {
+          "intact_pass": false,
+          "edited_pass": false
+        }
+      },
+      "restored": {
+        "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+        "reports/event-authority-20261105/CA-SEAL2-coverage.json": "04aa0cdf5aaf1a4d8c693230ae18bf046a47c4fad67a0e11ec6bbc79122d6c89",
+        "reports/event-authority-20261105/seal-check-recount-receipt.json": "899661007cdeb012ec5254d63c36629d41dd1adafd958fb9de9ebdcb6b3739da"
+      }
+    },
+    "fix10_preservation_tables": [
+      {
+        "label": "rebinding_inserted_call",
+        "round9": "PASS",
+        "round12": "FAIL: preserved occurrence mismatch"
+      },
+      {
+        "label": "inserted_sole_claim",
+        "round9": "PASS",
+        "round12": "FAIL: preserved occurrence mismatch"
+      },
+      {
+        "label": "duplicate_claim",
+        "round9": "PASS",
+        "round12": "FAIL: preserved occurrence mismatch"
+      },
+      {
+        "label": "changed_occurrence",
+        "round9": "PASS",
+        "round12": "FAIL: preserved occurrence mismatch"
+      },
+      {
+        "label": "changed_enclosing_header",
+        "round9": "PASS",
+        "round12": "FAIL: preserved occurrence mismatch"
+      }
+    ],
+    "cycle11_occurrence_probes": {
+      "occurrence-probes": {
+        "FAIL frozen lines missing": 18,
+        "FAIL module-level binding refused": 3
+      },
+      "occurrence-probes-full-rebase": {
+        "FAIL frozen lines missing": 18,
+        "FAIL module-level binding refused": 3
+      }
+    },
+    "cycle11_scope_probes": {
+      "FAIL frozen lines missing": 6
+    },
+    "cycle11_independent_map": {
+      "independent_eligible": 1223,
+      "committed_eligible": 1223,
+      "eligible_set_equal": true,
+      "counterparts_equal": true
+    },
+    "cycle12_truth_probes": {
+      "metadata_only": {
+        "FAIL frozen lines missing": 37,
+        "FAIL module-level binding refused": 5
+      },
+      "every_row_forged": {
+        "PASS": 37,
+        "FAIL module-level binding refused": 5
+      }
+    },
+    "cycle12_scope_probes": {
+      "metadata_only": {
+        "FAIL frozen lines missing": 23,
+        "FAIL module-level binding refused": 13
+      },
+      "every_row_forged": {
+        "PASS": 21,
+        "None": 2,
+        "FAIL module-level binding refused": 13
+      }
+    },
+    "cycle12_layout_probes": {
+      "duplicate_def_sha256_file_move": "FAIL module-level binding refused",
+      "duplicate_def_sha256_file_add": "FAIL module-level binding refused",
+      "duplicate_def_admission_record_problems_move": "FAIL module-level binding refused",
+      "duplicate_def_admission_record_problems_add": "FAIL module-level binding refused",
+      "duplicate_def_recount_outcomes_move": "FAIL module-level binding refused",
+      "duplicate_def_recount_outcomes_add": "FAIL module-level binding refused",
+      "duplicate_def_build_receipt_move": "FAIL module-level binding refused",
+      "duplicate_def_build_receipt_add": "FAIL module-level binding refused",
+      "duplicate_def_main_move": "FAIL module-level binding refused",
+      "duplicate_def_main_add": "FAIL module-level binding refused"
+    },
+    "cycle12_deletion_probes": {
+      "D:round9_gate_deleted": "FAIL frozen lines missing",
+      "D:main_recount_fold_deleted": "FAIL frozen lines missing",
+      "D:both_deleted": "FAIL frozen lines missing"
+    },
+    "cycle12_ondisk_corpora": {
+      "newfn_cards_dict_spread_neutral": [
+        236,
+        239
+      ],
+      "duplicate_def_build_receipt_move": [
+        189,
+        239
+      ],
+      "newfn_evidence_fields_neutral": [
+        203,
+        239
+      ],
+      "duplicate_def_admission_record_problems_padded": [
+        189,
+        239
+      ]
+    },
+    "cycle11_scripts": [
+      "augassign-corpus-summary",
+      "augassign-hidden-builder",
+      "c10-witness-replay",
+      "independent-map",
+      "occurrence-probes",
+      "occurrence-probes-full-rebase",
+      "real-dataflow-audit",
+      "round9-vs-round10-forged",
+      "scope-probes",
+      "synthetic-map-probes"
+    ],
+    "cycle12_scripts": [
+      "class-table-check",
+      "deletion-probes",
+      "layout-probes",
+      "layout-script-witness",
+      "line-neutral-variants",
+      "newfn-witness",
+      "ondisk-corpus-duplicate_def_admission_record_problems_padded",
+      "ondisk-corpus-duplicate_def_build_receipt_move",
+      "ondisk-corpus-newfn_cards_dict_spread_neutral",
+      "ondisk-corpus-newfn_evidence_fields_neutral",
+      "scope-probes",
+      "truth-probes"
+    ]
+  },
+  "evidence_directory": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix12"
+}

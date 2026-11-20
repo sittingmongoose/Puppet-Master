@@ -12,10 +12,15 @@
 #pm-o55-onboarding[hidden] { display: none !important; }
 html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 /* the app beneath the window is inert and dimmed (its demo clock is paused too): its own loops (working pulses, status
-   dots) hold still until the window closes, so every frame's work is the window's own. Restyled in the same frame that
-   makes the app inert, which the window's first held frame already pays for. The parts are marked data-o55-held by
-   the window (60-ui-core.js setInert), so an inert toggle elsewhere (the editor's sheet) matches nothing here. */
-html[data-o55-open] body > [data-o55-held], html[data-o55-open] body > [data-o55-held] * { animation-play-state: paused !important; }
+   dots) hold still until the window closes, so every frame's work is the window's own. Each element of the app that
+   runs a CSS animation is marked data-o55-loop by js/14-window-hold.js in the frame that draws the click's dim, so the
+   loops are held there, not in the mount's long frame, and let go a frame after the close's wake: a hold or resume
+   taken in a long frame is taken by that frame's stale time, and every held loop jumped by the frame's length
+   (FO-181). Keyed on the mark alone, so only the marked elements restyle; the rule on every element of the app it
+   replaces (`html[data-o55-open] body > [data-o55-held] *`) cost about 240 ms of style at each open and close.
+   !important and the two :not(#...) (an id's weight each) because some loops are set inline or by an !important
+   shorthand, which also sets the play state (NieR Mode's diamonds, the loaders), as in 21-shell-still.css. */
+[data-o55-loop]:not(#o55-loop-a):not(#o55-loop-b) { animation-play-state: paused !important; }
 /* NieR Mode's diamond loaders (styles.d/14-nier-parts.css) set their animation with an !important shorthand, which
    resets the play state and outranks the line above: under the window they are paused here by name, so ticking NieR
    Mode in the window never wakes the app beneath (performance rule 6; review W9).
@@ -176,7 +181,12 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 .o55-content { margin-block: auto; padding: 32px var(--o55-pad) 28px; max-width: 640px; width: 100%; box-sizing: border-box; }
 /* centred as a screen comes in, then held where it opened: a line appearing or going inside it grows or shrinks the
    column downward instead of re-centring it in one frame (p76: jumps of 20-29 px; 60-ui-core.js holdColumn) */
-.o55-layer[data-col-held] .o55-scroll > .o55-content { margin-top: var(--o55-col-top, auto); margin-bottom: auto; }
+/* (the held top is written on the layer, outside what a same-screen refresh redraws, R46-1, and reaches the column through
+   its scroller only: it does not inherit anywhere else, so writing it restyles the layer, the scroller and the column, not
+   the screen's every element, 60-ui-core.js holdColumn, FO-206) */
+@property --o55-col-top { syntax: '<length>'; inherits: false; initial-value: 0px; }
+.o55-layer[data-col-held] > .o55-scroll, .o55-layer[data-col-held] > .o55-scroll > .o55-content { --o55-col-top: inherit; }
+.o55-layer[data-col-held] .o55-scroll > .o55-content { margin-top: var(--o55-col-top); margin-bottom: auto; }
 .o55-eyebrow { margin: 0 0 10px; font: 700 11.5px/1.2 var(--body-font); letter-spacing: 0.13em; text-transform: uppercase; color: var(--o55-ink-accent); }
 .o55-title { margin: 0 0 10px; font: 750 clamp(24px, 2.35vw, 31px)/1.16 var(--display-font, var(--body-font)); letter-spacing: -0.012em; color: var(--text-primary); outline: none; text-wrap: balance; }
 .o55-lead { margin: 0 0 24px; font: 400 15.5px/1.55 var(--body-font); color: var(--text-secondary); max-width: 52ch; text-wrap: pretty; }
@@ -489,6 +499,14 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-stage { border-right: 0; border-bottom: 1px solid var(--o55-line); }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-raillabel:not(.o55-railjump) { display: none; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-brand span, #pm-o55-onboarding[data-o55-layout="narrow"] .o55-close span { display: none; }
+/* FO-209: at phone width the bead rail must fit between the brand and the controls: NieR's letter-spaced items ran
+   onto the look button and covered it, so a real click on Change the look timed out (390x844, light and dark; at 360
+   the brand block left the rail a 31 px track). Only the room around the beads shrinks, and only in the narrow
+   layout; each string keeps hanging from its bead's centre. NieR's brand gives up its decorative kicker and wide
+   tracking there (11-window-nier.css). */
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-head { gap: 6px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-railitem { padding-inline: 1px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-railstring { left: calc(1px + var(--o55-node-w, 10px) / 2); }
 /* how the app talks to me (21-talk.js): the mode's mark and name, the name folding away with Close's where the bar is
    narrow; its hover and focus are the header's other buttons' */
 .o55-talk .o55-talkglyph { display: inline-grid; place-items: center; }
@@ -612,10 +630,15 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkglyph
 .o55-provider .o55-rowmeta { overflow: visible; overflow-wrap: anywhere; }
 @container o55-provider (max-width: 560px) {
   #pm-o55-onboarding .o55-row.o55-row-q:has(> .o55-pill) { grid-template-columns: auto minmax(0, 1fr) auto; }
-  .o55-provider .o55-row:has(> .o55-pill) > :first-child { grid-column: 1; grid-row: 1; }
+  /* The lead and the action are named by class (a provider row's lead is its .o55-plogo or, for a free route, its
+     .o55-glyph; its action is O55.ui.btn's button.o55-btn): Chrome keeps one :has() invalidation set for the whole page,
+     and `> :first-child` (nothing to key on) made it "whole subtree", so each :has() change of any anchor restyled the
+     anchor's whole subtree (lane I: .working-head 2/s in a Working run); `> button` put every button into it. Same
+     specificity as before (:is() of classes = :first-child; :where(.o55-row) gives back the class button.o55-btn adds). */
+  .o55-provider .o55-row:has(> .o55-pill) > :is(.o55-plogo, .o55-glyph) { grid-column: 1; grid-row: 1; }
   .o55-provider .o55-row:has(> .o55-pill) > .o55-rowtext { grid-column: 2; grid-row: 1; }
   .o55-provider .o55-row:has(> .o55-pill) > .o55-pill { grid-column: 2; grid-row: 2; }
-  .o55-provider .o55-row:has(> .o55-pill) > button:not(.o55-tipq) { grid-column: 2; grid-row: 3; justify-self: start; }
+  .o55-provider :where(.o55-row):has(> .o55-pill) > button.o55-btn:not(.o55-tipq) { grid-column: 2; grid-row: 3; justify-self: start; }
   .o55-provider .o55-row-q:has(> .o55-pill) > .o55-tipq { grid-column: 3; grid-row: 1; }
 }
 
@@ -777,8 +800,13 @@ html[data-motion="reduced"] #pm-o55-onboarding :is(button:not(.o55-card, .o55-ti
 /* Keep the native look's timing when feedback moves off the target: Retro cuts
    states; Glass releases with its original spring curve and presses in 90 ms. */
 #pm-o55-onboarding[data-family="retro"] :is(button:not(.o55-card, .o55-tile), a[href].o55-btn) > * { transition: none !important; }
-#pm-o55-onboarding[data-family="glass"] :is(button, a[href]).o55-btn > * { transition: translate 380ms cubic-bezier(.3, 1.3, .5, 1), scale 380ms cubic-bezier(.3, 1.3, .5, 1); }
-#pm-o55-onboarding[data-family="glass"] :is(button, a[href]).o55-btn:active > * { transition-duration: 90ms; }
+/* The press's 90 ms reaches the button's parts as an inherited custom property set on the pressed button itself: a rule
+   `.o55-btn:active > *` made Chrome's one :active set for the whole page "whole subtree", and :active is set on the
+   whole ancestor chain of whatever is pressed (html, body, the window...), so every press anywhere restyled every
+   ancestor's whole subtree, down and up (lane J, 2026-11-11). The values are the same: 380 ms per property at rest
+   (the fallback keeps the two-entry list), 90 ms while held. */
+#pm-o55-onboarding[data-family="glass"] :is(button, a[href]).o55-btn > * { transition: translate 380ms cubic-bezier(.3, 1.3, .5, 1), scale 380ms cubic-bezier(.3, 1.3, .5, 1); transition-duration: var(--o55-press-ms, 380ms, 380ms); }
+#pm-o55-onboarding[data-family="glass"] :is(button, a[href]).o55-btn:active { --o55-press-ms: 90ms; }
 
 /* In-tile help has its visible mark as its target: invisible padding must not
    steal the surrounding painted choice, including its rounded corners. */

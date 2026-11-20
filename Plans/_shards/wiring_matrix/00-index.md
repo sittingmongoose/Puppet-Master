@@ -1,57 +1,57 @@
 # Shard Index: Plans/Wiring_Matrix.md
 
-Generated: 2026-11-05T10:10:41Z
+Generated: 2026-11-13T15:35:54Z
 
-Source SHA256: `4efcd3485739534c22678ccdfee907f870afd1f43e04aea7e60115e8757f0465`
+Source SHA256: `b7ed4b1c3437a68b97a5ec79bce60e0c2d172b0d1c6821dffad8113ff6f382e2`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `1f3bc34c79387b79660cd2ab8371961cb6114822706338f58d8744a1e26fda80`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L20 `bba4397917fa3431fbac1687031aecca8f57221284c75eb91b1ddeceabfa6ee5`
-- [003 - 0. Scope](003-0.-scope.md) L21-L30 `5dd2deb320e0ebcdd78f34a4798b7cae7e09990ae70843de8d89f3d7a0d0c2a1`
-- [004 - 1. Template](004-1.-template.md) L31-L58 `b386ddf4dba93e804f5c99f0389df0b3e380eddf3d23d23855eab8c7ee19a985`
-- [005 - 2. Example Entries](005-2.-example-entries.md) L59-L83 `d659d3514d96fef5102cdc7c2ce8201b6a0f1cccc471ca673cf7add6d89f9a58`
-- [006 - 3. JSON Example](006-3.-json-example.md) L84-L143 `5dc3d39e90329dd4358a59115ec856feee66c3c0b4c55786dbdd6c17cd43c7de`
-- [007 - GUI / PMConcept production wiring repair addendum (2026-07-02)](007-gui-pmconcept-production-wiring-repair-addendum-2026-07-02.md) L145-L204 `7517366279e9731508b1307c96f0f0f4cc6daf647ff62ad840e11589ae625222`
-- [008 - 4. Verification](008-4.-verification.md) L205-L257 `445f3096cbc85b527f0078ca405c890f8e8e4cbdf3ad7f81207343932bc8f5b0`
-- [009 - References](009-references.md) L259-L264 `db6a2a9c3349e7d52f8b9a50a1f0854431c45ae6f574bffd12126556dc22614c`
-- [010 - Scheduler/Remediation/Event Wiring Addendum (2026-03-08)](010-scheduler-remediation-event-wiring-addendum-2026-03-08.md) L266-L301 `2954eac24e5b5227891d8b600594cc9423b13c4ee0322be2f244acf1b5137012`
-- [011 - Runtime recovery wiring requirements (2026-03-09)](011-runtime-recovery-wiring-requirements-2026-03-09.md) L302-L313 `6f674fca520759045e40d252c012dbcaab28e292c528ba5bd9028d3236259b85`
-- [012 - Canonical Runtime Event Wiring Canonical Alignment (2026-03-09)](012-canonical-runtime-event-wiring-canonical-alignment-2026-03-09.md) L314-L340 `3a24a63381fecbeb7f3cd89c1219619de27460a0854aa8df2f14e27c95533daf`
-- [013 - Canonical Runtime Producer Consumer and Action Wiring Canonical Alignment (2026-03-09)](013-canonical-runtime-producer-consumer-and-action-wiring-canonical-.md) L341-L378 `31f4e3a1cfcd868d58c32ba41d0d34fdd241136b48a7c82500e116dbb43f1fd8`
-- [014 - Runtime Recovery Producer / Consumer Wiring](014-runtime-recovery-producer-consumer-wiring.md) L379-L491 `d7c1f9df9f55619aada63b86e39406c492ba854913d8699c048b97fff5960d33`
-- [015 - Source Control, GitHub Actions, and Docker Manager Wiring Addendum (2026-03-12)](015-source-control-github-actions-and-docker-manager-wiring-addendum.md) L493-L612 `ef2df2ab07042d24d5bdab4fda4d36e7f8f65c8fd0ebf6c175612b336ef8060e`
-- [016 - Route-aware wiring reconciliation](016-route-aware-wiring-reconciliation.md) L613-L642 `a2840704665162713cf5d85794b14eff979fcc2aa0c5ae68077dbdc7eb71b4cb`
-- [017 - Owner / Consumer Map](017-owner-consumer-map.md) L644-L648 `b443412658ef6b842105b40752b8fb8ec3f04ba64a6400b95d6628984e9fb2b0`
-- [018 - PlanUnits](018-planunits.md) L650-L3071 `ca2ba49b153d372008ffa081c3e690503782215b721d3b91e23b142b6b7999cf`
-- [019 - Migration Coverage](019-migration-coverage.md) L3073-L3087 `e94ceb357a174c304597b99f7208aa8f4ee774632efeac439ddca8a6d2b89ed9`
-- [020 - Ledger Compile Addendum - pldg-20260615-001](020-ledger-compile-addendum-pldg-20260615-001.md) L3089-L3254 `ff2ddc8b525aad45cde6a31844e9562aa347c75df75dc3339e1c198a87bd0f3f`
-- [021 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](021-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3257-L3381 `c0c2a24e04820b27ab591a050204a52e4c3dd32f45aa3abe8624d66cfe7cf83e`
-- [022 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](022-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L3383-L3461 `6775cc94f5311d22beadb18d785684470ba5c70ccde44f42c28c104028ca0770`
-- [023 - Usage GUI Propagation Addendum - 2026-07-09](023-usage-gui-propagation-addendum-2026-07-09.md) L3463-L3575 `1bcce6011cb5bd54d1ba139492149faa8b5447893d9c3b74da86043bca28261d`
-- [024 - FABLE Production Wiring Repair Addendum - 2026-07-07](024-fable-production-wiring-repair-addendum-2026-07-07.md) L3577-L3642 `8b31d5be80aec2c24f51568985fff3433bb6e2bd0a9b21c8603b47c570976439`
-- [025 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](025-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L3644-L4496 `8e3df6bfa7646cf71f18881d105dfe453186cf6dd8441513dca284a61f035702`
-- [026 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](026-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L4498-L4504 `95c80d79e82bd7a0f06aceaa8ffeec2b6e33cca97b4edee87d51421f075c9ae0`
-- [027 - u11 Prism II Usage Wiring Addendum - 2026-08-18](027-u11-prism-ii-usage-wiring-addendum-2026-08-18.md) L4506-L4591 `ab916d83295e585938649dd406d155be29eade805dde230b0ef5af2c2ad99b76`
-- [028 - PMConcept7 settled interaction production wiring addendum - 2026-08-27](028-pmconcept7-settled-interaction-production-wiring-addendum-2026-0.md) L4593-L4744 `30b4de8d028017bb2f1d38545dfb2206edc0e091d197ef81bc9a1d0b673679be`
-- [029 - Packet-owner command and Touch Closure wiring addendum - 2026-08-31](029-packet-owner-command-and-touch-closure-wiring-addendum-2026-08-3.md) L4746-L4881 `03c16ecccc230aaca9ac99f02a1619d0dec22b1cdcb3bf9d18c8a71929931125`
-- [030 - Guided Tour typed local route wiring disposition - 2026-09-01](030-guided-tour-typed-local-route-wiring-disposition-2026-09-01.md) L4883-L4938 `70179a6cfddd667de5c06c7e344a802ee181e543502ced66c3749cdba084dd36`
-- [031 - Agent plugin production-intent and consumer wiring addendum - 2026-09-01](031-agent-plugin-production-intent-and-consumer-wiring-addendum-2026.md) L4940-L5014 `60e73232313ef4f2aea5ab8aca41838bc970956b9391695199cf146eef02e4fd`
-- [032 - Cross-owner setup, restore, Server, pairing, and protected-auth wiring addendum - 2026-09-01](032-cross-owner-setup-restore-server-pairing-and-protected-auth-wiri.md) L5016-L5095 `3ef1f3a664d99c79021751257fa2903d0450e0d87073e41c1abbb3d61373e0a6`
-- [033 - Server/Egolite Production-Intent Wiring Addendum - 2026-09-01](033-server-egolite-production-intent-wiring-addendum-2026-09-01.md) L5096-L5187 `402f9b827f79f15f68a0c7ab60770937497fd7a3e45edf91de79d1dbeef5d67a`
-- [034 - Central Touch Production Wiring Closure Addendum - 2026-09-01](034-central-touch-production-wiring-closure-addendum-2026-09-01.md) L5189-L5222 `aae95c3ecbc8a55dd59f5975956f045116a264be39588aff02951be69097aba6`
-- [035 - Terminal Research Planned Wiring — DL-035 (2026-09-09)](035-terminal-research-planned-wiring-dl-035-2026-09-09.md) L5224-L5308 `c1f3682f30a7b01a21f787961646156bb825ea7cbf3594b7fad0065dfd1ce8b4`
-- [036 - Research Decision Review Planned Wiring — DL-036 (2026-09-09)](036-research-decision-review-planned-wiring-dl-036-2026-09-09.md) L5310-L5677 `0eb926856d9ab840212b26c307a007484e079e34d3d29540140d5bff02a70303`
-- [037 - DL-043 — Accepted Jujutsu Surface And Contract Planning (2026-09-11)](037-dl-043-accepted-jujutsu-surface-and-contract-planning-2026-09-11.md) L5679-L5785 `04ff9e78d54fffef724d87d801d1e79ed76ebc84e73f169920470b004b415565`
-- [038 - Project Recovery And Forge Delete/CI Production Intent — 2026-09-26](038-project-recovery-and-forge-delete-ci-production-intent-2026-09-2.md) L5787-L5888 `5295e9bdef2a6ffc017cf98dbad714e9ba56dbad00e635099461634857d68e09`
-- [039 - Commands Shortcuts Wiring Companions — 2026-09-26](039-commands-shortcuts-wiring-companions-2026-09-26.md) L5890-L5923 `1b35053f425dca174278c3955b5f1fd589b402d842374bc2fbad242567977cef`
-- [040 - Git adapter packet command production intent — 2026-09-27](040-git-adapter-packet-command-production-intent-2026-09-27.md) L5925-L6014 `c1c6c1645f56e952831ff033af9d1a6c0a28436a661bdbbe4e23ab8184e422ca`
-- [041 - Wand Modules Redesign Addendum (2026-09-27)](041-wand-modules-redesign-addendum-2026-09-27.md) L6016-L6299 `5df4054f4c045eb94defa303e80f3b7dc44dcc9217060a64b4b404ee06e12832`
-- [042 - 5.6 Pro Chat Round Wiring (2026-10-09)](042-5.6-pro-chat-round-wiring-2026-10-09.md) L6301-L6491 `653704a4a0a10dae1d30bf3effc4a44cca59246d2de9d547888abcc8c137f3f5`
-- [043 - Open Exact Plan Version Wiring (2026-10-09)](043-open-exact-plan-version-wiring-2026-10-09.md) L6493-L6554 `635853b225454cd7bed0318666f0fd8433274221862ba0d131af6fa8df8c100d`
-- [044 - DL-180 to DL-183 — Wiring For The Universal Panels And The Terminal Tab (2026-10-09)](044-dl-180-to-dl-183-wiring-for-the-universal-panels-and-the-termina.md) L6557-L7424 `6e717f1ed4639a5af9eb9e3a2016039a7869fe8f8432d7ba1312028362a57517`
-- [045 - DL-218 shared research and grilling wiring](045-dl-218-shared-research-and-grilling-wiring.md) L7426-L7520 `430db55aa55e183a8bbc846db253bcfd612fb7fac44bbaba5ebea53e5045d128`
-- [046 - DL-231 Chat Room round wiring](046-dl-231-chat-room-round-wiring.md) L7522-L7910 `fbfd37314abd76d0a9e6e025d6e42ff92629cdf7dac2af4a421fba27b3be62cf`
-- [047 - DL-270 storage health, record inspector and chat paging wiring](047-dl-270-storage-health-record-inspector-and-chat-paging-wiring.md) L7912-L9110 `f8135c413a361c2948550f1d7a611864b1ea5b1a0ad96d3525679ed2d74b87bc`
+- [001 - Preamble](001-preamble.md) L1-L1 `e6810ff770827ec1317d88b46335f1d9a21832ccb431c9a12fca762b0912390c`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L20 `56cedab1062959449e82448e7ca18a1f7e169a1d18368f7cbe6b3222298ed905`
+- [003 - 0. Scope](003-0.-scope.md) L21-L30 `05659f09e52957ec81cd33f1fb8b7945aabe4580ba342378730f36079e72305f`
+- [004 - 1. Template](004-1.-template.md) L31-L58 `b10e469056b103b78afe2edc311e217da4a3d8b2a6c66dd2357181e446e7b5f2`
+- [005 - 2. Example Entries](005-2.-example-entries.md) L59-L83 `e463308d7b8035f985c5a4fde408de86bfcc46f582bdf11f944ef2349b7490aa`
+- [006 - 3. JSON Example](006-3.-json-example.md) L84-L143 `2180368c638cda218162f6564d89a34883fa9b725431171f6fad7f3bddc1b71c`
+- [007 - GUI / PMConcept production wiring repair addendum (2026-07-02)](007-gui-pmconcept-production-wiring-repair-addendum-2026-07-02.md) L145-L204 `b18b47e858b6c2e5e238a03e3833c282238d01c518c015fe82f0d37d6b2397d0`
+- [008 - 4. Verification](008-4.-verification.md) L205-L257 `7d55a20c3f30c3ecfd39dbf29cf8cf3d92ccde613e97fc9becfb4dff47932faf`
+- [009 - References](009-references.md) L259-L264 `6968d6f58f77be8d5ad220762627a729df8b9fc8e8b3838157cf9f78194e8c59`
+- [010 - Scheduler/Remediation/Event Wiring Addendum (2026-03-08)](010-scheduler-remediation-event-wiring-addendum-2026-03-08.md) L266-L301 `2de07f96f631697d652689f442fac4f02ec27566e8a53ad5c34e98f5c0ec5368`
+- [011 - Runtime recovery wiring requirements (2026-03-09)](011-runtime-recovery-wiring-requirements-2026-03-09.md) L302-L313 `bcfe7bf07d119f0cf719ad1ae4186441bb4039b12c91bf29e007925be6760957`
+- [012 - Canonical Runtime Event Wiring Canonical Alignment (2026-03-09)](012-canonical-runtime-event-wiring-canonical-alignment-2026-03-09.md) L314-L340 `e1984e7cf2245d8dee864f1dd781044af4ffd35812f82f37a29722a85d64ac5d`
+- [013 - Canonical Runtime Producer Consumer and Action Wiring Canonical Alignment (2026-03-09)](013-canonical-runtime-producer-consumer-and-action-wiring-canonical-.md) L341-L378 `f7a4114f67455aed4ad0fe9d2c02c2f36aa4ee10d8370b87ce9a6cba40951a7c`
+- [014 - Runtime Recovery Producer / Consumer Wiring](014-runtime-recovery-producer-consumer-wiring.md) L379-L491 `6a2d4588575e67e91d21e967cc6cdded14adfd0bd022192c65570dbba0e8a478`
+- [015 - Source Control, GitHub Actions, and Docker Manager Wiring Addendum (2026-03-12)](015-source-control-github-actions-and-docker-manager-wiring-addendum.md) L493-L612 `d778f65d343b850c2e959ed07d578d1b70bd1800ed6583bffcc34aefd598bc3d`
+- [016 - Route-aware wiring reconciliation](016-route-aware-wiring-reconciliation.md) L613-L642 `4bf43239db5f91b39340f735c685be57212250c4327e648ea7fb38531c11f339`
+- [017 - Owner / Consumer Map](017-owner-consumer-map.md) L644-L648 `0a1f400d662d154387c011971d8d491ee6279e07495db04b83706e74637198ed`
+- [018 - PlanUnits](018-planunits.md) L650-L3071 `6a481ecdc44850877d39d5ca3b524ac54c97e7726ff3912542ab2842eae11bd8`
+- [019 - Migration Coverage](019-migration-coverage.md) L3073-L3087 `b382b38af5dc2ecad107546c30d2ac83ce2f7387d6eafa9bf6103aa14a71b824`
+- [020 - Ledger Compile Addendum - pldg-20260615-001](020-ledger-compile-addendum-pldg-20260615-001.md) L3089-L3254 `4fcacec18b2b18f4ddf6f552089b0933dcdabb252222864b62c98c4b036bf97a`
+- [021 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](021-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3257-L3380 `6ceb5d9d2a9f8efea9366e79bef124118acaea5c42f3b83fbf84492a04810955`
+- [022 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](022-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L3382-L3460 `8a7938a271672ad7bafcbac8f65acf451c517176985468873068e560d8ffbbbe`
+- [023 - Usage GUI Propagation Addendum - 2026-07-09](023-usage-gui-propagation-addendum-2026-07-09.md) L3462-L3574 `1f0452af85af5da1ed3ca7945a01d591cfa4a61939aa76ec8e241f25a102e3d1`
+- [024 - FABLE Production Wiring Repair Addendum - 2026-07-07](024-fable-production-wiring-repair-addendum-2026-07-07.md) L3576-L3641 `78bbe3a773d51333d8652c3845227cb7b82ac6fa4f56e82abe60a0c6be855ddc`
+- [025 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](025-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L3643-L4494 `af16e06a7fbdf4d17efb930dec58b9db0e47a4df4406a9b10a6017767bde3e8b`
+- [026 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](026-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L4496-L4502 `960a64b9e43c82e94d9489ea99f09649a69eae4dc0229313228f8b2f7ad04c30`
+- [027 - u11 Prism II Usage Wiring Addendum - 2026-08-18](027-u11-prism-ii-usage-wiring-addendum-2026-08-18.md) L4504-L4589 `3949ef016478c5cbf0483dd5f4a1d42d157dc4c0ce3871967796e67b587f2822`
+- [028 - PMConcept7 settled interaction production wiring addendum - 2026-08-27](028-pmconcept7-settled-interaction-production-wiring-addendum-2026-0.md) L4591-L4742 `915ddca127bd689e15a7c3b821abbe265880922ec241467903aa5bc6b4732495`
+- [029 - Packet-owner command and Touch Closure wiring addendum - 2026-08-31](029-packet-owner-command-and-touch-closure-wiring-addendum-2026-08-3.md) L4744-L4879 `89f8e9661d00e7869133e450628a97487f68e4492e8489e5f322e067f0ea4508`
+- [030 - Guided Tour typed local route wiring disposition - 2026-09-01](030-guided-tour-typed-local-route-wiring-disposition-2026-09-01.md) L4881-L4936 `d4b047c60d2f47bcb2f94c8f5b71c63e189198ce17763280abb65ac09d14bb19`
+- [031 - Agent plugin production-intent and consumer wiring addendum - 2026-09-01](031-agent-plugin-production-intent-and-consumer-wiring-addendum-2026.md) L4938-L5012 `52485727237017ca92343fbc16529af478eacb544c2338583c80a20aea60f4ae`
+- [032 - Cross-owner setup, restore, Server, pairing, and protected-auth wiring addendum - 2026-09-01](032-cross-owner-setup-restore-server-pairing-and-protected-auth-wiri.md) L5014-L5093 `51e3768eac4d34d7b103196b1ddbbe8f9a9a412e727726ebeef92ca3047f84dc`
+- [033 - Server/Egolite Production-Intent Wiring Addendum - 2026-09-01](033-server-egolite-production-intent-wiring-addendum-2026-09-01.md) L5094-L5185 `eeffa2d00d5c59f880f1c85da229fa0b04300a235ba007bfeed19131ccfd4cef`
+- [034 - Central Touch Production Wiring Closure Addendum - 2026-09-01](034-central-touch-production-wiring-closure-addendum-2026-09-01.md) L5187-L5220 `390255a8d9f32d39d1d53457a984016dc2409f99624a76604e2fa8e1118665aa`
+- [035 - Terminal Research Planned Wiring — DL-035 (2026-09-09)](035-terminal-research-planned-wiring-dl-035-2026-09-09.md) L5222-L5306 `c887b625572ca5dcdb2af90cf17a378c91822ba5d0568b3089665dff499c52d0`
+- [036 - Research Decision Review Planned Wiring — DL-036 (2026-09-09)](036-research-decision-review-planned-wiring-dl-036-2026-09-09.md) L5308-L5675 `f4a3dd0d20dc4235b7a6f0b1c6fc53e33a8e3ccc440d42af5c5255954902df7a`
+- [037 - DL-043 — Accepted Jujutsu Surface And Contract Planning (2026-09-11)](037-dl-043-accepted-jujutsu-surface-and-contract-planning-2026-09-11.md) L5677-L5783 `73719300a0543a58874b1f4207a4b341d7567f8ca08e3b78d50556aa6763e285`
+- [038 - Project Recovery And Forge Delete/CI Production Intent — 2026-09-26](038-project-recovery-and-forge-delete-ci-production-intent-2026-09-2.md) L5785-L5886 `d374777a800b8d972204167eed5915d01ec4ff6f84fba5353e872bdb2b9879b0`
+- [039 - Commands Shortcuts Wiring Companions — 2026-09-26](039-commands-shortcuts-wiring-companions-2026-09-26.md) L5888-L5921 `1a9f0617a68bde6ce7768fa351d513a78005cd89940dc72fd6a5475fcd8375e7`
+- [040 - Git adapter packet command production intent — 2026-09-27](040-git-adapter-packet-command-production-intent-2026-09-27.md) L5923-L6012 `0065a2e4aac4d4b672a1d7c3582d6b77af86be168fd05b6e33f9fbb1da4aaca7`
+- [041 - Wand Modules Redesign Addendum (2026-09-27)](041-wand-modules-redesign-addendum-2026-09-27.md) L6014-L6308 `9df00851a12221f205514a5e9377c2cd440fa7c7fc6e8e4a61433607ac5bb8d8`
+- [042 - 5.6 Pro Chat Round Wiring (2026-10-09)](042-5.6-pro-chat-round-wiring-2026-10-09.md) L6310-L6500 `83192f9b48b063801eeb8bf3357857ec47e1dbab831ca1549c85feea916fed25`
+- [043 - Open Exact Plan Version Wiring (2026-10-09)](043-open-exact-plan-version-wiring-2026-10-09.md) L6502-L6563 `9689ce97df70a5e58e26cbb7e27d1fb784e52304a990fde427d86d7443ee4f1c`
+- [044 - DL-180 to DL-183 — Wiring For The Universal Panels And The Terminal Tab (2026-10-09)](044-dl-180-to-dl-183-wiring-for-the-universal-panels-and-the-termina.md) L6566-L7433 `6d846d27e39b92e6c27c49c4d718e6c3c1a1a72c6324976e6c53524ed40555bf`
+- [045 - DL-218 shared research and grilling wiring](045-dl-218-shared-research-and-grilling-wiring.md) L7435-L7529 `dc5eb8e8621d0cec4b9c5d6360713c9f88124904c35c0576a37009e98b8801b9`
+- [046 - DL-231 Chat Room round wiring](046-dl-231-chat-room-round-wiring.md) L7531-L7919 `f2bf7f50349085bbd8d956338ca8d505cd314e6258c545f657384c4a456c7887`
+- [047 - DL-270 storage health, record inspector and chat paging wiring](047-dl-270-storage-health-record-inspector-and-chat-paging-wiring.md) L7921-L9119 `676f4a76743d2e0a90e0ea2d577ddef22ed760e5948e03d97964788aea85d6e8`

@@ -1,0 +1,1570 @@
+{
+ "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+ "global_datetime_inventory": "BLOCKED_PREEXISTING_MISSING_SPAN_MAP",
+ "implementation_head": "a9d4ede87727abe7695f5a479a29636e5c5e98d0",
+ "lane": "C12-DF",
+ "lane_number": 6,
+ "method": "original complete checkers + whole-definition Method B",
+ "metrics": {
+  "additional_schema_root_witnesses": 1,
+  "branch_schema_controls": 306,
+  "checked_scope_implications": 60,
+  "datetime_complete_rows": 12240,
+  "datetime_nodes": 175,
+  "datetime_schema_checks": 119000,
+  "entailed_rows_uncredited": 48,
+  "gated_rows_proved": 355,
+  "gated_tables": 223,
+  "number_complete_routes": 2148,
+  "original_expected_kills": 1080,
+  "original_invalid": 0,
+  "reachable_schema_clauses": 29964,
+  "retained_observations": 1952,
+  "schema_expected_kills": 27908,
+  "schema_invalid": 1221,
+  "schema_occurrences": 26184,
+  "shared_number_cases": 580,
+  "source_join_expected_kills": 36
+ },
+ "native_execution": "NOT_RUN",
+ "other_cells_unchanged": true,
+ "reviews": "NOT_RUN",
+ "rows": [
+  {
+   "after": "PASS",
+   "artifacts": [
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.command_denied.schema-matrix.json",
+     "sha256": "c950b3e869cc5a5c957798f0db087cbee26ac33e4badc875d3538e89fe4bc140"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.command_denied.definition-inventory.json",
+     "sha256": "415690625f2a9e3b4969c58af9c97d7c81e2937e279cdc2c501f0fca3bc74bec"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.command_denied.schema-calls.json",
+     "sha256": "6c3fc62cfdfa3d5b5a64665ff4219f506acc618800cdb24565c87910b4e9d889"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.command_denied.mutation-ledger.json",
+     "sha256": "d01179f2de50574276b8cbc65cfcafd0866417737c88cb7a4b8f1dd4ed4e1f79"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.command_denied.schema-summary.json",
+     "sha256": "408a7ae2d7948c3fafb27a1e9adfc6b687bd07e009490cc434cf50eae477b48f"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.command_denied.uncovered-clauses.json",
+     "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/datetime-final/filesafe.command_denied.datetime.json",
+     "sha256": "0a808939d643fbc8f4634e3302e9617638bd8a2f3f780a6ebd45b079a0cb7022"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/retained/filesafe.command_denied.retained.json",
+     "sha256": "c88e11b2ac5bf826f79beb11cd9701bbf0ed551dcc6c6775a4e9771a124e83cf"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/mutations/filesafe.command_denied.original-mutation-ledger.json",
+     "sha256": "d0bc93ccc421822d695e0167661666e28c7e5284aa93d2c34a44cf5683b08a37"
+    }
+   ],
+   "before": "PARTIAL",
+   "cells": {
+    "positive_negative_oracles": {
+     "evidence": [
+      {
+       "excerpt_sha256": "e8505fd44bc876171ee17254e2b0d972089fd63fb0963700635bb50c3e3f46d3",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "line_end": 40018,
+       "line_start": 40018,
+       "path": "Plans/Contracts_V0.md",
+       "quote": "**Producer and transition.** `BaseRunner command-string guard before spawn` is the sole semantic producer. The checked whole normalized segment is denied before spawn. Preserve segment index and actual denial code; denial never grants an override or runs the command. Preserve the original operation_",
+       "quote_check": "exact",
+       "unit": "CV-550"
+      },
+      {
+       "excerpt_sha256": "6a2db7ec47c858ed5927435e7cdc928c61a36793dcbcec22479cfe822a7e6f32",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "line_end": 44674,
+       "line_start": 44674,
+       "path": "Plans/storage-plan.md",
+       "quote": "**Exact original/issued joins for `filesafe.command_denied`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_command_denied.contract.json` and `CV-550` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verif",
+       "quote_check": "exact",
+       "unit": "SP-550"
+      },
+      {
+       "excerpt_sha256": "df0d9dfd918cacc62aa08714fdafc8cab4365fbef740fefccac6d61a42d6a694",
+       "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+       "line_end": 11373,
+       "line_start": 11373,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables",
+       "quote_check": "exact",
+       "unit": "ATS-275"
+      }
+     ],
+     "finding": "Complete original DF suite, whole-definition Method B schema/branch coverage with exact refusal, clause cut/restoration and no unresolved clauses; source/tool/case-bound 355-row proof plus 48 checked singleton entailments. Independently sealed retained original/store and copy-join evidence. Shared number corpus and all DF date-time boundaries replayed. Global inventory infrastructure remains separately blocked; native NOT_RUN.",
+     "representation": "executable_static_family_oracles",
+     "status": "PASS"
+    }
+   },
+   "criterion": 12,
+   "current_owner_units": [
+    "CV-550",
+    "SP-550",
+    "ATS-275",
+    "F2-213",
+    "CV-365",
+    "CV-366",
+    "CV-339",
+    "SP-278",
+    "SP-286"
+   ],
+   "datetime": {
+    "complete_checks": 1360,
+    "failures": 0,
+    "family": "filesafe.command_denied",
+    "inventory_nodes": 14,
+    "schema_checks": 9520
+   },
+   "event_type": "filesafe.command_denied",
+   "membership": "ABSENT",
+   "mutations": {
+    "attempts": 113,
+    "failures": 0,
+    "family": "filesafe.command_denied",
+    "invalid": 0,
+    "killed": 113
+   },
+   "native_execution": "NOT_RUN",
+   "other_cells_unchanged": true,
+   "retained": {
+    "failures": 0,
+    "family": "filesafe.command_denied",
+    "observations": 192
+   },
+   "schema": {
+    "branch_schema_controls": 0,
+    "calls": 307,
+    "controls": [
+     "filesafe_command_denied.original_project_0",
+     "filesafe_command_denied.original_application_1",
+     "filesafe_command_denied.fix3.inline_ascii_16383.project",
+     "filesafe_command_denied.fix3.inline_ascii_16384.project",
+     "filesafe_command_denied.fix3.inline_utf8_16383.project",
+     "filesafe_command_denied.fix3.inline_utf8_16384.project",
+     "filesafe_command_denied.fix3.sp337_reference.project",
+     "filesafe_command_denied.fix3.inline_ascii_16383.application",
+     "filesafe_command_denied.fix3.inline_ascii_16384.application",
+     "filesafe_command_denied.fix3.inline_utf8_16383.application",
+     "filesafe_command_denied.fix3.inline_utf8_16384.application",
+     "filesafe_command_denied.fix3.sp337_reference.application",
+     "filesafe_command_denied.fix6.integer_epoch.1",
+     "filesafe_command_denied.fix6.integer_epoch.0",
+     "filesafe_command_denied.fix6.integer_epoch.-0",
+     "filesafe_command_denied.fix7.selected_control.project",
+     "filesafe_command_denied.fix7.selected_control.application",
+     "filesafe_command_denied.sweep1.format.utc",
+     "filesafe_command_denied.sweep1.format.fraction",
+     "filesafe_command_denied.sweep1.format.long_fraction",
+     "filesafe_command_denied.sweep1.format.leap_day",
+     "filesafe_command_denied.p2bfix1.format.year_zero",
+     "filesafe_command_denied.p2bfix1.format.offset_ts",
+     "filesafe_command_denied.p2bfix1.format.lowercase_ts"
+    ],
+    "covering": 0,
+    "failures": 0,
+    "family": "filesafe.command_denied",
+    "invalid": 86,
+    "killed": 1981,
+    "method": "original whole-definition Method B; no per-keyword guard-row claim",
+    "occurrences": 1788,
+    "phases": [
+     "contract_payload_schema",
+     "issued_payload_schema",
+     "issued_schema",
+     "mat_payload_schema",
+     "mat_schema",
+     "payload_ref_descriptor",
+     "proto_body_schema",
+     "selected_source_schema"
+    ],
+    "reachable_clauses": 2315,
+    "uncovered_clauses": 0
+   }
+  },
+  {
+   "after": "PASS",
+   "artifacts": [
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_denied.schema-matrix.json",
+     "sha256": "2d19e7b6d9ae335b441bef02ead31641be8dc1942232048205430abe4b2f4ee1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_denied.definition-inventory.json",
+     "sha256": "0ab9cc44af9afcbaf3cf96495fbd6c2008f37b7347301afe89888e57b3bb9598"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_denied.schema-calls.json",
+     "sha256": "eddb6b45983f12d40142cd96bacd336834b3c60d631a1ab1fdd6c04b9886a1c3"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_denied.mutation-ledger.json",
+     "sha256": "76ff2d5e917e9335e90a11225f774955245206f9880769d54f45202c8ec31250"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_denied.schema-summary.json",
+     "sha256": "11bcbd2f9fa4bb5c082385b9bc95d65485a6f1fcba2f7f45b4aed8358d0e2775"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_denied.uncovered-clauses.json",
+     "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/datetime-final/filesafe.destructive_override_denied.datetime.json",
+     "sha256": "d1b91f3dd346b4879d603e063d8fd4b6f713643f171acff807b4b9137eb45f56"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/retained/filesafe.destructive_override_denied.retained.json",
+     "sha256": "5a8587c19a1311512d1c4f69c012b20970aaa1a616eaa836f81cbb2f62ac118a"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/mutations/filesafe.destructive_override_denied.original-mutation-ledger.json",
+     "sha256": "a0a29863a810ba8fd6fe054420ad1c759f5f9520fa4f1aaa9f60081983d70033"
+    }
+   ],
+   "before": "PARTIAL",
+   "cells": {
+    "positive_negative_oracles": {
+     "evidence": [
+      {
+       "excerpt_sha256": "dfa7db5f44e922c1af656fb77b3c6ae733bdc61472e0dfed52e3b4d6d3f197c0",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "line_end": 40100,
+       "line_start": 40100,
+       "path": "Plans/Contracts_V0.md",
+       "quote": "**Producer and transition.** `FileSafe authenticated destructive-override evaluator` is the sole semantic producer. A rejected request emits denial and leaves the original guarded command blocked. Missing authentication may omit operator/auth realm; absence never becomes anonymous permission. Preser",
+       "quote_check": "exact",
+       "unit": "CV-551"
+      },
+      {
+       "excerpt_sha256": "434332c190c24484ef784eed3ea209cde9a36e9cdb84c4a00d3e200d55501a51",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "line_end": 44744,
+       "line_start": 44744,
+       "path": "Plans/storage-plan.md",
+       "quote": "**Exact original/issued joins for `filesafe.destructive_override_denied`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_destructive_override_denied.contract.json` and `CV-551` lifecycle table. Before append, resolve its own original source under the actual storage_instance",
+       "quote_check": "exact",
+       "unit": "SP-551"
+      },
+      {
+       "excerpt_sha256": "df0d9dfd918cacc62aa08714fdafc8cab4365fbef740fefccac6d61a42d6a694",
+       "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+       "line_end": 11373,
+       "line_start": 11373,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables",
+       "quote_check": "exact",
+       "unit": "ATS-275"
+      }
+     ],
+     "finding": "Complete original DF suite, whole-definition Method B schema/branch coverage with exact refusal, clause cut/restoration and no unresolved clauses; source/tool/case-bound 355-row proof plus 48 checked singleton entailments. Independently sealed retained original/store and copy-join evidence. Shared number corpus and all DF date-time boundaries replayed. Global inventory infrastructure remains separately blocked; native NOT_RUN.",
+     "representation": "executable_static_family_oracles",
+     "status": "PASS"
+    }
+   },
+   "criterion": 12,
+   "current_owner_units": [
+    "CV-551",
+    "SP-551",
+    "ATS-275",
+    "F2-213",
+    "CV-365",
+    "CV-366",
+    "CV-339",
+    "SP-278",
+    "SP-286"
+   ],
+   "datetime": {
+    "complete_checks": 1360,
+    "failures": 0,
+    "family": "filesafe.destructive_override_denied",
+    "inventory_nodes": 20,
+    "schema_checks": 13600
+   },
+   "event_type": "filesafe.destructive_override_denied",
+   "membership": "ABSENT",
+   "mutations": {
+    "attempts": 102,
+    "failures": 0,
+    "family": "filesafe.destructive_override_denied",
+    "invalid": 0,
+    "killed": 102
+   },
+   "native_execution": "NOT_RUN",
+   "other_cells_unchanged": true,
+   "retained": {
+    "failures": 0,
+    "family": "filesafe.destructive_override_denied",
+    "observations": 192
+   },
+   "schema": {
+    "branch_schema_controls": 0,
+    "calls": 307,
+    "controls": [
+     "filesafe_destructive_override_denied.original_project_0",
+     "filesafe_destructive_override_denied.original_application_1",
+     "filesafe_destructive_override_denied.fix3.inline_ascii_16383.project",
+     "filesafe_destructive_override_denied.fix3.inline_ascii_16384.project",
+     "filesafe_destructive_override_denied.fix3.inline_utf8_16383.project",
+     "filesafe_destructive_override_denied.fix3.inline_utf8_16384.project",
+     "filesafe_destructive_override_denied.fix3.sp337_reference.project",
+     "filesafe_destructive_override_denied.fix3.inline_ascii_16383.application",
+     "filesafe_destructive_override_denied.fix3.inline_ascii_16384.application",
+     "filesafe_destructive_override_denied.fix3.inline_utf8_16383.application",
+     "filesafe_destructive_override_denied.fix3.inline_utf8_16384.application",
+     "filesafe_destructive_override_denied.fix3.sp337_reference.application",
+     "filesafe_destructive_override_denied.fix6.integer_epoch.1",
+     "filesafe_destructive_override_denied.fix6.integer_epoch.0",
+     "filesafe_destructive_override_denied.fix6.integer_epoch.-0",
+     "filesafe_destructive_override_denied.fix7.selected_control.project",
+     "filesafe_destructive_override_denied.fix7.selected_control.application",
+     "filesafe_destructive_override_denied.sweep1.format.utc",
+     "filesafe_destructive_override_denied.sweep1.format.fraction",
+     "filesafe_destructive_override_denied.sweep1.format.long_fraction",
+     "filesafe_destructive_override_denied.sweep1.format.leap_day",
+     "filesafe_destructive_override_denied.p2bfix1.format.year_zero",
+     "filesafe_destructive_override_denied.p2bfix1.format.offset_ts",
+     "filesafe_destructive_override_denied.p2bfix1.format.lowercase_ts"
+    ],
+    "covering": 0,
+    "failures": 0,
+    "family": "filesafe.destructive_override_denied",
+    "invalid": 110,
+    "killed": 2293,
+    "method": "original whole-definition Method B; no per-keyword guard-row claim",
+    "occurrences": 2022,
+    "phases": [
+     "contract_payload_schema",
+     "issued_payload_schema",
+     "issued_schema",
+     "mat_payload_schema",
+     "mat_schema",
+     "payload_ref_descriptor",
+     "proto_body_schema",
+     "selected_source_schema"
+    ],
+    "reachable_clauses": 2546,
+    "uncovered_clauses": 0
+   }
+  },
+  {
+   "after": "PASS",
+   "artifacts": [
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_granted.schema-matrix.json",
+     "sha256": "5133ada4c4901e695b6151e7277392abba4f89806a49d052b5108226b19156e8"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_granted.definition-inventory.json",
+     "sha256": "7b0c359c455a785033f38ceef2f04ed5f23dd84fbec64d5b0deb0b8a78434495"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_granted.schema-calls.json",
+     "sha256": "5c73447d2ed64fc5eec7c2f90de3a793b60cc27d388c2ff971c0f37f76dc92c5"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_granted.mutation-ledger.json",
+     "sha256": "b4249d72a5e7183c410c71b3a64c0ec355b6bb8c6c644663284f4ff342f91401"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_granted.schema-summary.json",
+     "sha256": "276d5820e968f3076862692374ff8acb4ac671650ea5eecf1ae634bd3a499a0b"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_granted.uncovered-clauses.json",
+     "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/datetime-final/filesafe.destructive_override_granted.datetime.json",
+     "sha256": "9622ca4c94394c62a5320f25630ae6b8520378bb86cee009ddbf75841d5d61fe"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/retained/filesafe.destructive_override_granted.retained.json",
+     "sha256": "ba411f47c73a541e13f4d6dc655f88b782d875694e4aa2631adf43aa1e432b58"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/mutations/filesafe.destructive_override_granted.original-mutation-ledger.json",
+     "sha256": "1c9f5dd6533ce9f5f192600179ae17e11b8c682847f0960193e0f34baf0bb8ed"
+    }
+   ],
+   "before": "PARTIAL",
+   "cells": {
+    "positive_negative_oracles": {
+     "evidence": [
+      {
+       "excerpt_sha256": "90d93e8fdd82ba51262901868b21ea0dc1c217d48b0e256a0e986acde997e196",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "line_end": 40187,
+       "line_start": 40187,
+       "path": "Plans/Contracts_V0.md",
+       "quote": "**Producer and transition.** `FileSafe authenticated destructive-override evaluator` is the sole semantic producer. Only an authenticated operator, exact authorized scope, reason and future expiry can yield a grant. The event is audit of the original receipt, never execution authority by itself. Exp",
+       "quote_check": "exact",
+       "unit": "CV-552"
+      },
+      {
+       "excerpt_sha256": "3784b9d12e970acb90af258507293297f1ba15f675745cded79b37a01f211cb7",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "line_end": 44813,
+       "line_start": 44813,
+       "path": "Plans/storage-plan.md",
+       "quote": "**Exact original/issued joins for `filesafe.destructive_override_granted`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_destructive_override_granted.contract.json` and `CV-552` lifecycle table. Before append, resolve its own original source under the actual storage_instan",
+       "quote_check": "exact",
+       "unit": "SP-552"
+      },
+      {
+       "excerpt_sha256": "df0d9dfd918cacc62aa08714fdafc8cab4365fbef740fefccac6d61a42d6a694",
+       "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+       "line_end": 11460,
+       "line_start": 11460,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables",
+       "quote_check": "exact",
+       "unit": "ATS-276"
+      }
+     ],
+     "finding": "Complete original DF suite, whole-definition Method B schema/branch coverage with exact refusal, clause cut/restoration and no unresolved clauses; source/tool/case-bound 355-row proof plus 48 checked singleton entailments. Independently sealed retained original/store and copy-join evidence. Shared number corpus and all DF date-time boundaries replayed. Global inventory infrastructure remains separately blocked; native NOT_RUN.",
+     "representation": "executable_static_family_oracles",
+     "status": "PASS"
+    }
+   },
+   "criterion": 12,
+   "current_owner_units": [
+    "CV-552",
+    "SP-552",
+    "ATS-276",
+    "F2-213",
+    "CV-365",
+    "CV-366",
+    "CV-339",
+    "SP-278",
+    "SP-286"
+   ],
+   "datetime": {
+    "complete_checks": 1360,
+    "failures": 0,
+    "family": "filesafe.destructive_override_granted",
+    "inventory_nodes": 32,
+    "schema_checks": 21760
+   },
+   "event_type": "filesafe.destructive_override_granted",
+   "membership": "ABSENT",
+   "mutations": {
+    "attempts": 100,
+    "failures": 0,
+    "family": "filesafe.destructive_override_granted",
+    "invalid": 0,
+    "killed": 100
+   },
+   "native_execution": "NOT_RUN",
+   "other_cells_unchanged": true,
+   "retained": {
+    "failures": 0,
+    "family": "filesafe.destructive_override_granted",
+    "observations": 200
+   },
+   "schema": {
+    "branch_schema_controls": 0,
+    "calls": 319,
+    "controls": [
+     "filesafe_destructive_override_granted.original_project_0",
+     "filesafe_destructive_override_granted.original_application_1",
+     "filesafe_destructive_override_granted.original_project_2",
+     "filesafe_destructive_override_granted.fix3.inline_ascii_16383.project",
+     "filesafe_destructive_override_granted.fix3.inline_ascii_16384.project",
+     "filesafe_destructive_override_granted.fix3.inline_utf8_16383.project",
+     "filesafe_destructive_override_granted.fix3.inline_utf8_16384.project",
+     "filesafe_destructive_override_granted.fix3.sp337_reference.project",
+     "filesafe_destructive_override_granted.fix3.inline_ascii_16383.application",
+     "filesafe_destructive_override_granted.fix3.inline_ascii_16384.application",
+     "filesafe_destructive_override_granted.fix3.inline_utf8_16383.application",
+     "filesafe_destructive_override_granted.fix3.inline_utf8_16384.application",
+     "filesafe_destructive_override_granted.fix3.sp337_reference.application",
+     "filesafe_destructive_override_granted.fix6.integer_epoch.1",
+     "filesafe_destructive_override_granted.fix6.integer_epoch.0",
+     "filesafe_destructive_override_granted.fix6.integer_epoch.-0",
+     "filesafe_destructive_override_granted.fix7.selected_control.project",
+     "filesafe_destructive_override_granted.fix7.selected_control.application",
+     "filesafe_destructive_override_granted.sweep1.format.utc",
+     "filesafe_destructive_override_granted.sweep1.format.fraction",
+     "filesafe_destructive_override_granted.sweep1.format.long_fraction",
+     "filesafe_destructive_override_granted.sweep1.format.leap_day",
+     "filesafe_destructive_override_granted.p2bfix1.format.year_zero",
+     "filesafe_destructive_override_granted.p2bfix1.format.offset_ts",
+     "filesafe_destructive_override_granted.p2bfix1.format.lowercase_ts"
+    ],
+    "covering": 0,
+    "failures": 0,
+    "family": "filesafe.destructive_override_granted",
+    "invalid": 134,
+    "killed": 2818,
+    "method": "original whole-definition Method B; no per-keyword guard-row claim",
+    "occurrences": 2427,
+    "phases": [
+     "contract_payload_schema",
+     "issued_payload_schema",
+     "issued_schema",
+     "mat_payload_schema",
+     "mat_schema",
+     "payload_ref_descriptor",
+     "proto_body_schema",
+     "selected_source_schema"
+    ],
+    "reachable_clauses": 3122,
+    "uncovered_clauses": 0
+   }
+  },
+  {
+   "after": "PASS",
+   "artifacts": [
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_requested.schema-matrix.json",
+     "sha256": "d4a49a5ee427e9753e6482c3e42670375cfe3cb8d3280bd014f24fcbfc502f1d"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_requested.definition-inventory.json",
+     "sha256": "dc34d12d621297aa4167c4902c56f44676a6f7deb435fa38ecc7c34d81d9aa54"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_requested.schema-calls.json",
+     "sha256": "9626adc43003e2a7c6bf4ad555f9f28a3202b19e6816fb4486e0f94a5fd0fa92"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_requested.mutation-ledger.json",
+     "sha256": "540371a84e180391abaa0b5d41e09972a978cea93a101f28441e718d42ee6812"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_requested.schema-summary.json",
+     "sha256": "e8c1a175cc968cca4b0ad57bb21d38f1a7e7cb8923c7c37aa821ef4ee88a29dc"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.destructive_override_requested.uncovered-clauses.json",
+     "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/datetime-final/filesafe.destructive_override_requested.datetime.json",
+     "sha256": "13dca4182d1ee5fa936db2f5009d71ba2b5304c33b415458a41d99677f365f66"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/retained/filesafe.destructive_override_requested.retained.json",
+     "sha256": "52fc51d30ffffa1792c97fb7b41a39edab193b50bce12290d48fb6281d8214f7"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/mutations/filesafe.destructive_override_requested.original-mutation-ledger.json",
+     "sha256": "7cf569f94e30a7793cff8a6a41af94c77937dbdbecc9c5ec77e80338ebd8ebb9"
+    }
+   ],
+   "before": "PARTIAL",
+   "cells": {
+    "positive_negative_oracles": {
+     "evidence": [
+      {
+       "excerpt_sha256": "0bd24ff789c01489f30c8809b376c08867f9f2d363c7e608a0863346e990c2cd",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "line_end": 40273,
+       "line_start": 40273,
+       "path": "Plans/Contracts_V0.md",
+       "quote": "**Producer and transition.** `FileSafe destructive-override request intake` is the sole semantic producer. Record the authenticated request before evaluation. PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 alone is never a grant; requested scope and duration cannot broaden the accepted scope. Preserve the origin",
+       "quote_check": "exact",
+       "unit": "CV-553"
+      },
+      {
+       "excerpt_sha256": "0cb999facf3baa8acd6b4e363958194003865578baa9d35918dd8e1a9be7a364",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "line_end": 44883,
+       "line_start": 44883,
+       "path": "Plans/storage-plan.md",
+       "quote": "**Exact original/issued joins for `filesafe.destructive_override_requested`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_destructive_override_requested.contract.json` and `CV-553` lifecycle table. Before append, resolve its own original source under the actual storage_in",
+       "quote_check": "exact",
+       "unit": "SP-553"
+      },
+      {
+       "excerpt_sha256": "df0d9dfd918cacc62aa08714fdafc8cab4365fbef740fefccac6d61a42d6a694",
+       "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+       "line_end": 11460,
+       "line_start": 11460,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables",
+       "quote_check": "exact",
+       "unit": "ATS-276"
+      }
+     ],
+     "finding": "Complete original DF suite, whole-definition Method B schema/branch coverage with exact refusal, clause cut/restoration and no unresolved clauses; source/tool/case-bound 355-row proof plus 48 checked singleton entailments. Independently sealed retained original/store and copy-join evidence. Shared number corpus and all DF date-time boundaries replayed. Global inventory infrastructure remains separately blocked; native NOT_RUN.",
+     "representation": "executable_static_family_oracles",
+     "status": "PASS"
+    }
+   },
+   "criterion": 12,
+   "current_owner_units": [
+    "CV-553",
+    "SP-553",
+    "ATS-276",
+    "F2-213",
+    "CV-365",
+    "CV-366",
+    "CV-339",
+    "SP-278",
+    "SP-286"
+   ],
+   "datetime": {
+    "complete_checks": 1360,
+    "failures": 0,
+    "family": "filesafe.destructive_override_requested",
+    "inventory_nodes": 14,
+    "schema_checks": 9520
+   },
+   "event_type": "filesafe.destructive_override_requested",
+   "membership": "ABSENT",
+   "mutations": {
+    "attempts": 128,
+    "failures": 0,
+    "family": "filesafe.destructive_override_requested",
+    "invalid": 0,
+    "killed": 128
+   },
+   "native_execution": "NOT_RUN",
+   "other_cells_unchanged": true,
+   "retained": {
+    "failures": 0,
+    "family": "filesafe.destructive_override_requested",
+    "observations": 200
+   },
+   "schema": {
+    "branch_schema_controls": 0,
+    "calls": 319,
+    "controls": [
+     "filesafe_destructive_override_requested.original_project_0",
+     "filesafe_destructive_override_requested.original_application_1",
+     "filesafe_destructive_override_requested.original_project_2",
+     "filesafe_destructive_override_requested.fix3.inline_ascii_16383.project",
+     "filesafe_destructive_override_requested.fix3.inline_ascii_16384.project",
+     "filesafe_destructive_override_requested.fix3.inline_utf8_16383.project",
+     "filesafe_destructive_override_requested.fix3.inline_utf8_16384.project",
+     "filesafe_destructive_override_requested.fix3.sp337_reference.project",
+     "filesafe_destructive_override_requested.fix3.inline_ascii_16383.application",
+     "filesafe_destructive_override_requested.fix3.inline_ascii_16384.application",
+     "filesafe_destructive_override_requested.fix3.inline_utf8_16383.application",
+     "filesafe_destructive_override_requested.fix3.inline_utf8_16384.application",
+     "filesafe_destructive_override_requested.fix3.sp337_reference.application",
+     "filesafe_destructive_override_requested.fix6.integer_epoch.1",
+     "filesafe_destructive_override_requested.fix6.integer_epoch.0",
+     "filesafe_destructive_override_requested.fix6.integer_epoch.-0",
+     "filesafe_destructive_override_requested.fix7.selected_control.project",
+     "filesafe_destructive_override_requested.fix7.selected_control.application",
+     "filesafe_destructive_override_requested.sweep1.format.utc",
+     "filesafe_destructive_override_requested.sweep1.format.fraction",
+     "filesafe_destructive_override_requested.sweep1.format.long_fraction",
+     "filesafe_destructive_override_requested.sweep1.format.leap_day",
+     "filesafe_destructive_override_requested.p2bfix1.format.year_zero",
+     "filesafe_destructive_override_requested.p2bfix1.format.offset_ts",
+     "filesafe_destructive_override_requested.p2bfix1.format.lowercase_ts"
+    ],
+    "covering": 0,
+    "failures": 0,
+    "family": "filesafe.destructive_override_requested",
+    "invalid": 134,
+    "killed": 2716,
+    "method": "original whole-definition Method B; no per-keyword guard-row claim",
+    "occurrences": 2373,
+    "phases": [
+     "contract_payload_schema",
+     "issued_payload_schema",
+     "issued_schema",
+     "mat_payload_schema",
+     "mat_schema",
+     "payload_ref_descriptor",
+     "proto_body_schema",
+     "selected_source_schema"
+    ],
+    "reachable_clauses": 3134,
+    "uncovered_clauses": 0
+   }
+  },
+  {
+   "after": "PASS",
+   "artifacts": [
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.guard_init_failed.schema-matrix.json",
+     "sha256": "6726db60e27be5a8c4a16935dfd8be5ab0c09e6e4dec8643214b7476c984a9a0"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.guard_init_failed.definition-inventory.json",
+     "sha256": "a4a940d7fb854f135608219ac4da1210e9051a78cb2115eb22950588a8d0b7fa"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.guard_init_failed.schema-calls.json",
+     "sha256": "38ca77267e9a22e007b18ade437d3f401346699a5798ffa905d42015d3417a41"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.guard_init_failed.mutation-ledger.json",
+     "sha256": "0b60ae71ce6089f54c724fb7430d74939fa9becf25e26515abbda455041e5c6f"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.guard_init_failed.schema-summary.json",
+     "sha256": "3089fd9c8a657d73062045c5cbd298e290924260d4788e1a0ab0de82da4db71a"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.guard_init_failed.uncovered-clauses.json",
+     "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/datetime-final/filesafe.guard_init_failed.datetime.json",
+     "sha256": "c4a3ef47a93b32d545dd1d0cef226afe031f0cf6cfd889fa197b3c615e2649cc"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/retained/filesafe.guard_init_failed.retained.json",
+     "sha256": "f8ac8ed5c74e96ed366da558a40562bde0d76db3bf661a5b920b9305d1a64e75"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/mutations/filesafe.guard_init_failed.original-mutation-ledger.json",
+     "sha256": "6355f797a4266aec844ae4bf5b1f6691b46420d3518db698c7515257c3d0988d"
+    }
+   ],
+   "before": "PARTIAL",
+   "cells": {
+    "positive_negative_oracles": {
+     "evidence": [
+      {
+       "excerpt_sha256": "aea2c873adc4227f650cc6d4d414e97d179e84cb31ebc851512a1a13b6e2e5ea",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "line_end": 40357,
+       "line_start": 40357,
+       "path": "Plans/Contracts_V0.md",
+       "quote": "**Producer and transition.** `FileSafe guard initialization path` is the sole semantic producer. On initialization failure block the affected capability; no disabled fallback. Embedded known-destructive baseline does not make a failed authoritative guard healthy. Preserve the original operation_id a",
+       "quote_check": "exact",
+       "unit": "CV-554"
+      },
+      {
+       "excerpt_sha256": "c76f750593062e6d2877dd19ef4870fac83ab9e95dc926dd202bf55b5a79a5e5",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "line_end": 44953,
+       "line_start": 44953,
+       "path": "Plans/storage-plan.md",
+       "quote": "**Exact original/issued joins for `filesafe.guard_init_failed`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_guard_init_failed.contract.json` and `CV-554` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and",
+       "quote_check": "exact",
+       "unit": "SP-554"
+      },
+      {
+       "excerpt_sha256": "df0d9dfd918cacc62aa08714fdafc8cab4365fbef740fefccac6d61a42d6a694",
+       "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+       "line_end": 11550,
+       "line_start": 11550,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables",
+       "quote_check": "exact",
+       "unit": "ATS-277"
+      }
+     ],
+     "finding": "Complete original DF suite, whole-definition Method B schema/branch coverage with exact refusal, clause cut/restoration and no unresolved clauses; source/tool/case-bound 355-row proof plus 48 checked singleton entailments. Independently sealed retained original/store and copy-join evidence. Shared number corpus and all DF date-time boundaries replayed. Global inventory infrastructure remains separately blocked; native NOT_RUN.",
+     "representation": "executable_static_family_oracles",
+     "status": "PASS"
+    }
+   },
+   "criterion": 12,
+   "current_owner_units": [
+    "CV-554",
+    "SP-554",
+    "ATS-277",
+    "F2-213",
+    "CV-365",
+    "CV-366",
+    "CV-339",
+    "SP-278",
+    "SP-286"
+   ],
+   "datetime": {
+    "complete_checks": 1360,
+    "failures": 0,
+    "family": "filesafe.guard_init_failed",
+    "inventory_nodes": 14,
+    "schema_checks": 9520
+   },
+   "event_type": "filesafe.guard_init_failed",
+   "membership": "ABSENT",
+   "mutations": {
+    "attempts": 102,
+    "failures": 0,
+    "family": "filesafe.guard_init_failed",
+    "invalid": 0,
+    "killed": 102
+   },
+   "native_execution": "NOT_RUN",
+   "other_cells_unchanged": true,
+   "retained": {
+    "failures": 0,
+    "family": "filesafe.guard_init_failed",
+    "observations": 200
+   },
+   "schema": {
+    "branch_schema_controls": 0,
+    "calls": 320,
+    "controls": [
+     "filesafe_guard_init_failed.original_project_0",
+     "filesafe_guard_init_failed.original_application_1",
+     "filesafe_guard_init_failed.original_application_2",
+     "filesafe_guard_init_failed.fix3.inline_ascii_16383.project",
+     "filesafe_guard_init_failed.fix3.inline_ascii_16384.project",
+     "filesafe_guard_init_failed.fix3.inline_utf8_16383.project",
+     "filesafe_guard_init_failed.fix3.inline_utf8_16384.project",
+     "filesafe_guard_init_failed.fix3.sp337_reference.project",
+     "filesafe_guard_init_failed.fix3.inline_ascii_16383.application",
+     "filesafe_guard_init_failed.fix3.inline_ascii_16384.application",
+     "filesafe_guard_init_failed.fix3.inline_utf8_16383.application",
+     "filesafe_guard_init_failed.fix3.inline_utf8_16384.application",
+     "filesafe_guard_init_failed.fix3.sp337_reference.application",
+     "filesafe_guard_init_failed.fix6.integer_epoch.1",
+     "filesafe_guard_init_failed.fix6.integer_epoch.0",
+     "filesafe_guard_init_failed.fix6.integer_epoch.-0",
+     "filesafe_guard_init_failed.fix7.selected_control.project",
+     "filesafe_guard_init_failed.fix7.selected_control.application",
+     "filesafe_guard_init_failed.sweep1.format.utc",
+     "filesafe_guard_init_failed.sweep1.format.fraction",
+     "filesafe_guard_init_failed.sweep1.format.long_fraction",
+     "filesafe_guard_init_failed.sweep1.format.leap_day",
+     "filesafe_guard_init_failed.p2bfix1.format.year_zero",
+     "filesafe_guard_init_failed.p2bfix1.format.offset_ts",
+     "filesafe_guard_init_failed.p2bfix1.format.lowercase_ts"
+    ],
+    "covering": 0,
+    "failures": 0,
+    "family": "filesafe.guard_init_failed",
+    "invalid": 86,
+    "killed": 1967,
+    "method": "original whole-definition Method B; no per-keyword guard-row claim",
+    "occurrences": 1762,
+    "phases": [
+     "contract_payload_schema",
+     "issued_payload_schema",
+     "issued_schema",
+     "mat_payload_schema",
+     "mat_schema",
+     "payload_ref_descriptor",
+     "proto_body_schema",
+     "selected_source_schema"
+    ],
+    "reachable_clauses": 2204,
+    "uncovered_clauses": 0
+   }
+  },
+  {
+   "after": "PASS",
+   "artifacts": [
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.path_denied.schema-matrix.json",
+     "sha256": "c7fab88d09e22ede6efb302918fb4b7f79bfbe311ca7b0cc06c2270a81867d99"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.path_denied.definition-inventory.json",
+     "sha256": "7f6e57c1938d4d716225495c7f5711290b8cbd9b8ef11cc631351a8326d56f85"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.path_denied.schema-calls.json",
+     "sha256": "4b155b157717ea8045da3266ca20f8a0db95217c45b27d73bc5ed6e8c5dac514"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.path_denied.mutation-ledger.json",
+     "sha256": "b7a468788a7af3ef7477c8ebb8a4300836b07a0e1e0b22f6105f35f54c5dbaa0"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.path_denied.schema-summary.json",
+     "sha256": "ad2aa5543c4c8b6650e619fde258980d3afb14814fe09616eae8e83d46a7b0c1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.path_denied.uncovered-clauses.json",
+     "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/datetime-final/filesafe.path_denied.datetime.json",
+     "sha256": "f1ab73fc195561accd56cd4e9068bfb319c86115e1d961dbbc353ff37f84701d"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/retained/filesafe.path_denied.retained.json",
+     "sha256": "929d5bdfe92b4c2acee23b137780ef60286b4cd95c5fa8000aaa8336be60cc41"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/mutations/filesafe.path_denied.original-mutation-ledger.json",
+     "sha256": "f667fe7e34aada7553519aecbab7ef7010c0a80e3a8f225b74e07064525baf17"
+    }
+   ],
+   "before": "PARTIAL",
+   "cells": {
+    "positive_negative_oracles": {
+     "evidence": [
+      {
+       "excerpt_sha256": "3b454bc062d5fb974b662a9fc5e2e511013802cf4e32b4b650aa9cea6633ec9e",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "line_end": 40440,
+       "line_start": 40440,
+       "path": "Plans/Contracts_V0.md",
+       "quote": "**Producer and transition.** `FileSafe path guard before file effect` is the sole semantic producer. Canonicalize existing path or nearest existing parent, verify actual root and recheck TOCTOU before effect. Refusal leaves the file untouched and preserves the denial code and permission/scope refs. ",
+       "quote_check": "exact",
+       "unit": "CV-555"
+      },
+      {
+       "excerpt_sha256": "1962beb7381faf8cbb1116702f4a2950641bc4399e797b2ec3c9dbf6b81ffc18",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "line_end": 45023,
+       "line_start": 45023,
+       "path": "Plans/storage-plan.md",
+       "quote": "**Exact original/issued joins for `filesafe.path_denied`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_path_denied.contract.json` and `CV-555` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify ever",
+       "quote_check": "exact",
+       "unit": "SP-555"
+      },
+      {
+       "excerpt_sha256": "df0d9dfd918cacc62aa08714fdafc8cab4365fbef740fefccac6d61a42d6a694",
+       "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+       "line_end": 11550,
+       "line_start": 11550,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables",
+       "quote_check": "exact",
+       "unit": "ATS-277"
+      }
+     ],
+     "finding": "Complete original DF suite, whole-definition Method B schema/branch coverage with exact refusal, clause cut/restoration and no unresolved clauses; source/tool/case-bound 355-row proof plus 48 checked singleton entailments. Independently sealed retained original/store and copy-join evidence. Shared number corpus and all DF date-time boundaries replayed. Global inventory infrastructure remains separately blocked; native NOT_RUN.",
+     "representation": "executable_static_family_oracles",
+     "status": "PASS"
+    }
+   },
+   "criterion": 12,
+   "current_owner_units": [
+    "CV-555",
+    "SP-555",
+    "ATS-277",
+    "F2-213",
+    "CV-365",
+    "CV-366",
+    "CV-339",
+    "SP-278",
+    "SP-286"
+   ],
+   "datetime": {
+    "complete_checks": 1360,
+    "failures": 0,
+    "family": "filesafe.path_denied",
+    "inventory_nodes": 14,
+    "schema_checks": 9520
+   },
+   "event_type": "filesafe.path_denied",
+   "membership": "ABSENT",
+   "mutations": {
+    "attempts": 102,
+    "failures": 0,
+    "family": "filesafe.path_denied",
+    "invalid": 0,
+    "killed": 102
+   },
+   "native_execution": "NOT_RUN",
+   "other_cells_unchanged": true,
+   "retained": {
+    "failures": 0,
+    "family": "filesafe.path_denied",
+    "observations": 192
+   },
+   "schema": {
+    "branch_schema_controls": 0,
+    "calls": 307,
+    "controls": [
+     "filesafe_path_denied.original_project_0",
+     "filesafe_path_denied.original_application_1",
+     "filesafe_path_denied.fix3.inline_ascii_16383.project",
+     "filesafe_path_denied.fix3.inline_ascii_16384.project",
+     "filesafe_path_denied.fix3.inline_utf8_16383.project",
+     "filesafe_path_denied.fix3.inline_utf8_16384.project",
+     "filesafe_path_denied.fix3.sp337_reference.project",
+     "filesafe_path_denied.fix3.inline_ascii_16383.application",
+     "filesafe_path_denied.fix3.inline_ascii_16384.application",
+     "filesafe_path_denied.fix3.inline_utf8_16383.application",
+     "filesafe_path_denied.fix3.inline_utf8_16384.application",
+     "filesafe_path_denied.fix3.sp337_reference.application",
+     "filesafe_path_denied.fix6.integer_epoch.1",
+     "filesafe_path_denied.fix6.integer_epoch.0",
+     "filesafe_path_denied.fix6.integer_epoch.-0",
+     "filesafe_path_denied.fix7.selected_control.project",
+     "filesafe_path_denied.fix7.selected_control.application",
+     "filesafe_path_denied.sweep1.format.utc",
+     "filesafe_path_denied.sweep1.format.fraction",
+     "filesafe_path_denied.sweep1.format.long_fraction",
+     "filesafe_path_denied.sweep1.format.leap_day",
+     "filesafe_path_denied.p2bfix1.format.year_zero",
+     "filesafe_path_denied.p2bfix1.format.offset_ts",
+     "filesafe_path_denied.p2bfix1.format.lowercase_ts"
+    ],
+    "covering": 0,
+    "failures": 0,
+    "family": "filesafe.path_denied",
+    "invalid": 86,
+    "killed": 2029,
+    "method": "original whole-definition Method B; no per-keyword guard-row claim",
+    "occurrences": 1824,
+    "phases": [
+     "contract_payload_schema",
+     "issued_payload_schema",
+     "issued_schema",
+     "mat_payload_schema",
+     "mat_schema",
+     "payload_ref_descriptor",
+     "proto_body_schema",
+     "selected_source_schema"
+    ],
+    "reachable_clauses": 2357,
+    "uncovered_clauses": 0
+   }
+  },
+  {
+   "after": "PASS",
+   "artifacts": [
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.policy_degraded.schema-matrix.json",
+     "sha256": "d132223c3308ed8a0bd9a0c0b1afc01ffc5e27169910996b8f6c10f5dd195a3e"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.policy_degraded.definition-inventory.json",
+     "sha256": "5c7243315f7f70db897c5eb59816ca8ecbc8ebd620fa6c0402ff30aacba7ba4a"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.policy_degraded.schema-calls.json",
+     "sha256": "b2e5e9235be20f20fbf77bee13916b86648fe821cf161d7964e1fe1b816d4c21"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.policy_degraded.mutation-ledger.json",
+     "sha256": "8082c5013639d541caad4ebbddb395a881d7660611cf8cbaea540dad1bdc7074"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.policy_degraded.schema-summary.json",
+     "sha256": "c87437bfdce81f59076902d3c94e1cdbff9785bcf4d64f496c272609fb9ed406"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-filesafe-final/filesafe.policy_degraded.uncovered-clauses.json",
+     "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/datetime-final/filesafe.policy_degraded.datetime.json",
+     "sha256": "8fe887e89cacdc25d3b61c0d04f9d1fd0b0d49f62b6c133d6cc5984ec008ccfc"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/retained/filesafe.policy_degraded.retained.json",
+     "sha256": "b839de342ee02e5f900a402ea04661ba22613fb5fa105500e763a307b8d526fc"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/mutations/filesafe.policy_degraded.original-mutation-ledger.json",
+     "sha256": "e0853ec3689ec08501ded2c992e02e8d4998866f56b153bb711d5982a8c2cb8d"
+    }
+   ],
+   "before": "PARTIAL",
+   "cells": {
+    "positive_negative_oracles": {
+     "evidence": [
+      {
+       "excerpt_sha256": "1e7117e7605da5b57a2acb13dfad62b127e64a642271b1caf1f88c560aaf6b4a",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "line_end": 40523,
+       "line_start": 40523,
+       "path": "Plans/Contracts_V0.md",
+       "quote": "**Producer and transition.** `FileSafe policy loader advisory/fallback diagnostic path` is the sole semantic producer. Valid only while authoritative enforcement is intact; an advisory failure or embedded authoritative fallback can be reported. Missing or empty allowlists, roots, unresolved canonica",
+       "quote_check": "exact",
+       "unit": "CV-556"
+      },
+      {
+       "excerpt_sha256": "5b8e40418bdaf3e9e4dfde74301ff2fe21bf9adbc1f5bdf0e36148f0e068ef01",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "line_end": 45092,
+       "line_start": 45092,
+       "path": "Plans/storage-plan.md",
+       "quote": "**Exact original/issued joins for `filesafe.policy_degraded`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_policy_degraded.contract.json` and `CV-556` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and ver",
+       "quote_check": "exact",
+       "unit": "SP-556"
+      },
+      {
+       "excerpt_sha256": "df0d9dfd918cacc62aa08714fdafc8cab4365fbef740fefccac6d61a42d6a694",
+       "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+       "line_end": 11626,
+       "line_start": 11626,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables",
+       "quote_check": "exact",
+       "unit": "ATS-278"
+      }
+     ],
+     "finding": "Complete original DF suite, whole-definition Method B schema/branch coverage with exact refusal, clause cut/restoration and no unresolved clauses; source/tool/case-bound 355-row proof plus 48 checked singleton entailments. Independently sealed retained original/store and copy-join evidence. Shared number corpus and all DF date-time boundaries replayed. Global inventory infrastructure remains separately blocked; native NOT_RUN.",
+     "representation": "executable_static_family_oracles",
+     "status": "PASS"
+    }
+   },
+   "criterion": 12,
+   "current_owner_units": [
+    "CV-556",
+    "SP-556",
+    "ATS-278",
+    "F2-213",
+    "CV-365",
+    "CV-366",
+    "CV-339",
+    "SP-278",
+    "SP-286"
+   ],
+   "datetime": {
+    "complete_checks": 1360,
+    "failures": 0,
+    "family": "filesafe.policy_degraded",
+    "inventory_nodes": 14,
+    "schema_checks": 9520
+   },
+   "event_type": "filesafe.policy_degraded",
+   "membership": "ABSENT",
+   "mutations": {
+    "attempts": 95,
+    "failures": 0,
+    "family": "filesafe.policy_degraded",
+    "invalid": 0,
+    "killed": 95
+   },
+   "native_execution": "NOT_RUN",
+   "other_cells_unchanged": true,
+   "retained": {
+    "failures": 0,
+    "family": "filesafe.policy_degraded",
+    "observations": 200
+   },
+   "schema": {
+    "branch_schema_controls": 0,
+    "calls": 320,
+    "controls": [
+     "filesafe_policy_degraded.original_project_0",
+     "filesafe_policy_degraded.original_application_1",
+     "filesafe_policy_degraded.original_application_2",
+     "filesafe_policy_degraded.fix3.inline_ascii_16383.project",
+     "filesafe_policy_degraded.fix3.inline_ascii_16384.project",
+     "filesafe_policy_degraded.fix3.inline_utf8_16383.project",
+     "filesafe_policy_degraded.fix3.inline_utf8_16384.project",
+     "filesafe_policy_degraded.fix3.sp337_reference.project",
+     "filesafe_policy_degraded.fix3.inline_ascii_16383.application",
+     "filesafe_policy_degraded.fix3.inline_ascii_16384.application",
+     "filesafe_policy_degraded.fix3.inline_utf8_16383.application",
+     "filesafe_policy_degraded.fix3.inline_utf8_16384.application",
+     "filesafe_policy_degraded.fix3.sp337_reference.application",
+     "filesafe_policy_degraded.fix6.integer_epoch.1",
+     "filesafe_policy_degraded.fix6.integer_epoch.0",
+     "filesafe_policy_degraded.fix6.integer_epoch.-0",
+     "filesafe_policy_degraded.fix7.selected_control.project",
+     "filesafe_policy_degraded.fix7.selected_control.application",
+     "filesafe_policy_degraded.sweep1.format.utc",
+     "filesafe_policy_degraded.sweep1.format.fraction",
+     "filesafe_policy_degraded.sweep1.format.long_fraction",
+     "filesafe_policy_degraded.sweep1.format.leap_day",
+     "filesafe_policy_degraded.p2bfix1.format.year_zero",
+     "filesafe_policy_degraded.p2bfix1.format.offset_ts",
+     "filesafe_policy_degraded.p2bfix1.format.lowercase_ts"
+    ],
+    "covering": 0,
+    "failures": 0,
+    "family": "filesafe.policy_degraded",
+    "invalid": 86,
+    "killed": 1931,
+    "method": "original whole-definition Method B; no per-keyword guard-row claim",
+    "occurrences": 1744,
+    "phases": [
+     "contract_payload_schema",
+     "issued_payload_schema",
+     "issued_schema",
+     "mat_payload_schema",
+     "mat_schema",
+     "payload_ref_descriptor",
+     "proto_body_schema",
+     "selected_source_schema"
+    ],
+    "reachable_clauses": 2168,
+    "uncovered_clauses": 0
+   }
+  },
+  {
+   "after": "PASS",
+   "artifacts": [
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-safe-final/safe_point.created.schema-matrix.json",
+     "sha256": "61f7d7447924bdae821e7b32a2c05944c0a7ce0160c547c137a4beccf9b77124"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-safe-final/safe_point.created.definition-inventory.json",
+     "sha256": "0b462e3394717f91e7ce67a1159bc8834d0d1a8730d73733427a0a762bba7e5e"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-safe-final/safe_point.created.schema-calls.json",
+     "sha256": "333e6b17981abf9a4526e6d6f56767a061fca43ec6a58f09d44a6334cbb77b70"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-safe-final/safe_point.created.mutation-ledger.json",
+     "sha256": "a0b330ce052dcc1da4537fd9254ed646c15edd266ded9a0590efc76ad39d0b2b"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-safe-final/safe_point.created.schema-summary.json",
+     "sha256": "3a1cd8b14f8a2d248725aa4ebd54d7249106dad0f7fbd4bf8dcee44215e1d81e"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-safe-final/safe_point.created.uncovered-clauses.json",
+     "sha256": "a4e89d5d84a14abdcc2276bc2797077e7a03ba495f02e2ad96b9be21c4584900"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/datetime-final/safe_point.created.datetime.json",
+     "sha256": "e457814e84e4295fb71c7d98957a2d599a896024132191f18c7f402857027551"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/retained/safe_point.created.retained.json",
+     "sha256": "0cb3d35ee62bdc0a872fbb8e2349a9895af575dd08b13346761e2a6bde971386"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/mutations/safe_point.created.original-mutation-ledger.json",
+     "sha256": "cfd1b7ba314a6e35c461c593d5d080af7a1f78bd0bb7cb5d072dcaae0e22a6f3"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-safe-final/safe_point.created.coverage-completion.json",
+     "sha256": "95cd104b5129f16f39d18779fa62bbae2480141d80888c91e6e7fd691ed08cc9"
+    }
+   ],
+   "before": "PARTIAL",
+   "cells": {
+    "positive_negative_oracles": {
+     "evidence": [
+      {
+       "excerpt_sha256": "69d6701c7910ad104d930b9aa7668d1e307b8e132b4ebf0c367bac057f498384",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "line_end": 40606,
+       "line_start": 40606,
+       "path": "Plans/Contracts_V0.md",
+       "quote": "**Producer and transition.** `FileSafe pre-mutation safe-point writer` is the sole semantic producer. Publish only after immutable manifest and blobs verify and the safe_point_record is durably committed. The capture precedes mutation; worktree-bound writes carry all four worktree fields. Failed or ",
+       "quote_check": "exact",
+       "unit": "CV-557"
+      },
+      {
+       "excerpt_sha256": "18be48523ffd6d589c533946072bf96ace666e8b29068d410f25c54a3bb03fc7",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "line_end": 45162,
+       "line_start": 45162,
+       "path": "Plans/storage-plan.md",
+       "quote": "**Exact original/issued joins for `safe_point.created`.** Adopt the complete source graph `Plans/filesafe_event_sources/safe_point_created.contract.json` and `CV-557` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every bo",
+       "quote_check": "exact",
+       "unit": "SP-557"
+      },
+      {
+       "excerpt_sha256": "df0d9dfd918cacc62aa08714fdafc8cab4365fbef740fefccac6d61a42d6a694",
+       "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+       "line_end": 11712,
+       "line_start": 11712,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables",
+       "quote_check": "exact",
+       "unit": "ATS-279"
+      }
+     ],
+     "finding": "Complete original DF suite, whole-definition Method B schema/branch coverage with exact refusal, clause cut/restoration and no unresolved clauses; source/tool/case-bound 355-row proof plus 48 checked singleton entailments. Independently sealed retained original/store and copy-join evidence. Shared number corpus and all DF date-time boundaries replayed. Global inventory infrastructure remains separately blocked; native NOT_RUN.",
+     "representation": "executable_static_family_oracles",
+     "status": "PASS"
+    }
+   },
+   "criterion": 12,
+   "current_owner_units": [
+    "CV-557",
+    "SP-557",
+    "ATS-279",
+    "F2-213",
+    "CV-365",
+    "CV-366",
+    "CV-339",
+    "SP-278",
+    "SP-286"
+   ],
+   "datetime": {
+    "complete_checks": 1360,
+    "failures": 0,
+    "family": "safe_point.created",
+    "inventory_nodes": 21,
+    "schema_checks": 14280
+   },
+   "event_type": "safe_point.created",
+   "membership": "ABSENT",
+   "mutations": {
+    "attempts": 169,
+    "failures": 0,
+    "family": "safe_point.created",
+    "invalid": 0,
+    "killed": 169
+   },
+   "native_execution": "NOT_RUN",
+   "other_cells_unchanged": true,
+   "retained": {
+    "failures": 0,
+    "family": "safe_point.created",
+    "observations": 192
+   },
+   "schema": {
+    "additional_schema_expected_kills": 0,
+    "branch_schema_controls": 59,
+    "calls": 494,
+    "checked_scope_implications": 18,
+    "controls": [
+     "safe_point_created.original_project_0",
+     "safe_point_created.original_application_1",
+     "safe_point_created.fix3.inline_ascii_16383.project",
+     "safe_point_created.fix3.inline_ascii_16384.project",
+     "safe_point_created.fix3.inline_utf8_16383.project",
+     "safe_point_created.fix3.inline_utf8_16384.project",
+     "safe_point_created.fix3.sp337_reference.project",
+     "safe_point_created.fix3.inline_ascii_16383.application",
+     "safe_point_created.fix3.inline_ascii_16384.application",
+     "safe_point_created.fix3.inline_utf8_16383.application",
+     "safe_point_created.fix3.inline_utf8_16384.application",
+     "safe_point_created.fix3.sp337_reference.application",
+     "safe_point_created.fix6.integer_epoch.1",
+     "safe_point_created.fix6.integer_epoch.0",
+     "safe_point_created.fix6.integer_epoch.-0",
+     "safe_point_created.fix7.selected_control.project",
+     "safe_point_created.fix7.selected_control.application",
+     "safe_point_created.sweep1.format.utc",
+     "safe_point_created.sweep1.format.fraction",
+     "safe_point_created.sweep1.format.long_fraction",
+     "safe_point_created.sweep1.format.leap_day",
+     "safe_point_created.p2bfix1.format.year_zero",
+     "safe_point_created.p2bfix1.format.offset_ts",
+     "safe_point_created.p2bfix1.format.lowercase_ts"
+    ],
+    "covering": 0,
+    "failures": 0,
+    "family": "safe_point.created",
+    "invalid": 187,
+    "killed": 4567,
+    "method": "original whole-definition Method B; no per-keyword guard-row claim",
+    "occurrences": 3854,
+    "phases": [
+     "app_body_schema",
+     "contract_payload_schema",
+     "issued_payload_schema",
+     "issued_schema",
+     "mat_payload_schema",
+     "mat_schema",
+     "payload_ref_descriptor",
+     "proto_body_schema",
+     "selected_source_schema"
+    ],
+    "raw_failures": 18,
+    "raw_schema_expected_kills": 4567,
+    "reachable_clauses": 4632,
+    "uncovered_clauses": 0
+   }
+  },
+  {
+   "after": "PASS",
+   "artifacts": [
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-safe-final/safe_point.restored.schema-matrix.json",
+     "sha256": "abbf3d0980c6d3c2825b28df0a1457a9e73542ed38c0e9fbbb8cb68bc17ddd71"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-safe-final/safe_point.restored.definition-inventory.json",
+     "sha256": "63f6269814fc9d6ac1583fc065c4c8c81d8fa67f60b3b595cf2b76be11e6aabf"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-safe-final/safe_point.restored.schema-calls.json",
+     "sha256": "f902f784595fee5af93e646d843263ff396038c1415e70960eb30ab01555912d"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-safe-final/safe_point.restored.mutation-ledger.json",
+     "sha256": "ced4ddb3799b0bd15688f28782e39ed9ee1d8f42f667be4e986b854a13c14316"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-safe-final/safe_point.restored.schema-summary.json",
+     "sha256": "225963188bd8083437c76d61bdf37957e1cb9658e692b73c6fe93123013cc533"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-safe-final/safe_point.restored.uncovered-clauses.json",
+     "sha256": "57f7215a9ee0d0e8eb0142ed6eb72ecf174a934ca9cc8747b0a5ca2cb982befa"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/datetime-final/safe_point.restored.datetime.json",
+     "sha256": "d67c737a16c36d09702c30d3ad11f8a38df2774756976b923f33f8e295116ef8"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/retained/safe_point.restored.retained.json",
+     "sha256": "633335dc956adbd5ec8a0fce5b5d80accda22d38fea538e26b5dceaae105ba10"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/postsplit/mutations/safe_point.restored.original-mutation-ledger.json",
+     "sha256": "0e0e8e8ed70e658d45d85144ed5565baceb3d10d94ae1fb65e312d59eb0d58b2"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-df/schema-safe-final/safe_point.restored.coverage-completion.json",
+     "sha256": "b891722a0c2fe7f324917b8369a04e1ae6d1a82edac3a2e41bde18bf64e02e8e"
+    }
+   ],
+   "before": "PARTIAL",
+   "cells": {
+    "positive_negative_oracles": {
+     "evidence": [
+      {
+       "excerpt_sha256": "3e64e062ce8c06f6bf693f517372c68f49e3950590d8ee5ec946c13cf3bfe079",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "line_end": 40702,
+       "line_start": 40702,
+       "path": "Plans/Contracts_V0.md",
+       "quote": "**Producer and transition.** `FileSafe exact-replace restore coordinator` is the sole semantic producer. Publish only the journal-proven outcome. restored_clean requires target equality, restore_failed pre-restore equality, restore_skipped preflight equality without mutation, restore_refused no muta",
+       "quote_check": "exact",
+       "unit": "CV-558"
+      },
+      {
+       "excerpt_sha256": "fae1adf797e693f8191f46fafe10a68d3ac83b468c84d4009162b63d5d63f29c",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "line_end": 45232,
+       "line_start": 45232,
+       "path": "Plans/storage-plan.md",
+       "quote": "**Exact original/issued joins for `safe_point.restored`.** Adopt the complete source graph `Plans/filesafe_event_sources/safe_point_restored.contract.json` and `CV-558` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every ",
+       "quote_check": "exact",
+       "unit": "SP-558"
+      },
+      {
+       "excerpt_sha256": "df0d9dfd918cacc62aa08714fdafc8cab4365fbef740fefccac6d61a42d6a694",
+       "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+       "line_end": 11712,
+       "line_start": 11712,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables",
+       "quote_check": "exact",
+       "unit": "ATS-279"
+      }
+     ],
+     "finding": "Complete original DF suite, whole-definition Method B schema/branch coverage with exact refusal, clause cut/restoration and no unresolved clauses; source/tool/case-bound 355-row proof plus 48 checked singleton entailments. Independently sealed retained original/store and copy-join evidence. Shared number corpus and all DF date-time boundaries replayed. Global inventory infrastructure remains separately blocked; native NOT_RUN.",
+     "representation": "executable_static_family_oracles",
+     "status": "PASS"
+    }
+   },
+   "criterion": 12,
+   "current_owner_units": [
+    "CV-558",
+    "SP-558",
+    "ATS-279",
+    "F2-213",
+    "CV-365",
+    "CV-366",
+    "CV-339",
+    "SP-278",
+    "SP-286"
+   ],
+   "datetime": {
+    "complete_checks": 1360,
+    "failures": 0,
+    "family": "safe_point.restored",
+    "inventory_nodes": 32,
+    "schema_checks": 21760
+   },
+   "event_type": "safe_point.restored",
+   "membership": "ABSENT",
+   "mutations": {
+    "attempts": 169,
+    "failures": 0,
+    "family": "safe_point.restored",
+    "invalid": 0,
+    "killed": 169
+   },
+   "native_execution": "NOT_RUN",
+   "other_cells_unchanged": true,
+   "retained": {
+    "failures": 0,
+    "family": "safe_point.restored",
+    "observations": 384
+   },
+   "schema": {
+    "additional_schema_expected_kills": 1,
+    "branch_schema_controls": 247,
+    "calls": 1420,
+    "checked_scope_implications": 42,
+    "controls": [
+     "safe_point_restored.original_project_0",
+     "safe_point_restored.original_application_1",
+     "safe_point_restored.original_project_2",
+     "safe_point_restored.original_project_3",
+     "safe_point_restored.original_project_4",
+     "safe_point_restored.original_project_5",
+     "safe_point_restored.original_application_6",
+     "safe_point_restored.original_application_7",
+     "safe_point_restored.original_application_8",
+     "safe_point_restored.original_application_9",
+     "safe_point_restored.fix2.valid_create_missing",
+     "safe_point_restored.fix2.valid_create_absent",
+     "safe_point_restored.fix2.valid_delete_missing",
+     "safe_point_restored.fix2.valid_delete_absent",
+     "safe_point_restored.fix2.valid_metadata",
+     "safe_point_restored.fix2.pre_append_null.restored_clean",
+     "safe_point_restored.fix2.pre_append_null.restore_failed",
+     "safe_point_restored.fix2.pre_append_null.restore_skipped",
+     "safe_point_restored.fix2.pre_append_null.restore_refused",
+     "safe_point_restored.fix2.pre_append_null.restore_recovery_required",
+     "safe_point_restored.fix2.large_blob_payload_ref",
+     "safe_point_restored.fix3.inline_ascii_16383.project",
+     "safe_point_restored.fix3.inline_ascii_16384.project",
+     "safe_point_restored.fix3.inline_utf8_16383.project",
+     "safe_point_restored.fix3.inline_utf8_16384.project",
+     "safe_point_restored.fix3.sp337_reference.project",
+     "safe_point_restored.fix3.inline_ascii_16383.application",
+     "safe_point_restored.fix3.inline_ascii_16384.application",
+     "safe_point_restored.fix3.inline_utf8_16383.application",
+     "safe_point_restored.fix3.inline_utf8_16384.application",
+     "safe_point_restored.fix3.sp337_reference.application",
+     "safe_point_restored.fix6.integer_epoch.1",
+     "safe_point_restored.fix6.integer_epoch.0",
+     "safe_point_restored.fix6.integer_epoch.-0",
+     "safe_point_restored.fix7.selected_control.project",
+     "safe_point_restored.fix7.selected_control.application",
+     "safe_point_restored.fix7.unequal_content_control.1",
+     "safe_point_restored.fix7.unequal_content_control.6",
+     "safe_point_restored.fix7.unequal_content_control.7",
+     "safe_point_restored.fix7.unequal_content_control.8",
+     "safe_point_restored.fix7.unequal_content_control.9",
+     "safe_point_restored.sweep1.format.utc",
+     "safe_point_restored.sweep1.format.fraction",
+     "safe_point_restored.sweep1.format.long_fraction",
+     "safe_point_restored.sweep1.format.leap_day",
+     "safe_point_restored.p2bfix1.format.year_zero",
+     "safe_point_restored.p2bfix1.format.offset_ts",
+     "safe_point_restored.p2bfix1.format.lowercase_ts"
+    ],
+    "covering": 0,
+    "failures": 0,
+    "family": "safe_point.restored",
+    "invalid": 312,
+    "killed": 7606,
+    "method": "original whole-definition Method B; no per-keyword guard-row claim",
+    "occurrences": 8390,
+    "phases": [
+     "app_body_schema",
+     "contract_payload_schema",
+     "issued_payload_schema",
+     "issued_schema",
+     "mat_payload_schema",
+     "mat_schema",
+     "payload_ref_descriptor",
+     "proto_body_schema",
+     "selected_source_schema"
+    ],
+    "raw_failures": 43,
+    "raw_schema_expected_kills": 7605,
+    "reachable_clauses": 7486,
+    "uncovered_clauses": 0
+   }
+  }
+ ],
+ "schema_id": "pm.event_authority.c12_df_closure.v1",
+ "source_grade": {
+  "path": "/home/sittingmongoose/pm-worktrees/pnc-c12-df/reports/event-authority-20261104/DF.self-grade.json",
+  "sha256": "0c7050d1315ccc24cfe301811f4044a595c7db134b4ce0838991b1feb5741cd3"
+ }
+}

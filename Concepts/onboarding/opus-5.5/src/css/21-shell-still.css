@@ -1,0 +1,11 @@
+/* The still page (PERF-3, Jared's choice B, 2026-11-11; src/js/14-shell-still.js): after 20 s without input the script
+   marks the element of each endless CSS animation (data-pm-held: "self", or the pseudo-element it runs on) and these
+   rules hold it where it is until the next input. Keyed on the mark alone, so marking restyles only the marked elements
+   (about 40 on Home). !important and the two :not(#...) (an id's weight each, matching every element) because some
+   loops are set inline or by an !important shorthand, which also sets the play state (NieR Mode's diamonds, the
+   loaders; the strongest today is one id and three classes, the loaders in Settings); every other rule of the page
+   that sets animation-play-state pauses. */
+[data-pm-held~="self"]:not(#pm-still-a):not(#pm-still-b) { animation-play-state: paused !important; }
+[data-pm-held~="before"]:not(#pm-still-a):not(#pm-still-b)::before { animation-play-state: paused !important; }
+[data-pm-held~="after"]:not(#pm-still-a):not(#pm-still-b)::after { animation-play-state: paused !important; }
+[data-pm-held~="marker"]:not(#pm-still-a):not(#pm-still-b)::marker { animation-play-state: paused !important; }

@@ -2,6 +2,8 @@
 
 import copy
 import importlib.util
+import json
+import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -64,12 +66,31 @@ def all_prepared_snapshot():
     registry["families"] = [row for row in registry["families"] if row["family_id"] in baseline_ids]
     # Re-frozen 2026-09-23 (was 4f701c95..., last true at 4fe66204bd) after the six landed goal v3
     # adoptions named in scripts/pm_emit_only_event_contract.py; same value as its prefix hash.
-    if len(registry["families"]) != 40 or GATE.fingerprint(registry["families"]) != "a27cf49b63d364ae0d6d6f62b0ebc8d3ebe9e66df6de8e58814d099194d81050":
+    # Re-frozen 2026-11-05 (was a27cf49b..., last true just before c0d688db9f) after three landed registry
+    # changes moved it: c0d688db9f and 634412b3ac (workspace.layout_changed 2.0.0, DL-188) and 102a7e99e8
+    # (lane F-d added scope_policy, payload_versions and payload_selection_policy to eleven goal rows). The
+    # preservation check just below still judges each changed row against its reviewed successor.
+    # Re-frozen 2026-11-04 (was a27cf49b..., last true at d86090abd9) after two owner-approved row changes
+    # inside the upstream40: DL-188's workspace.layout_changed 2.0.0 row (c0d688db9f, 634412b3ac) and DL-300's
+    # eleven Goal application editions (102a7e99e8, admitted 5375bfd2a7). The reviewed-successor check below
+    # still requires those exact current rows; pm-browser-event-admission.py accepts them by exact digest.
+    reviewed = GATE.emit_only_contract().reviewed_s5b_predecessors(registry["families"])
+    if len(reviewed) != 40 or GATE.fingerprint(reviewed) != "2fe49c025e4db8adc9183a3f32c393333c203f375d9a047cc7a98d48c6f8776e":
         raise AssertionError("Synthetic admission fixture requires the unchanged live upstream40")
     preservation, failures = GATE.preexisting_preservation(context[0], registry["families"])
     if len(registry["families"]) != 40 or failures or not preservation["current_preexisting_rows_match_reviewed_successors"]:
         raise AssertionError("Synthetic admission fixture requires the exact reviewed current upstream40")
     return context, registry
+
+
+class Upstream40PinTests(unittest.TestCase):
+    def test_snapshot_refuses_one_changed_live_row(self):
+        registry = copy.deepcopy(GATE.load_json("Plans/event_family_registry.json"))
+        baseline_ids = set(CONTEXT[0]["preexisting_family_ids"])
+        next(row for row in registry["families"] if row["family_id"] in baseline_ids)["family_revision"] = "9.9.9"
+        with registry_snapshot(registry):
+            with self.assertRaisesRegex(AssertionError, "unchanged live upstream40"):
+                all_prepared_snapshot()
 
 
 class BrowserPreexistingPreservationTests(unittest.TestCase):
@@ -143,6 +164,7 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
 
     def test_each_other_historical_row_and_compaction_remain_exact(self):
         coordination = GATE.admitted_coordination_rows()
+        recorded = GATE.admitted_record_rows()
         for original in self.rows:
             if original["family_id"] in GATE.REVIEWED_GOAL_SUCCESSORS or original["event_type"].startswith("browser."):
                 continue
@@ -151,12 +173,32 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
                 next(row for row in rows if row["family_id"] == original["family_id"])["family_revision"] = "99.0.0"
                 report, failures = GATE.preexisting_preservation(self.admission, rows)
                 self.assertTrue(failures)
-                if (original["family_id"], original["event_type"]) in coordination or original["family_id"] in GATE.REVIEWED_DL300_FAMILIES:
-                    # An admitted coordination row (Step 9 batch 2) or DL-300 family is not historical: drift makes
-                    # it unexpected.
+                if ((original["family_id"], original["event_type"]) in coordination
+                        or original["family_id"] in GATE.REVIEWED_DL300_FAMILIES
+                        or ((original["family_id"], original["event_type"]) in recorded
+                            and original["family_id"] not in set(self.admission["preexisting_family_ids"]) | {GATE.COMPACTION_FAMILY})):
+                    # An admitted coordination row (Step 9 batch 2), a DL-300 family or a row its own DL-077
+                    # admission record pins is not historical: drift makes it unexpected.
                     self.assertIn("unexpected_central_event_family", {row["error"] for row in failures})
                     continue
                 self.assertFalse(report["historical_baseline_verified"])
+
+    def test_record_pinned_row_passes_only_byte_for_byte(self):
+        # PNC-019 admission merges: a row outside every allowlist passes only through its own DL-077 record pin.
+        extra = copy.deepcopy(next(row for row in self.rows if row["family_id"] == GATE.COMPACTION_FAMILY))
+        extra.update(family_id="event-family-pnc019-record-probe", event_type="pnc019.record_probe")
+        rows = copy.deepcopy(self.rows) + [extra]
+        pin = {(extra["family_id"], extra["event_type"]): GATE.dl077_row_sha256(extra)}
+        base = {k: v for k, v in GATE.admitted_record_rows().items()}
+        _, failures = GATE.preexisting_preservation(self.admission, rows, record_rows={**base, **pin})
+        self.assertNotIn("unexpected_central_event_family", {row["error"] for row in failures})
+        for name, record_rows in (("no_record", base),
+                                  ("changed_row", {**base, (extra["family_id"], extra["event_type"]): "0" * 64}),
+                                  ("renamed_family", {**base, ("event-family-other", extra["event_type"]): pin[(extra["family_id"], extra["event_type"])]}),
+                                  ("renamed_event", {**base, (extra["family_id"], "pnc019.other"): pin[(extra["family_id"], extra["event_type"])]})):
+            with self.subTest(case=name):
+                _, failures = GATE.preexisting_preservation(self.admission, rows, record_rows=record_rows)
+                self.assertIn("unexpected_central_event_family", {row["error"] for row in failures})
 
     def test_missing_duplicate_reordered_extra_and_changed_manifest_rejected(self):
         for mutation in ("missing", "duplicate", "order", "compaction_order", "extra", "manifest_order", "manifest_hash"):
@@ -185,6 +227,8 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
     def test_current_manifest_pin_does_not_replace_historical_row_authority(self):
         self.assertEqual(self.admission["preexisting_family_rows_sha256"], GATE.CURRENT39_SHA256)
         current39 = [row for row in self.rows if row["family_id"] in self.admission["preexisting_family_ids"]]
+        # CURRENT39 is the retained post-DL300 checkpoint, before exact approved S5b revisions.
+        current39 = GATE.emit_only_contract().reviewed_s5b_predecessors(current39)
         self.assertEqual(GATE.fingerprint(current39), GATE.CURRENT39_SHA256)
         admission = copy.deepcopy(self.admission)
         admission["preexisting_family_rows_sha256"] = GATE.ORIGINAL39_SHA256
@@ -194,11 +238,15 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
         self.assertFalse(report["current_preexisting_rows_match_reviewed_successors"])
 
     def test_prepared_registration_cannot_escape_with_reviewed_successors(self):
-        prepared = next(row for row in self.admission["rows"] if row["admission_status"] == "prepared_not_admitted")
+        # Build the prepared-ledger state explicitly after all live rows are admitted.
+        # Keep exactly one real central row, so the subset guard is the boundary under test.
+        admission = copy.deepcopy(self.admission)
+        admission["rows"][0]["admission_status"] = "prepared_not_admitted"
+        context = (admission, *CONTEXT[1:])
         for payloads_only in (False, True):
             with self.subTest(payloads_only=payloads_only):
-                registry = {"families": self.rows + [synthetic_family(prepared)]}
-                with registry_snapshot(registry):
+                registry = {"families": copy.deepcopy(self.rows)}
+                with registry_snapshot(registry), patch.object(GATE, "contract_context", return_value=context):
                     report = GATE.validate(payloads_only=payloads_only)
                 self.assertEqual(report["status"], "fail")
                 self.assertIn("exact_admitted_subset_mismatch", {row["error"] for row in report["failures"]})
@@ -224,11 +272,18 @@ class BrowserPreparedAdmissionTests(unittest.TestCase):
         self.assertEqual(admitted | prepared, set(ROWS))
         self.assertEqual(report["prepared_scoped_event_families"], len(prepared))
         self.assertEqual(report["admitted_scoped_event_families"], len(admitted))
-        # The only other additions are rows the coordination ledger marks admitted (Step 9 batch 2) and the
-        # three DL-300 families.
+        # The only other additions are rows the coordination ledger marks admitted (Step 9 batch 2), the
+        # three DL-300 families and rows their own DL-077 admission record pins (PNC-019 admission merges).
         coordination = GATE.admitted_coordination_rows()
+        historical = set(CONTEXT[0]["preexisting_family_ids"]) | {GATE.COMPACTION_FAMILY}
+        recorded = GATE.admitted_record_rows()
+        record_pinned = [row for row in central
+                         if row["family_id"] not in historical and row["event_type"] not in ROWS
+                         and (row["family_id"], row["event_type"]) not in coordination
+                         and row["family_id"] not in GATE.REVIEWED_DL300_FAMILIES
+                         and recorded.get((row["family_id"], row["event_type"])) == GATE.dl077_row_sha256(row)]
         self.assertEqual(report["registry_family_count"],
-                         40 + len(admitted) + len(coordination) + len(GATE.REVIEWED_DL300_FAMILIES))
+                         40 + len(admitted) + len(coordination) + len(GATE.REVIEWED_DL300_FAMILIES) + len(record_pinned))
         self.assertEqual(report["admission_complete"], len(admitted) == 53)
 
     def test_isolated_prepared_consistency_is_not_admission_completion(self):
@@ -368,12 +423,19 @@ class BrowserPreparedAdmissionTests(unittest.TestCase):
         sibling["authority_contract_ref"] = "Plans/browser_workspace_created_contracts.schema.json#/x-pm-event-authority-binding"
         family = synthetic_family(sibling)
         value = event(sibling["event_type"])
-        self.assertIn("complete_browser_authority_binding_missing", GATE.event_failures(value, producer(value), context, families={sibling["event_type"]: family}))
+        # browser.workspace.closed is one of the 51 Browser Program families, so it is judged by its own
+        # per-family binding: without lane s4b's contracts it has none, and with them the borrowed
+        # authority_contract_ref is not its own Storage unit. Either way it never binds through created's.
+        own = ("browser_program_contract_missing" if not (ROOT / GATE.BROWSER_PROGRAM_CONTRACTS).is_file()
+               else "browser_program_authority_contract")
+        failures = GATE.event_failures(value, producer(value), context, families={sibling["event_type"]: family})
+        self.assertIn(own, failures)
+        self.assertNotIn("complete_browser_authority_binding_missing", failures)
         registry["families"].append(family)
         with patch.object(GATE, "contract_context", return_value=context), registry_snapshot(registry):
             report = GATE.validate()
         self.assertEqual(report["status"], "fail")
-        self.assertIn("complete_browser_authority_binding_missing", {row["error"] for row in report["failures"]})
+        self.assertIn(own, {row["error"] for row in report["failures"]})
 
     def test_created_requires_exact_depth_ref_beyond_label_and_central_row(self):
         context, _ = all_prepared_snapshot()
@@ -568,6 +630,172 @@ class BrowserCandidateSuccessorTests(unittest.TestCase):
         value = event("browser.workspace.created")
         value["payload"]["schema_id"] = "pm.browser_event.workspace_created.v1"
         self.assertIn("payload_schema", GATE.candidate_failures(value, producer(value), CONTEXT))
+
+
+class BrowserProgramBindingTests(unittest.TestCase):
+    """The per-family binding of the 51 Browser Program families (DL-046; lane s4b contracts; merge 2).
+
+    A synthetic root holds one contract shaped as lane s4b prepares them and the canon it names; every
+    binding row has a positive and a single-defect negative that refuses at that row alone.
+    """
+    EVENT = "browser.workspace.closed"
+
+    def spec(self):
+        return {
+            "event_type": self.EVENT, "admission_row_index": 0, "family_id": "event-family-browser-workspace-closed",
+            "family_revision": "1.0.0", "semantic_anchor": "browser-program-event-authority-workspace-closed",
+            "cv_unit": "CV-2500", "sp_unit": "SP-2500", "producer_component": "BrowserRuntimeService.workspace",
+            "publication_operation": "BrowserRuntimeService.workspace.publish.workspace_closed@1.0.0",
+            "consumer_id": "browser.workspace_inventory.workspace_closed.v1@1.0.0",
+            "index_writer_id": "storage.browser_workspace_closed_index.v1@1.0.0",
+            "checkpoint_family_id": "browser_workspace_closed_index_checkpoint",
+            "checkpoint_key_shape": "browser_workspace_closed_index_checkpoint.v1:{storage_instance_id}:{scope_partition}",
+            "checkpoint_schema_ref": "Plans/browser_program_event_contracts.schema.json#/$defs/workspace_closed_index_checkpoint",
+            "checkpoint_retention_policy": "RP-PROJECTION-3GEN@1.0.0", "retention_policy": "RP-AUTHORITY-INDEFINITE@1.0.0",
+            "payload_schema_id": "pm.browser_event.workspace_closed.schema.v1",
+            "owner_record_contract_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/browser_command_result",
+        }
+
+    def admitted_row(self, spec):
+        return {
+            "event_type": self.EVENT, "family_id": spec["family_id"], "family_revision": spec["family_revision"],
+            "admission_status": "admitted_static_contract", "authority_contract_ref": "Plans/storage-plan.md#SP-2500",
+            "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#" + spec["semantic_anchor"],
+            "consumer_contract_refs": ["Plans/storage-plan.md#SP-2500", "Plans/Contracts_V0.md#CV-2500"],
+            "producer_component": spec["producer_component"],
+            "payload_schema_ref": {"path": "Plans/browser_event_payloads.schema.json", "json_pointer": "#/$defs/workspace_closed",
+                                   "schema_id": spec["payload_schema_id"]},
+            "retention_policy_ref": {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-AUTHORITY-INDEFINITE",
+                                     "policy_version": "1.0.0"},
+            "owner_record_contract_ref": spec["owner_record_contract_ref"],
+        }
+
+    def write_root(self, root, spec, *, s15=None, cv=None, sp=None, storage=None, checkpoints=None, admission=None):
+        def put(rel, text):
+            path = root / rel
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(text, encoding="utf-8")
+        tokens = " ".join(str(spec[k]) for k in ("producer_component", "publication_operation", "consumer_id",
+                                                  "checkpoint_family_id", "cv_unit", "sp_unit", "retention_policy"))
+        put("reports/event-authority-20261114/S4B-contracts.json", json.dumps({"families": [spec]}))
+        put("Plans/browser_event_admission.json", json.dumps(admission or {"rows": [{"event_type": self.EVENT}]}))
+        put("Plans/Section15_MVP_Promoted_Features_Spec.md", s15 if s15 is not None else
+            '<a id="' + spec["semantic_anchor"] + '"></a>\n' + tokens + '\n<a id="other"></a>\nnothing')
+        put("Plans/Contracts_V0.md", cv if cv is not None else
+            "### CV-2500 - x\n" + " ".join([self.EVENT, spec["payload_schema_id"], "evt_browser_", "browser@1:",
+                                            "dedupe_by_idempotency_key", "projector_replay_only", "payload_inline_limit"]) + "\n### CV-2501 - y\n")
+        put("Plans/storage-plan.md", sp if sp is not None else
+            "### SP-2500 - x\n" + " ".join([self.EVENT, spec["checkpoint_family_id"], spec["checkpoint_key_shape"],
+                                            spec["checkpoint_schema_ref"], spec["index_writer_id"], spec["consumer_id"],
+                                            "RP-PROJECTION-3GEN", spec["retention_policy"], "original_receipt_missing",
+                                            "family_withdrawn", "checkpoint_cas_conflict"]) + "\n### SP-2501 - y\n")
+        put("Plans/storage_value_registry.json", json.dumps(storage or {"families": [{
+            "family_id": spec["checkpoint_family_id"], "key_shape": spec["checkpoint_key_shape"], "consumers": [spec["consumer_id"]],
+            "producer": [spec["index_writer_id"]], "value_schema_ref": spec["checkpoint_schema_ref"],
+            "retention_policy_ref": "RP-PROJECTION-3GEN"}]}))
+        put("Plans/browser_program_event_contracts.schema.json", json.dumps(checkpoints or {"$defs": {"workspace_closed_index_checkpoint": {"type": "object"}}}))
+
+    def failures(self, row, spec=None, **canon):
+        spec = spec or self.spec()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.write_root(root, spec, **canon)
+            return GATE.browser_program_binding_failures(row, root=root)
+
+    def test_the_prepared_contract_binds_its_admitted_row(self):
+        self.assertEqual(self.failures(self.admitted_row(self.spec())), [])
+
+    def test_each_binding_row_refuses_its_own_single_defect(self):
+        spec = self.spec()
+        row = self.admitted_row(spec)
+
+        def changed_row(**fields):
+            return dict(copy.deepcopy(row), **fields)
+
+        cases = {
+            "browser_program_family_identity": (changed_row(family_revision="2.0.0"), {}),
+            "browser_program_semantic_owner": (changed_row(semantic_owner_ref="Plans/Section15_MVP_Promoted_Features_Spec.md#other"), {}),
+            "browser_program_consumer_refs": (changed_row(consumer_contract_refs=["Plans/storage-plan.md#SP-2500"]), {}),
+            "browser_program_producer": (changed_row(producer_component="BrowserRuntimeService.page"), {}),
+            "browser_program_payload_schema": (changed_row(payload_schema_ref=dict(row["payload_schema_ref"], schema_id="pm.other.v1")), {}),
+            "browser_program_retention": (changed_row(retention_policy_ref=dict(row["retention_policy_ref"], policy_id="RP-RUNTIME-365D")), {}),
+            "browser_program_owner_record": (changed_row(owner_record_contract_ref="Plans/other.schema.json#/$defs/x"), {}),
+            "browser_program_authority_contract": (changed_row(authority_contract_ref="Plans/storage-plan.md#SP-2501"), {}),
+            "browser_program_section15_text": (row, {"s15": '<a id="' + spec["semantic_anchor"] + '"></a>\nonly some text'}),
+            "browser_program_contract_unit_text": (row, {"cv": "### CV-2500 - x\n" + self.EVENT + "\n"}),
+            "browser_program_storage_unit_text": (row, {"sp": "### SP-2500 - x\n" + self.EVENT + "\n"}),
+            "browser_program_checkpoint_row": (row, {"storage": {"families": [{"family_id": spec["checkpoint_family_id"]}]}}),
+            "browser_program_checkpoint_schema": (row, {"checkpoints": {"$defs": {}}}),
+        }
+        for code, (candidate, canon) in cases.items():
+            with self.subTest(code=code):
+                self.assertEqual(self.failures(candidate, **canon), [code])
+
+    def test_entry_rows_refuse_names_contracts_and_rows_they_do_not_pin(self):
+        spec = self.spec()
+        row = self.admitted_row(spec)
+        other = dict(row, event_type="browser.workspace.created")
+        self.assertEqual(self.failures(other), ["browser_program_binding_missing"])
+        prefix = dict(row, event_type="browser.workspace.closed.extra")
+        self.assertEqual(self.failures(prefix), ["browser_program_binding_missing"])
+        renamed = dict(spec, event_type="browser.page.closed")
+        self.assertEqual(self.failures(row, spec=renamed), ["browser_program_contract_missing"])
+        self.assertEqual(self.failures(row, admission={"rows": [{"event_type": "browser.page.closed"}]}),
+                         ["browser_program_admission_row_mismatch"])
+        self.assertEqual(self.failures(row, spec=dict(spec, admission_row_index=5)), ["browser_program_admission_row_mismatch"])
+
+    def test_dispatch_opens_exactly_the_pinned_program_names(self):
+        self.assertEqual(len(GATE.BROWSER_PROGRAM_FAMILIES), 51)
+        self.assertEqual(GATE.BROWSER_PROGRAM_FAMILIES,
+                         {row["event_type"] for row in CONTEXT[0]["rows"]} - {"browser.workspace.created", "browser.workspace.reset"})
+        row = self.admitted_row(self.spec())
+        self.assertEqual(GATE.authority_binding_failures(dict(row, event_type="browser.not_a_program_family")),
+                         ["complete_browser_authority_binding_missing"])
+        if not (ROOT / GATE.BROWSER_PROGRAM_CONTRACTS).is_file():
+            # Before lane s4b's contracts merge, a Program family is pinned but has no contract: it stays closed.
+            self.assertEqual(GATE.authority_binding_failures(row), ["browser_program_contract_missing"])
+
+
+
+class Merge2Fix1BrowserTests(unittest.TestCase):
+    """FIX1: full ledger compatibility and bounded successor preservation."""
+    def test_whole_ledger_is_valid(self):
+        result = GATE.validate()
+        self.assertEqual(result["failures"], [])
+        self.assertEqual(result["status"], "pass")
+
+    def test_storage_reference_shape_and_cross_family_refusals(self):
+        schema = GATE.load_json("Plans/browser_event_admission.schema.json")
+        admission = GATE.load_json("Plans/browser_event_admission.json")
+        self.assertEqual(list(GATE.Draft202012Validator(schema).iter_errors(admission)), [])
+        row = next(r for r in admission["rows"] if r["event_type"] == "browser.workspace.closed")
+        prop = schema["properties"]["rows"]["items"]["properties"]["authority_contract_ref"]
+        for ref in ("Plans/other.md#SP-2500", "Plans/storage-plan.md#SP-x", "Plans/storage-plan.md#SP-02500",
+                    "Plans/storage-plan.md#SP-2500/trailing", "Plans/storage-plan.md#SP-2500x"):
+            with self.subTest(ref=ref):
+                self.assertTrue(list(GATE.Draft202012Validator(prop).iter_errors(ref)))
+        wrong = dict(row, authority_contract_ref="Plans/storage-plan.md#SP-2501")
+        self.assertEqual(list(GATE.Draft202012Validator(prop).iter_errors(wrong["authority_contract_ref"])), [])
+        self.assertTrue(GATE.browser_program_binding_failures(wrong))
+        self.assertEqual(GATE.browser_program_binding_failures(row), [])
+
+    def test_s5b_projection_keeps_real_changes_refused(self):
+        rows = GATE.load_json("Plans/event_family_registry.json")["families"]
+        admission = GATE.load_json("Plans/browser_event_admission.json")
+        report, failures = GATE.preexisting_preservation(admission, rows)
+        self.assertEqual(failures, [])
+        self.assertTrue(report["historical_original39_verified"] and report["historical_original40_verified"])
+        pins = json.loads((ROOT / "scripts/pm_ea_reviewed_successors.json").read_text())["families"]
+        for family_id in pins:
+            for field in ("family_revision", "semantic_owner_doc", "payload_owner_doc", "source_refs", "scope_policy"):
+                changed = copy.deepcopy(rows)
+                row = next(r for r in changed if r["family_id"] == family_id)
+                row[field] = ["Plans/forged.md#CV-1"] if field == "source_refs" else "forged"
+                with self.subTest(family=family_id, field=field):
+                    self.assertTrue(GATE.preexisting_preservation(admission, changed)[1])
+        for family_id in GATE.REVIEWED_GOAL_SUCCESSORS:
+            changed = [r for r in rows if r["family_id"] != family_id]
+            self.assertTrue(GATE.preexisting_preservation(admission, changed)[1])
 
 
 if __name__ == "__main__":

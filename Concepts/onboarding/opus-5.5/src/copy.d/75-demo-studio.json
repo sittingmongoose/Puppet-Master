@@ -670,7 +670,7 @@
           },
           "memory": {
             "title": "Memory",
-            "lead": "Notes the assistant keeps, checked against your files."
+            "lead": "Notes Puppet Master keeps between chats, and the one line a reply shows when it saves one."
           },
           "eli5": {
             "title": "ELI5",
@@ -874,13 +874,13 @@
             "title": "When a reply misses your rule",
             "sub": "A reply leaves part of a rule out and you ask for a fix. Nothing is sent until you press Send."
           },
-          "memory-verified": {
-            "title": "A note a test proves",
-            "sub": "Three checks pass. Then the file changes and the note goes out of date."
+          "memory-saved": {
+            "title": "A reply that saved something",
+            "sub": "The reply fixes a failing test and ends with one quiet line: Saved to memory · View."
           },
-          "memory-locked": {
-            "title": "Your rule stays yours",
-            "sub": "A note suggests changing a locked rule. Nothing changes until you decide."
+          "memory-remember": {
+            "title": "Remember that I always use pnpm",
+            "sub": "Ask it to remember something and it says where the note applies, with a View link."
           },
           "eli5-override": {
             "title": "Simple answers in one chat",

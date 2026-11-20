@@ -1,0 +1,110 @@
+{
+  "application_id": "EA-B1-DS-FIX2-REGRADE",
+  "applied_at_utc": "2026-11-04T22:54:34.669096+00:00",
+  "applied_on_revision": "9f83b5ed566206585dcff5a22ac4db94feaf3cee",
+  "findings": [
+    "DS-SOL2-01",
+    "DS-SOL2-02",
+    "DS-SOL2-03",
+    "Ruling 1",
+    "Ruling 2"
+  ],
+  "registration_history_changed": false,
+  "membership_decisions_changed": false,
+  "frozen_validator_changed": false,
+  "new_plan_unit_ids": [],
+  "files": [
+    {
+      "path": "reports/event-authority-20261104/DS.selfgrade.json",
+      "before_sha256": "cca84356ade6b32ea93e44128e4e1db76dad660b503f9a0667b205589b9d4c60",
+      "after_sha256": "1610288136c938769626759644bd5ca4ec57ea2714a3455b63e991c261ece0f6"
+    },
+    {
+      "path": "reports/event-authority-20261104/depth-b1-seal-families.json",
+      "before_sha256": "116bc685e4f1cf62f7acae66dded955bf6ab0dbb233de670950791e5ee7f70b5",
+      "after_sha256": "535b9ea34754b03edb19e15e67650e13546fb8345ae5a8121f1646e87c9ff035"
+    },
+    {
+      "path": "reports/event-authority-20260911/admission-records/context.compaction.completed.json",
+      "before_sha256": "3e09c1b907309d2574cd61dcb6fb8f9af2fe978a3930444a82634dfee8e709eb",
+      "after_sha256": "d6b52ab03d199814630c215e004ecbcd9963e1b810857fbdbf6948654bcaf636"
+    },
+    {
+      "path": "reports/event-authority-20260911/admission-records/browser.workspace.created.json",
+      "before_sha256": "592be4c8a49015a528d29a7b6287cb8ee436ba204177a1980c640fcee08f0727",
+      "after_sha256": "c8666d4ead7522459a38983a659ba3539374f6ac3db5592f72bd138bced64f86"
+    },
+    {
+      "path": "reports/event-authority-20260911/admission-records/browser.workspace.reset.json",
+      "before_sha256": "c805a70111b9255d10c2626e267c8db20098ba05fe7ec3a25093892684a7ed17",
+      "after_sha256": "040f0bb499c66d51006ec50acad92c9a02c91052a0c49687ccbe65c994c90e3f"
+    },
+    {
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_workspace.layout_changed.json",
+      "before_sha256": "550a5960c335f4dca1cbcb38f86294f82d8f367149779bc4cd750505a5312ea0",
+      "after_sha256": "97ddc00044ac9cb52867a122119d52648c467f0b3ddadb31c255f2c1affa9f99"
+    },
+    {
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl",
+      "before_sha256": "d5db5c6adb93cfed7eab39dfc7b146eec7e166e124687bd27625097663af79e9",
+      "after_sha256": "3f7984f3ec8378e7f1e4dc14e40e2c6d201366d5d7f6b9445ce875fc33871685",
+      "rows": [
+        {
+          "line": 295,
+          "before_line_with_ending_sha256": "2b988aa3ba11040f886a8d745307cb417d099857795fa063e6097e34a0e196fd",
+          "after_line_with_ending_sha256": "d6786676b50bd7b5b779b0b08475a774ceb57518f107e522ef3599addd5a6d5b"
+        },
+        {
+          "line": 71,
+          "event_type": "context.compaction.completed",
+          "before_line_with_ending_sha256": "3cdecfb2dc118a44bda6a38f28e92224c462ef0439715580787430b78aadcc85",
+          "after_line_with_ending_sha256": "f224c173d6357fe876a900e7565829eb49222a359b5ae4df375359732f39d3a1"
+        }
+      ],
+      "lines_changed": 2
+    },
+    {
+      "path": "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl",
+      "before_sha256": "d1496fb25c97be9c19e7a24c25c6284ea48538275dd951090e4132b1d8e1ab55",
+      "after_sha256": "faee6d7738864f78b4f9966302e1858ba3ad65cd67ada8fa4795455376aa3dd8",
+      "rows": [
+        {
+          "line": 39,
+          "before_line_with_ending_sha256": "1f2ef68552b2eddf6e6b82f8be03260f29c3bedbd639f857da7a25a391005635",
+          "after_line_with_ending_sha256": "0e9346e166a30e444807c0e7e71d4e4f818ecdf59b0d7186c88bfcd49946d744"
+        },
+        {
+          "line": 106,
+          "event_type": "context.compaction.completed",
+          "before_line_with_ending_sha256": "79588dfb9dff538754cb6f2dff9efe16a1173f0942b9f4f4b4cfabacf95a4f99",
+          "after_line_with_ending_sha256": "c576885e6d715138675f6e9b69f4cdb8fc9f17210568c516569efd079dfd1e17"
+        }
+      ],
+      "lines_changed": 2
+    },
+    {
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_context.compaction.completed.json",
+      "before_sha256": "416d06a5170fdbdee68b7c3813fdae456873093871ea3d8cae41de4121a76453",
+      "after_sha256": "bded9943fe09f20e018ddd206bd9c8a8872a26afeb643b378694e725670b0ba9"
+    }
+  ],
+  "note": "Same assessment path remains honest and incomplete. Admission-record repoints are pins only, and supply no complete-depth proof. Original admission/registration decisions and the four original application records remain unchanged. The compaction supersession note is explicitly limited to historical registration/application lineage while its current depth target is incomplete; disposition and evidence remain unchanged.",
+  "grades_after": {
+    "context.compaction.completed": 11,
+    "browser.workspace.created": 11,
+    "browser.workspace.reset": 11,
+    "workspace.layout_changed": 11,
+    "terminal.workgroup_moved": 10
+  },
+  "layout_changed_fields": [
+    "disposition_rationale",
+    "evidence",
+    "citations_checked",
+    "quality_notes"
+  ],
+  "compaction_changed_fields": [
+    "disposition_rationale",
+    "quality_notes"
+  ],
+  "oracle_audit_source_revision": "9f83b5ed566206585dcff5a22ac4db94feaf3cee"
+}

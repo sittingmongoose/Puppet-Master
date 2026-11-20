@@ -24,8 +24,9 @@ export const tests={
   await t.check('no fixture account rows',await f.locator('.model-scroll [data-action="set-model"]').count()===0);
  },
  'SW35 standalone renderer':async t=>{
-  const file=t.args.standalone||fileURLToPath(new URL('../../../chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html',import.meta.url));
-  const url=pathToFileURL(file).href+'?o55=off';
+  const arg=t.args.standalone||fileURLToPath(new URL('../../../chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html',import.meta.url));
+  // An http(s) standalone (a --host run serving the checkout) passes through as-is; only a local path becomes file://
+  const url=/^https?:/i.test(arg)?arg+'?o55=off':pathToFileURL(arg).href+'?o55=off';
   let f;if(t.app.sandboxed(false)) f=await t.openInSandbox(url);else{await t.page.goto(url);f=t.page.mainFrame();}
   await f.waitForFunction(()=>window.__PM56_BOOT_OK);
   for(const look of LOOKS){

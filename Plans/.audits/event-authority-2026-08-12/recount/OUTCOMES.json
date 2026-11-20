@@ -1,0 +1,1003 @@
+{
+ "schema_id": "pm.assurance.event_authority.recount_outcomes.v1",
+ "recount_receipt_sha256": "1d0ef48f472f2a6c521c6879e4c0b6ab0da98467dfe5b1a7546b3dbcef09a709",
+ "recount_list_sha256": "2515ae5af31178a7d7a93581e982977bfb803d4494d779c72bebad9e7700376c",
+ "rows": [
+  {
+   "event_type": "artifacts.capture_provenance.inspected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "artifacts.demonstration_video.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "artifacts.demonstration_video.failed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "assistant_plan.build_started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "assistant_plan.cancelled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "assistant_plan.completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "assistant_plan.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "assistant_plan.exported",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "assistant_plan.schedule_invalidated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "assistant_plan.version_created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "assistant_plan.wizard_handoff_created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "autonomy.ceiling_checked",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "backup.destination_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "backup.state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "brainstorm.plan_synthesized",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "brainstorm.proposal_added",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "brainstorm.vote_added",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.controller_lease.granted",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.controller_lease.lost",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.controller_lease.renewed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.controller_lease.takeover_completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.controller_lease.takeover_requested",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.document.generation_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.execution_strategy.fallback_selected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.execution_strategy.selected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.navigation.generation_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.page.activated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.page.closed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.page.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.cancelled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.checkpointed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.failed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.paused",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.resumed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.segment.checkpointed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.segment.completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.segment.failed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.segment.started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.segment.timed_out",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.timeout.effect_state_unknown",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.timeout.effects_reconciled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.timeout.stopped",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program_workspace.checkpointed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program_workspace.closed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program_workspace.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program_workspace.spilled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program_workspace.updated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.representation.captured",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.representation.delta_created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.representation.invalidated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.representation.queried",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.route.browser_escalated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.route.fetch_selected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.routine.disabled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.routine.generated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.routine.invalidated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.routine.promoted",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.routine.validated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.screenshot.model_attachment_selected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.screenshot.skipped",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.script.compile_failed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.script.compile_started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.script.compiled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.session.interrupted",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.session.reconstructed_on_host",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.workspace.closed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.advice_emitted",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.assignment_paused",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.assignment_resumed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.assignment_started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.assignment_stopped",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.finding_cleared",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.finding_held",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.finding_reconfirmed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.finding_suppressed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.output_quarantined",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.policy_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.review_failed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.review_started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.review_timed_out",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.workflow_binding_created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.artifact_added",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.cancelled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.configuration_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.failed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.message_added",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.participant_completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.participant_started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.paused",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.resumed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "continuity.actor_identified",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "continuity.provenance_recorded",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "continuity.redaction_applied",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "continuity.replay_checkpointed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "discovery.backpressure",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "discovery.candidates_returned",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "discovery.disabled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "discovery.fallback",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "discovery.invoked",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "discovery.selected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "discovery.unsupported",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "discovery.verified",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "docker.compose.scenario.deleted",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "docker.compose.scenario.edited",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "docker.compose.scenario.run",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "docker.compose.scenario.saved",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "execution_window.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "execution_window.invalidated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "execution_window.updated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "external_research.budget_denied",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "external_research.finding_classified",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "external_research.job_terminal",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "external_research.packet_delivered",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "external_research.topic_started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.api.compatibility_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.connection.capabilities_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.connection.reauthorized",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.connection.validated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.mirror.connected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.mirror.degraded",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.mirror.detached",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.mirror.status_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.mirror.sync_completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.mirror.sync_started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.pipeline.cancelled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.pipeline.completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.pipeline.retried",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.pipeline.started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.repository.authority_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.repository.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.repository.discovered",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.repository.eligibility_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.approved",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.changes_requested",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.closed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.marked_ready",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.merged",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.reopened",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.thread.reopened",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.thread.replied",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.thread.resolved",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.updated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.version_created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.webhook.delivery_failed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.webhook.delivery_recovered",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.webhook.received",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.webhook.redelivery_queued",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "forge.webhook.rejected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "goal.continuation_evaluated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "goal.paused",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "goal.resumed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "named_plan.archived",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "named_plan.child_refs_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "named_plan.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "named_plan.priority_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "named_plan.renamed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "named_plan.restored",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "notebook.checkpoint_committed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "notebook.checkpoint_failed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "notebook.entry_committed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "notebook.entry_superseded",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "notebook.transition_state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "planning.question_budget_exhausted",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "remote_access.private_endpoint_state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "remote_access.proxy_state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "remote_access.public_security_violation_detected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "remote_access.remote_link_state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "remote_access.route_migration_state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "remote_access.route_preference_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "remote_access.route_state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "remote_access.route_test_completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "restore.state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "review.artifact_finalized",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "review.finding_added",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "review.finding_dispositioned",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "run.graph_canonical_locked",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "runtime.automation_pause_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "runtime.quota_resume_attempted",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "runtime.quota_resume_consent_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "runtime.quota_wait_started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "scheduled_dispatch.cancelled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "scheduled_dispatch.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "scheduled_dispatch.dispatched",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "scheduled_dispatch.failed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "scheduled_dispatch.held",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "scheduled_dispatch.updated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.catalog_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.client_pairing_state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.client_revoked",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.client_trust_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.connection_state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.discovery_expired",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.discovery_observed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.endpoint_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.identity_mismatch_detected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "session_prompt.admitted",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "session_prompt.cancelled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "session_prompt.expired",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "session_prompt.rejected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.backend.detected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.backend.selected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.checkpoint.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.checkpoint.restored",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.remote.fetch_completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.remote.fetch_started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.remote.publish_completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.remote.publish_started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.remote.sync_completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.remote.sync_started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.repository.bound",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.repository.unbound",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.status.refreshed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.workspace.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.workspace.opened",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.workspace.removed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.workspace.switched",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.writer_lease.granted",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.writer_lease.lost",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.bookmarked",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.clip_saved",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.effective_quality_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.health_degraded",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.health_recovered",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.interrupted",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.paused",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.provenance_rejected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.provenance_verified",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.redaction_applied",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.resumed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.segment_corrupt",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.segment_finalized",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.segment_recovered",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.stopped",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.target_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "testing.runtime_enabled_for_adapter",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "todo.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "todo.dependency_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "todo.removed_from_current_list",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "todo.reordered",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "todo.status_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "todo.updated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "todo.work_bound",
+   "outcome": "registered"
+  }
+ ]
+}

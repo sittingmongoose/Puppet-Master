@@ -1,0 +1,202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/orchestrator-historical-read/1.0.0/schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_type",
+    "reader_id",
+    "reader_status",
+    "publication_state",
+    "supported_payload_schema",
+    "original_admission",
+    "original_source_ref",
+    "original_source_sha256",
+    "original_source_verified",
+    "original_producer_context",
+    "current_access_allowed",
+    "source_deleted",
+    "hold_allows_disclosure",
+    "original_identity_recipe",
+    "original_recipe_evidence"
+  ],
+  "properties": {
+    "event_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reader_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reader_status": {
+      "enum": [
+        "active",
+        "compatibility",
+        "withdrawn"
+      ]
+    },
+    "publication_state": {
+      "enum": [
+        "published",
+        "fenced"
+      ]
+    },
+    "supported_payload_schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "original_admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_type",
+        "family_revision",
+        "payload_schema_id",
+        "event_id",
+        "scope_partition",
+        "storage_instance_id",
+        "admitted_when_written"
+      ],
+      "properties": {
+        "event_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "payload_schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "admitted_when_written": {
+          "type": "boolean"
+        }
+      }
+    },
+    "original_source_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "original_source_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "minLength": 64,
+      "maxLength": 64
+    },
+    "original_source_verified": {
+      "type": "boolean"
+    },
+    "original_producer_context": {
+      "type": "object"
+    },
+    "current_access_allowed": {
+      "type": "boolean"
+    },
+    "source_deleted": {
+      "type": "boolean"
+    },
+    "hold_allows_disclosure": {
+      "type": "boolean"
+    },
+    "original_identity_recipe": {
+      "type": "string",
+      "enum": [
+        "ea-do-json-v1",
+        "ea-do-rfc8785-v2"
+      ]
+    },
+    "original_recipe_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "source_sha256",
+        "verified",
+        "value"
+      ],
+      "properties": {
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "value": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "identity_recipe",
+            "event_type",
+            "event_id",
+            "idempotency_key",
+            "payload_schema_id",
+            "scope_partition",
+            "storage_instance_id",
+            "original_source_sha256"
+          ],
+          "properties": {
+            "identity_recipe": {
+              "type": "string",
+              "enum": [
+                "ea-do-json-v1",
+                "ea-do-rfc8785-v2"
+              ]
+            },
+            "event_type": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "idempotency_key": {
+              "type": "string",
+              "minLength": 1
+            },
+            "payload_schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "scope_partition": {
+              "type": "string",
+              "minLength": 1
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "original_source_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            }
+          }
+        }
+      }
+    }
+  }
+}

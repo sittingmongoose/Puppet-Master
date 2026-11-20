@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L4152-L4851
+Source lines: L4151-L4957
 
-Source SHA256: `42e5127223f8a970b5191a47606325b7ca1a7b687779fa7d2999df4ac7d7f012`
+Source SHA256: `0d705e75a031704f2a13f3f467fc31ca949c02fb1e800b626fed3c137f7d7d36`
 
 ---
 
@@ -707,4 +707,111 @@ command_payload_definitions:
         launch_state: {type: string, required: true, default: none, provenance: gap, gap_note: "result_contract token of the runtime row; no value set stated, typed string pending that enum"}
         approval_receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "result_contract token of the runtime row; approval receipt effect; no typed result contract"}
         approval_cas_receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "result_contract token of the runtime row; approval_cas_receipt effect (PWIZ-014 atomic write); no typed result contract"}
+```
+
+### PWIZ-097 - Deferred Intake wizard.opened Observation
+
+```yaml
+plan_unit_id: PWIZ-097
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: |-
+  wizard.opened is a newly authored technical event binding under DL-045 for the already specified UCC-032 deferred Planning Wizard intake; it does not revive Chain Wizard or alias another event name. UCC-002/current section 2.1A normalizes cmd.project.chain_wizard_open_deferred as a compatibility command spelling before admission, and PWIZ-001 admits exactly ApprovedPRDPack, normalized_requirements_pack and assistant_chat_handoff_seed. PWIZ-002/SP-216 own the real PlanningRun, Named Plan, thread_group_id and actual planning_wizard/intake child identity. Observe the existing successful open result for the real Project and actual current PlanningRun intake child, after owner route/currentness and permission validation. Opening is not proof of seed acceptance; a route click, attempt or failed open emits nothing. predecessor_event_id is null. This event never creates or selects a child on replay. The exact producer is emitter.wizard_opened@1.0.0, the current Planning Wizard deferred-intake owner continuation, never a GUI callback or generic projector. An admitted current command result supplies actual immutable request_id, child, source seed version/hash, parent joins and project-context refs; focus, fabricated Project, raw transcript and old Chain Wizard lifecycle are refused. Source refs preserve warnings, amendments/lineage and all compatible work-intent axes from the current seed; neither this fact nor its reader edits those owners. CV-594 owns the independent closed payload and identity recipe; Plans/storage-plan.md#wizard-opened-original-custody owns its independent original source, SP-286 receipt, SP-278 history and withdrawal contract. Current writes remain disabled pending this exact family's later admission and retention disposition. This observation changes no existing product action or user-visible result boundary. Original custody and restore remain independently required; a successful static fixture never supplies native source authority.
+
+  PNC-019 s4r retention binding for `wizard.opened` (2026-11-14).
+
+  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.
+
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+  DL-508 assigns exact original `wizard_open_evidence` to `RP-CHAT-THREAD-LIFETIME@1.0.0`, preserving its original owning chat and deletion/hold rules. The separate wizard event remains indefinite under DL-401 G17; a source reference cannot prolong the chat record.
+
+
+  Current selected assignment (2026-11-19): wizard.opened@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2431. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/Planning_Wizard.md#PWIZ-097 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: wizard_open_evidence uses RP-CHAT-THREAD-LIFETIME@1.0.0 under Plans/Decision_Log.md#DL-508; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
+gui_related: false
+gui_classification_reason: Defines original event/source custody and read contracts, without a presentation change.
+depends_on:
+- PWIZ-001
+- PWIZ-002
+- UCC-032
+- SP-216
+unblocks: []
+acceptance_criteria:
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Prepared without family admission; retention remains PENDING_RETENTION_DECISION.»"
+  - "The complete positive and negative static oracles pass; native execution is NOT_RUN."
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw_fix1
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- wizard.opened
+negative_constraints:
+- No event admission, retention choice, new UI behavior, native execution claim or governance seal.
+```
+
+
+### PWIZ-098 - Deferred Intake wizard.deferred_payload.loaded Observation
+
+```yaml
+plan_unit_id: PWIZ-098
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: |-
+  wizard.deferred_payload.loaded is a newly authored technical event binding under DL-045 for the already specified UCC-032 deferred Planning Wizard intake; it does not revive Chain Wizard or alias another event name. UCC-002/current section 2.1A normalizes cmd.project.chain_wizard_open_deferred as a compatibility command spelling before admission, and PWIZ-001 admits exactly ApprovedPRDPack, normalized_requirements_pack and assistant_chat_handoff_seed. PWIZ-002/SP-216 own the real PlanningRun, Named Plan, thread_group_id and actual planning_wizard/intake child identity. Observe the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual current PlanningRun intake child. The original successful open event and its exact first receipt must already resolve; predecessor_event_id is that wizard.opened event for the same original request, child, Project, Named Plan, seed and context. Loading is distinct from opening; route-open, a stale seed, unsupported raw legacy payload or failed load emits nothing. Receipt-backed acceptance is not a compile/approval/execution grant. The exact producer is emitter.wizard_deferred_payload_loaded@1.0.0, the current Planning Wizard deferred-intake owner continuation, never a GUI callback or generic projector. An admitted current command result supplies actual immutable request_id, child, source seed version/hash, parent joins and project-context refs; focus, fabricated Project, raw transcript and old Chain Wizard lifecycle are refused. Source refs preserve warnings, amendments/lineage and all compatible work-intent axes from the current seed; neither this fact nor its reader edits those owners. CV-595 owns the independent closed payload and identity recipe; Plans/storage-plan.md#wizard-deferred-payload-loaded-original-custody owns its independent original source, SP-286 receipt, SP-278 history and withdrawal contract. Current writes remain disabled pending this exact family's later admission and retention disposition. This observation changes no existing product action or user-visible result boundary. Original custody and restore remain independently required; a successful static fixture never supplies native source authority.
+
+  PNC-019 s4r retention binding for `wizard.deferred_payload.loaded` (2026-11-14).
+
+  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.
+
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+  DL-508 assigns exact original `wizard_seed_load_evidence` to `RP-CHAT-THREAD-LIFETIME@1.0.0`, preserving its original owning chat and deletion/hold rules. The separate wizard event remains indefinite under DL-401 G17; a source reference cannot prolong the chat record.
+
+
+  Current selected assignment (2026-11-19): wizard.deferred_payload.loaded@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2430. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/Planning_Wizard.md#PWIZ-098 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: wizard_seed_load_evidence uses RP-CHAT-THREAD-LIFETIME@1.0.0 under Plans/Decision_Log.md#DL-508; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
+gui_related: false
+gui_classification_reason: Defines original event/source custody and read contracts, without a presentation change.
+depends_on:
+- PWIZ-001
+- PWIZ-002
+- UCC-032
+- SP-216
+unblocks: []
+acceptance_criteria:
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Prepared without family admission; retention remains PENDING_RETENTION_DECISION.»"
+  - "The complete positive and negative static oracles pass; native execution is NOT_RUN."
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw_fix1
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- wizard.deferred_payload.loaded
+negative_constraints:
+- No event admission, retention choice, new UI behavior, native execution claim or governance seal.
 ```

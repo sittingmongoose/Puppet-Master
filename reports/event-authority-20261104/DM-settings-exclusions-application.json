@@ -1,0 +1,361 @@
+{
+  "application_id": "EA-DM-DL408-SETTINGS-EXCLUSIONS",
+  "applied_at_utc": "2026-11-04T20:26:49.560778Z",
+  "applied_by": "DM-APPLY-FIX1",
+  "branch": "plans/ea-w2-small-owners-20261104",
+  "applied_on_revision": "90f7e163614575558644d291f283c19ae6f305a9",
+  "authority_refs": [
+    "Plans/Decision_Log.md#DL-039",
+    "Plans/Decision_Log.md#DL-408"
+  ],
+  "decision_source": {
+    "branch": "origin/plans/ea-cards1-answers-20261104",
+    "revision": "b6332f391a7870bad5f01a29a7e9d080050dac27",
+    "unit": "DL-408",
+    "option": "2d A",
+    "integration_required": true
+  },
+  "citations": [
+    {
+      "path": "Plans/Decision_Log.md",
+      "line_start": 6453,
+      "line_end": 6453,
+      "quote": "excluded with cited evidence, or on a decision card for Jared; none is registered in bulk.",
+      "file_sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd",
+      "source_revision": "90f7e163614575558644d291f283c19ae6f305a9",
+      "source_kind": "pinned_git_object"
+    },
+    {
+      "path": "Plans/Decision_Log.md",
+      "line_start": 5298,
+      "line_end": 5298,
+      "quote": "Settings change, including the DRY guard, the memory switch and theme changes, is recorded only as `settings.layer.changed`.",
+      "file_sha256": "ce34da29a4f2170606b56f11199d5aa629269d2aebb209f9efa68c636568665f",
+      "source_revision": "b6332f391a7870bad5f01a29a7e9d080050dac27",
+      "source_kind": "pinned_git_object"
+    },
+    {
+      "path": "Plans/Decision_Log.md",
+      "line_start": 5299,
+      "line_end": 5299,
+      "quote": "`settings.updated` and `settings.theme.updated` are retired as superseded; records already written under the older",
+      "file_sha256": "ce34da29a4f2170606b56f11199d5aa629269d2aebb209f9efa68c636568665f",
+      "source_revision": "b6332f391a7870bad5f01a29a7e9d080050dac27",
+      "source_kind": "pinned_git_object"
+    },
+    {
+      "path": "Plans/Settings_System.md",
+      "line_start": 2312,
+      "line_end": 2312,
+      "quote": "DL-408 retires `settings.updated` and `settings.theme.updated` as superseded by `settings.layer.changed`: no current writer emits either retired name.",
+      "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190",
+      "source_revision": "90f7e163614575558644d291f283c19ae6f305a9",
+      "source_kind": "current_owner_text"
+    },
+    {
+      "path": "Plans/Settings_System.md",
+      "line_start": 2312,
+      "line_end": 2312,
+      "quote": "Already written dedicated DRY-guard records stay readable without a payload rewrite.",
+      "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190",
+      "source_revision": "90f7e163614575558644d291f283c19ae6f305a9",
+      "source_kind": "current_owner_text"
+    },
+    {
+      "path": "Plans/Settings_System.md",
+      "line_start": 2312,
+      "line_end": 2312,
+      "quote": "Until that key-to-valid-setting-ID and writer mapping is proven, the toggle remains disabled with the existing `owner_contract_missing` reason",
+      "file_sha256": "9b0ba62b7d17d02991a2b8f82f4b99d358d2b1b9feff18f0fa440b59b765b190",
+      "source_revision": "90f7e163614575558644d291f283c19ae6f305a9",
+      "source_kind": "current_owner_text"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "line_start": 8554,
+      "line_end": 8554,
+      "quote": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+      "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d",
+      "source_revision": "90f7e163614575558644d291f283c19ae6f305a9",
+      "source_kind": "current_owner_text"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "line_start": 1118,
+      "line_end": 1118,
+      "quote": "| `cmd.chat.memory.toggle_auto_save_unverified` | `{ project_id, enabled }` | `settings.layer.changed` (DL-408) | Assistant chat Gist Review panel |",
+      "file_sha256": "6a15c126ca4350f6f42fe3495eda443686d2a96328932addd95bc0ed74959f1d",
+      "source_revision": "90f7e163614575558644d291f283c19ae6f305a9",
+      "source_kind": "current_owner_text"
+    },
+    {
+      "path": "Plans/UI_Wiring_Rules.md",
+      "line_start": 977,
+      "line_end": 977,
+      "quote": "This naming decision does not change current transaction `expected_event_types=[]` until existing owner-adoption prerequisites are satisfied",
+      "file_sha256": "bd123153b48c904d5727958c1415d7309963f70e9416e18e3aa24933793d6534",
+      "source_revision": "90f7e163614575558644d291f283c19ae6f305a9",
+      "source_kind": "current_owner_text"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "line_start": 28944,
+      "line_end": 28944,
+      "quote": "This is retirement, not a payload alias or byte rewrite; older dedicated settings.agent_rules.dry_method_default_guard.updated records remain readable.",
+      "file_sha256": "3b18644251c2bdaa592917f229ebdb47b2f7197b6fe96872601d4e3c2eba0e75",
+      "source_revision": "90f7e163614575558644d291f283c19ae6f305a9",
+      "source_kind": "current_owner_text"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-09-procedure-20260924.md",
+      "line_start": 40,
+      "line_end": 40,
+      "quote": "Keep the legacy bucket and cohort pins, since the frozen schema has no J248 exclusion category, and claim no denominator removal.",
+      "file_sha256": "46752ec5113bf5a9e7eca3233cdb492df92e3d08695ae511324edf128415de17",
+      "source_revision": "90f7e163614575558644d291f283c19ae6f305a9",
+      "source_kind": "pinned_git_object"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-1_20261104.md",
+      "line_start": 3,
+      "line_end": 3,
+      "quote": "Verbatim answer: \"approve all except 4c B\"",
+      "file_sha256": "00bb608e8126b1c39fab29c347737404cf4b6352d3d75b0b3b7b3d1820600386",
+      "source_revision": null,
+      "source_kind": "external_answer"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md",
+      "line_start": 191,
+      "line_end": 191,
+      "quote": "`settings.updated` and `settings.theme.updated` are retired as superseded; records already written under the older dedicated DRY-guard spelling stay readable.",
+      "file_sha256": "578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696",
+      "source_revision": null,
+      "source_kind": "external_answer"
+    }
+  ],
+  "rows": [
+    {
+      "event_type": "settings.theme.updated",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_settings.theme.updated.json",
+      "before_sha256": "f41f90f9a98f8163694369b27c3a3d26fbb1bef480e91b78effd0c36eb13d655",
+      "after_sha256": "43b0260963db21ad317dff13fb1fffa87e912f3500b53a1672281285c81eee0e",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "RECLASSIFY_TO_EXCLUDED",
+      "provisional_before": false,
+      "provisional_after": false,
+      "changed_fields": [
+        "citations_checked",
+        "disposition",
+        "disposition_rationale"
+      ],
+      "frozen_fields_preserved": {
+        "bucket": "confirmed_persisted_unregistered",
+        "july_classification": "confirmed_persisted_unregistered",
+        "working_bucket": "confirmed_persisted_unregistered",
+        "cohort_pins": [
+          "july248"
+        ],
+        "source_overlay": "UnregOverlay21",
+        "fresh_census_merged": false,
+        "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+      },
+      "historical_fields_preserved": [
+        "evidence",
+        "phase1_application",
+        "applied_at_utc",
+        "quality_notes",
+        "owner_veto"
+      ],
+      "ledger_line": 251,
+      "census_line": 255,
+      "census_changed_fields": [
+        "disposition",
+        "notes"
+      ],
+      "census_frozen_fields_preserved": {
+        "schema_id": "pm.assurance.event_authority.census_adjudication_row.v1",
+        "candidate_id": "settings.theme.updated",
+        "event_type": "settings.theme.updated",
+        "category": "persisted_unregistered_quarantine",
+        "cohort_pins": [
+          "july248"
+        ],
+        "multi_cohort_reclass": false,
+        "evidence_refs": [
+          "individual-disposition/LEDGER.jsonl",
+          "cohort-pins/IMMUTABLE_COHORT_PINS.json"
+        ],
+        "source_citations": [],
+        "individual_disposition_provisional": false,
+        "applied_at_utc": "2026-09-11T15:12:51.572607+00:00",
+        "phase1_application": {
+          "authority_ref": "Plans/Decision_Log.md#DL-039",
+          "decision_id": "J248-VETO-BATCH-252",
+          "owner_response": {
+            "chosen_option": "CONFIRM_ALL_QUARANTINE_NO_ADMIT",
+            "decided_by": "Jared",
+            "recorded_at_utc": "2026-09-11T00:49:25.665050+00:00",
+            "source": "jared_chat_2026-09-10"
+          },
+          "step": 9,
+          "phase": "interim_stance_application",
+          "outcome": "KEEP_QUARANTINED_COUNTED_NOT_REGISTERED",
+          "author_task": "/root/step03_holding_bucket",
+          "report": "reports/event-authority-20260911/step-09-interim-application.json"
+        }
+      }
+    },
+    {
+      "event_type": "settings.updated",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_settings.updated.json",
+      "before_sha256": "13596813f75e378cf52436fa1681268848ae35190d439af88b8995dce1498c90",
+      "after_sha256": "c97dee8f1e37c0bd5ef46559a1dc8256cfb6945c627d3f9497271a428aa0e385",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "RECLASSIFY_TO_EXCLUDED",
+      "provisional_before": false,
+      "provisional_after": false,
+      "changed_fields": [
+        "citations_checked",
+        "disposition",
+        "disposition_rationale"
+      ],
+      "frozen_fields_preserved": {
+        "bucket": "confirmed_persisted_unregistered",
+        "july_classification": "confirmed_persisted_unregistered",
+        "working_bucket": "confirmed_persisted_unregistered",
+        "cohort_pins": [
+          "july248"
+        ],
+        "source_overlay": "UnregOverlay21",
+        "fresh_census_merged": false,
+        "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+      },
+      "historical_fields_preserved": [
+        "evidence",
+        "phase1_application",
+        "applied_at_utc",
+        "quality_notes",
+        "owner_veto"
+      ],
+      "ledger_line": 252,
+      "census_line": 256,
+      "census_changed_fields": [
+        "disposition",
+        "notes"
+      ],
+      "census_frozen_fields_preserved": {
+        "schema_id": "pm.assurance.event_authority.census_adjudication_row.v1",
+        "candidate_id": "settings.updated",
+        "event_type": "settings.updated",
+        "category": "persisted_unregistered_quarantine",
+        "cohort_pins": [
+          "july248"
+        ],
+        "multi_cohort_reclass": false,
+        "evidence_refs": [
+          "individual-disposition/LEDGER.jsonl",
+          "cohort-pins/IMMUTABLE_COHORT_PINS.json"
+        ],
+        "source_citations": [],
+        "individual_disposition_provisional": false,
+        "applied_at_utc": "2026-09-11T15:12:51.572607+00:00",
+        "phase1_application": {
+          "authority_ref": "Plans/Decision_Log.md#DL-039",
+          "decision_id": "J248-VETO-BATCH-252",
+          "owner_response": {
+            "chosen_option": "CONFIRM_ALL_QUARANTINE_NO_ADMIT",
+            "decided_by": "Jared",
+            "recorded_at_utc": "2026-09-11T00:49:25.665050+00:00",
+            "source": "jared_chat_2026-09-10"
+          },
+          "step": 9,
+          "phase": "interim_stance_application",
+          "outcome": "KEEP_QUARANTINED_COUNTED_NOT_REGISTERED",
+          "author_task": "/root/step03_holding_bucket",
+          "report": "reports/event-authority-20260911/step-09-interim-application.json"
+        }
+      }
+    }
+  ],
+  "files": {
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_settings.theme.updated.json": {
+      "before_sha256": "f41f90f9a98f8163694369b27c3a3d26fbb1bef480e91b78effd0c36eb13d655",
+      "after_sha256": "43b0260963db21ad317dff13fb1fffa87e912f3500b53a1672281285c81eee0e"
+    },
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_settings.updated.json": {
+      "before_sha256": "13596813f75e378cf52436fa1681268848ae35190d439af88b8995dce1498c90",
+      "after_sha256": "c97dee8f1e37c0bd5ef46559a1dc8256cfb6945c627d3f9497271a428aa0e385"
+    },
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl": {
+      "before_sha256": "37ea8147878040e62b6ff76981c440a679e002d055ffb7bc5d256573454b5265",
+      "after_sha256": "96b964c6238e0a55516cd8dc1aad962c3095e0b26fa91abf9b6c5a23e268e543",
+      "lines_changed": 2,
+      "line_hashes": [
+        {
+          "line": 251,
+          "event_type": "settings.theme.updated",
+          "before_sha256": "2fd7d0cd261734be152f5f11f723a7c84cacaa6ba5dc21a73a508e7c39840b49",
+          "after_sha256": "e229b2ae7ed4f26b57a8e2b869827fd3c31375f9ad54f04caf2a9954fd293705"
+        },
+        {
+          "line": 252,
+          "event_type": "settings.updated",
+          "before_sha256": "09257bd2e7f79892af9aba5ff91fbf2e2b15ec9d343228c72b09aa9069d31752",
+          "after_sha256": "0bd036d16b1238a2973a11663589ea1ab038f0612156ee635d190190a5ea5f93"
+        }
+      ]
+    },
+    "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl": {
+      "before_sha256": "83a1698ac3dfe2795fec2f10aed3eaabfae6f4074966ed5e6806f756ddf15af0",
+      "after_sha256": "0d328df879ecae7ea8ca9f910bcc86f22eb49077ca02c5ea117642ba34941bf4",
+      "lines_changed": 2,
+      "line_hashes": [
+        {
+          "line": 255,
+          "event_type": "settings.theme.updated",
+          "before_sha256": "56e43100ea16f5a6b64525c5e87b9c881b728df44745fd8b387275be3e217f80",
+          "after_sha256": "6d7ee3e6b1d04b7856d3127f4a1a9e8c5a903bff0912f91631c7c355fc68bcaa"
+        },
+        {
+          "line": 256,
+          "event_type": "settings.updated",
+          "before_sha256": "ce3f69230c4aa6e539478c00e0125e4e293ddcc76487e7266dd4ace6ca3d0f0d",
+          "after_sha256": "5b374e62a021f595bb1a20d10a41a2671cfde5180e1afe1961947b9df42e9e3b"
+        }
+      ]
+    }
+  },
+  "protected_files_sha256_before_and_after": {
+    "Plans/.audits/event-authority-2026-08-12/cohort-pins/IMMUTABLE_COHORT_PINS.json": "2859343a914ddd943d8db4600aaa869e7f3e8c3723c38730c525e1d4f5e7eec3",
+    "Plans/.audits/event-authority-2026-08-12/cohort-pins/EVENT_TO_COHORTS.json": "67db3a7f1fa11ab145ce517caf85a17b78a5e7105cf891f0d70ff9e552f9cc0f",
+    "Plans/event_family_registry.json": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+  },
+  "boundaries": {
+    "registry_changed": false,
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "validator_changed": false,
+    "cohort_pins_changed": false,
+    "owner_choice_changed": false,
+    "denominator_removal_claimed": false,
+    "depth_pass_claimed": false,
+    "seal_claimed": false,
+    "historical_event_bytes_rewritten": false,
+    "dry_guard_enabled": false
+  },
+  "campaign_count": {
+    "excluded_delta": 2,
+    "remaining_delta": -2,
+    "registered_delta": 0,
+    "denominator_delta": 0,
+    "note": "Only this application delta is stated; frozen census category and denominator pins are unchanged, and other lanes are not counted here."
+  },
+  "citation_anchor_revision": {
+    "new_current_owner_citations": "90f7e163614575558644d291f283c19ae6f305a9",
+    "decision_citations": "b6332f391a7870bad5f01a29a7e9d080050dac27",
+    "note": "All new quotes checked exactly at the recorded lines. Inherited August evidence/citations and the prior phase1 record remain historical, unchanged, without current writer or depth claims."
+  },
+  "not_updated": "individual-disposition/COVERAGE.json and census category are frozen/generated historical artifacts and are not regenerated or reclassified. No denominator removal."
+}

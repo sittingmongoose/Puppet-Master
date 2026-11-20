@@ -64,6 +64,17 @@
     const n = N(); if (n && n.previewing && n.previewing() && n.linger) n.linger();
   }
 
+  /* a lingering preview (the window closed unfinished) is taken back before the look it shows is saved: Settings drops a
+     lingering preview at its next write, and the theme pair is written before NieR's rows, so the background and parts
+     chosen in the window went back to the stored ones (O55.shell.commitLook, FO-216 R57 F2). preview({}) keeps every value
+     and ends the lingering. */
+  function own() {
+    const n = N(), pv = n && n.previewing ? n.previewing() : null;
+    if (!pv || !pv.loose || !n.preview) return false;
+    n.preview({}, { within: null });
+    return true;
+  }
+
   /* into or out of NieR (an older caller's toggle). In the window the control shows the new state in the same frame and
      the moment plays inside the window (hero spec H1, flip below); after setup it is saved at once (Settings' own
      reboot moment, in NieR's voice). */
@@ -84,9 +95,16 @@
     const n = N(); if (!n) return false;
     const on = family === 'nier';
     if (!inWindow()) { const tome = window.PM7_SETTINGS_TOME; try { if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(family); tome.setChromeThemeMode(mode); } } catch (_) {} return true; }
+    /* FO-188: the app beneath holds still from the pick until the cover's first frame (PM_LOOK_HOLD, 11-motion-start.js),
+       so its work for the new look (the chat's redraw: 704 ms on the VM, inside the click's own task with the window's)
+       is done under the cover, which is there to hide the repaint, and no longer holds the cover back. The instant path
+       (Reduced Motion, a low-resource computer) has no cover, and is unchanged. */
+    const L = window.PM_LOOK_HOLD, release = L && L.begin && !instant() ? L.begin() : null;
     try { window.PM_THEME.setFamily(family, { persist: false }); window.PM_THEME.setMode(mode, { persist: false }); } catch (_) { /* the moment repaints it */ }
-    if (state().on === on) return true;
-    return flip(on, el);
+    if (state().on === on) { if (release) release(); return true; }
+    const flipped = flip(on, el, release);
+    if (!flipped && release) release();
+    return flipped;
   }
   /* after setup (the tour's look menu): Settings' page-wide moment, grown from the row pressed, with the sounds played
      here in O55's voice (they follow the tour's own sound control): the hum on the cover's first frame (its growth
@@ -133,7 +151,7 @@
   };
   /* the stage's moment, until the cover has lifted: the window re-renders the stage with its cast held in the wings */
   const busy = () => !!(flight && !flight.revealed);
-  function flip(next, el) {
+  function flip(next, el, release) {
     const n = N(); if (!n || !inWindow()) return false;
     const S = O55.S, A = O55.art, tr = troupe(), NW = O55.nierWindow, FX = O55.nierFx;
     heavy(4500);
@@ -143,8 +161,11 @@
     if (!next) O55.sound.play('nierOff');
     look(S);
     /* a second toggle: the first one's beats end where they stand */
-    if (flight) { snap(); flight.timers.forEach((t) => t.cancel()); }
-    const F = flight = { id: ++flights, on: next, timers: [], revealed: false, entered: false, spoke: false, snapped: false, humAt: next ? null : O55.motion.now() };
+    if (flight) { snap(); flight.timers.forEach((t) => t.cancel()); held(flight); }
+    const F = flight = { id: ++flights, on: next, timers: [], revealed: false, entered: false, spoke: false, snapped: false, humAt: next ? null : O55.motion.now(), release };
+    /* (a cover that never reports its first frame lets the app go at its reveal, or after 1.5 s, also once the window
+       has closed) */
+    if (release) setTimeout(() => held(F), 1500);
     const st = stageEl();
     if (next) {
       /* T0: the thumbnail's units peek with joy as the brackets lock on; the resting Pod waits off stage */
@@ -172,9 +193,12 @@
     F.humAt = O55.motion.now();
     if (flight === F && inWindow()) O55.sound.play('nierOn');
   }
+  /* the app beneath goes on (the pick's hold, above) */
+  function held(F) { const r = F && F.release; if (r) { F.release = null; r(); } }
   function reveal(F, phase) {
-    if (phase === 'start') { hum(F); return; }
-    if (phase === 'gone') { F.gone = true; return; }
+    if (phase === 'start') { hum(F); held(F); return; }
+    if (phase === 'gone') { F.gone = true; held(F); return; }
+    held(F);
     if (phase !== 'reveal' || F.revealed) return;
     hum(F); /* a moment that never reported its first frame */
     F.revealed = true; F.revealAt = O55.motion.now();
@@ -260,7 +284,9 @@
     const s = N().store('preview');
     /* the session keeps every change, and each change answers in the window's voice (the chips' own clicks are
        inside the window, where the page's NieR menu sounds stay quiet) */
-    const after = (ev) => { remember(S); if (ev) O55.sound.play(ev); };
+    /* (an edit made here is the person's choice, as a pick is: closed unfinished, or the page gone with the window open,
+       the window saves it, FO-216 R57 F3) */
+    const after = (ev) => { remember(S); if (S) S.lookPicked = true; if (ev) O55.sound.play(ev); };
     return Object.freeze({
       kind: s.kind, BACKGROUNDS: s.BACKGROUNDS,
       on: () => s.on(), parts: () => s.parts(), background: () => s.background(), onChange: (cb) => s.onChange(cb),
@@ -361,5 +387,5 @@
     if (back) try { back.focus({ preventScroll: true }); } catch (_) {}
   }
 
-  O55.nierLook = { IDS, state, toggle, pick, adjust, reapply, commit, closed, look, busy, snap, panelOpen: () => !!panel, closePanel, icon: () => U.nx('sliders', 14, 'control', 'o55-sg') || SLIDERS };
+  O55.nierLook = { IDS, state, toggle, pick, adjust, reapply, commit, own, closed, look, busy, snap, panelOpen: () => !!panel, closePanel, icon: () => U.nx('sliders', 14, 'control', 'o55-sg') || SLIDERS };
 })();

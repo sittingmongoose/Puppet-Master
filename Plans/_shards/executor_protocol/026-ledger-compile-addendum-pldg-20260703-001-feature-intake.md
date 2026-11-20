@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L6893-L7269
+Source lines: L6881-L7257
 
-Source SHA256: `0b05561f1eb83bf6b273023ae1ca8d3237cbaa391f7182dcb36ea7e21539ad2a`
+Source SHA256: `5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732`
 
 ---
 
@@ -332,7 +332,7 @@ canonical_text: >-
   transport_decision_receipt.
 gui_related: false
 gui_classification_reason: This unit defines runtime scheduling and transport behavior, not visual presentation.
-depends_on: [EP-026, EP-028, EP-030, EP-032, EP-085, EP-098, EP-110, EP-111, EP-112, EP-113, CV-313]
+depends_on: [EP-026, EP-028, EP-030, EP-032, EP-085, EP-110, EP-111, EP-112, EP-113, CV-313]
 unblocks: []
 acceptance_criteria:
   - "`scheduler.pass` uses the closed wake_reason set shared with Contracts_V0."

@@ -1,0 +1,102 @@
+{
+  "status": "NEW_NATIVE_INTERFACE_CONTRACT_NOT_IMPLEMENTED_NOT_SERIALIZABLE",
+  "type": "CertifiedProducerSourceParticipants<'original, 'held>",
+  "constructor": "Only the actual already-installed original owner dispatch creates the applicable borrowed participant set from native owner objects. Caller strings, IDs, schemas, paths and serialized source packets cannot construct it.",
+  "lifetime": "The complete original values, immutable prepared output buffers, original owner binding, schema/codec roles, actual current permission/Stop/source/writer/retention observations and held exclusion/CAS reads remain valid across the entire method. A lifetime/epoch break invalidates the method; no hidden reacquisition or resume.",
+  "members": [
+    {
+      "name": "assignment",
+      "type": "OriginalAssignmentOwner<'original, 'held>",
+      "full_inputs": "Actual whole original assignment request, decision, policy, authority and allocation records; exact target and current assignment applicability."
+    },
+    {
+      "name": "invocation",
+      "type": "OriginalCertifierInvocationOwner<'original, 'held>",
+      "full_inputs": "Actual original invocation request/result, original source inventory, actor assignment, Event target context, occurrence and genuine native operation origin."
+    },
+    {
+      "name": "actor",
+      "type": "OriginalActorReferenceOwner<'original, 'held>",
+      "full_inputs": "Actual original principal, actor and execution-role records and complete actor reference binding."
+    },
+    {
+      "name": "resolvers",
+      "type": "CompleteOriginalResolverOwnerSet<'original, 'held>",
+      "full_inputs": "Exactly the actual original graph-manifest owner set: Prompt Pipeline, Run Modes, Models, capability, Personas, Multi-Account, auth and provider dispatch where genuinely applicable. Every owner supplies its whole actual request/input/output and original custody; no optional omission by the caller."
+    },
+    {
+      "name": "references",
+      "type": "CompleteOriginalReferenceOwnerSet<'original, 'held>",
+      "full_inputs": "Exactly all actual original actor/provider/model/account/causal/parent/payload reference owner records applicable to the genuine inventory."
+    },
+    {
+      "name": "causality",
+      "type": "OriginalCausalContextOwner<'original, 'held>",
+      "full_inputs": "Actual originating context, complete original relationship/absence decision and complete original Event identity/value/custody owners when a cause or parent exists."
+    },
+    {
+      "name": "identity_admission",
+      "type": "OriginalCertifiedIdentityOwner<'original, 'held>",
+      "full_inputs": "Whole genuine original certified-v3 recipe, complete derivation input and original admission decision under actual installed owner authority. This interface does not imply that the presently unbound v3 recipe is installed."
+    },
+    {
+      "name": "goal",
+      "type": "OriginalCurrentGoalOwner<'held>",
+      "full_inputs": "Existing full CurrentGoalArgument and every original current Goal owner predicate in its separate realm; preparation only."
+    },
+    {
+      "name": "workflow",
+      "type": "OriginalNativeWorkflowOwner<'original, 'held>",
+      "full_inputs": "Full actual OriginalFinalDecisionSource, genuinely issued FinalDecisionResult and separately complete CertificationCandidateResult under their existing native owner; preparation only."
+    },
+    {
+      "name": "standard_storage",
+      "type": "OriginalStandardStorageOwner<'original, 'held>",
+      "full_inputs": "Whole already-durable Standard receipt and genuine original capture origin with complete current owner/codec/physical authority; preparation only."
+    },
+    {
+      "name": "permission_lifetime",
+      "type": "HeldSourcePermissionAndLifetimeOwners<'held>",
+      "full_inputs": "Every applicable real current permission/Stop/cancellation/writer/schema/profile/source/deletion/hold/recovery owner observation and actual coherent source read/CAS set. Retained mode instead uses only current disclosure/original retained-origin inventory authority."
+    }
+  ],
+  "member_operations": [
+    {
+      "name": "capture_complete_original_before_helpers",
+      "arguments": "Exact phase-specific whole schema arguments and actual original owner operation handles",
+      "result": "HeldOriginalInputs<'original, 'held> containing every independently read actual source/native observation and the actual fixed source-role schema/codec selection",
+      "effect": "Read/borrow only; never creates a missing original operation, capture, assignment, resolution, login, Event or durable source row."
+    },
+    {
+      "name": "derive_complete_reply_before_final_guard",
+      "arguments": "HeldOriginalInputs plus exact complete prospective candidate where the phase requires one",
+      "result": "PreparedCompleteReply with all whole typed/encoded values and every original owner comparison completed; no later parser/codec/serialization/copy required",
+      "effect": "Private memory only; includes whole native and Event candidates separately in preparation."
+    },
+    {
+      "name": "final_pure_held_predicate_and_disclose",
+      "arguments": "Same HeldOriginalInputs and complete PreparedCompleteReply under unbroken actual owner/read/CAS/permission lifetime",
+      "result": "Exact schema-declared whole reply or exact Unavailable outcome",
+      "effect": "One inseparable native boundary: recheck all phase predicates against full native/typed sources and complete output, then directly return without a returning helper, callback, logger, asynchronous gap or resource rebind."
+    }
+  ],
+  "retained_type": "OriginalRetainedSourceParticipants<'held> is a distinct native type: actual original surviving metadata/origin and current disclosure permission/inventory only. It has no method to construct current action participants or source packets from metadata.",
+  "forbidden_conversions": [
+    "JSON source packet to owner capability",
+    "method/profile/schema string to dispatch authority",
+    "retained metadata to current source",
+    "Start invocation to certification invocation",
+    "provider permit to new dispatch",
+    "old Workflow birth to new source enrollment"
+  ],
+  "native_execution": "NOT_RUN",
+  "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+  "combined_guard_rule": "Every exact actual method occurrence requires its complete original phase tuple, including prior certified guard arguments, AND complete-method-occurrences.json mandatory combined guard and actual-phase rule. This is fixed by genuine prebirth native registration; no caller-selected or optional supplement.",
+  "combined_current_pending_rule": "pending-source-boundaries.json",
+  "mandatory_stop_execution_revocation": {
+    "source": "stop-native-participants.json",
+    "guard": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+    "execution_authority": "Actual original Goal/slot/native adapter check, never metadata. No normal continuation after Stop; exact original recovery/cleanup authority only.",
+    "original_cancellation_unchanged": true
+  }
+}

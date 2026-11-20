@@ -37,7 +37,7 @@ html[data-theme="retro-light"] #panel-settings { --k3-amber: #9c5000; --k3-red: 
 
 #panel-settings .pm51-mgr .pm51-roster .resource-row.active .resource-row-meta { color: color-mix(in srgb, var(--k3-text-1) 50%, var(--k3-text-2)); }
 /* the chosen chapter's line in the rail, likewise (it read 3.7 to 4.0 on the chosen row's tint) */
-#panel-settings .domain-link.active .domain-copy small { color: color-mix(in srgb, var(--k3-text-1) 50%, var(--k3-text-2)); }
+#panel-settings .domain-link.active .domain-copy :where(.domain-sub):is(small) { color: color-mix(in srgb, var(--k3-text-1) 50%, var(--k3-text-2)); }
 
 /* ---- who reads which ink ---------------------------------------------------------------------------------------- */
 /* The rail's chapter headings ("Chapters", "Essential setup") were the base page's fixed #77748c in every look (2.3 to

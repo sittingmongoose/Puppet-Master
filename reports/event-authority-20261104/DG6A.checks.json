@@ -1,0 +1,99 @@
+{
+  "schema_id": "pm.dg6a.fix_checks.v1",
+  "round": 7,
+  "status": "pass_with_preexisting_index_failures",
+  "reviewed_head": "adda7279f8067637b109125f9524b0952f88f96b",
+  "technical_head": "da37d7ac9d947f8a26b6b66f053dffb4eaa6f150",
+  "focused_navigation_head": "f34fec9eb0c00754638a05e65b456e576b9d818a",
+  "prepared_families": 7,
+  "held_unchanged": 9,
+  "family_checker_cases": 3353,
+  "guard_summary": {
+    "guards": 509,
+    "current_negatives": 1829,
+    "historical_negatives": 522,
+    "duplicate_proofs": 65,
+    "duplicate_matrices": 26,
+    "domain_guards": 1620,
+    "domain_observations": 73026,
+    "schema_field_nodes": 1160,
+    "composed_endpoints": 4909
+  },
+  "supplementary_parser_format_guards": 35,
+  "cli_observations": 1016,
+  "actual_cli_invocations": 719,
+  "historical_observations": 297,
+  "grade_citations": 591,
+  "index_validation": {
+    "exit": 1,
+    "status": "fail",
+    "unchanged_failure_rows": 22
+  },
+  "resource_floor_gib": 6,
+  "new_plan_unit_ids": 0,
+  "native": "NOT_RUN",
+  "admission": "ABSENT",
+  "retention": "PENDING_RETENTION_DECISION",
+  "evidence": {
+    "guard-summary.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/guard-summary.json",
+      "sha256": "927d6839683c16060e6a6ce1ba5373102d0168d3ab53a2a2b71e36f15e206790"
+    },
+    "final-family-commands.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/final-family-commands.json",
+      "sha256": "f4aea4f968bac90e270288606a6affaebb1c667eac147195e5ce81ab26b2439f"
+    },
+    "final-cli-commands.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/final-cli-commands.json",
+      "sha256": "ee5ce585097dd2ad5a73cc7d58a2a4021c3ba36cd7e5f9fcca58b7089087a88d"
+    },
+    "cli-summary.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/cli-summary.json",
+      "sha256": "6b1a36c93fbedcbdb50a2c805caadf57e8ae241f71eaa86621ef8b7347f8f661"
+    },
+    "parser-format-guards.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/parser-format-guards.json",
+      "sha256": "00cc18ec8c276aa0ba5b108e015400aa7ecfd47b23e59f7771b7eb378f954cb2"
+    },
+    "parser-format-proof.py": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/parser-format-proof.py",
+      "sha256": "2f6ac4402ecf280e51dfb00c78bff373502e4f7d73aa1d95c5c4e13a4cbd0734"
+    },
+    "final-consumed-sources.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/final-consumed-sources.json",
+      "sha256": "fda2a2680b92c46250d67162459bf2f04e97addb49ffbf981156b6094f17860e"
+    },
+    "full-cli-consumed-sources.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/full-cli-consumed-sources.json",
+      "sha256": "171fd917ebb732e1eaefcb71314fb712e18e8017cf24d5106cc6ada7be000c3b"
+    },
+    "input-restoration.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/input-restoration.json",
+      "sha256": "1ac26011993333bd064f5861d7506e23251f592b990cd8490235dfe79629fbf7"
+    },
+    "boundary-audit.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/boundary-audit.json",
+      "sha256": "ecfdb42715c233806de2b9909e06205226f23cce0f4140503b745a705cd80caf"
+    },
+    "repository-checks.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/repository-checks.json",
+      "sha256": "9608c653bbaa7b251a975c381753a372d6b5075cf7913e3048c397badfe4cc57"
+    },
+    "index-validate.log": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/index-validate.log",
+      "sha256": "f340efef803579c9b6904a6f02109875a331d12f9559a0bc51999aa8fa25f063"
+    },
+    "index-baseline-comparison.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/index-baseline-comparison.json",
+      "sha256": "aca7e40ef6da380a89ad1bcd649af24e17a449371b0af6e8e03b510cc217c9fb"
+    },
+    "currentness-copy.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/currentness-copy.json",
+      "sha256": "ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c"
+    },
+    "grade-audit.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix7/grade-audit.json",
+      "sha256": "a47c82da58fd275f143ac493b38d946042cfff0fe7f10e5c8281ab652b243c94"
+    }
+  }
+}

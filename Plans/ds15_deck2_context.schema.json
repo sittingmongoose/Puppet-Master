@@ -1,0 +1,1411 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.ds15.deck2.context.v1",
+  "$defs": {
+    "browser.context_shared": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "owner_command_authorized",
+        "outcome_committed",
+        "transition"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id",
+            "user_id",
+            "computer_id",
+            "profile_id"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "project",
+                "app"
+              ]
+            },
+            "project_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "user_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "profile_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "project"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "app"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "envelope_project_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "envelope_run_id": {
+          "type": "null"
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "outcome_committed": {
+          "type": "boolean"
+        },
+        "transition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "browser_session_id",
+            "recipient_scope",
+            "before_grants",
+            "after_grants",
+            "capture_created"
+          ],
+          "properties": {
+            "browser_session_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+            },
+            "recipient_scope": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "project_id",
+                "user_id",
+                "computer_id",
+                "profile_id"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "project",
+                    "app"
+                  ]
+                },
+                "project_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "minLength": 1
+                },
+                "user_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "computer_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "profile_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "project"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "project_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "app"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "project_id": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "before_grants": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "thread_id",
+                  "grant_ref"
+                ],
+                "properties": {
+                  "thread_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+                  },
+                  "grant_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+                  }
+                }
+              }
+            },
+            "after_grants": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "thread_id",
+                  "grant_ref"
+                ],
+                "properties": {
+                  "thread_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+                  },
+                  "grant_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+                  }
+                }
+              }
+            },
+            "capture_created": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "browser.context_share_revoked": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "owner_command_authorized",
+        "outcome_committed",
+        "transition"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id",
+            "user_id",
+            "computer_id",
+            "profile_id"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "project",
+                "app"
+              ]
+            },
+            "project_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "user_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "profile_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "project"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "app"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "envelope_project_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "envelope_run_id": {
+          "type": "null"
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "outcome_committed": {
+          "type": "boolean"
+        },
+        "transition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "browser_session_id",
+            "recipient_scope",
+            "before_grants",
+            "after_grants",
+            "capture_created"
+          ],
+          "properties": {
+            "browser_session_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+            },
+            "recipient_scope": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "project_id",
+                "user_id",
+                "computer_id",
+                "profile_id"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "project",
+                    "app"
+                  ]
+                },
+                "project_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "minLength": 1
+                },
+                "user_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "computer_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "profile_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "project"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "project_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "app"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "project_id": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "before_grants": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "thread_id",
+                  "grant_ref"
+                ],
+                "properties": {
+                  "thread_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+                  },
+                  "grant_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+                  }
+                }
+              }
+            },
+            "after_grants": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "thread_id",
+                  "grant_ref"
+                ],
+                "properties": {
+                  "thread_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+                  },
+                  "grant_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+                  }
+                }
+              }
+            },
+            "capture_created": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "catalog.update.started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "owner_command_authorized",
+        "outcome_committed",
+        "transition"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id",
+            "user_id",
+            "computer_id",
+            "profile_id"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "project",
+                "app"
+              ]
+            },
+            "project_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "user_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "profile_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "project"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "app"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "envelope_project_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "envelope_run_id": {
+          "type": "null"
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "outcome_committed": {
+          "type": "boolean"
+        },
+        "transition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "uses",
+            "stage",
+            "previous_version",
+            "installed_available",
+            "queued",
+            "owner_rules_satisfied",
+            "override_preserved",
+            "external_data_preserved",
+            "request_versions_preserved",
+            "renewed_approval_satisfied",
+            "credentials_current",
+            "recovery_ready",
+            "target_version",
+            "effective_version",
+            "safe_boundary_confirmed"
+          ],
+          "properties": {
+            "uses": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+              },
+              "uniqueItems": true
+            },
+            "stage": {
+              "enum": [
+                "queued",
+                "applying",
+                "effective",
+                "refused",
+                "removing",
+                "removed"
+              ]
+            },
+            "previous_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+            },
+            "installed_available": {
+              "type": "boolean"
+            },
+            "queued": {
+              "type": "boolean"
+            },
+            "owner_rules_satisfied": {
+              "type": "boolean"
+            },
+            "override_preserved": {
+              "type": "boolean"
+            },
+            "external_data_preserved": {
+              "type": "boolean"
+            },
+            "request_versions_preserved": {
+              "type": "boolean"
+            },
+            "renewed_approval_satisfied": {
+              "type": "boolean"
+            },
+            "credentials_current": {
+              "type": "boolean"
+            },
+            "recovery_ready": {
+              "type": "boolean"
+            },
+            "target_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+            },
+            "effective_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+            },
+            "safe_boundary_confirmed": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "catalog.update.completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "owner_command_authorized",
+        "outcome_committed",
+        "transition"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id",
+            "user_id",
+            "computer_id",
+            "profile_id"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "project",
+                "app"
+              ]
+            },
+            "project_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "user_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "profile_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "project"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "app"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "envelope_project_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "envelope_run_id": {
+          "type": "null"
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "outcome_committed": {
+          "type": "boolean"
+        },
+        "transition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "uses",
+            "stage",
+            "previous_version",
+            "installed_available",
+            "queued",
+            "owner_rules_satisfied",
+            "override_preserved",
+            "external_data_preserved",
+            "request_versions_preserved",
+            "renewed_approval_satisfied",
+            "credentials_current",
+            "recovery_ready",
+            "target_version",
+            "effective_version",
+            "safe_boundary_confirmed"
+          ],
+          "properties": {
+            "uses": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+              },
+              "uniqueItems": true
+            },
+            "stage": {
+              "enum": [
+                "queued",
+                "applying",
+                "effective",
+                "refused",
+                "removing",
+                "removed"
+              ]
+            },
+            "previous_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+            },
+            "installed_available": {
+              "type": "boolean"
+            },
+            "queued": {
+              "type": "boolean"
+            },
+            "owner_rules_satisfied": {
+              "type": "boolean"
+            },
+            "override_preserved": {
+              "type": "boolean"
+            },
+            "external_data_preserved": {
+              "type": "boolean"
+            },
+            "request_versions_preserved": {
+              "type": "boolean"
+            },
+            "renewed_approval_satisfied": {
+              "type": "boolean"
+            },
+            "credentials_current": {
+              "type": "boolean"
+            },
+            "recovery_ready": {
+              "type": "boolean"
+            },
+            "target_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+            },
+            "effective_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+            },
+            "safe_boundary_confirmed": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "catalog.remove.started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "owner_command_authorized",
+        "outcome_committed",
+        "transition"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id",
+            "user_id",
+            "computer_id",
+            "profile_id"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "project",
+                "app"
+              ]
+            },
+            "project_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "user_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "profile_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "project"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "app"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "envelope_project_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "envelope_run_id": {
+          "type": "null"
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "outcome_committed": {
+          "type": "boolean"
+        },
+        "transition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "uses",
+            "stage",
+            "previous_version",
+            "installed_available",
+            "queued",
+            "owner_rules_satisfied",
+            "override_preserved",
+            "external_data_preserved",
+            "request_versions_preserved",
+            "renewed_approval_satisfied",
+            "credentials_current",
+            "recovery_ready"
+          ],
+          "properties": {
+            "uses": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+              },
+              "uniqueItems": true
+            },
+            "stage": {
+              "enum": [
+                "queued",
+                "applying",
+                "effective",
+                "refused",
+                "removing",
+                "removed"
+              ]
+            },
+            "previous_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+            },
+            "installed_available": {
+              "type": "boolean"
+            },
+            "queued": {
+              "type": "boolean"
+            },
+            "owner_rules_satisfied": {
+              "type": "boolean"
+            },
+            "override_preserved": {
+              "type": "boolean"
+            },
+            "external_data_preserved": {
+              "type": "boolean"
+            },
+            "request_versions_preserved": {
+              "type": "boolean"
+            },
+            "renewed_approval_satisfied": {
+              "type": "boolean"
+            },
+            "credentials_current": {
+              "type": "boolean"
+            },
+            "recovery_ready": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "catalog.remove.completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "owner_command_authorized",
+        "outcome_committed",
+        "transition"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id",
+            "user_id",
+            "computer_id",
+            "profile_id"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "project",
+                "app"
+              ]
+            },
+            "project_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "user_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "profile_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "project"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "app"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "envelope_project_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "envelope_run_id": {
+          "type": "null"
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "outcome_committed": {
+          "type": "boolean"
+        },
+        "transition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "uses",
+            "stage",
+            "previous_version",
+            "installed_available",
+            "queued",
+            "owner_rules_satisfied",
+            "override_preserved",
+            "external_data_preserved",
+            "request_versions_preserved",
+            "renewed_approval_satisfied",
+            "credentials_current",
+            "recovery_ready"
+          ],
+          "properties": {
+            "uses": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+              },
+              "uniqueItems": true
+            },
+            "stage": {
+              "enum": [
+                "queued",
+                "applying",
+                "effective",
+                "refused",
+                "removing",
+                "removed"
+              ]
+            },
+            "previous_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+            },
+            "installed_available": {
+              "type": "boolean"
+            },
+            "queued": {
+              "type": "boolean"
+            },
+            "owner_rules_satisfied": {
+              "type": "boolean"
+            },
+            "override_preserved": {
+              "type": "boolean"
+            },
+            "external_data_preserved": {
+              "type": "boolean"
+            },
+            "request_versions_preserved": {
+              "type": "boolean"
+            },
+            "renewed_approval_satisfied": {
+              "type": "boolean"
+            },
+            "credentials_current": {
+              "type": "boolean"
+            },
+            "recovery_ready": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "tool.custom_headless.skipped": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "envelope_project_id",
+        "envelope_run_id",
+        "session_security_class",
+        "owner_command_authorized",
+        "outcome_committed",
+        "transition"
+      ],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id"
+          ],
+          "properties": {
+            "kind": {
+              "const": "project"
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+            }
+          }
+        },
+        "envelope_project_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "envelope_run_id": {
+          "type": "null"
+        },
+        "session_security_class": {
+          "type": "string"
+        },
+        "owner_command_authorized": {
+          "type": "boolean"
+        },
+        "outcome_committed": {
+          "type": "boolean"
+        },
+        "transition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "config_present",
+            "notice_before",
+            "notice_after",
+            "first_absent_check_id",
+            "eligibility_project_id",
+            "project_origin",
+            "earlier_configured_run",
+            "project_id_saved",
+            "source_project_id"
+          ],
+          "properties": {
+            "config_present": {
+              "type": "boolean"
+            },
+            "notice_before": {
+              "enum": [
+                "unused",
+                "issued",
+                "unknown"
+              ]
+            },
+            "notice_after": {
+              "enum": [
+                "unused",
+                "issued",
+                "unknown"
+              ]
+            },
+            "first_absent_check_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+            },
+            "eligibility_project_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+            },
+            "project_origin": {
+              "enum": [
+                "existing",
+                "new",
+                "clone_new_id",
+                "import_new_id",
+                "restore_same_id"
+              ]
+            },
+            "earlier_configured_run": {
+              "type": "boolean"
+            },
+            "project_id_saved": {
+              "type": "boolean"
+            },
+            "source_project_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

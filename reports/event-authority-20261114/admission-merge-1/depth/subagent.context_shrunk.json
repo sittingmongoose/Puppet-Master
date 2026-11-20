@@ -1,0 +1,555 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-1",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-15.32",
+  "sha256": "d2d57065f2c511a1454357b95068216e098c7d527b7cde1feed1d5dcedbfe524",
+  "family_count": 78,
+  "row_pointer": "#/families/77"
+ },
+ "base_commit": "03a09c66360991e5fb7b5620a84bc85b681e3635",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "subagent.context_shrunk",
+   "family_id": "event-family-subagent-context-shrunk",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-15.32 as #/families/77 (canonical row SHA-256 2c2730e2e593772d0b80bff0335d56945d40af0f67e686e1aa63d3af8c9527f5); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/77",
+       "line_start": 5122,
+       "line_end": 5207,
+       "quote": "\"event_type\": \"subagent.context_shrunk\"",
+       "quote_line": 5125,
+       "file_sha256": "d2d57065f2c511a1454357b95068216e098c7d527b7cde1feed1d5dcedbfe524",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PP-152/CV-624/SP-604 independently govern this exact 1.0.0 candidate.",
+     "evidence": [
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6168,
+       "line_end": 6168,
+       "quote": "subagent.context_shrunk 1.0.0 — newly authored owner contract under DL-045.",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DM-self-grade.json",
+      "sha256": "db1afde1d26205e9ccbb8361b0d631615653f23f4fabae9748d08607a66f9312",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PP-152 adopts original owner operation/result, SP-286/CV-339 full-value and current SP-336/SP-347 group-before-receipt ordering; admission remains unavailable.",
+     "evidence": [
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6180,
+       "line_end": 6180,
+       "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DM-self-grade.json",
+      "sha256": "db1afde1d26205e9ccbb8361b0d631615653f23f4fabae9748d08607a66f9312",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact closed logical body at 1.0.0; patterned fields now have full-match and CR/LF guards. SP-337 external bodies use the same schema after authorized resolution; no envelope or payload-shape widening.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/subagent_context_shrunk.schema.json",
+       "unit": "CV-624",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"additionalProperties\": false,",
+       "file_sha256": "30a66344f57beff1772b526c449a23ddc276eb493842497eaa11f7f2a110db22",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6182,
+       "line_end": 6182,
+       "quote": "Exact envelope joins for subagent.context_shrunk: actor_ref is the non-empty non-secret actor reference retained by the original accepted child-context shrink operation for payload.agent_id and the ex",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DM-self-grade.json",
+      "sha256": "db1afde1d26205e9ccbb8361b0d631615653f23f4fabae9748d08607a66f9312",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-366 application key uses the original actual Server and exact UTF-8 owner operation bytes, independently per family; Project/event-id identities and all original joins remain unchanged.",
+     "evidence": [
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6182,
+       "line_end": 6182,
+       "quote": "Exact envelope joins for subagent.context_shrunk: actor_ref is the non-empty non-secret actor reference retained by the original accepted child-context shrink operation for payload.agent_id and the ex",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      },
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6181,
+       "line_end": 6181,
+       "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"subagent.context_shrunk\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and a",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      },
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6181,
+       "line_end": 6181,
+       "quote": "application idempotency_key=application@1:{hex(server_id)}:{hex(owner_operation_id)} exactly under CV-366.",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DM-self-grade.json",
+      "sha256": "db1afde1d26205e9ccbb8361b0d631615653f23f4fabae9748d08607a66f9312",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Frozen deterministic identity and complete producer semantics select immutable original result/receipt; changed semantics refuse, no owner action on replay.",
+     "evidence": [
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6181,
+       "line_end": 6181,
+       "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"subagent.context_shrunk\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and a",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      },
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6190,
+       "line_end": 6190,
+       "quote": "subagent.context_shrunk append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DM-self-grade.json",
+      "sha256": "db1afde1d26205e9ccbb8361b0d631615653f23f4fabae9748d08607a66f9312",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Runtime child-context evidence retains existing RP-RUNTIME-365D and source-coupled/three-generation generic index policy.",
+     "evidence": [
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6186,
+       "line_end": 6186,
+       "quote": "Retention policy: RP-RUNTIME-365D. Runtime context events are Runtime/run/child attempt evidence under Storage Case L-3, 365 days, subject to existing holds and source anchors. For a PENDING marker no",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DM-self-grade.json",
+      "sha256": "db1afde1d26205e9ccbb8361b0d631615653f23f4fabae9748d08607a66f9312",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PP-152 independently selects existing secret_refs_only with rationale, family source custody, coherent original backup/restore and access/deletion/hold gates.",
+     "evidence": [
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6184,
+       "line_end": 6184,
+       "quote": "Profile rationale for subagent.context_shrunk: source and effective-context bodies remain behind authorized refs; redaction_profile=secret_refs_only is an existing EventRecord value and does not grant",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      },
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6185,
+       "line_end": 6185,
+       "quote": "Custody remains with effective-context runtime shrinking adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, ",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DM-self-grade.json",
+      "sha256": "db1afde1d26205e9ccbb8361b0d631615653f23f4fabae9748d08607a66f9312",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact original owner completion/observation and this family producer predicates precede append; unrelated copied sibling clauses removed.",
+     "evidence": [
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6178,
+       "line_end": 6178,
+       "quote": "Producer: effective-context runtime shrinking adapter. When the existing effective-context shrinker commits a shorter replacement, preserve source refs and rehydration handles. Automatic default scope",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DM-self-grade.json",
+      "sha256": "db1afde1d26205e9ccbb8361b0d631615653f23f4fabae9748d08607a66f9312",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact operating reader adopts SP-278 with no private cursor. The static adapter validates original Storage/source/key/generation identity, closed nine-field token, exact selected live-token projection and publication frontier before atomic rebuild; 37 checkpoint negatives preserve old publication. Native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6183,
+       "line_end": 6183,
+       "quote": "Operating consumer reader.context.shrunk@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact event_type/r",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      },
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6191,
+       "line_end": 6191,
+       "quote": "Checkpoint identity for subagent.context_shrunk: before atomic rebuild publication, validate the nine-field durable token",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "checkpoint_matches_original",
+       "line_start": 811,
+       "line_end": 811,
+       "quote": "def checkpoint_matches_original(state):",
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DM-self-grade.json",
+      "sha256": "db1afde1d26205e9ccbb8361b0d631615653f23f4fabae9748d08607a66f9312",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact producer/reader withdrawal, frozen original acceptance epoch/session/restore joins and governed fresh re-enable/rebuild refuse stale intent relabeling; retained original replay stays immutable.",
+     "evidence": [
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6187,
+       "line_end": 6187,
+       "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DM-self-grade.json",
+      "sha256": "db1afde1d26205e9ccbb8361b0d631615653f23f4fabae9748d08607a66f9312",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc and persisted_at_utc, and event_record for the CV-339 AppendReceipt acknowledged_at_utc (Jared's E5-2 = A, 2026-11-13, adopted by ff3e81e0c9), selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
+     "evidence": [
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6188,
+       "line_end": 6188,
+       "quote": "Exact-family oracle matrix for subagent.context_shrunk: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and ",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "run_exact_family",
+       "line_start": 1040,
+       "line_end": 1040,
+       "quote": "def run_exact_family(row):",
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6190,
+       "line_end": 6190,
+       "quote": "subagent.context_shrunk append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      },
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6182,
+       "line_end": 6182,
+       "quote": "At most 16 KiB stays inline with payload_ref=null. Above 16 KiB, SP-337 owns the pack bytes/index:",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      },
+      {
+       "path": "Plans/Prompt_Pipeline.md",
+       "unit": "PP-152",
+       "line_start": 6191,
+       "line_end": 6191,
+       "quote": "Checkpoint identity for subagent.context_shrunk: before atomic rebuild publication, validate the nine-field durable token",
+       "file_sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174",
+       "quote_check": "exact",
+       "quote_scope": "unit PP-152, Plans/Prompt_Pipeline.md:6168-6219"
+      },
+      {
+       "path": "scripts/pm-small-owner-guard-audit.py",
+       "unit": "normal_checks",
+       "line_start": 794,
+       "line_end": 794,
+       "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
+       "file_sha256": "e84f7cfdce6d6aeb72d8a7b4c3fa98c68af520b3727ad865d545481fcb61a9ef",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "current_retry",
+       "line_start": 764,
+       "line_end": 764,
+       "quote": "'family': _fact(lambda: incoming.get('event_type') == row['event_type']),",
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "current_retry",
+       "line_start": 765,
+       "line_end": 765,
+       "quote": "'payload_schema': _fact(lambda: incoming.get('payload_schema_id') == expected_schema),",
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "integer_type",
+       "line_start": 178,
+       "line_end": 178,
+       "quote": "def integer_type(checker, instance):",
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "canonical_json_numbers",
+       "line_start": 235,
+       "line_end": 235,
+       "quote": "def canonical_json_numbers(value, *, retained=False):",
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "retained_producer_digest",
+       "line_start": 488,
+       "line_end": 488,
+       "quote": "def retained_producer_digest(event):",
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-small-owner-guard-audit.py",
+       "unit": "numeric_catalogue",
+       "line_start": 638,
+       "line_end": 638,
+       "quote": "def numeric_catalogue(m, fixtures, add, change):",
+       "file_sha256": "e84f7cfdce6d6aeb72d8a7b4c3fa98c68af520b3727ad865d545481fcb61a9ef",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "clock_ok",
+       "quote": "return date_time(value, profile=profile) == value",
+       "line_start": 76,
+       "line_end": 76,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "storage_clocks_ok",
+       "quote": "def storage_clocks_ok(event, profile):",
+       "line_start": 91,
+       "line_end": 91,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind in ('source', 'ack'):",
+       "line_start": 64,
+       "line_end": 64,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind == 'storage':",
+       "line_start": 66,
+       "line_end": 66,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "exact_value",
+       "quote": "def exact_value(value, expected):",
+       "line_start": 200,
+       "line_end": 200,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-small-owner-guard-audit.py",
+       "unit": "type_timestamp_catalogue",
+       "quote": "def type_timestamp_catalogue(m, fixtures, add, change, no_if, mutants):",
+       "line_start": 474,
+       "line_end": 474,
+       "file_sha256": "e84f7cfdce6d6aeb72d8a7b4c3fa98c68af520b3727ad865d545481fcb61a9ef",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "current_retry",
+       "line_start": 759,
+       "line_end": 759,
+       "quote": "'closure_keys': _fact(lambda: not (incoming.keys() - envelope['properties'].keys())),",
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "main",
+       "line_start": 1279,
+       "line_end": 1279,
+       "quote": "for case in row['retry_extra_field_cases']:",
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DM-self-grade.json",
+      "sha256": "db1afde1d26205e9ccbb8361b0d631615653f23f4fabae9748d08607a66f9312",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}

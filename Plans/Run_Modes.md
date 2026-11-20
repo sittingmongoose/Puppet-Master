@@ -1664,10 +1664,10 @@ gui_classification_reason: Run-mode outcome semantics feed GUI projections but a
 depends_on: [RM-024, RM-048, UF-087, UF-088]
 unblocks: []
 acceptance_criteria:
-  - Partial/aborted stream fixtures preserve UsageRecord refs and settlement_status without showing settled/final copy.
-  - Retry/escalation fixtures count accepted usage once through dedupe_key while preserving failed or superseded attempts for audit.
-  - Blocked outcomes such as permission_denied, filesafe_blocked, runtime_disabled, runtime_unavailable, capability_unavailable, host_untrusted, host_unreachable, and test_gap_policy render blocked state rather than execution failure or zero usage.
-  - Hidden/background contribution refs remain attributable across run modes and are not folded into parent totals without drill-through.
+  - "Partial/aborted stream fixtures preserve UsageRecord refs and settlement_status without showing settled/final copy."
+  - "Retry/escalation fixtures count accepted usage once through dedupe_key while preserving failed or superseded attempts for audit."
+  - "Blocked outcomes such as permission_denied, filesafe_blocked, runtime_disabled, runtime_unavailable, capability_unavailable, host_untrusted, host_unreachable, and test_gap_policy render blocked state rather than execution failure or zero usage."
+  - "Hidden/background contribution refs remain attributable internally across run modes. Chat totals stay truthful with no per-run source/inclusion receipt; existing non-chat Usage diagnostics retain their own scoped drill-through."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py run-gates
@@ -1687,6 +1687,7 @@ source_lineage:
   - "Plans/Run_Modes.md:843-1030"
   - "Plans/usage-feature.md:5412-5605"
   - "Plans/Runtime_Artifacts_Panel.md:281-290"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - streaming_partial
   - failed
@@ -1700,6 +1701,7 @@ negative_constraints:
   - Do not erase failed, aborted, or superseded usage records just because a retry later settles.
   - Do not display blocked run-mode outcomes as zero usage or final settled cost.
   - Do not treat run-mode policy as permission to fabricate missing provider usage.
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints:
   - Plans/Run_Modes.md
   - Plans/usage-feature.md
@@ -1725,7 +1727,7 @@ Every applicable run snapshot preserves `requested_bsd_mode`, `effective_bsd_mod
 
 `BackSeatDriverService` lifecycle and isolation remain owned by `Plans/Shared_Integration_Runtime.md`: independent assignment, cursor, stable prefix, requested/effective route, Usage lineage, fallback, quota, and health; bounded delta input; semantic duplicate suppression; no protected `AuthBrowserSession`; and non-blocking timeout/failure/quota behavior. Usage owns cost/accounting. Chat owns presentation. This owner decides effective mode policy only.
 
-Time-Traveling conditional rules are likewise a separate Prompt Pipeline/shared-runtime consumer. A rule conditioned on runtime mode or Goal phase may remind or request a bounded steer/retry, but cannot change effective runtime mode, approve an action, bypass deterministic safety, or widen authority.
+Time-Traveling conditional rules are likewise a separate Prompt Pipeline/shared-runtime consumer. A rule conditioned on runtime mode or workflow stage may remind or request a bounded steer/retry, but cannot change effective runtime mode, approve an action, bypass deterministic safety, or widen authority.
 
 The concurrency defaults in §4.1 remain hard ceilings, not promised admission. Effective sustainable concurrency is always less than or equal to those ceilings and is determined by `RuntimeResourceGovernor` from actual Host/Environment capacity, provider/account/model/reset permits, memory/process pressure, leases, dependency readiness, cost policy, and physical-parent sharing. Provider request permits are held only during provider request/stream production, not while an agent performs local work or awaits children.
 

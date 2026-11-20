@@ -254,6 +254,18 @@
        taken during the rest found nothing: re-measure and look again (a page switch slides the new page in while the
        outgoing page stays hit-testable, and the Usage room plays its entrance after it, both rests) */
     function restEnded() { scopeDirty = rectsDirty = geomDirty = true; recheckSoon(); setTimeout(afterFrameSoon, 400); }
+    /* Usage's wheel pause (PERF-USAGE-HOVER, usage 42-cards.js bindTools) ends without a body class or a pointer move */
+    document.addEventListener('pmu-op-end', restEnded);
+    /* Clear this board's light on its first wheel-driven scroll. Fixed layers still carry the old viewport rect,
+       including layers that already started their ordinary fade. Other boards keep their light. */
+    document.addEventListener('pmu-op-start', function (event) {
+      var board = event.detail && event.detail.board;
+      if (!board) return;
+      if (hover && board.contains(hover)) { swapHover(hover, null, isReduced()); hover = null; }
+      lit.forEach(function (s) { if (board.contains(s.el)) { unlight(s); lit.delete(s); } });
+      hideBoardProxies(board);
+      recheckSoon();
+    });
 
     function gestureRest() {
       var b = document.body;
@@ -427,6 +439,7 @@
         s.variant = cs.getPropertyValue('--pmh-variant').trim() || null;   /* the marker's data-pmh-variant on this target */
         s.inset = null;
         if (ins) { var q = ins.split(/\s+/).map(parseFloat); if (q.length === 4 && q.every(isFinite) && (q[0] || q[1] || q[2] || q[3])) s.inset = q; }
+        s.contain = cs.getPropertyValue('--pmh-contain').trim() === '1';   /* the marker's travel stops at this target's edges */
         s.gen = lookGen;
       }
       if (!s.clippers) s.clippers = clippersOf(s.el);
@@ -487,7 +500,8 @@
         stampSoon(300);
         if (hover || springs.size || lit.size) { moved = true; start(); }
       };
-      if (typeof window.PM_AFTER_LAYOUT === 'function') { tokenFrame = 1; window.PM_AFTER_LAYOUT(retokenFrame); }
+      /* (the window shows the hover: a look's reveal over it never holds this read, PM_AFTER_LAYOUT.own) */
+      if (typeof window.PM_AFTER_LAYOUT === 'function') { if (window.PM_AFTER_LAYOUT.own) window.PM_AFTER_LAYOUT.own(retokenFrame); tokenFrame = 1; window.PM_AFTER_LAYOUT(retokenFrame); }
       else tokenFrame = raf(retokenFrame);
     }
 
@@ -818,7 +832,27 @@
       document.body.appendChild(glowEl);
       return glowEl;
     }
-    function glowOn(L, on) { if (L.on !== on) { L.el.classList.toggle('pmh-glow-on', on); L.on = on; stats.writes++; } }
+    function hideBoardProxies(board) {
+      GL.forEach(function (layer, i) {
+        if (!layer.host || !board.contains(layer.host)) return;
+        layer.el.classList.add('pmh-proxy-cut');
+        glowOn(layer, false);
+        layer.host = null;
+        if (glowCur === i) { glowLastOff = i; glowCur = -1; }
+        stats.writes++;
+      });
+      if (FR.host && board.contains(FR.host)) {
+        frameEl.classList.add('pmh-proxy-cut');
+        frameOff(-Infinity);
+        FR.host = null; FR.offAt = -Infinity;
+        stats.writes++;
+      }
+    }
+    function glowOn(L, on) {
+      if (L.on === on) return;
+      if (on) L.el.classList.remove('pmh-proxy-cut');
+      L.el.classList.toggle('pmh-glow-on', on); L.on = on; stats.writes++;
+    }
     function glowUpdate(hc, vis) {
       var s = hover ? st(hover) : null, tok = s ? tk(s.kind) : null;
       var target = s && tok.glow && hc ? hover : null;
@@ -856,18 +890,23 @@
       var m = Math.round(d * k);
       return cur + (Math.abs(m) >= 1 ? m : (d > 0 ? 1 : -1));
     }
+    function frameOff(now) {
+      if (!FR.on) return;
+      frameEl.classList.remove('pmh-frame-on', 'pmh-frame-travel', 'pmh-frame-press');
+      FR.on = FR.travel = FR.press = false; FR.offAt = now; stats.writes++;
+    }
     function frameUpdate(hc, vis, dt, reduced, now) {
       var s = hover ? st(hover) : null, tok = s ? tk(s.kind) : null;
       var target = s && tok.frame && hc ? hover : null;
       if (!target) {
-        if (FR.on) { frameEl.classList.remove('pmh-frame-on', 'pmh-frame-travel', 'pmh-frame-press'); FR.on = false; FR.travel = false; FR.press = false; FR.offAt = now; FR.host = null; stats.writes++; }
+        frameOff(now); // Keep its last host while the frame's opacity can still be visible.
         return false;
       }
       ensureFrame();
       if (!frameEl) return false;
       var b = boxFor(hc), gx = b.l + (tok.follow ? s.wx : 0), gy = b.t + (tok.follow ? s.wy : 0), gw = b.w, gh = b.h;
       var far = false;
-      if (FR.host !== target) {
+      if (!FR.on || FR.host !== target) {
         if (frameEl.getAttribute('data-pmh-kind') !== s.kind) frameEl.setAttribute('data-pmh-kind', s.kind);
         far = tok.fmax > 0 && Math.max(Math.abs(gx - FR.x), Math.abs(gy - FR.y)) > tok.fmax;
         FR.host = target;
@@ -883,7 +922,7 @@
       /* .pmh-frame-new: the frame met this target anew (placed, not travelled), so a look can play an arrival there;
          it stays until the frame next travels */
       if (snap !== FR.fresh && (snap || FR.x !== gx || FR.y !== gy)) { frameEl.classList.toggle('pmh-frame-new', snap); FR.fresh = snap; stats.writes++; }
-      if (!FR.on) { FR.on = true; frameEl.classList.add('pmh-frame-on'); stats.writes++; }
+      if (!FR.on) { FR.on = true; frameEl.classList.remove('pmh-proxy-cut'); frameEl.classList.add('pmh-frame-on'); stats.writes++; }
       if (snap) { FR.x = gx; FR.y = gy; FR.w = gw; FR.h = gh; FR.vx = FR.vy = FR.vw = FR.vh = 0; }
       else if (tok.fhz > 0) {
         FR.acc += dt;
@@ -893,10 +932,21 @@
           FR.x = stepTo(FR.x, gx, k); FR.y = stepTo(FR.y, gy, k); FR.w = stepTo(FR.w, gw, k); FR.h = stepTo(FR.h, gh, k);
         }
       } else {
-        var ks = tok.fstiff, kd = tok.fdamp;
+        var ks = tok.fstiff, kd = tok.fdamp, p0 = s.contain ? [FR.x, FR.y, FR.x + FR.w, FR.y + FR.h] : null;
         FR.vx += (ks * (gx - FR.x) - kd * FR.vx) * dt; FR.vy += (ks * (gy - FR.y) - kd * FR.vy) * dt;
         FR.vw += (ks * (gw - FR.w) - kd * FR.vw) * dt; FR.vh += (ks * (gh - FR.h) - kd * FR.vh) * dt;
         FR.x += FR.vx * dt; FR.y += FR.vy * dt; FR.w += FR.vw * dt; FR.h += FR.vh * dt;
+        /* --pmh-contain (FO-194): each edge comes in on the spring and stops at the target's edge when it reaches it instead
+           of overshooting it, so the marker never passes the box it travels to (Friendly's page tabs, 2 px apart: the
+           overshoot lay over the next tab). Only an edge that crossed its target in this step stops: one still moving away
+           from a target that has just changed behind it (a quick reversal, Home -> Projects -> Home) turns on the spring as
+           before; stopping it by the sign of its speed put every edge on the new target at once (34.6 px in one frame,
+           FO-194 round 2) */
+        if (p0) {
+          var e0 = [FR.x, FR.y, FR.x + FR.w, FR.y + FR.h], v0 = [FR.vx, FR.vy, FR.vx + FR.vw, FR.vy + FR.vh], g0 = [gx, gy, gx + gw, gy + gh];
+          for (var ei = 0; ei < 4; ei++) if ((p0[ei] - g0[ei]) * (e0[ei] - g0[ei]) < 0) { e0[ei] = g0[ei]; v0[ei] = 0; }
+          FR.x = e0[0]; FR.y = e0[1]; FR.w = e0[2] - e0[0]; FR.h = e0[3] - e0[1]; FR.vx = v0[0]; FR.vy = v0[1]; FR.vw = v0[2] - v0[0]; FR.vh = v0[3] - v0[1];
+        }
         if (Math.abs(gx - FR.x) < 0.3 && Math.abs(gy - FR.y) < 0.3 && Math.abs(gw - FR.w) < 0.3 && Math.abs(gh - FR.h) < 0.3 &&
             Math.abs(FR.vx) + Math.abs(FR.vy) + Math.abs(FR.vw) + Math.abs(FR.vh) < 2) {
           FR.x = gx; FR.y = gy; FR.w = gw; FR.h = gh; FR.vx = FR.vy = FR.vw = FR.vh = 0;

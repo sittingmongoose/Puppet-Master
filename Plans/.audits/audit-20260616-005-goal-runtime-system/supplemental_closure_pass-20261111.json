@@ -1,0 +1,159 @@
+{
+  "audit_id": "audit-20260616-005-goal-runtime-system",
+  "closures": [
+    {
+      "appended_matrix_line": 1,
+      "appended_matrix_sha256": "ac1539b1a65b2a648ee9136ce8fc9d86d21ca50ecd6da8d2905def99c064a7d4",
+      "appended_registry_line": 1124,
+      "appended_registry_sha256": "6b07f6687cc4794ed3dbfb83ef4d747549a1d3e5e3ee18e7fa45198ad5dbcd5e",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 11
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/00-plans-index.md#section=Native Goal Runtime Map (2026-06-16)": "71b3e926e0dc67672289947ead0fd5eafff05294abb3cd4cde14b09984bbf8e8",
+        "Plans/Contracts_V0.md#unit=CV-286": "7247c74966817143f898f38369551d0d0bdec25396db0d86bb551f3bc92aeb8d",
+        "Plans/Contracts_V0.md#unit=CV-287": "a9f1166158257f476b5ff4de31e45b79225337e58e5cd04677e3bcf26e52039e",
+        "Plans/Goal_Runtime_System.md#section=Goal and GoalRun payload minima": "ff962cb3bbdd39101a780f868f0075d79f4f2d5caaaa8242f0d8565656754717",
+        "Plans/Permissions_System.md#unit=PS-114": "792d26daaedabeddfec2a8a5ee32a1b980a9596ef64b7d4186c7a0381b217fa1",
+        "Plans/storage-plan.md#unit=SP-214": "d25c5e3c20979fa541ec62489aa88873058443aa52b8cfbf7bc014d1d48354f2"
+      },
+      "finding_key": "sfk-622c6f620b58638d07dd1f64",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-005-goal-runtime-system-semantic-risks-jsonl-11",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "091573ea1cac88491abb3396667393c3d8420bc113f818ed87e3f2c80ef99051",
+          "reason": "The three adjacent owner documents now contain the required Goal contract, persistence and approval-scope PlanUnits, with CV-287 supplying event registration. The runtime routing paragraph now assigns these responsibilities to those documents rather than leaving their registration pending.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "091573ea1cac88491abb3396667393c3d8420bc113f818ed87e3f2c80ef99051",
+          "reason": "The contract, storage and permission owners now contain the required Goal Runtime registration units, and the payload section expressly says those owners carry the shared contracts. The index also names the same owner split, replacing the earlier no-owner-impact boundary.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 2,
+      "appended_matrix_sha256": "77eaf85ec578fd7f04a418d505e07c8c9d1e35d65551cc58f44b92782fdb1914",
+      "appended_registry_line": 1125,
+      "appended_registry_sha256": "94a74f4d9a23c35cc0c0544106dd69cd4be31af12a93694944c26d355a80858f",
+      "closes": {
+        "claim_status": "weak_or_overclaim",
+        "plan_unit_id": "ACD-417",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_row": 3
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/audit-20260616-005-goal-runtime-system/audit_report.json": "81b87efca2f87437cca79ff830be71104dd092e620bccf2bce9eafd89386edde",
+        "Plans/.audits/audit-20260616-005-goal-runtime-system/semantic_risks.jsonl": "d0853b4f7811c35a634a4d517edf5a694e0c3d42c75c339cc5336f78b02a06db",
+        "Plans/assistant-chat-design.md#unit=ACD-417": "df649f22d4987c10fe86a85354b0c8fea4e5dc679b450210224ac8a960212a04",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl#jsonl=atom_id=atom-0036": "e3bd546a6b6443de65f60985a34cef0a741fe27dd10f192dcd7f3670d4b501dd"
+      },
+      "finding_key": "sfk-28d9b8371011a653ceb9b3be",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-005-goal-runtime-system-planunit-source-claims-jsonl-3",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "8033dea5746a990fb37257e3a2dde12669b1d5b280a7e00bc7488ab9c3e4f6ef",
+          "reason": "Atom-0036 directly requires preemption or re-steering on user messages and constraints, supporting the audited ACD-417 user-update behavior despite its low lexical overlap. The audit's confirmed ACD-417 finding was the separate enum-shape issue, and the atom-to-unit relationship is reciprocal.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "8033dea5746a990fb37257e3a2dde12669b1d5b280a7e00bc7488ab9c3e4f6ef",
+          "reason": "Atom-0036 is a genuine source for handling user changes rather than an unsupported invention, and its ACD-417 output is reciprocal. The audit manual review identified an enum-shape problem for this unit, not a semantic lack of support from atom-0036; current ACD-417 also keeps user scope changes under an explicit owner operation.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 3,
+      "appended_matrix_sha256": "b9d9f92cd0b168de4596ac31c0781171437c011c7f93fac0c4bf4022f47ff51b",
+      "appended_registry_line": 1126,
+      "appended_registry_sha256": "bef2f920844b75dcccdc8898612a7730f5a1c3e8ff221bcf19112a7d86a61885",
+      "closes": {
+        "claim_status": "weak_or_overclaim",
+        "plan_unit_id": "ACD-419",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_row": 5
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/audit-20260616-005-goal-runtime-system/audit_report.json": "81b87efca2f87437cca79ff830be71104dd092e620bccf2bce9eafd89386edde",
+        "Plans/.audits/audit-20260616-005-goal-runtime-system/semantic_risks.jsonl": "d0853b4f7811c35a634a4d517edf5a694e0c3d42c75c339cc5336f78b02a06db",
+        "Plans/assistant-chat-design.md#unit=ACD-419": "8dd89e5fa1639b1b313c0b289962c1071beb0f3d75cd1f500b87e49e1ada8d66",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl#jsonl=atom_id=atom-0058": "b336a478c3f9c1ad392f8db76bb1565cb5f03a16444ba1953a083541a98ea9be",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl#jsonl=atom_id=atom-0079": "734744a03a0cf2d7b48873d5b1ae025793fc687e3a2ebe3677df0c335d1df94b",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl#jsonl=atom_id=atom-0097": "4fd9ff415dc076b1f9d9c9b9e5fa6f004feefdc14d5b0e04fdb6a1906933a71a"
+      },
+      "finding_key": "sfk-16b320cfd6b9a4b0e353daa9",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-005-goal-runtime-system-planunit-source-claims-jsonl-5",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "7c84219e0b81e0efc728436d20c58bc7ca5f6631c9158eaa141c9442bfa22d9f",
+          "reason": "Atom-0058 supplies the parallel dedicated-goal example, while atoms 0079 and 0097 explicitly supply the child status and collapsible-display requirements ACD-419 cites. The weak lexical match on the example does not establish an unsupported claim; the proposal needs those two display-source anchors added.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "7c84219e0b81e0efc728436d20c58bc7ca5f6631c9158eaa141c9442bfa22d9f",
+          "reason": "The weak-source flag is lexical: atom-0058 supplies the parallel dedicated-goal use case, while atoms 0079 and 0097 directly supply the tree, summary and expanded-display requirements. Those sources and ACD-419 reciprocally reference each other; the separate conflict with Goal V2 retirement remains open under the UI findings.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    }
+  ],
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-334",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "route": "new_registry_row",
+    "source": "Jared, \"approve all\", T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z (stream C question 7, option (a)); extended to the other June audits with uncovered rows by pm7-build's relay of the same approved option (pm-mail 1105030457-ade2, 2026-11-05)"
+  },
+  "matrix": {
+    "original_rows": 0,
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "pass_id": "audit-20260616-005-goal-runtime-system-supplemental-20261111",
+  "reviews": "Sol and Astra blind reviews are listed on each closures entry (verdict, your_verdict, your_status, packet_row_digest, batch file)",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}

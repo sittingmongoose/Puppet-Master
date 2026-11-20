@@ -174,17 +174,15 @@ html[data-motion="reduced"] .pmx-pip-host .pmx-pip-host-svg :is(.pmx-pip-rig, .p
 /* ---------------------------------------------------------------- where Pip stands in for a glyph */
 /* the Orbit's centre (PC4, FO-120): Pip alone; its thinking dots bob while the
    run runs (the reply's one moving Pip: the thinking placeholder's loader hands over to it) */
-.orbit-core-face { position: relative; display: block; width: 40px; height: 40px; margin-top: -6px; flex: none; }
-.orbit-core-face > .pmx-pip-mk { width: 40px; height: 40px; }
+/* its size and place are the disc's (orbit.css, .orbit-core > .orbit-core-face: 26-40 px by the disc's size, FO-201) */
+.orbit-core-face { position: relative; display: block; width: 40px; height: 40px; flex: none; }
+.orbit-core-face > .pmx-pip-mk { width: 100%; height: 100%; }
 /* the core is the live subject's dark puck in every look but NieR, so on a light look Pip's ink control and strings
    take the puck's own ink (Friendly's lilac control reads on it as it is) */
 html:not([data-o55-nier="on"]) body:is([data-theme="basic-light"], [data-theme="glass-light"], [data-theme="retro-light"]) .orbit-core-face {
   --pip-ctl: var(--nx-disc-text); --pip-rod: var(--nx-disc-text); --pip-rodback: color-mix(in srgb, var(--nx-disc-text) 58%, var(--nx-disc));
   --pip-back: color-mix(in srgb, var(--nx-disc-text) 58%, var(--nx-disc)); --pip-pin: color-mix(in srgb, var(--nx-disc-text) 60%, var(--nx-disc));
   --pip-str: color-mix(in srgb, var(--nx-disc-text) 55%, var(--nx-disc));
-}
-@container orbitdial (max-width: 150px) {
-  .orbit-core-face, .orbit-core-face > .pmx-pip-mk { width: 32px; height: 32px; }
 }
 .orbit-core-face.is-live :is(.pmx-pip-dot2, .pmx-pip-dot3, .pmx-pip-dot4) { animation-name: pmx-pip-dot; animation-duration: 1.15s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
 .orbit-core-face.is-live .pmx-pip-dot3 { animation-delay: .16s; }

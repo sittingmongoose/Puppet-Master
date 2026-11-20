@@ -1,0 +1,190 @@
+{
+  "schema_id": "pm.assurance.ca_seal2.fix8_results.v1",
+  "reviewed_base": "fceb67118ec6f5b73017f2fb8ab31056ed27a52e",
+  "code_commit": "56eaff6497d4c30ab7ef4cbdfc7965d29205636d",
+  "validator_sha256": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+  "checker_sha256": "ed36199f78cf34b6be01909fccefbc4685e2615a54dcfff0bbc5a084f903b7f3",
+  "corpus": {
+    "checks": 190,
+    "passed": 190,
+    "restored_results_identical": true,
+    "verified_sources": 597
+  },
+  "findings": {
+    "B01": {
+      "status": "fixed",
+      "exception_alternatives": 9,
+      "each_own_cut_fails_only_own_control": true
+    },
+    "B02": {
+      "status": "fixed",
+      "strict_type_controls": 13
+    },
+    "B03": {
+      "status": "fixed",
+      "optional_map_absent_control": true,
+      "present_snapshot_actual_hashes": 4,
+      "missing_snapshot_diagnostic_null": true,
+      "real_absent_map_custody_issues": 17
+    }
+  },
+  "inventory": {
+    "syntax_sites": 286,
+    "semantic_expansions": 41,
+    "walker_sites": 327,
+    "supplement_rows": 43,
+    "combined_sites": 370,
+    "outcomes": {
+      "killed by": 270,
+      "structural": 21,
+      "implied": 23,
+      "same-predicate duplicate": 4,
+      "frozen-input only": 52
+    },
+    "unclassified": 0
+  },
+  "variant_executions": {
+    "total": 263,
+    "outcomes": {
+      "killed by": 211,
+      "same-predicate duplicate": 7,
+      "implied": 16,
+      "frozen-input only": 22,
+      "structural": 7
+    },
+    "unclassified": 0,
+    "Astra_2_182": {
+      "killed by": 139,
+      "same-predicate duplicate": 5,
+      "implied": 16,
+      "frozen-input only": 22
+    },
+    "Astra_3_221": {
+      "killed by": 171,
+      "same-predicate duplicate": 5,
+      "implied": 16,
+      "frozen-input only": 22,
+      "structural": 7
+    },
+    "Astra_5_and_supplement_42": {
+      "killed by": 40,
+      "same-predicate duplicate": 2
+    }
+  },
+  "fail_closed": {
+    "injected_unknown_forms": 8,
+    "all_refused": true,
+    "missing_stale_and_removed_dispatch_refused": true,
+    "intact_and_restored_pass": true
+  },
+  "repository_checks": {
+    "checks": [
+      {
+        "check": "shard-check",
+        "exit": 0,
+        "status": "pass",
+        "failure_count": 0,
+        "report_sha256": "3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21"
+      },
+      {
+        "check": "index-validate",
+        "exit": 1,
+        "status": "fail",
+        "failure_count": 88,
+        "report_sha256": "da281659bbd7db5915a9df0a49c99e60ab86e1611d5344e2081eadf5ee901148"
+      }
+    ],
+    "all_Plans_and_scripts_identical_to_reviewed_base": true,
+    "regenerated": false
+  },
+  "index_reviewed_base_comparison": {
+    "base": "fceb67118ec6f5b73017f2fb8ab31056ed27a52e",
+    "base_exit": 1,
+    "base_status": "fail",
+    "base_failures": 88,
+    "current_status": "fail",
+    "current_failures": 88,
+    "complete_failure_arrays_equal": true,
+    "same_ignored_currentness_inputs": true
+  },
+  "scope": {
+    "changes": "tests and records only",
+    "tracked_Plans_scripts_and_receipts_unchanged": true,
+    "governance_refreshed": false,
+    "admission_or_seal_awarded": false
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/final-corpus.json",
+      "sha256": "c8512a90df0a17053b3eb5fed13fc0a11919be106858a5d83ee6f1eaa2a76de9"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/cut-audit.json",
+      "sha256": "324718531c601ab647441679f6e7f16e7e9145b495e4ac2df0ae0c6625daf801"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/independent-supplement-audit.json",
+      "sha256": "123231b2b719385827d63abccb10a04f74f827041cd5f320a67b154e15cdde9e"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/coverage-demo.json",
+      "sha256": "5af9de5867c3906c59a9dcf355e8419fda86e390ee37be88d28b1a1b4786395b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/unicode-dispatch-proofs.json",
+      "sha256": "a506a026b9e4f2cb07b69b9c26494ae64e16ae3ed858e34aeca4487b47d8f927"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/builder-bool-summary.json",
+      "sha256": "88690d7604fc7b9aa9fad33a55d73e20977e5ebda51f2f15317a5b56dfb67794"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/real-absent-map-witness.json",
+      "sha256": "6631ffb727f210e9957de2045c41e553da5cc01dd96f2fe6affbe4d362eb6b42"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/index-comparison.json",
+      "sha256": "866f239c1ae1af9b6462cf97d8f7f377c70a29cf5a24e1bd0ed3c3c1d46ac4b5"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/repo-check-summary.json",
+      "sha256": "fddcf2c95bae940532a3d39edac0032607105abfb091867cb7b15b8cf7b57c6e"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/evidence-reference-audit.json",
+      "sha256": "61ede00066d584b6243c50f65919d29b6d7ec4df766eddbf034acb3f22af94c7"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/extraction-manifest.json",
+      "sha256": "1efc449a90c10a11bffcf3946ad97ecb3b20a41436547b08693a704a275d1e8b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/source-revisions.json",
+      "sha256": "05e6becb01c3fe6fae734492d3e84d11b9f237f5e63bbd364540d821ea77abe3"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/local-source-copy-manifest.json",
+      "sha256": "540b01eca3a59b4579cdec54752ce772f1f97dce3a759cf31d569962443fab76"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/removal-summary.json",
+      "sha256": "99db37a02e8e0ee86a422f7fee2ac23f773df84b3563e8e0e6cf5976eec64c60"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/supplemental-summary.json",
+      "sha256": "79253293ce55d2f552a5192d323598a60c3ca69c363e06a3de1b9329779759f4"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/additional-summary.json",
+      "sha256": "5418c1db0c3ed2c6b99e00d755ae43b9a9dc43b1c3e3efb4590f69d8d8a9f704"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/dispatch-summary.json",
+      "sha256": "0c6f36bee7527e103075f7f65e67cfa667d235a2afbc97ea1fb192ed9f07759e"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix8/touched-summary.json",
+      "sha256": "0647d5f085d4a4e403d25ccf43646d978f7cb4489fccf6149ba6b515b5cce94d"
+    }
+  ]
+}

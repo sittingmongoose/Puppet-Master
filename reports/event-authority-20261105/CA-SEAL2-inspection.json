@@ -1,0 +1,124 @@
+{
+  "status": "implemented_pending_coordinated_landing_and_independent_reviews",
+  "kind": "bounded_fourth_recorded_change_no_seal_or_admission",
+  "resumed_from_head": "5764ca809c0dcc8a161d4fcd45770abf6355f746",
+  "third_change_head": "17c842445a2623bb0334ba8d6932e7a6bf088967",
+  "recount_head": "c53e4199ae94ca853a197354f3f9e7f296cf1efc",
+  "validator_sha256_before": "319f6bffddb07a36e633fd949146e4ce9149819ea5e817b13897a74314163a91",
+  "validator_sha256_after": "de9d85130aafed77f87bc365d94218db3992691a7e95285739b2c7c802e24321",
+  "scope_ruling": {
+    "author": "pm7-build",
+    "mail": "1105050013-eb00",
+    "attribution": "pm7-build's reading of 9.b, not Jared's words",
+    "final_approval": "august_and_all_249_recount_outcomes_in_one_run",
+    "single_snapshot": "diagnostic_only"
+  },
+  "source_custody": {
+    "declared_fingerprints": 597,
+    "verified_fingerprints": 597,
+    "explicit_saved_source_locations": 26,
+    "no_original_pin_changed": true,
+    "recovery": "15 exact ignored edition files and 11 external evidence inputs preserved. Two historical briefs recovered by removing later additions; accepted only after exact original byte count and complete SHA-256 matched."
+  },
+  "targeted_checks": {
+    "status": "pass",
+    "count": 68,
+    "passed": 68,
+    "failed": 0
+  },
+  "legacy_differential": {
+    "status": "pass",
+    "old_exit": 1,
+    "new_exit": 1,
+    "old_failures": 10,
+    "new_failure_count": 12,
+    "original_August_main_prefix_AST_unchanged": true,
+    "all_original_named_checks_equal": true,
+    "all_original_input_pins_equal": true,
+    "original_functions_unchanged": [
+      "holding_authority_bytes",
+      "holding_evidence_digest",
+      "holding_timestamp",
+      "decision_section_bytes",
+      "canonical_json_sha256",
+      "post_august_receipt_state",
+      "holding_validator_pin",
+      "registry_step_shape_ok",
+      "registry_step_states",
+      "strict_step_record",
+      "registry_step_claim",
+      "registry_step_record_scan",
+      "registry_step_problems",
+      "admission_record_problems",
+      "validate_post_august_admissions",
+      "validate_holding_bucket",
+      "option_token",
+      "decision_chosen_token",
+      "sha256_file",
+      "load_json",
+      "load_ledger",
+      "derive_independent_partition",
+      "evidence_map",
+      "cell_ok_pass"
+    ],
+    "original_functions_changed_only_for_fourth_change": [
+      "multi_family_receipt_state",
+      "post_august_validator_pin",
+      "main",
+      "build_receipt"
+    ],
+    "validator_before_sha256": "319f6bffddb07a36e633fd949146e4ce9149819ea5e817b13897a74314163a91",
+    "validator_after_sha256": "de9d85130aafed77f87bc365d94218db3992691a7e95285739b2c7c802e24321"
+  },
+  "index_validation": {
+    "exit": 1,
+    "top_level_status": "fail",
+    "findings": 23,
+    "ledger_errors": 21,
+    "newer_main_DL302": 1,
+    "untouched_readiness_artifact_stale": 1
+  },
+  "shard_check": {
+    "docs_checked": 99,
+    "failures": [],
+    "shards_checked": 3092,
+    "source_count": 99,
+    "status": "pass"
+  },
+  "scope_diff": {
+    "protected_files_and_existing_receipts_records_registry_unchanged": true,
+    "indexed_owner_docs_shards_plan_index_unchanged": true,
+    "test_files_under_tests_changed": false
+  },
+  "spec_lock_entry_template": {
+    "path": "reports/event-authority-20261105/seal-check-recount-receipt.json",
+    "sha256": "<SHA-256 of complete final receipt after actual lander and prior-receipt pins are filled>"
+  },
+  "pending": [
+    "Actual per-name outcomes and unchanged August closure/depth prerequisites",
+    "Decision/recount dependencies and coordinated third/fourth byte anchors",
+    "Actual lander slots and both independent pre/post landing reviews",
+    "Shared guard-isolation sweep; full guard-removal proof is not claimed",
+    "Resolve/report the 23 index findings at integration without editing unrelated files"
+  ],
+  "stopped_question": null,
+  "external_evidence_sha256": {
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/CA-SEAL2-checks.py": "ce2e04b8e7ef6e91afcca8caf73a2f6eef0467eaa45ff46263daee265e8617e0",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/check-results.json": "fb5375109e14ca1ff8976a0e2f6a71ba40a1a8cdc45429356d9862efd24230a9",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/source-locations.json": "154b4a3f4f89faa79d96b08b3600a9d947ea741004d58c3107aa005bca25360a",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/recount-source-verification.json": "6956c8bd486657aacbe1bd48e16299316fa434a0c8224156f2f5eef0df3e0ab5",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/legacy_differential.py": "35f3d2cf3548c2bd132a268d5ae7ea2add29595961998b3be9001495725987f0",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/legacy-differential.json": "a240796ec237f42f8d457d64a6eea8455f97f5f38a9cc707773c29cde88448e0",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/shard-check.json": "3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/index-validate.json": "5700eb94f8e49e61f8df5b750185b3a09d59208e1c4cc733de1a9d3c403ff860",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/index-validate-with-edition.json": "c81f7ee63045fb6d4d008be50c4ed3c792d4ffac0d0d636ed2148e6ff6e7c082",
+    "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/resume/currentness-edition-copy.json": "daf80cdc1395935c791eed463d54ff4d0405f90ce97f39f12e10fbb0a547f8ac"
+  },
+  "resources": {
+    "pre_worktree_free_disk_GB": 64,
+    "pre_worktree_available_memory_GB": 19,
+    "lowest_observed_available_memory_GB": 8,
+    "under_6GB_pause_needed": false,
+    "checker_scheduling_deviation": "One 0.96-second legacy differential overlapped the index-with-edition rerun. Subsequent checks were sequential."
+  }
+}

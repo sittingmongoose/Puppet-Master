@@ -1,0 +1,100 @@
+{
+  "schema_id": "pm.goal.cancel.w12.scoped_imports.v2",
+  "status": "NEWLY_AUTHORED_EXACT_LOCATION_BINDING",
+  "source_bank": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-workflow-resources.v2.json",
+  "source_realm": "native",
+  "retained_bank": {
+    "path": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-retained-resources.v2.json",
+    "sha256": "117818eb74b5b5f7d90de19a38eb7d7cf7e93377a95be48430198e7af587f1e2"
+  },
+  "imports": [
+    {
+      "source_document_sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "source_pointer": "/$defs/OriginalCompletionInput/properties/receipt",
+      "literal_ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_completion_receipt",
+      "target_ref": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_completion_receipt",
+      "whole_target_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "source_base_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1"
+    },
+    {
+      "source_document_sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "source_pointer": "/$defs/OriginalCompletionInput/properties/dispatch",
+      "literal_ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_dispatch_receipt",
+      "target_ref": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_dispatch_receipt",
+      "whole_target_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "source_base_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1"
+    },
+    {
+      "source_document_sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "source_pointer": "/$defs/OriginalCompletionInput/properties/changes/items",
+      "literal_ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_change_receipt",
+      "target_ref": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_change_receipt",
+      "whole_target_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "source_base_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1"
+    },
+    {
+      "source_document_sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "source_pointer": "/$defs/OriginalCompletionInput/properties/tests/items",
+      "literal_ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/test_run_receipt",
+      "target_ref": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/test_run_receipt",
+      "whole_target_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "source_base_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1"
+    },
+    {
+      "source_document_sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "source_pointer": "/$defs/OriginalCompletionInput/properties/auditor",
+      "literal_ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/auditor_verification_receipt",
+      "target_ref": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/auditor_verification_receipt",
+      "whole_target_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "source_base_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1"
+    },
+    {
+      "source_document_sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "source_pointer": "/$defs/OriginalCompletionInput/properties/auditor_cycles/items",
+      "literal_ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/auditor_cycle_report",
+      "target_ref": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/auditor_cycle_report",
+      "whole_target_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "source_base_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1"
+    },
+    {
+      "source_document_sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "source_pointer": "/$defs/OriginalCompletionInput/properties/source_control/items",
+      "literal_ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/source_control_receipt",
+      "target_ref": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/source_control_receipt",
+      "whole_target_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "source_base_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1"
+    },
+    {
+      "source_document_sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "source_pointer": "/$defs/OriginalCompletionInput/properties/finalization",
+      "literal_ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/source_control_finalization_receipt",
+      "target_ref": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/source_control_finalization_receipt",
+      "whole_target_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "source_base_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1"
+    },
+    {
+      "source_document_sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "source_pointer": "/$defs/OriginalCompletionInput/properties/validators/items",
+      "literal_ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/validator_outcome",
+      "target_ref": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/validator_outcome",
+      "whole_target_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "source_base_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1"
+    },
+    {
+      "source_document_sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "source_pointer": "/$defs/OriginalCompletionInput/properties/repairs/items",
+      "literal_ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/repair_attempt_receipt",
+      "target_ref": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/repair_attempt_receipt",
+      "whole_target_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "source_base_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1"
+    },
+    {
+      "source_document_sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "source_pointer": "/$defs/OriginalCompletionInput/properties/promotions/items",
+      "literal_ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/merge_or_promotion_receipt",
+      "target_ref": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/merge_or_promotion_receipt",
+      "whole_target_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "source_base_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1"
+    }
+  ]
+}

@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L840-L4881
+Source lines: L844-L4895
 
-Source SHA256: `20bc6cdaf237934560a847048ee0b4cd0bec2fca90152d0fb6a88a474bceb2af`
+Source SHA256: `5428a3a6244d5d451d2b68857de5b7035b2d85ba353dd0f9f19a8a0c9c51240d`
 
 ---
 
@@ -782,12 +782,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
-  Account-backed providers store ordered account rows with stable ids. The locked account-profile schema and minimum
-  fields preserve account_id, provider_id, label, auth_surface, enabled, priority, provider_identity, credential_ref,
-  configured_project_id, selected_billing_entity_id, threshold and retry controls, cooldown, availability, configuration,
-  credential state, and user-facing status. account_id is the internal stable key, provider_identity is descriptive
-  provider-native metadata only, secrets remain outside config/state stores, auth families that change quota semantics
-  remain separate account rows, and Codex and Gemini account examples preserve auth-family separation.
+  Account-backed providers store ordered account rows with stable ids. The locked account-profile schema
+  and minimum fields preserve account_id, provider_id, label, auth_surface, enabled, priority,
+  provider_identity, credential_ref, configured_project_id, selected_billing_entity_id, threshold and
+  retry controls, cooldown, availability, configuration, credential state, and user-facing status.
+  account_id is the internal stable key, provider_identity is descriptive provider-native metadata only,
+  secrets remain outside config/state stores, auth families that change quota semantics remain separate
+  account rows, and Codex and Gemini account examples preserve auth-family separation. An optional
+  account-owned default_model_selection is one concrete model/effort pair, absent by default and
+  validated against this account. It applies only to manually account-directed runs without an earlier
+  model source; automatic rotation ignores it. Existing records without the field keep normal list
+  behavior.
 gui_related: false
 gui_classification_reason: The unit defines backend account schema and identity constraints rather than GUI presentation.
 split_recommended: true
@@ -2503,10 +2508,15 @@ plan_unit_id: MA-039
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: Account/profile rows display dense scan-friendly identity, auth, configuration, availability, pressure,
-  cooldown, entitlement, billing, health, and action state. Detailed usage/cooldown and requested/effective explanation
-  belongs in the inspector, Codex and Copilot rows preserve their real account/entity shape, OpenCode server profiles
-  expose connection readiness, and provider-level enable/disable changes future eligibility without destroying rows/defaults.
+canonical_text: >-
+  Account/profile rows display dense scan-friendly identity, auth, configuration, availability, pressure,
+  cooldown, entitlement, billing, health, and action state. Detailed usage/cooldown and
+  requested/effective explanation belongs in the inspector, Codex and Copilot rows preserve their real
+  account/entity shape, OpenCode server profiles expose connection readiness, and provider-level
+  enable/disable changes future eligibility without destroying rows/defaults. The selected account detail
+  offers its own optional model/depth picker (ai.accounts.default-model), filtered to this account; no
+  independent depth row. This affects manually directed runs only under Models §2, with existing binding
+  and no-silent-substitution rules intact.
 gui_related: true
 gui_classification_reason: The unit defines GUI account/profile row content, actions, and inspector boundaries.
 split_recommended: false
@@ -3999,7 +4009,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
-  Multi-Account owns requested/effective account identity for Goal Runtime worker, planner, evaluator, verifier, and adjudicator provider use. Goal Runtime consumes account identity and role scope, but does not redefine account stickiness, failover, quota pressure, or provider-account policy.
+  The Goal Runtime worker/planner/evaluator/verifier/adjudicator role cast is retired by DL-478. Goals use ordinary Assistant account selection. Multi-Account owns requested/effective account identity, account stickiness, failover, quota pressure, and provider-account policy; the old role words remain compatibility/source-lineage only and cannot restore Goal-owned account policy.
 gui_related: false
 gui_classification_reason: Requested/effective account identity and role-scoped provider-account policy are backend account-resolution behavior; F3-393 owns visible Settings placement.
 depends_on:
@@ -4009,9 +4019,9 @@ depends_on:
   - MS-108
 unblocks: []
 acceptance_criteria:
-  - Goal Runtime role execution can carry requested and effective account identity for worker, planner, evaluator, verifier, and adjudicator provider use.
+  - Goals use ordinary Assistant account selection and carry requested and effective account identity.
   - Multi-Account keeps ownership of account stickiness, failover, quota pressure, and provider-account policy.
-  - Goal Runtime consumes role-scoped account identity without redefining provider-account behavior.
+  - Goal Runtime consumes ordinary account identity without redefining provider-account behavior or restoring retired roles.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Goal Runtime account-identity resolver review

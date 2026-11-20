@@ -1,0 +1,856 @@
+{
+  "checkpoint-shard-generate": {
+    "label": "checkpoint-shard-generate",
+    "command": [
+      "python3",
+      "scripts/pm-shard-plans.py",
+      "--generate",
+      "--config",
+      "Plans/sharding_config.json"
+    ],
+    "exit_code": 0,
+    "seconds": 4.010164022445679,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:43:58.515339+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/checkpoint-shard-generate.json",
+    "sha256": "65feb14ff129839e8beeaf369bae0e6b6b785fb09d30a6ecbd0af083f791bcdf"
+  },
+  "checkpoint-index-generate": {
+    "label": "checkpoint-index-generate",
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "generate"
+    ],
+    "exit_code": 0,
+    "seconds": 54.10551595687866,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:44:52.626813+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/checkpoint-index-generate.json",
+    "sha256": "a8f10b23370c11f0818affcc520243b028156dadb60cc38bbce0604829be76bb"
+  },
+  "checkpoint-shard-check": {
+    "label": "checkpoint-shard-check",
+    "command": [
+      "python3",
+      "scripts/pm-shard-plans.py",
+      "--check",
+      "--config",
+      "Plans/sharding_config.json"
+    ],
+    "exit_code": 0,
+    "seconds": 30.060953378677368,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:45:22.694098+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/checkpoint-shard-check.json",
+    "sha256": "434b40c6c08273146c15e78d0dd6a02789a25a54f5e8e0966059d816649c1daa"
+  },
+  "checkpoint-index-validate": {
+    "label": "checkpoint-index-validate",
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "validate"
+    ],
+    "exit_code": 1,
+    "seconds": 52.11994791030884,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:46:14.822726+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/checkpoint-index-validate.json",
+    "sha256": "af009a2a0a6f6d7f40777756d3487fb982cdec6abff9db0874acf8a1a5e3dc2b"
+  },
+  "types-approval_requested": {
+    "label": "types-approval_requested",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "approval.requested"
+    ],
+    "exit_code": 0,
+    "seconds": 2.006002902984619,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:30:10.832415+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-approval_requested.json",
+    "sha256": "88dd68c83fca67ae9bc96f94413c3a7607d9eeb5cbc6e447e2decc6a5676c125"
+  },
+  "types-approval_granted": {
+    "label": "types-approval_granted",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "approval.granted"
+    ],
+    "exit_code": 0,
+    "seconds": 2.0063087940216064,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:30:12.845492+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-approval_granted.json",
+    "sha256": "6d0bd3ce5521cf6b118a418ffad4ca5568684f834aba00512bc96b34f218d2d3"
+  },
+  "types-approval_denied": {
+    "label": "types-approval_denied",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "approval.denied"
+    ],
+    "exit_code": 0,
+    "seconds": 2.005357503890991,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:30:14.857419+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-approval_denied.json",
+    "sha256": "255f5801e8dd9f1cafb92f4598c69f99124a74e8a09fff7a7416751689b443e0"
+  },
+  "types-approval_timeout": {
+    "label": "types-approval_timeout",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "approval.timeout"
+    ],
+    "exit_code": 0,
+    "seconds": 2.0044045448303223,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:30:16.867131+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-approval_timeout.json",
+    "sha256": "ae22d00968585afdf3f695244cfe5cffef425ff4b79c01564dd149eea8151428"
+  },
+  "types-config_migrated": {
+    "label": "types-config_migrated",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "config.migrated"
+    ],
+    "exit_code": 0,
+    "seconds": 2.006012439727783,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:30:18.880357+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-config_migrated.json",
+    "sha256": "af84e066bf321967756418e8618661e921029bf3e076dec59fe45884347973c9"
+  },
+  "types-gate_evaluation_started": {
+    "label": "types-gate_evaluation_started",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "gate.evaluation_started"
+    ],
+    "exit_code": 0,
+    "seconds": 2.0079832077026367,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:30:20.895307+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-gate_evaluation_started.json",
+    "sha256": "96d2507f35ccfce44aff3647886a85d3a6d5be84f9f60a4698c4224dc4faf69c"
+  },
+  "types-gate_failed": {
+    "label": "types-gate_failed",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "gate.failed"
+    ],
+    "exit_code": 0,
+    "seconds": 2.006969451904297,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:30:22.907107+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-gate_failed.json",
+    "sha256": "272da31e7569843ba82ce2275a7d663b828b60c90adb105baf292fa8055ad6e9"
+  },
+  "types-gate_passed": {
+    "label": "types-gate_passed",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "gate.passed"
+    ],
+    "exit_code": 0,
+    "seconds": 2.004939556121826,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:30:24.917639+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-gate_passed.json",
+    "sha256": "22eb52b5313ca1c5ef301754654a9dbda8570792dd4e8b1ddea8129af8b24323"
+  },
+  "types-requirements_clarification_requested": {
+    "label": "types-requirements_clarification_requested",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "requirements.clarification_requested"
+    ],
+    "exit_code": 0,
+    "seconds": 2.0078201293945312,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:30:26.931519+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-requirements_clarification_requested.json",
+    "sha256": "5a8a0147b5931de27e89d6649dcc602dae9e7a079623e17201ba55ea3dd3fb58"
+  },
+  "types-run_background_enqueued": {
+    "label": "types-run_background_enqueued",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "run.background_enqueued"
+    ],
+    "exit_code": 0,
+    "seconds": 2.008781671524048,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:30:28.947242+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-run_background_enqueued.json",
+    "sha256": "b143dc0d6a63eb5b717f14d5426a2106967e724ba2d9d8cd6d5157b163bcfaaa"
+  },
+  "types-tool_denied": {
+    "label": "types-tool_denied",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "tool.denied"
+    ],
+    "exit_code": 0,
+    "seconds": 2.0056614875793457,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:30:30.958638+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-tool_denied.json",
+    "sha256": "cd18a59e6e169ede2627036bccdae6b408602ee6b3cc959745fe33dca1e4c85a"
+  },
+  "types-tool_execution_completed": {
+    "label": "types-tool_execution_completed",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "tool.execution_completed"
+    ],
+    "exit_code": 0,
+    "seconds": 2.006856918334961,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:30:32.971217+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-tool_execution_completed.json",
+    "sha256": "81014beb700b0a17cc43c154846b7387b38c3ed9a34c94d8c28430637afac55d"
+  },
+  "types-tool_execution_started": {
+    "label": "types-tool_execution_started",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "tool.execution_started"
+    ],
+    "exit_code": 0,
+    "seconds": 2.006399631500244,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:30:34.990938+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-tool_execution_started.json",
+    "sha256": "5a09de2458ecf701a404b0dde5c85f7371bf0ce2be7f8661dcfe21394a369a9d"
+  },
+  "types-tool_invoked": {
+    "label": "types-tool_invoked",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "tool.invoked"
+    ],
+    "exit_code": 0,
+    "seconds": 6.01668906211853,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:30:41.013801+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-tool_invoked.json",
+    "sha256": "a3cec1335d0a6c4e9eaf607d62551495edcec67aecfd3a0f0a50d38f0fad5420"
+  },
+  "types-usage_event": {
+    "label": "types-usage_event",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "usage.event"
+    ],
+    "exit_code": 0,
+    "seconds": 18.044742107391357,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:30:59.065788+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-usage_event.json",
+    "sha256": "87245058fac7a76eff75c16339e267b9e102150fadde829be0e72859010ab2d1"
+  },
+  "types-worktree_created": {
+    "label": "types-worktree_created",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "worktree.created"
+    ],
+    "exit_code": 0,
+    "seconds": 2.0059943199157715,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:31:01.080785+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-worktree_created.json",
+    "sha256": "972246f2391714024e0961e534fd9382e6df72496707786d52687ca97b008704"
+  },
+  "types-worktree_deleted": {
+    "label": "types-worktree_deleted",
+    "command": [
+      "python3",
+      "scripts/pm-dt-number-type-sweep.py",
+      "--family",
+      "worktree.deleted"
+    ],
+    "exit_code": 0,
+    "seconds": 2.0305910110473633,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:31:03.142535+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/types-worktree_deleted.json",
+    "sha256": "e4ff90adfc0729e8402f233b7f4aedf3a738595cf79924e29ca521e4637615f6"
+  },
+  "checker": {
+    "label": "checker",
+    "command": [
+      "python3",
+      "scripts/pm-dt-event-contracts.py"
+    ],
+    "exit_code": 0,
+    "seconds": 58.12611365318298,
+    "memory_events": [],
+    "finished_at": "2026-11-05T06:59:45.350284+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/checker.json",
+    "sha256": "a74b3086edae60d5e5ed120b300bb7a32b1ffca69c7d9d84c756237e5b18084f"
+  },
+  "guards-approval_requested": {
+    "label": "guards-approval_requested",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "approval.requested"
+    ],
+    "exit_code": 0,
+    "seconds": 140.3528287410736,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:34:43.754427+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-approval_requested.json",
+    "sha256": "e4bc685d51d44e9b807237fdcfd23ec4f71d0d7851ecc82adc20204587aedd6c"
+  },
+  "guards-approval_granted": {
+    "label": "guards-approval_granted",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "approval.granted"
+    ],
+    "exit_code": 0,
+    "seconds": 154.3603072166443,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:37:18.182815+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-approval_granted.json",
+    "sha256": "df323ae61b7127d71c0bb9159693337eeb0617b6b677bed77c4c44ff66e0fec8"
+  },
+  "guards-approval_denied": {
+    "label": "guards-approval_denied",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "approval.denied"
+    ],
+    "exit_code": 0,
+    "seconds": 138.28011012077332,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:39:36.470704+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-approval_denied.json",
+    "sha256": "e8f0028b5217b95904c8ff2d0371f7d13b6d89150a8d95bc619bb0724b2108f1"
+  },
+  "guards-approval_timeout": {
+    "label": "guards-approval_timeout",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "approval.timeout"
+    ],
+    "exit_code": 0,
+    "seconds": 148.4605097770691,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:42:04.942038+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-approval_timeout.json",
+    "sha256": "0215235ebe653db388440e0e7fc0861800b35cd52769c8ff72c7a7169bff8876"
+  },
+  "guards-config_migrated": {
+    "label": "guards-config_migrated",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "config.migrated"
+    ],
+    "exit_code": 0,
+    "seconds": 110.23098254203796,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:01:35.593307+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-config_migrated.json",
+    "sha256": "db9420ec72846933bb6550c2acf12d4d330c45d62f0f8a277a102f79ef1d6ec0"
+  },
+  "guards-gate_evaluation_started": {
+    "label": "guards-gate_evaluation_started",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "gate.evaluation_started"
+    ],
+    "exit_code": 0,
+    "seconds": 146.2801673412323,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:55:27.000719+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-gate_evaluation_started.json",
+    "sha256": "c397470cf8cced9ee1e8bca268a7bf85a09817f680acdc824da03078b5df2398"
+  },
+  "guards-gate_failed": {
+    "label": "guards-gate_failed",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "gate.failed"
+    ],
+    "exit_code": 0,
+    "seconds": 156.31009340286255,
+    "memory_events": [],
+    "finished_at": "2026-11-05T05:58:03.318451+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-gate_failed.json",
+    "sha256": "a1055ab2d9cd2140ee1dab9dbbf973baf0eaf39a7c15bf106fc3a2e93c29ae2a"
+  },
+  "guards-gate_passed": {
+    "label": "guards-gate_passed",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "gate.passed"
+    ],
+    "exit_code": 0,
+    "seconds": 152.31205201148987,
+    "memory_events": [],
+    "finished_at": "2026-11-05T06:00:35.641276+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-gate_passed.json",
+    "sha256": "58e2b869c526668076210a664ec210b652bfb1469f19ac4c01ac7e8bb6a25194"
+  },
+  "guards-requirements_clarification_requested": {
+    "label": "guards-requirements_clarification_requested",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "requirements.clarification_requested"
+    ],
+    "exit_code": 0,
+    "seconds": 122.25052499771118,
+    "memory_events": [],
+    "finished_at": "2026-11-05T06:02:37.899238+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-requirements_clarification_requested.json",
+    "sha256": "08c310f08b57eedf7301942acf511198ff13f0ac28a1ebb86236ae2827d5b40f"
+  },
+  "guards-run_background_enqueued": {
+    "label": "guards-run_background_enqueued",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "run.background_enqueued"
+    ],
+    "exit_code": 0,
+    "seconds": 128.26850008964539,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:03:43.868922+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-run_background_enqueued.json",
+    "sha256": "059fe5b7a0c1a79e54264ec791a4ca8fedbab933931e1e0a3f4f7f44811fc151"
+  },
+  "guards-tool_denied": {
+    "label": "guards-tool_denied",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "tool.denied"
+    ],
+    "exit_code": 0,
+    "seconds": 166.37473678588867,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:06:30.383277+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-tool_denied.json",
+    "sha256": "5df66e108d2cd23d1da5c64668285927415a895e2033e57b8907e6a810958b6a"
+  },
+  "guards-tool_execution_completed": {
+    "label": "guards-tool_execution_completed",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "tool.execution_completed"
+    ],
+    "exit_code": 0,
+    "seconds": 110.22636461257935,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:08:20.616996+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-tool_execution_completed.json",
+    "sha256": "40caf0f8221be0423b859575f9c440614299f719f6adda1ad16cfba216349b97"
+  },
+  "guards-tool_execution_started": {
+    "label": "guards-tool_execution_started",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "tool.execution_started"
+    ],
+    "exit_code": 0,
+    "seconds": 110.21372103691101,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:10:10.836223+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-tool_execution_started.json",
+    "sha256": "0e8a0ae1e08d10e78731559b39bdca328c5855dac7c0a8d695df7f1eb18766e5"
+  },
+  "guards-tool_invoked": {
+    "label": "guards-tool_invoked",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "tool.invoked"
+    ],
+    "exit_code": 0,
+    "seconds": 370.81287240982056,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:16:21.674716+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-tool_invoked.json",
+    "sha256": "3269238c77b2d0add1579b5d3501cac0730e077be2ce86e04700af0425c8cafe"
+  },
+  "guards-usage_event": {
+    "label": "guards-usage_event",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "usage.event"
+    ],
+    "exit_code": 0,
+    "seconds": 1013.718423128128,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:33:15.400296+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-usage_event.json",
+    "sha256": "41c927e2aab0477fa502cd833255d968729aecd2209fed37a07422b12b41a05e"
+  },
+  "guards-worktree_created": {
+    "label": "guards-worktree_created",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "worktree.created"
+    ],
+    "exit_code": 0,
+    "seconds": 667.3672971725464,
+    "memory_events": [],
+    "finished_at": "2026-11-05T06:50:43.997429+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-worktree_created.json",
+    "sha256": "3ca0bbe158f67c0bb003e0f936170ee7cdc013a264b6c35dd69eca1415ca3895"
+  },
+  "guards-worktree_deleted": {
+    "label": "guards-worktree_deleted",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/cached-guard.py",
+      "worktree.deleted"
+    ],
+    "exit_code": 0,
+    "seconds": 134.25412321090698,
+    "memory_events": [],
+    "finished_at": "2026-11-05T06:52:58.264357+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guards-worktree_deleted.json",
+    "sha256": "d4bf7ba79866bc72a1add6bd6435f551e240d9166b7a97ad177d2051920fa9f8"
+  },
+  "reference-controls": {
+    "label": "reference-controls",
+    "command": [
+      "python3",
+      "scripts/pm-dt-guard-isolation.py",
+      "--references-only"
+    ],
+    "exit_code": 0,
+    "seconds": 805.699823141098,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:46:41.110082+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/reference-controls.json",
+    "sha256": "0cfa71008c8aeaf2ceb9d868df33fd4cd74bc0908d3cb8d5960b9a71192386ef"
+  },
+  "failure-probe": {
+    "label": "failure-probe",
+    "command": [
+      "python3",
+      "scripts/pm-dt-standing-checks.py",
+      "--failure-probe",
+      "approval.requested"
+    ],
+    "exit_code": 1,
+    "seconds": 56.116658449172974,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:47:37.234774+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/failure-probe.json",
+    "sha256": "cab0ff1c956ef40a5eb871833ddd9fdfae387f19555b28498a5b8d196259f9ba"
+  },
+  "storage-recovery": {
+    "label": "storage-recovery",
+    "command": [
+      "python3",
+      "scripts/pm-storage-recovery-contracts.py",
+      "--self-test"
+    ],
+    "exit_code": 0,
+    "seconds": 4.357934474945068,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:47:41.653332+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/storage-recovery.json",
+    "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
+  },
+  "storage-profile": {
+    "label": "storage-profile",
+    "command": [
+      "python3",
+      "scripts/pm-storage-profile-check.py"
+    ],
+    "exit_code": 1,
+    "seconds": 2.008178234100342,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:47:43.668066+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/storage-profile.json",
+    "sha256": "2ae3547ccf844ed510908987ec26a179e199a54365b8d75a0301b6cc392723c3"
+  },
+  "shard-generate": {
+    "label": "shard-generate",
+    "command": [
+      "python3",
+      "scripts/pm-shard-plans.py",
+      "--generate",
+      "--config",
+      "Plans/sharding_config.json"
+    ],
+    "exit_code": 0,
+    "seconds": 4.012345314025879,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:47:47.684889+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/shard-generate.json",
+    "sha256": "65feb14ff129839e8beeaf369bae0e6b6b785fb09d30a6ecbd0af083f791bcdf"
+  },
+  "index-generate": {
+    "label": "index-generate",
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "generate"
+    ],
+    "exit_code": 0,
+    "seconds": 42.09028387069702,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:48:29.782208+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/index-generate.json",
+    "sha256": "6d9591f781bbe660e78054bc0badabf1062e66ffb3d3f3af9df81f5ccdc0cc06"
+  },
+  "shard-check": {
+    "label": "shard-check",
+    "command": [
+      "python3",
+      "scripts/pm-shard-plans.py",
+      "--check",
+      "--config",
+      "Plans/sharding_config.json"
+    ],
+    "exit_code": 0,
+    "seconds": 18.044056177139282,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:48:47.835849+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/shard-check.json",
+    "sha256": "434b40c6c08273146c15e78d0dd6a02789a25a54f5e8e0966059d816649c1daa"
+  },
+  "index-validate": {
+    "label": "index-validate",
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "validate"
+    ],
+    "exit_code": 1,
+    "seconds": 42.09168982505798,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:49:29.934397+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/index-validate.json",
+    "sha256": "3c6dc490eec052f45616b4ad8579b50d129d40d5c3e057d61511485681bba4b0"
+  },
+  "cache-equivalence-approval_requested": {
+    "label": "cache-equivalence-approval_requested",
+    "command": [
+      "python3",
+      "scripts/pm-dt-guard-isolation.py",
+      "approval.requested"
+    ],
+    "exit_code": 0,
+    "seconds": 208.47830843925476,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:52:58.438663+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/cache-equivalence-approval_requested.json",
+    "sha256": "372eb550e6bad2eda9b1bfa1c5940aaec3a9a644883c2a77fc994f4eb763845c"
+  },
+  "cache-equivalence-config_migrated": {
+    "label": "cache-equivalence-config_migrated",
+    "command": [
+      "python3",
+      "scripts/pm-dt-guard-isolation.py",
+      "config.migrated"
+    ],
+    "exit_code": 0,
+    "seconds": 208.4284052848816,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:56:26.875257+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/cache-equivalence-config_migrated.json",
+    "sha256": "a2a8ccc2b0c9adacdd78cc9cc55bbb0f50693056916218a50e7b2e8811c79aa5"
+  },
+  "aggregate-result": {
+    "label": "aggregate-result",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/aggregate-final.py"
+    ],
+    "exit_code": 0,
+    "seconds": 8.020551681518555,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:56:47.433069+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/aggregate-result.json",
+    "sha256": "53b10972cfe163b12a439a156e0ae000ad8d90286e13d45aa6ee3e53fa791d86"
+  },
+  "number-sweep-handoff": {
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/number-sweep-handoff.json",
+    "sha256": "b6a2a18c24c810d3ba718da87074dc56ecfae9f5f6c27bb3c33e3147142c5c47",
+    "status": "diagnostic_deferred_sweep"
+  },
+  "cache-compare-approval_requested": {
+    "label": "cache-compare-approval_requested",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/compare-cache.py",
+      "approval.requested"
+    ],
+    "exit_code": 0,
+    "seconds": 2.0068717002868652,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:56:51.475155+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/cache-compare-approval_requested.json",
+    "sha256": "524eab63d7990dc7afae3299faa57a4fe61ecebbfc5668e3346a2c0005336178"
+  },
+  "cache-compare-config_migrated": {
+    "label": "cache-compare-config_migrated",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/compare-cache.py",
+      "config.migrated"
+    ],
+    "exit_code": 0,
+    "seconds": 2.0069737434387207,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:56:53.488421+00:00",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/cache-compare-config_migrated.json",
+    "sha256": "052df0535d168405946e4cc64227c837eceba40f86ee3b542a91437c821abb56"
+  },
+  "baseline-comparisons": {
+    "label": "baseline-comparisons",
+    "command": [
+      "python3",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/final-evidence.py",
+      "baseline"
+    ],
+    "exit_code": 1,
+    "seconds": 2.007805347442627,
+    "memory_events": [],
+    "finished_at": "2026-11-05T07:56:55.502890+00:00",
+    "superseded_reason": "Initial exact-equality comparison found new upstream PLS-025 on a byte-unchanged file; final comparison records it explicitly as unrelated integration work.",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/baseline-comparisons.json",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "baseline-comparisons-final": {
+    "label": "baseline-comparisons-final",
+    "command": [
+      "python3",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/final-evidence.py",
+      "baseline"
+    ],
+    "exit_code": 0,
+    "seconds": null,
+    "finished_at": "2026-11-05T07:59:09.812034+00:00",
+    "record_note": "Actual successful command output captured in baseline-comparisons-final.json; original failed comparison is retained.",
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/baseline-comparisons-final.json",
+    "sha256": "aaa96b733e8a0d81ff196f3c3cf70a0456cf8c9a70f6a454b2d66641e9fd716a"
+  },
+  "guard-summary": {
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/guard-summary.json",
+    "sha256": "193f7cfec3812fb62afde7baa0012a8a6a15f02e0bb05dce10846dcf3d5231fa",
+    "status": "pass"
+  },
+  "grade-evidence-check": {
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/grade-evidence-check.json",
+    "sha256": "8d3ff03eb2e7b5cebba3bfd67625360fe919789dbd0eb141f9ef2f07da513848",
+    "status": "pass"
+  },
+  "index-baseline-comparison": {
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/index-baseline-comparison.json",
+    "sha256": "43d82e94fe1477adda1cafe96d20dc875ac0e3576de224604e7ab062590c60ae",
+    "status": "unchanged_baseline_plus_unrelated_upstream_advance"
+  },
+  "storage-profile-comparison": {
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/storage-profile-comparison.json",
+    "sha256": "05bcdac169e8aeeb2a414782ee244ca933de0ee19c08f250558c3a33f998f6fb",
+    "status": "unchanged_baseline_errors"
+  },
+  "cache-equivalence-summary-approval_requested": {
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/cache-equivalence-summary-approval_requested.json",
+    "sha256": "c353b7b069a3dee984066f6f8a36a4d49f2e36dd1025758a2a421a84e253422c",
+    "status": "pass"
+  },
+  "cache-equivalence-summary-config_migrated": {
+    "evidence_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/fix6/final/cache-equivalence-summary-config_migrated.json",
+    "sha256": "338a41e50a70b68a8073580a0ce9191515f136e7550a8aafc7c94ee985a74ce1",
+    "status": "pass"
+  },
+  "scope": {
+    "branch": "plans/ea-w2-tools-gates-approvals-20261104",
+    "implementation_head": "417200479ddff92213b905e9ecdbb3d6fea87692",
+    "numeric_domain_disposition": "F16 deferred to shared CV-1100/SP-1100/SP-1101 NUMRULE sweep by Jared; all new caps and recipe selection removed",
+    "native_execution": "NOT_RUN"
+  },
+  "current_sweep": {
+    "phase": "sweep_part1",
+    "source_head": "8f7c9515f1d79f2ecd13c177bdeea5ec68bb1fa6",
+    "record": "reports/event-authority-20261104/DT-sweep-p1.json",
+    "record_sha256": "aa89ac228a6d1c5aa281d1ca30e5e520e48904adba09e6354e2e97672008116a",
+    "ready": false,
+    "guard_proof_status": "PART2_PENDING",
+    "prior_entries": "fix-6 historical evidence at their recorded source revisions; superseded for current grades/status",
+    "evidence": {
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/checker-final.json": "a74b3086edae60d5e5ed120b300bb7a32b1ffca69c7d9d84c756237e5b18084f",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/ds15-contract-reference.json": "98a18db62e1d1a798b3fdb3eb8040c0a91d6c3cb8dbd6992cbb4aec0239825a8",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/emission-regression.json": "ce4f437deece3c6d1487b521e3fc619335b2e67730590d23269b6848d3f2daef",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/emission-regression.py": "4e9ebf46b1b20fd37e56994ee70d44e20b847e5bcd2b2e07b44e631499458355",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/emission-regression.stdout.json": "a241be82dea75ba9ea5797686742324d2fa057cc80b1eccc2daecb44b9bf2a35",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/grade-comparison.json": "0c6de67943db77072bc08fe01dedca53aca9dc30bf42d05ccae68d034cf67701",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/index-generate.json": "30ab2faed7bf76eafa974ef8348d6860e09b291c4d67d4b43a3f18ddc2d8a3f3",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/index-validate.json": "99f4a8860a2dcfe5c5bad6633023d5f0282c31134300dc02b51e3ffff453378f",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/large-retry-summary.json": "95feeb7a53aa428fa06c7f7ff50fad246dd93b903a94a5ba9ad51d3a67e73e4a",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/large-retry.json": "9895d0ec016bc8a3b1abf78ccad9ad4ec2ee1000863db0cbcde0ed46a7722330",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/large-retry.py": "cd1cf40deaf6e3e73485ebbca651705b4c5455f85aa57eb7c789136e8593e4df",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/scope-and-number-preservation.json": "27cfa17a2017736315c47882df137ed6696ab3786cc56437db26ed1cc7ff4ff8",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/shard-check.json": "bb0bee76498588bda400411e345702fc74d0a79997d931d7b950958cb9bc0004",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/shard-generate.json": "26c095b4864c76a28018bcd03b437fcc746f08c9e59dcd1128e26285351e8f53",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/storage-profile-comparison.json": "87290dfdd9ab29715d4d58f01947fdd0ccebe67e0835703555070b72ab638059",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/storage-profile-main.json": "89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/storage-profile.json": "2ae3547ccf844ed510908987ec26a179e199a54365b8d75a0301b6cc392723c3",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/storage-recovery.json": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/targeted-checks.json": "03aaf76336d96a2cc7a42adfe9876e75107c2f632aeee0f7793d6a03cd449b91",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/type-sweep-summary.json": "d4bcf1cb3d614e5c45a1b272d53b67bd986baeb0fb3a9cad26e3e6260841c6fd",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/type-sweep.json": "ab59290dee05d9a6dc9c9280b0ccbb4d0a4ea407be31b009e140742c5ca50cf6",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p1/type-sweep.py": "328eb00681155a597cbb8eb8878eb737f998700eb88742d0d78eb141d52de386"
+    }
+  }
+}

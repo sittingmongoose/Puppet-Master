@@ -1,0 +1,1043 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.debug_investigation.events.v1",
+  "$defs": {
+    "context_item_added": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "item_id",
+        "item_kind",
+        "source_surface",
+        "state",
+        "summary",
+        "redaction_state"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "item_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "item_kind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_surface": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "state": {
+          "enum": [
+            "active",
+            "redacted",
+            "revoked",
+            "blocked",
+            "expired",
+            "omitted"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "artifact_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "redaction_state": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "$id": "pm.debug_investigation.context_item_added.schema.v1"
+    },
+    "context_item_state_changed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "item_id",
+        "previous_state",
+        "state"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "item_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "previous_state": {
+          "enum": [
+            "active",
+            "redacted",
+            "revoked",
+            "blocked",
+            "expired",
+            "omitted"
+          ]
+        },
+        "state": {
+          "enum": [
+            "active",
+            "redacted",
+            "revoked",
+            "blocked",
+            "expired",
+            "omitted"
+          ]
+        },
+        "reason_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "$id": "pm.debug_investigation.context_item_state_changed.schema.v1"
+    },
+    "exported": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "bundle_id",
+        "schema_id",
+        "item_count",
+        "artifact_count",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "bundle_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "schema_id": {
+          "const": "pm.investigation_bundle.schema.v1"
+        },
+        "item_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "artifact_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redaction_profile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "$id": "pm.debug_investigation.exported.schema.v1"
+    },
+    "imported": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "bundle_id",
+        "source_kind",
+        "schema_id",
+        "imported_target_kind"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "bundle_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_kind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "schema_id": {
+          "const": "pm.investigation_bundle.schema.v1"
+        },
+        "imported_target_kind": {
+          "const": "imported_bundle"
+        }
+      },
+      "$id": "pm.debug_investigation.imported.schema.v1"
+    },
+    "instrumentation_state_changed": {
+      "$id": "pm.debug_investigation.instrumentation_state_changed.schema.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "investigation_id",
+        "operation_id",
+        "instrumentation_id",
+        "scope_kind",
+        "reason_code",
+        "detail_ref",
+        "schema_version",
+        "previous_state",
+        "state",
+        "previous_rollback_state",
+        "rollback_state"
+      ],
+      "properties": {
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "instrumentation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope_kind": {
+          "enum": [
+            "env_config_activation",
+            "ephemeral_tool_install",
+            "wrapper_launcher",
+            "temporary_source_patch",
+            "debugger_or_profiler_attach"
+          ]
+        },
+        "reason_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "detail_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "previous_state": {
+          "enum": [
+            "planned",
+            "active",
+            "collecting",
+            "cleanup_pending",
+            "cleanup_failed",
+            "cleaned"
+          ]
+        },
+        "state": {
+          "enum": [
+            "planned",
+            "active",
+            "collecting",
+            "cleanup_pending",
+            "cleanup_failed",
+            "cleaned"
+          ]
+        },
+        "previous_rollback_state": {
+          "enum": [
+            "not_needed",
+            "pending",
+            "succeeded",
+            "failed",
+            "superseded"
+          ]
+        },
+        "rollback_state": {
+          "enum": [
+            "not_needed",
+            "pending",
+            "succeeded",
+            "failed",
+            "superseded"
+          ]
+        }
+      }
+    },
+    "started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "project_id",
+        "initiator_surface",
+        "target_kind",
+        "target_locator_summary",
+        "requested_mode_overlay",
+        "effective_mode_overlay",
+        "runtime_mode"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "initiator_surface": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_kind": {
+          "enum": [
+            "dev_session",
+            "browser_target",
+            "dap_session",
+            "agent_session",
+            "imported_bundle"
+          ]
+        },
+        "target_locator_summary": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "requested_mode_overlay": {
+          "enum": [
+            "none",
+            "plan",
+            "deep_plan",
+            "debug",
+            "interview",
+            "brainstorm",
+            "crew"
+          ],
+          "$comment": "Closed by Plans/assistant-chat-design.md 'Canonical enum closure' (requested_mode_overlay/effective_mode_overlay)."
+        },
+        "effective_mode_overlay": {
+          "enum": [
+            "none",
+            "plan",
+            "deep_plan",
+            "debug",
+            "interview",
+            "brainstorm",
+            "crew"
+          ],
+          "$comment": "Closed by Plans/assistant-chat-design.md 'Canonical enum closure' (requested_mode_overlay/effective_mode_overlay)."
+        },
+        "runtime_mode": {
+          "enum": [
+            "ask",
+            "plan",
+            "regular",
+            "yolo"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "$comment": "Chat 1.0B: selected Debug persists debug/debug.",
+          "if": {
+            "properties": {
+              "requested_mode_overlay": {
+                "enum": [
+                  "debug"
+                ]
+              }
+            },
+            "required": [
+              "requested_mode_overlay"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective_mode_overlay": {
+                "const": "debug"
+              }
+            }
+          }
+        },
+        {
+          "$comment": "Chat 1.0B/1.0C: Debug uses regular or explicit-opt-in yolo, never ask/plan.",
+          "if": {
+            "properties": {
+              "effective_mode_overlay": {
+                "enum": [
+                  "debug"
+                ]
+              }
+            },
+            "required": [
+              "effective_mode_overlay"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_mode_overlay": {
+                "const": "debug"
+              },
+              "runtime_mode": {
+                "enum": [
+                  "regular",
+                  "yolo"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "$comment": "Chat 1.0A/1.0C and 29.1: effective Plan/Deep Plan is read-only runtime plan. Approval handoff is a separate owner gate; no universal overlay clearing/equality.",
+          "if": {
+            "properties": {
+              "effective_mode_overlay": {
+                "enum": [
+                  "plan",
+                  "deep_plan"
+                ]
+              }
+            },
+            "required": [
+              "effective_mode_overlay"
+            ]
+          },
+          "then": {
+            "properties": {
+              "runtime_mode": {
+                "const": "plan"
+              }
+            }
+          }
+        }
+      ],
+      "$id": "pm.debug_investigation.started.schema.v1"
+    },
+    "target_bound": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "target_kind",
+        "target_bindings",
+        "binding_state"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_kind": {
+          "enum": [
+            "dev_session",
+            "browser_target",
+            "dap_session",
+            "agent_session",
+            "imported_bundle"
+          ]
+        },
+        "target_bindings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "owner_ref",
+            "target_ref",
+            "binding_revision",
+            "source_sha256"
+          ],
+          "properties": {
+            "owner_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "target_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "binding_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "source_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            }
+          }
+        },
+        "binding_state": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "$id": "pm.debug_investigation.target_bound.schema.v1"
+    },
+    "verification_recorded": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "verification_strength",
+        "verification_summary"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "verification_strength": {
+          "enum": [
+            "none",
+            "weak",
+            "strong"
+          ]
+        },
+        "verification_summary": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "artifact_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true,
+          "maxItems": 256
+        }
+      },
+      "$id": "pm.debug_investigation.verification_recorded.schema.v1"
+    },
+    "instrumentation_change_detail": {
+      "$id": "pm.debug_investigation.instrumentation_change_detail.schema.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "instrumentation_id",
+        "operation_id",
+        "target_ref",
+        "previous_owner_ref",
+        "owner_ref",
+        "proof_ref",
+        "recovery_ref",
+        "linked_work_ref",
+        "remaining_obligation_refs",
+        "whole_lane_never_needed_undoing",
+        "no_leftovers",
+        "removal_verified",
+        "retry_authorized",
+        "previous_attempt_failed",
+        "handoff_approved",
+        "durable_fix_approved",
+        "owner_accepted",
+        "handoff_pending",
+        "invasive",
+        "restore_receipt_verified",
+        "permission_verified",
+        "overlap_present",
+        "target_leftovers_present",
+        "target_leftovers_promoted",
+        "retry_count_before",
+        "retry_count_after",
+        "attempt_number",
+        "transition_kind",
+        "handoff_kind",
+        "handoff_committed"
+      ],
+      "properties": {
+        "instrumentation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "previous_owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "proof_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "recovery_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "linked_work_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "remaining_obligation_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "whole_lane_never_needed_undoing": {
+          "type": "boolean"
+        },
+        "no_leftovers": {
+          "type": "boolean"
+        },
+        "removal_verified": {
+          "type": "boolean"
+        },
+        "retry_authorized": {
+          "type": "boolean"
+        },
+        "previous_attempt_failed": {
+          "type": "boolean"
+        },
+        "handoff_approved": {
+          "type": "boolean"
+        },
+        "durable_fix_approved": {
+          "type": "boolean"
+        },
+        "owner_accepted": {
+          "type": "boolean"
+        },
+        "handoff_pending": {
+          "type": "boolean"
+        },
+        "invasive": {
+          "type": "boolean"
+        },
+        "restore_receipt_verified": {
+          "type": "boolean"
+        },
+        "permission_verified": {
+          "type": "boolean"
+        },
+        "overlap_present": {
+          "type": "boolean"
+        },
+        "target_leftovers_present": {
+          "type": "boolean"
+        },
+        "target_leftovers_promoted": {
+          "type": "boolean"
+        },
+        "retry_count_before": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "retry_count_after": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "transition_kind": {
+          "enum": [
+            "installation_succeeded",
+            "collection_started",
+            "collection_paused_or_finished",
+            "ended_never_needed",
+            "leftovers_require_cleanup",
+            "inspection_never_needed",
+            "removal_succeeded",
+            "removal_failed",
+            "retry_begins",
+            "retry_outcome_succeeded",
+            "retry_outcome_failed",
+            "responsibility_handoff",
+            "receiving_owner_begins",
+            "receiving_owner_cannot_retry",
+            "replacement_never_needed"
+          ]
+        },
+        "handoff_kind": {
+          "enum": [
+            "none",
+            "replacement",
+            "durable_fix"
+          ]
+        },
+        "handoff_committed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "state_changed": {
+      "$id": "pm.debug_investigation.state_changed.schema.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "previous_state",
+        "previous_phase",
+        "phase",
+        "state"
+      ],
+      "properties": {
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "attention_required_reason_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "stop_reason_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "budget_kind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "blocked_reason_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "previous_state": {
+          "enum": [
+            "active",
+            "blocked",
+            "attention_required",
+            "verifying",
+            "failed_cleanup",
+            "resolved",
+            "failed",
+            "cancelled",
+            "superseded"
+          ]
+        },
+        "state": {
+          "enum": [
+            "active",
+            "blocked",
+            "attention_required",
+            "verifying",
+            "failed_cleanup",
+            "resolved",
+            "failed",
+            "cancelled",
+            "superseded"
+          ]
+        },
+        "previous_phase": {
+          "enum": [
+            "target_binding",
+            "baseline_capture",
+            "instrumentation",
+            "reproduction",
+            "analysis",
+            "repair",
+            "verification",
+            "cleanup"
+          ]
+        },
+        "phase": {
+          "enum": [
+            "target_binding",
+            "baseline_capture",
+            "instrumentation",
+            "reproduction",
+            "analysis",
+            "repair",
+            "verification",
+            "cleanup"
+          ]
+        },
+        "verification_strength": {
+          "enum": [
+            "none",
+            "weak",
+            "strong"
+          ]
+        }
+      }
+    },
+    "lifecycle_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "phase",
+        "verification_qualified",
+        "cleanup_completed",
+        "documented_preservation_hold"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "active",
+            "blocked",
+            "attention_required",
+            "verifying",
+            "failed_cleanup",
+            "resolved",
+            "failed",
+            "cancelled",
+            "superseded"
+          ]
+        },
+        "phase": {
+          "enum": [
+            "target_binding",
+            "baseline_capture",
+            "instrumentation",
+            "reproduction",
+            "analysis",
+            "repair",
+            "verification",
+            "cleanup"
+          ]
+        },
+        "verification_qualified": {
+          "type": "boolean"
+        },
+        "cleanup_completed": {
+          "type": "boolean"
+        },
+        "documented_preservation_hold": {
+          "type": "boolean"
+        }
+      }
+    },
+    "instrumentation_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "instrumentation_id",
+        "scope_kind",
+        "target_ref",
+        "owner_ref",
+        "state",
+        "cleanup_result",
+        "retry_count",
+        "previous_attempt_failed",
+        "handoff_pending"
+      ],
+      "properties": {
+        "instrumentation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope_kind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "state": {
+          "enum": [
+            "planned",
+            "active",
+            "collecting",
+            "cleanup_pending",
+            "cleanup_failed",
+            "cleaned"
+          ]
+        },
+        "cleanup_result": {
+          "enum": [
+            "not_needed",
+            "pending",
+            "succeeded",
+            "failed",
+            "superseded"
+          ]
+        },
+        "retry_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "previous_attempt_failed": {
+          "type": "boolean"
+        },
+        "handoff_pending": {
+          "type": "boolean"
+        }
+      }
+    },
+    "cleanup_retry_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "retries_used",
+        "authorized"
+      ],
+      "properties": {
+        "retries_used": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "authorized": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

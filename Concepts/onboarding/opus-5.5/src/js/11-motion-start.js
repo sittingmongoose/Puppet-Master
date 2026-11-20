@@ -15,6 +15,58 @@
    not held invisible through the GPU's first draw; other moves still wait for the second. */
 (function () {
   'use strict';
+  /* PM_LOOK_HOLD (FO-188): the app beneath the onboarding window holds still while a look is revealed over it (README
+     Performance rule 6). A look picked in the window plays one View Transition, a circular reveal of 760 ms (Retro 520 ms),
+     and the app's own work for the new look ran inside it: the chat redrew itself (515 ms on the VM), Home, the terminal
+     and the editor applied the look (98 ms in one frame), with the window's own work on top, so the reveal stuttered and
+     lurched (Jared's QA, 2026-11-13: tasks of 50 to 450 ms and frame gaps up to 880 ms on a fast PC). The colours still
+     change at once (CSS); what the app does in script for a look waits until the reveal has ended.
+       PM_LOOK_HOLD()         true while a reveal plays (60-ui-core.js applyLook holds it from the theme's write to the
+                              reveal's end)
+       PM_LOOK_HOLD.after(fn) while held: fn is kept (once) and run after it, and the answer is true; else false, and the
+                              caller runs fn itself as before
+       PM_LOOK_HOLD.begin()   holds; returns end(), which a reveal calls once
+     What was kept runs once the reveal has ended, in idle slices in the order asked: the frame after the reveal's last
+     one is the browser's own restyle of the whole page (the transition ending, about 4,800 elements), and one task doing
+     all of it after that was a long task of its own. A slice runs jobs until 6 ms have gone (at least one): a reveal
+     keeps dozens of after-layout callbacks, whose asking again costs nothing, and one job a slice left the chat's redraw
+     waiting behind them for 0.7 to 2 s after the reveal (Alexis, kit check perf-look-change), the dimmed app showing
+     the old family's glyphs all that time. A new reveal starting meanwhile holds the rest again. */
+  let lookHolds = 0, lookIdle = 0;
+  const lookLater = [];
+  const lookNext = () => {
+    lookIdle = 0;
+    const t0 = performance.now();
+    while (!lookHolds && lookLater.length) {
+      const fn = lookLater.shift();
+      try { fn(); } catch (e) { try { console.error('[PM_LOOK_HOLD]', e); } catch (_) { /* none */ } }
+      if (performance.now() - t0 >= 6) break;
+    }
+    if (lookLater.length) lookSlice();
+  };
+  const lookSlice = () => {
+    if (lookIdle || lookHolds) return;
+    lookIdle = 1;
+    if (window.requestIdleCallback) window.requestIdleCallback(lookNext, { timeout: 200 });
+    else setTimeout(lookNext, 16);
+  };
+  window.PM_LOOK_HOLD = function lookHold() { return lookHolds > 0; };
+  window.PM_LOOK_HOLD.after = function after(fn) {
+    if (!lookHolds || typeof fn !== 'function') return false;
+    if (lookLater.indexOf(fn) < 0) lookLater.push(fn);
+    return true;
+  };
+  window.PM_LOOK_HOLD.begin = function begin() {
+    lookHolds++;
+    let open = true;
+    return function end() {
+      if (!open) return;
+      open = false;
+      if (--lookHolds > 0) return;
+      /* past the frame of the transition's own end restyle, then the slices */
+      requestAnimationFrame(() => requestAnimationFrame(lookSlice));
+    };
+  };
   /* PM_AFTER_LAYOUT(fn): fn runs in the coming frame after its style and layout, before its paint (a ResizeObserver
      delivery), so what it reads is already computed. One observer, made as this script loads, serves every caller:
      ResizeObservers are told in the order they were made, and one made at the moment it was needed was told after the
@@ -24,13 +76,23 @@
      Never ask from inside another ResizeObserver's callback: that code already runs after layout, so do the work there.
      The root observed from inside a delivery cannot be delivered in that frame; the browser reports it as a
      'ResizeObserver loop' error and fn runs a frame late (the panels' bodyObserver asking for its resize flush, F4
-     settle bisect). Asked from inside this helper's own delivery, fn is moved to the next frame on purpose. */
-  const afterQ = [];
+     settle bisect). Asked from inside this helper's own delivery, fn is moved to the next frame on purpose.
+     While a look is revealed over the window (PM_LOOK_HOLD above) only the window's own callers run here (marked with
+     PM_AFTER_LAYOUT.own: the moves held for a frame on time, the hover tokens); every other one
+     is the app beneath applying the look (Home's render and tab bodies, the terminal's and editor's look, the rail's fit,
+     the wallpaper's reads), and is kept until the reveal has ended, then asked again, one per idle slice. */
+  const afterQ = [], afterOwn = new WeakSet(), afterHeld = new Set();
   let afterRo = null, observing = false, flushing = false, flushedAt = null;
   const watch = () => { if (!observing && afterQ.length) { observing = true; afterRo.observe(document.documentElement); } };
+  const afterHold = (fn) => {
+    if (afterHeld.has(fn)) return;
+    afterHeld.add(fn);
+    window.PM_LOOK_HOLD.after(() => { afterHeld.delete(fn); window.PM_AFTER_LAYOUT(fn); });
+  };
   const flushAfter = () => {
     if (afterRo && observing) { afterRo.unobserve(document.documentElement); observing = false; }
-    const q = afterQ.splice(0);
+    let q = afterQ.splice(0);
+    if (lookHolds) q = q.filter((fn) => { if (afterOwn.has(fn)) return true; afterHold(fn); return false; });
     flushing = true;
     flushedAt = document.timeline.currentTime;
     for (const fn of q) { try { fn(); } catch (e) { try { console.error('[PM_AFTER_LAYOUT]', e); } catch (_) { /* none */ } } }
@@ -50,6 +112,8 @@
     if (flushedAt != null && flushedAt === document.timeline.currentTime) { requestAnimationFrame(watch); return; }
     watch();
   };
+  /* the window's own callers: never held by a look's reveal (above) */
+  window.PM_AFTER_LAYOUT.own = function own(fn) { if (typeof fn === 'function') afterOwn.add(fn); return fn; };
   window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
     const max = (o && o.frames) || 6, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
     /* o.wait: () => bool. While it says true the moves stay held, even when the frames are on time, for at most o.waitCap
@@ -112,7 +176,8 @@
     /* Each check runs in its frame after layout (PM_AFTER_LAYOUT, before paint), so reading
        the moves (getAnimations for CSS animations) finds style already computed: from an animation frame callback it
        forced that frame's style early (49.7 ms on the P1000 for the customizer's six panels, editor lane). What the
-       check changes is drawn in the same frame. */
+       check changes is drawn in the same frame. A look's reveal never holds it (PM_AFTER_LAYOUT.own). */
+    window.PM_AFTER_LAYOUT.own(tick);
     const next = () => requestAnimationFrame(() => window.PM_AFTER_LAYOUT(tick));
     next();
   };
@@ -269,7 +334,10 @@
        judged: by the two rAF intervals after the step's frame (the first is where a GPU compile holds the next frame)
          and, for a GPU step, every interval of its watch, until 300 ms after its frame, since on the P1000 its programs
          link 100-350 ms after its frame, when the tiles raster (frameMs [d1, d2, worst later]); the next admission waits
-         for the watch, so links never stack across steps. Late (v3.9) is any of them over 100 ms, the acceptance bar;
+         for the watch, so links never stack across steps. The watch runs while a computer shows it is needed (pm7-perf
+         lane B): from the start and after any interval over the slow bar; after 16 watched steps in a row with every
+         interval on time (25 ms) a GPU step is judged by its two intervals, logged watched: false, until a slow
+         interval comes again. Late (v3.9) is any of them over 100 ms, the acceptance bar;
          slow is one over max(40 ms, 3x the median refresh) but not over 100 ms, logged 'slow': one program linked (45-84
          ms on the P1000) is warm then, so a slow step takes the clean path, and only ends a light chain and holds light
          steps to one a frame pair for 2 s. A cpu step (it makes no GPU work) keeps two intervals: in a long slot the two
@@ -279,7 +347,8 @@
        light (one kind, <= 2 ms of JS): judged by the one interval after it; the owner's next step, if light, may go in
          the next frame (one per frame) while that interval is under the slow bar, every gate holds, no frame was slow or
          late in the last 2 s and the chain is under
-         100 ms (its owner's turn, v3.6 item 3); the chain's last step gets the 300 ms watch.
+         100 ms (its owner's turn, v3.6 item 3); the chain's last step gets the 300 ms watch (while it is needed; else
+         the interval after its own).
        late: onLate({ name, late, dropped: false }); true means the owner handled it (split it, moved it), otherwise it
          goes to the end of its owner's line once, and late twice it is dropped (onLate with dropped: true). The wait
          after a late step is 1 s, doubling to 8 s; 3 clean steps reset it. 3 late in a row stop the queue until
@@ -293,9 +362,12 @@
      add({ owner, name, run, near, later, light, cpu, until, onLate }) -> id; cancel(id), cancelOwner(owner), state(owner?)
      { queued, dropped, backoffMs, lateRun, stopped, session, off, running, lateCount, waiting: the gate that held the
      last try ('idle', 'frames', 'input', 'animation', ...) }; window.__pmWarmLog (also PM_WARM.log): the last 200
-     { owner, name, t, at (the step's frame), cpuMs, frameMs, late, outcome }. 'pm-warm-done' on window when the queue
-     empties, at the session stop, and after an add skipped with nothing queued (warming off), so an owner that waits
-     for it never waits on a software-rendered computer */
+     { owner, name, t, at (the step's frame), cpuMs, frameMs, late, outcome, watched: false on a GPU step judged without
+     its watch, steadyMs / slowMs (the adaptive watch bars, rounded to 0.1 ms), slow1 / steady1 and slow2 / steady2
+     (the slow bar and the steady bar in effect when the step's two intervals, d1 and d2, were judged, rounded to
+     0.1 ms), resetAt (0, or 1 or 2 for the interval that set the steady-watch count back to zero), watchReset: true
+     on the first row after an interval that no row shows set that count back to zero (watchClean, below) }. 'pm-warm-done' on window when the queue empties, at the session stop, and after an add skipped with
+     nothing queued (warming off), so an owner that waits for it never waits on a software-rendered computer */
   const warmFlag = (v) => { try { return new RegExp('(?:^|[?&])pm-warm=' + v + '(?:&|$)').test(location.search); } catch (_) { return false; } };
   const warmOff = warmFlag('0'), warmForce = warmFlag('force');
   /* softwareRendered() says false until its worker has answered, so only a known answer is kept (landing review IW-1) */
@@ -314,7 +386,8 @@
   let warmSeq = 0, warmLastOwner = '', warmTimer = 0, warmIdle = 0, warmBusy = false, warmRunning = null,
     warmBackoff = 0, warmUntil = 0, warmClean = 0, warmLateRun = 0, warmLateCount = 0, warmLateAt = -1e9,
     warmStops = 0, warmStopped = false, warmSession = false, warmStopTimer = 0, warmDoneTimer = 0,
-    warmInput = -1e9, warmWaitMs = 0, warmQuietSince = 0, warmVis = 0, warmD1 = 0, warmD2 = 0, warmClassing = false, warmWhy = '';
+    warmInput = -1e9, warmWaitMs = 0, warmQuietSince = 0, warmVis = 0, warmD1 = 0, warmD2 = 0, warmClassing = false, warmWhy = '',
+    watchClean = 0, watchResets = 0, watchUnseen = false;
   const listen = (t, fn) => window.addEventListener(t, fn, { capture: true, passive: true });
   ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((t) => listen(t, () => { warmInput = performance.now(); }));
   /* shown again: the quiet clock starts again (review WQ5-3) */
@@ -329,6 +402,9 @@
   const animOn = (k) => (e) => {
     const el = e.target;
     if (!el || el.nodeType !== 1) return;
+    /* a View Transition's own pseudo-elements (a look's reveal) end with it and are no motion of the page's: counted, the
+       lookup asked <html> for every animation under it, 196 ms inside a Light reveal on the VM (FO-188, variant B) */
+    if (e.pseudoElement && e.pseudoElement.indexOf('::view-transition') === 0) return;
     let m = warmAnims.get(el);
     if (!m) warmAnims.set(el, (m = new Map()));
     const now = performance.now();
@@ -362,7 +438,10 @@
     return st;
   };
   /* in PM_AFTER_LAYOUT: style is computed, so reading an element's animations forces nothing. Only an element counted for
-     a pseudo-element's animation is asked for its subtree, which walks every element under it (shell's review) */
+     a pseudo-element's animation is asked for its subtree, which walks every element under it (shell's review). While a
+     look is revealed over the window this lookup waits for the reveal's end like the app's callers (PM_LOOK_HOLD): one
+     getAnimations per counted element, it was 112-115 ms inside a Light reveal on the VM (FO-188, variant B), and the
+     warm queue does nothing while the window is open anyway (PM_BUSY: 'onboarding'). */
   const classify = () => {
     warmClassing = false;
     const now = performance.now();
@@ -391,10 +470,24 @@
     const s = warmDeltas.slice().sort((a, b) => a - b);
     return s[Math.floor(s.length / 2)];
   };
+  /* Log-only snapshots: no gate, timer or watch decision reads these. */
+  let watchSteadyLog = null, watchSlowLog = null;
+  let slow1Log = null, steady1Log = null, slow2Log = null, steady2Log = null, resetAtLog = 0;
   const lateMs = () => Math.max(40, 3 * median());
   const onTime = (d) => d <= 1.5 * median();
-  const note = (d) => {
-    if (d > lateMs()) warmLateAt = performance.now();
+  /* which is 1 or 2 when this interval is the step's d1 or d2; admission frames and watch frames omit it */
+  const note = (d, which) => {
+    watchSlowLog = lateMs(); // the slow bar before this noted interval enters the rolling median
+    if (which === 1 || which === 2) {
+      const steadyBar = Math.max(STEADY_MS, 1.5 * median());
+      if (which === 1) { slow1Log = watchSlowLog; steady1Log = steadyBar; }
+      else { slow2Log = watchSlowLog; steady2Log = steadyBar; }
+    }
+    /* over the slow bar: the watch is needed again (watchClean, below) */
+    if (d > lateMs()) {
+      warmLateAt = performance.now(); watchClean = 0; watchResets++;
+      if ((which === 1 || which === 2) && resetAtLog === 0) resetAtLog = which;
+    }
     warmD1 = warmD2; warmD2 = d;
     warmDeltas.push(d); if (warmDeltas.length > 30) warmDeltas.shift();
   };
@@ -416,7 +509,26 @@
   const LASTING = { hidden: 1, busy: 1, input: 1, pending: 1 };
   const quiet = () => { warmWhy = blocked(); if (LASTING[warmWhy]) warmQuietSince = performance.now(); return !warmWhy; };
   const logStep = (st, cpuMs, frameMs, late, outcome) => {
-    warmLog.push({ owner: st.owner, name: st.name, t: Math.round(performance.now()), at: st.at ? Math.round(st.at) : null, cpuMs: Math.round(cpuMs * 10) / 10, frameMs: frameMs, late: late, outcome: outcome });
+    const row = { owner: st.owner, name: st.name, t: Math.round(performance.now()), at: st.at ? Math.round(st.at) : null, cpuMs: Math.round(cpuMs * 10) / 10, frameMs: frameMs, late: late, outcome: outcome };
+    if (!st.cpu) {
+      row.steadyMs = Math.round((watchSteadyLog == null ? Math.max(STEADY_MS, 1.5 * median()) : watchSteadyLog) * 10) / 10;
+      row.slowMs = Math.round((watchSlowLog == null ? lateMs() : watchSlowLog) * 10) / 10;
+    }
+    /* the bars d1 and d2 were judged against, and which of them reset the count; absent on a row that judged neither */
+    if (slow1Log != null && steady1Log != null && slow2Log != null && steady2Log != null) {
+      row.slow1 = Math.round(slow1Log * 10) / 10;
+      row.steady1 = Math.round(steady1Log * 10) / 10;
+      row.slow2 = Math.round(slow2Log * 10) / 10;
+      row.steady2 = Math.round(steady2Log * 10) / 10;
+      row.resetAt = resetAtLog;
+    }
+    watchSteadyLog = watchSlowLog = slow1Log = steady1Log = slow2Log = steady2Log = null;
+    resetAtLog = 0;
+    /* a GPU step judged without its watch (watching(), below) */
+    if (st.unwatched) row.watched = false;
+    /* the count of steady watches set back to zero by an interval no row shows (watchUnseen, at WATCH_KEEP below) */
+    if (watchUnseen) { row.watchReset = true; watchUnseen = false; }
+    warmLog.push(row);
     if (warmLog.length > 200) warmLog.shift();
   };
   const tell = (st, late, dropped) => {
@@ -500,7 +612,9 @@
     const vis = warmVis;
     requestAnimationFrame((tA) => requestAnimationFrame((tB) => requestAnimationFrame((tC) => {
       if (vis !== warmVis) { warmBusy = false; retry(); return; }
+      const r0 = watchResets;
       note(tB - tA); note(tC - tB);
+      if (watchResets !== r0) watchUnseen = true;   /* (no row shows these two: watchUnseen, at WATCH_KEEP below) */
       /* a frame off time is momentary: tried again in 250 ms, the wait not grown (v3.5 item 3) */
       if (!onTime(tB - tA) || !onTime(tC - tB)) { warmWhy = 'frames'; warmBusy = false; warmWake(250); return; }
       if (!quiet()) { warmBusy = false; if (!lookUp()) retry(); return; }
@@ -518,9 +632,40 @@
     return { cpu: performance.now() - c0, cleanup: typeof cleanup === 'function' ? cleanup : null };
   };
   const clean = (r) => { if (r.cleanup) { try { r.cleanup(); } catch (_) { /* none */ } } };
+  const WATCH_MS = 300, LATE_MS = 100;
+  /* the watch while a computer shows it is needed (pm7-perf lane B, 2026-11-11). Its frame loop makes the page draw a
+     main frame on every refresh for as long as GPU steps are queued, and they are queued for minutes after a load
+     (Usage's pass, then Glass's catalog: on the 3090 1,124 steps from +6 s to +317 s, 38 frames a step, 33 of them the
+     watch's; on the P1000 1,141 steps to +370 s). Where links land late (the P1000: 104 of 856 watched steps had a
+     40-100 ms interval only the watch saw) it spaces the steps, so their links never stack; where they do not, it only
+     costs frames. So it runs from the start, and again whenever the queue notes an interval over the slow bar (a step's
+     two, its watch's, the two admission frames'); once WATCH_KEEP watched GPU steps in a row came back with every
+     interval on time (STEADY_MS, or 1.5x the refresh on a slower display), a GPU step is judged by its two intervals
+     (a light chain's last by the two after it) and logged watched: false, until such a slow interval comes again. On
+     the P1000 the longest run of steady watches was 11 steps (three idle runs, 1,855 watched steps), so its watch stays;
+     on the 3090 812 of 838 watches were steady (runs up to 181), on the M3 all 772.
+     What the log says of it (for perf-warm-watch's replay; lane C3, the R1 review): a GPU step's row shows its own
+     intervals (frameMs; a watch by its worst), and two kinds of interval that also set watchClean back to zero show in
+     no row: the two frames looked at before a step is admitted (an admission attempt, admitted or not, writes no row),
+     and those of a step whose judging the page's hiding cut short (its row has frameMs null). When one of them was over
+     the slow bar, the next row logged, whatever it is (a step, or one 'skipped' or 'dropped' without frameMs), carries
+     watchReset: true: since the row before it, an interval over the slow bar that no row's frameMs shows set the count
+     of steady watches back to zero. Without it a replay of the log believed 16 steady watches still stood and called
+     the next, rightly watched, step needless. Only the log changes: watchResets counts every such reset, watchUnseen
+     holds the word until the next row. steadyMs captures the bar at watched(); slowMs captures note()'s latest slow
+     bar before inserting that interval. Rows without those decisions report the current bars. Both are rounded to
+     0.1 ms for replay: the later display-rate sample cannot stand in for this rolling 30-interval median.
+     A step's row also records the slow bar and the steady bar in effect when its d1 and its d2 were judged
+     (slow1, steady1, slow2, steady2) and resetAt, 0 or the interval (1 or 2) whose comparison set the count back
+     to zero. The median can move between those two judgments and the row's slowMs, so the endpoint bars are not
+     a bound on the bar d1 met (R53-C4). Admission frames and the watch's later frames are not d1 or d2 and leave
+     these fields unset. watchSteadyLog / watchSlowLog / slow1Log / steady1Log / slow2Log / steady2Log / resetAtLog
+     are log-only; the existing decisions below read their existing expressions. */
+  const WATCH_KEEP = 16, STEADY_MS = 25;
+  const watching = () => watchClean < WATCH_KEEP;
+  const watched = (frameMs) => { watchSteadyLog = Math.max(STEADY_MS, 1.5 * median()); watchClean = Math.max.apply(null, frameMs) <= Math.max(STEADY_MS, 1.5 * median()) ? watchClean + 1 : 0; };
   /* the watch after a GPU step (v3.5 item 1): the frames from the one at 'from' until 300 ms after the step's frame t;
      done(the worst of those intervals), or done(-1) when the page was hidden meanwhile */
-  const WATCH_MS = 300, LATE_MS = 100;
   const warmWatch = (t, from, vis, done) => {
     let prev = from, worst = 0;
     const tick = (x) => {
@@ -550,12 +695,12 @@
   /* a GPU step, in the frame at t */
   const runStep = (st, t) => {
     const vis = warmVis, limit = lateMs(), r = run(st);
-    st.at = t;
+    st.at = t; st.unwatched = false; st.resets0 = watchResets;
     requestAnimationFrame((a) => {
       clean(r);
       const d1 = a - t;
       if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
-      note(d1);
+      note(d1, 1);
       if (st.light) {
         /* the owner's next light step (FIFO) in this frame, while everything holds and the chain is under its 100 ms
            turn (v3.6 item 3); then the turn passes on */
@@ -565,22 +710,41 @@
           if (judge(st, r.cpu, [Math.round(d1)], limit)) return;
           nx.chain0 = c0; runStep(nx, a); return;
         }
-        /* the chain's last step: the watch */
+        /* the chain's last step: the watch, or while it is not needed the interval after this one */
+        if (!watching()) { unwatched(st, r.cpu, a, d1, vis, limit); return; }
         warmWatch(t, a, vis, (w) => {
           if (w < 0) { judge(st, r.cpu, null, limit); after(); return; }
-          if (!judge(st, r.cpu, [Math.round(d1), Math.round(w)], limit)) after();
+          const fm = [Math.round(d1), Math.round(w)];
+          watched(fm);
+          if (!judge(st, r.cpu, fm, limit)) after();
         });
         return;
       }
       requestAnimationFrame((b) => {
         const d2 = b - a;
         if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
-        note(d2);
+        note(d2, 2);
+        /* the watch not needed: judged by the two (a d1 or d2 over the slow bar has just made it needed, so this step
+           keeps it) */
+        if (!watching()) { st.unwatched = true; if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], limit)) after(); return; }
         warmWatch(t, b, vis, (w) => {
           if (w < 0) { judge(st, r.cpu, null, limit); after(); return; }
-          if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2), Math.round(w)], limit)) after();
+          const fm = [Math.round(d1), Math.round(d2), Math.round(w)];
+          watched(fm);
+          if (!judge(st, r.cpu, fm, limit)) after();
         });
       });
+    });
+  };
+  /* a light chain's last step while the watch is not needed: judged by d1 and the interval after it (d2); one of them
+     over the slow bar makes it needed again (note) for the next steps */
+  const unwatched = (st, cpuMs, a, d1, vis, limit) => {
+    requestAnimationFrame((b) => {
+      const d2 = b - a;
+      if (vis !== warmVis) { judge(st, cpuMs, null, limit); after(); return; }
+      note(d2, 2);
+      st.unwatched = true;
+      if (!judge(st, cpuMs, [Math.round(d1), Math.round(d2)], limit)) after();
     });
   };
   /* a cpu step, inside an idle callback, given its deadline. In a long slot it is judged by the two intervals after the
@@ -588,7 +752,7 @@
      pending a frame loop (1 s at most) keeps tLast, and it is judged by tLast -> a and a -> b, so its overrun of the
      ambient loop's frame counts; it goes back to the head of the line only when no idle callback comes within 1 s */
   const cpuStep = (st, tC) => {
-    warmRunning = st; st.at = tC;
+    warmRunning = st; st.at = tC; st.resets0 = watchResets;
     const vis = warmVis, limit = lateMs();
     let tLast = tC, waiting = true;
     const loop = (t) => { if (!waiting) return; tLast = t; if (t - tC < 1000) requestAnimationFrame(loop); };
@@ -603,11 +767,11 @@
       clean(r);
       if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
       const d1 = a - from;
-      note(d1);
+      note(d1, 1);
       requestAnimationFrame((b) => {
         const d2 = b - a;
         if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
-        note(d2);
+        note(d2, 2);
         if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], limit)) after();
       });
     };
@@ -631,6 +795,8 @@
      takes the clean path, logged 'slow'; it ends a light chain and holds light steps to one a frame pair for 2 s */
   const judge = (st, cpuMs, frameMs, limit) => {
     warmRunning = null;
+    /* left unjudged by the page's hiding: its intervals show in no row (watchUnseen, at WATCH_KEEP above) */
+    if (!frameMs && st.resets0 != null && watchResets !== st.resets0) watchUnseen = true;
     const worst = frameMs ? Math.max.apply(null, frameMs) : 0, late = worst > LATE_MS;
     if (!late) {
       const slow = worst > limit;

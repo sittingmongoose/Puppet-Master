@@ -1,0 +1,49 @@
+{
+  "schema_id": "pm.ds.sweep_p1.regrade.v1",
+  "applied_at_utc": "2026-11-05T16:09:15.841025+00:00",
+  "source_revision": "31a1f32d8e03300f29eff851732058a78a5fbe13",
+  "base_revision": "e42ce235b4711325ced818c777f070c3ee0d7952",
+  "before_revision": "da6e0aeba6aa837511cdb6094f49cbe136e03a65",
+  "files": [
+    {
+      "path": "reports/event-authority-20261104/DS.selfgrade.json",
+      "before_sha256": "829a7d36e0a5c7db374d5d0ba9172a069b1dad7ca6a1967909d8196278e5bdd1",
+      "after_sha256": "92db02cd01862178d0584b59030d4d9ebb05ab107d49373d68ba3fab0221e4c0"
+    }
+  ],
+  "status_counts": {
+    "PASS": 55,
+    "PARTIAL": 5
+  },
+  "grades": [
+    {
+      "event_type": "context.compaction.completed",
+      "before_pass_count": 11,
+      "after_pass_count": 11
+    },
+    {
+      "event_type": "browser.workspace.created",
+      "before_pass_count": 11,
+      "after_pass_count": 11
+    },
+    {
+      "event_type": "browser.workspace.reset",
+      "before_pass_count": 11,
+      "after_pass_count": 11
+    },
+    {
+      "event_type": "workspace.layout_changed",
+      "before_pass_count": 11,
+      "after_pass_count": 11
+    },
+    {
+      "event_type": "terminal.workgroup_moved",
+      "before_pass_count": 10,
+      "after_pass_count": 11
+    }
+  ],
+  "reanchored_citations": 95,
+  "guard_isolation": "PARTIAL",
+  "historical_assessment_and_admission_pins": "unchanged",
+  "ledger_note": "No audit ledger or row is changed in this sweep; the parent reconciles canonical grade projections under LEDGER_WRITE_RULE. No admission is made."
+}

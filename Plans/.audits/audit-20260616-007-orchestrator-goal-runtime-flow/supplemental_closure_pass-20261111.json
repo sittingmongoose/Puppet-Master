@@ -1,0 +1,539 @@
+{
+  "audit_id": "audit-20260616-007-orchestrator-goal-runtime-flow",
+  "closures": [
+    {
+      "appended_matrix_line": 1,
+      "appended_matrix_sha256": "9a3669188c1cbb7970846afb4b6ab167b6a6331befe75ccd2efe4c4a9095c87f",
+      "appended_registry_line": 1139,
+      "appended_registry_sha256": "d3df02309634659c8e1b3344373b00d7b24897f0682dabffb5409802e551f150",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 2
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Permissions_System.md#unit=PS-115": "a333dd4c1c0cc509d0501f5265b84448462a2e3e5bfc6c331064f0cf0ec7f153",
+        "Plans/WorktreeGitImprovement.md#unit=W-071": "da5c76565b870d51b7804387e3136fa42e6fceaebe4e113145d3ef7901d116f2",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0036": "abd9a47e41ec90b664a0f8b1562277435ce495a8a1a0712a1c0fee13b058a1f9"
+      },
+      "finding_key": "sfk-7b52cc5f2cd2d221b513296e",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-007-orchestrator-goal-runtime-flow-semantic-risks-jsonl-2",
+      "reviews": {
+        "astra": {
+          "batch": "S03",
+          "file": "supplemental/batches/S03/review-astra-r1.jsonl",
+          "packet_row_digest": "8b0c5c3574b4f794a08d64da77f1a741f1ddfbdc1ac45fbb009683e3a5061a6e",
+          "reason": "Both PS-115 and W-071 now include isolated_worktree in the six-value write-mode list in canonical prose and acceptance criteria. The current Worktree authority section and goal_run.started schema also retain that value; no contrary active omission was found.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S03",
+          "file": "supplemental/batches/S03/review-sol-r1.jsonl",
+          "packet_row_digest": "8b0c5c3574b4f794a08d64da77f1a741f1ddfbdc1ac45fbb009683e3a5061a6e",
+          "reason": "PS-115 and W-071 now include isolated_worktree in their canonical prose and acceptance criteria alongside the other five write modes. The specific enum omission is repaired.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 2,
+      "appended_matrix_sha256": "9b205fa824dc9bc75c0ddd3aa9b5e8a342d082651a704986cfa8983103aaca7c",
+      "appended_registry_line": 1140,
+      "appended_registry_sha256": "e353a02351fda563d55e17d185c72daf13c3fd12a992d9d383793e100ab706fb",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 7
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/repair_report.json": "0408057f041fcc906b77986b32cd8431885a6fb48df2a3e8ddfab82084c9e8ad",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_impact_matrix.json#json=/source_repo_snapshot": "e6bd78bda90810e3b51a6c947a0b84b841fe62a9bd65cb848b46859f0a242436",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/doc_impact_matrix.json#json=/status": "c92cf6612b30238f38909054905df596e740ca815d019ad86158a83c47d1a01f"
+      },
+      "finding_key": "sfk-5f362ce48b6aff3b0e3b27fb",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-007-orchestrator-goal-runtime-flow-semantic-risks-jsonl-7",
+      "reviews": {
+        "astra": {
+          "batch": "S03",
+          "file": "supplemental/batches/S03/review-astra-r1.jsonl",
+          "packet_row_digest": "0ccabdd87f7fef5e20d0da16bc8ba680c6e9719f9b22f63588fbad362481c581",
+          "reason": "doc_impact_matrix.json now replaces the local archive path with a redacted snapshot description. A search of the entire current file found no /mnt/, /home/, /tmp/, zip-archive, or extraction-path remnants.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S03",
+          "file": "supplemental/batches/S03/review-sol-r1.jsonl",
+          "packet_row_digest": "0ccabdd87f7fef5e20d0da16bc8ba680c6e9719f9b22f63588fbad362481c581",
+          "reason": "doc_impact_matrix now uses a redacted audit description instead of the local archive/extraction path, and explicitly marks the snapshot as source memory requiring a live-repository rerun. The original path and archive filename are absent from the entire file.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 3,
+      "appended_matrix_sha256": "18bb3a1c5b8a8b49ef329c2c4da76de5f93ef9aa15425b9091972be343fba2a3",
+      "appended_registry_line": 1141,
+      "appended_registry_sha256": "e8ff9912a0777e8943d55d9015513932f89f7576dc82d8a2e0ef9c9c38628c68",
+      "closes": {
+        "plan_unit_id": "SP-215",
+        "source_artifact": "owner_routing_findings.jsonl",
+        "source_row": 3
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/storage-plan.md#unit=SP-215": "18e35ab12e9294f9235657b66050f3da43b429f20d927553d83be6da49943d73"
+      },
+      "finding_key": "sfk-31d6cf315786d66f172ab977",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-007-orchestrator-goal-runtime-flow-owner-routing-findings-jsonl-3",
+      "reviews": {
+        "astra": {
+          "batch": "S03",
+          "file": "supplemental/batches/S03/review-astra-r1.jsonl",
+          "packet_row_digest": "55a00be7accffb195ac13ef34c402e8482931477e9c594a658d881556370405c",
+          "reason": "SP-215 describes persistence of requested/effective provider/model/account references and now includes Models_System, Multi-Account, Provider_OpenCode, and Permissions_System among its implementation surfaces. This satisfies the audit's proposed addition of owner references while leaving storage responsible for persistence and projection.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S03",
+          "file": "supplemental/batches/S03/review-sol-r1.jsonl",
+          "packet_row_digest": "55a00be7accffb195ac13ef34c402e8482931477e9c594a658d881556370405c",
+          "reason": "SP-215 narrows its responsibility to persistence/projection and stores requested/effective provider/model/account references. It includes Models_System, Multi-Account, Provider_OpenCode and Permissions_System in implementation_surfaces, meeting the audit's explicit add-owner-refs remedy.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 4,
+      "appended_matrix_sha256": "5394e9de3e3ef7debec0696f2d168fcc9717242e864dc8ccf9be7b80f1f73a73",
+      "appended_registry_line": 1142,
+      "appended_registry_sha256": "ad7314e42cf53337f89d883e9e3ad9b5c6f4851056cb549ffd0438473e3592ec",
+      "closes": {
+        "plan_unit_id": "PS-115",
+        "source_artifact": "owner_routing_findings.jsonl",
+        "source_row": 4
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Permissions_System.md#unit=PS-115": "a333dd4c1c0cc509d0501f5265b84448462a2e3e5bfc6c331064f0cf0ec7f153"
+      },
+      "finding_key": "sfk-8d7388c3e0fb6a3f8b20d0c2",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-007-orchestrator-goal-runtime-flow-owner-routing-findings-jsonl-4",
+      "reviews": {
+        "astra": {
+          "batch": "S03",
+          "file": "supplemental/batches/S03/review-astra-r1.jsonl",
+          "packet_row_digest": "24659959f2db169eefd71f72f3d0b5d8b15c191b0fc0f59fa37a51d8f20264b7",
+          "reason": "PS-115 now states that permission decisions consume capability_lane and write_mode from contract/storage runtime records. Both implementation_surfaces and owner_hints name Contracts_V0 and storage-plan, repairing the missing owner route.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S03",
+          "file": "supplemental/batches/S03/review-sol-r1.jsonl",
+          "packet_row_digest": "24659959f2db169eefd71f72f3d0b5d8b15c191b0fc0f59fa37a51d8f20264b7",
+          "reason": "PS-115 now consumes capability_lane and write_mode from contract/storage runtime records and names Contracts_V0 and storage-plan in implementation_surfaces and owner_hints. It retains permission decisions and recoverable blockers rather than taking over record ownership.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 5,
+      "appended_matrix_sha256": "87ac806939c495d29d09d6baefb8b05f63f91d0aabb2e088e599530a5f87c25d",
+      "appended_registry_line": 1143,
+      "appended_registry_sha256": "1baf2229853ca695b89b8b08e0adf0ffd597b91a116bc6961239b233dc2a4f44",
+      "closes": {
+        "plan_unit_id": "F3-394",
+        "source_artifact": "owner_routing_findings.jsonl",
+        "source_row": 5
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/FinalGUISpec.md#unit=F3-394": "b85f7b6f1f272e48ef8c6b05a0da80f2654772efe191beafde286d0aa52a9c4c"
+      },
+      "finding_key": "sfk-1fb6cebf79756a7bd11665a9",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-007-orchestrator-goal-runtime-flow-owner-routing-findings-jsonl-5",
+      "reviews": {
+        "astra": {
+          "batch": "S03",
+          "file": "supplemental/batches/S03/review-astra-r1.jsonl",
+          "packet_row_digest": "88c49531e82c1e30e31edb113012484836d4c9df85e2a5247cc4277ffedaa041",
+          "reason": "F3-394 now depends on MS-109 and PS-115, and its dependency list no longer names MS-108. The canonical text and negative constraints explicitly preserve the policy authority of Models and Permissions rather than assigning it to Settings.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S03",
+          "file": "supplemental/batches/S03/review-sol-r1.jsonl",
+          "packet_row_digest": "88c49531e82c1e30e31edb113012484836d4c9df85e2a5247cc4277ffedaa041",
+          "reason": "F3-394 depends on MS-109 and PS-115 and no longer depends on MS-108. Its canonical text and negative constraints explicitly preserve Models and Permissions policy authority while Settings exposes the controls.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 6,
+      "appended_matrix_sha256": "139bbbdde5f145e9c68aa84b56753b5abf2f213302b1ff2beef6de7337f8f43c",
+      "appended_registry_line": 1144,
+      "appended_registry_sha256": "1de6b99a03d5d43131df882df4cd812c8f00783f091151369b24d87964e0e2d9",
+      "closes": {
+        "plan_unit_id": "OP-022",
+        "source_artifact": "owner_routing_findings.jsonl",
+        "source_row": 6
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Orchestrator_Page.md#unit=OP-022": "601dddb429e0919be41d42f8a14831330e6add5fcedb9688bb9ec1ed88cc8f0a"
+      },
+      "finding_key": "sfk-fe91d930db137ca888b16e3b",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-007-orchestrator-goal-runtime-flow-owner-routing-findings-jsonl-6",
+      "reviews": {
+        "astra": {
+          "batch": "S03",
+          "file": "supplemental/batches/S03/review-astra-r1.jsonl",
+          "packet_row_digest": "75bc05d13abc9bb85679b55f200fdcb5ceb0aba4c2768a5c0da8bb571153da33",
+          "reason": "OP-022 explicitly preserves contract, storage, permission, worktree, and model-owner authority over its projected fields. Both implementation_surfaces and owner_hints now list the five missing owner documents, repairing the cross-document routing gap.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S03",
+          "file": "supplemental/batches/S03/review-sol-r1.jsonl",
+          "packet_row_digest": "75bc05d13abc9bb85679b55f200fdcb5ceb0aba4c2768a5c0da8bb571153da33",
+          "reason": "OP-022 explicitly keeps contract, storage, permission, worktree and model-owner records authoritative for projected fields. Its implementation_surfaces and owner_hints name all five requested owners, repairing the missing cross-document routes.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 7,
+      "appended_matrix_sha256": "813ed631ae35dff5988d75f7d2dd120fd00e95184e81be8f33512af0e4719bfd",
+      "appended_registry_line": 1145,
+      "appended_registry_sha256": "a22dd129e70e99f4f75410bc3092d1c89b583bcc2b2e9ea515c5af6011435e4a",
+      "closes": {
+        "source_artifact": "ledger_consistency.json",
+        "source_row": "findings[0]"
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/repair_report.json": "0408057f041fcc906b77986b32cd8431885a6fb48df2a3e8ddfab82084c9e8ad",
+        "Plans/Decision_Policy.md#section=5.2 Required steps (deterministic)": "6efbb0bc7dca752435a00333b9c96685bcf49cf266c7998e9aa0caf80548e699",
+        "Plans/Spec_Lock.json#json=/spec_lock_update_protocol": "451d96c56409ff67b3a1af758d491d328d02eac2aa9dbe5ba7d1f150071d7bc0",
+        "Plans/auto_decisions.jsonl#jsonl=decision_id=dec-2026-06-16-orchestrator-goal-runtime-flow-post-audit-repair-governance-seal": "1a4905423befa41dca6262f97aded8a6ec59f728f00b084ca64f5c085237c38b",
+        "Plans/evidence_artifact_binding_modes.json#json=/entries/4": "3df996d874008522c695bf4b4db748266993a9444bc2aaf62790610f4daef158",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/manifest.json#json=/governance_status": "6248de8c916da2d0fe49f63c83197b5673acaf91acac3855966ff8b19d6dab03"
+      },
+      "finding_key": "sfk-4cdfd4afaefcc1054f287f56",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-007-orchestrator-goal-runtime-flow-ledger-consistency-json-findings-0",
+      "reviews": {
+        "astra": {
+          "batch": "S03",
+          "file": "supplemental/batches/S03/review-astra-r1.jsonl",
+          "packet_row_digest": "24700353bb08b3661c0170afb20d8ef6d64c4e31a7811fec298e72cfc811710a",
+          "reason": "The previously missing seal decision now exists and explicitly applies to the pldg-002 ledger. The dedicated post-audit evidence bundle is registered as a pinned historical snapshot and its bytes match that pin, so the cited absence of seal provenance is repaired.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S03",
+          "file": "supplemental/batches/S03/review-sol-r1.jsonl",
+          "packet_row_digest": "24700353bb08b3661c0170afb20d8ef6d64c4e31a7811fec298e72cfc811710a",
+          "reason": "The dedicated post-audit repair/seal auto-decision now exists, explicitly applies to the pldg-002 ledger, and identifies the repair-and-seal action. The corresponding evidence bundle is registered and hash-pinned in the binding manifest, backing the previously missing seal provenance.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 8,
+      "appended_matrix_sha256": "c72e4ce8564fb265abbb2141682925f993eeb0a35ab25ab013df6b429cadd1b9",
+      "appended_registry_line": 1180,
+      "appended_registry_sha256": "4f4ed1ecce30943f24b802b297d93a1f3e4ce5ca4ec34bf028510750d60c985c",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 1
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Contracts_V0.md#unit=CV-288": "30cb2e62a81553c7e38b2e605ba3ada9f9ad675b268352f2a5ac9948ae7fa917",
+        "Plans/Goal_Runtime_System.md#unit=GRS-027": "56d4d5ffa81b932ef7fc3cdd2a6a59f440ff399d0ffe17c0704b890afe71b85f",
+        "Plans/Goal_Runtime_System.md#unit=GRS-053": "c4ef09014af4add172888e6645240ea5363a3fd4959083328cce2690fd0cb140",
+        "Plans/Runtime_Artifacts_Panel.md#unit=RAP-027": "5cf143a48f49216e77de0db6c8f4e1e215606c82eeedca71dc5f50c9dcf8b263",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0052": "743a724d3e1b83c02dc814d7020d6bcb164133c0c5b4c11525a0d813bcac3ff2",
+        "Plans/storage-plan.md#unit=SP-215": "18e35ab12e9294f9235657b66050f3da43b429f20d927553d83be6da49943d73"
+      },
+      "finding_key": "sfk-766c5e6a3aed495c265b3a84",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-007-orchestrator-goal-runtime-flow-semantic-risks-jsonl-1",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "090acfff8d5ebf8dd782fe95d6e730f884d075d3cedda7c338b2a20417582fd1",
+          "reason": "VerificationReceipt now has governed fields in CV-288 and matching persistence fields in SP-215, including verifier identity, findings, signatures, validator outcomes, repair-cycle references, and regression checks. GRS-027 is explicitly superseded with custody moved to execution owners, while RAP-027 exposes the receipt and skipped-validator/evidence information as a consumer.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "090acfff8d5ebf8dd782fe95d6e730f884d075d3cedda7c338b2a20417582fd1",
+          "reason": "VerificationReceipt is now defined in the active contract and persisted storage prose with verifier identity, findings, signatures, validator outcomes, repair-cycle refs and regression checks. GRS-027's explicit retirement explains the custody transfer rather than leaving the object as a Goal metadata token.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 9,
+      "appended_matrix_sha256": "9f0f1b6214685dad7e0f90e4776523c89671dba2eaf739fb6f736b55c63a7c4f",
+      "appended_registry_line": 1181,
+      "appended_registry_sha256": "cc640ec2644ababe456507a2fce283d51c9775348c0cd0975861717de84d14c6",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 3
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Contracts_V0.md#unit=CV-288": "30cb2e62a81553c7e38b2e605ba3ada9f9ad675b268352f2a5ac9948ae7fa917",
+        "Plans/Executor_Protocol.md#unit=EP-098": "ca143b3b15aa3f4060c94180bc9e7704c4a2e0a5c0f0ab780b013f80d84dab8b",
+        "Plans/Orchestrator_Page.md#unit=OP-022": "601dddb429e0919be41d42f8a14831330e6add5fcedb9688bb9ec1ed88cc8f0a",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0056": "caf8700628d47aab958671ef2d5b9e75ed66b136b109ac4211087a3d74272991",
+        "Plans/storage-plan.md#unit=SP-215": "18e35ab12e9294f9235657b66050f3da43b429f20d927553d83be6da49943d73"
+      },
+      "finding_key": "sfk-8feb3e5b6a4a977e9bd80a7d",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-007-orchestrator-goal-runtime-flow-semantic-risks-jsonl-3",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "52a06964dba37ed19f45d2cd5ebbb1ba6fa1aa4c6e18758b0ef0a860395af5f6",
+          "reason": "The complete eleven-value GoalRun/WorkNode projection status list is now explicit in OP-022 and in CV-288/SP-215 canonical text. provisional_success and failed_verification are behavior-bearing status values rather than token-only metadata, and the narrow VerificationCycle enum remains distinct.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "52a06964dba37ed19f45d2cd5ebbb1ba6fa1aa4c6e18758b0ef0a860395af5f6",
+          "reason": "OP-022 governs all eleven GoalRun/WorkNode projection states in canonical text and acceptance criteria, including provisional_success and failed_verification. CV-288 carries that broader projection enum and SP-215 explicitly excludes it from the narrow VerificationCycle.status field.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 10,
+      "appended_matrix_sha256": "700da9d2b707ca4d1eea0fe8b200c442251dbddb4cee28f96a22d97533ab3014",
+      "appended_registry_line": 1182,
+      "appended_registry_sha256": "12c570c941f24c4b0e56335aafef825fd407e94aac1556389d85e853115752b0",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 5
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/00-plans-index.md#unit=0PI-056": "55b95ef42e3773deaabe06fbb7fc855bb65b40124068573427c94dc03688c7d6",
+        "Plans/Contracts_V0.md#unit=CV-288": "30cb2e62a81553c7e38b2e605ba3ada9f9ad675b268352f2a5ac9948ae7fa917",
+        "Plans/Orchestrator_Page.md#unit=OP-022": "601dddb429e0919be41d42f8a14831330e6add5fcedb9688bb9ec1ed88cc8f0a",
+        "Plans/Permissions_System.md#unit=PS-115": "a333dd4c1c0cc509d0501f5265b84448462a2e3e5bfc6c331064f0cf0ec7f153",
+        "Plans/storage-plan.md#unit=SP-215": "18e35ab12e9294f9235657b66050f3da43b429f20d927553d83be6da49943d73"
+      },
+      "finding_key": "sfk-7e139c4cdea7df1a2523b1f8",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-007-orchestrator-goal-runtime-flow-semantic-risks-jsonl-5",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "67703242f3d838c7c65babf532061b1000ea0bd6f03f0eaf6d6aa5b79d161352",
+          "reason": "0PI-056 now assigns contract, persistence, permissions, model/account/provider, ledger, and PlanUnit boundaries to their respective owners. CV-288, SP-215, PS-115, and OP-022 preserve those boundaries through canonical ownership statements, external-owner references, and implementation surfaces rather than treating every participant as a mere consumer.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "67703242f3d838c7c65babf532061b1000ea0bd6f03f0eaf6d6aa5b79d161352",
+          "reason": "0PI-056 now assigns contract, storage, permission, model/account/provider, ledger and PlanUnit boundaries to their owners. CV-288, SP-215, PS-115 and OP-022 preserve that split by carrying references or projections while leaving the underlying authority with those owners.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 11,
+      "appended_matrix_sha256": "f5f72f2162b72ac8282deede0ce500634b14f8d16cd4aa7ff0b8fb6ed57e5d55",
+      "appended_registry_line": 1183,
+      "appended_registry_sha256": "387f4ca22bfe58d6a50cf4de2f4cc7671d7dad0be3f88cf7cde45ec3e9105c14",
+      "closes": {
+        "plan_unit_id": "0PI-056",
+        "source_artifact": "owner_routing_findings.jsonl",
+        "source_row": 1
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/00-plans-index.md#unit=0PI-056": "55b95ef42e3773deaabe06fbb7fc855bb65b40124068573427c94dc03688c7d6"
+      },
+      "finding_key": "sfk-fe87e62839b07b13c4a27370",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-007-orchestrator-goal-runtime-flow-owner-routing-findings-jsonl-1",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "502fbf216132b98033042a809b84102cdf8429ae1fd05e712105666e4506352e",
+          "reason": "The current 0PI-056 canonical owner-map sentence expressly names Contracts_V0, storage-plan, Permissions_System, Models_System, Multi-Account, provider docs, Planning_Ledger_System, and Plan_Document_System as owners of their own boundaries. Its separate consumer sentence and implementation/owner metadata preserve that distinction.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "502fbf216132b98033042a809b84102cdf8429ae1fd05e712105666e4506352e",
+          "reason": "0PI-056 explicitly lists the authoritative boundary owners and separately lists the consuming surfaces. It no longer treats Contracts, Models, Permissions, storage or Planning Ledger as mere consumers of this flow.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 12,
+      "appended_matrix_sha256": "280e1e0bbc1cdde3ed9f8cc71e86c1686f7634ec4cac130e087ec50e1f8a08ca",
+      "appended_registry_line": 1184,
+      "appended_registry_sha256": "1cb869da93abe42b0ba28823a0408122ed4e5cc3c9a281d610989ad0f4d62e88",
+      "closes": {
+        "plan_unit_id": "CV-288",
+        "source_artifact": "owner_routing_findings.jsonl",
+        "source_row": 2
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Contracts_V0.md#unit=CV-288": "30cb2e62a81553c7e38b2e605ba3ada9f9ad675b268352f2a5ac9948ae7fa917"
+      },
+      "finding_key": "sfk-7234b9d8cdc0c29cd8e06a89",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-007-orchestrator-goal-runtime-flow-owner-routing-findings-jsonl-2",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "1e9eab4f9f470241643a5515ed484ff81d3414290ab9411d3a43bc61c0a24f3e",
+          "reason": "CV-288 expressly delegates requested/effective provider/model/account meanings to Models_System, Multi-Account, and provider-specific owners and says its envelope only carries their references. It likewise delegates write-mode and lease semantics to Permissions_System/WorktreeGitImprovement and lists the affected owner documents.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "1e9eab4f9f470241643a5515ed484ff81d3414290ab9411d3a43bc61c0a24f3e",
+          "reason": "CV-288 explicitly routes requested/effective provider, model and account meanings to Models_System, Multi-Account and provider-specific owners. It likewise leaves write authority and worktree leases with Permissions_System and WorktreeGitImprovement; the envelope carries references.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    }
+  ],
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-334",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "route": "new_registry_row",
+    "source": "Jared, \"approve all\", T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z (stream C question 7, option (a)); extended to the other June audits with uncovered rows by pm7-build's relay of the same approved option (pm-mail 1105030457-ade2, 2026-11-05)"
+  },
+  "matrix": {
+    "original_rows": 0,
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "pass_id": "audit-20260616-007-orchestrator-goal-runtime-flow-supplemental-20261111",
+  "reviews": "Sol and Astra blind reviews are listed on each closures entry (verdict, your_verdict, your_status, packet_row_digest, batch file)",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}

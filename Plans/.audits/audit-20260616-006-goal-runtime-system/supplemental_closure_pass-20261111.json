@@ -1,0 +1,591 @@
+{
+  "audit_id": "audit-20260616-006-goal-runtime-system",
+  "closures": [
+    {
+      "appended_matrix_line": 1,
+      "appended_matrix_sha256": "44f19db2902f9ba7edd71e81438fb6142073c9cbbd49588b03fd5b38c0914936",
+      "appended_registry_line": 1127,
+      "appended_registry_sha256": "a0190be9e23839391ce869b29a8e26c28db98d166de377cedf61ee9dab3a2696",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 6
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Goal_Runtime_System.md#unit=GRS-012": "41909257aa4f530fcad6e69230b473ac4eee71bfd50d8a77154b63251cdf804c",
+        "Plans/Goal_Runtime_System.md#unit=GRS-050": "8e2dc23bc4b250fce963db2f28df2e5fbda980a99ae786ca30193ef193a840ec"
+      },
+      "finding_key": "sfk-9f1af12c45d57cf6eb894d29",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-006-goal-runtime-system-semantic-risks-jsonl-6",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "e92d31a799cc33fcb15576eb68309990c7784be10d70813ca1a80d7c669b8071",
+          "reason": "GRS-012's canonical prose and acceptance criteria now require the specific input accounting and ledger-to-Plans content, conflict, invention and mapping checks the finding requested. GRS-050 still requires owner-supplied completion evidence, so those completion-evidence criteria remain meaningful under Goal V2.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "e92d31a799cc33fcb15576eb68309990c7784be10d70813ca1a80d7c669b8071",
+          "reason": "GRS-012 now places the missing ledger coverage, open-question/decision disposition, conflict preservation, no-invention and source-to-target evidence criteria in canonical prose and acceptance criteria. It also states the inventoried/represented/dispositioned/unaccounted-for accounting rule, while GRS-050 retains the requirement for owner-supplied completion evidence.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 2,
+      "appended_matrix_sha256": "6115aad334853d17d31b0d78eb01590a1d201a191416ca6e82dea54c239a56ef",
+      "appended_registry_line": 1128,
+      "appended_registry_sha256": "c7c5640377ddc8df822e1173b3cd0d05799311378346844537368fde1634cdff",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 8
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Goal_Runtime_System.md#unit=GRS-018": "0e3bafa2b13c9fea75100c37517d09e36dbc4e1cd0dc059b88fbbd1606860fa1"
+      },
+      "finding_key": "sfk-29134420d94e0ad967198ff2",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-006-goal-runtime-system-semantic-risks-jsonl-8",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "90c669743b366dfddb8877e6a843aac3cde41c93449579a89dfb184345683586",
+          "reason": "GRS-018 now states each of the five audited template gates in canonical prose and acceptance criteria, including tests, evidence, documentation and ledger coverage. These requirements are no longer merely preserved-token entries.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "90c669743b366dfddb8877e6a843aac3cde41c93449579a89dfb184345683586",
+          "reason": "GRS-018 now governs each of the five requested template gates in canonical prose and repeats them as acceptance criteria. These are substantive completion conditions rather than a list of preserved template names.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 3,
+      "appended_matrix_sha256": "33315eb851c83133d28437e1ad1f3ba5cb1833bf278f0df3e0013ba7ff0e6e98",
+      "appended_registry_line": 1129,
+      "appended_registry_sha256": "acc6164e817645fe3fa6d919553c7d8b984bb6ef5937c3ba4a17ecbd273a9ac4",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 9
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Goal_Runtime_System.md#unit=GRS-019": "024a9ee9d3c0e92bf82a178ac8d400746d8b1e435f549de8cf3ce86e3b799887",
+        "Plans/assistant-chat-design.md#unit=ACD-417": "df649f22d4987c10fe86a85354b0c8fea4e5dc679b450210224ac8a960212a04"
+      },
+      "finding_key": "sfk-81cb3757e32776a3a4883a52",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-006-goal-runtime-system-semantic-risks-jsonl-9",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "190d75bd1ec22d1a099388a896e847374ffc5d7679b07516443ffbaa5442e185",
+          "reason": "GRS-019 now governs the missing ambiguity, recovery and complete blocker-explanation requirements. ACD-417 depends on that owner and requires Goal Activity Detail/transcript to show exact owner blockers and state, preserving the visible explanation obligation by reference.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "ec56eb14da6e254df4359ff734cc3f426532fccf9f99c3a6fddd52ac6ffcd5b5",
+          "reason": "GRS-019’s canonical rule still requires the complete blocker explanation to be stored and displayed. ACD-417 explicitly depends on GRS-019, directs Goal Activity Detail and the transcript to show owner blockers/current state, and requires exact owner state, preserving that display contract by reference. The finding does not require the consumer to duplicate every field name in its own prose.",
+          "reviewer": "sol",
+          "verdict": "disagree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 4,
+      "appended_matrix_sha256": "fa56cf13a313be1bd2b9ccb3007ee5d0edcd90083cfa4d93cc84d8068fca8391",
+      "appended_registry_line": 1130,
+      "appended_registry_sha256": "4633f84f3732c02ecf0e48a409ac7ce35bf5e8f71ac6c166d7ba58c6243228d3",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 10
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Contracts_V0.md#unit=CV-286": "7247c74966817143f898f38369551d0d0bdec25396db0d86bb551f3bc92aeb8d",
+        "Plans/Models_System.md#unit=MS-108": "cb0a30ddf73825ee6e6dde71b025371d8b919cf90625991ce7720532c371239a",
+        "Plans/Multi-Account.md#unit=MA-060": "599677b34b9035354f8fe82779fcb8a4563512137649cb3cb315b24f9acf66c9",
+        "Plans/Permissions_System.md#unit=PS-114": "792d26daaedabeddfec2a8a5ee32a1b980a9596ef64b7d4186c7a0381b217fa1",
+        "Plans/ledgers/v2/ledger_registry.json#json=/sealed_ledgers/5": "c92923788a2a5ee912d50b88456f49d2c0af9f9dc891886e0621012c3d4dd3f4",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/compile_queue.json#json=/items/0/compiled_plan_unit_ids": "70ceda4c9bfea0920dc2cbe14ca626cd71a8a21ca2f3a67005ddf50f6f1dd1ed",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/current.json#json=/compiled_owner_docs": "bf1ce94e917bc3ec87d7022a1eaffac906cd04a3b27714c570ae4e26aac5753f",
+        "Plans/storage-plan.md#unit=SP-214": "d25c5e3c20979fa541ec62489aa88873058443aa52b8cfbf7bc014d1d48354f2"
+      },
+      "finding_key": "sfk-8eef3a2aeffe305bdfaf492f",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-006-goal-runtime-system-semantic-risks-jsonl-10",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "578adf24799d5291f9040823b506032492f020ed1fbb825b835710c92b756379",
+          "reason": "The current-state and registry projections include all five previously omitted owner documents, and the compile queue includes CV-286, MS-108, MA-060, PS-114 and SP-214. Each named unit exists in its stated owner, so the reported projection omission is repaired.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "578adf24799d5291f9040823b506032492f020ed1fbb825b835710c92b756379",
+          "reason": "The current-state projection and registry both include all five formerly omitted owner docs, and the compile queue includes CV-286, MS-108, MA-060, PS-114 and SP-214. Each named PlanUnit exists in its listed owner document, so the scoped projection omission is repaired.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 5,
+      "appended_matrix_sha256": "6feb1d0e9f6f8a1b1c62a6145a7972a01e464b484c7861e90300ea5f7e21c7c5",
+      "appended_registry_line": 1131,
+      "appended_registry_sha256": "a042f5a62ba188fe29c934478195fd03448d9a19d60f3c416b24a9afaa4d6cc1",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 11
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Contracts_V0.md#unit=CV-286": "7247c74966817143f898f38369551d0d0bdec25396db0d86bb551f3bc92aeb8d",
+        "Plans/Models_System.md#unit=MS-108": "cb0a30ddf73825ee6e6dde71b025371d8b919cf90625991ce7720532c371239a",
+        "Plans/Multi-Account.md#unit=MA-060": "599677b34b9035354f8fe82779fcb8a4563512137649cb3cb315b24f9acf66c9",
+        "Plans/Permissions_System.md#unit=PS-114": "792d26daaedabeddfec2a8a5ee32a1b980a9596ef64b7d4186c7a0381b217fa1",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=CV-286": "71fdd6f1c8f9eb834f4b65e3d902201db2589d627aabd5d4173226582abad577",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=MA-060": "f4cac5e401e86c3636cdae6b0143876a35a74a9d8af198b25c485a8d66220bb2",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=MS-108": "2c8d1ae75d87fd292da7b1a6b1ae47b1af8a6b5af1e32efbfcb4843335d7e10f",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=PS-114": "5c76f5cee76da2e6bcc97abec040bae2266d8402e9a18cbc559fd8efc6136c3a",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=SP-214": "e72079beb5de27c4af8840d72e2295f2bcc275adc4632bfa5e54b7e193b80e47",
+        "Plans/storage-plan.md#unit=SP-214": "d25c5e3c20979fa541ec62489aa88873058443aa52b8cfbf7bc014d1d48354f2"
+      },
+      "finding_key": "sfk-c0c1f5784fbcd3ce282bfec9",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-006-goal-runtime-system-semantic-risks-jsonl-11",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "94aa27727b7402a13ac875ebb35f7eafdba3d0bdcdb467b8e0d02ffff93fcfc7",
+          "reason": "Every Goal Runtime atom cited by the five audited cross-owner units now lists the corresponding unit in compiled_output_plan_unit_ids. Independent comparisons found no missing reciprocal link for CV-286, MS-108, MA-060, PS-114 or SP-214.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "94aa27727b7402a13ac875ebb35f7eafdba3d0bdcdb467b8e0d02ffff93fcfc7",
+          "reason": "Comparing each unit’s cited Goal Runtime atoms against all atom outputs gives exact reciprocal sets: CV-286 has ten, MS-108 five, MA-060 four, PS-114 two and SP-214 twelve. None of those cited atoms is missing the corresponding compiled_output_plan_unit_id.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 6,
+      "appended_matrix_sha256": "630cc0ede687fc5288ebef73fd38a3b39d894bfbc6417b98025545f76fb090df",
+      "appended_registry_line": 1132,
+      "appended_registry_sha256": "bbd069c63b3db836d9a494f03da1cb1463b8b945c542508a26ab0b66287da207",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 20
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/00-plans-index.md#section=Native Goal Runtime Map (2026-06-16)": "71b3e926e0dc67672289947ead0fd5eafff05294abb3cd4cde14b09984bbf8e8",
+        "Plans/Automated_Testing_System.md#unit=ATS-001": "68f5ef14cf5d710f8e928317dbc0f69f8d8c6d96d4a2be4a6fd9db12d714bd6a",
+        "Plans/evidence_artifact_binding_modes.json#json=/entries/16": "1b3d00c9cbcf047307391e9d454d08ae19ed8b2d50f308c6c0e3dd0f943dc041",
+        "Plans/evidence_artifact_binding_modes.json#json=/entries/2": "b790c0c6bb76bbc958bf2f4afa9d578c1b67659acb066151b56831dcdd091023",
+        "Plans/evidence_artifact_binding_modes.json#json=/entries/8": "8440707957be9a9db99f3a03c96c526343a252fe56d8b201f8d715918a65ad9f",
+        "scripts/pm-plans-verify.py#pydef=validate_evidence_file": "3c83931342ca81f08a5ad409bb836a04580511ed66a0cfbf3d5db2480f06eff1"
+      },
+      "finding_key": "sfk-ecab7289f81ba48b918b406c",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-006-goal-runtime-system-semantic-risks-jsonl-20",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "fd85cf245c829e68fe9fb4767f6ad654d065df4b3abd6ca24aba11954a964711",
+          "reason": "The two cited evidence bundles are explicitly hash-pinned historical snapshots under ATS-001 and the binding manifest; a separate live_current bundle owns the rolling shard inventory. The ledger is identified as compile source memory, so its point-in-time validation counts do not claim current canonical inventory.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "source_lineage_only",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "fd85cf245c829e68fe9fb4767f6ad654d065df4b3abd6ca24aba11954a964711",
+          "reason": "The two evidence bundles named by the finding are now explicitly immutable historical snapshots, whose capture-time counts are not rolling current-inventory assertions. ATS-001 and the validator preserve that boundary, the manifest assigns a separate live-current sharding successor, and the index classifies the ledger as source-lineage/planning memory.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "source_lineage_only",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 7,
+      "appended_matrix_sha256": "f6f9ff6c37eb6ad02f751683b112b5796983936ec7914533b854baf4d920444f",
+      "appended_registry_line": 1133,
+      "appended_registry_sha256": "3beef178b70625afa20e53c5f37a489e53ba46e4915c7df0b3398e8b0d091abd",
+      "closes": {
+        "plan_unit_id": "CV-286",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_row": 6
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Contracts_V0.md#unit=CV-286": "7247c74966817143f898f38369551d0d0bdec25396db0d86bb551f3bc92aeb8d",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=CV-286": "71fdd6f1c8f9eb834f4b65e3d902201db2589d627aabd5d4173226582abad577"
+      },
+      "finding_key": "sfk-79de07410fb6708f3229c64b",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-006-goal-runtime-system-planunit-source-claims-jsonl-6",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "292dd9548e7fb73db1e86dc23f38b00d87fc113c7fe62ed70d30edbd1a6e6f5f",
+          "reason": "CV-286 cites the ten relevant Goal Runtime atoms, and all ten now reciprocally list CV-286. This directly repairs the one-way lineage defect recorded in this source-claims row.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "292dd9548e7fb73db1e86dc23f38b00d87fc113c7fe62ed70d30edbd1a6e6f5f",
+          "reason": "CV-286 cites the same ten Goal Runtime atoms, and the complete output-membership set now contains exactly those ten atoms. The audit’s one-way-lineage defect is therefore repaired.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 8,
+      "appended_matrix_sha256": "d1148f8a50b612b1c1d5fc67f819e56f4f827912862ac4984467029486d56db5",
+      "appended_registry_line": 1134,
+      "appended_registry_sha256": "873fb6f84f73d438f8fc13a97069306289cba74ddeb196f9eaebdfc0095964c0",
+      "closes": {
+        "plan_unit_id": "GRS-025",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_row": 32
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Goal_Runtime_System.md#unit=GRS-025": "dc7eb6255378887e366111200f36607115b3645eb52e9cde90ff32bf4e70155c",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=GRS-025": "fd92cd18790da055a3e2a814fc1b20db6b855a425d1cba8e52e47d444b430265"
+      },
+      "finding_key": "sfk-6f9d2e84700f4d349cf152f8",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-006-goal-runtime-system-planunit-source-claims-jsonl-32",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "37c3500b355347972fcf031c0b105f31ab98e8050e7670fd3a6ef4d88d7d4afa",
+          "reason": "GRS-025 now cites activation, durable-state, separate-role-policy and certification-tier atoms in addition to the deferred questions. All four atoms reciprocally list GRS-025, repairing the missing accepted-claim provenance identified here.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "37c3500b355347972fcf031c0b105f31ab98e8050e7670fd3a6ef4d88d7d4afa",
+          "reason": "GRS-025 now cites direct atoms for activation controls, durable state and model-policy requirements in addition to its three question records. All four of those atoms reciprocally list GRS-025, repairing the finding that accepted claims had question-only lineage.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 9,
+      "appended_matrix_sha256": "90bc7bc13a93157c11e6a63d4caed5bc666e33d33653187ea190a3c104cebfc5",
+      "appended_registry_line": 1135,
+      "appended_registry_sha256": "7ce2b7ae09ed34a7e54516b93ff068e6e56ea95148513b29f0ca1290a9400fb7",
+      "closes": {
+        "plan_unit_id": "MA-060",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_row": 33
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Multi-Account.md#unit=MA-060": "599677b34b9035354f8fe82779fcb8a4563512137649cb3cb315b24f9acf66c9",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=MA-060": "f4cac5e401e86c3636cdae6b0143876a35a74a9d8af198b25c485a8d66220bb2"
+      },
+      "finding_key": "sfk-868594dbc82e81433ba5bed9",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-006-goal-runtime-system-planunit-source-claims-jsonl-33",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "1c51e83aeafb454b48d4207385165149ea9188f46668d60e43f9219a0cf47fea",
+          "reason": "MA-060 cites atoms 0075, 0076, 0104 and 0105, and each now lists MA-060 in its compiled outputs. The specific one-way lineage defect is repaired.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "1c51e83aeafb454b48d4207385165149ea9188f46668d60e43f9219a0cf47fea",
+          "reason": "MA-060 still cites atoms 0075, 0076, 0104 and 0105, and each now lists MA-060 as a compiled output. The unit-side and atom-side sets match exactly, closing this one-way-lineage finding.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 10,
+      "appended_matrix_sha256": "f328dd292eec699a8fdc03a5141eaefa284a24126f272dcd628134faff54410c",
+      "appended_registry_line": 1136,
+      "appended_registry_sha256": "65865a253d42eaaa3a4f59c5f9b01a7864c3d755e3fea46f3fb54d6d0ba00593",
+      "closes": {
+        "plan_unit_id": "MS-108",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_row": 34
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Models_System.md#unit=MS-108": "cb0a30ddf73825ee6e6dde71b025371d8b919cf90625991ce7720532c371239a",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=MS-108": "2c8d1ae75d87fd292da7b1a6b1ae47b1af8a6b5af1e32efbfcb4843335d7e10f"
+      },
+      "finding_key": "sfk-f6aa639cf72fce7950dd23be",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-006-goal-runtime-system-planunit-source-claims-jsonl-34",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "a45f45e4c5b9c5ba0cf8245f1ab4d2a31f960a16f9db2c8f8e967199ee507564",
+          "reason": "MS-108 has reciprocal links from all five cited atoms and has removed the unsupported capability-fit and unsupported/blocked-reason claims. Its narrower model-resolution and capability-evidence wording is supported by the cited model-quality and role-policy sources.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "a45f45e4c5b9c5ba0cf8245f1ab4d2a31f960a16f9db2c8f8e967199ee507564",
+          "reason": "All five cited atoms now reciprocate MS-108. Its canonical claim has also been narrowed to model resolution and capability evidence, with Goal Runtime retaining block/degrade semantics; it no longer invents capability-fit reporting or unsupported/blocked-reason outputs from those atoms.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 11,
+      "appended_matrix_sha256": "764c2df0a61833e4c1d73964480fb33d2f35333d361b7280d92b6b294a7c473d",
+      "appended_registry_line": 1137,
+      "appended_registry_sha256": "bab268fbb2010bcba89cd73bbd735e53382bdab03e69ad41772435b7fd2502e0",
+      "closes": {
+        "plan_unit_id": "PS-114",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_row": 35
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Permissions_System.md#unit=PS-114": "792d26daaedabeddfec2a8a5ee32a1b980a9596ef64b7d4186c7a0381b217fa1",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=PS-114": "5c76f5cee76da2e6bcc97abec040bae2266d8402e9a18cbc559fd8efc6136c3a"
+      },
+      "finding_key": "sfk-32106df132a94cbcad14eb68",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-006-goal-runtime-system-planunit-source-claims-jsonl-35",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "f27d7636632c8a416f8e065b293fadde89994124fcc53eb1b23a4f9b41ef61fa",
+          "reason": "Both cited atoms now reciprocally name PS-114. The unit explicitly limits their support to the approval boundary and consumes existing permission-owner schemas, forbidding the inference of new payload schemas from those atoms.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "f27d7636632c8a416f8e065b293fadde89994124fcc53eb1b23a4f9b41ef61fa",
+          "reason": "Both approval-boundary atoms now reciprocate PS-114. The unit expressly consumes existing permission-owned rules, limits what the Goal atoms establish, and prohibits deriving new permission schemas from them, repairing both the reciprocal-lineage and schema-overclaim issues.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 12,
+      "appended_matrix_sha256": "f48e995feaec4ae2039404770d010ba61c734c78b551032a271fdc817bfa43b6",
+      "appended_registry_line": 1138,
+      "appended_registry_sha256": "211b36a618572bb173f74a84e29e7442e8c3292b90dbac226a859218bf066cf4",
+      "closes": {
+        "plan_unit_id": "SP-214",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_row": 36
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=SP-214": "e72079beb5de27c4af8840d72e2295f2bcc275adc4632bfa5e54b7e193b80e47",
+        "Plans/storage-plan.md#unit=SP-214": "d25c5e3c20979fa541ec62489aa88873058443aa52b8cfbf7bc014d1d48354f2"
+      },
+      "finding_key": "sfk-e3e6cf7352429cbb6f610a07",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-006-goal-runtime-system-planunit-source-claims-jsonl-36",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "222eb1086bc30175c6d2ebb56cc4e044189ee19bdf46d4145c8efad7b5b5bbd4",
+          "reason": "All twelve cited atoms reciprocally list SP-214, and its canonical prose and acceptance criteria preserve goal_revision/expected_goal_revision. Both the lineage omission and the field-name reshaping identified in this row are repaired.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "222eb1086bc30175c6d2ebb56cc4e044189ee19bdf46d4145c8efad7b5b5bbd4",
+          "reason": "SP-214’s twelve cited atoms all reciprocate the unit, and its governed prose and acceptance criteria preserve goal_revision/expected_goal_revision rather than the narrowed generic revision spelling. The source-lineage and field-shape defects identified by this row are repaired.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 13,
+      "appended_matrix_sha256": "419c9adb6e17ed154a2e122bbd42c7ce4511f83ca71cfcd4435aeeee2add7222",
+      "appended_registry_line": 1179,
+      "appended_registry_sha256": "964c5f6728720932905555a822f1a51098b2da3de8bcb9061d04d6f1017db125",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 18
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Commands_System.md#section=7. Reserved built-in slash commands": "ca24fb89ca31b6be8467e8379db9b0b4ead49d3a425b3c2c1bce413578654afd",
+        "Plans/Commands_System.md#unit=CS-051": "f328780818fd04654877d114420704b4880c20875c2bc818fa99fa30db34884c",
+        "Plans/UI_Command_Catalog.md#section=2.7 Chat slash commands (reserved)": "3c4ebf7761149703c0eb32b1f6891b5acbe6169ed31d7bca938e3b6dda4b3e6d",
+        "Plans/UI_Command_Catalog.md#unit=UCC-096": "cfe91a9317137a46b6d9586a8209676c2047fc7607f657411d5c932f5e912aa1",
+        "Plans/Wiring_Matrix.md#unit=WM-037": "7af45c43d5009546aed67e6535918b8a5411553e1e13846f03add90500a28a15"
+      },
+      "finding_key": "sfk-20c7452f4f98ee30b4c8ba5c",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-006-goal-runtime-system-semantic-risks-jsonl-18",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "6d3081ae8c4c9c2a37c6ce58ebf5a40bba3d5f6b962e549787c5698fb0e4960c",
+          "reason": "UCC-096, CS-051, and WM-037 register and wire /goal to cmd.chat.goal.start and /goal again to cmd.chat.goal.update. Both reserved-slash sections include the pair, and Commands_System explicitly prevents User Commands or override_builtin from replacing them.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "6d3081ae8c4c9c2a37c6ce58ebf5a40bba3d5f6b962e549787c5698fb0e4960c",
+          "reason": "UCC-096, CS-051 and WM-037 now register and wire /goal to cmd.chat.goal.start and /goal again to cmd.chat.goal.update. CS-051 also prevents user-command overrides of the reserved pair.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    }
+  ],
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-334",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "route": "new_registry_row",
+    "source": "Jared, \"approve all\", T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z (stream C question 7, option (a)); extended to the other June audits with uncovered rows by pm7-build's relay of the same approved option (pm-mail 1105030457-ade2, 2026-11-05)"
+  },
+  "matrix": {
+    "original_rows": 0,
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "pass_id": "audit-20260616-006-goal-runtime-system-supplemental-20261111",
+  "reviews": "Sol and Astra blind reviews are listed on each closures entry (verdict, your_verdict, your_status, packet_row_digest, batch file)",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}

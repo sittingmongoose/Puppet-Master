@@ -1,0 +1,769 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
+  "row_pointer": "#/families/517"
+ },
+ "base_commit": "6cfe2a14a61a6fa26eb034276e56e17d6ee3e7b8",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "usage.event",
+   "family_id": "event-family-usage-event",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/517 (canonical row SHA-256 e8acb218b20549a1acde148e99c63fa322437cbd5d23ab21ff45e200b9053bb7). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/517",
+       "line_start": 33543,
+       "line_end": 33637,
+       "quote": "\"event_type\": \"usage.event\"",
+       "quote_line": 33546,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/517",
+        "line_start": 33537,
+        "line_end": 33631,
+        "quote": "\"event_type\": \"usage.event\"",
+        "quote_line": 33540,
+        "file_sha256": "aa6188dd713badcfa9c902d24d917b764b23a6a9e2290bdb58de8776a2f79a5e",
+        "quote_check": "exact"
+       },
+       "unit": "#/families/517",
+       "quote_scope": "unit #/families/517, Plans/event_family_registry.json:33543-33637"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-614/SP-594 govern this exact family independently.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-614",
+       "line_start": 35808,
+       "line_end": 35808,
+       "quote": "Newly authored owner contract under DL-045 for usage.event@1.0.0 only",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35801-36006",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-614",
+        "line_start": 35437,
+        "line_end": 35437,
+        "quote": "Newly authored owner contract under DL-045 for usage.event@1.0.0 only",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json",
+      "sha256": "12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact original-owner/source custody, prepare/outcome/publication and SP-286/CV-339 receipt ordering remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-594",
+       "line_start": 40681,
+       "line_end": 40681,
+       "quote": "For usage.event alone, the newly authored original-source custody",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-594, Plans/storage-plan.md:40627-40906",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-594",
+        "line_start": 39206,
+        "line_end": 39206,
+        "quote": "For usage.event alone, the newly authored original-source custody",
+        "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json",
+      "sha256": "12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact closed payload/source schemas and 41 Storage mirrors validate; every patterned identifier is guarded by exact length or full-match termination and trailing-LF refusal cases. Sweep part 2B: every format: date-time field of the payload, sources and checkpoint runs the shared registered CV-1101 predicate (EventRecord profile; 7 owner-valid forms accepted and 15 malformed forms refused per populated field), and every integer slot takes only an exact integer through the shared current_integer within its own owner bounds (integral floats and values past the maximum refused).",
+     "evidence": [
+      {
+       "path": "Plans/dt_event_contracts.schema.json",
+       "unit": "#/$defs/usage_event",
+       "line_start": 6006,
+       "line_end": 6006,
+       "quote": "\"const\": \"pm.event_payload.usage_event.v1\"",
+       "quote_check": "exact",
+       "quote_scope": "unit #/$defs/usage_event, Plans/dt_event_contracts.schema.json:5959-6720",
+       "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213",
+       "source_citation": {
+        "path": "Plans/dt_event_contracts.schema.json",
+        "unit": "Plans/dt_event_contracts.schema.json#/$defs/usage_event",
+        "line_start": 6006,
+        "line_end": 6006,
+        "quote": "\"const\": \"pm.event_payload.usage_event.v1\"",
+        "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213"
+       },
+       "json_pointer": "#/$defs/usage_event"
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 198,
+       "line_end": 198,
+       "quote": "DATE_TIME_FORMAT = format_checker(profile=EVENT_RECORD)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 198,
+        "line_end": 198,
+        "quote": "DATE_TIME_FORMAT = format_checker(profile=EVENT_RECORD)",
+        "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 214,
+       "line_end": 214,
+       "quote": "Draft202012Validator, type_checker=Draft202012Validator.TYPE_CHECKER.redefine('integer', exact_integer_type))",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 214,
+        "line_end": 214,
+        "quote": "Draft202012Validator, type_checker=Draft202012Validator.TYPE_CHECKER.redefine('integer', exact_integer_type))",
+        "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-614",
+       "line_start": 35950,
+       "line_end": 35950,
+       "quote": "For usage.event alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35801-36006",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-614",
+        "line_start": 35447,
+        "line_end": 35447,
+        "quote": "For usage.event alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json",
+      "sha256": "12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "F4: source null proves optional absence; Project/app absent-account, unknown/local/CLI positives and fabricated/changed-account negatives pass.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-614",
+       "line_start": 35933,
+       "line_end": 35934,
+       "quote": "immutable before.account_id, billing_entity_id and provider_account_ref are required nullable\n  source slots.",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35801-36006",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-614",
+        "line_start": 35445,
+        "line_end": 35445,
+        "quote": "immutable before.account_id, billing_entity_id and provider_account_ref are required nullable source slots.",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json",
+      "sha256": "12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Original full-value retry/conflict custody remains; both current writer and retry refuse projector_replay_only as replay_only_not_appendable. Sweep part 2B: the producer digest is the shared producer_semantic_digest over the unchanged CV-317 projection (pinned bytes unchanged), and the current writer qualifies it before append: an exact integer the JCS route cannot preserve (2^53+1, 2^60, u64 max, a 4,400-digit integer) refuses number_domain at SV36 and the retry route has no digest (AM02); 2^53 is accepted; retained originals with those integers stay readable through SP-1101 custody (F16 closed).",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-614",
+       "line_start": 35928,
+       "line_end": 35928,
+       "quote": "For usage.event alone, current writer and retry paths refuse",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35801-36006",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-614",
+        "line_start": 35444,
+        "line_end": 35444,
+        "quote": "For usage.event alone, current writer and retry paths refuse",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 515,
+       "line_end": 515,
+       "quote": "return pm_event_numbers.producer_semantic_digest(event)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 515,
+        "line_end": 515,
+        "quote": "return pm_event_numbers.producer_semantic_digest(event)",
+        "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 882,
+       "line_end": 882,
+       "quote": "yield 'src_replay', {'historical': historical, 'replay_policy': event['replay_policy'], 'producer_refusal': producer_refusal(event)}",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 882,
+        "line_end": 882,
+        "quote": "yield 'src_replay', {'historical': historical, 'replay_policy': event['replay_policy'], 'producer_refusal': producer_refusal(event)}",
+        "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-614",
+       "line_start": 35950,
+       "line_end": 35950,
+       "quote": "For usage.event alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35801-36006",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-614",
+        "line_start": 35447,
+        "line_end": 35447,
+        "quote": "For usage.event alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json",
+      "sha256": "12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Signed E8-1 option A resolves the `usage.event` history binding: select the existing `ai.usage.usage-retention` setting under SP-341/UF-108, not a fixed ordinary-telemetry policy. The setting remains 90 days by default with its existing allowed choices. For each Project or application entry, `retention_binding.setting_key = ai.usage.usage-retention`, `retention_binding.anchor = first_durable_save`: the first successful save of that exact entry that survives a restart supplies the immutable anchor. Retry, replay, reprocessing, compaction, backup restore and later settlement/correction of the entry never reset that anchor; a genuinely separate entry has its own first-save anchor. Read the configured window and apply it from that preserved anchor in both seglog and Parquet; unlimited means no age expiry. If the original anchor or setting cannot be authenticated, refuse expiry rather than substitute occurrence, observation, source-result, run-finish or recovery time. There is no count eviction. Daily account/provider/model totals remain canonical, backed up and permanent; commit their accounting before detail cleanup and never rebuild them from expired detail. Holds, required references, recovery, rollback and protected backups still block deletion. This is the existing setting-driven policy selector, not a newly minted policy ID. The separate original source rows keep their exact DL-507 assignments; no source-row lifetime is transferred from this event answer. `PENDING_RETENTION_BINDING` is resolved for this event; separate admission, storage implementation and native proof remain required.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-594",
+       "line_start": 40869,
+       "line_end": 40869,
+       "quote": "Current selected assignment (2026-11-19): usage.event@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-594, Plans/storage-plan.md:40627-40906",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-594",
+        "line_start": 39349,
+        "line_end": 39349,
+        "quote": "\\ = ai.usage.usage-retention`, `retention_binding.anchor = first_durable_save`: the first successful\\",
+        "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX4",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-594",
+       "line_start": 40869,
+       "line_end": 40869,
+       "quote": "Current selected assignment (2026-11-19): usage.event@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-594, Plans/storage-plan.md:40627-40906",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-594",
+        "line_start": 39360,
+        "line_end": 39360,
+        "quote": "\\ anchor=first_durable_save, anchor_immutable=true and owner_ref=Plans/storage-plan.md#SP-594, with no policy_id or policy_version. The separate original source rows keep their exact DL-507 assignments; no source-row lifetime\\",
+        "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX4",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json",
+      "sha256": "12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Redacted metadata, permission-checked references and coherent original source/receipt backup closure remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-594",
+       "line_start": 40704,
+       "line_end": 40706,
+       "quote": "Source\n  stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent\n  backup closure.",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit SP-594, Plans/storage-plan.md:40627-40906",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-594",
+        "line_start": 39232,
+        "line_end": 39234,
+        "quote": "Source\\\n  \\ stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory\\\n  \\ coherent backup closure.",
+        "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-594",
+        "old_quote": "Source\\\n  \\ stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory\\\n  \\ coherent backup closure.",
+        "new_quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json",
+      "sha256": "12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact-family original before/outcome predicates and publication barrier are checked, with no repeated side effects.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-614",
+       "line_start": 35907,
+       "line_end": 35907,
+       "quote": "For usage.event alone, the explicit lifecycle transition is",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35801-36006",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-614",
+        "line_start": 35442,
+        "line_end": 35442,
+        "quote": "For usage.event alone, the explicit lifecycle transition is",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json",
+      "sha256": "12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact-family SP-278 adoption and complete globally examined prefix/CAS remain; full-string token hashes and source Storage identity are now enforced, including a coherent foreign-token negative.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-594",
+       "line_start": 40715,
+       "line_end": 40715,
+       "quote": "For usage.event alone, its SP-278/DL-076 checkpoint",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-594, Plans/storage-plan.md:40627-40906",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-594",
+        "line_start": 39240,
+        "line_end": 39240,
+        "quote": "For usage.event alone, its SP-278/DL-076 checkpoint",
+        "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac"
+       }
+      },
+      {
+       "path": "scripts/pm_dt_table_cp_token.py",
+       "unit": "CP14_token_storage",
+       "line_start": 20,
+       "line_end": 20,
+       "quote": "def CP14_token_storage(value, context):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "3ffbb77f1d1cebde79dcad3337caf1c9909400c6711478d09f5f15d1f4b361fc",
+       "source_citation": {
+        "path": "scripts/pm_dt_table_cp_token.py",
+        "unit": "CP14_token_storage",
+        "line_start": 20,
+        "line_end": 20,
+        "quote": "def CP14_token_storage(value, context):",
+        "file_sha256": "3ffbb77f1d1cebde79dcad3337caf1c9909400c6711478d09f5f15d1f4b361fc"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json",
+      "sha256": "12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Version/withdrawal/read gates and governed source rebuild remain; no zero reset or history rewrite. Sweep part 2B (SP-1101): the historical reader resolves the sealed original and its frozen recipe and resources through the shared RetainedDispatcher for the binding the record claims (HR13); no caller-supplied original, flag or schema selects or narrows the recipe, and owner-valid broad timestamps stay readable with their exact spelling.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-594",
+       "line_start": 40667,
+       "line_end": 40667,
+       "quote": "Withdrawal first cuts off this family''s append admission",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-594, Plans/storage-plan.md:40627-40906",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-594",
+        "line_start": 39194,
+        "line_end": 39195,
+        "quote": "Withdrawal first cuts off this family's\\\n  \\ append admission",
+        "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-594",
+        "old_quote": "Withdrawal first cuts off this family's append admission",
+        "new_quote": "Withdrawal first cuts off this family''s append admission",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "ca51e78d48b283861d77e4b5b947c1ea880e5fc0"
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 1224,
+       "line_end": 1224,
+       "quote": "custody = _CUSTODY['dispatcher'].resolve(original_ref(completed, event), binding, disclose=lambda b: True)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 1224,
+        "line_end": 1224,
+        "quote": "custody = _CUSTODY['dispatcher'].resolve(original_ref(completed, event), binding, disclose=lambda b: True)",
+        "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-614",
+       "line_start": 35950,
+       "line_end": 35950,
+       "quote": "For usage.event alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-614, Plans/Contracts_V0.md:35801-36006",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-614",
+        "line_start": 35447,
+        "line_end": 35447,
+        "quote": "For usage.event alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json",
+      "sha256": "12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "integrated_criterion12_delta",
+     "finding": "Exact-family C12 PASS from reports/event-authority-20261114/C12-DT-self-grade.json",
+     "evidence": [
+      {
+       "line_end": 9322,
+       "line_start": 9322,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "For usage.event alone, round-1 fixtures refuse",
+       "unit": "ATS-297",
+       "quote_check": "exact",
+       "quote_scope": "unit ATS-297, Plans/Automated_Testing_System.md:9309-9347",
+       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "source_citation": {
+        "line_end": 9311,
+        "line_start": 9311,
+        "path": "Plans/Automated_Testing_System.md",
+        "quote": "For usage.event alone, round-1 fixtures refuse",
+        "unit": "ATS-297",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
+      },
+      {
+       "line_end": 157708,
+       "line_start": 157708,
+       "path": "Plans/dt_event_contract_fixtures.json",
+       "quote": "\"producer_semantic_digest\": \"254357fd3346f20821dfb45d310dd4aad1793f0c4d3df688c6ef2787f085a4d9\"",
+       "unit": "#/families/14",
+       "quote_check": "exact",
+       "quote_scope": "unit #/families/14, Plans/dt_event_contract_fixtures.json:136941-158694",
+       "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365",
+       "source_citation": {
+        "line_end": 157708,
+        "line_start": 157708,
+        "path": "Plans/dt_event_contract_fixtures.json",
+        "quote": "\"producer_semantic_digest\": \"254357fd3346f20821dfb45d310dd4aad1793f0c4d3df688c6ef2787f085a4d9\"",
+        "unit": "usage.event retry_oracle",
+        "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365"
+       },
+       "json_pointer": "#/families/14"
+      },
+      {
+       "line_end": 40744,
+       "line_start": 40744,
+       "path": "Plans/storage-plan.md",
+       "quote": "For usage.event, boolean authority/context flags are exact booleans",
+       "unit": "SP-594",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-594, Plans/storage-plan.md:40627-40906",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "line_end": 39270,
+        "line_start": 39270,
+        "path": "Plans/storage-plan.md",
+        "quote": "For usage.event, boolean authority/context flags are exact booleans",
+        "unit": "SP-594",
+        "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac"
+       }
+      },
+      {
+       "line_end": 2572,
+       "line_start": 2572,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def family_checks(c, inputs, check):",
+       "unit": "complete original suite",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 2572,
+        "line_start": 2572,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def family_checks(c, inputs, check):",
+        "unit": "complete original suite",
+        "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+       }
+      },
+      {
+       "line_end": 1388,
+       "line_start": 1388,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def retained_custody_checks(c, f, schemas, check):",
+       "unit": "sealed receipt and store",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 1388,
+        "line_start": 1388,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def retained_custody_checks(c, f, schemas, check):",
+        "unit": "sealed receipt and store",
+        "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+       }
+      },
+      {
+       "line_end": 242,
+       "line_start": 242,
+       "path": "scripts/pm_dt_c12_schema.py",
+       "quote": "def schema_witnesses(dt, inputs, out):",
+       "unit": "whole-definition covering",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "95ecbab453e7816c3fe3fa6863a6ae0aab2cf0a238636cdd52a7e62af99a8870",
+       "source_citation": {
+        "line_end": 242,
+        "line_start": 242,
+        "path": "scripts/pm_dt_c12_schema.py",
+        "quote": "def schema_witnesses(dt, inputs, out):",
+        "unit": "whole-definition covering",
+        "file_sha256": "95ecbab453e7816c3fe3fa6863a6ae0aab2cf0a238636cdd52a7e62af99a8870"
+       }
+      },
+      {
+       "line_end": 44,
+       "line_start": 44,
+       "path": "scripts/pm-dt-c12-closure.py",
+       "quote": "check(schema['uncontrolled_rules'] == 0",
+       "unit": "coverage control",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "fedacd8204d3579d61670ce2156b078fd3e2325b18ea7e74c1457b00eee96404",
+       "source_citation": {
+        "line_end": 44,
+        "line_start": 44,
+        "path": "scripts/pm-dt-c12-closure.py",
+        "quote": "check(schema['uncontrolled_rules'] == 0",
+        "unit": "coverage control",
+        "file_sha256": "fedacd8204d3579d61670ce2156b078fd3e2325b18ea7e74c1457b00eee96404"
+       }
+      },
+      {
+       "line_end": 2260,
+       "line_start": 2260,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def number_corpus_checks(c, f, schemas, check):",
+       "unit": "shared numbers",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 2260,
+        "line_start": 2260,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def number_corpus_checks(c, f, schemas, check):",
+        "unit": "shared numbers",
+        "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+       }
+      },
+      {
+       "line_end": 2111,
+       "line_start": 2111,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def datetime_checks(c, f, schemas, check):",
+       "unit": "shared datetime",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 2111,
+        "line_start": 2111,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def datetime_checks(c, f, schemas, check):",
+        "unit": "shared datetime",
+        "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json",
+      "sha256": "12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-18.1",
+  "sha256": "aa6188dd713badcfa9c902d24d917b764b23a6a9e2290bdb58de8776a2f79a5e",
+  "family_count": 518,
+  "row_pointer": "#/families/517"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "9ecb523310059427039049aadc7ef1e959af5d42d327c68cf244fb4789d641e7",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
+}

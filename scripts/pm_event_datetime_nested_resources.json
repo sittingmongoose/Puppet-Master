@@ -1,0 +1,1384 @@
+{
+ "source_commit": "c7b3deb332",
+ "source_path": "Plans/dch_retained_recipes.json",
+ "source_container_sha256": "46c741436673418dff60da1e3abed58e9070a980ac7c3cba5b7dc32a15f8479c",
+ "resources": {
+  "5bb2a08751ebd1ba82915aa01d966ccecb51f237322106938cf8167ee0e57cd7": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json",
+   "title": "Puppet Master EventRecord Envelope",
+   "description": "Canonical persisted EventRecord envelope for schema_id pm.event.v0. The envelope is closed and carries identity, sequence, causality, redaction, replay, idempotency, and migration fields. Event-specific payload content is dispatched through payload_schema_id and remains owned by the registered payload schema. No raw secret, token, password, credential, API key, OAuth value, or local machine secret may be stored in this envelope or payload.",
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "schema_version",
+    "scope_kind",
+    "event_id",
+    "event_type",
+    "project_id",
+    "thread_id",
+    "run_id",
+    "node_id",
+    "attempt_id",
+    "actor_ref",
+    "requested_account_ref",
+    "effective_account_ref",
+    "occurred_at_utc",
+    "observed_at_utc",
+    "persisted_at_utc",
+    "sequence_id",
+    "producer_sequence_id",
+    "correlation_id",
+    "causation_event_id",
+    "parent_event_id",
+    "idempotency_key",
+    "payload_schema_id",
+    "payload",
+    "payload_ref",
+    "redaction_profile",
+    "replay_policy",
+    "migration"
+   ],
+   "properties": {
+    "schema_id": {
+     "type": "string",
+     "const": "pm.event.v0"
+    },
+    "schema_version": {
+     "type": "string",
+     "const": "2.0.0"
+    },
+    "scope_kind": {
+     "type": "string",
+     "enum": [
+      "application",
+      "project"
+     ]
+    },
+    "event_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "event_type": {
+     "type": "string",
+     "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+    },
+    "project_id": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "thread_id": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "run_id": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "node_id": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "attempt_id": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "actor_ref": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "requested_account_ref": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "effective_account_ref": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "occurred_at_utc": {
+     "$ref": "#/$defs/date_time_string"
+    },
+    "observed_at_utc": {
+     "$ref": "#/$defs/date_time_string"
+    },
+    "persisted_at_utc": {
+     "$ref": "#/$defs/date_time_string"
+    },
+    "sequence_id": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "producer_sequence_id": {
+     "$ref": "#/$defs/nullable_non_negative_integer"
+    },
+    "correlation_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "causation_event_id": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "parent_event_id": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "idempotency_key": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "payload_schema_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "payload": {
+     "type": "object",
+     "additionalProperties": true
+    },
+    "payload_ref": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "redaction_profile": {
+     "type": "string",
+     "enum": [
+      "no_secrets",
+      "redacted",
+      "secret_refs_only"
+     ]
+    },
+    "replay_policy": {
+     "type": "string",
+     "enum": [
+      "append_once",
+      "dedupe_by_event_id",
+      "dedupe_by_idempotency_key",
+      "projector_replay_only"
+     ]
+    },
+    "migration": {
+     "$ref": "#/$defs/migration"
+    }
+   },
+   "allOf": [
+    {
+     "if": {
+      "properties": {
+       "scope_kind": {
+        "const": "application"
+       }
+      },
+      "required": [
+       "scope_kind"
+      ]
+     },
+     "then": {
+      "properties": {
+       "project_id": {
+        "type": "null"
+       }
+      }
+     }
+    },
+    {
+     "if": {
+      "properties": {
+       "scope_kind": {
+        "const": "project"
+       }
+      },
+      "required": [
+       "scope_kind"
+      ]
+     },
+     "then": {
+      "properties": {
+       "project_id": {
+        "$ref": "#/$defs/non_empty_string"
+       }
+      }
+     }
+    }
+   ],
+   "$defs": {
+    "non_empty_string": {
+     "type": "string",
+     "minLength": 1
+    },
+    "nullable_non_empty_string": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/non_empty_string"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "nullable_non_negative_integer": {
+     "anyOf": [
+      {
+       "type": "integer",
+       "minimum": 0
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "date_time_string": {
+     "type": "string",
+     "format": "date-time",
+     "minLength": 1
+    },
+    "migration": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "migrated_from_schema_id",
+      "migrated_from_schema_version",
+      "migration_id",
+      "compatibility_event_type"
+     ],
+     "properties": {
+      "migrated_from_schema_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "migrated_from_schema_version": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "migration_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "compatibility_event_type": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      }
+     }
+    },
+    "event_record_1_0_0_compatibility_reader": {
+     "description": "Frozen compatibility reader shape for persisted pm.event.v0 version 1.0.0 values. New writers must not emit this shape.",
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "schema_id",
+      "schema_version",
+      "event_id",
+      "event_type",
+      "project_id",
+      "thread_id",
+      "run_id",
+      "node_id",
+      "attempt_id",
+      "actor_ref",
+      "requested_account_ref",
+      "effective_account_ref",
+      "occurred_at_utc",
+      "observed_at_utc",
+      "persisted_at_utc",
+      "sequence_id",
+      "producer_sequence_id",
+      "correlation_id",
+      "causation_event_id",
+      "parent_event_id",
+      "idempotency_key",
+      "payload_schema_id",
+      "payload",
+      "payload_ref",
+      "redaction_profile",
+      "replay_policy",
+      "migration"
+     ],
+     "properties": {
+      "schema_id": {
+       "type": "string",
+       "const": "pm.event.v0"
+      },
+      "schema_version": {
+       "type": "string",
+       "const": "1.0.0"
+      },
+      "event_id": {
+       "$ref": "#/$defs/non_empty_string"
+      },
+      "event_type": {
+       "type": "string",
+       "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+      },
+      "project_id": {
+       "$ref": "#/$defs/non_empty_string"
+      },
+      "thread_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "run_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "node_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "attempt_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "actor_ref": {
+       "$ref": "#/$defs/non_empty_string"
+      },
+      "requested_account_ref": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "effective_account_ref": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "occurred_at_utc": {
+       "$ref": "#/$defs/date_time_string"
+      },
+      "observed_at_utc": {
+       "$ref": "#/$defs/date_time_string"
+      },
+      "persisted_at_utc": {
+       "$ref": "#/$defs/date_time_string"
+      },
+      "sequence_id": {
+       "type": "integer",
+       "minimum": 0
+      },
+      "producer_sequence_id": {
+       "$ref": "#/$defs/nullable_non_negative_integer"
+      },
+      "correlation_id": {
+       "$ref": "#/$defs/non_empty_string"
+      },
+      "causation_event_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "parent_event_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "idempotency_key": {
+       "$ref": "#/$defs/non_empty_string"
+      },
+      "payload_schema_id": {
+       "$ref": "#/$defs/non_empty_string"
+      },
+      "payload": {
+       "type": "object",
+       "additionalProperties": true
+      },
+      "payload_ref": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "redaction_profile": {
+       "type": "string",
+       "enum": [
+        "no_secrets",
+        "redacted",
+        "secret_refs_only"
+       ]
+      },
+      "replay_policy": {
+       "type": "string",
+       "enum": [
+        "append_once",
+        "dedupe_by_event_id",
+        "dedupe_by_idempotency_key",
+        "projector_replay_only"
+       ]
+      },
+      "migration": {
+       "$ref": "#/$defs/migration"
+      }
+     }
+    }
+   }
+  },
+  "c24df89b1396714ea00294773701e79d744207357457b274a72fc959f478240d": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json",
+   "title": "Puppet Master EventRecord Envelope",
+   "description": "Canonical persisted EventRecord envelope for schema_id pm.event.v0. The envelope is closed and carries identity, sequence, causality, redaction, replay, idempotency, and migration fields. Event-specific payload content is dispatched through payload_schema_id and remains owned by the registered payload schema. No raw secret, token, password, credential, API key, OAuth value, or local machine secret may be stored in this envelope or payload.",
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "schema_version",
+    "scope_kind",
+    "event_id",
+    "event_type",
+    "project_id",
+    "thread_id",
+    "run_id",
+    "node_id",
+    "attempt_id",
+    "actor_ref",
+    "requested_account_ref",
+    "effective_account_ref",
+    "occurred_at_utc",
+    "observed_at_utc",
+    "persisted_at_utc",
+    "sequence_id",
+    "producer_sequence_id",
+    "correlation_id",
+    "causation_event_id",
+    "parent_event_id",
+    "idempotency_key",
+    "payload_schema_id",
+    "payload",
+    "payload_ref",
+    "redaction_profile",
+    "replay_policy",
+    "migration"
+   ],
+   "properties": {
+    "schema_id": {
+     "type": "string",
+     "const": "pm.event.v0"
+    },
+    "schema_version": {
+     "type": "string",
+     "const": "2.0.0"
+    },
+    "scope_kind": {
+     "type": "string",
+     "enum": [
+      "application",
+      "project"
+     ]
+    },
+    "event_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "event_type": {
+     "type": "string",
+     "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+    },
+    "project_id": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "thread_id": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "run_id": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "node_id": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "attempt_id": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "actor_ref": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "requested_account_ref": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "effective_account_ref": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "occurred_at_utc": {
+     "$ref": "#/$defs/date_time_string"
+    },
+    "observed_at_utc": {
+     "$ref": "#/$defs/date_time_string"
+    },
+    "persisted_at_utc": {
+     "$ref": "#/$defs/date_time_string"
+    },
+    "sequence_id": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "producer_sequence_id": {
+     "$ref": "#/$defs/nullable_non_negative_integer"
+    },
+    "correlation_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "causation_event_id": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "parent_event_id": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "idempotency_key": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "payload_schema_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "payload": {
+     "type": "object",
+     "additionalProperties": true
+    },
+    "payload_ref": {
+     "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "redaction_profile": {
+     "type": "string",
+     "enum": [
+      "no_secrets",
+      "redacted",
+      "secret_refs_only"
+     ]
+    },
+    "replay_policy": {
+     "type": "string",
+     "enum": [
+      "append_once",
+      "dedupe_by_event_id",
+      "dedupe_by_idempotency_key",
+      "projector_replay_only"
+     ]
+    },
+    "migration": {
+     "$ref": "#/$defs/migration"
+    }
+   },
+   "allOf": [
+    {
+     "if": {
+      "properties": {
+       "scope_kind": {
+        "const": "application"
+       }
+      },
+      "required": [
+       "scope_kind"
+      ]
+     },
+     "then": {
+      "properties": {
+       "project_id": {
+        "type": "null"
+       }
+      }
+     }
+    },
+    {
+     "if": {
+      "properties": {
+       "scope_kind": {
+        "const": "project"
+       }
+      },
+      "required": [
+       "scope_kind"
+      ]
+     },
+     "then": {
+      "properties": {
+       "project_id": {
+        "$ref": "#/$defs/non_empty_string"
+       }
+      }
+     }
+    },
+    {
+     "if": {
+      "properties": {
+       "event_type": {
+        "enum": [
+         "bundle.selection_forward_blocked",
+         "bundle.selection_sent_to_chat",
+         "chat.message",
+         "chat.thread_archived",
+         "chat.thread_created",
+         "chat.thread_deleted",
+         "chat.thread_worktree_bound",
+         "chat.thread_worktree_create_failed",
+         "chat.thread_worktree_merge_failed",
+         "chat.thread_worktree_merged",
+         "chat.thread_worktree_pr_created",
+         "chat.thread_worktree_pr_failed",
+         "chat.thread_worktree_pre_merge_test_failed",
+         "chat.thread_worktree_pre_merge_test_passed",
+         "chat.thread_worktree_pre_merge_test_started",
+         "chat.thread_worktree_renamed",
+         "chat.thread_worktree_unbound"
+        ]
+       }
+      },
+      "required": [
+       "event_type"
+      ]
+     },
+     "then": {
+      "properties": {
+       "sequence_id": {
+        "maximum": 9007199254740991
+       },
+       "producer_sequence_id": {
+        "maximum": 9007199254740991
+       }
+      }
+     }
+    }
+   ],
+   "$defs": {
+    "non_empty_string": {
+     "type": "string",
+     "minLength": 1
+    },
+    "nullable_non_empty_string": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/non_empty_string"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "nullable_non_negative_integer": {
+     "anyOf": [
+      {
+       "type": "integer",
+       "minimum": 0
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "date_time_string": {
+     "type": "string",
+     "format": "date-time",
+     "minLength": 1
+    },
+    "migration": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "migrated_from_schema_id",
+      "migrated_from_schema_version",
+      "migration_id",
+      "compatibility_event_type"
+     ],
+     "properties": {
+      "migrated_from_schema_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "migrated_from_schema_version": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "migration_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "compatibility_event_type": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      }
+     }
+    },
+    "event_record_1_0_0_compatibility_reader": {
+     "description": "Frozen compatibility reader shape for persisted pm.event.v0 version 1.0.0 values. New writers must not emit this shape.",
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "schema_id",
+      "schema_version",
+      "event_id",
+      "event_type",
+      "project_id",
+      "thread_id",
+      "run_id",
+      "node_id",
+      "attempt_id",
+      "actor_ref",
+      "requested_account_ref",
+      "effective_account_ref",
+      "occurred_at_utc",
+      "observed_at_utc",
+      "persisted_at_utc",
+      "sequence_id",
+      "producer_sequence_id",
+      "correlation_id",
+      "causation_event_id",
+      "parent_event_id",
+      "idempotency_key",
+      "payload_schema_id",
+      "payload",
+      "payload_ref",
+      "redaction_profile",
+      "replay_policy",
+      "migration"
+     ],
+     "properties": {
+      "schema_id": {
+       "type": "string",
+       "const": "pm.event.v0"
+      },
+      "schema_version": {
+       "type": "string",
+       "const": "1.0.0"
+      },
+      "event_id": {
+       "$ref": "#/$defs/non_empty_string"
+      },
+      "event_type": {
+       "type": "string",
+       "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+      },
+      "project_id": {
+       "$ref": "#/$defs/non_empty_string"
+      },
+      "thread_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "run_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "node_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "attempt_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "actor_ref": {
+       "$ref": "#/$defs/non_empty_string"
+      },
+      "requested_account_ref": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "effective_account_ref": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "occurred_at_utc": {
+       "$ref": "#/$defs/date_time_string"
+      },
+      "observed_at_utc": {
+       "$ref": "#/$defs/date_time_string"
+      },
+      "persisted_at_utc": {
+       "$ref": "#/$defs/date_time_string"
+      },
+      "sequence_id": {
+       "type": "integer",
+       "minimum": 0
+      },
+      "producer_sequence_id": {
+       "$ref": "#/$defs/nullable_non_negative_integer"
+      },
+      "correlation_id": {
+       "$ref": "#/$defs/non_empty_string"
+      },
+      "causation_event_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "parent_event_id": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "idempotency_key": {
+       "$ref": "#/$defs/non_empty_string"
+      },
+      "payload_schema_id": {
+       "$ref": "#/$defs/non_empty_string"
+      },
+      "payload": {
+       "type": "object",
+       "additionalProperties": true
+      },
+      "payload_ref": {
+       "$ref": "#/$defs/nullable_non_empty_string"
+      },
+      "redaction_profile": {
+       "type": "string",
+       "enum": [
+        "no_secrets",
+        "redacted",
+        "secret_refs_only"
+       ]
+      },
+      "replay_policy": {
+       "type": "string",
+       "enum": [
+        "append_once",
+        "dedupe_by_event_id",
+        "dedupe_by_idempotency_key",
+        "projector_replay_only"
+       ]
+      },
+      "migration": {
+       "$ref": "#/$defs/migration"
+      }
+     }
+    }
+   }
+  }
+ },
+ "recipes": {
+  "raw-v1": "5bb2a08751ebd1ba82915aa01d966ccecb51f237322106938cf8167ee0e57cd7",
+  "normalized-v2": "5bb2a08751ebd1ba82915aa01d966ccecb51f237322106938cf8167ee0e57cd7",
+  "strict-v3": "c24df89b1396714ea00294773701e79d744207357457b274a72fc959f478240d"
+ },
+ "rows": [
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/raw-v1/schemas/Plans~1event_record.schema.json",
+   "fields": [
+    "observed_at_utc",
+    "persisted_at_utc"
+   ],
+   "resource_pointer": "",
+   "resource_id": null,
+   "resource_sha256": "46c741436673418dff60da1e3abed58e9070a980ac7c3cba5b7dc32a15f8479c",
+   "node_sha256": "5bb2a08751ebd1ba82915aa01d966ccecb51f237322106938cf8167ee0e57cd7",
+   "profile": "storage_utc_z",
+   "classification": "EventRecord",
+   "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+   "citation": [
+    {
+     "path": "Plans/dch_retained_recipes.json",
+     "pointer": "/recipes/raw-v1/schemas/Plans~1event_record.schema.json/properties/observed_at_utc",
+     "value": {
+      "$ref": "#/$defs/date_time_string"
+     }
+    },
+    {
+     "path": "Plans/dch_retained_recipes.json",
+     "pointer": "/recipes/raw-v1/schemas/Plans~1event_record.schema.json/properties/persisted_at_utc",
+     "value": {
+      "$ref": "#/$defs/date_time_string"
+     }
+    },
+    {
+     "path": "Plans/Contracts_V0.md",
+     "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+    }
+   ],
+   "role_evidence": {
+    "resource_title": null,
+    "schema_identity": {
+     "type": "string",
+     "const": "pm.event.v0"
+    },
+    "required": [
+     "schema_id",
+     "schema_version",
+     "scope_kind",
+     "event_id",
+     "event_type",
+     "project_id",
+     "thread_id",
+     "run_id",
+     "node_id",
+     "attempt_id",
+     "actor_ref",
+     "requested_account_ref",
+     "effective_account_ref",
+     "occurred_at_utc",
+     "observed_at_utc",
+     "persisted_at_utc",
+     "sequence_id",
+     "producer_sequence_id",
+     "correlation_id",
+     "causation_event_id",
+     "parent_event_id",
+     "idempotency_key",
+     "payload_schema_id",
+     "payload",
+     "payload_ref",
+     "redaction_profile",
+     "replay_policy",
+     "migration"
+    ]
+   }
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/raw-v1/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader",
+   "fields": [
+    "observed_at_utc",
+    "persisted_at_utc"
+   ],
+   "resource_pointer": "",
+   "resource_id": null,
+   "resource_sha256": "46c741436673418dff60da1e3abed58e9070a980ac7c3cba5b7dc32a15f8479c",
+   "node_sha256": "602ee18d91514ac0e5c6140e652f3f5b226b7547f1bb3d2f96c286e1b36bb6d1",
+   "profile": "storage_utc_z",
+   "classification": "EventRecord",
+   "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+   "citation": [
+    {
+     "path": "Plans/dch_retained_recipes.json",
+     "pointer": "/recipes/raw-v1/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader/properties/observed_at_utc",
+     "value": {
+      "$ref": "#/$defs/date_time_string"
+     }
+    },
+    {
+     "path": "Plans/dch_retained_recipes.json",
+     "pointer": "/recipes/raw-v1/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader/properties/persisted_at_utc",
+     "value": {
+      "$ref": "#/$defs/date_time_string"
+     }
+    },
+    {
+     "path": "Plans/Contracts_V0.md",
+     "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+    }
+   ],
+   "role_evidence": {
+    "resource_title": null,
+    "schema_identity": {
+     "type": "string",
+     "const": "pm.event.v0"
+    },
+    "required": [
+     "schema_id",
+     "schema_version",
+     "event_id",
+     "event_type",
+     "project_id",
+     "thread_id",
+     "run_id",
+     "node_id",
+     "attempt_id",
+     "actor_ref",
+     "requested_account_ref",
+     "effective_account_ref",
+     "occurred_at_utc",
+     "observed_at_utc",
+     "persisted_at_utc",
+     "sequence_id",
+     "producer_sequence_id",
+     "correlation_id",
+     "causation_event_id",
+     "parent_event_id",
+     "idempotency_key",
+     "payload_schema_id",
+     "payload",
+     "payload_ref",
+     "redaction_profile",
+     "replay_policy",
+     "migration"
+    ]
+   }
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/normalized-v2/schemas/Plans~1event_record.schema.json",
+   "fields": [
+    "observed_at_utc",
+    "persisted_at_utc"
+   ],
+   "resource_pointer": "",
+   "resource_id": null,
+   "resource_sha256": "46c741436673418dff60da1e3abed58e9070a980ac7c3cba5b7dc32a15f8479c",
+   "node_sha256": "5bb2a08751ebd1ba82915aa01d966ccecb51f237322106938cf8167ee0e57cd7",
+   "profile": "storage_utc_z",
+   "classification": "EventRecord",
+   "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+   "citation": [
+    {
+     "path": "Plans/dch_retained_recipes.json",
+     "pointer": "/recipes/normalized-v2/schemas/Plans~1event_record.schema.json/properties/observed_at_utc",
+     "value": {
+      "$ref": "#/$defs/date_time_string"
+     }
+    },
+    {
+     "path": "Plans/dch_retained_recipes.json",
+     "pointer": "/recipes/normalized-v2/schemas/Plans~1event_record.schema.json/properties/persisted_at_utc",
+     "value": {
+      "$ref": "#/$defs/date_time_string"
+     }
+    },
+    {
+     "path": "Plans/Contracts_V0.md",
+     "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+    }
+   ],
+   "role_evidence": {
+    "resource_title": null,
+    "schema_identity": {
+     "type": "string",
+     "const": "pm.event.v0"
+    },
+    "required": [
+     "schema_id",
+     "schema_version",
+     "scope_kind",
+     "event_id",
+     "event_type",
+     "project_id",
+     "thread_id",
+     "run_id",
+     "node_id",
+     "attempt_id",
+     "actor_ref",
+     "requested_account_ref",
+     "effective_account_ref",
+     "occurred_at_utc",
+     "observed_at_utc",
+     "persisted_at_utc",
+     "sequence_id",
+     "producer_sequence_id",
+     "correlation_id",
+     "causation_event_id",
+     "parent_event_id",
+     "idempotency_key",
+     "payload_schema_id",
+     "payload",
+     "payload_ref",
+     "redaction_profile",
+     "replay_policy",
+     "migration"
+    ]
+   }
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/normalized-v2/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader",
+   "fields": [
+    "observed_at_utc",
+    "persisted_at_utc"
+   ],
+   "resource_pointer": "",
+   "resource_id": null,
+   "resource_sha256": "46c741436673418dff60da1e3abed58e9070a980ac7c3cba5b7dc32a15f8479c",
+   "node_sha256": "602ee18d91514ac0e5c6140e652f3f5b226b7547f1bb3d2f96c286e1b36bb6d1",
+   "profile": "storage_utc_z",
+   "classification": "EventRecord",
+   "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+   "citation": [
+    {
+     "path": "Plans/dch_retained_recipes.json",
+     "pointer": "/recipes/normalized-v2/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader/properties/observed_at_utc",
+     "value": {
+      "$ref": "#/$defs/date_time_string"
+     }
+    },
+    {
+     "path": "Plans/dch_retained_recipes.json",
+     "pointer": "/recipes/normalized-v2/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader/properties/persisted_at_utc",
+     "value": {
+      "$ref": "#/$defs/date_time_string"
+     }
+    },
+    {
+     "path": "Plans/Contracts_V0.md",
+     "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+    }
+   ],
+   "role_evidence": {
+    "resource_title": null,
+    "schema_identity": {
+     "type": "string",
+     "const": "pm.event.v0"
+    },
+    "required": [
+     "schema_id",
+     "schema_version",
+     "event_id",
+     "event_type",
+     "project_id",
+     "thread_id",
+     "run_id",
+     "node_id",
+     "attempt_id",
+     "actor_ref",
+     "requested_account_ref",
+     "effective_account_ref",
+     "occurred_at_utc",
+     "observed_at_utc",
+     "persisted_at_utc",
+     "sequence_id",
+     "producer_sequence_id",
+     "correlation_id",
+     "causation_event_id",
+     "parent_event_id",
+     "idempotency_key",
+     "payload_schema_id",
+     "payload",
+     "payload_ref",
+     "redaction_profile",
+     "replay_policy",
+     "migration"
+    ]
+   }
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/strict-v3/schemas/Plans~1event_record.schema.json",
+   "fields": [
+    "observed_at_utc",
+    "persisted_at_utc"
+   ],
+   "resource_pointer": "",
+   "resource_id": null,
+   "resource_sha256": "46c741436673418dff60da1e3abed58e9070a980ac7c3cba5b7dc32a15f8479c",
+   "node_sha256": "c24df89b1396714ea00294773701e79d744207357457b274a72fc959f478240d",
+   "profile": "storage_utc_z",
+   "classification": "EventRecord",
+   "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+   "citation": [
+    {
+     "path": "Plans/dch_retained_recipes.json",
+     "pointer": "/recipes/strict-v3/schemas/Plans~1event_record.schema.json/properties/observed_at_utc",
+     "value": {
+      "$ref": "#/$defs/date_time_string"
+     }
+    },
+    {
+     "path": "Plans/dch_retained_recipes.json",
+     "pointer": "/recipes/strict-v3/schemas/Plans~1event_record.schema.json/properties/persisted_at_utc",
+     "value": {
+      "$ref": "#/$defs/date_time_string"
+     }
+    },
+    {
+     "path": "Plans/Contracts_V0.md",
+     "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+    }
+   ],
+   "role_evidence": {
+    "resource_title": null,
+    "schema_identity": {
+     "type": "string",
+     "const": "pm.event.v0"
+    },
+    "required": [
+     "schema_id",
+     "schema_version",
+     "scope_kind",
+     "event_id",
+     "event_type",
+     "project_id",
+     "thread_id",
+     "run_id",
+     "node_id",
+     "attempt_id",
+     "actor_ref",
+     "requested_account_ref",
+     "effective_account_ref",
+     "occurred_at_utc",
+     "observed_at_utc",
+     "persisted_at_utc",
+     "sequence_id",
+     "producer_sequence_id",
+     "correlation_id",
+     "causation_event_id",
+     "parent_event_id",
+     "idempotency_key",
+     "payload_schema_id",
+     "payload",
+     "payload_ref",
+     "redaction_profile",
+     "replay_policy",
+     "migration"
+    ]
+   }
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/strict-v3/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader",
+   "fields": [
+    "observed_at_utc",
+    "persisted_at_utc"
+   ],
+   "resource_pointer": "",
+   "resource_id": null,
+   "resource_sha256": "46c741436673418dff60da1e3abed58e9070a980ac7c3cba5b7dc32a15f8479c",
+   "node_sha256": "602ee18d91514ac0e5c6140e652f3f5b226b7547f1bb3d2f96c286e1b36bb6d1",
+   "profile": "storage_utc_z",
+   "classification": "EventRecord",
+   "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+   "citation": [
+    {
+     "path": "Plans/dch_retained_recipes.json",
+     "pointer": "/recipes/strict-v3/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader/properties/observed_at_utc",
+     "value": {
+      "$ref": "#/$defs/date_time_string"
+     }
+    },
+    {
+     "path": "Plans/dch_retained_recipes.json",
+     "pointer": "/recipes/strict-v3/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader/properties/persisted_at_utc",
+     "value": {
+      "$ref": "#/$defs/date_time_string"
+     }
+    },
+    {
+     "path": "Plans/Contracts_V0.md",
+     "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+    }
+   ],
+   "role_evidence": {
+    "resource_title": null,
+    "schema_identity": {
+     "type": "string",
+     "const": "pm.event.v0"
+    },
+    "required": [
+     "schema_id",
+     "schema_version",
+     "event_id",
+     "event_type",
+     "project_id",
+     "thread_id",
+     "run_id",
+     "node_id",
+     "attempt_id",
+     "actor_ref",
+     "requested_account_ref",
+     "effective_account_ref",
+     "occurred_at_utc",
+     "observed_at_utc",
+     "persisted_at_utc",
+     "sequence_id",
+     "producer_sequence_id",
+     "correlation_id",
+     "causation_event_id",
+     "parent_event_id",
+     "idempotency_key",
+     "payload_schema_id",
+     "payload",
+     "payload_ref",
+     "redaction_profile",
+     "replay_policy",
+     "migration"
+    ]
+   }
+  }
+ ],
+ "controls": [
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/raw-v1/schemas/Plans~1event_record.schema.json",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/raw-v1/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/normalized-v2/schemas/Plans~1event_record.schema.json",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/normalized-v2/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/strict-v3/schemas/Plans~1event_record.schema.json",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb"
+  },
+  {
+   "path": "Plans/dch_retained_recipes.json",
+   "origin": "json",
+   "pointer": "/recipes/strict-v3/schemas/Plans~1event_record.schema.json/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  }
+ ],
+ "objects": {
+  "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb": {
+   "source": {
+    "path": "Plans/event_record_index_checkpoint_contract_fixtures.json",
+    "origin": "json",
+    "pointer": "/positive/current_read_without_old_controls/current_source/frames/0/event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+    "event_type": "restore_point.created",
+    "project_id": "project-A",
+    "thread_id": "thread-A",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "actor-A",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-06-10T17:00:00Z",
+    "observed_at_utc": "2026-06-10T17:00:00Z",
+    "producer_sequence_id": null,
+    "correlation_id": "command-A",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "create-A",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+    "payload": {
+     "schema_version": "1.0.0",
+     "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+     "project_id": "project-A",
+     "source_thread_ref": "thread-A",
+     "source_branch_ref": "branch-A",
+     "message_boundary_ref": "message-A",
+     "record_ref": "rp:project-A:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+     "record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+     "context_refs": [
+      "ctx-A"
+     ],
+     "provenance_refs": [
+      "prov-A"
+     ],
+     "attachment_refs": [],
+     "citation_refs": [],
+     "status": "available",
+     "created_at_utc": "2026-06-10T17:00:00Z"
+    },
+    "payload_ref": null,
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    },
+    "sequence_id": 7,
+    "persisted_at_utc": "2026-06-10T17:00:00Z"
+   }
+  },
+  "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30": {
+   "source": {
+    "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+    "origin": "json",
+    "pointer": "/artifact_receipts/plan_approved_event"
+   },
+   "value": {
+    "actor_ref": "actor:pnc019-certifier",
+    "attempt_id": null,
+    "causation_event_id": null,
+    "correlation_id": "corr-pnc019-0001",
+    "effective_account_ref": "account:certification-harness",
+    "event_id": "evt-pnc019-plan-approved-0001",
+    "event_type": "planning.plan_approved",
+    "idempotency_key": "idem-pnc019-approved-plan-pack-0001",
+    "migration": {
+     "compatibility_event_type": null,
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null
+    },
+    "node_id": null,
+    "observed_at_utc": "2026-07-06T00:00:00Z",
+    "occurred_at_utc": "2026-07-06T00:00:00Z",
+    "parent_event_id": null,
+    "payload": {
+     "approval_cas_receipt_id": "approval-cas-pnc019-0001",
+     "approved_plan_pack_id": "app-pnc019-0001",
+     "plan_compile_run_id": "pcr-pnc019-0001",
+     "source_refs": [
+      "Plans/Planning_Wizard.md#PWIZ-014"
+     ]
+    },
+    "payload_ref": null,
+    "payload_schema_id": "pm.event_payload.plan_approved.v1",
+    "persisted_at_utc": "2026-07-06T00:00:00Z",
+    "producer_sequence_id": 1,
+    "project_id": "pnc019-clean-room-project",
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "requested_account_ref": "account:certification-harness",
+    "run_id": "pcr-pnc019-0001",
+    "schema_id": "pm.event.v0",
+    "schema_version": "1.0.0",
+    "sequence_id": 1,
+    "thread_id": "thread-pnc019"
+   }
+  }
+ }
+}

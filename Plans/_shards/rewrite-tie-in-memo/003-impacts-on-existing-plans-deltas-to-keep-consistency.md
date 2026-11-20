@@ -4,7 +4,7 @@ Source: `Plans/rewrite-tie-in-memo.md`
 
 Source lines: L89-L139
 
-Source SHA256: `3abc641ce316c72a894a8507d216526468d06a9c256ba3e09ea7a9d46cd0d46d`
+Source SHA256: `353387d68dafd801aa1b4fe4383487037da33cf2fb710d4b583b0e62be46dd7f`
 
 ---
 
@@ -17,7 +17,7 @@ The following contradictions must be retired during reconciliation so the rewrit
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md
 
-- **Provider split:** retire any wording that treats Gemini direct and Gemini CLI as one mixed provider surface.
+- **Provider split:** Gemini Direct and Antigravity remain live; the Gemini CLI (`gemini_cli`) provider entry, auth surfaces and quota planes are retired by DL-332 and DL-478. Preserve the old split only as compatibility/source lineage.
 - **Direct-provider canon:** retire any wording that describes Codex or GitHub Copilot as CLI-driven runtime providers in PM.
 - **OpenCode ontology:** retire `server` / `cli_launcher` language that obscures the canonical `Managed Server` / `Attach to Existing Server` server-profile model.
 - **Runtime vocabulary:** keep `requested_platform` / `effective_platform` canonical and add family/runtime-platform/billing fields additively rather than minting a parallel primary vocabulary.

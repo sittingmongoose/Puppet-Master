@@ -49,8 +49,10 @@ html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-m
   .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) :where(*) {
   color: inherit !important; -webkit-text-fill-color: currentColor;
 }
-html[data-o55-nier-parts~="cursor"] :is(.orch-tab, .resource-row, .chat-thread-item, .fm-row, .index-link).o55np-cur-over :is([class*="badge"], [class*="count"], kbd),
-html[data-o55-nier-parts~="cursor"] :is(.orch-tab, .resource-row, .chat-thread-item, .fm-row, .index-link):is(.active, .is-active, .selected) :is([class*="badge"], [class*="count"], kbd) {
+/* (a key is named by the classes every key here already has, .pmr-key and .pm51-kbd; same specificity, the :is() held
+   attribute arms: a bare kbd after .active put the tag into Chrome's page-wide .active set, lane J 2026-11-11) */
+html[data-o55-nier-parts~="cursor"] :is(.orch-tab, .resource-row, .chat-thread-item, .fm-row, .index-link).o55np-cur-over :is([class*="badge"], [class*="count"], .pmr-key, .pm51-kbd),
+html[data-o55-nier-parts~="cursor"] :is(.orch-tab, .resource-row, .chat-thread-item, .fm-row, .index-link):is(.active, .is-active, .selected) :is([class*="badge"], [class*="count"], .pmr-key, .pm51-kbd) {
   background: var(--o55-nier-on-ink) !important; color: var(--o55-nier-ink) !important; border-color: var(--o55-nier-on-ink) !important;
 }
 /* the bar's own marks (index bullets, active side ticks) would double the cursor: hide them */

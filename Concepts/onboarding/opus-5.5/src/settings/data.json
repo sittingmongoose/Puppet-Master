@@ -1949,56 +1949,13 @@
     "doctor": {
       "groups": [
         {
-          "id": "server",
-          "title": "Puppet Master Server",
-          "help": "Your home server and how this app reaches it.",
-          "findings": [
-            {
-              "id": "reach",
-              "title": "Home TrueNAS reachable",
-              "state": "Ready",
-              "checked": "2 min ago"
-            },
-            {
-              "id": "identity",
-              "title": "Server identity confirmed",
-              "state": "Ready",
-              "checked": "2 min ago"
-            }
-          ]
-        },
-        {
-          "id": "devices",
-          "title": "Devices & Remote Access",
-          "help": "Paired devices and ways to connect from outside your home.",
-          "findings": [
-            {
-              "id": "pairing",
-              "title": "Pairing code expired",
-              "state": "Needs attention",
-              "checked": "5 min ago",
-              "fix": "Create New Code",
-              "impact": "New devices cannot pair until you make a new code.",
-              "todo": "Create a new pairing code from Server & Project Location."
-            },
-            {
-              "id": "tailscale",
-              "title": "Tailscale not set up",
-              "state": "Not set up",
-              "checked": "5 min ago",
-              "fix": "Set Up",
-              "impact": "You can only reach the server on your home network.",
-              "todo": "Set up Tailscale under Away From Home."
-            }
-          ]
-        },
-        {
           "id": "ai",
-          "title": "AI Services",
-          "help": "The services that do the thinking.",
+          "area": "AI providers",
+          "help": "Whether each AI service can take work.",
           "findings": [
             {
               "id": "antigravity",
+              "check": "ai:antigravity",
               "title": "Antigravity CLI signed out",
               "state": "Needs attention",
               "checked": "9 min ago",
@@ -2008,6 +1965,7 @@
             },
             {
               "id": "claude",
+              "check": "ai:claude",
               "title": "Claude Code ready",
               "state": "Ready",
               "checked": "4 min ago"
@@ -2015,92 +1973,131 @@
           ]
         },
         {
-          "id": "code",
-          "title": "Code & Version History",
-          "help": "Git, Jujutsu, and your code services.",
+          "id": "storage",
+          "area": "Storage",
+          "help": "Your home server, where your work is kept, and its backups.",
           "findings": [
             {
-              "id": "push",
-              "title": "GitHub push access missing",
-              "state": "Needs attention",
-              "checked": "2 h ago",
-              "fix": "Set Up Push Access",
-              "impact": "Changes can be read from GitHub but not pushed.",
-              "todo": "Set up push access from Source Control."
+              "id": "reach",
+              "check": "server:reach",
+              "title": "Home TrueNAS reachable",
+              "state": "Ready",
+              "checked": "2 min ago"
             },
             {
-              "id": "vcs",
-              "title": "Git and Jujutsu ready",
+              "id": "last",
+              "check": "backups:last",
+              "title": "Last backup verified",
               "state": "Ready",
-              "checked": "2 h ago"
-            }
-          ]
-        },
-        {
-          "id": "backups",
-          "title": "Backups & Recovery",
-          "help": "Whether your work can be brought back.",
-          "findings": [
+              "checked": "Today · 2:00 AM"
+            },
             {
               "id": "kit",
+              "check": "backups:kit",
               "title": "Recovery Kit not tested",
               "state": "Needs attention",
               "checked": "Today",
               "fix": "Test Recovery Kit",
               "impact": "You have a kit, but it has never been proven to unlock a backup.",
               "todo": "Run the Recovery Kit test from Backup & Restore."
-            },
-            {
-              "id": "last",
-              "title": "Last backup verified",
-              "state": "Ready",
-              "checked": "Today · 2:00 AM"
             }
           ]
         },
         {
-          "id": "updates",
-          "title": "Updates",
-          "help": "Puppet Master itself and its catalogs.",
+          "id": "signins",
+          "area": "Sign-ins",
+          "help": "Server identity, device pairing and account access.",
           "findings": [
             {
+              "id": "identity",
+              "check": "server:identity",
+              "title": "Server identity confirmed",
+              "state": "Ready",
+              "checked": "2 min ago"
+            },
+            {
+              "id": "pairing",
+              "check": "devices:pairing",
+              "title": "Pairing code expired",
+              "state": "Needs attention",
+              "checked": "5 min ago",
+              "fix": "Create New Code",
+              "impact": "New devices cannot pair until you make a new code.",
+              "todo": "Create a new pairing code from Server & Project Location."
+            },
+            {
+              "id": "push",
+              "check": "code:push",
+              "title": "GitHub push access missing",
+              "state": "Needs attention",
+              "checked": "2 h ago",
+              "fix": "Set Up Push Access",
+              "impact": "Changes can be read from GitHub but not pushed.",
+              "todo": "Set up push access from Source Control."
+            }
+          ]
+        },
+        {
+          "id": "performance",
+          "area": "Performance",
+          "help": "How fast this computer can work, measured here.",
+          "findings": [
+            {
+              "id": "gpu",
+              "check": "optional:gpu",
+              "title": "GPU",
+              "probe": "gpu"
+            }
+          ]
+        },
+        {
+          "id": "dependencies",
+          "area": "Dependencies",
+          "help": "Tools Puppet Master uses, and its own version.",
+          "findings": [
+            {
+              "id": "vcs",
+              "check": "code:vcs",
+              "title": "Git and Jujutsu ready",
+              "state": "Ready",
+              "checked": "2 h ago"
+            },
+            {
               "id": "app",
+              "check": "updates:app",
               "title": "0.8.1 available",
               "state": "Ready",
               "checked": "7 min ago",
               "fix": "Open Update…",
               "impact": "Optional. Nothing is broken.",
               "todo": "Install from App Updates when convenient."
-            }
-          ]
-        },
-        {
-          "id": "optional",
-          "title": "Optional Capabilities",
-          "help": "Things you can turn on later. Off by choice counts as ready.",
-          "findings": [
+            },
+            {
+              "id": "tailscale",
+              "check": "devices:tailscale",
+              "title": "Tailscale not set up",
+              "state": "Not set up",
+              "checked": "5 min ago",
+              "fix": "Set Up",
+              "impact": "You can only reach the server on your home network.",
+              "todo": "Set up Tailscale under Away From Home."
+            },
             {
               "id": "wsl",
+              "check": "optional:wsl",
               "title": "WSL off (by choice)",
               "state": "Ready",
               "checked": "Today"
             },
             {
               "id": "containers",
+              "check": "optional:containers",
               "title": "Container engine",
               "state": "Not set up",
               "checked": "Today",
               "fix": "Set Up",
               "impact": "Container-based work runs on the server instead.",
               "todo": "Install Docker or Podman on this computer."
-            },
-            {
-              "id": "gpu",
-              "title": "GPU",
-              "state": "Unavailable",
-              "checked": "Today",
-              "impact": "Local media generation uses the server.",
-              "todo": "No action needed."
             }
           ]
         }

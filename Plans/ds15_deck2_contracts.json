@@ -1,0 +1,267 @@
+[
+  {
+    "event_type": "browser.context_shared",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-320",
+    "storage_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-320",
+    "payload_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-320",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-329",
+    "payload_schema_ref": "Plans/ds15_browser_context_shared.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_browser_context_shared_checkpoint.schema.json",
+    "consumer": "reader.ds15.browser_context_shared.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.browser_context_shared:{scope_key}",
+    "identity_fields": [
+      "operation_id"
+    ],
+    "scope_policy": "application_or_project",
+    "idempotency_recipe": "application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)}; Project scope: sha256(canonical MessagePack array [\"browser.context_shared\", \"1.0.0\", actual scope map with UTF-8 sorted keys, operation_id])",
+    "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME",
+    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "decision": "DL-433",
+    "card_item": "4.c",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/browser_context_shared-search.json"
+  },
+  {
+    "event_type": "browser.context_share_revoked",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+    "storage_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+    "payload_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-329",
+    "payload_schema_ref": "Plans/ds15_browser_context_share_revoked.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_browser_context_share_revoked_checkpoint.schema.json",
+    "consumer": "reader.ds15.browser_context_share_revoked.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.browser_context_share_revoked:{scope_key}",
+    "identity_fields": [
+      "operation_id"
+    ],
+    "scope_policy": "application_or_project",
+    "idempotency_recipe": "application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)}; Project scope: sha256(canonical MessagePack array [\"browser.context_share_revoked\", \"1.0.0\", actual scope map with UTF-8 sorted keys, operation_id])",
+    "retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "decision": "DL-433",
+    "card_item": "4.c",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/browser_context_share_revoked-search.json"
+  },
+  {
+    "event_type": "catalog.update.started",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-322",
+    "storage_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-322",
+    "payload_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-322",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-329",
+    "payload_schema_ref": "Plans/ds15_catalog_update_started.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_catalog_update_started_checkpoint.schema.json",
+    "consumer": "reader.ds15.catalog_update_started.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.catalog_update_started:{scope_key}",
+    "identity_fields": [
+      "operation_id"
+    ],
+    "scope_policy": "application_or_project",
+    "idempotency_recipe": "application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)}; Project scope: sha256(canonical MessagePack array [\"catalog.update.started\", \"1.0.0\", actual scope map with UTF-8 sorted keys, operation_id])",
+    "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+    "checkpoint_retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+    "decision": "DL-434",
+    "card_item": "4.d",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/catalog_update_started-search.json",
+    "listed_uses": {
+      "command": [
+        "open_edit_session",
+        "component_reference"
+      ],
+      "skill": [
+        "selected_request",
+        "instructions_loaded_or_invoked",
+        "persona_reference"
+      ],
+      "plugin": [
+        "enabled_not_loaded",
+        "loaded_or_hook_running",
+        "persona_reference"
+      ],
+      "hook": [
+        "enabled_not_loaded",
+        "loaded_or_hook_running",
+        "persona_reference"
+      ],
+      "mcp_config": [
+        "configured_or_connected",
+        "persona_reference"
+      ]
+    }
+  },
+  {
+    "event_type": "catalog.update.completed",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-323",
+    "storage_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-323",
+    "payload_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-323",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-329",
+    "payload_schema_ref": "Plans/ds15_catalog_update_completed.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_catalog_update_completed_checkpoint.schema.json",
+    "consumer": "reader.ds15.catalog_update_completed.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.catalog_update_completed:{scope_key}",
+    "identity_fields": [
+      "operation_id"
+    ],
+    "scope_policy": "application_or_project",
+    "idempotency_recipe": "application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)}; Project scope: sha256(canonical MessagePack array [\"catalog.update.completed\", \"1.0.0\", actual scope map with UTF-8 sorted keys, operation_id])",
+    "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+    "checkpoint_retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+    "decision": "DL-434",
+    "card_item": "4.d",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/catalog_update_completed-search.json",
+    "listed_uses": {
+      "command": [
+        "open_edit_session",
+        "component_reference"
+      ],
+      "skill": [
+        "selected_request",
+        "instructions_loaded_or_invoked",
+        "persona_reference"
+      ],
+      "plugin": [
+        "enabled_not_loaded",
+        "loaded_or_hook_running",
+        "persona_reference"
+      ],
+      "hook": [
+        "enabled_not_loaded",
+        "loaded_or_hook_running",
+        "persona_reference"
+      ],
+      "mcp_config": [
+        "configured_or_connected",
+        "persona_reference"
+      ]
+    }
+  },
+  {
+    "event_type": "catalog.remove.started",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-324",
+    "storage_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-324",
+    "payload_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-324",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-329",
+    "payload_schema_ref": "Plans/ds15_catalog_remove_started.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_catalog_remove_started_checkpoint.schema.json",
+    "consumer": "reader.ds15.catalog_remove_started.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.catalog_remove_started:{scope_key}",
+    "identity_fields": [
+      "operation_id"
+    ],
+    "scope_policy": "application_or_project",
+    "idempotency_recipe": "application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)}; Project scope: sha256(canonical MessagePack array [\"catalog.remove.started\", \"1.0.0\", actual scope map with UTF-8 sorted keys, operation_id])",
+    "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+    "checkpoint_retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+    "decision": "DL-435",
+    "card_item": "4.e",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/catalog_remove_started-search.json",
+    "listed_uses": {
+      "command": [
+        "component_reference",
+        "open_edit_session"
+      ],
+      "skill": [
+        "selected_request",
+        "instructions_loaded_or_invoked",
+        "persona_reference"
+      ],
+      "plugin": [
+        "enabled_not_loaded",
+        "loaded_or_hook_running",
+        "persona_reference"
+      ],
+      "hook": [
+        "enabled_not_loaded",
+        "loaded_or_hook_running",
+        "persona_reference"
+      ],
+      "mcp_config": [
+        "configured_or_connected",
+        "persona_reference"
+      ],
+      "theme": [
+        "current_or_saved_theme"
+      ]
+    }
+  },
+  {
+    "event_type": "catalog.remove.completed",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-325",
+    "storage_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-325",
+    "payload_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-325",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-329",
+    "payload_schema_ref": "Plans/ds15_catalog_remove_completed.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_catalog_remove_completed_checkpoint.schema.json",
+    "consumer": "reader.ds15.catalog_remove_completed.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.catalog_remove_completed:{scope_key}",
+    "identity_fields": [
+      "operation_id"
+    ],
+    "scope_policy": "application_or_project",
+    "idempotency_recipe": "application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)}; Project scope: sha256(canonical MessagePack array [\"catalog.remove.completed\", \"1.0.0\", actual scope map with UTF-8 sorted keys, operation_id])",
+    "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+    "checkpoint_retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+    "decision": "DL-435",
+    "card_item": "4.e",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/catalog_remove_completed-search.json",
+    "listed_uses": {
+      "command": [
+        "component_reference",
+        "open_edit_session"
+      ],
+      "skill": [
+        "selected_request",
+        "instructions_loaded_or_invoked",
+        "persona_reference"
+      ],
+      "plugin": [
+        "enabled_not_loaded",
+        "loaded_or_hook_running",
+        "persona_reference"
+      ],
+      "hook": [
+        "enabled_not_loaded",
+        "loaded_or_hook_running",
+        "persona_reference"
+      ],
+      "mcp_config": [
+        "configured_or_connected",
+        "persona_reference"
+      ],
+      "theme": [
+        "current_or_saved_theme"
+      ]
+    }
+  },
+  {
+    "event_type": "tool.custom_headless.skipped",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-326",
+    "storage_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-326",
+    "payload_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-326",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-329",
+    "payload_schema_ref": "Plans/ds15_tool_custom_headless_skipped.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_tool_custom_headless_skipped_checkpoint.schema.json",
+    "consumer": "reader.ds15.tool_custom_headless_skipped.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.tool_custom_headless_skipped:{project_id}",
+    "identity_fields": [],
+    "scope_policy": "project_only",
+    "idempotency_recipe": "sha256(canonical MessagePack array [\"tool.custom_headless.skipped\", \"1.0.0\", actual project_id])",
+    "retention_policy_ref": "RP-OPERATIONAL-2555D",
+    "checkpoint_retention_policy_ref": "RP-OPERATIONAL-2555D",
+    "decision": "DL-436",
+    "card_item": "4.f",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/tool_custom_headless_skipped-search.json"
+  }
+]

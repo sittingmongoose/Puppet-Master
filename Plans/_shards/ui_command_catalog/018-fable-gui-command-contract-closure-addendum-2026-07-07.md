@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8626-L8825
+Source lines: L8638-L8843
 
-Source SHA256: `3076b04b822023dbbc42190301d7803c7772652b6b3fc3f45d443c7c7683b726`
+Source SHA256: `bc0b5a57e9ac720343912a6df888a28d74bcf8bf04f1c0dd0686f219f4856ba7`
 
 ---
 
@@ -18,16 +18,22 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 
 ### Added GUI command families
 
+The Persona rows below preserve historical Project-only command sketches, not the active scope contract. UCC-214 and P-060 select each exact `persona_<operation>_request_v2` / `persona_<operation>_result_v2` from `Plans/projects_refresh_command_bindings.json`, including create/delete/export/import/select/update and the distinct-ID duplicate route. Each uses WorkflowScopeV2 (CV-365): the actual Server application scope has required-present null Project fields; actual Project operations retain real Project identity. Existing historical Project schemas remain unchanged. Save writes the current whole-record home under expected revision; `persona_patch` in the historical sketch does not grant per-field layering. No event is admitted here.
+
+The selected Persona result vocabulary is `requested_persona` / `effective_persona` (Personas section 10), never parallel `_id` runtime fields. The select result’s existing authenticated owner_result_ref carries original frozen resolution evidence (CV-691 persona_selected_resolution); historical `_id` spellings are read-only migration/source-lineage aliases and cannot authorize a current write or fresh Settings resolution. CV-691/P-124 supplies the exact event binding.
+
+**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.
+
 | Command ID | Payload fields | Result fields | Error/disabled fields | Receipt or event effect |
 |---|---|---|---|---|
-| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (resolved theme; in `auto` it tracks OS `prefers-color-scheme` live), `contrast_profile` | `stale_projection`, `permission_denied`, `invalid_args` | `settings.theme.updated` |
-| `cmd.theme.set_accent` | `project_id?`, `scope`, `accent_token`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_accent_token` | `invalid_args`, `stale_projection` | `settings.theme.updated` |
-| `cmd.theme.set_density` | `project_id?`, `scope`, `density`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_density` | `invalid_args`, `stale_projection` | `settings.theme.updated` |
-| `cmd.theme.reset` | `project_id?`, `scope`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `reset_scope` | `stale_projection`, `permission_denied` | `settings.theme.updated` |
+| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (resolved theme; in `auto` it tracks OS `prefers-color-scheme` live), `contrast_profile` | `stale_projection`, `permission_denied`, `invalid_args` | `settings.layer.changed` (DL-408) |
+| `cmd.theme.set_accent` | `project_id?`, `scope`, `accent_token`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_accent_token` | `invalid_args`, `stale_projection` | `settings.layer.changed` (DL-408) |
+| `cmd.theme.set_density` | `project_id?`, `scope`, `density`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_density` | `invalid_args`, `stale_projection` | `settings.layer.changed` (DL-408) |
+| `cmd.theme.reset` | `project_id?`, `scope`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `reset_scope` | `stale_projection`, `permission_denied` | `settings.layer.changed` (DL-408) |
 | `cmd.persona.create` | `project_id`, `persona_spec`, `source_refs[]`, `idempotency_key` | `persona_id`, `persona_revision` | `invalid_args`, `permission_denied`, `stale_projection` | `persona.created` |
 | `cmd.persona.update` | `project_id`, `persona_id`, `persona_patch`, `expected_persona_revision`, `idempotency_key` | `persona_id`, `persona_revision` | `stale_projection`, `invalid_args`, `permission_denied` | `persona.updated` |
 | `cmd.persona.delete` | `project_id`, `persona_id`, `expected_persona_revision`, `confirmation_token`, `idempotency_key` | `persona_id`, `terminal_state` | `blocked_state_required`, `permission_denied`, `stale_projection` | `persona.deleted` |
-| `cmd.persona.select` | `project_id`, `surface`, `persona_id`, `expected_persona_revision?` | `effective_persona_id`, `selection_scope` | `invalid_args`, `stale_projection` | `persona.selected` |
+| `cmd.persona.select` | `project_id`, `surface`, `persona_id`, `expected_persona_revision?` | `effective_persona`, `selection_scope` (canonical naming; old `_id` read alias only) | `invalid_args`, `stale_projection` | `persona.selected` |
 | `cmd.persona.duplicate` | `project_id`, `source_persona_id`, `new_name`, `idempotency_key` | `persona_id`, `persona_revision` | `invalid_args`, `permission_denied` | `persona.created` |
 | `cmd.persona.import` | `project_id`, `source_ref`, `import_mode`, `authority_snapshot`, `idempotency_key` | `persona_id`, `persona_revision`, `import_receipt_ref` | `invalid_args`, `permission_denied`, `handler_unavailable` | `persona.imported` |
 | `cmd.persona.export` | `project_id`, `persona_id`, `format`, `redaction_profile` | `export_ref`, `persona_revision` | `invalid_args`, `permission_denied` | `persona.exported` |
@@ -95,7 +101,7 @@ or runtime handler.
 | Command family | Field-level closure |
 |---|---|
 | PRD/Planning launch | `cmd.prd_builder.approve_for_planning_wizard`, `cmd.planning_wizard.approve_and_build`, and `cmd.plan_compile.open_build` keep their existing command rows. Their payloads must include CAS/currentness inputs, approval actor, idempotency key, route/build identity where relevant, result identity, `UICommandResponse`, and receipt/event refs. `cmd.plan_compile.open_build` remains route/open or post-build reveal only while runtime activation is disabled; it must not emit `plan_compile.command_applied` as a fabricated success event. |
-| Runtime allowed actions | `resume_after_prerequisite`, `restore_safe_point_then_retry`, `start_fresh_attempt`, `replan`, `skip_node`, and `abort_run` map only to the existing `cmd.runtime.*` commands. Payloads carry `run_id`, `node_id?`, `blocked_sequence?`, `attempt_id?`, safe-point/worktree/baseline fields where applicable, result status, and closed error codes. Dispatch emits `node.unblocked`, `safe_point.restored`, `scheduler.pass`, `goal.replanned`, `goal_run.stopped`, or an explicit dispatch receipt; it must not emit `runtime.command_applied`. |
+| Runtime allowed actions | `resume_after_prerequisite`, `restore_safe_point_then_retry`, `start_fresh_attempt`, `replan`, `skip_node`, and `abort_run` map only to the existing `cmd.runtime.*` commands. Payloads carry `run_id`, `node_id?`, `blocked_sequence?`, `attempt_id?`, safe-point/worktree/baseline fields where applicable, result status, and closed error codes. Dispatch emits `node.unblocked`, `safe_point.restored`, `scheduler.pass`, `goal_run.replanned`, `goal_run.stopped`, or an explicit dispatch receipt; it must not emit `runtime.command_applied`. Amended 2026-11-14 (DL-080 option 1): `replan` emits `goal_run.replanned` through EP-3101's Replan writer on an `all_writers.v8` birth and refuses `handler_unavailable` on any other birth; `goal.replanned` is historical-only (GRS-070) and is no command's effect. |
 | FileManager CRUD | Existing `cmd.file.new_file`, `cmd.file.new_folder`, `cmd.file.rename`, `cmd.file.delete`, `cmd.file.copy_path`, `cmd.file.copy_nodes`, `cmd.file.cut_nodes`, `cmd.file.paste_nodes`, `cmd.file.open_with`, and `cmd.file.save_local_copy` rows remain canonical. Mutation commands emit their existing file/folder events; clipboard and open commands record explicit no-persist dispatch or route/open receipts. |
 
 ### UCC-108 - FABLE GUI Command Families And Response Contracts
@@ -105,7 +111,7 @@ plan_unit_id: UCC-108
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'The FABLE GUI command repair registers missing theme, persona, alert, concern, model, chat
+canonical_text: 'DL-408 retires settings.theme.updated as superseded by settings.layer.changed, the sole Settings change event including theme changes; existing owner-adoption requirements remain. The FABLE GUI command repair registers missing theme, persona, alert, concern, model, chat
   send/stop, panel undock/redock, Orchestrator pause/resume, Dashboard widget, Free Models onboarding, launch-chain,
   runtime recovery, and FileManager command contracts with field-level payload, result, error, and receipt/event
   requirements. Existing FileManager CRUD, launch-chain, and runtime allowed-action rows remain canonical and
@@ -115,7 +121,7 @@ canonical_text: 'The FABLE GUI command repair registers missing theme, persona, 
   NieR (Q22), the Guided Tour bar''s Look menu and the NieR Mode editor compose cmd.settings.transaction.preview
   then cmd.settings.transaction.apply as UCC-120''s local affordances do; no theme family or NieR command is
   added. The application''s start and onboarding''s look previews (ui.onboarding.start, ui.onboarding.choose_look)
-  dispatch no cmd.theme.* and emit no settings.theme.updated: the pre-paint reads the one resolved Everywhere/Device/actual-Project
+  dispatch no cmd.theme.* and emit no settings.layer.changed: the pre-paint reads the one resolved Everywhere/Device/actual-Project
   theme pair; No project omits Project and never flashes a forced Basic Dark, while owner-declared factory/pre-claim
   fallback and nonpersistent onboarding preview remain (F3-468, DL-153). Amended 2026-10-09 (DL-180): from
   the home layout cmd.panel.undock and cmd.panel.redock are dispatched only with chat, into a window (UCC-203);
@@ -152,7 +158,7 @@ acceptance_criteria:
 - No command in this addendum uses or authorizes fabricated `*.command_applied` events.
 - No PM7 look control dispatches a cmd.theme.* command (amended 2026-10-17, DL-228, from only the title bar's
   Light/Dark/Auto control); Light/Dark/Auto, family, NieR Mode and NieR editor changes use the Settings transaction
-  pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.theme.updated
+  pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.layer.changed
   (F3-468, DL-153).
 - Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
   refusal and the exact command/local/tool binding from UCC-214; no native/event/governance proof follows from

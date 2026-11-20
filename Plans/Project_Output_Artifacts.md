@@ -3229,15 +3229,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
-  Project_Output_Artifacts owns packaged output references for plans-to-code receipt families: PlanCompile receipt, ExecutorIntakeReport, worknode_dispatch_receipt, source_control_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_change_receipt, test_run_receipt, auditor_cycle_report, auditor_verification_receipt, repair_attempt_receipt, legacy validation_pass_report compatibility mirrors, merge_or_promotion_receipt, worknode_completion_receipt, source-control finalization receipt, model resolution receipt, and GoalCompletionReceipt. Artifact records preserve source artifact, destination artifact, owner, validator, receipt, schema payload, retry route, rollback route, user escalation condition, evidence refs, changed artifacts, test artifacts, source-control refs, model receipts, Auditor cycle refs, and final certification status without becoming the runtime source of truth.
-  Receipt artifact families preserve canonical evidence as a separate truth layer and include source_artifact, destination_artifact, retry_route, rollback_route, and source-control context refs for handoff rows. Source-control receipt packaging preserves repo/worktree/branch/baseline/head/safe-point/changed-files/conflicts/rollback context through preflight, safe point, change, promotion, finalization, and completion certification.
+  Project_Output_Artifacts owns packaged output references for plans-to-code receipt families: PlanCompile receipt, ExecutorIntakeReport, worknode_dispatch_receipt, source_control_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_change_receipt, test_run_receipt, auditor_cycle_report, auditor_verification_receipt, repair_attempt_receipt, legacy validation_pass_report compatibility mirrors, merge_or_promotion_receipt, worknode_completion_receipt, source-control finalization receipt, and model resolution receipt. Artifact records preserve source artifact, destination artifact, owner, validator, receipt, schema payload, retry route, rollback route, user escalation condition, evidence refs, changed artifacts, test artifacts, source-control refs, model receipts, and Auditor cycle refs without becoming the runtime source of truth.
+  Receipt artifact families preserve canonical evidence as a separate truth layer and include source_artifact, destination_artifact, retry_route, rollback_route, and source-control context refs for handoff rows. Source-control receipt packaging preserves repo/worktree/branch/baseline/head/safe-point/changed-files/conflicts/rollback context through preflight, safe point, change, promotion, and finalization.
 gui_related: false
 gui_classification_reason: Receipt artifact packaging and references are evidence/artifact contracts, not visual presentation.
 depends_on: [POA-046, EP-103, PNC-014]
 unblocks: [POA-048, RAP-029, CV-289]
 acceptance_criteria:
   - Receipt artifact families are named and discoverable in project output packages.
-  - Artifacts preserve handoff, evidence, test, source-control, model, and final certification refs.
+  - Artifacts preserve handoff, evidence, test, source-control, and model refs.
   - Legacy validation_pass_report rows are compatibility mirrors of auditor_cycle_report, carry compatibility_only true and cycle_report_ref, and are not active fixed Pass 1 / Pass 2 / Pass 3 process stages.
   - Project output artifacts package receipt references without replacing runtime, storage, or contract authority.
 validation_surfaces:
@@ -3294,14 +3294,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
-    GoalCompletionReceipt package entries must prove all_worknodes_terminal, all_tests_passed_or_dispositioned, source_control_receipts_valid, no_active_blockers, rollback and safe-point requirements satisfied, Auditor passed, no stale Plan/WorkGraph/currentness mismatch, final source state clean or intentionally preserved, final summary/evidence written, and final certifier decision. The receipt links to child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, evidence refs, unresolved risks, source-control receipts, test receipts, model resolution receipts, source evidence, canonical Plan evidence, process evidence, governance evidence, test evidence, source-control evidence, completion receipts, and final source-control context refs.
-    GoalCompletionReceipt packages preserve all WorkNodes terminal, all automated tests passed or dispositioned, rollback_requirements_satisfied, safe_point_requirements_satisfied, no_stale_plan_workgraph_currentness_mismatch, final_source_state, final_summary_ref, canonical evidence, and final certification evidence as explicit fields.
+    GoalCompletionReceipt final-certifier and Goal-type completion obligations are retired by DL-478.
+    Output packages retain references to owner-produced WorkNode receipts, changed artifacts, validator outcomes, authority checks, evidence refs, unresolved risks, source-control receipts, test receipts, and model resolution receipts without certifying Goal completion. Source evidence, canonical evidence, process evidence, governance evidence, test evidence, source-control evidence, and final source-control context remain separate evidence layers.
 gui_related: false
 gui_classification_reason: Completion receipt package fields are evidence contracts, not visual presentation.
-depends_on: [POA-047, GRS-030, EP-103]
+depends_on: [POA-047, EP-103]
 unblocks: [RAP-029, CV-289]
 acceptance_criteria:
-  - GoalCompletionReceipt fields are sufficient to prove code-complete criteria.
+  - Output packages impose no GoalCompletionReceipt certification or Goal-type completion gate.
   - Worker prose cannot substitute for missing receipts, test dispositions, source-control validity, or Auditor pass.
   - Completion receipt references preserve separate evidence truth layers.
 validation_surfaces:
@@ -3319,12 +3319,8 @@ source_lineage:
   - pldg-20260617-001-plans-to-code-handoff:dec-0023
 preserved_exact_tokens:
   - "GoalCompletionReceipt"
-  - "all WorkNodes terminal"
-  - "all automated tests passed"
   - "canonical evidence"
   - "source-control context"
-  - "no active blockers"
-  - "final certification"
 negative_constraints:
   - Do not accept worker says done as code completion.
 owner_hints:
@@ -3348,7 +3344,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: 'Approval creates an immutable, versioned Approved PRD Pack containing the primary PRD, accepted PRD-ledger snapshot, source manifest, traceability, assumptions and constraints, open questions, quality report, approval receipt, hashes, and version identity. PRD Builder preserves original uploaded artifacts byte-for-byte with stable source IDs, hashes, MIME/type metadata, and extraction status before semantic processing. Create deterministic text, heading, page, table, image, and offset projections plus a source manifest recording coverage, extraction warnings, skipped content, and parser versions. Planning topics may accept uploaded reference images and generate wireframes, architecture diagrams, data-flow diagrams, state diagrams, or visual references through the existing image system, with artifact IDs, provenance, topic links, version, and status. Online capability research records source URL or provider reference,
-  publication or update time when available, retrieval time, tool and version, supported platform, license, cost, credential needs, installation scope, freshness, confidence, and selection rationale. Discovery, research, selection, installation, harness probe, visible session, user interaction, test result, artifact, exception, and cleanup operations produce typed receipts linked to project, PlanCompileRun, GoalRun, WorkNode, attempt, capability, and source currentness. Approve And Build creates a versioned immutable ApprovedPlanPack containing canonical Plan docs, PlanUnit and acceptance-unit snapshots and hashes, source PRD Pack, project-context snapshot, amendments, policies, testing requirements, audit evidence, closure records, readiness report, and planning-ledger lineage references.'
+  publication or update time when available, retrieval time, tool and version, supported platform, license, cost, credential needs, installation scope, freshness, confidence, and selection rationale. Discovery, research, selection, installation, harness probe, visible session, user interaction, test result, artifact, exception, and cleanup operations produce typed receipts linked to project, PlanCompileRun, WorkNode, attempt, capability, and source currentness. Approve And Build creates a versioned immutable ApprovedPlanPack containing canonical Plan docs, PlanUnit and acceptance-unit snapshots and hashes, source PRD Pack, project-context snapshot, amendments, policies, testing requirements, audit evidence, closure records, readiness report, and planning-ledger lineage references.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
 depends_on: []

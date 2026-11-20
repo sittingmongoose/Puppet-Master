@@ -1,0 +1,60 @@
+{
+ "application_id": "EA-B1-DS-COMPACTION-ROW-SUPERSEDED-NOTE",
+ "applied_at_utc": "2026-11-04T18:45:00Z",
+ "applied_by": "claude-opus-5.5:lane-DS-ea-b1-20261104",
+ "branch": "plans/ea-b1-seal-blockers-20261104",
+ "applied_on_revision": "55f68a717eeda1fbfff83705977b94a15a8e1235",
+ "authority_refs": [
+  "Plans/Decision_Log.md#DL-039",
+  "Plans/Decision_Log.md#DL-077"
+ ],
+ "rows": [
+  {
+   "event_type": "context.compaction.completed",
+   "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_context.compaction.completed.json",
+   "before_sha256": "c751bf418f65f9e744c31e20a38e94bd877db580300ba9b9b3d4d2d9e9fdb125",
+   "after_sha256": "b60aae68fb22118e483a7e993184d84c8a8cc79a027b35d950bfc8ede725aba3",
+   "ledger_line": 71,
+   "census_line": 106,
+   "disposition_before": "NEEDS_MORE_EVIDENCE",
+   "disposition_after": "NEEDS_MORE_EVIDENCE",
+   "provisional_before": false,
+   "provisional_after": false,
+   "changed_fields": [
+    "disposition_rationale"
+   ],
+   "census_changed_fields": [
+    "notes"
+   ]
+  }
+ ],
+ "files": {
+  "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl": {
+   "before_sha256": "cdccffd447e65ba2b2706c973a32451282528e6d9a6602999867d29755ecf810",
+   "after_sha256": "1291dec58b62ee15f522d4ab960356c7a18f3e5125ac9fe861fa8aa4cf228f17",
+   "lines_changed": 1
+  },
+  "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl": {
+   "before_sha256": "074acfa3e17e3ff9828e571c4d84a7f235eae83098c3ffa1f5e6c7ba06ecadaa",
+   "after_sha256": "43ad22c23070ae43964c4e372f4ee1d8eca69128dcad95f2b3e5bcbd9d761aa0",
+   "lines_changed": 1
+  }
+ },
+ "boundaries": {
+  "registry_changed": false,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "validator_changed": false,
+  "cohort_pins_changed": false,
+  "owner_choice_changed": false,
+  "denominator_removal_claimed": false,
+  "depth_pass_claimed": false,
+  "seal_claimed": false
+ },
+ "citation_anchor_revision": {
+  "new_citations": "55f68a717eeda1fbfff83705977b94a15a8e1235",
+  "note": "Every citation this application writes is an exact single-line quote located at this revision."
+ },
+ "not_updated": "individual-disposition/COVERAGE.json (generated 2026-09-11) is not regenerated, as the Step 9 batch 1 application did not regenerate it."
+}

@@ -1,0 +1,412 @@
+{
+ "application_id": "EA-B1-DS-FIX1-APPLICATION-TIME-CORRECTION",
+ "applied_at_utc": "2026-11-04T20:31:21Z",
+ "applied_by": "claude-opus-5.5:lane-DS-FIX1-ea-b1-20261104",
+ "branch": "plans/ea-b1-seal-blockers-20261104",
+ "applied_on_revision": "31cd37713c43528c6f7b278a20657406f8796e9f",
+ "review_finding": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DS-sol/REVIEW.md DS-SOL-04 (should fix): the second application record is post-dated",
+ "scope_note": "The review named ds-p2-august-regrade-application.json. The three first-pass records have the same defect (each recorded time is after its application commit), so all four are corrected here.",
+ "authority_refs": [
+  "Plans/Decision_Log.md#DL-039"
+ ],
+ "pattern": "reports/event-authority-20261104/ds-step5-august-ledger-application.json: receipted row update with before and after hashes",
+ "corrections": [
+  {
+   "application_record": "reports/event-authority-20261104/ds-step5-august-ledger-application.json",
+   "application_id": "EA-B1-DS-AUGUST-LEDGER-ROWS",
+   "application_record_sha256": "ff61e665bf197b78fb9ee8715ecce6b6bbb65b15d7b129c3fe31175b8d085613",
+   "recorded_applied_at_utc": "2026-11-04T18:30:00Z",
+   "evidenced_applied_at_utc": "2026-11-04T18:08:51Z",
+   "evidence": {
+    "application_commit": "55f68a717eeda1fbfff83705977b94a15a8e1235",
+    "application_commit_time_utc": "2026-11-04T18:08:51Z",
+    "preceding_commit": "66a93f80f3fe3d032d8276d4e486cf69a2f1bf05",
+    "preceding_commit_time_utc": "2026-11-04T17:56:15Z",
+    "bound": "The rows were written after the preceding commit and before the application commit; the application commit's author and committer time is the latest the application can have happened, so it is recorded as the evidenced time."
+   },
+   "recorded_time_after_commit_by_seconds": 1269,
+   "rows": [
+    "workspace.layout_changed",
+    "terminal.workgroup_moved"
+   ]
+  },
+  {
+   "application_record": "reports/event-authority-20261104/ds-step6-compaction-ledger-note.json",
+   "application_id": "EA-B1-DS-COMPACTION-ROW-SUPERSEDED-NOTE",
+   "application_record_sha256": "c81340f4f127ee0edc763060570a43ec24c41474886f197f200a1d2cfcde4f6e",
+   "recorded_applied_at_utc": "2026-11-04T18:45:00Z",
+   "evidenced_applied_at_utc": "2026-11-04T18:09:32Z",
+   "evidence": {
+    "application_commit": "ade1ee3d6c4466d1c758c44b85e4a22ebe167c35",
+    "application_commit_time_utc": "2026-11-04T18:09:32Z",
+    "preceding_commit": "55f68a717eeda1fbfff83705977b94a15a8e1235",
+    "preceding_commit_time_utc": "2026-11-04T18:08:51Z",
+    "bound": "The rows were written after the preceding commit and before the application commit; the application commit's author and committer time is the latest the application can have happened, so it is recorded as the evidenced time."
+   },
+   "recorded_time_after_commit_by_seconds": 2128,
+   "rows": [
+    "context.compaction.completed"
+   ]
+  },
+  {
+   "application_record": "reports/event-authority-20261104/ds-step7-exclusions-application.json",
+   "application_id": "EA-B1-DS-EXCLUSIONS-WIDGET-MIRROR",
+   "application_record_sha256": "34c6144baad8960597fceaa0bf46da86c827dc4aaeee452c5d8200c6a6803ee9",
+   "recorded_applied_at_utc": "2026-11-04T18:50:00Z",
+   "evidenced_applied_at_utc": "2026-11-04T18:11:24Z",
+   "evidence": {
+    "application_commit": "43d1ab55553489dad8d98fd01aa9a256e621f6cb",
+    "application_commit_time_utc": "2026-11-04T18:11:24Z",
+    "preceding_commit": "ade1ee3d6c4466d1c758c44b85e4a22ebe167c35",
+    "preceding_commit_time_utc": "2026-11-04T18:09:32Z",
+    "bound": "The rows were written after the preceding commit and before the application commit; the application commit's author and committer time is the latest the application can have happened, so it is recorded as the evidenced time."
+   },
+   "recorded_time_after_commit_by_seconds": 2316,
+   "rows": [
+    "dashboard.widget_added",
+    "coordination.debug_mirror_exported"
+   ]
+  },
+  {
+   "application_record": "reports/event-authority-20261104/ds-p2-august-regrade-application.json",
+   "application_id": "EA-B1-DS-P2-AUGUST-REGRADE",
+   "application_record_sha256": "aa457a052a594db50fe46d9c1e58cda6800473d5b4e3939c4e3213876a35f7e1",
+   "recorded_applied_at_utc": "2026-11-04T23:30:00Z",
+   "evidenced_applied_at_utc": "2026-11-04T19:11:41Z",
+   "evidence": {
+    "application_commit": "af9bff39aed195c0e8b05d909e4143fb3746a6ef",
+    "application_commit_time_utc": "2026-11-04T19:11:41Z",
+    "preceding_commit": "bef4342ecc0437df62a87d5c5c79506420ba032a",
+    "preceding_commit_time_utc": "2026-11-04T19:08:18Z",
+    "bound": "The rows were written after the preceding commit and before the application commit; the application commit's author and committer time is the latest the application can have happened, so it is recorded as the evidenced time."
+   },
+   "recorded_time_after_commit_by_seconds": 15499,
+   "rows": [
+    "workspace.layout_changed",
+    "terminal.workgroup_moved"
+   ]
+  }
+ ],
+ "mirrored_occurrences_replaced": {
+  "workspace.layout_changed": {
+   "2026-11-04T18:30:00Z": {
+    "row_occurrences": 2,
+    "census_occurrences": 1
+   },
+   "2026-11-04T23:30:00Z": {
+    "row_occurrences": 2,
+    "census_occurrences": 1
+   }
+  },
+  "terminal.workgroup_moved": {
+   "2026-11-04T18:30:00Z": {
+    "row_occurrences": 2,
+    "census_occurrences": 1
+   },
+   "2026-11-04T23:30:00Z": {
+    "row_occurrences": 2,
+    "census_occurrences": 1
+   }
+  },
+  "context.compaction.completed": {
+   "2026-11-04T18:45:00Z": {
+    "row_occurrences": 1,
+    "census_occurrences": 1
+   }
+  },
+  "dashboard.widget_added": {
+   "2026-11-04T18:50:00Z": {
+    "row_occurrences": 1,
+    "census_occurrences": 1
+   }
+  },
+  "coordination.debug_mirror_exported": {
+   "2026-11-04T18:50:00Z": {
+    "row_occurrences": 1,
+    "census_occurrences": 1
+   }
+  }
+ },
+ "rows": [
+  {
+   "event_type": "workspace.layout_changed",
+   "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_workspace.layout_changed.json",
+   "before_sha256": "b7416f6da4ec464fa7eb1712ecd729733e05f03ede16e8c7c27a545ee5431e1d",
+   "after_sha256": "4482699e0f2976d839a146a0d3de8f708337f99e77a4c2a1903bf8e27886e614",
+   "ledger_line": 295,
+   "census_line": 39,
+   "ledger_line_before_sha256": "9ce319491c17e78fbf2551324423895246929cf626cd185eb356965d16046b0e",
+   "ledger_line_after_sha256": "b7db153a5092d66b633d21318f31c24f295c8e8160b7c00ee941d13985c8721a",
+   "census_line_before_sha256": "a6562e5250f63bc56c4cfe41f22a96a9a3c4973e453594c4aa4bc904bc666619",
+   "census_line_after_sha256": "08a93d8cf6b4b7a618936073b732f791ddbed0d644fcfcb6c04de3e6e4fc7bcc",
+   "disposition_before": "KEEP_REGISTERED",
+   "disposition_after": "KEEP_REGISTERED",
+   "provisional_before": false,
+   "provisional_after": false,
+   "cells_before": {
+    "owner_doc": "PASS",
+    "producer": "PASS",
+    "membership_version": "PASS",
+    "closed_payload_schema": "PASS",
+    "scope_identity": "PASS",
+    "replay_idempotency": "PASS",
+    "retention": "PASS",
+    "redaction_custody": "PASS",
+    "transitions": "PASS",
+    "consumers_checkpoints": "PASS",
+    "compatibility_withdrawal": "PASS",
+    "positive_negative_oracles": "PASS"
+   },
+   "cells_after": {
+    "owner_doc": "PASS",
+    "producer": "PASS",
+    "membership_version": "PASS",
+    "closed_payload_schema": "PASS",
+    "scope_identity": "PASS",
+    "replay_idempotency": "PASS",
+    "retention": "PASS",
+    "redaction_custody": "PASS",
+    "transitions": "PASS",
+    "consumers_checkpoints": "PASS",
+    "compatibility_withdrawal": "PASS",
+    "positive_negative_oracles": "PASS"
+   },
+   "changed_fields": [
+    "disposition_rationale",
+    "quality_notes"
+   ],
+   "census_changed_fields": [
+    "notes"
+   ]
+  },
+  {
+   "event_type": "terminal.workgroup_moved",
+   "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_terminal.workgroup_moved.json",
+   "before_sha256": "0882d023d6005e4fb1a8bdf56bbd761420bf676b1a966b80212fc0ef3d0b5ded",
+   "after_sha256": "beb9214f5bb51d9962ac0320ed20e77193a3684f542c17ecba730891aebde9d5",
+   "ledger_line": 279,
+   "census_line": 38,
+   "ledger_line_before_sha256": "88c86ad48aa080bc5964a56ee7aa6f5050086949ce4fccf43ee5fb17345138a2",
+   "ledger_line_after_sha256": "1c92293dfdbe5a7e1f756be250bde8e98a1df7360bce0d914a3bb9151bdd4a59",
+   "census_line_before_sha256": "d9b849574c3ffb86fe61ce8cdfb8cb882bb3025f0d7c0e44ea3692134035fcfe",
+   "census_line_after_sha256": "18a3e7d4803a06e9f048581fbdabb1b6bf3adb5e566ae5fd1780365642e4387a",
+   "disposition_before": "KEEP_REGISTERED",
+   "disposition_after": "KEEP_REGISTERED",
+   "provisional_before": false,
+   "provisional_after": false,
+   "cells_before": {
+    "owner_doc": "PASS",
+    "producer": "PASS",
+    "membership_version": "PASS",
+    "closed_payload_schema": "PASS",
+    "scope_identity": "PASS",
+    "replay_idempotency": "PASS",
+    "retention": "PASS",
+    "redaction_custody": "PASS",
+    "transitions": "PASS",
+    "consumers_checkpoints": "PASS",
+    "compatibility_withdrawal": "PASS",
+    "positive_negative_oracles": "FAIL"
+   },
+   "cells_after": {
+    "owner_doc": "PASS",
+    "producer": "PASS",
+    "membership_version": "PASS",
+    "closed_payload_schema": "PASS",
+    "scope_identity": "PASS",
+    "replay_idempotency": "PASS",
+    "retention": "PASS",
+    "redaction_custody": "PASS",
+    "transitions": "PASS",
+    "consumers_checkpoints": "PASS",
+    "compatibility_withdrawal": "PASS",
+    "positive_negative_oracles": "FAIL"
+   },
+   "changed_fields": [
+    "disposition_rationale",
+    "quality_notes"
+   ],
+   "census_changed_fields": [
+    "notes"
+   ]
+  },
+  {
+   "event_type": "context.compaction.completed",
+   "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_context.compaction.completed.json",
+   "before_sha256": "b60aae68fb22118e483a7e993184d84c8a8cc79a027b35d950bfc8ede725aba3",
+   "after_sha256": "416d06a5170fdbdee68b7c3813fdae456873093871ea3d8cae41de4121a76453",
+   "ledger_line": 71,
+   "census_line": 106,
+   "ledger_line_before_sha256": "4a81550bfd48dfbf351b2297b08fc071146a7d285f16e45326aa013e46790d82",
+   "ledger_line_after_sha256": "eb73bcfae43ae255cc2341ceeb06afe1cfc4a57171fe148ee5559ab9aa410af5",
+   "census_line_before_sha256": "319dfe01e698d72bd9b81c855b544c42c22cd0a4d9b0f29eb0dc373366fe8aa1",
+   "census_line_after_sha256": "9def13195cdb04716640b93a373fe475820b82e7e2cf109443f32bbe42055023",
+   "disposition_before": "NEEDS_MORE_EVIDENCE",
+   "disposition_after": "NEEDS_MORE_EVIDENCE",
+   "provisional_before": false,
+   "provisional_after": false,
+   "cells_before": {
+    "owner_doc": "OWNER_REQUIRED",
+    "producer": "FAIL",
+    "membership_version": "FAIL",
+    "closed_payload_schema": "FAIL",
+    "scope_identity": "FAIL",
+    "replay_idempotency": "FAIL",
+    "retention": "FAIL",
+    "redaction_custody": "FAIL",
+    "transitions": "FAIL",
+    "consumers_checkpoints": "FAIL",
+    "compatibility_withdrawal": "FAIL",
+    "positive_negative_oracles": "PASS"
+   },
+   "cells_after": {
+    "owner_doc": "OWNER_REQUIRED",
+    "producer": "FAIL",
+    "membership_version": "FAIL",
+    "closed_payload_schema": "FAIL",
+    "scope_identity": "FAIL",
+    "replay_idempotency": "FAIL",
+    "retention": "FAIL",
+    "redaction_custody": "FAIL",
+    "transitions": "FAIL",
+    "consumers_checkpoints": "FAIL",
+    "compatibility_withdrawal": "FAIL",
+    "positive_negative_oracles": "PASS"
+   },
+   "changed_fields": [
+    "disposition_rationale",
+    "quality_notes"
+   ],
+   "census_changed_fields": [
+    "notes"
+   ]
+  },
+  {
+   "event_type": "dashboard.widget_added",
+   "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_dashboard.widget_added.json",
+   "before_sha256": "e13e00454ab9223760924afa1e98a9ca838fa5ade1e41bd3dfd40e4e6c131a3d",
+   "after_sha256": "bbe7ed0147f3b82abc734d3d5ba16ec6f49d1e5e732ba6aff91e6d564066e51f",
+   "ledger_line": 91,
+   "census_line": 126,
+   "ledger_line_before_sha256": "2c305bbc6ca1ccdb5be387f986ae659628151ce210741d96176786db9c6820ff",
+   "ledger_line_after_sha256": "07ab1ed83d81ca88a188b4a53a137fe76e982e0978712c2bb87cc0d2bb609574",
+   "census_line_before_sha256": "7a53094d3f756e9c9e25e1b88c9e77d31591a98ba4b33b216b1ede03119ce614",
+   "census_line_after_sha256": "a1a00201fa69b9714be508d977cdb90309dfa335beef0b3f4f1a9999ff15aefd",
+   "disposition_before": "RECLASSIFY_TO_EXCLUDED",
+   "disposition_after": "RECLASSIFY_TO_EXCLUDED",
+   "provisional_before": false,
+   "provisional_after": false,
+   "cells_before": {
+    "membership_version": "OWNER_REQUIRED",
+    "owner_doc": "OWNER_REQUIRED",
+    "producer": "PASS",
+    "closed_payload_schema": "FAIL",
+    "scope_identity": "FAIL",
+    "replay_idempotency": "FAIL",
+    "retention": "OWNER_REQUIRED",
+    "redaction_custody": "OWNER_REQUIRED",
+    "transitions": "FAIL",
+    "consumers_checkpoints": "FAIL",
+    "compatibility_withdrawal": "OWNER_REQUIRED",
+    "positive_negative_oracles": "FAIL"
+   },
+   "cells_after": {
+    "membership_version": "OWNER_REQUIRED",
+    "owner_doc": "OWNER_REQUIRED",
+    "producer": "PASS",
+    "closed_payload_schema": "FAIL",
+    "scope_identity": "FAIL",
+    "replay_idempotency": "FAIL",
+    "retention": "OWNER_REQUIRED",
+    "redaction_custody": "OWNER_REQUIRED",
+    "transitions": "FAIL",
+    "consumers_checkpoints": "FAIL",
+    "compatibility_withdrawal": "OWNER_REQUIRED",
+    "positive_negative_oracles": "FAIL"
+   },
+   "changed_fields": [
+    "disposition_rationale",
+    "quality_notes"
+   ],
+   "census_changed_fields": [
+    "notes"
+   ]
+  },
+  {
+   "event_type": "coordination.debug_mirror_exported",
+   "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.debug_mirror_exported.json",
+   "before_sha256": "bbf2d77771a15586dc4f23157d6f12fb311c51450a4760dfa74c7084061562f0",
+   "after_sha256": "9cd55ed65b351dce33277bd76495c2207bcf57e58f32a5891195a0af887e9e20",
+   "ledger_line": 81,
+   "census_line": 116,
+   "ledger_line_before_sha256": "216222060149bfb367eef9f6995bbc82837344ad30cf396ab59900d51e33fe48",
+   "ledger_line_after_sha256": "878dbdcdccfd816294ca5831ca3222150a4210e590d3ff641476dfe4756017db",
+   "census_line_before_sha256": "4b47e4ca7521150a90603e04c641b44b91f1fc94828ef38335d879bb5f8d1965",
+   "census_line_after_sha256": "b603620ae8dae8e2ce59b01b3bdab714821abbcdc71c6b5a380a1cfe06d2d637",
+   "disposition_before": "RECLASSIFY_TO_EXCLUDED",
+   "disposition_after": "RECLASSIFY_TO_EXCLUDED",
+   "provisional_before": false,
+   "provisional_after": false,
+   "cells_before": {
+    "owner_doc": "PASS",
+    "producer": "PASS",
+    "membership_version": "FAIL",
+    "closed_payload_schema": "OWNER_REQUIRED",
+    "scope_identity": "PASS",
+    "replay_idempotency": "PASS",
+    "retention": "OWNER_REQUIRED",
+    "redaction_custody": "PASS",
+    "transitions": "PASS",
+    "consumers_checkpoints": "PASS",
+    "compatibility_withdrawal": "PASS",
+    "positive_negative_oracles": "PASS"
+   },
+   "cells_after": {
+    "owner_doc": "PASS",
+    "producer": "PASS",
+    "membership_version": "FAIL",
+    "closed_payload_schema": "OWNER_REQUIRED",
+    "scope_identity": "PASS",
+    "replay_idempotency": "PASS",
+    "retention": "OWNER_REQUIRED",
+    "redaction_custody": "PASS",
+    "transitions": "PASS",
+    "consumers_checkpoints": "PASS",
+    "compatibility_withdrawal": "PASS",
+    "positive_negative_oracles": "PASS"
+   },
+   "changed_fields": [
+    "disposition_rationale",
+    "quality_notes"
+   ],
+   "census_changed_fields": [
+    "notes"
+   ]
+  }
+ ],
+ "files": {
+  "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl": {
+   "before_sha256": "92cc8ea83b67ef5e154f55e512bda772054bf9f5616bedde035e1aaff3829a7e",
+   "after_sha256": "52f0ac862efe889ddb27495be462d88fe9e33770fa88381c85f8545033c5ceba",
+   "lines_changed": 5
+  },
+  "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl": {
+   "before_sha256": "6769cee73fc0b7da752daa54c6012a78802c8706a088654c8bc7e5483306c385",
+   "after_sha256": "15cd4acc993b29b612994c4d22ce2f4572a03459fa733dcd6740a8b8e322442b",
+   "lines_changed": 5
+  }
+ },
+ "hash_chain": "Each row's and file's before hash here is the after hash of the last application that touched it; the four original records and their before/after hashes are left byte-unchanged as history.",
+ "boundaries": {
+  "original_application_records_changed": false,
+  "cell_status_changed": false,
+  "disposition_changed": false,
+  "provisional_changed": false,
+  "cohort_pins_changed": false,
+  "owner_choice_changed": false,
+  "registry_changed": false,
+  "validator_changed": false,
+  "seal_claimed": false
+ },
+ "not_updated": "individual-disposition/COVERAGE.json (generated 2026-09-11) is not regenerated, as in step 5."
+}

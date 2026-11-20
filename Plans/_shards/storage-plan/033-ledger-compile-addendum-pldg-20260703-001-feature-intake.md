@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16458-L16935
+Source lines: L16896-L17373
 
-Source SHA256: `46b65fa5cef7d5b67ad27e23a573b372e74628124d8a2210af1f16d9011b6b4e`
+Source SHA256: `8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537`
 
 ---
 
@@ -363,7 +363,7 @@ canonical_text: >-
   API keys, OAuth values, local credential paths, or local machine secrets.
 gui_related: false
 gui_classification_reason: This unit defines backend storage value contracts and registry validation, not GUI presentation.
-depends_on: [SP-214, SP-215, SP-216, SP-230, CV-287, CV-288, CV-290, CV-309, PWIZ-014, PNC-010, PNC-013, PNC-014, EP-099, EP-103]
+depends_on: [SP-214, SP-216, SP-230, CV-287, CV-288, CV-290, CV-309, PWIZ-014, PNC-010, PNC-013, PNC-014, EP-099, EP-103]
 unblocks: []
 acceptance_criteria:
   - Plans/storage_value_registry.json parses and conforms to Plans/storage_value_registry.schema.json.

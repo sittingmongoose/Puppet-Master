@@ -152,7 +152,8 @@
               "select",
               "slider",
               "text",
-              "toggle"
+              "toggle",
+              "model_picker"
             ]
           },
           "options": {
@@ -163,7 +164,9 @@
           },
           "presentation_options": {
             "type": "array",
-            "items": { "type": "string" },
+            "items": {
+              "type": "string"
+            },
             "uniqueItems": true,
             "description": "Family names offered by Theme; options retains the compatible composite storage values (DL-301)."
           },
@@ -232,9 +235,51 @@
           },
           "layering": {
             "$ref": "#/$defs/layering"
+          },
+          "model_picker": {
+            "$ref": "#/$defs/model_picker"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "model_picker"
+                }
+              },
+              "required": [
+                "type"
+              ]
+            },
+            "then": {
+              "required": [
+                "model_picker",
+                "default"
+              ],
+              "properties": {
+                "default": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "$ref": "#/$defs/model_selection"
+                    }
+                  ]
+                }
+              }
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "model_picker"
+                ]
+              }
+            }
+          }
+        ]
       }
     },
     "retired_input_ids": {
@@ -245,6 +290,116 @@
         "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$"
       },
       "uniqueItems": true
+    },
+    "compatibility_reads": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "replacement_ids",
+          "read_rule",
+          "write_policy",
+          "search_policy",
+          "transfer_policy",
+          "label",
+          "search"
+        ],
+        "properties": {
+          "replacement_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          },
+          "read_rule": {
+            "type": "string",
+            "minLength": 1
+          },
+          "write_policy": {
+            "const": "omit_retired_key"
+          },
+          "search_policy": {
+            "const": "explain_retirement"
+          },
+          "transfer_policy": {
+            "const": "omit_with_notice"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "search": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "description": "Read-only compatibility disposition, never active inventory, new write or automatic shared-default authority."
+    },
+    "model_defaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner",
+        "source_order",
+        "plain_rule",
+        "list_setting_ids",
+        "account_setting_id",
+        "removed_precedence_sources",
+        "legacy_lane_aliases"
+      ],
+      "properties": {
+        "owner": {
+          "type": "string"
+        },
+        "source_order": {
+          "const": [
+            "manual_override",
+            "scope_policy",
+            "surface_default",
+            "manual_account_default",
+            "project_list",
+            "everywhere_factory_list"
+          ]
+        },
+        "plain_rule": {
+          "const": "What you pick for a run wins; then the account's own default if you sent the run to that account; then this project's list; then Everywhere."
+        },
+        "list_setting_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "account_setting_id": {
+          "const": "ai.accounts.default-model"
+        },
+        "removed_precedence_sources": {
+          "const": [
+            "persona_preference",
+            "command_saved_model",
+            "computer_default",
+            "last_used",
+            "provider_default"
+          ]
+        },
+        "legacy_lane_aliases": {
+          "const": {
+            "low_cost_executor": "low_effort_worker",
+            "standard_reviewer": "auditor",
+            "high_reasoning_orchestrator": "overseer",
+            "verifier": "auditor",
+            "adjudicator": "auditor",
+            "certifier": "auditor"
+          }
+        }
+      }
     }
   },
   "additionalProperties": false,
@@ -574,6 +729,78 @@
           }
         }
       ]
+    },
+    "model_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider_entry_id",
+        "model_id",
+        "effort"
+      ],
+      "properties": {
+        "provider_entry_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effort": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "description": "One concrete provider/runtime route plus canonical model and optional proven effort. Exact-name acceptance alone does not prove effort or other capabilities. Policy sentinel strings inherit/Default/None/auto remain row-specific alternatives."
+    },
+    "model_picker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog",
+        "inherit_from",
+        "allow_exact_name",
+        "validate_before_save",
+        "effort",
+        "requires_enabled"
+      ],
+      "properties": {
+        "catalog": {
+          "enum": [
+            "live",
+            "account",
+            "vision",
+            "image",
+            "video",
+            "tts",
+            "music"
+          ]
+        },
+        "inherit_from": {
+          "type": "string",
+          "minLength": 1
+        },
+        "allow_exact_name": {
+          "const": true
+        },
+        "validate_before_save": {
+          "const": "small_call"
+        },
+        "effort": {
+          "const": "inside_picker"
+        },
+        "requires_enabled": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
     }
   }
 }

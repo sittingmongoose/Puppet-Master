@@ -1,0 +1,1154 @@
+{
+ "schema_id": "pm.assurance.event_authority.criterion12_delta.v1",
+ "implementation_commit": "e14b1332904a7d67b3184b732c3c77bcabe5088f",
+ "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+ "criterion_only": 12,
+ "native": "NOT_RUN",
+ "independent_review": "NOT_RUN",
+ "other_cells": "No other criterion is regraded; admission and retention are not inferred from this delta.",
+ "families": [
+  {
+   "event_type": "config.validation.failed",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-680",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32457,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32475,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `config.validation.failed` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:config.validation.failed"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 44,
+    "selector": 1,
+    "entailed": 2
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "crew.board_message_posted",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-681",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32507,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32531,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `crew.board_message_posted` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:crew.board_message_posted"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 83,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition",
+    "board",
+    "project_input",
+    "board_member",
+    "coordination_storage",
+    "successor"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "crew.board_message_read",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-682",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32563,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32585,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `crew.board_message_read` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:crew.board_message_read"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 44,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition",
+    "board",
+    "project_input",
+    "board_member",
+    "coordination_storage",
+    "successor"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "crew.board_messages_archived",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-683",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32617,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32639,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `crew.board_messages_archived` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:crew.board_messages_archived"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 49,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition",
+    "board",
+    "project_input",
+    "board_member",
+    "coordination_storage",
+    "successor"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "parser.error",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-684",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32671,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32691,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `parser.error` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:parser.error"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 45,
+    "selector": 1,
+    "entailed": 2
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "phase.force_completed",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-685",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32723,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32741,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `phase.force_completed` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:phase.force_completed"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 46,
+    "selector": 1,
+    "entailed": 2
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.budget_warning",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-686",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32773,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32791,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.budget_warning` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.budget_warning"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 62,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.cancelled",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-687",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32823,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32841,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.cancelled` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.cancelled"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 61,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.completed",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-688",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32873,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32891,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.completed` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.completed"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 70,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.context_warning",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-689",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32923,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32941,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.context_warning` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.context_warning"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 63,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.escalated",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-690",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32973,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 32991,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.escalated` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.escalated"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 61,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.failed",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-691",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33023,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33041,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.failed` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.failed"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 64,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.message_received",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-692",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33073,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33091,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.message_received` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.message_received"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 64,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.message_sent",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-693",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33123,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33141,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.message_sent` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.message_sent"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 64,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.model_switched",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-694",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33173,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33191,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.model_switched` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.model_switched"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 64,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.output_truncated",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-695",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33223,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33241,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.output_truncated` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.output_truncated"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 61,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.paused",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-696",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33273,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33291,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.paused` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.paused"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 58,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.progress",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-697",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33323,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33341,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.progress` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.progress"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 61,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.resumed",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-698",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33373,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33391,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.resumed` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.resumed"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 58,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.retried",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-699",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33423,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33441,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.retried` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.retried"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 66,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.spawned",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-700",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33473,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33491,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.spawned` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.spawned"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 61,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.started",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-701",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33523,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33541,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.started` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.started"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 58,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.timeout",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-702",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33573,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33591,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.timeout` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.timeout"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 60,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.tool_called",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-703",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33623,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33641,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.tool_called` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.tool_called"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 64,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  },
+  {
+   "event_type": "subagent.tool_completed",
+   "criterion": "positive_negative_oracles",
+   "criterion_number": 12,
+   "before": "PARTIAL",
+   "after": "PASS",
+   "assessment": "static_self_grade_pending_lead_review",
+   "owner_unit": "OSI-704",
+   "evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33673,
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "line": 33691,
+     "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.tool_completed` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+     "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+     "route": "payload:subagent.tool_completed"
+    },
+    {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
+    }
+   ],
+   "schema_coverage": {
+    "witnessed": 66,
+    "selector": 1
+   },
+   "boundary_selection": [
+    "append",
+    "transport",
+    "pack",
+    "checkpoint",
+    "historical",
+    "retry",
+    "retry_context",
+    "retry_transition"
+   ],
+   "native": "NOT_RUN",
+   "other_criteria": "unchanged_by_this_delta"
+  }
+ ]
+}

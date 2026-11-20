@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import { installToggleFiniteWatch } from '../helpers/still-finite.mjs';
+const target = (usage, held = '', prewarm = false) => ({ tagName: 'ARTICLE', id: '', getAttribute: (k) => k === 'data-pm-held' ? held : 'pmu-card', closest: (s) => s === '#pmuBoard' ? usage && {} : s === '#pmuLiveCtl' ? null : s === '[data-pmu-prewarm]' ? prewarm && {} : usage ? { tagName:'DIV', id:'', getAttribute:()=> 'pmu-cardbody' } : null });
+const animation = (el, iterations = 1, name = 'count-up', state = 'running', pseudo = null) => ({ animationName:name, playState:state, currentTime:40, startTime:100, effect:{ target:el, pseudoElement:pseudo, getTiming:()=>({iterations,duration:300}) } });
+const list = [animation(target(true)),animation(target(true),Infinity),animation(target(true,'self')),animation(target(false)),animation(target(true),1,'finished','finished'),animation(target(true,'before'),1,'pseudo','running','::before'),animation(target(true,'',true),1,'prewarm')];
+const window = {}, context=vm.createContext({window, document:{getAnimations:()=>list}, performance:{now:()=>500,getEntriesByName:()=>[{startTime:350}]}});
+vm.runInContext('('+installToggleFiniteWatch.toString()+')()',context);
+const x=window.__stillFiniteAtMark();
+assert.equal(x.error,null);assert.equal(x.finite.length,3);assert.equal(x.usageFiniteCount,2);
+assert.equal(x.lastLiveBeatMs,150);assert.equal(x.finite.filter((a)=>a.prewarm).length,1);
+assert.equal(x.finite[0].name,'count-up');assert.equal(x.finite[0].currentTime,40);
+context.document.getAnimations=()=>{throw new Error('unavailable');};
+assert.ok(window.__stillFiniteAtMark().error,'a failed census is unknown, never a clean zero');
+console.log('PASS only running, finite, unheld animations count; Usage/prewarm targets and beat age retained; failure is unknown');

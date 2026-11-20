@@ -37,7 +37,7 @@ import tempfile
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, Iterator
 from urllib.parse import urlparse
 
 import yaml
@@ -2334,6 +2334,81 @@ def internal_detail(check: str, exc: BaseException) -> str:
     return f"{check}: {type(exc).__name__}: {' '.join(str(exc).split())}"
 
 
+class _AliasSpanLoader(yaml.SafeLoader):
+    """SafeLoader that records which mapping keys have a YAML alias as their value.
+
+    The composer resolves an alias to the anchored node itself, so that node's marks describe the
+    anchor's site, not the alias use; a field span built from them would point into another key
+    (T232). compose_mapping_node composes each value with its key node as ``index``. A key alias
+    reuses one key node in several parent mappings, so an alias-valued key is recorded as its
+    (parent mapping, key) occurrence, not the key node alone (T242).
+    """
+
+    def __init__(self, stream: str) -> None:
+        super().__init__(stream)
+        self.alias_value_keys: set[tuple[int, int]] = set()
+        # Scalar events/nodes start at properties; scanner tokens start at the value.
+        # Block tokens also include their header comment, so skip the complete header.
+        self.scalar_value_starts: dict[int, int] = {}
+        for token in yaml.scan(stream):
+            if isinstance(token, yaml.tokens.ScalarToken):
+                start, end = token.start_mark.index, token.end_mark.index
+                if token.style in ("|", ">"):
+                    newline = re.search(r"\r\n|[\r\n\x85\u2028\u2029]", stream[start:end])
+                    start = start + newline.end() if newline else end
+                self.scalar_value_starts[end] = start
+
+    def compose_node(self, parent: yaml.Node | None, index: yaml.Node | int | None) -> yaml.Node:
+        if self.check_event(yaml.AliasEvent) and isinstance(index, yaml.Node):
+            node = super().compose_node(parent, index)
+            self.alias_value_keys.add((id(parent), id(index)))
+            return node
+        node = super().compose_node(parent, index)
+        if isinstance(node, yaml.ScalarNode):
+            # An implicit empty scalar has no value token and contributes no source text.
+            node.value_start = self.scalar_value_starts.get(node.end_mark.index, node.end_mark.index)
+        return node
+
+
+def _compose_unit_fence(text: str) -> tuple[yaml.Node | None, set[tuple[int, int]]]:
+    """(root node, (parent mapping, key) occurrences whose value is an alias) of one YAML document."""
+    loader = _AliasSpanLoader(text)
+    try:
+        return loader.get_single_node(), loader.alias_value_keys
+    finally:
+        loader.dispose()
+
+
+def _value_spans(node: yaml.Node, left: int, right: int) -> Iterator[tuple[int, int]]:
+    """Physical source spans of a field value's own scalar nodes (T243).
+
+    A collection's outer bounds include comments and the whitespace between items; a line hint
+    must land on a value token's own text, never properties or a header comment (T245).
+    An alias resolves to the anchored
+    node, whose marks describe the anchor's site: that span counts only when the anchor lies
+    physically inside this field's own source bounds (left, right), never when it sits in
+    another key. Shared nodes are visited once, so an alias cycle cannot loop the walk.
+    """
+    seen: set[int] = set()
+
+    def walk(current: yaml.Node) -> Iterator[tuple[int, int]]:
+        if id(current) in seen:
+            return
+        seen.add(id(current))
+        if isinstance(current, yaml.ScalarNode):
+            if left <= current.value_start and current.end_mark.index <= right:
+                yield (current.value_start, current.end_mark.index)
+        elif isinstance(current, yaml.SequenceNode):
+            for item in current.value:
+                yield from walk(item)
+        elif isinstance(current, yaml.MappingNode):
+            for key, value in current.value:
+                yield from walk(key)
+                yield from walk(value)
+
+    yield from walk(node)
+
+
 def check_evidence_lines(ctx: Context, value: Any = None, doc: str = CATALOG) -> None:
     """Check all evidence records with line hints, including nested definition records."""
     outside_map = value is None
@@ -2351,12 +2426,18 @@ def check_evidence_lines(ctx: Context, value: Any = None, doc: str = CATALOG) ->
                 unit = ctx.corpus.units(target).get(uid)
                 if unit:
                     match = PLAN_UNIT_FENCE_PATTERN.match(text, unit.start)
-                    root = yaml.compose(match.group(1), Loader=yaml.SafeLoader) if match else None
+                    root, aliased = _compose_unit_fence(match.group(1)) if match else (None, set())
                     if isinstance(root, yaml.MappingNode):
                         for name, node in root.value:
                             if name.value == field:
-                                allowed.append((match.start(1) + node.start_mark.index,
-                                                match.start(1) + node.end_mark.index))
+                                if (id(root), id(name)) in aliased:
+                                    # T232: the value is an alias, so the resolved node's marks
+                                    # describe the anchor's site in another key, not this field;
+                                    # refuse the hint instead of accepting the anchor's line.
+                                    continue
+                                allowed.extend((match.start(1) + start, match.start(1) + end)
+                                               for start, end in _value_spans(node, node.start_mark.index,
+                                                                              node.end_mark.index))
             map_unit = ctx.catalog_units.get(MAP_UNIT)
             if outside_map and target == CATALOG and map_unit:
                 allowed = [(left, right) for start, end in allowed
@@ -4393,6 +4474,115 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
             occurrences = list(re.finditer(re.escape(quote), text))
             selected = {"map": 0, "doc_map": 0, "correct": 1, "other_field": 2, "other_unit": 3}[location]
             evidence["line"] = line_of(text, occurrences[selected].start())
+
+    @case("fail T232: evidence hint at an aliased field's anchor", 1, {"C05"}, kinds={"evidence_line_mismatch"})
+    def _(fx: Fixture) -> None:
+        external(fx)
+        evidence = fx.map["outside_range_commands"][0]["evidence"]
+        quote = evidence["quote"]
+        # The named field's value becomes an alias; the quote stays on the anchor's line in another key.
+        fx.doc_suffix[CATALOG] = fx.doc_suffix[CATALOG].replace(
+            "canonical_text: " + quote,
+            "other_source: &q " + quote + "\ncanonical_text: *q", 1)
+        evidence["line"] = 1
+        text = fx.files()[CATALOG]
+        evidence["line"] = line_of(text, text.index("other_source: &q " + quote))
+
+    @case("pass T242: reused anchored key with an alias value in another mapping keeps a correct hint", 0, set())
+    def _(fx: Fixture) -> None:
+        external(fx)
+        evidence = fx.map["outside_range_commands"][0]["evidence"]
+        quote = evidence["quote"]
+        # The nested mapping reuses the anchored key with an alias value; the root field's own
+        # value is a physically present scalar, so its hint stays valid.
+        fx.doc_suffix[CATALOG] = fx.doc_suffix[CATALOG].replace(
+            "canonical_text: " + quote,
+            "&k canonical_text: &q " + quote + "\nother_source:\n  *k: *q", 1)
+        evidence["line"] = 1
+        text = fx.files()[CATALOG]
+        evidence["line"] = line_of(text, text.index("&k canonical_text:"))
+
+    @case("pass T242: anchored key reused at root with a plain value keeps a correct hint", 0, set())
+    def _(fx: Fixture) -> None:
+        external(fx)
+        evidence = fx.map["outside_range_commands"][0]["evidence"]
+        quote = evidence["quote"]
+        # The key is first anchored in a nested mapping with an alias value, then reused at the
+        # root with a plain value; only the nested occurrence is alias-valued.
+        fx.doc_suffix[CATALOG] = fx.doc_suffix[CATALOG].replace(
+            "canonical_text: " + quote,
+            "other_source: &q " + quote + "\nmetadata:\n  &k canonical_text: *q\n*k: " + quote, 1)
+        evidence["line"] = 1
+        text = fx.files()[CATALOG]
+        evidence["line"] = line_of(text, text.index("*k: " + quote))
+
+    @case("fail T243: evidence hint into a comment inside an alias-containing sequence", 1, {"C05"},
+          kinds={"evidence_line_mismatch"})
+    def _(fx: Fixture) -> None:
+        external(fx)
+        evidence = fx.map["outside_range_commands"][0]["evidence"]
+        quote = evidence["quote"]
+        # The sequence resolves to the quote, but the hinted line is a YAML comment inside the
+        # sequence's outer source bounds, not a source occurrence of the field's value.
+        fx.doc_suffix[CATALOG] = fx.doc_suffix[CATALOG].replace(
+            "canonical_text: " + quote,
+            "other_source: &q " + quote + "\ncanonical_text:\n- *q\n# " + quote, 1)
+        evidence["line"] = 1
+        text = fx.files()[CATALOG]
+        evidence["line"] = line_of(text, text.index("# " + quote))
+
+    @case("pass T243: alias-containing sequence with a local item keeps a correct local hint", 0, set())
+    def _(fx: Fixture) -> None:
+        external(fx)
+        evidence = fx.map["outside_range_commands"][0]["evidence"]
+        quote = evidence["quote"]
+        fx.doc_suffix[CATALOG] = fx.doc_suffix[CATALOG].replace(
+            "canonical_text: " + quote,
+            "other_source: &q " + quote + "\ncanonical_text:\n- *q\n- " + quote, 1)
+        evidence["line"] = 1
+        text = fx.files()[CATALOG]
+        evidence["line"] = line_of(text, text.index("- " + quote))
+
+    @case("fail T243: alias-containing sequence refuses a hint at the other field's anchor", 1, {"C05"},
+          kinds={"evidence_line_mismatch"})
+    def _(fx: Fixture) -> None:
+        external(fx)
+        evidence = fx.map["outside_range_commands"][0]["evidence"]
+        quote = evidence["quote"]
+        fx.doc_suffix[CATALOG] = fx.doc_suffix[CATALOG].replace(
+            "canonical_text: " + quote,
+            "other_source: &q " + quote + "\ncanonical_text:\n- *q", 1)
+        evidence["line"] = 1
+        text = fx.files()[CATALOG]
+        evidence["line"] = line_of(text, text.index("other_source: &q " + quote))
+
+    for shape in ("anchor", "tag", "literal_header", "folded_header", "tag_comment", "anchor_comment", "alias_header"):
+        for correct in (False, True):
+            @case(f"{'pass' if correct else 'fail'} T245: {shape} hint at {'value' if correct else 'property or comment'}",
+                  0 if correct else 1, set() if correct else {"C05"},
+                  kinds=set() if correct else {"evidence_line_mismatch"})
+            def _(fx: Fixture, shape=shape, correct=correct) -> None:
+                external(fx)
+                entry = fx.map["outside_range_commands"][0]
+                command_quote = entry["evidence"]["quote"]
+                quote = {"anchor": "attempt_id", "tag": "str"}.get(shape, command_quote)
+                prefix = {"anchor": "&attempt_id", "tag": "!!str", "literal_header": "|",
+                          "folded_header": ">", "tag_comment": "!!str", "anchor_comment": "&q",
+                          "alias_header": "|"}[shape]
+                header = prefix + (" # " + quote if "header" in shape or "comment" in shape else "")
+                replacement = f"canonical_text:\n- {header}\n  {quote}\n- {command_quote}"
+                if shape == "alias_header":
+                    replacement = (f"other_source: &q {command_quote}\ncanonical_text:\n- *q\n"
+                                   f"- {header}\n  {quote}")
+                fx.doc_suffix[CATALOG] = fx.doc_suffix[CATALOG].replace(
+                    "canonical_text: " + command_quote, replacement, 1)
+                # The ordinary registration stays intact; this nested locator isolates a
+                # single-token property quote without weakening the command's evidence.
+                evidence = entry["locator_probe"] = {"doc": CATALOG, "unit": "UCC-231",
+                                                       "field": "canonical_text", "quote": quote, "line": 1}
+                text = fx.files()[CATALOG]
+                marker = "  " + quote if correct else "- " + header
+                evidence["line"] = line_of(text, text.index(marker, text.index(replacement)))
 
     @case("fail MAX1: deleted in-record discriminator", 1, {"C05"}, kinds={"typed_discriminator_branch_value_mismatch"})
     def _(fx: Fixture) -> None:

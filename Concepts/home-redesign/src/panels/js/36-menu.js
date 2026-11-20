@@ -179,7 +179,7 @@ menu.open = function (anchor, spec) {
       main.appendChild(h('span', { class: 'pmw-mlead pmw-mcheck' + (r.checked ? ' on' : '') }, [icon('check', { size: 14 })]));
     }
     var copy = h('span', { class: 'pmw-mcopy' }, [h('b', { text: r.label })]);
-    if (r.sub || (r.disabled && r.reason)) copy.appendChild(h('span', { text: r.disabled && r.reason ? r.reason : r.sub }));
+    if (r.sub || (r.disabled && r.reason)) copy.appendChild(h('span', { class: 'pmw-msub', text: r.disabled && r.reason ? r.reason : r.sub }));
     main.appendChild(copy);
     if (r.right) main.appendChild(h('span', { class: 'pmw-mright', text: PMW.keyLabel(r.right) }));
     if (r.submenu) main.appendChild(h('span', { class: 'pmw-mchev' }, [icon('chevronRight', { size: 14 })]));

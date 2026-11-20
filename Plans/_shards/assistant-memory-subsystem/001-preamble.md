@@ -4,11 +4,11 @@ Source: `Plans/assistant-memory-subsystem.md`
 
 Source lines: L1-L4
 
-Source SHA256: `491fcd9f9b62043680aff28e14e60a048d6f38897f1933bdd4f97eda715d8068`
+Source SHA256: `bef912af3f908a962527eb2a58e3d50af7eb741092d247beebc773e1314587d8`
 
 ---
 
-# Assistant-Only Memory Subsystem (Canonical SSOT)
+# Memory Subsystem (Canonical SSOT)
 
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.

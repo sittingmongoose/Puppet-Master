@@ -1,0 +1,294 @@
+{
+  "schema_id": "pm.dm.fix7.checks.v1",
+  "status": "PASS",
+  "base": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+  "reviewed_head": "6c0c65f6a1fdc009f2bfe2ab8ce323c127f761aa",
+  "code_head": "aa45d09c450145d5710df426080fd6c110619cf4",
+  "integration_commit": "382c5c4a2f5946dcd875a6b529b00d2f2aaf24b8",
+  "source_repair_commit": "d5cacd38aa2120e53f877fcf77c71480ce004904",
+  "family_runs": [
+    {
+      "family": "format.applied",
+      "check": "checker",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/format_applied-checker.log"
+    },
+    {
+      "family": "format.applied",
+      "check": "guards",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/format_applied-guards.log"
+    },
+    {
+      "family": "lsp.server.lifecycle_changed",
+      "check": "checker",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/lsp_server_lifecycle_changed-checker.log"
+    },
+    {
+      "family": "lsp.server.lifecycle_changed",
+      "check": "guards",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/lsp_server_lifecycle_changed-guards.log"
+    },
+    {
+      "family": "model.catalog_refreshed",
+      "check": "checker",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/model_catalog_refreshed-checker.log"
+    },
+    {
+      "family": "model.catalog_refreshed",
+      "check": "guards",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/model_catalog_refreshed-guards.log"
+    },
+    {
+      "family": "subagent.context_rehydrated",
+      "check": "checker",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/subagent_context_rehydrated-checker.log"
+    },
+    {
+      "family": "subagent.context_rehydrated",
+      "check": "guards",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/subagent_context_rehydrated-guards.log"
+    },
+    {
+      "family": "subagent.context_shrunk",
+      "check": "checker",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/subagent_context_shrunk-checker.log"
+    },
+    {
+      "family": "subagent.context_shrunk",
+      "check": "guards",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/subagent_context_shrunk-guards.log"
+    },
+    {
+      "family": "project.added",
+      "check": "checker",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/project_added-checker.log"
+    },
+    {
+      "family": "project.added",
+      "check": "guards",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/project_added-guards.log"
+    },
+    {
+      "family": "project.created",
+      "check": "checker",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/project_created-checker.log"
+    },
+    {
+      "family": "project.created",
+      "check": "guards",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/project_created-guards.log"
+    },
+    {
+      "family": "git.clone.completed",
+      "check": "checker",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/git_clone_completed-checker.log"
+    },
+    {
+      "family": "git.clone.completed",
+      "check": "guards",
+      "exit_code": 0,
+      "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/git_clone_completed-guards.log"
+    }
+  ],
+  "checker_assertions": 55158,
+  "guard_summary": {
+    "guards": 458,
+    "negative_probes": 23221,
+    "full_checker_mutants_rejected": 1296
+  },
+  "extras": {
+    "status": "PASS",
+    "results": [
+      {
+        "check": "review-reproductions",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/review-reproductions.py"
+        ],
+        "exit_code": 0,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/review-reproductions.log"
+      },
+      {
+        "check": "independent-probes",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/independent-probes.py"
+        ],
+        "exit_code": 0,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/independent-probes.log"
+      },
+      {
+        "check": "focused-probes",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/focused-probes.py"
+        ],
+        "exit_code": 0,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/focused-probes.log"
+      },
+      {
+        "check": "exit-oracle-probes",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/exit-oracle-probes.py"
+        ],
+        "exit_code": 0,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/exit-oracle-probes.log"
+      },
+      {
+        "check": "numeric-sweep",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/numeric-sweep.py"
+        ],
+        "exit_code": 0,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/numeric-sweep.log"
+      },
+      {
+        "check": "receipt-time-probes",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/receipt-time-probes.py"
+        ],
+        "exit_code": 0,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/receipt-time-probes.log"
+      },
+      {
+        "check": "source-scope-audit",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/source-scope-audit.py"
+        ],
+        "exit_code": 0,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/source-scope-audit.log"
+      },
+      {
+        "check": "settings-layering",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "scripts/pm-settings-layering-check.py"
+        ],
+        "exit_code": 0,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/settings-layering.log"
+      },
+      {
+        "check": "dry-tests",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_pm_touch_closure_source.py",
+          "-k",
+          "DryGuardConsumerTests"
+        ],
+        "exit_code": 0,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/dry-tests.log"
+      },
+      {
+        "check": "storage-recovery",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "scripts/pm-storage-recovery-contracts.py",
+          "--self-test"
+        ],
+        "exit_code": 0,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/storage-recovery.log"
+      },
+      {
+        "check": "whitespace",
+        "command": [
+          "git",
+          "-c",
+          "core.whitespace=cr-at-eol",
+          "diff",
+          "--check",
+          "fb441b27fd75440e14115fb382b15a5258ad7ea3"
+        ],
+        "exit_code": 0,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/whitespace.log"
+      }
+    ]
+  },
+  "regeneration": {
+    "status": "PASS",
+    "base": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+    "currentness_files": 15,
+    "DL_302_preserved": true,
+    "results": [
+      {
+        "check": "shard-generate",
+        "command": [
+          "python3",
+          "scripts/pm-shard-plans.py",
+          "--generate",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "exit_code": 0,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/shard-generate.log"
+      },
+      {
+        "check": "index-generate",
+        "command": [
+          "python3",
+          "scripts/pm-plan-index.py",
+          "generate"
+        ],
+        "exit_code": 0,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/index-generate.log"
+      },
+      {
+        "check": "shard-check",
+        "command": [
+          "python3",
+          "scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "exit_code": 0,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/shard-check.log",
+        "top_level_status": "pass"
+      },
+      {
+        "check": "index-validate",
+        "command": [
+          "python3",
+          "scripts/pm-plan-index.py",
+          "validate"
+        ],
+        "exit_code": 0,
+        "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix7/index-validate.log",
+        "top_level_status": "pass"
+      }
+    ]
+  }
+}

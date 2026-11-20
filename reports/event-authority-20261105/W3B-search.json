@@ -1,0 +1,253 @@
+{
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "families": [
+    {
+      "event_type": "source_control.backend.detected",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 395,
+          "text": "source_control.backend.detected"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.backend.selected",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 396,
+          "text": "source_control.backend.selected"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.checkpoint.created",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 412,
+          "text": "source_control.checkpoint.created"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.checkpoint.restored",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 413,
+          "text": "source_control.checkpoint.restored"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.remote.fetch_completed",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 405,
+          "text": "source_control.remote.fetch_completed"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.remote.fetch_started",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 404,
+          "text": "source_control.remote.fetch_started"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.remote.publish_completed",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 409,
+          "text": "source_control.remote.publish_completed"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.remote.publish_started",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 408,
+          "text": "source_control.remote.publish_started"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.remote.sync_completed",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 407,
+          "text": "source_control.remote.sync_completed"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.remote.sync_started",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 406,
+          "text": "source_control.remote.sync_started"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.repository.bound",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 397,
+          "text": "source_control.repository.bound"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.repository.unbound",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 398,
+          "text": "source_control.repository.unbound"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.status.refreshed",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 399,
+          "text": "source_control.status.refreshed"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.workspace.created",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 400,
+          "text": "source_control.workspace.created"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.workspace.opened",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 401,
+          "text": "source_control.workspace.opened"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.workspace.removed",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 403,
+          "text": "source_control.workspace.removed"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.workspace.switched",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 402,
+          "text": "source_control.workspace.switched"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.writer_lease.granted",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 410,
+          "text": "source_control.writer_lease.granted"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    },
+    {
+      "event_type": "source_control.writer_lease.lost",
+      "scope": "live Plans prose, schemas, registries and fixtures; excludes generated shards/index, audits/evidence/migration and source-only ledgers",
+      "matches": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "line": 411,
+          "text": "source_control.writer_lease.lost"
+        }
+      ],
+      "negative_evidence": "No exact closed event payload, event-specific first-receipt source, identity recipe, consumer/checkpoint, replay or withdrawal contract found. Inventory listing and existing command/native contracts are reused; new event bindings are newly authored under deck 2 item 9.a A."
+    }
+  ],
+  "checked_owner_definitions": [
+    "Plans/Source_Control_System.md#SCS-002",
+    "Plans/Source_Control_System.md#SCS-003",
+    "Plans/Source_Control_System.md#SCS-004",
+    "Plans/Source_Control_System.md#SCS-008",
+    "Plans/Source_Control_System.md#SCS-009",
+    "Plans/Source_Control_System.md#SCS-010",
+    "Plans/Source_Control_System.md#SCS-014",
+    "Plans/Source_Control_System.md#SCS-015",
+    "Plans/Source_Control_System.md#SCS-016",
+    "Plans/Source_Control_System.md#SCS-025",
+    "Plans/source_control_contracts.schema.json",
+    "Plans/storage-plan.md#SP-278",
+    "Plans/storage-plan.md#SP-286",
+    "Plans/storage-plan.md#SP-337",
+    "Plans/Contracts_V0.md#CV-317",
+    "Plans/Contracts_V0.md#CV-339",
+    "Plans/Contracts_V0.md#CV-366",
+    "Plans/storage-plan.md#case-l-3-retention-holds-compaction-deletion-and-quarantine"
+  ]
+}

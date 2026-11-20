@@ -19,6 +19,7 @@ import tempfile
 import textwrap
 import time
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 CHECKOUT = Path("/home/someone/pm-worktrees/example-20260917")
@@ -258,6 +259,328 @@ ALL_REPORTS = {
     "audit-governance": AUDIT_GOVERNANCE_REPORT,
     "plan-migration-validate": MIGRATION_REPORT,
 }
+
+
+class RenamedShardStaleness(unittest.TestCase):
+    """T32: a `missing_ref` from sealed evidence to a regenerated shard whose line-range name changed is
+    staleness (the Q5 landing, 2026-11-05: its bucket grew 1 -> 3 and stopped the landing). Every other
+    `missing_ref` keeps its class: a deleted unit, a missing non-shard path, a reference from a file that
+    is not sealed evidence."""
+
+    EVIDENCE = "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+    OLD = "Plans/_shards/prd_planning_runtime_contracts/002-lines-201-235.md"
+    NEW = "Plans/_shards/prd_planning_runtime_contracts/002-lines-201-237.md"
+    OLD_SCHEMA = "Plans/_shards/prd_planning_runtime_contracts.schema/004-lines-601-637.md"
+    NEW_SCHEMA = "Plans/_shards/prd_planning_runtime_contracts.schema/004-lines-601-646.md"
+
+    def setUp(self):
+        # T53: the base revision holds the old range names and the evidence; the working tree is the branch,
+        # where regeneration renamed the shards
+        self.root = Path(tempfile.mkdtemp(prefix="landing-renamed-shard-"))
+        self.addCleanup(shutil.rmtree, self.root)
+        self.manifest("prd_planning_runtime_contracts", [("001", "001-lines-1-200.md"), ("002", "002-lines-201-235.md")])
+        self.manifest("prd_planning_runtime_contracts.schema", [("004", "004-lines-601-637.md")])
+        evidence = self.root / self.EVIDENCE
+        evidence.parent.mkdir(parents=True, exist_ok=True)
+        evidence.write_text("{}\n")
+        git = lambda *a: subprocess.run(["git", *a], cwd=self.root, check=True, capture_output=True)
+        git("init", "--quiet", "--initial-branch=base")
+        git("add", "-A")
+        git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "base")
+        git("tag", "base")
+        for old in (self.OLD, self.OLD_SCHEMA):
+            (self.root / old).unlink()
+        self.manifest("prd_planning_runtime_contracts", [("001", "001-lines-1-200.md"), ("002", "002-lines-201-237.md")])
+        self.manifest("prd_planning_runtime_contracts.schema", [("004", "004-lines-601-646.md")])
+        self.context = M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA])
+
+    def manifest(self, doc, shards):
+        folder = self.root / "Plans" / "_shards" / doc
+        folder.mkdir(parents=True, exist_ok=True)
+        for stale in folder.glob("*.md"):
+            stale.unlink()
+        rows = []
+        for shard_id, name in shards:
+            (folder / name).write_text("shard\n")
+            rows.append({"shard_id": shard_id, "path": f"Plans/_shards/{doc}/{name}", "split_rule": "line-count-200"})
+        (folder / "manifest.json").write_text(json.dumps({"schema_id": "pm.plan_shards.manifest.v1", "shards": rows}))
+
+    def ref(self, target, source=None):
+        source = source or self.EVIDENCE
+        return {"path": source, "artifact": target, "artifact_ref": target, "error": "missing_ref"}
+
+    def stale(self, failure, context=None):
+        return M.normalize("run-gates", "validate_evidence", failure, self.root, context or self.context)["stale"]
+
+    def test_q5_renamed_line_range_shards_are_staleness(self):
+        self.assertTrue(self.stale(self.ref(self.OLD)))
+        self.assertTrue(self.stale(self.ref(self.OLD_SCHEMA)))
+
+    def test_q5_bucket_growth_by_renamed_shards_does_not_stop_the_landing(self):
+        unrelated = self.ref("Plans/_shards/gone_doc/001-lines-1-200.md")
+        items = [M.normalize("audit-governance", "evidence", f, self.root, self.context) for f in (unrelated, self.ref(self.OLD), self.ref(self.OLD_SCHEMA))]
+        name = M.bucket_of(items[0])
+        self.assertTrue(all(M.bucket_of(item) == name for item in items))
+        renamed = {name: sum(1 for item in items if item["stale"])}
+        rows = M.grown_buckets({name: 3}, {name: 1}, renamed)
+        self.assertEqual(len(rows), 1)
+        self.assertTrue(rows[0]["stale"])
+        self.assertEqual(M.blocking_items([], rows, []), [])
+        # The same growth without the rename rule (the tool before T32) stopped the landing.
+        self.assertFalse(M.grown_buckets({name: 3}, {name: 1})[0]["stale"])
+
+    def test_growth_beyond_the_renamed_shards_still_stops_the_landing(self):
+        name = M.bucket_of(M.normalize("audit-governance", "evidence", self.ref(self.OLD), self.root, self.context))
+        rows = M.grown_buckets({name: 4}, {name: 1}, {name: 2})
+        self.assertFalse(rows[0]["stale"])
+        self.assertEqual(len(M.blocking_items([], rows, [])), 1)
+
+    # T63 (REVIEW-etools-tb3-opus findings 7 and 8): the branch left the evidence file alone, in its commits read raw
+    # and in the working tree, and the file is no symbolic link
+    def test_an_uncommitted_edit_of_the_evidence_keeps_its_class(self):
+        (self.root / self.EVIDENCE).write_text('{"edited": true}\n')
+        self.assertFalse(self.stale(self.ref(self.OLD)))
+
+    def test_an_untracked_evidence_file_keeps_its_class(self):
+        fresh = "Plans/.evidence/fresh-run/evidence.json"
+        (self.root / fresh).parent.mkdir(parents=True, exist_ok=True)
+        (self.root / fresh).write_text("{}\n")
+        self.assertFalse(self.stale(self.ref(self.OLD, source=fresh)))
+
+    def test_an_evidence_symlink_keeps_its_class(self):
+        real = self.root / "Plans/elsewhere.json"
+        real.write_text("{}\n")
+        link = self.root / "Plans/.evidence/linked/evidence.json"
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(real)
+        git = lambda *a: subprocess.run(["git", *a], cwd=self.root, check=True, capture_output=True)
+        git("add", "Plans/elsewhere.json", "Plans/.evidence/linked/evidence.json")
+        git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "link")
+        context = M.RenameContext(self.root, "HEAD", [self.NEW, self.NEW_SCHEMA])
+        self.assertFalse(self.stale(self.ref(self.OLD, source="Plans/.evidence/linked/evidence.json"), context))
+
+    def test_a_non_ascii_evidence_path_the_branch_edited_keeps_its_class(self):
+        name = "Plans/.evidence/\u00e9t\u00e9/evidence.json"
+        target = self.root / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text("{}\n")
+        git = lambda *a: subprocess.run(["git", *a], cwd=self.root, check=True, capture_output=True)
+        git("add", name)
+        git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "evidence")
+        git("tag", "evidence-base")
+        target.write_text('{"edited": true}\n')
+        git("add", name)
+        git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "branch edit")
+        touched = M.branch_paths(self.root, "evidence-base")
+        self.assertIn(name, touched)
+        context = M.RenameContext(self.root, "base", touched)
+        self.assertFalse(self.stale(self.ref(self.OLD, source=name), context))
+
+    # T88 (TOOLBATCH4 pre-check findings 5 to 7): a committed rename's old path is one of the branch's paths; files git
+    # status does not report still lose the excuse; and the check never writes the index
+    def _git(self, *a):
+        return subprocess.run(["git", *a], cwd=self.root, check=True, capture_output=True)
+
+    def _commit(self, message):
+        self._git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", message)
+
+    def test_a_committed_rename_names_its_old_path_among_the_branch_paths(self):
+        notes = self.root / "Plans/notes.md"
+        notes.write_text("notes\n" * 40)
+        self._git("add", "-A"); self._commit("notes")
+        self._git("tag", "rename-base")
+        self._git("mv", "Plans/notes.md", "Plans/notes-renamed.md"); self._commit("rename")
+        touched = M.branch_paths(self.root, "rename-base")
+        self.assertIn("Plans/notes.md", touched)
+        self.assertIn("Plans/notes-renamed.md", touched)
+
+    def test_an_ignored_untracked_evidence_file_keeps_its_class(self):
+        (self.root / ".gitignore").write_text("coverage/\n")
+        self._git("add", ".gitignore"); self._commit("ignore")
+        fresh = "Plans/.evidence/coverage/evidence.json"
+        (self.root / fresh).parent.mkdir(parents=True, exist_ok=True)
+        (self.root / fresh).write_text("{}\n")
+        context = M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA])
+        self.assertFalse(self.stale(self.ref(self.OLD, source=fresh), context))
+        self.assertIn(fresh, context.why)
+
+    def test_an_excluded_untracked_evidence_file_keeps_its_class(self):
+        (self.root / ".git/info").mkdir(parents=True, exist_ok=True)
+        (self.root / ".git/info/exclude").write_text("Plans/.evidence/scratch/\n")
+        fresh = "Plans/.evidence/scratch/evidence.json"
+        (self.root / fresh).parent.mkdir(parents=True, exist_ok=True)
+        (self.root / fresh).write_text("{}\n")
+        self.assertFalse(self.stale(self.ref(self.OLD, source=fresh), M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA])))
+
+    def test_a_skip_worktree_edit_of_the_evidence_keeps_its_class(self):
+        self._git("update-index", "--skip-worktree", self.EVIDENCE)
+        (self.root / self.EVIDENCE).write_text('{"edited": true}\n')
+        context = M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA])
+        self.assertFalse(self.stale(self.ref(self.OLD), context))
+        self.assertIn("skip-worktree", context.why[self.EVIDENCE])
+
+    def test_an_assume_unchanged_edit_of_the_evidence_keeps_its_class(self):
+        self._git("update-index", "--assume-unchanged", self.EVIDENCE)
+        (self.root / self.EVIDENCE).write_text('{"edited": true}\n')
+        context = M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA])
+        self.assertFalse(self.stale(self.ref(self.OLD), context))
+        self.assertIn("assume-unchanged", context.why[self.EVIDENCE])
+
+    def test_the_untouched_evidence_still_keeps_the_excuse_and_the_index_is_not_written(self):
+        index = self.root / ".git/index"
+        os.utime(self.root / self.EVIDENCE, (1, 1))             # stale stat data: a plain git status would refresh the index
+        before = (index.stat().st_mtime_ns, index.read_bytes())
+        context = M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA])
+        self.assertTrue(self.stale(self.ref(self.OLD), context))
+        self.assertEqual((index.stat().st_mtime_ns, index.read_bytes()), before)
+        self.assertNotIn(self.EVIDENCE, context.why)
+
+    def test_a_deleted_unit_is_not_staleness(self):
+        # the document's manifest no longer holds shard 002 at all
+        self.manifest("prd_planning_runtime_contracts", [("001", "001-lines-1-200.md")])
+        self.assertFalse(self.stale(self.ref(self.OLD)))
+
+    def test_a_missing_non_shard_path_is_not_staleness(self):
+        self.assertFalse(self.stale(self.ref("Plans/prd_planning_runtime_contracts.md")))
+        self.assertFalse(self.stale(self.ref("Plans/.plan_index/plan_units.jsonl")))
+
+    def test_a_reference_from_a_file_that_is_not_sealed_evidence_is_not_staleness(self):
+        self.assertFalse(self.stale(self.ref(self.OLD, source="Plans/plan_graph.json")))
+        self.assertFalse(self.stale({"path": self.OLD, "error": "missing_ref"}))
+
+    def test_a_renamed_slug_shard_is_not_a_line_range_rename(self):
+        self.manifest("some_doc", [("013", "013-8.-testing-renamed.md")])
+        self.assertFalse(self.stale(self.ref("Plans/_shards/some_doc/013-8.-testing.md")))
+
+    def test_another_error_kind_keeps_its_class(self):
+        failure = dict(self.ref(self.OLD), error="missing_artifact")
+        self.assertFalse(self.stale(failure))
+
+    # T53 (TOOLBATCH2 pre-check finding 9): the base revision and the branch's own edits.
+    def test_p8_a_range_name_that_never_existed_is_not_staleness(self):
+        # the ordinal 002 still exists, but 002-lines-1-99999.md was never a shard at the base
+        self.assertFalse(self.stale(self.ref("Plans/_shards/prd_planning_runtime_contracts/002-lines-1-99999.md")))
+
+    def test_p8_evidence_the_branch_edited_is_not_staleness(self):
+        edited = M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA, self.EVIDENCE])
+        self.assertFalse(self.stale(self.ref(self.OLD), edited))
+
+    def test_p6_a_source_path_that_leaves_the_evidence_folder_is_not_staleness(self):
+        for source in ("Plans/.evidence/../x", "Plans/.evidence/./pm7/evidence.json", "Plans/.evidence//pm7/evidence.json",
+                       "Plans/.evidence/pm7/../../plan_graph.json"):
+            self.assertFalse(self.stale(self.ref(self.OLD, source=source)), source)
+
+    def test_p6_a_target_path_that_is_not_in_its_normal_form_is_not_staleness(self):
+        for target in ("Plans/_shards/prd_planning_runtime_contracts/./002-lines-201-235.md",
+                       "Plans/_shards//prd_planning_runtime_contracts/002-lines-201-235.md"):
+            self.assertFalse(self.stale(self.ref(target)), target)
+
+    def test_without_a_base_the_rule_never_applies(self):
+        self.assertFalse(M.normalize("run-gates", "validate_evidence", self.ref(self.OLD), self.root)["stale"])
+
+    def test_the_base_lookup_is_real_git(self):
+        self.assertTrue(self.context.existed_at_base(self.OLD))
+        self.assertFalse(self.context.existed_at_base(self.NEW))
+        self.assertFalse(M.RenameContext(self.root, "no-such-revision", []).existed_at_base(self.OLD))
+
+    def assert_printed_and_exported(self, failure, context, stale):
+        """Both aggregates must make the same decision before and after complete-export replacement."""
+        failures = [failure] + [{"path": "Plans/Other.md", "error": "artifact_hash_stale", "artifact": f"shard-{n}"}
+                                for n in range(101)]
+        printed, counts, argv = [], {}, {}
+        for check, subcheck, cap in (("run-gates", "validate_evidence", 50), ("audit-governance", "evidence", 100)):
+            report = {"failures": [{"check": subcheck, "failures": failures[:cap]}],
+                      subcheck: {"failures": len(failures)}}
+            items, counted = M.extract(check, report, self.root, context)
+            printed.extend(items)
+            counts[check] = counted
+            argv[check, subcheck] = ["validate-evidence"]
+        result = {"report": {"failures": failures}, "elapsed_seconds": 0, "timed_out": False}
+        with patch.object(M, "run_export", return_value=result):
+            exported, decisions = M.key_from_exports(self.root, counts, {}, set(), argv, 600,
+                                                      items=printed, context=context)
+        self.assertEqual([row["case"] for row in decisions], ["keyed", "keyed"])
+        for check, subcheck in argv:
+            before = next(row for row in printed if (row["check"], row["subcheck"]) == (check, subcheck))
+            after = exported[check, subcheck][0]
+            for route, row in (("printed", before), ("exported", after)):
+                with self.subTest(check=check, route=route):
+                    self.assertEqual(row["stale"], stale)
+                    bucket = M.bucket_of(row)
+                    growth = M.grown_buckets({bucket: 2}, {bucket: 1}, {bucket: int(row["stale"])})
+                    self.assertEqual(len(M.blocking_items([], growth, [])), 0 if stale else 1)
+            self.assertEqual(before["key"], after["key"])
+
+    def test_complete_exports_keep_the_same_rename_context_as_printed_rows(self):
+        self.assert_printed_and_exported(self.ref(self.OLD), self.context, True)
+
+    def test_export_and_printed_paths_refuse_an_old_target_absent_at_base(self):
+        self.assert_printed_and_exported(self.ref("Plans/_shards/prd_planning_runtime_contracts/002-lines-1-99999.md"),
+                                         self.context, False)
+
+    def test_export_and_printed_paths_refuse_evidence_edited_in_commits(self):
+        self.assertTrue(self.context.left_alone(self.EVIDENCE))
+        (self.root / self.EVIDENCE).write_text('{"edited": true}\n')
+        self._git("add", "--", self.EVIDENCE)
+        self._commit("edit evidence after context creation")
+        self.assert_printed_and_exported(self.ref(self.OLD), self.context, False)
+        self.assertEqual(self.context.why[self.EVIDENCE], "the branch's commits changed it")
+
+    def test_export_and_printed_paths_recheck_evidence_after_a_working_tree_edit(self):
+        self.assert_printed_and_exported(self.ref(self.OLD), self.context, True)
+        (self.root / self.EVIDENCE).write_text('{"edited": true}\n')
+        self.assert_printed_and_exported(self.ref(self.OLD), self.context, False)
+        self.assertIn("working-tree changes", self.context.why[self.EVIDENCE])
+
+    def test_export_and_printed_paths_recheck_evidence_after_a_staged_edit(self):
+        self.assertTrue(self.context.left_alone(self.EVIDENCE))
+        original = (self.root / self.EVIDENCE).read_bytes()
+        (self.root / self.EVIDENCE).write_bytes(original + b"\n")
+        self._git("add", "--", self.EVIDENCE)
+        (self.root / self.EVIDENCE).write_bytes(original)
+        self.assert_printed_and_exported(self.ref(self.OLD), self.context, False)
+
+    def test_a_committed_evidence_rename_refuses_both_paths_with_rename_detection_configured(self):
+        self.assertTrue(self.context.left_alone(self.EVIDENCE))
+        self._git("config", "diff.renames", "true")
+        self._git("mv", self.EVIDENCE, self.EVIDENCE + ".moved")
+        self._commit("rename evidence")
+        self.assertIn(self.EVIDENCE, M.branch_paths(self.root, "base"))
+        with patch.object(self.context, "_git", wraps=self.context._git) as calls:
+            self.assert_printed_and_exported(self.ref(self.OLD), self.context, False)
+        diffs = [call.args for call in calls.call_args_list if call.args[0] == "diff"]
+        self.assertTrue(diffs)
+        self.assertTrue(all("--no-renames" in args and "--no-ext-diff" in args for args in diffs))
+        self.assertEqual(self.context.why[self.EVIDENCE], "the branch's commits changed it")
+
+    def test_evidence_symlink_refuses_both_paths_with_the_explicit_diagnostic(self):
+        self.assertTrue(self.context.left_alone(self.EVIDENCE))
+        target = self.root / "Plans/elsewhere.json"
+        target.write_bytes((self.root / self.EVIDENCE).read_bytes())
+        (self.root / self.EVIDENCE).unlink()
+        (self.root / self.EVIDENCE).symlink_to(target)
+        self.assert_printed_and_exported(self.ref(self.OLD), self.context, False)
+        self.assertEqual(self.context.why[self.EVIDENCE], "evidence is or sits under a symbolic link")
+
+    def test_evidence_parent_symlink_refuses_both_paths_with_the_explicit_diagnostic(self):
+        self.assertTrue(self.context.left_alone(self.EVIDENCE))
+        parent = (self.root / self.EVIDENCE).parent
+        target = parent.with_name("moved-evidence")
+        parent.rename(target)
+        parent.symlink_to(target, target_is_directory=True)
+        self.assert_printed_and_exported(self.ref(self.OLD), self.context, False)
+        self.assertEqual(self.context.why[self.EVIDENCE], "evidence is or sits under a symbolic link")
+
+    def test_export_recording_without_context_never_excuses_a_rename(self):
+        self.assert_printed_and_exported(self.ref(self.OLD), None, False)
+
+    def test_a_failed_current_commit_lookup_refuses_both_paths(self):
+        git = self.context._git
+        def fail_diff(*args):
+            return subprocess.CompletedProcess(args, 1, b"", b"failed") if args[0] == "diff" else git(*args)
+        with patch.object(self.context, "_git", side_effect=fail_diff):
+            self.assert_printed_and_exported(self.ref(self.OLD), self.context, False)
+        self.assertEqual(self.context.why[self.EVIDENCE], "git diff failed")
 
 
 class BaselineDiff(unittest.TestCase):
@@ -2065,6 +2388,56 @@ class ExportKeyedSubchecks(LandingRun):
         code, out = self.run_main("--record-baseline", "--baseline", "baseline.json")
         self.assertEqual(code, 0, out + self.stderr)
         return out, json.loads((self.repo / "baseline.json").read_text(encoding="utf-8"))
+
+    def test_q5_export_replacement_keeps_rename_staleness_and_the_preexisting_missing_ref(self):
+        """Exercise main's context handoff and row replacement, with both renamed rows past both print caps."""
+        evidence = RenamedShardStaleness.EVIDENCE
+        pairs = ((RenamedShardStaleness.OLD, RenamedShardStaleness.NEW),
+                 (RenamedShardStaleness.OLD_SCHEMA, RenamedShardStaleness.NEW_SCHEMA))
+        source = self.repo / evidence
+        source.parent.mkdir(parents=True)
+        source.write_text("{}\n")
+        paths = [evidence]
+        for old, new in pairs:
+            target = self.repo / old
+            target.parent.mkdir(parents=True)
+            target.write_text("shard\n")
+            manifest = target.parent / "manifest.json"
+            manifest.write_text(json.dumps({"shards": [{"shard_id": target.name.split("-")[0], "path": old}]}))
+            paths.extend([old, str(manifest.relative_to(self.repo))])
+        self.git("add", "--", *paths)
+        self.git("commit", "-qm", "Q5 base evidence and shards")
+        self.base = self.git("rev-parse", "HEAD").strip()
+        padding = [{"path": evidence, "error": "artifact_hash_stale", "artifact": f"Plans/owner-{n}.md"}
+                   for n in range(101)]
+        unrelated = {"path": evidence, "error": "missing_ref",
+                     "artifact_ref": "Plans/_shards/storage_value_registry/631-lines-125818-125835.md"}
+        baseline_rows = padding + [unrelated]
+        self.stub(gates={"validate_evidence": baseline_rows}, audit={"evidence": baseline_rows})
+        self.exports["validate-evidence"] = baseline_rows
+        self.record()
+        for old, new in pairs:
+            self.git("mv", old, new)
+            manifest = (self.repo / new).parent / "manifest.json"
+            manifest.write_text(json.dumps({"shards": [{"shard_id": Path(new).name.split("-")[0], "path": new}]}))
+            self.git("add", "--", str(manifest.relative_to(self.repo)))
+        self.git("commit", "-qm", "Q5 regenerate line-range shards")
+        rows = baseline_rows + [{"path": evidence, "error": "missing_ref", "artifact_ref": old} for old, new in pairs]
+        self.stub(gates={"validate_evidence": rows}, audit={"evidence": rows})
+        self.exports["validate-evidence"] = rows
+        code, out = self.compare("--json")
+        report = json.loads(out)
+        self.assertEqual(code, 1, out + self.stderr)
+        self.assertEqual(report["blocking"], 0)
+        self.assertEqual(len(report["exports"]["subchecks"]), 2)
+        self.assertTrue(all(row["case"] == "keyed" for row in report["exports"]["subchecks"]))
+        grown = [row for row in report["grown_buckets"] if "|missing_ref|" in row["bucket"]]
+        self.assertEqual(len(grown), 2)
+        self.assertTrue(all((row["baseline_count"], row["count"], row["renamed_shard_refs"], row["stale"]) ==
+                            (1, 3, 2, True) for row in grown))
+        renamed = [row for row in report["new"] if row["error"] == "missing_ref"]
+        self.assertEqual(len(renamed), 4)
+        self.assertTrue(all(row["stale"] for row in renamed))
 
     def test_the_reviewers_export_is_keyed_and_exits_one(self):
         """132 artifact_hash_stale rows on the two edited documents and their shards, and main's one

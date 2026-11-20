@@ -34,6 +34,8 @@ import base_source
 import active_descendant_rewrite
 import css_bucket_split
 import css_media_split
+import invalidation_sets
+import css_comment_lint
 
 TOOLS = Path(__file__).resolve().parent
 PKG = TOOLS.parent
@@ -120,9 +122,6 @@ PAGE_STATE_OK = {
 # NOTE in every build until its owner gives it a class tail; the rule is then simply gone from here. Measured
 # 2026-10-08 on the NieR look screen (16.7k elements, h-fx2-work/attrcost2.mjs): a toggle with no rule costs 0 ms.
 PAGE_WIDE_DEBT = {
-    ('src/css/10-window.css', 'html[data-o55-open] body > [data-o55-held] *'):
-        'WINDOW: about 240 ms of style each time the onboarding window opens or closes; name the animated parts '
-        '(the next rule already does) instead of every element of the app',
     ('src/css/30-art.css', 'html[data-o55-lowres] .o55-f-nier :is(.o55-nier-online .nv-scan, .o55-nier-online .nv-rest, '
                            '.o55-nier-linkrun path[style], .o55-nier-linkoff path[style], .o55-nier-stamp *)'):
         'ART: the `.o55-nier-stamp *` arm makes each low-resource switch cost about 260 ms instead of 135 ms, and it '
@@ -518,6 +517,11 @@ def lint_sources() -> list[str]:
     problems.extend(_home().lint())
     # The 5.6 Pro chat port's own sources (pm7-port/css, pm7-port/js): emoji, pills, side stripes, unscoped selectors.
     problems.extend(_chat56().lint())
+    # A CSS comment that ends early (`(width/height/min-*/ overflow)` closes at `min-*/`) turns its own words into a
+    # selector prelude, and the browser drops the whole rule after them with no console error: FO-166 found
+    # `.pm-home-surface` missing that way in base/style/pm6-css-dashboard.css, so every Home surface lost its basis,
+    # border, radius, surface background and isolation. Source sheets only; check() lints the built page's <style> bodies.
+    problems.extend(css_comment_lint.tree_problems([PKG / 'base' / 'style', SRC]))
     return problems
 
 
@@ -825,7 +829,7 @@ def check(built: str) -> list[str]:
     warn_inert_sources()
     problems = (lint_liquid_glass_slots() + lint_sources() + syntax_check(built) + _rail().published_problems(built)
                 + _glyphs().published_problems(built) + _home().published_problems(built)
-                + _chat56().published_problems(built))
+                + _chat56().published_problems(built) + css_comment_lint.page_problems(built, 'built page'))
     for removed in dict.fromkeys(['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
                                   'pm7-onboarding-css', 'pm7-guided-tour-css', 'id="pm7-settings-data"',
                                   "'.pm7gt-callout", ".closest('.pm7gt')",
@@ -846,6 +850,7 @@ def check(built: str) -> list[str]:
         problems.append('Concepts/PMConcept7.html is missing; run build.py --publish-pm7')
     elif TARGET.read_bytes() != expected:
         problems.append('Concepts/PMConcept7.html differs from a fresh build; run build.py --publish-pm7')
+    problems.extend(invalidation_sets.published_problems(MEDIA_WHOLE.get(built, built)))
     unsplit = UNSPLIT.get(built)
     if unsplit is None:
         problems.append('page lint ratchet: no page from before step 7 for this build (build_text() must run first)')
@@ -882,6 +887,12 @@ def syntax_check(built: str) -> list[str]:
 
 
 def main() -> int:
+    # The Settings layers read Plans/settings_inventory.json (tracked, outside Concepts/). Without it the build
+    # silently drops inventory rows and fails later with a misleading placement error, so refuse a partial checkout.
+    inventory = PKG.parents[2] / 'Plans' / 'settings_inventory.json'
+    if not inventory.is_file():
+        print('BUILD FAILED: this build needs Plans/settings_inventory.json (a full repository checkout)', file=sys.stderr)
+        return 1
     unknown = [a for a in sys.argv[1:] if a.startswith('--') and a not in ('--check', '--publish-pm7', '--out')]
     if unknown:
         print(f"unknown option(s): {' '.join(unknown)} (the --no-usage and --no-home private reference builds were "
@@ -900,7 +911,9 @@ def main() -> int:
         return 0 if not problems else 1
     whole = MEDIA_WHOLE.get(built, built)
     problems = (lint_sources() + syntax_check(built) + _rail().published_problems(whole) + _glyphs().published_problems(whole)
-                + _home().published_problems(whole) + _chat56().published_problems(whole))
+                + _home().published_problems(whole) + _chat56().published_problems(whole)
+                # the page-wide invalidation sets a hover, press or selection change uses (tools/invalidation_sets.py)
+                + invalidation_sets.published_problems(whole))
     if css_media_split.join(built) != whole:
         problems.append('css_media_split: the published page with its viewport parts joined is not the page before the split')
     if problems:

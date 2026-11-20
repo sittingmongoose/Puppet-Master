@@ -1,0 +1,225 @@
+{
+ "schema_id": "pm.report.w3c_phase2_retention.v1",
+ "read_against_main": "564ed6a4678e030ca8046a0e0fb95780af46e9bc",
+ "decisions_checked": [
+  "DL-401 (Card 1)",
+  "DL-415..DL-452 (deck 2)",
+  "DL-453..DL-464 (deck 3)",
+  "DL-500..DL-509 (deck 4)"
+ ],
+ "appendix_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-3.as-presented-a7d00c73.md Appendix A items 1.a (lines 440-546), 2.a (547-614), 3.a (615-693); Appendix B W3C 8 settled rows (772-784)",
+ "integration_note": "On this unrebased branch the registry holds RP-AUTHORITY-INDEFINITE, RP-OPERATIONAL-2555D and RP-PROJECTION-3GEN. RP-TELEMETRY-90D@1.0.0, RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 and the Project first-save anchor adapter are on main (storage_value_registry.json and storage-plan.md Case L-3 at 564ed6a467) and arrive with the batch-3 rebase.",
+ "pending": 0,
+ "cells": [
+  {
+   "event_type": "artifacts.capture_provenance.inspected",
+   "owner_unit": "TCME-1300",
+   "storage_unit": "SP-1300",
+   "phase1": "PENDING_RETENTION_DECISION",
+   "phase2_project": "RP-TELEMETRY-90D@1.0.0",
+   "phase2_application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+   "decision": "DL-454",
+   "decision_source": "E-CARDS-3 item 2.a (33 routine histories, 90 days), option A; Plans/storage-plan.md:17651 at main 564ed6a467 (Case L-3, \"Kept 90 days, 33 routine histories (DL-454)\")"
+  },
+  {
+   "event_type": "artifacts.demonstration_video.created",
+   "owner_unit": "TCME-1301",
+   "storage_unit": "SP-1301",
+   "phase1": "RP-AUTHORITY-INDEFINITE",
+   "phase2_project": "RP-AUTHORITY-INDEFINITE",
+   "phase2_application": "RP-AUTHORITY-INDEFINITE",
+   "decision": "unchanged (phase-1 Case L-3 source-lineage/receipt/approval authority binding, reviewed PASS)",
+   "decision_source": "TCME/ATS phase-1 text; Storage Case L-3"
+  },
+  {
+   "event_type": "artifacts.demonstration_video.failed",
+   "owner_unit": "TCME-1302",
+   "storage_unit": "SP-1302",
+   "phase1": "PENDING_RETENTION_DECISION",
+   "phase2_project": "RP-OPERATIONAL-2555D@1.0.0",
+   "phase2_application": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+   "decision": "DL-455",
+   "decision_source": "E-CARDS-3 item 3.a (24 operational, security and recovery histories, seven years), option A; Plans/storage-plan.md:17659 at main 564ed6a467 (Case L-3, \"Kept seven years, 24 ... (DL-455)\")"
+  },
+  {
+   "event_type": "testing.capture.bookmarked",
+   "owner_unit": "TCME-1303",
+   "storage_unit": "SP-1303",
+   "phase1": "PENDING_RETENTION_DECISION",
+   "phase2_project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+   "phase2_application": "RP-AUTHORITY-INDEFINITE@1.0.0",
+   "decision": "DL-453",
+   "decision_source": "E-CARDS-3 item 1.a (47 families, permanent), option A; Plans/storage-plan.md:17638 at main 564ed6a467 (Case L-3, \"47 further names (DL-453)\")"
+  },
+  {
+   "event_type": "testing.capture.clip_saved",
+   "owner_unit": "TCME-1304",
+   "storage_unit": "SP-1304",
+   "phase1": "RP-AUTHORITY-INDEFINITE",
+   "phase2_project": "RP-AUTHORITY-INDEFINITE",
+   "phase2_application": "RP-AUTHORITY-INDEFINITE",
+   "decision": "unchanged (phase-1 Case L-3 source-lineage/receipt/approval authority binding, reviewed PASS)",
+   "decision_source": "TCME/ATS phase-1 text; Storage Case L-3"
+  },
+  {
+   "event_type": "testing.capture.effective_quality_changed",
+   "owner_unit": "TCME-1305",
+   "storage_unit": "SP-1305",
+   "phase1": "PENDING_RETENTION_DECISION",
+   "phase2_project": "RP-TELEMETRY-90D@1.0.0",
+   "phase2_application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+   "decision": "DL-454",
+   "decision_source": "E-CARDS-3 item 2.a (33 routine histories, 90 days), option A; Plans/storage-plan.md:17651 at main 564ed6a467 (Case L-3, \"Kept 90 days, 33 routine histories (DL-454)\")"
+  },
+  {
+   "event_type": "testing.capture.health_degraded",
+   "owner_unit": "TCME-1306",
+   "storage_unit": "SP-1306",
+   "phase1": "PENDING_RETENTION_DECISION",
+   "phase2_project": "RP-TELEMETRY-90D@1.0.0",
+   "phase2_application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+   "decision": "DL-454",
+   "decision_source": "E-CARDS-3 item 2.a (33 routine histories, 90 days), option A; Plans/storage-plan.md:17651 at main 564ed6a467 (Case L-3, \"Kept 90 days, 33 routine histories (DL-454)\")"
+  },
+  {
+   "event_type": "testing.capture.health_recovered",
+   "owner_unit": "TCME-1307",
+   "storage_unit": "SP-1307",
+   "phase1": "PENDING_RETENTION_DECISION",
+   "phase2_project": "RP-TELEMETRY-90D@1.0.0",
+   "phase2_application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+   "decision": "DL-454",
+   "decision_source": "E-CARDS-3 item 2.a (33 routine histories, 90 days), option A; Plans/storage-plan.md:17651 at main 564ed6a467 (Case L-3, \"Kept 90 days, 33 routine histories (DL-454)\")"
+  },
+  {
+   "event_type": "testing.capture.interrupted",
+   "owner_unit": "TCME-1308",
+   "storage_unit": "SP-1308",
+   "phase1": "PENDING_RETENTION_DECISION",
+   "phase2_project": "RP-OPERATIONAL-2555D@1.0.0",
+   "phase2_application": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+   "decision": "DL-455",
+   "decision_source": "E-CARDS-3 item 3.a (24 operational, security and recovery histories, seven years), option A; Plans/storage-plan.md:17659 at main 564ed6a467 (Case L-3, \"Kept seven years, 24 ... (DL-455)\")"
+  },
+  {
+   "event_type": "testing.capture.paused",
+   "owner_unit": "TCME-1309",
+   "storage_unit": "SP-1309",
+   "phase1": "PENDING_RETENTION_DECISION",
+   "phase2_project": "RP-TELEMETRY-90D@1.0.0",
+   "phase2_application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+   "decision": "DL-454",
+   "decision_source": "E-CARDS-3 item 2.a (33 routine histories, 90 days), option A; Plans/storage-plan.md:17651 at main 564ed6a467 (Case L-3, \"Kept 90 days, 33 routine histories (DL-454)\")"
+  },
+  {
+   "event_type": "testing.capture.provenance_rejected",
+   "owner_unit": "TCME-1310",
+   "storage_unit": "SP-1310",
+   "phase1": "RP-AUTHORITY-INDEFINITE",
+   "phase2_project": "RP-AUTHORITY-INDEFINITE",
+   "phase2_application": "RP-AUTHORITY-INDEFINITE",
+   "decision": "unchanged (phase-1 Case L-3 source-lineage/receipt/approval authority binding, reviewed PASS)",
+   "decision_source": "TCME/ATS phase-1 text; Storage Case L-3"
+  },
+  {
+   "event_type": "testing.capture.provenance_verified",
+   "owner_unit": "TCME-1311",
+   "storage_unit": "SP-1311",
+   "phase1": "RP-AUTHORITY-INDEFINITE",
+   "phase2_project": "RP-AUTHORITY-INDEFINITE",
+   "phase2_application": "RP-AUTHORITY-INDEFINITE",
+   "decision": "unchanged (phase-1 Case L-3 source-lineage/receipt/approval authority binding, reviewed PASS)",
+   "decision_source": "TCME/ATS phase-1 text; Storage Case L-3"
+  },
+  {
+   "event_type": "testing.capture.redaction_applied",
+   "owner_unit": "TCME-1312",
+   "storage_unit": "SP-1312",
+   "phase1": "RP-AUTHORITY-INDEFINITE",
+   "phase2_project": "RP-AUTHORITY-INDEFINITE",
+   "phase2_application": "RP-AUTHORITY-INDEFINITE",
+   "decision": "unchanged (phase-1 Case L-3 source-lineage/receipt/approval authority binding, reviewed PASS)",
+   "decision_source": "TCME/ATS phase-1 text; Storage Case L-3"
+  },
+  {
+   "event_type": "testing.capture.resumed",
+   "owner_unit": "TCME-1313",
+   "storage_unit": "SP-1313",
+   "phase1": "PENDING_RETENTION_DECISION",
+   "phase2_project": "RP-TELEMETRY-90D@1.0.0",
+   "phase2_application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+   "decision": "DL-454",
+   "decision_source": "E-CARDS-3 item 2.a (33 routine histories, 90 days), option A; Plans/storage-plan.md:17651 at main 564ed6a467 (Case L-3, \"Kept 90 days, 33 routine histories (DL-454)\")"
+  },
+  {
+   "event_type": "testing.capture.segment_corrupt",
+   "owner_unit": "TCME-1314",
+   "storage_unit": "SP-1314",
+   "phase1": "PENDING_RETENTION_DECISION",
+   "phase2_project": "RP-OPERATIONAL-2555D@1.0.0",
+   "phase2_application": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+   "decision": "DL-455",
+   "decision_source": "E-CARDS-3 item 3.a (24 operational, security and recovery histories, seven years), option A; Plans/storage-plan.md:17659 at main 564ed6a467 (Case L-3, \"Kept seven years, 24 ... (DL-455)\")"
+  },
+  {
+   "event_type": "testing.capture.segment_finalized",
+   "owner_unit": "TCME-1315",
+   "storage_unit": "SP-1315",
+   "phase1": "RP-AUTHORITY-INDEFINITE",
+   "phase2_project": "RP-AUTHORITY-INDEFINITE",
+   "phase2_application": "RP-AUTHORITY-INDEFINITE",
+   "decision": "unchanged (phase-1 Case L-3 source-lineage/receipt/approval authority binding, reviewed PASS)",
+   "decision_source": "TCME/ATS phase-1 text; Storage Case L-3"
+  },
+  {
+   "event_type": "testing.capture.segment_recovered",
+   "owner_unit": "TCME-1316",
+   "storage_unit": "SP-1316",
+   "phase1": "RP-AUTHORITY-INDEFINITE",
+   "phase2_project": "RP-AUTHORITY-INDEFINITE",
+   "phase2_application": "RP-AUTHORITY-INDEFINITE",
+   "decision": "unchanged (phase-1 Case L-3 source-lineage/receipt/approval authority binding, reviewed PASS)",
+   "decision_source": "TCME/ATS phase-1 text; Storage Case L-3"
+  },
+  {
+   "event_type": "testing.capture.started",
+   "owner_unit": "TCME-1317",
+   "storage_unit": "SP-1317",
+   "phase1": "PENDING_RETENTION_DECISION",
+   "phase2_project": "RP-TELEMETRY-90D@1.0.0",
+   "phase2_application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+   "decision": "DL-454",
+   "decision_source": "E-CARDS-3 item 2.a (33 routine histories, 90 days), option A; Plans/storage-plan.md:17651 at main 564ed6a467 (Case L-3, \"Kept 90 days, 33 routine histories (DL-454)\")"
+  },
+  {
+   "event_type": "testing.capture.stopped",
+   "owner_unit": "TCME-1318",
+   "storage_unit": "SP-1318",
+   "phase1": "PENDING_RETENTION_DECISION",
+   "phase2_project": "RP-TELEMETRY-90D@1.0.0",
+   "phase2_application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+   "decision": "DL-454",
+   "decision_source": "E-CARDS-3 item 2.a (33 routine histories, 90 days), option A; Plans/storage-plan.md:17651 at main 564ed6a467 (Case L-3, \"Kept 90 days, 33 routine histories (DL-454)\")"
+  },
+  {
+   "event_type": "testing.capture.target_changed",
+   "owner_unit": "TCME-1319",
+   "storage_unit": "SP-1319",
+   "phase1": "PENDING_RETENTION_DECISION",
+   "phase2_project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+   "phase2_application": "RP-AUTHORITY-INDEFINITE@1.0.0",
+   "decision": "DL-453",
+   "decision_source": "E-CARDS-3 item 1.a (47 families, permanent), option A; Plans/storage-plan.md:17638 at main 564ed6a467 (Case L-3, \"47 further names (DL-453)\")"
+  },
+  {
+   "event_type": "testing.runtime_enabled_for_adapter",
+   "owner_unit": "ATS-1220",
+   "storage_unit": "SP-1320",
+   "phase1": "RP-AUTHORITY-INDEFINITE",
+   "phase2_project": "RP-AUTHORITY-INDEFINITE",
+   "phase2_application": null,
+   "decision": "unchanged (phase-1 Case L-3 source-lineage/receipt/approval authority binding, reviewed PASS)",
+   "decision_source": "TCME/ATS phase-1 text; Storage Case L-3"
+  }
+ ]
+}

@@ -1,0 +1,640 @@
+{
+  "schema_id": "pm.assurance.ca_seal2.fix11.v1",
+  "base_commit": "715b7c1506dee7a4831110424bc620a58743cc16",
+  "code_commits": [
+    "ef462bc5b52714f088aef1142af3fb89cc0d4b92",
+    "babeb1b4f75281c7d8afb851e63f43e877094160"
+  ],
+  "validator_sha256": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+  "checker_sha256": "12cb98ead3013b46e9c85a8e40418a58cdb82d887d0137fee73a489f35d2962f",
+  "coverage_sha256": "5c427409a55f2d984eda61793a9eeb5fc131075259243c51c3e8481c11a96015",
+  "python": "3.14.4",
+  "corpus": {
+    "passed": 220,
+    "checks": 220,
+    "original_map": true,
+    "replay_caches": false,
+    "scratch_copy_passed": 220,
+    "scratch_copy_checks": 220,
+    "verified_sources": 597,
+    "prior_tests_retained": 200,
+    "new_tests": [
+      "negative_ast_class_removed",
+      "negative_ast_rule_for_data_class",
+      "negative_ast_truth_class_without_rule",
+      "negative_census_augassign_bitand",
+      "negative_census_augassign_bitor",
+      "negative_census_augassign_bitxor",
+      "negative_census_hidden_builder_bitand",
+      "negative_census_hidden_builder_bitor",
+      "negative_census_hidden_builder_bitxor",
+      "negative_changed_inserted_continue",
+      "negative_changed_module_rebinding",
+      "negative_changed_module_truth_carrier",
+      "negative_changed_rebound_input",
+      "negative_changed_truncated_input",
+      "negative_deleted_preserved_guard",
+      "negative_fresh_function_shadows_builtin",
+      "negative_fresh_module_mutation",
+      "negative_fresh_module_rebinding",
+      "negative_refused_class_present",
+      "positive_ast_class_table"
+    ],
+    "changed_prior_result_records": []
+  },
+  "findings": {
+    "CA2-C11-B01": "fixed: operator census (exact-class dispatch; BitAnd/BitOr/BitXor in BinOp and AugAssign wherever they occur) and a complete AST class table",
+    "CA2-C11-N02": "fixed, option A: every node on an inserted or changed line of an aligned unit (four functions and the module body) has a census or changed-line row; every CA-SEAL line without a counterpart a reviewed record; module-scope bindings must be fresh",
+    "CA2-C11-N03": "fixed: report wording (the longer side of a move keeps preservation)",
+    "CA2-C11-N04": "fixed: source lines counted as the parser counts them, checked by a sentinel; form-feed and lone-CR controls"
+  },
+  "ast_classes": {
+    "python_version": "3.14.4",
+    "classes": 133,
+    "by_category": {
+      "truth-carrying": 37,
+      "data": 43,
+      "structural": 29,
+      "refused when present": 24
+    },
+    "table_sha256": "a059dc26d90a5be752e92191efb140778d83246822e9f9b02474f2a73815035b"
+  },
+  "census": {
+    "Add": {
+      "category": "data",
+      "touched_functions": {
+        "AugAssign": 1,
+        "BinOp": 27
+      },
+      "carried_by_census_row": 0,
+      "unanchored": 0
+    },
+    "And": {
+      "category": "truth-carrying",
+      "touched_functions": {
+        "BoolOp": 43
+      },
+      "carried_by_census_row": 43,
+      "unanchored": 0
+    },
+    "BitAnd": {
+      "category": "truth-carrying",
+      "touched_functions": {
+        "BinOp": 9
+      },
+      "carried_by_census_row": 9,
+      "unanchored": 0
+    },
+    "BitOr": {
+      "category": "truth-carrying",
+      "touched_functions": {
+        "BinOp": 3
+      },
+      "carried_by_census_row": 3,
+      "unanchored": 0
+    },
+    "BitXor": {
+      "category": "truth-carrying",
+      "touched_functions": {},
+      "carried_by_census_row": 0,
+      "unanchored": 0
+    },
+    "Div": {
+      "category": "data",
+      "touched_functions": {
+        "BinOp": 78
+      },
+      "carried_by_census_row": 0,
+      "unanchored": 0
+    },
+    "Eq": {
+      "category": "truth-carrying",
+      "touched_functions": {
+        "Compare": 58
+      },
+      "carried_by_census_row": 58,
+      "unanchored": 0
+    },
+    "FloorDiv": {
+      "category": "data",
+      "touched_functions": {},
+      "carried_by_census_row": 0,
+      "unanchored": 0
+    },
+    "Gt": {
+      "category": "truth-carrying",
+      "touched_functions": {
+        "Compare": 1
+      },
+      "carried_by_census_row": 1,
+      "unanchored": 0
+    },
+    "GtE": {
+      "category": "truth-carrying",
+      "touched_functions": {},
+      "carried_by_census_row": 0,
+      "unanchored": 0
+    },
+    "In": {
+      "category": "truth-carrying",
+      "touched_functions": {
+        "Compare": 23
+      },
+      "carried_by_census_row": 23,
+      "unanchored": 0
+    },
+    "Invert": {
+      "category": "data",
+      "touched_functions": {},
+      "carried_by_census_row": 0,
+      "unanchored": 0
+    },
+    "Is": {
+      "category": "truth-carrying",
+      "touched_functions": {
+        "Compare": 23
+      },
+      "carried_by_census_row": 23,
+      "unanchored": 0
+    },
+    "IsNot": {
+      "category": "truth-carrying",
+      "touched_functions": {
+        "Compare": 36
+      },
+      "carried_by_census_row": 36,
+      "unanchored": 0
+    },
+    "LShift": {
+      "category": "data",
+      "touched_functions": {},
+      "carried_by_census_row": 0,
+      "unanchored": 0
+    },
+    "Lt": {
+      "category": "truth-carrying",
+      "touched_functions": {
+        "Compare": 2
+      },
+      "carried_by_census_row": 2,
+      "unanchored": 0
+    },
+    "LtE": {
+      "category": "truth-carrying",
+      "touched_functions": {
+        "Compare": 6
+      },
+      "carried_by_census_row": 6,
+      "unanchored": 0
+    },
+    "MatMult": {
+      "category": "data",
+      "touched_functions": {},
+      "carried_by_census_row": 0,
+      "unanchored": 0
+    },
+    "Mod": {
+      "category": "data",
+      "touched_functions": {},
+      "carried_by_census_row": 0,
+      "unanchored": 0
+    },
+    "Mult": {
+      "category": "data",
+      "touched_functions": {},
+      "carried_by_census_row": 0,
+      "unanchored": 0
+    },
+    "Not": {
+      "category": "truth-carrying",
+      "touched_functions": {
+        "UnaryOp": 113
+      },
+      "carried_by_census_row": 113,
+      "unanchored": 0
+    },
+    "NotEq": {
+      "category": "truth-carrying",
+      "touched_functions": {
+        "Compare": 58
+      },
+      "carried_by_census_row": 58,
+      "unanchored": 0
+    },
+    "NotIn": {
+      "category": "truth-carrying",
+      "touched_functions": {
+        "Compare": 14
+      },
+      "carried_by_census_row": 14,
+      "unanchored": 0
+    },
+    "Or": {
+      "category": "truth-carrying",
+      "touched_functions": {
+        "BoolOp": 67
+      },
+      "carried_by_census_row": 67,
+      "unanchored": 0
+    },
+    "Pow": {
+      "category": "data",
+      "touched_functions": {},
+      "carried_by_census_row": 0,
+      "unanchored": 0
+    },
+    "RShift": {
+      "category": "data",
+      "touched_functions": {},
+      "carried_by_census_row": 0,
+      "unanchored": 0
+    },
+    "Sub": {
+      "category": "data",
+      "touched_functions": {
+        "BinOp": 31
+      },
+      "carried_by_census_row": 0,
+      "unanchored": 0
+    },
+    "UAdd": {
+      "category": "data",
+      "touched_functions": {},
+      "carried_by_census_row": 0,
+      "unanchored": 0
+    },
+    "USub": {
+      "category": "data",
+      "touched_functions": {},
+      "carried_by_census_row": 0,
+      "unanchored": 0
+    }
+  },
+  "census_node_types": {
+    "BinOp(BitAnd)": 9,
+    "BinOp(BitOr)": 3,
+    "BoolOp": 110,
+    "Call": 891,
+    "Compare": 219,
+    "If test": 171,
+    "IfExp": 17,
+    "Try dispatch": 6,
+    "UnaryOp(Not)": 113,
+    "comprehension if": 38,
+    "except alternative": 29,
+    "except dispatch": 6,
+    "parser callback": 5
+  },
+  "changed_line_nodes": {
+    "rows": 190,
+    "by_unit": {
+      "<module>": 52,
+      "build_receipt": 49,
+      "main": 81,
+      "multi_family_receipt_state": 5,
+      "post_august_validator_pin": 3
+    },
+    "by_class": {
+      "Assign": 29,
+      "Attribute": 8,
+      "BinOp": 2,
+      "Constant": 46,
+      "Dict": 1,
+      "Expr": 1,
+      "If": 1,
+      "Import": 3,
+      "Name": 78,
+      "SetComp": 2,
+      "Subscript": 15,
+      "Tuple": 1,
+      "alias": 3
+    },
+    "by_outcome": {
+      "data": 189,
+      "structural": 1
+    }
+  },
+  "historical_lines": {
+    "rows": 2,
+    "by_mark": {
+      "deleted": 0,
+      "replaced": 2,
+      "function removed": 0
+    }
+  },
+  "occurrence_map": {
+    "baseline": "17c842445a2623bb0334ba8d6932e7a6bf088967",
+    "aligned_functions": 4,
+    "new_functions": 11,
+    "aligned_blocks": 8,
+    "aligned_lines": 1306,
+    "eligible_nodes": 1126,
+    "ineligible_nodes": {
+      "changed enclosing header": 1,
+      "function new since CA-SEAL": 455,
+      "inserted or changed line": 35
+    },
+    "line_marks": {
+      "multi_family_receipt_state": {
+        "inserted": 0,
+        "changed": 1,
+        "deleted": 0,
+        "replaced": 1
+      },
+      "post_august_validator_pin": {
+        "inserted": 0,
+        "changed": 1,
+        "deleted": 0,
+        "replaced": 1
+      },
+      "main": {
+        "inserted": 18,
+        "changed": 0,
+        "deleted": 0,
+        "replaced": 0
+      },
+      "build_receipt": {
+        "inserted": 10,
+        "changed": 0,
+        "deleted": 0,
+        "replaced": 0
+      },
+      "<module>": {
+        "inserted": 43,
+        "changed": 0,
+        "deleted": 0,
+        "replaced": 0
+      }
+    },
+    "removed_functions": [],
+    "preserved_rows_matched": 620
+  },
+  "committed_rows": {
+    "rows_before": 1944,
+    "rows_after": 1944,
+    "same_site_ids": true,
+    "rows_with_changed_fields": [],
+    "new_truth_carrying_census_rows": 0,
+    "new_changed_line_rows": 190,
+    "new_historical_records": 2
+  },
+  "corpus_probes": {
+    "negative_ast_class_removed": true,
+    "negative_ast_rule_for_data_class": true,
+    "negative_ast_truth_class_without_rule": true,
+    "negative_census_augassign_bitand": true,
+    "negative_census_augassign_bitor": true,
+    "negative_census_augassign_bitxor": true,
+    "negative_census_hidden_builder_bitand": true,
+    "negative_census_hidden_builder_bitor": true,
+    "negative_census_hidden_builder_bitxor": true,
+    "negative_changed_inserted_continue": true,
+    "negative_changed_module_rebinding": true,
+    "negative_changed_module_truth_carrier": true,
+    "negative_changed_rebound_input": true,
+    "negative_changed_truncated_input": true,
+    "negative_deleted_preserved_guard": true,
+    "negative_fresh_function_shadows_builtin": true,
+    "negative_fresh_module_mutation": true,
+    "negative_fresh_module_rebinding": true,
+    "negative_refused_class_present": true
+  },
+  "replays": {
+    "cycle10_astra6_insertions": [
+      {
+        "label": "isinstance_assignment",
+        "missing": 1,
+        "refused": true
+      },
+      {
+        "label": "boolean_bitand_assignment",
+        "missing": 1,
+        "refused": true
+      },
+      {
+        "label": "bare_name_filter",
+        "missing": 1,
+        "refused": true
+      },
+      {
+        "label": "unknown_call",
+        "missing": 1,
+        "refused": true
+      },
+      {
+        "label": "known_predicate_call",
+        "missing": 1,
+        "refused": true
+      }
+    ],
+    "cycle10_adjacent_missing": [
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      1,
+      1
+    ],
+    "cycle10_rebinding_witness": "FAIL: preserved occurrence mismatch",
+    "astra6_hidden_builder": {
+      "coverage_refused": true,
+      "corpus_passed": 219,
+      "corpus_checks": 220,
+      "failed": [
+        "positive_complete_predicate_coverage"
+      ],
+      "restored": {
+        "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+        "reports/event-authority-20261105/CA-SEAL2-coverage.json": "5c427409a55f2d984eda61793a9eeb5fc131075259243c51c3e8481c11a96015",
+        "reports/event-authority-20261105/seal-check-recount-receipt.json": "899661007cdeb012ec5254d63c36629d41dd1adafd958fb9de9ebdcb6b3739da"
+      }
+    },
+    "cycle11_hidden_augassign_on_disk": {
+      "forms": [
+        {
+          "statement": "overall_pass |= {\"review_extra\": False, **named}[\"review_extra\"]",
+          "round10": "PASS",
+          "round11": "FAIL: coverage sites missing=['supplemen"
+        },
+        {
+          "statement": "overall_pass &= {\"review_extra\": False, **named}[\"review_extra\"]",
+          "round10": "PASS",
+          "round11": "FAIL: coverage sites missing=['supplemen"
+        },
+        {
+          "statement": "overall_pass ^= {\"review_extra\": False, **named}[\"review_extra\"]",
+          "round10": "PASS",
+          "round11": "FAIL: coverage sites missing=['supplemen"
+        }
+      ],
+      "corpus_passed": 219,
+      "corpus_checks": 220,
+      "failed": [
+        "positive_complete_predicate_coverage"
+      ],
+      "direct_witness": {
+        "with_trigger": {
+          "intact_pass": false,
+          "edited_pass": true
+        },
+        "without_trigger": {
+          "intact_pass": false,
+          "edited_pass": false
+        }
+      },
+      "restored": {
+        "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+        "reports/event-authority-20261105/CA-SEAL2-coverage.json": "5c427409a55f2d984eda61793a9eeb5fc131075259243c51c3e8481c11a96015",
+        "reports/event-authority-20261105/seal-check-recount-receipt.json": "899661007cdeb012ec5254d63c36629d41dd1adafd958fb9de9ebdcb6b3739da"
+      }
+    },
+    "cycle11_scope_probes_metadata_rebase": [
+      {
+        "label": "q4_input_truncated_before_preserved_len_check",
+        "coverage": "FAIL changed-line nodes missing"
+      },
+      {
+        "label": "q4_input_rebound_before_preserved_compare",
+        "coverage": "FAIL changed-line nodes missing"
+      },
+      {
+        "label": "q4_continue_silences_loop",
+        "coverage": "FAIL changed-line nodes missing"
+      },
+      {
+        "label": "deletion_of_preserved_guard",
+        "coverage": "FAIL changed-line nodes missing"
+      },
+      {
+        "label": "augassign_bitor_truth_carrier",
+        "coverage": "FAIL coverage sites missing"
+      },
+      {
+        "label": "control_binop_bitor_truth_carrier",
+        "coverage": "FAIL coverage sites missing"
+      }
+    ],
+    "cycle11_occurrence_probes": {
+      "map_verdicts_identical_to_precheck": true,
+      "full_rebase": {
+        "dup_above": "FAIL changed-line nodes missing",
+        "dup_below": "FAIL changed-line nodes missing",
+        "dup_far_same_body": "FAIL changed-line nodes missing",
+        "alignment_steal": "FAIL changed-line nodes missing",
+        "block_moved_guard_after_return": "FAIL changed-line nodes missing",
+        "block_moved_small_side": "FAIL changed-line nodes missing",
+        "swap_218_219": "FAIL changed-line nodes missing",
+        "swap_main_dict_values": "FAIL changed-line nodes missing",
+        "comment_on_preserved_line": "FAIL changed-line nodes missing",
+        "comment_line_inside_if_test": "PASS",
+        "blank_line_above_preserved": "PASS",
+        "reindent_continuation": "FAIL changed-line nodes missing",
+        "decorator_added": "FAIL changed-line nodes missing",
+        "default_argument_changed": "FAIL changed-line nodes missing",
+        "except_header_widened": "FAIL historical lines missing",
+        "except_body_returns_bridge": "FAIL changed-line nodes missing",
+        "try_wrapped_in_with": "FAIL changed-line nodes missing",
+        "if_moved_to_other_loop": "FAIL changed-line nodes missing",
+        "same_name_exact_copy_appended": "FAIL changed-line nodes missing",
+        "same_name_weakened_copy_appended": "FAIL changed-line nodes missing",
+        "same_name_august_copy_appended": "FAIL changed-line nodes missing"
+      }
+    },
+    "cycle11_augassign_in_memory": {
+      "hidden_part_a": "FAIL coverage sites missing=['supplement",
+      "hidden_corpus": [
+        220,
+        220
+      ],
+      "plain_corpus": [
+        211,
+        220
+      ]
+    },
+    "cycle11_independent_map": {
+      "independent_eligible": 1126,
+      "committed_eligible": 1126,
+      "eligible_set_equal": true,
+      "counterparts_equal": true
+    },
+    "fix10_preservation_tables": [
+      {
+        "label": "rebinding_inserted_call",
+        "round9": "PASS",
+        "round11": "FAIL: preserved occurrence mismatch",
+        "single_category_cuts": {
+          "without claims_another_occurrence": "FAIL",
+          "without not_an_unchanged_occurrence": "FAIL",
+          "without occurrence_claimed_twice": "FAIL"
+        }
+      },
+      {
+        "label": "inserted_sole_claim",
+        "round9": "PASS",
+        "round11": "FAIL: preserved occurrence mismatch",
+        "single_category_cuts": {
+          "without claims_another_occurrence": "FAIL",
+          "without not_an_unchanged_occurrence": "PASS",
+          "without occurrence_claimed_twice": "FAIL"
+        }
+      },
+      {
+        "label": "duplicate_claim",
+        "round9": "PASS",
+        "round11": "FAIL: preserved occurrence mismatch",
+        "single_category_cuts": {
+          "without claims_another_occurrence": "FAIL",
+          "without not_an_unchanged_occurrence": "FAIL",
+          "without occurrence_claimed_twice": "FAIL"
+        }
+      },
+      {
+        "label": "changed_occurrence",
+        "round9": "PASS",
+        "round11": "FAIL: preserved occurrence mismatch",
+        "single_category_cuts": {
+          "without claims_another_occurrence": "FAIL",
+          "without not_an_unchanged_occurrence": "PASS",
+          "without occurrence_claimed_twice": "FAIL"
+        }
+      },
+      {
+        "label": "changed_enclosing_header",
+        "round9": "PASS",
+        "round11": "FAIL: preserved occurrence mismatch",
+        "single_category_cuts": {
+          "without claims_another_occurrence": "FAIL",
+          "without not_an_unchanged_occurrence": "PASS",
+          "without occurrence_claimed_twice": "FAIL"
+        }
+      }
+    ],
+    "changed_line_audit": {
+      "nodes_on_changed_lines_anchored_by_census": 34,
+      "nodes_on_changed_lines_with_committed_row": 190,
+      "nodes_without_row": [],
+      "historical_records_are_patience_removed_lines": true,
+      "patience_removed_lines_without_record": []
+    },
+    "arithmetic_audit": {
+      "occurrences": 137,
+      "by_operator": {
+        "BinOp(Div)": 78,
+        "BinOp(Add)": 27,
+        "BinOp(Sub)": 31,
+        "AugAssign(Add)": 1
+      },
+      "with_a_direct_truth_operand": [],
+      "with_a_call_operand": 14
+    },
+    "fresh_name_audit": {
+      "round10": "PASS",
+      "round11": "module-level binding is not fresh {\"binds_a_ca_seal_or_built"
+    }
+  },
+  "evidence_directory": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix11"
+}

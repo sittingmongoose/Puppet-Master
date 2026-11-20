@@ -1,0 +1,28 @@
+{
+  "status": "lane_checks_pass_with_unrelated_repository_failures",
+  "checks": {
+    "complete_checker": 0,
+    "guard_proof": 0,
+    "boolean_duplicate_matrix": 0,
+    "type_sweep": 0,
+    "representation_sweep": 0,
+    "independent_line_audit": 0,
+    "own_eleven_class_probes": 0,
+    "full_cli_controls": 0,
+    "preservation_citations": 0,
+    "projects_refresh": 0,
+    "github_integration": 0,
+    "primary_command_catalog": 0,
+    "shard_generate": 0,
+    "index_generate": 0,
+    "shard_check": 0,
+    "index_validate": 1,
+    "storage_profiles": 1,
+    "diff_check": 0
+  },
+  "index_validate": "22 failures reproduce at unchanged input head against advanced origin/main: 21 untouched legacy-ledger format errors, DL-302 only apparent removal; no lane unit removed.",
+  "storage_profiles": "Same ordered 41 pre-existing errors as round 5.",
+  "native_execution": "NOT_RUN",
+  "fixed_contract_head": "2cf358d37ec169577926c8638b1ed8eed8337206",
+  "evidence_dir": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix6"
+}

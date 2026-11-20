@@ -39,6 +39,7 @@ FIXTURES = (
     'Plans/scheduling_and_quota_resume_contract_fixtures.json',
     'Plans/server_system_contract_fixtures.json',
     'Plans/settings_system_contract_fixtures.json',
+    'Plans/work_placement_policy_fixtures.json',
     'tests/fixtures/goal_runtime_events/golden/application_scope_contract_cases.json',
     'tests/fixtures/runtime_artifacts/golden/application_scope_contract_cases.json',
 )
@@ -63,6 +64,7 @@ SCHEMAS = tuple('Plans/' + name + '.schema.json' for name in (
     'section15_browser_program_contracts', 'server_system_contracts', 'settings_inventory',
     'settings_system_contracts', 'shared_integration_runtime', 'shared_runtime_command_contracts',
     'source_control_contracts', 'touch_closure', 'ui_command_response', 'working_notebook_contracts',
+    'work_placement_policy',
 ))
 REGISTRIES = (
     ('Plans/settings_inventory.schema.json', 'Plans/settings_inventory.json'),

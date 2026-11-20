@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L15299-L15410
+Source lines: L15743-L15855
 
-Source SHA256: `46b65fa5cef7d5b67ad27e23a573b372e74628124d8a2210af1f16d9011b6b4e`
+Source SHA256: `8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: |-
-  storage-plan owns persistence, replay, and projection boundaries for Goal Runtime durable state, append-only goal event log, completion/degraded/stopped/blocked receipts, child-goal state, recovery state, evidence refs, goal_revision/expected_goal_revision, and retention anchors. Canonical persisted goal events registered by Contracts_V0 are goal.created, goal.scheduled, goal.progressed, goal.tool_check_recorded, goal.updated, goal.replanned, goal.child_status_changed, goal.evidence_captured, goal.verification_decided, goal.receipt_recorded, goal.completed, goal.degraded, goal.stopped, goal.blocked, goal.cancelled, plus Orchestrator GoalRun events goal_run.started, goal_run.replanned, goal_run.blocked, goal_run.certified, goal_run.cancelled, and goal_run.stopped. Storage persists them in an append-only goal_event_log and rebuilds disposable projections goal_state.v1:{project_id}:{goal_id}, goal_receipt.v1:{project_id}:{receipt_id}, goal_blocked_projection.v1:{project_id}:{goal_id}, goal_child_index.v1:{project_id}:{parent_goal_id}, goal_evidence_index.v1:{project_id}:{goal_id}, and goal_run_projection.v1:{project_id}:{goal_run_id}. Goal_Runtime_System owns behavior semantics; Contracts_V0 owns event-name and payload-minimum registration.
+  storage-plan owns persistence, replay, and projection boundaries for Goal Runtime durable state, append-only goal event log, completion/degraded/stopped/blocked receipts, recovery state, evidence refs, goal_revision/expected_goal_revision, and retention anchors. Canonical persisted goal events registered by Contracts_V0 are goal.created, goal.scheduled, goal.progressed, goal.tool_check_recorded, goal.updated, goal.replanned, goal.child_status_changed, goal.evidence_captured, goal.verification_decided, goal.receipt_recorded, goal.completed, goal.degraded, goal.stopped, goal.blocked, goal.cancelled, plus Orchestrator GoalRun events goal_run.started, goal_run.replanned, goal_run.blocked, goal_run.certified, goal_run.cancelled, and goal_run.stopped. Storage persists them in an append-only goal_event_log and rebuilds disposable projections goal_state.v1:{project_id}:{goal_id}, goal_receipt.v1:{project_id}:{receipt_id}, goal_blocked_projection.v1:{project_id}:{goal_id}, goal_evidence_index.v1:{project_id}:{goal_id}, and goal_run_projection.v1:{project_id}:{goal_run_id}. Goal_Runtime_System owns behavior semantics; Contracts_V0 owns event-name and payload-minimum registration.
 
   For exactly goal.degraded, GRS-061/CV-335 override current-write or Goal-state reconstruction implications: its schema/event custody remains historical, and SP-277 owns bounded read-only inspection with no family projection or checkpoint write. Existing other-row qualifications remain unchanged.
 
@@ -50,7 +50,7 @@ unblocks: []
 acceptance_criteria:
 - Goal Runtime durable state and append-only event-log records have a storage owner for persistence/projection and
   replay.
-- Completion, degraded, stopped, blocked, child-goal, recovery, evidence-ref, revision, and retention-anchor fields
+- Completion, degraded, stopped, blocked, recovery, evidence-ref, revision, and retention-anchor fields
   are preserved in append-only events and rebuilt projections. The goal_receipt physical values remain canonical
   non-rebuildable authority under GRS-042/SP-235; SP-289 defines their separately selected Standard custody. Rebuild
   applies only to an individually admitted projection route; the exact-row historical/body/receipt qualifications
@@ -100,7 +100,6 @@ preserved_exact_tokens:
 - durable state
 - append-only goal event log
 - completion/degraded/stopped/blocked receipts
-- child-goal state
 - recovery state
 - evidence refs
 - goal_revision
@@ -120,3 +119,5 @@ owner_hints:
 - Plans/Contracts_V0.md
 - Plans/Runtime_Artifacts_Panel.md
 ```
+
+Amended 2026-11-14 (DL-080 option 1, PNC-019 lane rv8b): for `goal_run.replanned` the individually admitted projection route is the prepared v8 branch of GRS-3101 with SP-3102's values and checkpoint; no other projection consumes the family, and nothing is stored under it before a genuine v8 birth.

@@ -1,0 +1,478 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.dch_event.bundle_selection_sent_to_chat.schema.v1",
+  "description": "Newly authored owner contract; prepared without admission; old swept draft unchanged.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/project"
+    },
+    {
+      "$ref": "#/$defs/application"
+    }
+  ],
+  "$defs": {
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "thread_id",
+        "operation_id",
+        "actor_ref",
+        "ts",
+        "computer_id",
+        "scope",
+        "bundle_id",
+        "doc_id",
+        "selection_id",
+        "requested_target",
+        "effective_target",
+        "selection_excerpt_ref",
+        "provenance_refs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.dch_event.bundle_selection_sent_to_chat.project.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "thread_id": {
+          "type": "string",
+          "pattern": "^thr_[0-9A-HJKMNP-TV-Z]{26}$(?![\\s\\S])",
+          "minLength": 30,
+          "maxLength": 30
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
+          "maxLength": 512
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$(?![\\s\\S])"
+        },
+        "computer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "scope_kind",
+            "scope_partition",
+            "project_id",
+            "project_home_server_id",
+            "named_plan_id",
+            "server_id"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.workflow_scope.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "scope_kind": {
+              "enum": [
+                "application",
+                "project"
+              ]
+            },
+            "scope_partition": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "project_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "project_home_server_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "named_plan_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "server_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "scope_kind": {
+                    "const": "application"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "const": null
+                  },
+                  "project_home_server_id": {
+                    "const": null
+                  },
+                  "named_plan_id": {
+                    "const": null
+                  },
+                  "scope_partition": {
+                    "const": "app"
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "project_home_server_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "scope_partition": {
+                    "type": "string",
+                    "pattern": "^project~[A-Za-z0-9_-]+$(?![\\s\\S])"
+                  }
+                }
+              }
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "project"
+                }
+              }
+            }
+          ]
+        },
+        "bundle_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "doc_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "selection_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "requested_target": {
+          "type": "string",
+          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
+          "maxLength": 512
+        },
+        "effective_target": {
+          "type": "string",
+          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
+          "maxLength": 512
+        },
+        "selection_excerpt_ref": {
+          "type": "string",
+          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
+          "maxLength": 512
+        },
+        "provenance_refs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
+            "maxLength": 512
+          }
+        }
+      }
+    },
+    "application": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "thread_id",
+        "operation_id",
+        "actor_ref",
+        "ts",
+        "computer_id",
+        "scope",
+        "bundle_id",
+        "doc_id",
+        "selection_id",
+        "requested_target",
+        "effective_target",
+        "selection_excerpt_ref",
+        "provenance_refs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.dch_event.bundle_selection_sent_to_chat.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "thread_id": {
+          "type": "string",
+          "pattern": "^thr_[0-9A-HJKMNP-TV-Z]{26}$(?![\\s\\S])",
+          "minLength": 30,
+          "maxLength": 30
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
+          "maxLength": 512
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$(?![\\s\\S])"
+        },
+        "computer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "scope_kind",
+            "scope_partition",
+            "project_id",
+            "project_home_server_id",
+            "named_plan_id",
+            "server_id"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.workflow_scope.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "scope_kind": {
+              "enum": [
+                "application",
+                "project"
+              ]
+            },
+            "scope_partition": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "project_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "project_home_server_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "named_plan_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "server_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "scope_kind": {
+                    "const": "application"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "const": null
+                  },
+                  "project_home_server_id": {
+                    "const": null
+                  },
+                  "named_plan_id": {
+                    "const": null
+                  },
+                  "scope_partition": {
+                    "const": "app"
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "project_home_server_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "scope_partition": {
+                    "type": "string",
+                    "pattern": "^project~[A-Za-z0-9_-]+$(?![\\s\\S])"
+                  }
+                }
+              }
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "bundle_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "doc_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "selection_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "requested_target": {
+          "type": "string",
+          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
+          "maxLength": 512
+        },
+        "effective_target": {
+          "type": "string",
+          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
+          "maxLength": 512
+        },
+        "selection_excerpt_ref": {
+          "type": "string",
+          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
+          "maxLength": 512
+        },
+        "provenance_refs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
+            "maxLength": 512
+          }
+        }
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_id": {},
+    "schema_version": {},
+    "thread_id": {},
+    "operation_id": {},
+    "actor_ref": {},
+    "ts": {},
+    "computer_id": {},
+    "scope": {},
+    "bundle_id": {},
+    "doc_id": {},
+    "selection_id": {},
+    "requested_target": {},
+    "effective_target": {},
+    "selection_excerpt_ref": {},
+    "provenance_refs": {}
+  }
+}

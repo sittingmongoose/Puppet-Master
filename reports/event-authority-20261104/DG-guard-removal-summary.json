@@ -1,0 +1,119 @@
+{
+  "schema_id": "pm.goal.dg.round2.guard_summary.v1",
+  "implementation_commit": "686382d06164df5f7296f4d6af1ab8f9d16f734e",
+  "suites": {
+    "history": {
+      "status": "pass",
+      "cases": 6143,
+      "negative_cases": 6032,
+      "unproved_guards": [],
+      "inactive_schema_type_guards": {},
+      "failures": [],
+      "native_execution": "NOT_RUN",
+      "families": {
+        "goal.child_status_changed": 100,
+        "goal.degraded": 95,
+        "goal.scheduled": 104,
+        "goal.progressed": 98,
+        "goal.replanned": 93,
+        "goal.stopped": 96,
+        "goal.verification_decided": 96,
+        "goal.evidence_captured": 95,
+        "goal.receipt_recorded": 95,
+        "goal.tool_check_recorded": 90
+      },
+      "guard_count": 650,
+      "schema_type_assertions": 345
+    },
+    "current": {
+      "status": "pass",
+      "cases": 931,
+      "negative_cases": 861,
+      "unproved_guards": [],
+      "inactive_schema_type_guards": {},
+      "failures": [],
+      "native_execution": "NOT_RUN",
+      "case_counts": {
+        "goal.updated payload": 43,
+        "goal.updated identity": 8,
+        "goal.updated identity-collision": 4,
+        "goal.cancelled payload": 8,
+        "goal.cancelled identity": 4,
+        "goal.cancelled identity-collision": 1,
+        "goal.updated progress": 11,
+        "goal.updated reader": 3,
+        "goal.cancelled join": 5,
+        "goal.cancelled late": 8,
+        "goal.cancelled inspect": 2,
+        "goal_run.started/payload": 2,
+        "goal_run.started reducer": 20,
+        "goal_run.cancelled/payload": 15,
+        "goal_run.cancelled reducer": 19,
+        "goal_run.certified/payload": 27,
+        "goal_run.certified reducer": 20,
+        "goal.updated/replay": 32,
+        "goal.cancelled/replay": 32,
+        "goal_run.started/replay": 32,
+        "goal_run.cancelled/replay": 32,
+        "goal_run.certified/replay": 32
+      },
+      "guard_count": 143,
+      "schema_type_assertions": 90
+    },
+    "stop-block": {
+      "status": "pass",
+      "cases": 478,
+      "negative_cases": 427,
+      "unproved_guards": [],
+      "inactive_schema_type_guards": {},
+      "failures": [],
+      "native_execution": "NOT_RUN",
+      "case_counts": {
+        "goal_run.stopped payload": 26,
+        "goal_run.stopped identity": 7,
+        "goal_run.stopped source": 18,
+        "goal_run.blocked payload": 25,
+        "goal_run.blocked identity": 6,
+        "goal_run.blocked source": 18,
+        "wiring": 4,
+        "projection": 36,
+        "goal_run.stopped/replay": 32,
+        "goal_run.blocked/replay": 32
+      },
+      "guard_count": 90,
+      "schema_type_assertions": 35
+    },
+    "lifecycle": {
+      "status": "pass",
+      "cases": 514,
+      "negative_cases": 487,
+      "unproved_guards": [],
+      "inactive_schema_type_guards": {
+        "schema/ed1c9c4ef10082e1/type": {
+          "reason": "items cannot occur in any schema-valid array",
+          "dominating_schema_guard": "schema/01292399cbf7b22c/maxItems",
+          "proof": "ancestor maxItems is exactly zero"
+        }
+      },
+      "failures": [],
+      "native_execution": "NOT_RUN",
+      "activation": "REFUSED_UNBOUND_ORIGINAL_HOST_SOURCE",
+      "guard_count": 104,
+      "schema_type_assertions": 38
+    }
+  },
+  "guard_count": 987,
+  "negative_count": 7807,
+  "schema_type_assertions": 508,
+  "inactive_type_assertions": 1,
+  "before": {
+    "listed_guard_count": 594,
+    "negative_count": 1311,
+    "exhaustive_inventory": false
+  },
+  "after": {
+    "unproved_active_guards": 0,
+    "oracle_grades": "all 19 PARTIAL",
+    "native_execution": "NOT_RUN"
+  }
+}

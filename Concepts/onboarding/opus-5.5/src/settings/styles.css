@@ -84,12 +84,12 @@
 #panel-settings .pm51-tag svg { width: 11px; height: 11px; }
 #panel-settings .pm51-chips { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
 #panel-settings .pm51-chips .pm51-tag + .pm51-tag::before { content: '·'; margin-right: 10px; color: var(--k3-muted); }
-#panel-settings .pm51-kbd { display: inline-block; min-width: 18px; padding: 1px 6px; border: 1px solid var(--k3-line); border-bottom-width: 2px; border-radius: 5px; background: var(--k3-bg-2); font-family: var(--mono-font, ui-monospace, monospace); font-size: 10.5px; color: var(--k3-text-2); text-align: center; }
+#panel-settings .pm51-kbd { display: inline-block; min-width: 18px; padding: 1px 6px; border: 1px solid var(--k3-line); border-bottom-width: 2px; border-radius: 5px; background: var(--k3-bg-2); font-family: var(--mono-font, ui-monospace, monospace); font-size: 11px; color: var(--k3-text-2); text-align: center; }
 #panel-settings .pm51-chip-toggle { display: inline-flex; align-items: center; cursor: pointer; font: inherit; font-size: 11.5px; min-height: 26px; padding: 0 10px; border: 1px solid var(--k3-line); border-radius: 7px; background: var(--k3-bg-2); color: var(--k3-text-2); }
 #panel-settings .pm51-chip-toggle.is-on { color: var(--k3-accent-ink); border-color: rgba(var(--accent-primary-rgb), .45); background: var(--k3-accent-soft); }
 #panel-settings .pm51-chip-toggle:hover { border-color: var(--k3-line-strong); }
 #panel-settings .pm51-tech { font-family: var(--mono-font, ui-monospace, monospace); font-size: 11px; color: var(--k3-text-3); background: var(--k3-bg-2); border: 1px solid var(--k3-line); border-radius: 5px; padding: 1px 6px; overflow-wrap: anywhere; }
-#panel-settings .pm51-tech-inline { font-family: var(--mono-font, ui-monospace, monospace); font-size: 10.5px; color: var(--k3-text-3); }
+#panel-settings .pm51-tech-inline { font-family: var(--mono-font, ui-monospace, monospace); font-size: 11px; color: var(--k3-text-3); }
 
 /* ---- buttons & links ---------------------------------------------------------- */
 #panel-settings .pm51-btn { min-height: 32px; padding: 0 12px; font-size: 12px; gap: 6px; display: inline-flex; align-items: center; border-radius: 8px; }
@@ -150,10 +150,17 @@
 
 /* ---- key/value, notes, fields ---------------------------------------------- */
 #panel-settings .pm51-kv { display: grid; grid-template-columns: minmax(0, 1fr); }
-#panel-settings .pm51-kv-row { display: grid; grid-template-columns: minmax(120px, 38%) minmax(0, 1fr); gap: 12px; padding: 7px 0; border-top: 1px solid var(--k3-line); font-size: 12px; }
+/* FO-173: a value keeps room for its longest word. The key keeps its column (38%, at least 120px); the value takes
+   the rest while its longest word fits there, and otherwise a line of its own under the key, the row's full width
+   (a path or a command such as "node_modules/.bin/prettier --stdin-filepath ${file}" in a 263px pane: the old
+   grid gave it 131px and broke the path anywhere). It breaks inside a word only when even the full row is narrower. */
+#panel-settings .pm51-kv-row { display: flex; flex-wrap: wrap; gap: 2px 12px; padding: 7px 0; border-top: 1px solid var(--k3-line); font-size: 12px; }
 #panel-settings .pm51-kv-row:first-child { border-top: 0; }
-#panel-settings .pm51-kv-row > span:first-child { color: var(--k3-text-3); }
-#panel-settings .pm51-kv-row > span:last-child { color: var(--k3-text-2); overflow-wrap: anywhere; }
+#panel-settings .pm51-kv-row > span:first-child { flex: 0 0 max(120px, 38%); min-width: 0; color: var(--k3-text-3); }
+#panel-settings .pm51-kv-row > span:last-child { flex: 1 1 0; max-width: 100%; color: var(--k3-text-2); overflow-wrap: break-word; }
+/* a one-word value (PM51.kv marks it) is placed by its whole width, not by its last soft break: a path or a fingerprint
+   breaks after a hyphen or an ellipsis, so its least width is shorter than the word and it stayed beside the key in pieces */
+#panel-settings .pm51-kv-row > span.pm51-kv-word { flex-basis: auto; }
 #panel-settings .pm51-note { display: flex; gap: 8px; align-items: flex-start; margin: 0; padding: 9px 11px; border: 1px solid var(--k3-line); border-radius: 8px; background: var(--k3-bg-2); font-size: 11.5px; color: var(--k3-text-2); line-height: 1.45; }
 #panel-settings .pm51-note svg { width: 14px; height: 14px; flex: 0 0 auto; margin-top: 1px; color: var(--k3-blue); }
 #panel-settings .pm51-note.tone-attention { border-color: rgba(247,189,99,.3); background: var(--k3-amber-soft); color: var(--k3-text-1); }
@@ -169,11 +176,11 @@
 /* ---- list + detail (roster) ---------------------------------------------------- */
 #panel-settings .pm51-split { grid-template-columns: 250px minmax(0, 1fr); }
 #panel-settings .pm51-roster .roster-head { min-height: 48px; }
-#panel-settings .pm51-roster .roster-title { font-size: 10.5px; }
+#panel-settings .pm51-roster .roster-title { font-size: 11px; }
 #panel-settings .pm51-roster .resource-row { min-height: 50px; }
 #panel-settings .pm51-roster .resource-row-name { font-size: 12px; white-space: normal; line-height: 1.3; }
 #panel-settings .pm51-roster .resource-row-meta { font-size: 11px; white-space: normal; line-height: 1.35; }
-#panel-settings .pm51-roster .resource-row-meta .pm51-status { font-size: 10.5px; margin-top: 2px; }
+#panel-settings .pm51-roster .resource-row-meta .pm51-status { font-size: 11px; margin-top: 2px; }
 #panel-settings .pm51-roster .resource-row:hover { transform: none; }
 #panel-settings .pm51-roster .resource-row[hidden] { display: none; }
 #panel-settings .pm51-detail-head { min-height: 62px; padding: 12px 16px; gap: 12px; }
@@ -212,7 +219,7 @@
 #panel-settings .pm51-hero.tone-ready .pm51-hero-icon { color: var(--k3-green); background: var(--k3-green-soft); box-shadow: 0 0 0 1px rgba(84,214,154,.3), 0 10px 26px -10px rgba(84,214,154,.6); }
 #panel-settings .pm51-hero.tone-attention .pm51-hero-icon { color: var(--k3-amber); background: var(--k3-amber-soft); box-shadow: 0 0 0 1px rgba(247,189,99,.3), 0 10px 26px -10px rgba(247,189,99,.6); }
 #panel-settings .pm51-hero.tone-blocked .pm51-hero-icon { color: var(--k3-red); background: var(--k3-red-soft); box-shadow: 0 0 0 1px rgba(242,119,145,.3), 0 10px 26px -10px rgba(242,119,145,.6); }
-#panel-settings .pm51-hero-eyebrow { font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--k3-text-3); margin-bottom: 2px; }
+#panel-settings .pm51-hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--k3-text-3); margin-bottom: 2px; }
 #panel-settings .pm51-panel-copy { min-width: 0; flex: 1 1 auto; }
 #panel-settings .pm51-panel-title { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 15px; font-weight: 720; color: var(--k3-text-1); letter-spacing: -.01em; line-height: 1.3; }
 #panel-settings .pm51-hero .pm51-panel-title { font-size: 16px; }
@@ -221,7 +228,7 @@
 #panel-settings .pm51-hero-status { margin-top: 12px; }
 #panel-settings .pm51-hero-summary { margin: 10px 0 0; font-size: 12.5px; line-height: 1.55; color: var(--k3-text-2); max-width: 60ch; }
 #panel-settings .pm51-hero-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px 14px; margin: 12px 0 0; padding-top: 12px; border-top: 1px solid var(--k3-line); }
-#panel-settings .pm51-hero-facts dt { font-size: 10.5px; font-weight: 600; color: var(--k3-text-3); }
+#panel-settings .pm51-hero-facts dt { font-size: 11px; font-weight: 600; color: var(--k3-text-3); }
 #panel-settings .pm51-hero-facts dd { margin: 2px 0 0; font-size: 12.5px; font-weight: 650; color: var(--k3-text-1); overflow-wrap: anywhere; }
 #panel-settings .pm51-hero-rail { display: flex; margin: 14px 0 0; padding: 0; list-style: none; }
 #panel-settings .pm51-hero-rail li { flex: 1 1 0; position: relative; padding: 16px 6px 0 0; font-size: 11px; line-height: 1.3; color: var(--k3-text-3); }
@@ -386,6 +393,9 @@ html[data-density="compact"] #panel-settings .pm51-all .all-settings-window .set
 .pm51-popout-search svg { width: 13px; height: 13px; color: var(--text-muted, #8f8ab0); flex: 0 0 auto; }
 .pm51-popout-search input { flex: 1 1 auto; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--text-primary, #f4f2ff); font: 600 12px/1.3 var(--body-font, Inter, system-ui, sans-serif); }
 .pm51-popout-empty { padding: 10px; font-size: 11.5px; color: var(--text-muted, #8f8ab0); }
+/* FO-169: a roster's no-match line reads in the roster's own help-text ink (its rows' second line, --k3-text-3), not the
+   popout's muted token, which painted 2.8:1 in Basic Dark */
+#panel-settings .pm51-roster .pm51-filter-empty { color: var(--k3-text-3); }
 .pm51-menu { min-width: 210px; max-width: calc(100vw - 16px); padding: 4px 0; }
 .pm51-menu .pm51-popout-item { padding: 8px 12px; font-size: 11px; letter-spacing: .02em; border-radius: 0; }
 /* FO-123: a menu item's own words stay whole. The box grows to the line (kit.js); a line wider than the
@@ -432,7 +442,7 @@ html[data-motion="reduced"] .pm51-popout.is-open { opacity: 1; visibility: visib
 #panel-settings .pm51-meter.tone-blocked .pm51-meter-fill { background: var(--k3-red); }
 #panel-settings .pm51-meter.tone-info .pm51-meter-fill { background: var(--k3-blue); }
 #panel-settings .pm51-meter.tone-blocked .pm51-meter-value { color: var(--k3-red); }
-#panel-settings .pm51-meter-note { margin-top: 3px; font-size: 10.5px; color: var(--k3-text-3); }
+#panel-settings .pm51-meter-note { margin-top: 3px; font-size: 11px; color: var(--k3-text-3); }
 #panel-settings .pm51-order { width: 24px; height: 24px; flex: 0 0 auto; display: grid; place-items: center; border: 0; border-radius: 0; background: none; color: var(--k3-text-2); font-size: 13px; font-weight: 720; font-variant-numeric: tabular-nums; }
 #panel-settings .pm51-order.is-locked { color: var(--k3-text-3); }
 #panel-settings .pm51-order svg { width: 13px; height: 13px; }

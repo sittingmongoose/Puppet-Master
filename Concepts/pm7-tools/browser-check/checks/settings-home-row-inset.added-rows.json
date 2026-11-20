@@ -1,0 +1,18 @@
+{
+ "v": 1,
+ "about": "settings-home-row-inset: rows a later, approved item adds to General > App & Input > 'Show all explanations', which FO-174 pins at main's 72 rows and their per-family line totals. Each entry is explicit and reviewed (never a pattern): its section title, its label as drawn, its setting id and its reason. A listed row is held to every inset rule and its lines are logged; the other rows must still be main's 72 with main's totals, and a listed row that is missing fails. --set addedRows=<json>|none names another file or turns this one off (the bite: without it FO-167's page fails).",
+ "rows": [
+  {
+   "section": "What the chat shows",
+   "label": "Squeeze Context Now",
+   "id": "memory.limits.manual-compact",
+   "why": "FO-167 (Jared's quiet Memory design, approved 2026-11-11) moves this row out of Memory into App & Input: placement.d/30-memory.json overrides it to section app-chat-view (main: memory-per-chat); memory-quiet asserts the same move (MOVED['memory.limits.manual-compact'] = 'app-input')."
+  },
+  {
+   "section": "What the chat shows",
+   "label": "Show Context Usage In Chat",
+   "id": "general.interaction.context-usage",
+   "why": "FO-167 moves this row out of Memory into App & Input: placement.d/30-memory.json overrides it to section app-chat-view (main: memory-context-meter); memory-quiet asserts the same move (MOVED['general.interaction.context-usage'] = 'app-input')."
+  }
+ ]
+}

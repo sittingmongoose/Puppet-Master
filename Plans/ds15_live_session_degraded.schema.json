@@ -1,0 +1,133 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project_id",
+    "run_id",
+    "live_session_id",
+    "degradation_revision",
+    "requested_visual_mode",
+    "effective_visual_mode",
+    "fallback_reason"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "live_session_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "degradation_revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "requested_visual_mode": {
+      "enum": [
+        "auto",
+        "forced_visible",
+        "forced_headless"
+      ]
+    },
+    "effective_visual_mode": {
+      "enum": [
+        "visible",
+        "headless",
+        null
+      ]
+    },
+    "fallback_reason": {
+      "enum": [
+        "missing_display",
+        "runtime_unavailable",
+        "simulator_unavailable",
+        "emulator_boot_timeout"
+      ]
+    },
+    "browser_session_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "session_class": {
+      "enum": [
+        "workspace_preview",
+        "detached_preview",
+        "automation_session",
+        "normal_browsing"
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.ds15.live_session_degraded.payload.v1",
+  "dependentRequired": {
+    "browser_session_id": [
+      "session_class"
+    ],
+    "session_class": [
+      "browser_session_id"
+    ]
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "requested_visual_mode": {
+            "const": "auto"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "effective_visual_mode": {
+            "const": "headless"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "requested_visual_mode": {
+            "const": "forced_visible"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "effective_visual_mode": {
+            "const": null
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "requested_visual_mode": {
+            "const": "forced_headless"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "effective_visual_mode": {
+            "const": "headless"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Graph_View.md`
 
-Source lines: L917-L1000
+Source lines: L917-L997
 
-Source SHA256: `d990267317886e1a98ff1dffec5507cf2b542c4e7c64651b6afe1823848cb558`
+Source SHA256: `2e313dd145a70c97b08265328941a91390451c105bd0c8ab01c57a7d5deded18`
 
 ---
 
@@ -15,9 +15,10 @@ Source SHA256: `d990267317886e1a98ff1dffec5507cf2b542c4e7c64651b6afe1823848cb558
 ```yaml
 plan_unit_id: RGV-012
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/Run_Graph_View.md
 canonical_text: >-
+  RETIRED BY DL-478 (Jared, 2026-11-12, "Sweep and retire all") -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The GoalRun graph, wave, and verification overlay flow is retired; the old text is retained only for source lineage.
   Run Graph must display GoalRun WorkGraph structure, WorkNode status, SubagentWave membership, VerificationCycle overlays, repair/retry markers, blocked/replan-required states, receipt refs, and evidence refs. For Plan/PlanUnit-originated graph preparation, the Node Graph and Run Graph views may show readiness, blockers, gui_related, receipt status, and compiler contract state only as projections. The view remains a projection over Goal Runtime, Executor, Contracts, storage, Plan_Document_System, and Plan_To_Node_Compilation records; it must not decide WorkNode readiness, capacity, compiler artifact creation, or completion authority.
 gui_related: true
 gui_classification_reason: WorkGraph nodes, verification overlays, repair markers, and evidence refs are visible Run Graph UI.
@@ -32,11 +33,7 @@ depends_on:
   - PNC-009
 unblocks: []
 acceptance_criteria:
-  - Run Graph can render GoalRun WorkGraph, WorkNode status, SubagentWave membership, and VerificationCycle overlays.
-  - Repair/retry, blocked, and replan-required states are visible in the graph view.
-  - Receipt and evidence refs are drillable through owner projections.
-  - Plan/PlanUnit graph-preparation overlays show readiness, blockers, gui_related, receipt status, and compiler contract state without creating executable artifacts.
-  - The view does not replace Executor readiness, capacity, dispatch, or Goal Runtime completion authority.
+  - No product work or acceptance obligation is compiled from this retired unit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Run Graph GoalRun overlay review

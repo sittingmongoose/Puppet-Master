@@ -1,0 +1,397 @@
+{
+ "schema_id": "pm.test.goal_adoption_helper_witnesses.v1",
+ "frozen_manifest_sha256": "62bbf9a084a438f03c320764778768b78c98eecb3994783b145bd50509d40923",
+ "cases": [
+  {
+   "expected_refusal": "restore_point.deleted/original/created payload schema",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 73,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "restore_created",
+    "event",
+    "payload"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "4fe6fad9657fa423b2d620c1cb9fce346282c9e32605f2b13b33d21fc4ee091e"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/run payload schema",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 73,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "run_started",
+    "event",
+    "payload"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "bf9c29b925dd4f29416af1c45deb94988c71351841069cb724323b311928375a"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/run full rebuild exact source/token handoff",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 106,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "read_token",
+    "checkpoint_key"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 2,
+   "input_sha256": "1fc12b38e83928e64a3373f44054839b2810f838f45598abf5dae56413126859"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual withdrawn predecessor witness",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 106,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "successor_handoff",
+    "predecessor_run_withdrawn"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "8851e2007cfe5e02869498a21a4b74cde91859624fb4b8010d3a03ebb0de9b3b"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/run predecessor scope",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 106,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "run_started",
+    "checkpoint",
+    "project_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "16e9c1eb2827c982ee5802f7d3f3b220e40f48a2e16028a4f6cf22069530386a"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/run selected successor ID and actual first publication",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 106,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "run_started",
+    "checkpoint",
+    "publication_id"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 2,
+   "input_sha256": "88e9848cd235e37c07247a718e33806421bd8bf15afc0ff05ecdc483de5319f0"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual run successor Storage/key transaction",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 106,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "run_started",
+    "checkpoint",
+    "storage_instance_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "6bb171b147711f8f8a2974b8b790e46c213656d3a4ce281635d8ce4c130d129e"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/run refresh observation cannot predate first publication",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 106,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "run_started",
+    "checkpoint",
+    "updated_at_utc"
+   ],
+   "operation": "coherent_backward",
+   "hash_recipe_version": 2,
+   "input_sha256": "66233066c8aa40891890cb6fe44e084ad42b91e738a32b9bf81b067328b6a993"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/run retired scope and Storage identity",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 99,
+    "ordinal": 4
+   },
+   "path": [
+    "args",
+    0,
+    "project_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "af94902d6d8349a2b5cf627bac61fddbb4a68c213356eece1e73779d39f2da42"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/run at most three logical generations",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 99,
+    "ordinal": 4
+   },
+   "path": [
+    "args",
+    0,
+    "retired_generations"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "1d591d75d8d887279fd0a0cd7154952203232c4b6708e0796cf31265b0a217f2"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/run exact first-withdrawal retirement anchor",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 99,
+    "ordinal": 4
+   },
+   "path": [
+    "args",
+    0,
+    "retired_generations",
+    0,
+    "custody_bound_at_utc"
+   ],
+   "operation": "coherent_backward",
+   "hash_recipe_version": 2,
+   "input_sha256": "0ed718df72c9cb33b6020a471533787f6c9e6b662779daf46bc9db82af078d01"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/v1 wrapper is new handoff custody identity, not historical birth",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 99,
+    "ordinal": 4
+   },
+   "path": [
+    "args",
+    0,
+    "retired_generations",
+    0,
+    "identity_origin"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "4a0153d6d3721d822e983cf3c8195e1cafa36619f93150416d78047a74e0003f"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/v2 retained actual publication identity and holds",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 99,
+    "ordinal": 4
+   },
+   "path": [
+    "args",
+    0,
+    "retired_generations",
+    1,
+    "hold_refs"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "5e53cc9d07bc7d39881ae145db3a8fee8ed4fd9e47335b0de8d524d067a37b12"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual complete generic source event/index membership restore_created",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 137,
+    "ordinal": 5
+   },
+   "path": [
+    "args",
+    0,
+    "restore_created",
+    "event",
+    "project_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "e1d2717ae4034ecdb56abcbb4c6f1e6c4e2f0d2511a1a63f03015c7264d5961c"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/creation exact original source value/payload bytes",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 137,
+    "ordinal": 5
+   },
+   "path": [
+    "args",
+    0,
+    "restore_created",
+    "source_fixture",
+    "frame_sha256"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "234fd93aa5607da4e0570c599d9320274af71e585753b90f6e7dc941fad5de12"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/run complete retained bounds",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 137,
+    "ordinal": 5
+   },
+   "path": [
+    "args",
+    0,
+    "run_started",
+    "checkpoint",
+    "first_retained_sequence_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "beca69a9f234b8c227c06b749670994cdb60e67053d140c5194b230ab0222a0e"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual complete generic source event/index membership run_started",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 137,
+    "ordinal": 5
+   },
+   "path": [
+    "args",
+    0,
+    "run_started",
+    "event",
+    "project_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "13aa1767c73457f5c2f8fc66a9a9c9db0a19e76b0e29cf6d287efebe337c9481"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/run valid prior state",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 106,
+    "ordinal": 6
+   },
+   "path": [
+    "args",
+    0,
+    "successor_handoff",
+    "predecessor_run_withdrawn",
+    "state"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 2,
+   "input_sha256": "ca5efad33aa81cafe85b9e754d0d5b2291c41cacfdb59f5a96ad41cb4520b0a4"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/existing index row schema",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 21,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "datasets",
+    "event_record_index.v2@eig_d2e7acc50c2edd797a870bfed4c97a285b92517316602f26c3b8465bf95ede5c",
+    "event_record_index.v2:project~Zml4dHVyZS1wcm9qZWN0:00000000000000000008:evt_run_start_fb2c064e705715c5917582df0777bba6bb3b78026bf546019b8294d20cb64751"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 2,
+   "input_sha256": "c430431ba9f0051685bae4f51ffa3a3bcac1da50df5956e3cf5fcda399640239"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/run distinct generation IDs",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 99,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "retired_generations"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "264922ccc37c47e11e2f4da7ade81901021446bf1227433b6a2fc90a56e90385"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/run withdrawal clock ordering",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 106,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "successor_handoff",
+    "run_generation_admission",
+    "predecessor_checkpoint",
+    "updated_at_utc"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "ea41600ad8a972f67435a08185e431287d0ac74b93a5f0f03a2c0a0e39d234de"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/v2 original predecessor generation/holds retained",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 106,
+    "ordinal": 5
+   },
+   "path": [
+    "args",
+    0,
+    "successor_handoff",
+    "run_generation_admission",
+    "predecessor_hold_refs"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "7edad7a81c6358bd7d6a4f3d8c08cb318c797cd32b97db2004baeeb803d9a62d"
+  }
+ ]
+}

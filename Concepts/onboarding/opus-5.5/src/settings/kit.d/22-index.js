@@ -37,8 +37,14 @@ function pm51AdoptAnchors(ws, body) {
   }
 }
 /* What the index can honestly list for a drawn page: anchors in drawing order, not hidden, not switched off, not in a
-   manager's closed More options (a plain page's More options is listed: its groups open on the way there). */
-const pm51AnchorShown = el => !el.closest('[hidden], .o55-sec-off, .o55-leaving') && !(el.closest('details.pm51-advanced') && !el.closest('.o55-page-more'));
+   manager's closed More options (a plain page's More options is listed: its groups open on the way there).
+   FO-185: a manager's More options that is open is listed too (it was left out open or closed, so the index lit
+   nothing while you read How models answer, Models' last group); opening or closing it redraws the page's entries. */
+const pm51AnchorShown = el => !el.closest('[hidden], .o55-sec-off, .o55-leaving') && !(el.closest('details.pm51-advanced:not([open])') && !el.closest('.o55-page-more'));
+root.addEventListener('toggle', e => {
+  const d = e.target; if (!d || !d.matches || !d.matches('details.pm51-advanced')) return;
+  const body = d.closest('[data-continuous-workspace-body]'); if (body && PM51.syncIndex) PM51.syncIndex(body.dataset.continuousWorkspaceBody);
+}, true);
 function pm51IndexEntries(w) {
   const statics = (domainSectionMap[w.id] || []).filter(s => !pm51IsMain(w.id, s.id));
   const body = root.querySelector(`[data-continuous-workspace-body="${cssEscape(w.id)}"][data-workspace-mounted="true"]`);
@@ -66,7 +72,7 @@ function pm51IndexGroupInner(w, activeWsId, activeSection) {
   const cur = pm51IndexCurTab(w.id), main = `${w.id}:main`;
   for (const t of pm51TabOrder[w.id]) {
     const open = t === cur;
-    html += `<button type="button" class="index-link pm51-index-tab${open ? ' is-open' : ''}${open && active === main ? ' is-active' : ''}" data-action="pm51-index-tab" data-workspace="${escAttr(w.id)}" data-tab="${escAttr(t)}" data-section="${open ? escAttr(main) : ''}" aria-expanded="${open}"><span>${escapeHtml(pm51TabLabel(w.id, t))}</span>${icon('chevron')}</button>`;
+    html += `<button type="button" class="index-link pm51-index-tab${open ? ' is-open' : ''}${open && active === main ? ' is-active' : ''}" data-action="pm51-index-tab" data-workspace="${escAttr(w.id)}" data-tab="${escAttr(t)}" data-section="${open ? escAttr(main) : ''}" aria-expanded="${open}"><span class="pm51-index-tab-label">${escapeHtml(pm51TabLabel(w.id, t))}</span>${icon('chevron')}</button>`;
     if (open && entries.length) html += `<div class="pm51-index-sub" role="group" aria-label="${escAttr(pm51TabLabel(w.id, t))}">${entries.map(s => pm51IndexLink(w, s, active)).join('')}</div>`;
   }
   return html;
@@ -144,7 +150,7 @@ setActiveLocalSection = function (workspaceId, sectionId, persist = true) {
 
 /* ---------- scroll spy ------------------------------------------------------------------------------------------- */
 /* An anchor counts as reached when the page has scrolled to where a jump to it lands (scrollOffsetWithin, which
-   allows for a manager's sticky tab strip) less a reading allowance. A jump pins its target: it stays lit while it is
+   allows for a manager's sticky tab strip), give or take 4 px (FO-185). A jump pins its target: it stays lit while it is
    on screen until you scroll, type or click yourself. */
 let pm51SpyPin = null;
 const pm51LandTop = (scroller, el) => scrollOffsetWithin(scroller, el) - 26;
@@ -177,7 +183,12 @@ setupScrollSpy = function () {
     if (performance.now() < suppressScrollSpyUntil) { schedule(); return; }
     const blocks = [...scroller.querySelectorAll('[data-workspace-block]')];
     if (!blocks.length) return;
-    const top = scroller.scrollTop, line = top + Math.min(140, scroller.clientHeight * .3);
+    /* FO-185 (Jared, 2026-11-13 #6: "When you scroll in settings, the highlight on the submenu doesnt work properly"):
+       a section is the one in view once its heading has reached the top of the page's view, where a jump to it lands
+       (pm51LandTop), not 140 px before it gets there. The old reading allowance lit the next section about 180 px early
+       and passed over a short section (Answers, the last of Providers & Accounts) altogether, since the next page's
+       top passed the same early line right after it. 4 px absorbs a landing's rounding. */
+    const top = scroller.scrollTop, line = top + 4;
     const sc = scroller.getBoundingClientRect();
     const pinEl = pm51SpyPin ? root.querySelector(`[data-section-id="${cssEscape(pm51SpyPin)}"]`) : null;
     const pinOn = pinEl && pm51SpyShown(pinEl) && (() => { const r = pinEl.getBoundingClientRect(); return r.bottom > sc.top + 20 && r.top < sc.bottom - 40; })();

@@ -13,6 +13,7 @@
   const K = () => W.PM12_KIMI;
   const wait = PSX.wait;
   const ORIGINAL_DEFAULTS = clone(DEFAULTS);
+  const DEFAULTS_MOVED = {};   // defaults a moment moved on rows adopted after ORIGINAL_DEFAULTS was taken (11.12)
 
   /* ------------------------------------------------------------------ helpers */
   async function go(domain, workspace, tab) {
@@ -163,11 +164,13 @@
     PSX.setCtx({ project: 'loom' });
     await go('ai', 'providers', ['providers', 'models']);
     await wait(300);
-    const tid = 'ai.models.reasoning-effort';
+    /* main's one-model design (Settings batch 3) retired Thinking depth, so the assistant's narrow write is on Everyday
+       building (ai.models.worker-model), a row main's Models page draws with Everywhere and Project */
+    const tid = 'ai.models.worker-model', tval = 'claude-code/claude-opus';
     const yolo = S.runMode === 'yolo';
     // a request about loom stays narrow in both run modes
-    const tx = PSX.write([{ level: 'project', key: 'loom', id: tid, value: 'high' }], { by: 'assistant', yolo });
-    if (tx) PSX.note({ title: 'The assistant set Thinking depth to High for loom.', body: `In loom’s chat: “Raise the thinking depth here.” It wrote the narrowest place, this project${yolo ? ', in YOLO too' : ''}.`, mark: 'complete', actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id, tid) }], ms: 8000 });
+    const tx = PSX.write([{ level: 'project', key: 'loom', id: tid, value: tval }], { by: 'assistant', yolo });
+    if (tx) PSX.note({ title: `The assistant set ${label(tid)} to ${vt(tid, tval)} for loom.`, body: `In loom’s chat: “Build with Opus here.” It wrote the narrowest place, this project${yolo ? ', in YOLO too' : ''}.`, mark: 'complete', actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id, tid) }], ms: 8000 });
     await wait(1600);
     const f = PSX.followers('ai.models.default-model', 'openai/gpt-5');
     const keeps = f.keeps;
@@ -187,7 +190,9 @@
   };
   M['11.11'] = async () => { S.actor = 'ipad'; PSX.setCtx({ device: 'ipad' }); await go('general', 'app-input'); await reveal('general.visual.font-size'); PSX.note({ title: 'You’re using Sam’s iPad', body: 'A Member’s device: it can change only its own screen settings. Try Change on any other line.', mark: 'info', ms: 8000 }); };
   M['11.12'] = async () => {
-    DEFAULTS['ai.models.reasoning-effort'] = 'auto'; DEFAULTS['system.mcp.timeout'] = 45000;
+    // an update moves two defaults (Everyday building is adopted after ORIGINAL_DEFAULTS was taken, so reset() puts back
+    // what this moment moved)
+    [['ai.models.worker-model', 'claude-code/claude-sonnet'], ['system.mcp.timeout', 45000]].forEach(([k, v]) => { if (!(k in DEFAULTS_MOVED)) DEFAULTS_MOVED[k] = DEFAULTS[k]; DEFAULTS[k] = v; });
     PSX.W.rev++; PSX.feed.push(); PSX.emit('redraw');
     try { W.PM_PAGES.go('settings'); } catch (e) { /* ignore */ }
     try { K().dispatchAction('home'); } catch (e) { /* ignore */ }
@@ -221,7 +226,14 @@
   M['11.18'] = async () => { PSX.setCtx({ project: 'loom' }); approvals(); };
   M.copy = async () => { await go('system', 'settings-transfer'); PSX.copy.open({ mode: 'settings' }); };
   // New Project starts on your usual settings; the moment chooses Like tastebook for you, to show Advanced (the strip says so)
-  M['copy-new'] = async () => { PSX.copy.open({ mode: 'new', comp: 'homenas', advanced: true, src: 'tastebook' }); };
+  /* tastebook also uses a Copilot seat tied to this Mac here, so the copy to Home NAS shows the real cannot_move result
+     (guided flows 3.12): it stays the intended choice and nothing replaces it */
+  M['copy-new'] = async () => {
+    const w = PSX.W, added = !w.uses.tastebook.includes('copilot');
+    if (added) w.uses.tastebook = w.uses.tastebook.concat('copilot');
+    // the demo world is put back when the sheet closes, so a later copy or the accounts page sees tastebook as it was
+    PSX.copy.open({ mode: 'new', comp: 'homenas', advanced: true, src: 'tastebook', onClose: () => { if (added && w.uses && w.uses.tastebook) w.uses.tastebook = w.uses.tastebook.filter((k) => k !== 'copilot'); } });
+  };
 
   /* ------------------------------------------------------------------ 11.5 Move where your settings are kept
      An owner choice (7.2): YOLO never moves it. The variants (a change in flight, Home NAS gone for good) are moments of
@@ -263,8 +275,9 @@
   /* ------------------------------------------------------------------ 11.6 Two setups joining */
   const JOIN = [
     ['general.visual.theme', null, 'Basic Light'], ['general.visual.font-size', null, 16], ['ai.models.default-model', null, 'anthropic/claude-sonnet-4'],
-    ['general.interaction.eli5-default', null, false], ['general.interaction.sound-effects', null, true], ['ai.models.reasoning-effort', null, 'high'],
-    ['branching.worktrees.default-branch', null, 'master'], ['system.mcp.timeout', null, 45000], ['safety.rules.permission-preset', null, 'full']
+    ['general.interaction.eli5-default', null, false], ['general.interaction.sound-effects', null, true], ['ai.models.worker-model', null, 'claude-code/claude-opus'],
+    // inventory alignment: Main branch name is project-only in Plans' inventory, so it has no everywhere value to join
+    ['ai.models.default-provider', null, 'codex'], ['system.mcp.timeout', null, 45000], ['safety.rules.permission-preset', null, 'full']
   ];
   /* The keeper is the owner's choice (YOLO never picks it); each row then keeps the keeper's value, keeps the other's as
      that computer's own, or uses the other's everywhere. The settings home, Studio Mac's joining and every value move
@@ -273,6 +286,8 @@
     const st = { keepOn: 'homenas', pick: JOIN.map(() => 'keeper') };
     const nas = (id) => { const r = PSX.resolve(id, { project: 'none', on: 'homenas', device: 'here' }); return r.everywhere !== undefined ? r.everywhere : DEFAULTS[id]; };
     const studioOwnLevel = (id) => { const def = DEF[id]; return def && (def.may || []).includes('device') ? 'device' : 'computer'; };
+    // inventory alignment: "keep it as Studio Mac's own" only where the row has that place (Everyday building has no Computer)
+    const canOwn = (id) => !!DEF[id] && !!PSX.offered(DEF[id])[studioOwnLevel(id)];
     const other = () => (st.keepOn === 'homenas' ? 'studio' : 'homenas');
     const valueOf = (who, id, studioV) => (who === 'homenas' ? nas(id) : studioV);
     function plan() {
@@ -298,7 +313,7 @@
         + `<div class="psx-h">${JOIN.length} settings are different</div><ul class="psx-list">${JOIN.map(([id, , studioV], i) => {
           const def = DEF[id], screen = def && def.screen && !(def.may || []).includes('project');
           const kn = placeName('computer', st.keepOn), on = placeName('computer', other());
-          return `<li class="psx-li psx-join"><span><span class="psx-li-name">${esc(label(id))}</span><span class="psx-li-sub" style="display:block">Home NAS: ${esc(vt(id, nas(id)))} · Studio Mac: ${esc(vt(id, studioV))}</span></span><span class="psx-li-end"><select class="psx-input" data-i="${i}" aria-label="${esc(label(id))}"><option value="keeper"${st.pick[i] === 'keeper' ? ' selected' : ''}>Keep ${esc(kn)}’s</option>${screen && other() === 'homenas' ? '' : `<option value="own"${st.pick[i] === 'own' ? ' selected' : ''}>Keep ${esc(on)}’s on ${screen ? 'its screen' : esc(on)}</option>`}<option value="every"${st.pick[i] === 'every' ? ' selected' : ''}>Use ${esc(on)}’s everywhere</option></select></span></li>`;
+          return `<li class="psx-li psx-join"><span><span class="psx-li-name">${esc(label(id))}</span><span class="psx-li-sub" style="display:block">Home NAS: ${esc(vt(id, nas(id)))} · Studio Mac: ${esc(vt(id, studioV))}</span></span><span class="psx-li-end"><select class="psx-input" data-i="${i}" aria-label="${esc(label(id))}"><option value="keeper"${st.pick[i] === 'keeper' ? ' selected' : ''}>Keep ${esc(kn)}’s</option>${(screen && other() === 'homenas') || !canOwn(id) ? '' : `<option value="own"${st.pick[i] === 'own' ? ' selected' : ''}>Keep ${esc(on)}’s on ${screen ? 'its screen' : esc(on)}</option>`}<option value="every"${st.pick[i] === 'every' ? ' selected' : ''}>Use ${esc(on)}’s everywhere</option></select></span></li>`;
         }).join('')}</ul><details class="psx-adv"><summary><svg class="psx-chev" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Show the 31 settings that already match</span></summary><p class="psx-p psx-muted">They are the same on both, so nothing changes for them.</p></details>`
         + `<p class="psx-p" style="margin-top:12px">${icon('lock')} Projects keep their own values. Nothing is lost: what isn’t kept stays in History, and you can undo this for 30 days.</p>`;
       s.body.querySelectorAll('input[name="psx-keep"]').forEach((x) => x.addEventListener('change', () => { st.keepOn = x.value; draw(s); s.setActions(acts()); }));
@@ -344,8 +359,9 @@
 
   /* ------------------------------------------------------------------ 11.12 An update changed defaults */
   function updateCard() {
-    const text = `This update changed 2 defaults: ${label('ai.models.reasoning-effort')} (Medium to Let the model decide) and ${label('system.mcp.timeout')} (30 to 45 seconds). Keep the old ones?`;
-    const act = [{ label: 'Keep the old ones', primary: true, run: () => { const tx = PSX.apply([{ level: 'everywhere', key: null, id: 'ai.models.reasoning-effort', value: 'medium' }, { level: 'everywhere', key: null, id: 'system.mcp.timeout', value: 30000 }], { batch: 'migrated', text: 'Kept the old defaults (source: migrated)' }); PSX.feed.push(); PSX.note({ title: 'Kept the old ones.', body: 'They are your everywhere values now.', actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id) }] }); } }, { label: 'Use the new ones', run: () => PSX.note({ title: 'Using the new defaults.', mark: 'complete' }) }];
+    const wm = 'ai.models.worker-model';
+    const text = `This update changed 2 defaults: ${label(wm)} (${vt(wm, 'inherit')} to ${vt(wm, 'claude-code/claude-sonnet')}) and ${label('system.mcp.timeout')} (30 to 45 seconds). Keep the old ones?`;
+    const act = [{ label: 'Keep the old ones', primary: true, run: () => { const tx = PSX.apply([{ level: 'everywhere', key: null, id: wm, value: 'inherit' }, { level: 'everywhere', key: null, id: 'system.mcp.timeout', value: 30000 }], { batch: 'migrated', text: 'Kept the old defaults (source: migrated)' }); PSX.feed.push(); PSX.note({ title: 'Kept the old ones.', body: 'They are your everywhere values now.', actions: [{ label: 'Undo', run: () => PSX.undoTx(tx.id) }] }); } }, { label: 'Use the new ones', run: () => PSX.note({ title: 'Using the new defaults.', mark: 'complete' }) }];
     const home = D.querySelector('#pm-settings-root .home-page');
     if (home) {
       home.querySelectorAll('[data-psx-update]').forEach((n) => n.remove());
@@ -496,7 +512,7 @@
     const ids = Object.keys(PSX.W.project.tastebook).filter((id) => DEF[id] && !DEF[id].home);
     PSX.sheet({
       title: 'Copy tastebook’s settings to other projects', kicker: 'Settings Transfer · Advanced', sub: `${ids.length} of tastebook’s own settings, into each project you tick.`,
-      body: `<ul class="psx-list">${targets.map((p) => `<li class="psx-li"><label class="psx-check"><input type="checkbox" checked value="${p}"><span>${esc(p)}<small>works on ${esc(placeName('computer', PSX.projectById(p).home))}${p === 'lighting-rig' ? ' · Studio Mac is off' : ''}</small></span></label></li>`).join('')}</ul><p class="psx-p psx-muted" style="margin-top:10px">One batch with one receipt and one Undo. A part whose computer is off is not changed and not queued.</p>`,
+      body: `<ul class="psx-list">${targets.map((p) => `<li class="psx-li"><label class="psx-check"><input type="checkbox" checked value="${p}"><span>${esc(p)}<small>Auto (default: ${esc(placeName('computer', PSX.projectById(p).home))})${p === 'lighting-rig' ? ' · Studio Mac is off' : ''}</small></span></label></li>`).join('')}</ul><p class="psx-p psx-muted" style="margin-top:10px">One batch with one receipt and one Undo. A part whose computer is off is not changed and not queued.</p>`,
       actions: [{ label: 'Cancel', run: (s) => s.close() }, { spacer: true }, { label: 'Copy into 5 projects', primary: true, run: (s) => {
         const picked = [...s.body.querySelectorAll('input:checked')].map((x) => x.value);
         s.close();
@@ -532,49 +548,246 @@
   }
 
   /* ------------------------------------------------------------------ 11.18 What asks you, in Regular and in YOLO
-     loom's chat, one run: every action that can ask, and what it does in the run mode the strip shows. Ordinary tool
-     asks and git push or publish don't ask in YOLO (Jared, 2026-11-03); a path outside the project, a deletion on the
-     remote and a looser rule from someone else's repository still ask. No skipped ask becomes an Always rule (S16) */
+     loom's chat, one run. Round A-r3 rebuilt this moment from one rule model: the README's "Always allow: the rule
+     model", each cell resting on a line of Plans/Permissions_System.md. MODEL holds tables B, C and E; covers() is
+     table D; isBroad() is table F. No step has an exception of its own: every step is settled by the same code */
+  const MODEL = {
+    /* B. the answers each kind of step offers, whether YOLO still asks, and the one rule kind that may cover it.
+       command: §6.1 keeps deny, once, for session and always; §8.0 step 2, yolo clamps tool permissions to allow.
+       path: §3.3, external_directory "Default remains `ask`, including YOLO"; the allowlist bypasses it, and so does
+       PS-145's one exception: with FileSafe on, a task-needed, listed, non-secret home-folder read outside its
+       exclusions doesn't ask, in either mode (§3.3, §4.2, PS-026, PS-145). FileSafe off removes the exception.
+       remote (push, publish): PS-146, Regular keeps its exact-effect approvals and yolo pushes and publishes without
+       another yes; a push approval is bound to its branch and commit, so a kept rule could never be reused.
+       remote-delete: PS-146, remote branch deletion "still ask[s] with exact targets in ordinary YOLO" */
+    kinds: {
+      command: { answers: ['once', 'session', 'always', 'no'], yoloAsks: false, rule: 'command' },
+      path: { answers: ['once', 'session', 'always', 'no'], yoloAsks: true, rule: 'path' },
+      remote: { answers: ['once', 'session', 'no'], yoloAsks: false, rule: null },
+      'remote-delete': { answers: ['once', 'no'], yoloAsks: true, rule: null }
+    },
+    /* B, the path exception: a home read the task needs (a step marked home), while FileSafe is on. Review Sol max F1:
+       the step's target is read by the layer's one path reader too, so a step marked home whose path isn't in the home
+       folder never takes the exception */
+    homeRead: (a, fileSafe) => !!a.home && !!fileSafe && PSX.paths.find(a.target).some((f) => PSX.paths.rootOf(f.word) === 'home'),
+    /* C. how long an answer lasts. step: this step only (§6.1 "Once authorizes one invocation"; §2.3 deny blocks the
+       invocation). run: the same request later in this run and this run mode, gone at a new run or a switch of Run
+       mode (§6.1 "for session is ephemeral under approval_scope_key"; PS-113; §2 Rules 3). rule: a kept rule, in every
+       later run and both run modes until you remove it (§6.1 "Always is the durable person-choice path"; PS-144) */
+    lasts: { once: 'step', session: 'run', always: 'rule', no: 'step' },
+    /* E. where a rule may apply: Everywhere only for a command rule that isn't host-dependent (PS-144 "Rules about a
+       file, directory, executable location, root or other host-dependent target never offer Everywhere"; §6.1 "paths
+       never offer Everywhere"). Nothing is preselected */
+    places: (rule, host) => (rule === 'command' && !host ? ['project', 'computer', 'everywhere'] : ['project', 'computer'])
+  };
   const ASKS = [
-    { id: 'test', what: 'Run npm test', cmd: 'npm test', kind: 'tool', path: false, yolo: 'run', report: 'Ran npm test: 214 passed.' },
-    { id: 'push', what: 'Push to GitHub', cmd: 'git push origin feature/tags', kind: 'push', yolo: 'run', report: 'Pushed 3 commits to origin/feature/tags. A push can’t be undone exactly; a later push can change it back.' },
-    { id: 'publish', what: 'Publish the image', cmd: 'docker push ghcr.io/jared/loom:1.4.0', kind: 'publish', yolo: 'run', report: 'Published ghcr.io/jared/loom:1.4.0 (private). A published image can’t be unpublished by Undo.' },
-    { id: 'outside', what: 'Read a folder outside loom', cmd: 'read ~/Documents/taxes', kind: 'path', path: true, yolo: 'ask', why: 'A path outside the project that isn’t granted still asks.' },
-    { id: 'delete', what: 'Delete a branch on GitHub', cmd: 'git push origin --delete old-ui', kind: 'remote-delete', yolo: 'ask', why: 'Deleting on the remote still asks, naming the branch (Y1).' }
+    { id: 'test', what: 'Run npm test', kind: 'command', cmd: 'npm test', target: 'npm test', report: 'Ran npm test: 214 passed.',
+      patterns: [['npm test', 'exactly this command'], ['npm test *', 'npm test with any arguments'], ['npm *', 'every npm command']],
+      samples: ['npm test', 'npm test -- --watch', 'npm run build', 'npm install left-pad'] },
+    { id: 'release', what: 'Run the release script', kind: 'command', cmd: './scripts/release.sh v1.4.0', target: './scripts/release.sh v1.4.0', report: 'Ran ./scripts/release.sh v1.4.0: tagged v1.4.0.',
+      patterns: [['./scripts/release.sh v1.4.0', 'exactly this command'], ['./scripts/release.sh *', 'this script with any arguments'], ['./scripts/*', 'every script in that folder']],
+      samples: ['./scripts/release.sh v1.4.0', './scripts/release.sh v1.5.0', './scripts/deploy.sh', 'npm test'] },
+    { id: 'push', what: 'Push to GitHub', kind: 'remote', cmd: 'git push origin feature/tags', target: 'git push origin feature/tags', report: 'Pushed 3 commits to origin/feature/tags. A push can’t be undone exactly; a later push can change it back.' },
+    { id: 'publish', what: 'Publish the image', kind: 'remote', cmd: 'docker push ghcr.io/jared/loom:1.4.0', target: 'docker push ghcr.io/jared/loom:1.4.0', report: 'Published ghcr.io/jared/loom:1.4.0 (private). A published image can’t be unpublished by Undo.' },
+    /* review A-r4 F1: the outside folder is off the home folder, so PS-145's FileSafe-on home-read exception can never
+       cover it: it asks in both run modes unless a folder rule does. The home read below shows the exception */
+    { id: 'outside', what: 'Read a folder outside loom', kind: 'path', cmd: 'read /mnt/team-share/release-notes', target: '/mnt/team-share/release-notes', why: 'A path outside the project that isn’t granted, and isn’t a home-folder read FileSafe allows, still asks.', report: 'Read /mnt/team-share/release-notes: 3 files.',
+      patterns: [['/mnt/team-share/release-notes', 'this folder only'], ['/mnt/team-share/release-notes/**', 'this folder and every folder in it'], ['/mnt/team-share/**', 'everything on the team share']],
+      samples: ['/mnt/team-share/release-notes', '/mnt/team-share/release-notes/1.4/notes.md', '/mnt/team-share/payroll'] },
+    { id: 'home', what: 'Read your release checklist', kind: 'path', home: true, cmd: 'read ~/Documents/release-checklist.md', target: '~/Documents/release-checklist.md', why: 'FileSafe is off for loom, so a home-folder read asks like any path outside the project.', report: 'Read ~/Documents/release-checklist.md.',
+      patterns: [['~/Documents/release-checklist.md', 'this file only'], ['~/Documents/*.md', 'every Markdown file in Documents'], ['~/Documents/**', 'everything in Documents']],
+      samples: ['~/Documents/release-checklist.md', '~/Documents/notes.md', '~/Documents/taxes/2025.pdf'] },
+    // the same command again later in the run: For this session on the first one covers it, Allow once doesn't
+    { id: 'test2', what: 'Run npm test again, after the fix', kind: 'command', cmd: 'npm test', target: 'npm test', report: 'Ran npm test again: 214 passed.',
+      patterns: [['npm test', 'exactly this command'], ['npm test *', 'npm test with any arguments'], ['npm *', 'every npm command']],
+      samples: ['npm test', 'npm test -- --watch', 'npm run build', 'npm install left-pad'] },
+    { id: 'delete', what: 'Delete a branch on GitHub', kind: 'remote-delete', cmd: 'git push origin --delete old-ui', target: 'git push origin --delete old-ui', why: 'Deleting on the remote still asks, naming the branch.', report: 'Deleted the branch old-ui on origin. No safe Undo: push it again from a local copy to bring it back.' }
   ];
+  const ruleKind = (a) => MODEL.kinds[a.kind].rule;
+  const PATHS = PSX.paths;
+  /* E. host-dependent: what the rule allows depends on one computer. A folder rule always is; a command rule is when a
+     row of the README's table E2 holds for one of its words: the one rule PSX.paths.host (layer/world.js) holds as
+     HOST_ROWS. Rows 1 to 6 are PS-144's host-dependent targets (an executable location, a root, a drive, a share or the
+     home folder, a place relative to where it runs, a bare relative path, a directory or file flag's value, a script
+     file); rows 7 and 8 are concept choices (a file command, a wildcard program). A web address, an image or registry
+     reference and a git ref are not paths (NOT_A_PATH). Review A-r4 N2: it comes from the pattern, what the rule is about (PS-144), never from
+     the step it was typed on.
+     Review Sol max F1: hostOf() is the one classifier. The editor's places, its line saying why, the line saying a
+     chosen place was cleared, and the save guard all call it, so what the editor offers and what Add the rule keeps
+     can never differ. Astra max A2: it no longer has a reader of its own; it asks PSX.paths.host, row by row.
+     It says why: { why: folder | program | root | home | relative | separator | flag | file | filecmd | wildcard,
+     row, word, flag? } or null */
+  const hostOf = (pattern, a) => {
+    if (a && ruleKind(a) === 'path') return { why: 'folder', row: 'folder' };
+    const p = String(pattern || '').trim(); if (!p) return null;
+    return PATHS.host(p);
+  };
+  const hostDependent = (pattern, a) => !!hostOf(pattern, a);
+  // the reason, in the words the editor and the guard show, one per row of E2; `code` wraps the word it found
+  const hostWhy = (h, code) => {
+    if (!h) return '';
+    const c = (x) => (code ? `<code>${esc(x)}</code>` : x), w = c(h.word);
+    return {
+      folder: 'a folder rule is about a path on one computer',
+      program: `it runs ${w} by its location on one computer`,
+      root: `${w} is a path on one computer`,
+      home: /[\\/]/.test(h.word) ? `${w} is in the home folder of one computer` : `${w} is the home folder of one computer`,
+      relative: `${w} is a place relative to the folder it runs in`,
+      separator: `${w} is a path relative to the folder it runs in`,
+      flag: `${c(h.flag)} takes a folder or a file, so ${w} names a place on one computer`,
+      file: `it names the file ${w}, which is on one computer`,
+      filecmd: `${w} works on the files of one computer`,
+      wildcard: `${w} can match a program by its location on one computer`
+    }[h.why];
+  };
+  /* F. broad: the preview warns, and the rule can still be made. A command rule is broad when its program is a
+     wildcard (*, ./scripts/*), when it starts with sudo and has a *, when a shell or interpreter runs * or inline code,
+     or when one program word, with or without flags (a directory flag's value counts with its flag), is followed by *
+     (npm *, npx *, git *, rm -rf *, read *, git -C repo *). A named script or subcommand followed by * is not
+     (./scripts/release.sh *, npm test *, git push origin *). A folder rule is broad when it reaches past the file or
+     folder the step asked for (/mnt/team-share/**). The whole list is a concept choice: canon names none.
+     Astra max A2: it reads the same words as E2 (PSX.paths.read): a named script is a word rows 1, 2, 3, 4 or 6 hold for */
+  const SHELLS = /^(bash|sh|zsh|fish|dash|ksh|csh|tcsh|pwsh|powershell|cmd(\.exe)?|env|eval|exec|xargs|python[0-9.]*|node|deno|bun|ruby|perl|php|lua|osascript)$/i;
+  const isScript = (x) => !!x && !!x.host && [1, 2, 3, 4, 6].includes(x.host.row);
+  const isBroad = (pattern, a) => {
+    const p = String(pattern || '').trim(); if (!p) return false;
+    // a folder rule: its literal start and the step's path, each written one way (quotes off, either separator)
+    if (a && ruleKind(a) === 'path') { const lit = PATHS.norm(p.split('*')[0]), tgt = PATHS.norm(a.target); return p.includes('*') && lit !== tgt && !lit.startsWith(tgt + '/'); }
+    const r = PATHS.read(p), w = r.words.slice(r.at);
+    if (r.words.length && r.words[0].word === 'sudo' && p.includes('*')) return true;
+    if (!w.length || w[0].word.includes('*')) return true;
+    if (SHELLS.test(w[0].word)) { if (!p.includes('*')) return false; return !isScript(w.slice(1).find((x) => x.role === 'arg')); }
+    return /\s\*$/.test(p) && w.slice(1, -1).every((x) => x.role === 'flag' || x.role === 'value' || x.role === 'end') && !isScript(w[0]);
+  };
+  /* §3.1: * matches zero or more characters and ? exactly one; a trailing " *" makes the rest optional ("git *" matches
+     "git"). A folder rule's trailing "/**" (or "/*") covers the folder itself as well as everything in it */
+  const globRe = (pattern, path) => {
+    let t = String(pattern).trim(), tail = '';
+    if (/\s\*$/.test(t)) { t = t.replace(/\s\*$/, ''); tail = '(\\s.*)?'; } else if (path && /\/\*{1,2}$/.test(t)) { t = t.replace(/\/\*{1,2}$/, ''); tail = '(/.*)?'; }
+    return new RegExp('^' + [...t].map((ch) => (ch === '*' ? '.*' : ch === '?' ? '.' : ch.replace(/[.+^${}()|[\]\\]/g, '\\$&'))).join('') + tail + '$');
+  };
+  /* review Sol max F1: a folder rule and the path it is matched against are each written one way by the path reader
+     (quotes off, \ as /, one separator at a time, none at the end), so "/mnt/team-share/release-notes/" or a quoted
+     path covers the folder it names, as the broad check already read it */
+  const test = (pattern, target, path) => { try { return path ? globRe(PATHS.norm(pattern), true).test(PATHS.norm(target)) : globRe(pattern, false).test(target); } catch (e) { return false; } };
+  /* D. a rule covers a step only when the step's kind takes that rule kind and the pattern matches the step's target:
+     a command rule covers commands, never a path, a push, a publish or a deletion on the remote ("Domain classes remain
+     separate from generic tool allow"; PS-146 "No generic tool allow ... is substitute for ... domain authority"); a
+     folder rule (the outside-folder list, §3.3) covers paths only; nothing covers a push, a publish or a deletion */
+  const covers = (rule, a) => !!rule && rule.kind === ruleKind(a) && test(rule.pattern, a.target, rule.kind === 'path');
+  const PLACE = { project: ['In this project', 'loom', 'in loom'], computer: ['On this computer', 'This computer', 'on This computer'], everywhere: ['Everywhere', 'every project and computer', 'everywhere'] };
+  const RULE_WORD = { command: 'command rule', path: 'folder rule' };
   function approvals() {
-    const st = { done: {}, rules: [] };
+    const st = { done: {}, rules: [], edit: null, session: [], run: 0, fileSafe: true };
+    // loom's FileSafe as this run starts: a run keeps the permission snapshot it started with (§2 Rules 1 and 2), so a
+    // change of FileSafe takes effect in the next run
+    const fileSafeNow = () => { try { return PSX.resolve('safety.protection.filesafe-integration', S.ctx).value !== false; } catch (e) { return true; } };
     const yolo = () => S.runMode === 'yolo';
+    const asks = (a) => !yolo() || MODEL.kinds[a.kind].yoloAsks;
+    const at = (a) => ASKS.indexOf(a);
+    /* settle each later step that is still open, from the tables alone: PS-145's home read while FileSafe is on (B), or
+       YOLO's own allow (§8.0 step 2), then a kept rule (D), then a session answer given earlier in this run (C);
+       otherwise the step asks */
+    const settle = () => ASKS.forEach((x) => {
+      if (st.done[x.id]) return;
+      if (MODEL.homeRead(x, st.fileSafe)) { st.done[x.id] = { mark: 'complete', word: 'Read, not asked', text: `${x.report} FileSafe is on, and this home-folder read is one the task needs and not a secret, so it didn’t ask. It is listed in Activity.`, by: 'filesafe' }; return; }
+      if (!asks(x)) { st.done[x.id] = { mark: 'complete', word: 'Ran, not asked', text: x.report, by: 'mode' }; return; }
+      const r = st.rules.find((y) => y.at < at(x) && covers(y, x));
+      if (r) { st.done[x.id] = { mark: 'complete', word: 'Allowed by your rule', text: `${x.report} Your ${RULE_WORD[r.kind]} ${r.pattern} (${PLACE[r.where][2]}) allowed it.`, by: 'rule' }; return; }
+      const s = st.session.find((y) => y.at < at(x) && y.kind === x.kind && y.target === x.target);
+      if (s) st.done[x.id] = { mark: 'complete', word: 'Allowed for this session', text: `${x.report} The same request was allowed for this session earlier in this run, so it didn’t ask again.`, by: 'session' };
+    });
+    const answer = (a, kind, s) => {
+      if (!MODEL.kinds[a.kind].answers.includes(kind)) return;
+      if (kind === 'once') st.done[a.id] = { mark: 'complete', word: 'Allowed once', text: a.report, by: 'once' };
+      else if (kind === 'session') { st.done[a.id] = { mark: 'complete', word: 'Allowed for this session', text: `${a.report} For the rest of this run in ${yolo() ? 'YOLO' : 'Regular'}; a new run or another run mode asks again. No rule is kept.`, by: 'session' }; st.session.push({ kind: a.kind, target: a.target, at: at(a) }); }
+      else if (kind === 'no') st.done[a.id] = { mark: 'off', word: 'Not allowed', text: 'Not run. The assistant is told no and says so in the chat; nothing is kept, so the next request asks again.', by: 'no' };
+      st.edit = null; settle(); draw(s);
+    };
+    /* Always allow: you choose the exact pattern (a suggestion, or your own words) and where it applies; nothing is
+       chosen for you, the preview says what it matches, and only then is the rule kept (guided-flows 8.03) */
+    const editor = (a) => {
+      const e = st.edit, pat = e.pattern != null ? e.pattern : '', kind = ruleKind(a);
+      const host = hostOf(pat || a.target, a);
+      const places = MODEL.places(kind, !!host);
+      // review Sol max F1: a place the pattern no longer allows is cleared, and the editor says so and why
+      if (e.where && !places.includes(e.where)) { e.cleared = e.where; e.where = null; }
+      if (e.where) e.cleared = null;
+      const matches = [], misses = [];
+      if (pat.trim()) a.samples.forEach((x) => (test(pat, x, kind === 'path') ? matches : misses).push(x));
+      const broad = !!pat.trim() && isBroad(pat, a);
+      const radios = a.patterns.map(([p, what], i) => `<label class="psx-radio${pat === p && !e.own ? ' is-on' : ''}"><input type="radio" name="psx-pat-${a.id}" value="${i}" data-pat="${i}"${pat === p && !e.own ? ' checked' : ''}><span><b><code>${esc(p)}</code></b><small>${esc(what)}</small></span></label>`).join('')
+        + `<label class="psx-radio${e.own ? ' is-on' : ''}"><input type="radio" name="psx-pat-${a.id}" value="own" data-pat="own"${e.own ? ' checked' : ''}><span><b>Your own pattern</b><small>* matches anything</small></span></label>`
+        + (e.own ? `<input class="psx-input" data-pat-own="1" value="${esc(pat)}" aria-label="Your own pattern" spellcheck="false" autocomplete="off">` : '');
+      const whereHtml = places.map((k) => `<label class="psx-radio${e.where === k ? ' is-on' : ''}"><input type="radio" name="psx-where-${a.id}" value="${k}" data-where="${k}"${e.where === k ? ' checked' : ''}><span><b>${esc(PLACE[k][0])}</b><small>${esc(PLACE[k][1])}</small></span></label>`).join('');
+      const ready = pat.trim() && e.where;
+      const scope = kind === 'path' ? 'A folder rule goes on the outside-folder list. It covers only the paths it matches, in both run modes, and never a command.' : 'A command rule covers only the commands it matches: never a path outside the project, a push, a publish or a deletion on the remote.';
+      return `<li class="psx-li psx-always" data-always="${a.id}"><div class="psx-always-body">
+        <div class="psx-h">Always allow: what it matches</div><div class="psx-copy-choice" role="radiogroup" aria-label="What the rule matches">${radios}</div>
+        ${pat.trim() ? `<p class="psx-p" data-k="preview">${mark(broad ? 'warning' : 'info')} <b>Matches:</b> ${esc(matches.join(' · ') || 'none of these')}${misses.length ? `. <b>Still asks:</b> ${esc(misses.join(' · '))}` : ''}.${broad ? ' This one is broad.' : ''}</p>` : `<p class="psx-p psx-muted">Choose a pattern to see what it would match.</p>`}
+        <p class="psx-p psx-muted" data-k="covers">${esc(scope)}</p>
+        <div class="psx-h">Where it applies</div><div class="psx-copy-choice" role="radiogroup" aria-label="Where the rule applies">${whereHtml}</div>
+        ${places.includes('everywhere') ? '' : `<p class="psx-p psx-muted" data-k="noeverywhere">${mark('info')} Everywhere isn’t offered: ${hostWhy(host, true)}.</p>`}
+        ${e.cleared ? `<p class="psx-p" data-k="cleared" data-cleared="${esc(e.cleared)}" role="status">${mark('warning')} <b>Your choice, ${esc(PLACE[e.cleared][0])}, was cleared</b> ${places.includes(e.cleared) ? 'while the pattern was about one computer' : 'for that reason'}. Choose where it applies again; nothing is chosen for you.</p>` : ''}
+        <div class="psx-li-end" style="justify-content:flex-start"><button type="button" class="psx-tb is-primary" data-always-save="${a.id}"${ready ? '' : ' aria-disabled="true"'}>Add the rule</button><button type="button" class="psx-tb" data-always-cancel="${a.id}">Cancel</button></div>
+      </div></li>`;
+    };
+    const LABEL = { once: 'Allow once', session: 'For this session', always: 'Always allow…', no: 'Don’t allow' };
+    const pendingSub = (a) => (yolo() ? `YOLO still asks: ${a.why}` : a.kind === 'remote' ? 'Regular asks before a push or a publish.' : a.kind === 'remote-delete' ? 'It asks every time, naming the branch, in both run modes.' : a.home ? 'FileSafe is off for loom, so this home-folder read asks.' : a.kind === 'path' ? 'It asks before reaching outside the project.' : 'Regular asks before it runs.');
     const draw = (s) => {
-      s.body.innerHTML = `<p class="psx-p">“Tag the release and ship it.” What each step does in ${yolo() ? '<b>YOLO</b>' : '<b>Regular</b>'}; switch Run mode in the strip to see the other.</p>`
+      s.body.innerHTML = `<p class="psx-p">“Tag the release and ship it.” What each step does in ${yolo() ? '<b>YOLO</b>' : '<b>Regular</b>'}; switch Run mode in the strip to see the other. FileSafe is <b data-k="filesafe">${st.fileSafe ? 'on' : 'off'}</b> for loom.</p>`
         + `<ul class="psx-list psx-ask">${ASKS.map((a) => {
           const d = st.done[a.id];
-          let end = '';
-          if (d) end = PSX.st(d.mark, d.word);
-          else if (yolo() && a.yolo === 'run') end = PSX.st('working', 'Runs without asking');
-          else end = `<button type="button" class="psx-tb is-primary" data-ask="${a.id}" data-a="once">Allow once</button>${a.kind === 'tool' || a.kind === 'path' ? `<button type="button" class="psx-tb" data-ask="${a.id}" data-a="always" aria-haspopup="menu">Always allow…</button>` : ''}<button type="button" class="psx-tb" data-ask="${a.id}" data-a="no">Don’t allow</button>`;
-          const sub = d ? d.text : yolo() && a.yolo === 'ask' ? `YOLO still asks: ${a.why}` : yolo() ? 'No yes needed in YOLO; the chat reports what ran.' : a.kind === 'push' || a.kind === 'publish' ? 'Regular asks before a push or a publish.' : 'Regular asks before it runs.';
-          return `<li class="psx-li"><span><span class="psx-li-name">${esc(a.what)}</span><span class="psx-li-sub" style="display:block"><code>${esc(a.cmd)}</code> · ${esc(sub)}</span></span><span class="psx-li-end">${end}</span></li>`;
+          const end = d ? PSX.st(d.mark, d.word) : MODEL.kinds[a.kind].answers.map((k, i) => `<button type="button" class="psx-tb${i === 0 ? ' is-primary' : ''}" data-ask="${a.id}" data-a="${k}"${k === 'always' ? ` aria-expanded="${st.edit && st.edit.id === a.id ? 'true' : 'false'}"` : ''}>${LABEL[k]}</button>`).join('');
+          const row = `<li class="psx-li" data-step="${a.id}" data-state="${d ? d.by : 'asks'}"><span><span class="psx-li-name">${esc(a.what)}</span><span class="psx-li-sub" style="display:block"><code>${esc(a.cmd)}</code> · ${esc(d ? d.text : pendingSub(a))}</span></span><span class="psx-li-end">${end}</span></li>`;
+          return row + (st.edit && st.edit.id === a.id && !d ? editor(a) : '');
         }).join('')}<li class="psx-li"><span><span class="psx-li-name">Use the looser rule open-recipes brings</span><span class="psx-li-sub" style="display:block">Held in both run modes until you accept it (S15). See moment 11.13.</span></span><span class="psx-li-end">${PSX.st('paused', 'Held')}</span></li></ul>`
-        + `<div class="psx-h">Always rules</div>${st.rules.length ? `<ul class="psx-list">${st.rules.map((r) => `<li class="psx-li"><span class="psx-li-name"><code>${esc(r.cmd)}</code></span><span class="psx-li-end psx-muted">${esc(r.where)}</span></li>`).join('')}</ul>` : `<p class="psx-p psx-muted">None made. ${yolo() ? 'YOLO skips the asks, so it makes no Always rule; you can still make one in Permissions, choosing its pattern and its place.' : 'Always allow asks where it applies: This project, This computer or Everywhere, never chosen for you, and never Everywhere for a path.'}</p>`}`;
+        + `<div class="psx-h">Always rules</div>${st.rules.length ? `<ul class="psx-list" data-k="rules">${st.rules.map((r) => `<li class="psx-li"><span class="psx-li-name"><code>${esc(r.pattern)}</code></span><span class="psx-li-end psx-muted">${esc(RULE_WORD[r.kind].replace(/^./, (c) => c.toUpperCase()))} · ${esc(PLACE[r.where][0])}</span></li>`).join('')}</ul>` : `<p class="psx-p psx-muted">None made. ${yolo() ? 'What YOLO runs without asking never becomes a rule; one is kept only when you choose Always allow on a step that still asks.' : 'Always allow asks what the rule matches and where it applies: This project, This computer or Everywhere, never chosen for you, and never Everywhere for a rule about a path, a folder or a program’s location.'}</p>`}`;
       s.body.querySelectorAll('[data-ask]').forEach((b) => b.addEventListener('click', () => {
         const a = ASKS.find((x) => x.id === b.dataset.ask);
-        if (b.dataset.a === 'once') { st.done[a.id] = { mark: 'complete', word: 'Allowed once', text: a.report || 'Allowed once.' }; draw(s); }
-        else if (b.dataset.a === 'no') { st.done[a.id] = { mark: 'off', word: 'Not allowed', text: 'Not run. The assistant stops at this step and says why.' }; draw(s); }
-        else PSX.menu(b, [
-          { label: 'In this project', meta: 'loom', run: () => always(a, 'Always in loom', s) },
-          { label: 'On this computer', meta: 'This computer', run: () => always(a, 'Always on This computer', s) },
-          { label: 'Everywhere', meta: a.path ? 'never for a path' : 'every project and computer', disabled: a.path ? 'A path means something on one computer only' : null, run: () => always(a, 'Always, everywhere', s) }
-        ], { label: 'Always allow, where?', width: 280 });
+        if (b.dataset.a === 'always') { st.edit = st.edit && st.edit.id === a.id ? null : { id: a.id, pattern: null, own: false, where: null }; draw(s); focusIn(s, a.id); }
+        else answer(a, b.dataset.a, s);
       }));
+      const ed = s.body.querySelector('[data-always]');
+      if (ed) {
+        const a = ASKS.find((x) => x.id === ed.dataset.always);
+        ed.querySelectorAll('[data-pat]').forEach((r) => r.addEventListener('change', () => { if (r.dataset.pat === 'own') { st.edit.own = true; st.edit.pattern = st.edit.pattern || a.target; } else { st.edit.own = false; st.edit.pattern = a.patterns[+r.dataset.pat][0]; } draw(s); const f = s.body.querySelector(r.dataset.pat === 'own' ? '[data-pat-own]' : `[data-pat="${r.dataset.pat}"]`); if (f) f.focus(); }));
+        const own = ed.querySelector('[data-pat-own]');
+        if (own) own.addEventListener('input', () => { st.edit.pattern = own.value; const pos = own.selectionStart; draw(s); const f = s.body.querySelector('[data-pat-own]'); if (f) { f.focus(); try { f.setSelectionRange(pos, pos); } catch (er) { /* fine */ } } });
+        ed.querySelectorAll('[data-where]').forEach((r) => r.addEventListener('change', () => { st.edit.where = r.dataset.where; draw(s); const f = s.body.querySelector(`[data-where="${r.dataset.where}"]`); if (f) f.focus(); }));
+        ed.querySelector('[data-always-cancel]').addEventListener('click', () => { st.edit = null; draw(s); const f = s.body.querySelector(`[data-ask="${a.id}"][data-a="always"]`); if (f) f.focus(); });
+        ed.querySelector('[data-always-save]').addEventListener('click', (ev) => {
+          if (ev.currentTarget.getAttribute('aria-disabled') === 'true') { PSX.note({ title: 'Choose both first', body: 'Pick what the rule matches and where it applies. Nothing is chosen for you.', mark: 'info' }); return; }
+          always(a, st.edit.pattern.trim(), st.edit.where, s);
+        });
+      }
       s.setActions([{ label: 'Run it again', run: () => PSX.approvals.draw() }, { spacer: true }, { label: 'Close', primary: true, run: () => s.close() }]);
     };
-    const always = (a, where, s) => { st.rules.push({ cmd: a.cmd, where }); st.done[a.id] = { mark: 'complete', word: 'Allowed', text: `${a.report} Always rule: ${where}.` }; draw(s); PSX.note({ title: `Always allowed ${a.cmd}.`, body: `${where}. Change it in Permissions.`, mark: 'complete' }); };
+    const focusIn = (s, id) => { const f = s.body.querySelector(`[data-always="${id}"] input`); if (f) try { f.focus(); } catch (e) { /* gone */ } };
+    const always = (a, pattern, where, s) => {
+      const kind = ruleKind(a);
+      if (!kind) return;
+      /* review Sol max F1: the guard asks the editor's own classifier about the exact pattern it is about to keep. A
+         place that pattern doesn't allow is never kept: it is cleared, the editor says why, and a note says nothing
+         was kept */
+      const host = hostOf(pattern, a);
+      if (!MODEL.places(kind, !!host).includes(where)) {
+        if (st.edit) { st.edit.cleared = PLACE[where] ? where : null; st.edit.where = null; }
+        draw(s);
+        PSX.note({ title: 'Not kept', body: `${PLACE[where] ? PLACE[where][0] : 'That place'} isn’t offered for ${pattern}: ${hostWhy(host)}. Choose where it applies; no rule was kept.`, mark: 'warning' });
+        return;
+      }
+      st.rules.push({ kind, pattern, where, at: at(a) });
+      st.edit = null;
+      st.done[a.id] = { mark: 'complete', word: 'Allowed, rule kept', text: `${a.report} Kept as a ${RULE_WORD[kind]}: ${pattern}, ${PLACE[where][2]}.`, by: 'always' };
+      settle(); draw(s);
+      PSX.note({ title: `Always allowed ${pattern}.`, body: `${PLACE[where][0]}, as a ${RULE_WORD[kind]}. Change it in Permissions.`, mark: 'complete' });
+    };
     const s = PSX.sheet({ title: 'What asks you', kicker: 'loom’s chat · one run', sub: 'Approvals in Regular and in YOLO.', size: 'wide', body: '' });
-    // in YOLO the steps that don't ask have run by the time you look: the chat shows the report for each. A new run
-    // mode is a new run, so the strip's switch shows the other mode's answers at once
-    const start = () => { st.done = {}; if (yolo()) ASKS.filter((a) => a.yolo === 'run').forEach((a) => { st.done[a.id] = { mark: 'complete', word: 'Ran, not asked', text: a.report }; }); draw(s); };
-    PSX.approvals = { sheet: s, draw: () => { if (s.back.isConnected) start(); } };
+    // a new run (Run it again, or a switch of Run mode) starts with no answers and no session answers; kept rules
+    // apply to the whole of every later run
+    const start = () => { st.done = {}; st.edit = null; st.session = []; st.run += 1; st.fileSafe = fileSafeNow(); st.rules.forEach((r) => { r.at = -1; }); settle(); draw(s); };
+    PSX.approvals = { sheet: s, draw: () => { if (s.back.isConnected) start(); }, st, MODEL, ASKS, covers, hostDependent, hostOf, isBroad, test };
     start();
   }
 
@@ -608,6 +821,7 @@
   function reset() {
     if (guideEl) { guideEl.remove(); guideEl = null; }
     Object.keys(ORIGINAL_DEFAULTS).forEach((k) => { DEFAULTS[k] = ORIGINAL_DEFAULTS[k]; });
+    Object.keys(DEFAULTS_MOVED).forEach((k) => { DEFAULTS[k] = DEFAULTS_MOVED[k]; delete DEFAULTS_MOVED[k]; });
     S.conflict = null; S.conflictArmed = null; S.firstStart = false; S.ownLook = false; S.mcpProject = null; S.actor = 'here';
     PSX.H.removeAttribute('data-psx-first');
     D.querySelectorAll('[data-psx-update], [data-psx-first]').forEach((n) => n.remove());
@@ -619,10 +833,11 @@
   }
   async function run(id) {
     const fn = M[id]; if (!fn) return;
-    // every moment starts from a fresh demo: the world, defaults, computers, the device in use and the context
+    // every moment starts from a fresh demo: the world, defaults, computers, the device in use and the context.
+    // review A-r3 R3-6: the moment is set before the reset reports state, so the strip never shows the last caption
+    S.moment = id;
     if (PSX.reset) PSX.reset({ keepMoment: true }); else { reset(); PSX.closeSheets(); }
     await wait(120);
-    S.moment = id;
     try { await fn(); } catch (e) { console.error('[psx moment]', id, e); }
     PSX.report && PSX.report('state');
   }

@@ -5,6 +5,7 @@
 // --set probe=1 logs geometry and still fails a wrong look. --set looks= --set size=1920x1080 limit the matrix.
 import fs from 'node:fs';
 import { LOOKS } from '../browser-check.config.mjs';
+import { setLookBySetting } from '../helpers/settings-look.mjs';
 
 const SIZES = [[1920, 1080], [1390, 900], [1024, 768]];
 
@@ -153,36 +154,8 @@ const MEASURE = (look) => {
 	return { glow, columns, scrollers, lists: lists.length, theme, nier, lookOk };
 };
 
-/* The look is set the way a person sets it, through the Theme and Light or dark rows, so the saved pair survives
-   the next Settings render. Same path as settings-inspector-fit (1d86abca96). */
-async function setLookBySetting(t, f, look) {
-	const [family, mode] = look.split('-');
-	const general = f.locator('#pm-settings-root [data-action="navigate-domain"][data-domain="general"]').first();
-	if (await general.count()) {
-		await general.click();
-		await f.waitForTimeout(700);
-	}
-	for (const [setting, value] of [
-		['general.visual.theme', family === 'nier' ? 'NieR' : family[0].toUpperCase() + family.slice(1)],
-		['general.visual.theme-mode', mode === 'light' ? 'Light' : 'Dark'],
-	]) {
-		const trigger = f.locator(`select[data-setting="${setting}"]`).locator('..').locator('.pm51-dd-trigger');
-		const labels = await f.locator(`select[data-setting="${setting}"] option`).allTextContents();
-		const name = labels.includes(value) ? value : `${value} ${mode === 'light' ? 'Light' : 'Dark'}`;
-		await trigger.first().scrollIntoViewIfNeeded();
-		await trigger.first().click();
-		await f.getByRole('option', { name, exact: true }).click({ timeout: 8000 });
-		await f.locator('.pm51-dd-list').waitFor({ state: 'hidden', timeout: 8000 }).catch(() => {});
-		await f.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()), null, { timeout: 15000 }).catch(() => {});
-		await t.page.waitForTimeout(400);
-	}
-	await f.waitForFunction(([fam, m]) => {
-		const theme = document.documentElement.getAttribute('data-theme') || '';
-		const nier = !!(window.PM_NIER && PM_NIER.on()) || theme.startsWith('nier');
-		return fam === 'nier' ? nier && theme.endsWith('-' + m) : !nier && theme === fam + '-' + m;
-	}, [family, mode], { timeout: 20000 }).catch(() => {});
-	await t.page.waitForTimeout(500);
-}
+/* The look is set the way a person sets it, through the Theme and Light or dark rows (helpers/settings-look.mjs, shared
+   with settings-inspector-fit and settings-save-still), so the saved pair survives the next Settings render. */
 
 export default async function (t) {
 	const looks = String(t.args.looks || LOOKS.join(',')).split(',').map((s) => s.trim()).filter(Boolean);

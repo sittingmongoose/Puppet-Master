@@ -1354,16 +1354,7 @@
         "ai.models.worker-model",
         "ai.models.gui-worker-model",
         "ai.models.high-effort-worker-model",
-        "ai.models.auditor-model",
-        "ai.models.goal-worker-model",
-        "ai.models.goal-verifier-model",
-        "ai.models.lane-bindings",
-        "ai.models.role-policy",
-        "ai.models.subagent-model",
-        "ai.models.subagent-effort",
-        "ai.models.per-lane-platform",
-        "ai.models.per-lane-model",
-        "ai.models.execution-role"
+        "ai.models.auditor-model"
       ]
     },
     {
@@ -1617,23 +1608,6 @@
       "ids": [
         "code.execution.edit-publisher-xml",
         "code.execution.preserve-unknown-xml"
-      ]
-    },
-    {
-      "section": "memory-retrieval",
-      "ids": [
-        "memory.retention.retrieval-strategy",
-        "memory.retention.retrieval-mode",
-        "memory.retention.rehydration",
-        "memory.retention.retrieval-balance",
-        "memory.retention.half-life-by-kind",
-        "memory.retention.done-decay-multiplier"
-      ]
-    },
-    {
-      "section": "memory-retention-tools",
-      "ids": [
-        "memory.retention.maintenance"
       ]
     },
     {
@@ -1929,7 +1903,6 @@
       "ids": [
         "extensions.commands.command-scope",
         "extensions.commands.command-mode",
-        "extensions.commands.command-model",
         "extensions.commands.command-persona",
         "extensions.commands.command-permissions",
         "extensions.commands.override-builtin",

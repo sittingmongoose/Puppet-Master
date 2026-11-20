@@ -1,0 +1,177 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope": {
+      "$ref": "pm.shared_integration_runtime.command_contracts.schema.v1#/$defs/WorkflowScopeV2"
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "guard_type": {
+      "enum": [
+        "bash_guard",
+        "file_guard",
+        "security_filter"
+      ]
+    },
+    "denial_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "command_preview": {
+      "type": "string",
+      "minLength": 1
+    },
+    "normalized_command_identity": {
+      "type": "string",
+      "minLength": 1
+    },
+    "segment_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "pattern_matched": {
+      "type": "string",
+      "minLength": 1
+    },
+    "permission_snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "filesafe_scope_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "worktree_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "allowed_action_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "execution_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "thread_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "computer_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "host_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "environment_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "root_generation": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "working_directory": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "thread_id",
+        "run_id",
+        "computer_id",
+        "host_id",
+        "environment_id",
+        "root_id",
+        "root_generation",
+        "working_directory"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "operation_id",
+    "scope",
+    "ts",
+    "guard_type",
+    "denial_code",
+    "command_preview",
+    "normalized_command_identity",
+    "project_id",
+    "execution_context"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0",
+  "title": "filesafe.command_denied prepared closed payload; not admission",
+  "$comment": "filesafe.command_denied complete semantic root. Inline admission additionally measures the complete canonical UTF-8 JSON body (SP-337): at most 16384 bytes, inclusive. A larger root is resolved from the verified payload_ref; it is never retained inline. The byte rule is executable in pm_filesafe_event_contracts.py and pm_filesafe_event_authority.py, not a JSON Schema character-count constraint."
+}

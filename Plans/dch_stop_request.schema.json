@@ -1,0 +1,455 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.dch_stop.request.schema.v1",
+  "description": "DL-406/DL-427; prepared without event admission or runtime durability certification. Existing WorkflowScopeV2 and ID descriptors reused; formats enforced by pm_dch_formats.validator (shared CV-1101 date-time check and DCH URI grammar).",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/project"
+    },
+    {
+      "$ref": "#/$defs/application"
+    }
+  ],
+  "$defs": {
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "thread_id",
+        "operation_id",
+        "actor_ref",
+        "ts",
+        "computer_id",
+        "scope",
+        "assistant_turn_id",
+        "stop_reason_code",
+        "target_work"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.dch_stop.request.project.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "thread_id": {
+          "type": "string",
+          "pattern": "^thr_[0-9A-HJKMNP-TV-Z]{26}$(?![\\s\\S])",
+          "minLength": 30,
+          "maxLength": 30
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
+          "maxLength": 512
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$(?![\\s\\S])"
+        },
+        "computer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "scope_kind",
+            "scope_partition",
+            "project_id",
+            "project_home_server_id",
+            "named_plan_id",
+            "server_id"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.workflow_scope.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "scope_kind": {
+              "enum": [
+                "application",
+                "project"
+              ]
+            },
+            "scope_partition": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "project_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "project_home_server_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "named_plan_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "server_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "scope_kind": {
+                    "const": "application"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "const": null
+                  },
+                  "project_home_server_id": {
+                    "const": null
+                  },
+                  "named_plan_id": {
+                    "const": null
+                  },
+                  "scope_partition": {
+                    "const": "app"
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "project_home_server_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "scope_partition": {
+                    "type": "string",
+                    "pattern": "^project~[A-Za-z0-9_-]+$(?![\\s\\S])"
+                  }
+                }
+              }
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "project"
+                }
+              }
+            }
+          ]
+        },
+        "assistant_turn_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\r\\n]+$(?![\\s\\S])"
+        },
+        "stop_reason_code": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$(?![\\s\\S])"
+        },
+        "target_work": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "work_ref",
+              "lease_ref"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "model",
+                  "tool",
+                  "subagent"
+                ]
+              },
+              "work_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512,
+                "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+              },
+              "lease_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512,
+                "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+              }
+            }
+          }
+        }
+      }
+    },
+    "application": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "thread_id",
+        "operation_id",
+        "actor_ref",
+        "ts",
+        "computer_id",
+        "scope",
+        "assistant_turn_id",
+        "stop_reason_code",
+        "target_work"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.dch_stop.request.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "thread_id": {
+          "type": "string",
+          "pattern": "^thr_[0-9A-HJKMNP-TV-Z]{26}$(?![\\s\\S])",
+          "minLength": 30,
+          "maxLength": 30
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^pmref:[A-Za-z0-9_.:/-]+$(?![\\s\\S])",
+          "maxLength": 512
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$(?![\\s\\S])"
+        },
+        "computer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "scope_kind",
+            "scope_partition",
+            "project_id",
+            "project_home_server_id",
+            "named_plan_id",
+            "server_id"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.workflow_scope.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "scope_kind": {
+              "enum": [
+                "application",
+                "project"
+              ]
+            },
+            "scope_partition": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "project_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "project_home_server_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "named_plan_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "server_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "scope_kind": {
+                    "const": "application"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "const": null
+                  },
+                  "project_home_server_id": {
+                    "const": null
+                  },
+                  "named_plan_id": {
+                    "const": null
+                  },
+                  "scope_partition": {
+                    "const": "app"
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "project_home_server_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "scope_partition": {
+                    "type": "string",
+                    "pattern": "^project~[A-Za-z0-9_-]+$(?![\\s\\S])"
+                  }
+                }
+              }
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "assistant_turn_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\r\\n]+$(?![\\s\\S])"
+        },
+        "stop_reason_code": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$(?![\\s\\S])"
+        },
+        "target_work": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "work_ref",
+              "lease_ref"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "model",
+                  "tool",
+                  "subagent"
+                ]
+              },
+              "work_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512,
+                "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+              },
+              "lease_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512,
+                "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

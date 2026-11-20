@@ -1,0 +1,917 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "storage_instance_id",
+    "project_id",
+    "scope_partition",
+    "operation_digest",
+    "event_id",
+    "idempotency_key",
+    "request_digest",
+    "state",
+    "payload",
+    "original_command",
+    "before",
+    "after",
+    "owner_commit_ref",
+    "result_ref",
+    "dispatch_receipt_ref",
+    "original_append_result_ref"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.storage_value.bundle_note_created_operation.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "storage_instance_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+    },
+    "scope_partition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operation_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+    },
+    "request_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
+    },
+    "state": {
+      "enum": [
+        "prepared",
+        "committed",
+        "settled"
+      ]
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "actor_ref",
+        "correlation_id",
+        "idempotency_key",
+        "ts",
+        "bundle_id",
+        "doc_id",
+        "annotation_id",
+        "note_id",
+        "provenance_ref",
+        "prior_revision",
+        "result_revision",
+        "previous_state",
+        "state",
+        "before_record_ref",
+        "after_record_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.card5.bundle_note_created.payload.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        "correlation_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "bundle_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+        },
+        "doc_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+        },
+        "annotation_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+        },
+        "note_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+        },
+        "provenance_ref": {
+          "type": "string",
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        "prior_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "result_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "previous_state": {
+          "enum": [
+            null,
+            "open",
+            "addressed",
+            "still_open",
+            "cannot_apply",
+            "resolved"
+          ]
+        },
+        "state": {
+          "enum": [
+            "open",
+            "addressed",
+            "still_open",
+            "cannot_apply",
+            "resolved"
+          ]
+        },
+        "before_record_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_record_ref": {
+          "type": "string",
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        }
+      },
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.card5.bundle_note_created.payload.v1",
+      "description": "Closed family-specific payload/decoded historical view. No event admission. Original historical bytes are never rewritten."
+    },
+    "original_command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "payload",
+        "action"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.bundle.note.create"
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "project_id",
+            "actor_ref",
+            "correlation_id",
+            "idempotency_key",
+            "ts",
+            "bundle_id",
+            "doc_id",
+            "annotation_id",
+            "note_id",
+            "provenance_ref",
+            "prior_revision",
+            "result_revision",
+            "previous_state",
+            "state",
+            "before_record_ref",
+            "after_record_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.card5.bundle_note_created.payload.v1"
+            },
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "project_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+            },
+            "actor_ref": {
+              "type": "string",
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            "correlation_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+            },
+            "idempotency_key": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "bundle_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+            },
+            "doc_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+            },
+            "annotation_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+            },
+            "note_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+            },
+            "provenance_ref": {
+              "type": "string",
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            "prior_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "result_revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "previous_state": {
+              "enum": [
+                null,
+                "open",
+                "addressed",
+                "still_open",
+                "cannot_apply",
+                "resolved"
+              ]
+            },
+            "state": {
+              "enum": [
+                "open",
+                "addressed",
+                "still_open",
+                "cannot_apply",
+                "resolved"
+              ]
+            },
+            "before_record_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "after_record_ref": {
+              "type": "string",
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            }
+          },
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "$id": "pm.card5.bundle_note_created.payload.v1",
+          "description": "Closed family-specific payload/decoded historical view. No event admission. Original historical bytes are never rewritten."
+        },
+        "action": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "actor_ref",
+            "actor_kind",
+            "authorized",
+            "area_ref",
+            "source_access",
+            "current",
+            "transition_allowed",
+            "existing_approvals_satisfied",
+            "reason_ref",
+            "evidence_refs",
+            "evidence_changed",
+            "prior_terminal_ref",
+            "old_owner_ref",
+            "new_owner_ref",
+            "outgoing_approval",
+            "receiving_acceptance",
+            "wider_scope",
+            "promotion_evidence_ref",
+            "promotion_approvals_satisfied",
+            "transfer_evidence_ref",
+            "risk_decision",
+            "remaining_risk_ref",
+            "resolution_kind",
+            "lineage_action_ref",
+            "patch",
+            "action_ref"
+          ],
+          "properties": {
+            "actor_ref": {
+              "type": "string",
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            "actor_kind": {
+              "enum": [
+                "controller",
+                "user",
+                "worker",
+                "owner",
+                "external"
+              ]
+            },
+            "authorized": {
+              "type": "boolean"
+            },
+            "area_ref": {
+              "type": "string",
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            "source_access": {
+              "type": "boolean"
+            },
+            "current": {
+              "type": "boolean"
+            },
+            "transition_allowed": {
+              "type": "boolean"
+            },
+            "existing_approvals_satisfied": {
+              "type": "boolean"
+            },
+            "reason_ref": {
+              "type": "string",
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+              },
+              "uniqueItems": true
+            },
+            "evidence_changed": {
+              "type": "boolean"
+            },
+            "prior_terminal_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "old_owner_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "new_owner_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "outgoing_approval": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "actor_ref",
+                    "actor_kind",
+                    "action_ref",
+                    "role",
+                    "decision",
+                    "explicit",
+                    "permission_allowed",
+                    "area_ref",
+                    "evidence_ref"
+                  ],
+                  "properties": {
+                    "actor_ref": {
+                      "type": "string",
+                      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                    },
+                    "actor_kind": {
+                      "enum": [
+                        "human",
+                        "agent",
+                        "component"
+                      ]
+                    },
+                    "action_ref": {
+                      "type": "string",
+                      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                    },
+                    "role": {
+                      "enum": [
+                        "outgoing_human",
+                        "receiving_owner",
+                        "authorized_human"
+                      ]
+                    },
+                    "decision": {
+                      "enum": [
+                        "approved",
+                        "accepted",
+                        "declined",
+                        "unavailable"
+                      ]
+                    },
+                    "explicit": {
+                      "type": "boolean"
+                    },
+                    "permission_allowed": {
+                      "type": "boolean"
+                    },
+                    "area_ref": {
+                      "type": "string",
+                      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                    },
+                    "evidence_ref": {
+                      "type": "string",
+                      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                    }
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "receiving_acceptance": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "actor_ref",
+                    "actor_kind",
+                    "action_ref",
+                    "role",
+                    "decision",
+                    "explicit",
+                    "permission_allowed",
+                    "area_ref",
+                    "evidence_ref"
+                  ],
+                  "properties": {
+                    "actor_ref": {
+                      "type": "string",
+                      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                    },
+                    "actor_kind": {
+                      "enum": [
+                        "human",
+                        "agent",
+                        "component"
+                      ]
+                    },
+                    "action_ref": {
+                      "type": "string",
+                      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                    },
+                    "role": {
+                      "enum": [
+                        "outgoing_human",
+                        "receiving_owner",
+                        "authorized_human"
+                      ]
+                    },
+                    "decision": {
+                      "enum": [
+                        "approved",
+                        "accepted",
+                        "declined",
+                        "unavailable"
+                      ]
+                    },
+                    "explicit": {
+                      "type": "boolean"
+                    },
+                    "permission_allowed": {
+                      "type": "boolean"
+                    },
+                    "area_ref": {
+                      "type": "string",
+                      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                    },
+                    "evidence_ref": {
+                      "type": "string",
+                      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                    }
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "wider_scope": {
+              "type": "boolean"
+            },
+            "promotion_evidence_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "promotion_approvals_satisfied": {
+              "type": "boolean"
+            },
+            "transfer_evidence_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "risk_decision": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "actor_ref",
+                    "actor_kind",
+                    "action_ref",
+                    "role",
+                    "decision",
+                    "explicit",
+                    "permission_allowed",
+                    "area_ref",
+                    "evidence_ref"
+                  ],
+                  "properties": {
+                    "actor_ref": {
+                      "type": "string",
+                      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                    },
+                    "actor_kind": {
+                      "enum": [
+                        "human",
+                        "agent",
+                        "component"
+                      ]
+                    },
+                    "action_ref": {
+                      "type": "string",
+                      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                    },
+                    "role": {
+                      "enum": [
+                        "outgoing_human",
+                        "receiving_owner",
+                        "authorized_human"
+                      ]
+                    },
+                    "decision": {
+                      "enum": [
+                        "approved",
+                        "accepted",
+                        "declined",
+                        "unavailable"
+                      ]
+                    },
+                    "explicit": {
+                      "type": "boolean"
+                    },
+                    "permission_allowed": {
+                      "type": "boolean"
+                    },
+                    "area_ref": {
+                      "type": "string",
+                      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                    },
+                    "evidence_ref": {
+                      "type": "string",
+                      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                    }
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "remaining_risk_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "resolution_kind": {
+              "enum": [
+                null,
+                "fixed",
+                "accepted_risk",
+                "superseded",
+                "merged",
+                "split",
+                "invalidated",
+                "obsoleted_by_patch",
+                "obsoleted_by_recovery"
+              ]
+            },
+            "lineage_action_ref": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "patch": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "severity",
+                "category",
+                "authority_ref"
+              ],
+              "properties": {
+                "severity": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "info",
+                        "warning",
+                        "error",
+                        "critical"
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "category": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "authority_ref": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            },
+            "action_ref": {
+              "type": "string",
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            }
+          }
+        }
+      }
+    },
+    "before": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "project_id",
+            "bundle_id",
+            "doc_id",
+            "annotation_id",
+            "note_id",
+            "revision",
+            "state",
+            "provenance_ref",
+            "record_ref"
+          ],
+          "properties": {
+            "project_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+            },
+            "bundle_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+            },
+            "doc_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+            },
+            "annotation_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+            },
+            "note_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "state": {
+              "enum": [
+                "open",
+                "addressed",
+                "still_open",
+                "cannot_apply",
+                "resolved"
+              ]
+            },
+            "provenance_ref": {
+              "type": "string",
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            },
+            "record_ref": {
+              "type": "string",
+              "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "after": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "bundle_id",
+        "doc_id",
+        "annotation_id",
+        "note_id",
+        "revision",
+        "state",
+        "provenance_ref",
+        "record_ref"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+        },
+        "bundle_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+        },
+        "doc_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+        },
+        "annotation_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+        },
+        "note_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "state": {
+          "enum": [
+            "open",
+            "addressed",
+            "still_open",
+            "cannot_apply",
+            "resolved"
+          ]
+        },
+        "provenance_ref": {
+          "type": "string",
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        "record_ref": {
+          "type": "string",
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        }
+      }
+    },
+    "owner_commit_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "result_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dispatch_receipt_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "original_append_result_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.storage_value.bundle_note_created_operation.v1"
+}

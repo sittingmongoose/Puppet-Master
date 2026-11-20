@@ -1,0 +1,403 @@
+{
+  "status": "PASS_WITH_EXISTING_STORAGE_PROFILE_BASELINE",
+  "code_commit": "30310ba26833255573ad884ec256ef7e4a1277e3",
+  "rebase_base": "e42ce235b4711325ced818c777f070c3ee0d7952",
+  "family_assertions": 55420,
+  "closure_repairs": 24,
+  "preserved_retry_history_controls": 88,
+  "preserved_marker_controls": 16,
+  "additional_input_observations": 1186,
+  "runs": [
+    {
+      "name": "retry-closure-regressions",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/retry-closure-regressions.py"
+      ],
+      "environment": {},
+      "exit_code": 0,
+      "seconds": 5.008,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/retry-closure-regressions.log",
+      "log_sha256": "dfea17dab1339add283546d9269f6a50dff776f84ba88bff0aba82151b7b42be"
+    },
+    {
+      "name": "format_applied-family",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "environment": {
+        "PM_DM_FAMILY": "format.applied"
+      },
+      "exit_code": 0,
+      "seconds": 25.035,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/format_applied-family.log",
+      "log_sha256": "d4a4a5c04b634684c338c7e0eb7e524a96d488e4412ff74cbb20e3fef3b33225",
+      "assertions": 6792
+    },
+    {
+      "name": "lsp_server_lifecycle_changed-family",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "environment": {
+        "PM_DM_FAMILY": "lsp.server.lifecycle_changed"
+      },
+      "exit_code": 0,
+      "seconds": 25.033,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/lsp_server_lifecycle_changed-family.log",
+      "log_sha256": "7df517d4ccf101bc80172fa2f88c141fa1100d242c246d981d3f5e9a222fd6ce",
+      "assertions": 6846
+    },
+    {
+      "name": "model_catalog_refreshed-family",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "environment": {
+        "PM_DM_FAMILY": "model.catalog_refreshed"
+      },
+      "exit_code": 0,
+      "seconds": 25.04,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/model_catalog_refreshed-family.log",
+      "log_sha256": "7c9d6bb134bed41e08fec5ba80d532df0197cf8d4d87aee7fba9a5cd227ee1ce",
+      "assertions": 7008
+    },
+    {
+      "name": "subagent_context_rehydrated-family",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "environment": {
+        "PM_DM_FAMILY": "subagent.context_rehydrated"
+      },
+      "exit_code": 0,
+      "seconds": 20.029,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/subagent_context_rehydrated-family.log",
+      "log_sha256": "32ea20334235c9eed406527aad59a7528721386196f21b0469ed1517fe48052b",
+      "assertions": 7217
+    },
+    {
+      "name": "subagent_context_shrunk-family",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "environment": {
+        "PM_DM_FAMILY": "subagent.context_shrunk"
+      },
+      "exit_code": 0,
+      "seconds": 25.037,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/subagent_context_shrunk-family.log",
+      "log_sha256": "aa74a24d80e652e46dca9c6a76087d2e9b0d1b4260b1c447d31c3a6a3040596f",
+      "assertions": 7242
+    },
+    {
+      "name": "project_added-family",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "environment": {
+        "PM_DM_FAMILY": "project.added"
+      },
+      "exit_code": 0,
+      "seconds": 20.03,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/project_added-family.log",
+      "log_sha256": "835c1c137f0d1a885421477f51ecd09effcbb8285c02ca6f40dac4c36947f949",
+      "assertions": 6746
+    },
+    {
+      "name": "project_created-family",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "environment": {
+        "PM_DM_FAMILY": "project.created"
+      },
+      "exit_code": 0,
+      "seconds": 20.026,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/project_created-family.log",
+      "log_sha256": "bbc240b18e8683c31b44f7a4d88d50d8509382424957fcd3c149e210f91423b6",
+      "assertions": 6750
+    },
+    {
+      "name": "git_clone_completed-family",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-small-owner-events.py"
+      ],
+      "environment": {
+        "PM_DM_FAMILY": "git.clone.completed"
+      },
+      "exit_code": 0,
+      "seconds": 25.039,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/git_clone_completed-family.log",
+      "log_sha256": "342b03c18b4add15ed743a54010a1489541f148d1fe4976c46b71c1c6a1139eb",
+      "assertions": 6819
+    },
+    {
+      "name": "shard-generate",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "environment": {},
+      "exit_code": 0,
+      "seconds": 5.009,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/shard-generate.log",
+      "log_sha256": "d7cfdf85905b1af45d5817cf77df09f8ece650942ade45163f90dd6f61b3ad68",
+      "top_level_status": "pass"
+    },
+    {
+      "name": "index-generate",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "environment": {},
+      "exit_code": 0,
+      "seconds": 45.055,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/index-generate.log",
+      "log_sha256": "a7e4de33d23dac9d350fc631dcda461a7c687c05968a9c4e021b03ac98da2eb3",
+      "top_level_status": "pass"
+    },
+    {
+      "name": "shard-check",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "environment": {},
+      "exit_code": 0,
+      "seconds": 20.032,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/shard-check.log",
+      "log_sha256": "a715ce384c99d89a8b5576fb6a07f92786372746197d08d9bad57c619fec35c1",
+      "top_level_status": "pass"
+    },
+    {
+      "name": "index-validate",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "environment": {},
+      "exit_code": 0,
+      "seconds": 40.055,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/index-validate.log",
+      "log_sha256": "a298d20db685b64fcb19e42ad4c43258bb83c42a26331e5451fc6634b3f49824",
+      "top_level_status": "pass"
+    },
+    {
+      "name": "additional-input-probes",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/additional-input-probes.py"
+      ],
+      "environment": {},
+      "exit_code": 0,
+      "seconds": 5.01,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/additional-input-probes.log",
+      "log_sha256": "7e1c3c6d6a29db9f322eae6407200057df17f86bc3126625fdd2f3156d5808fe"
+    },
+    {
+      "name": "settings-layering",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-settings-layering-check.py"
+      ],
+      "environment": {},
+      "exit_code": 0,
+      "seconds": 5.01,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/settings-layering.log",
+      "log_sha256": "d38e86560c3cea1f45370aa1e8aa9564729b3f5f97bac6cde7f9c831e0106da7"
+    },
+    {
+      "name": "storage-recovery",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-storage-recovery-contracts.py",
+        "--self-test"
+      ],
+      "environment": {},
+      "exit_code": 0,
+      "seconds": 5.009,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/storage-recovery.log",
+      "log_sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
+    },
+    {
+      "name": "dry-consumer-tests",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pm_touch_closure_source.py",
+        "-k",
+        "DryGuardConsumerTests"
+      ],
+      "environment": {},
+      "exit_code": 0,
+      "seconds": 15.025,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/dry-consumer-tests.log",
+      "log_sha256": "5b17380f0268d6430c1e771177cb693659d5abbf330a10e1edcdfcb2c82809ff"
+    },
+    {
+      "name": "storage-profile",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/pm-storage-profile-check.py"
+      ],
+      "environment": {},
+      "exit_code": 1,
+      "seconds": 5.009,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/storage-profile.log",
+      "log_sha256": "89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b"
+    },
+    {
+      "name": "exit-oracle-probes",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/exit-oracle-probes.py"
+      ],
+      "environment": {},
+      "exit_code": 0,
+      "seconds": 10.016,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/exit-oracle-probes.log",
+      "log_sha256": "d1f75a3b22209a616885e9c61c6dd0f818eba98d4e2db7defd2e06dfceae1836"
+    }
+  ],
+  "resources": {
+    "min_available_gib": 18,
+    "samples_below_6": 0,
+    "checkers_serial": true
+  },
+  "storage_profile": {
+    "exit_code": 1,
+    "sha256": "89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b",
+    "matches_prior_41_error_baseline": true
+  },
+  "readiness": "NOT_READY_PENDING_PART_2",
+  "native_execution": "NOT_RUN",
+  "regeneration_commit": "aa535b3d56e47630ce983128db32599331e63f00",
+  "assessed_canonical_head": "aa535b3d56e47630ce983128db32599331e63f00",
+  "citation_count": 332,
+  "citation_refreshes": 148,
+  "findings": [
+    {
+      "id": "Astra-4 B1",
+      "status": "FIXED",
+      "commit": "30310ba26833255573ad884ec256ef7e4a1277e3"
+    },
+    {
+      "id": "Astra-4 N1 / Sol-9 N2",
+      "status": "FIXED",
+      "commit": "aa535b3d56e47630ce983128db32599331e63f00"
+    },
+    {
+      "id": "Sol-9 N1",
+      "status": "PREVIOUS_FIX_VERIFIED_AND_PINS_REFRESHED",
+      "original_commit": "7ef0eb9aad39c177750e10dcff5dc2b5d63353b8"
+    },
+    {
+      "id": "Astra-4 S1 / Sol SW-NUMRULE-DM",
+      "status": "PART_2_OPEN"
+    },
+    {
+      "id": "Astra-4 S2 / Sol SW-GUARDTOOL-DM",
+      "status": "PART_2_OPEN"
+    },
+    {
+      "id": "SW7-1 / SW7-2",
+      "status": "PRIOR_TYPE_FIXES_VERIFIED_NOT_NUMBER_DEFERRALS"
+    },
+    {
+      "id": "Astra-4 N2",
+      "status": "CLOCK_QUALIFICATION_RETAINED"
+    },
+    {
+      "id": "Astra-4 N3 / Sol-9 N3",
+      "status": "UNCHANGED_PREREQUISITES_RECORDED"
+    }
+  ],
+  "evidence": {
+    "retry-closure-regressions.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/retry-closure-regressions.json",
+      "sha256": "1d84ba6322d8839faeb3019b9741660109bed774922685bafe9a003c09675e51"
+    },
+    "additional-input-probes.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/additional-input-probes.json",
+      "sha256": "527a0ddbaa92b5215b242461c9b93104ecb8595a747158b6741288bc3d29a583"
+    },
+    "citation-refresh.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/citation-refresh.json",
+      "sha256": "64c0f26be11bb09c66c7ece8b6afc7c02658acbe4fdacc0cb561746391bdb3fb"
+    },
+    "contract-rebase-check.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/contract-rebase-check.json",
+      "sha256": "a8c5ba09c8e4d6f353964e728947bc26c445502aa6ce3ccb60ce01c9d73fe296"
+    },
+    "settings-current-rebase.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/settings-current-rebase.json",
+      "sha256": "b6db3511f2c18998cb8c6b67c466f37daf5470a26d9326340a9fbd77897d051b"
+    },
+    "rebase-ledger-preservation.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/rebase-ledger-preservation.json",
+      "sha256": "8969fefcce69ab7eb9bc4fddc3c5e56edefac7d1782dcde93d6394e0c25f48e6"
+    },
+    "derived-owner-scope.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/derived-owner-scope.json",
+      "sha256": "034481f9872eec64d8c04e71f57025acc7f1eee7a9e4465c9a46243e023c1168"
+    },
+    "currentness-copy.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/currentness-copy.json",
+      "sha256": "486bdf8f71b6496c7c122fc5ee5fd4621bfc1e04c7928bfa129a2005d414c8d3"
+    },
+    "exit-oracle-probes.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/exit-oracle-probes.json",
+      "sha256": "15d5a84de3cb7c618241972f22a1b05e6f9bbf6c3121fdc05aa8741e48e3492a"
+    },
+    "final-verification.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/sweep-p1/final-verification.json",
+      "sha256": "f7a4d600382973daf22917b55874dbf5c27e4aefd154a04968a28afc8da0f969"
+    }
+  },
+  "failure_exit_controls": {
+    "expected_exit_1_children": 8,
+    "actual_success_exit_0_children_refused_by_oracle": 8
+  }
+}

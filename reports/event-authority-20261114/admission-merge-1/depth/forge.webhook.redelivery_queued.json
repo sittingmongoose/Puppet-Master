@@ -1,0 +1,325 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-1",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-15.98",
+  "sha256": "94d2c9df9a6106df39923a09b63031e95c2a981e60ae9612a1e9ffc6ffc721f8",
+  "family_count": 144,
+  "row_pointer": "#/families/143"
+ },
+ "base_commit": "03a09c66360991e5fb7b5620a84bc85b681e3635",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "forge.webhook.redelivery_queued",
+   "family_id": "event-family-forge-webhook-redelivery-queued",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-15.98 as #/families/143 (canonical row SHA-256 7fcb0f9bf518c0fa4740fc6ba67d2f98eafd82644eecc07ba23f97235987ffbd); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/143",
+       "line_start": 10205,
+       "line_end": 10285,
+       "quote": "\"event_type\": \"forge.webhook.redelivery_queued\"",
+       "quote_line": 10208,
+       "file_sha256": "94d2c9df9a6106df39923a09b63031e95c2a981e60ae9612a1e9ffc6ffc721f8",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1233 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1233",
+       "line_start": 6151,
+       "line_end": 6151,
+       "quote": "canonical_text: 'Newly authored owner contract for forge.webhook.redelivery_queued@1.0.0 under deck-2 9.a A (DL-450),",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1233, Plans/Forge_Integrations.md:6144-6309",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1233 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1233",
+       "line_start": 6174,
+       "line_end": 6174,
+       "quote": "Producer and order: ForgeWebhookRecovery.commit_redelivery_queued@1.0.0 accepts only the actual native owner result/observation,",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1233, Plans/Forge_Integrations.md:6144-6309",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1233 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1233",
+       "line_start": 6184,
+       "line_end": 6184,
+       "quote": "Closed payload: Plans/event_payloads/forge/forge_webhook_redelivery_queued.schema.json# selects pm.event_payload.forge_webhook_redelivery_queued.v1@1.0.0;",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1233, Plans/Forge_Integrations.md:6144-6309",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1233 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1233",
+       "line_start": 6193,
+       "line_end": 6193,
+       "quote": "Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1233, Plans/Forge_Integrations.md:6144-6309",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1233 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1233",
+       "line_start": 6201,
+       "line_end": 6201,
+       "quote": "Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1233, Plans/Forge_Integrations.md:6144-6309",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Bound to DL-454 (E-CARDS-3 item 2.a) as the landed Storage third-sitting assignment states: Project RP-TELEMETRY-90D@1.0.0, application RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0; anchor creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore. Source/checkpoint policies stay SP-bound. Native expiry and counting NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1233",
+       "line_start": 6210,
+       "line_end": 6210,
+       "quote": "Retention (DL-454, E-CARDS-3 item 2.a, applied as the landed Storage third-sitting assignment states): Project",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1233, Plans/Forge_Integrations.md:6144-6309",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      },
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1233",
+       "line_start": 6303,
+       "line_end": 6303,
+       "quote": "- RP-TELEMETRY-90D@1.0.0",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1233, Plans/Forge_Integrations.md:6144-6309",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1233 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1233",
+       "line_start": 6222,
+       "line_end": 6222,
+       "quote": "Custody/redaction: forge_webhook_redelivery_queued_source is canonical non-rebuildable identity/source-lineage,",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1233, Plans/Forge_Integrations.md:6144-6309",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1233 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1233",
+       "line_start": 6165,
+       "line_end": 6165,
+       "quote": "Semantics and transitions: The exact authorized redelivery has been durably queued by the webhook recovery owner",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1233, Plans/Forge_Integrations.md:6144-6309",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-1233 refines recipe/issuance/membership dependencies and the exact count/resume contract; existing family consumer/SP-278 binding remains explicit. Native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1233",
+       "line_start": 6232,
+       "line_end": 6232,
+       "quote": "Consumer/checkpoint: newly bind Hosting Services webhook redelivery-history reader as consumer.forge.webhook.redelivery_queued.history@1.0.0,",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1233, Plans/Forge_Integrations.md:6144-6309",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1233",
+       "line_start": 52498,
+       "line_end": 52498,
+       "quote": "Generation invariants for forge.webhook.redelivery_queued: correct ID recipes, actual seed-issuance",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1233, Plans/storage-plan.md:52374-52565",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1233",
+       "line_start": 52443,
+       "line_end": 52443,
+       "quote": "The forge.webhook.redelivery_queued count-equality oracle uses a completely covered prefix with one exact",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1233, Plans/storage-plan.md:52374-52565",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1233 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1233",
+       "line_start": 6239,
+       "line_end": 6239,
+       "quote": "Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1233, Plans/Forge_Integrations.md:6144-6309",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executed_static_oracle",
+     "finding": "scripts/pm_w3a_forge_events.py runs this family in both scopes: 28 positives (append, settle, retry, publish, stage, read, replay, withdraw; both scopes) and 593 to 667 negatives, every reachable row of its tables refused first by its own single-defect witness (all 35 families: 980 positives, 21,829 negatives, 21,409 single-defect, 420 labelled multi-defect). Guard tables on the gated tool 004bdedd63: 592 tables, 2,101 rows, 2,100 proved; the one unproved row PM01_pack_media is entailed by the source-row pending_intent_ref pattern and sits alone in its own table; lane matrix 0, masked 0. Numbers: shared calls at every integer slot; shared corpus 140/140 direct and 1,624/1,624 complete-checker routes, 0 untracked; --self-test --scope numbers pass; no crash on 4,400-digit integers. Timestamps: CV-1101 date_time with the event_record / storage_utc_z owner profiles. Retained reads select only from the one sealed SP-1101 receipt. Native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1233",
+       "line_start": 6249,
+       "line_end": 6249,
+       "quote": "Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1233, Plans/Forge_Integrations.md:6144-6309",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}

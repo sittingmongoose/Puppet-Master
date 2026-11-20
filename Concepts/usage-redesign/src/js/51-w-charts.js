@@ -183,9 +183,10 @@
       var reserve = (compact ? 56 : 40) + (factsOk ? 30 : 0) + (mixOk ? 40 : 0);
       /* the plot takes whatever the hero leaves (the hero wraps to a second line at some widths), so no band stays empty */
       void reserve;
-      body.innerHTML = '<div class="pmu-budget' + (compact ? ' is-compact' : '') + '">' + hero + '<div class="pmu-budgetplot pmu-fillplot"></div>' +
+      var html = '<div class="pmu-budget' + (compact ? ' is-compact' : '') + '">' + hero + '<div class="pmu-budgetplot pmu-fillplot"></div>' +
         (factsOk ? '<div class="pmu-factrow">' + m.facts.map(function (f) { return '<span><em>' + esc(f[0]) + '</em> <b>' + esc(f[1]) + '</b></span>'; }).join('') + '</div>' : '') +
         (mixOk ? '<div class="pmu-budgetmix"></div>' : '') + '</div>';
+      if (body.innerHTML !== html) body.innerHTML = html;
       C.chart(body, 'budget', body.querySelector('.pmu-budgetplot'), budgetSpec(m, compact),
         { label: 'Budget projection: ' + C.money(m.spent) + ' of ' + C.money(m.budget), tier: ctx.tier, readout: true });
       if (mixOk) C.chart(body, 'mix', body.querySelector('.pmu-budgetmix'), { segments: m.mix, legend: true }, { label: 'Plan allocation versus metered' });

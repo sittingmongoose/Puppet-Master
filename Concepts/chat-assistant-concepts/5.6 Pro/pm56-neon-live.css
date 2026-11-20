@@ -18,8 +18,8 @@ svg.pmx-chevron { --nx-stroke-base: 2; }
 svg.fast-bolt, svg.meta-fast, svg.fast-row-bolt { --nx-ink: var(--warning); --nx-hiv: visible; --nx-hi-a: var(--nx-h-bolt-i); animation: none; opacity: 1; }
 
 /* Grill Me's kettle on a setup sheet: hovering the row or focusing its box or switch plays the act once (section 8d) */
-.pmx-check:where(:hover, :focus-within) > .pmx-check-glyph > svg:where(.nx),
-.pmx-spec:where(:hover, :focus-within) > .pmx-spec-glyph > svg:where(.nx) {
+.pmx-check:where(:hover, :focus-within) > .pmx-check-glyph > :where(.nx):is(svg),
+.pmx-spec:where(:hover, :focus-within) > .pmx-spec-glyph > :where(.nx):is(svg) {
   --nx-hi-a: var(--nx-h-swell-i);
   --nx-1: var(--nx-d1) var(--nx-ease) backwards;
 }

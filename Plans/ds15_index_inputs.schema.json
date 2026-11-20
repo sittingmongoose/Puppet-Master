@@ -1,0 +1,229 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.ds15.index_inputs.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source",
+    "rows"
+  ],
+  "properties": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "index_read_token",
+        "first_sequence",
+        "last_sequence",
+        "rows"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string"
+        },
+        "index_read_token": {
+          "type": "object"
+        },
+        "first_sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "last_sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "sequence",
+              "event_type",
+              "scope",
+              "event_id",
+              "scope_partition"
+            ],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "scope": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "project_id"
+                ],
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "project",
+                      "app"
+                    ]
+                  },
+                  "project_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "user_id": {
+                    "type": "string"
+                  },
+                  "computer_id": {
+                    "type": "string"
+                  },
+                  "profile_id": {
+                    "type": "string"
+                  }
+                },
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "kind": {
+                          "const": "app"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "project_id": {
+                          "type": "null"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "kind": {
+                          "const": "project"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "project_id": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "event_type": {
+                "type": "string"
+              },
+              "event_id": {
+                "type": "string"
+              },
+              "scope_partition": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sequence",
+          "event_type",
+          "scope",
+          "event_id",
+          "scope_partition"
+        ],
+        "properties": {
+          "sequence": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "scope": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "project_id"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "project",
+                  "app"
+                ]
+              },
+              "project_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "user_id": {
+                "type": "string"
+              },
+              "computer_id": {
+                "type": "string"
+              },
+              "profile_id": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "const": "app"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "const": "project"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "event_type": {
+            "type": "string"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "scope_partition": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

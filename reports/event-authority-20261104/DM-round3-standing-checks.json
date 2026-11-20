@@ -1,0 +1,1141 @@
+{
+  "status": "PASS",
+  "native_execution": "NOT_RUN",
+  "full_checker_negatives_rejected": 64,
+  "success_exit_harness_negatives_rejected": 8,
+  "families": [
+    {
+      "event_type": "format.applied",
+      "baseline_checkpoint_mismatch_accepted": true,
+      "fixed_checkpoint_mismatch_refused": true,
+      "exact_family_assertions": 552,
+      "application_key_applicability": "project_only_foreign_keys_refused",
+      "legal_oversized_payload_reachable": false,
+      "payload_pattern_negatives": 3,
+      "checkpoint_negatives": 37,
+      "success_exit_refused": true,
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "negative_case": "current retry accepts compatibility-only projector_replay_only",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "format.applied",
+            "1"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('format.applied', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/format_applied-check1-negative.txt",
+          "sha256": "694c479742ecec67f02a7f81ad75809122184dadc12a719edbc65663c12d402d"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "negative_case": "positive writer accepts noncanonical application@1 key (project-only rows refuse any foreign key)",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "format.applied",
+            "2"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('format.applied', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/format_applied-check2-negative.txt",
+          "sha256": "c2dae1e24413f895c4491ab30f369bc170573a748b51b0b3cfaf1d016d19558f"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "negative_case": "project positive uses raw Project id in place of encoded project~ partition",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "format.applied",
+            "3"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('format.applied', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/format_applied-check3-negative.txt",
+          "sha256": "687610751af081be1531fcd535c8fe155dcbfc967f6968618587fa7d4a55d4b6"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "negative_case": "Storage adapter accepts >16384 inline bytes before logical schema validation",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "format.applied",
+            "4"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('format.applied', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/format_applied-check4-negative.txt",
+          "sha256": "9a28254d3f49ba206d850573ba0977b258c3e10c0b32ad3f13a2277bc0b3bb81"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "negative_case": "checkpoint adapter strips trailing LF from identifiers instead of rejecting it",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "format.applied",
+            "5"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('format.applied', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/format_applied-check5-negative.txt",
+          "sha256": "fa23a69c0f77270cd0f2789e7ee44efde5aef735928d1230bfd27919fa27420e"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "negative_case": "retry semantic digest includes Storage-assigned sequence_id",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "format.applied",
+            "6"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('format.applied', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/format_applied-check6-negative.txt",
+          "sha256": "1c5447fe2c5b34342bdcb52eafb59b53ae75fa650155a4af099dbd7e3f971bde"
+        },
+        {
+          "check": 7,
+          "status": "FIXED",
+          "negative_case": "rebuild publishes foreign checkpoint Storage identity unchecked",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "format.applied",
+            "7"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('format.applied', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/format_applied-check7-negative.txt",
+          "sha256": "3e18d2b8634cfc2f8154753b0c89a68445068349d6e619de6b4e7ec1fa385222"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "negative_case": "invalid producer witness labelled a positive returns success from full checker",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "format.applied",
+            "8"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/format_applied-check8-negative.txt",
+          "sha256": "b2b5dfdd30a101316ef672ef2e5d687300c72a40ffe4d3a61c54a5576f467177"
+        }
+      ]
+    },
+    {
+      "event_type": "lsp.server.lifecycle_changed",
+      "baseline_checkpoint_mismatch_accepted": true,
+      "fixed_checkpoint_mismatch_refused": true,
+      "exact_family_assertions": 548,
+      "application_key_applicability": "project_only_foreign_keys_refused",
+      "legal_oversized_payload_reachable": false,
+      "payload_pattern_negatives": 0,
+      "checkpoint_negatives": 37,
+      "success_exit_refused": true,
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "negative_case": "current retry accepts compatibility-only projector_replay_only",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "lsp.server.lifecycle_changed",
+            "1"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('lsp.server.lifecycle_changed', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/lsp_server_lifecycle_changed-check1-negative.txt",
+          "sha256": "8d33ea7450382c84bc3e18168ea4f4d8670e5c441b2b7bfbc20d4fcbe29fecb9"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "negative_case": "positive writer accepts noncanonical application@1 key (project-only rows refuse any foreign key)",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "lsp.server.lifecycle_changed",
+            "2"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('lsp.server.lifecycle_changed', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/lsp_server_lifecycle_changed-check2-negative.txt",
+          "sha256": "02e6d46dfc0bfdb21ea8736b512b7b597abda45bf05da960204a93caffb481bc"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "negative_case": "project positive uses raw Project id in place of encoded project~ partition",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "lsp.server.lifecycle_changed",
+            "3"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('lsp.server.lifecycle_changed', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/lsp_server_lifecycle_changed-check3-negative.txt",
+          "sha256": "975aa3cd63224f84a70915f20277dea69479a1a7b70da537642abd01b00c5c2c"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "negative_case": "Storage adapter accepts >16384 inline bytes before logical schema validation",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "lsp.server.lifecycle_changed",
+            "4"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('lsp.server.lifecycle_changed', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/lsp_server_lifecycle_changed-check4-negative.txt",
+          "sha256": "679b66552c23c48a098ffde7e0b4a3167dce0f42c9d46f29f4cf746e110be432"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "negative_case": "checkpoint adapter strips trailing LF from identifiers instead of rejecting it",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "lsp.server.lifecycle_changed",
+            "5"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('lsp.server.lifecycle_changed', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/lsp_server_lifecycle_changed-check5-negative.txt",
+          "sha256": "bd30a90ee68f690b84adc8f2f479da039d7d00e3d11a3a4fdfa7c8bda0477d4f"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "negative_case": "retry semantic digest includes Storage-assigned sequence_id",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "lsp.server.lifecycle_changed",
+            "6"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('lsp.server.lifecycle_changed', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/lsp_server_lifecycle_changed-check6-negative.txt",
+          "sha256": "3507f2859278440f1482d6d0d8c4124f4dabfd9973240cdc3c15dc5ef4ca5300"
+        },
+        {
+          "check": 7,
+          "status": "FIXED",
+          "negative_case": "rebuild publishes foreign checkpoint Storage identity unchecked",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "lsp.server.lifecycle_changed",
+            "7"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('lsp.server.lifecycle_changed', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/lsp_server_lifecycle_changed-check7-negative.txt",
+          "sha256": "441b298bffb1896d834f4c0bfc2705c9001a6bc5780d9ac8ce1a3851588172de"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "negative_case": "invalid producer witness labelled a positive returns success from full checker",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "lsp.server.lifecycle_changed",
+            "8"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/lsp_server_lifecycle_changed-check8-negative.txt",
+          "sha256": "14b3fae090a6387e545b6f6fb83e03fa032a433e4352edbb4d0c4da9f1167f4d"
+        }
+      ]
+    },
+    {
+      "event_type": "model.catalog_refreshed",
+      "baseline_checkpoint_mismatch_accepted": true,
+      "fixed_checkpoint_mismatch_refused": true,
+      "exact_family_assertions": 605,
+      "application_key_applicability": "application_and_project",
+      "legal_oversized_payload_reachable": true,
+      "payload_pattern_negatives": 1,
+      "checkpoint_negatives": 37,
+      "success_exit_refused": true,
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "negative_case": "current retry accepts compatibility-only projector_replay_only",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "model.catalog_refreshed",
+            "1"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('model.catalog_refreshed', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/model_catalog_refreshed-check1-negative.txt",
+          "sha256": "e825e30cbb62acad13c9a1698ef3f72cc3fe84ea28839599b9e29f4752a74388"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "negative_case": "positive writer accepts noncanonical application@1 key (project-only rows refuse any foreign key)",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "model.catalog_refreshed",
+            "2"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('model.catalog_refreshed', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/model_catalog_refreshed-check2-negative.txt",
+          "sha256": "1299fd82518b9fcdcd11de7b929c4442f1ecc378f8e2a183c3f198a869743a70"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "negative_case": "project positive uses raw Project id in place of encoded project~ partition",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "model.catalog_refreshed",
+            "3"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('model.catalog_refreshed', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/model_catalog_refreshed-check3-negative.txt",
+          "sha256": "dfab4ffb043215d134237b090f1a10478f236f882dcc8ca1e3849f930520f555"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "negative_case": "Storage adapter accepts >16384 inline bytes before logical schema validation",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "model.catalog_refreshed",
+            "4"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('model.catalog_refreshed', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/model_catalog_refreshed-check4-negative.txt",
+          "sha256": "80cc48586ca87d16a4d08e5fa3ea4f95f6f96f60e57e499dd4d7ebb290e9ff9b"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "negative_case": "checkpoint adapter strips trailing LF from identifiers instead of rejecting it",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "model.catalog_refreshed",
+            "5"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('model.catalog_refreshed', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/model_catalog_refreshed-check5-negative.txt",
+          "sha256": "ce90899a6c26230d43cac16c2669479707e060c5a07bd2f11af0175043018582"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "negative_case": "retry semantic digest includes Storage-assigned sequence_id",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "model.catalog_refreshed",
+            "6"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('model.catalog_refreshed', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/model_catalog_refreshed-check6-negative.txt",
+          "sha256": "c0c5d4787fd8c347e8309f875d1f9acf1256ca9efc21dda5a2b2622d9f972fda"
+        },
+        {
+          "check": 7,
+          "status": "FIXED",
+          "negative_case": "rebuild publishes foreign checkpoint Storage identity unchecked",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "model.catalog_refreshed",
+            "7"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('model.catalog_refreshed', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/model_catalog_refreshed-check7-negative.txt",
+          "sha256": "5a28b23eb08518d759e309dc36a83ebe1cca4bcd199dc6dfbf7dea3e3b1857e4"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "negative_case": "invalid producer witness labelled a positive returns success from full checker",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "model.catalog_refreshed",
+            "8"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/model_catalog_refreshed-check8-negative.txt",
+          "sha256": "9bd79961339ddd62b15b1e38f1f607b0c1b92acec69a6c5c06e6126d4d3cf76f"
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.context_rehydrated",
+      "baseline_checkpoint_mismatch_accepted": true,
+      "fixed_checkpoint_mismatch_refused": true,
+      "exact_family_assertions": 608,
+      "application_key_applicability": "application_and_project",
+      "legal_oversized_payload_reachable": true,
+      "payload_pattern_negatives": 2,
+      "checkpoint_negatives": 37,
+      "success_exit_refused": true,
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "negative_case": "current retry accepts compatibility-only projector_replay_only",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_rehydrated",
+            "1"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('subagent.context_rehydrated', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_rehydrated-check1-negative.txt",
+          "sha256": "8558080ec7a3e3610b6881efab31cb2adb604e1c6f9a826b4dc85a090afd1502"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "negative_case": "positive writer accepts noncanonical application@1 key (project-only rows refuse any foreign key)",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_rehydrated",
+            "2"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('subagent.context_rehydrated', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_rehydrated-check2-negative.txt",
+          "sha256": "5c2c942a2792446bf343d89651f69382a607ee9bc9a15634c109722c12dddde2"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "negative_case": "project positive uses raw Project id in place of encoded project~ partition",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_rehydrated",
+            "3"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('subagent.context_rehydrated', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_rehydrated-check3-negative.txt",
+          "sha256": "c99999f0a4ca5c7983936a3e965230e9787407a706972e7edc14d623570eca7f"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "negative_case": "Storage adapter accepts >16384 inline bytes before logical schema validation",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_rehydrated",
+            "4"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('subagent.context_rehydrated', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_rehydrated-check4-negative.txt",
+          "sha256": "af8e993d983c2a541ab7ccb8c7cf3b40fc5b34fbc86fd7311dcc9a6b00241bde"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "negative_case": "checkpoint adapter strips trailing LF from identifiers instead of rejecting it",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_rehydrated",
+            "5"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('subagent.context_rehydrated', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_rehydrated-check5-negative.txt",
+          "sha256": "7b55c54d6bb36f9211b278247c1a935a88dbb192c5cbda505824982071ff9b46"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "negative_case": "retry semantic digest includes Storage-assigned sequence_id",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_rehydrated",
+            "6"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('subagent.context_rehydrated', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_rehydrated-check6-negative.txt",
+          "sha256": "21a91ba23669fa6353d92575e74f4603b5ebc16ee425b5c261d1dca445d76205"
+        },
+        {
+          "check": 7,
+          "status": "FIXED",
+          "negative_case": "rebuild publishes foreign checkpoint Storage identity unchecked",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_rehydrated",
+            "7"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('subagent.context_rehydrated', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_rehydrated-check7-negative.txt",
+          "sha256": "3be0cf494a3d3a8792d9970f57d30a2ccfb80c437d2e8f8480a2a3d0548c0bb0"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "negative_case": "invalid producer witness labelled a positive returns success from full checker",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_rehydrated",
+            "8"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_rehydrated-check8-negative.txt",
+          "sha256": "2ee7ef3a38d56f53b5367d38eb11cf117b7208a8ad7e63fe79466fe3db39364e"
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.context_shrunk",
+      "baseline_checkpoint_mismatch_accepted": true,
+      "fixed_checkpoint_mismatch_refused": true,
+      "exact_family_assertions": 608,
+      "application_key_applicability": "application_and_project",
+      "legal_oversized_payload_reachable": true,
+      "payload_pattern_negatives": 2,
+      "checkpoint_negatives": 37,
+      "success_exit_refused": true,
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "negative_case": "current retry accepts compatibility-only projector_replay_only",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_shrunk",
+            "1"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('subagent.context_shrunk', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_shrunk-check1-negative.txt",
+          "sha256": "d9d20673b761d3483deeb77b60de88cf1d1e6535282f8fda3357df0b22b3cb74"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "negative_case": "positive writer accepts noncanonical application@1 key (project-only rows refuse any foreign key)",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_shrunk",
+            "2"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('subagent.context_shrunk', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_shrunk-check2-negative.txt",
+          "sha256": "cc811b9cd3613d538940126ca0914550accf66814d8474d60408da95f52aa8fd"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "negative_case": "project positive uses raw Project id in place of encoded project~ partition",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_shrunk",
+            "3"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('subagent.context_shrunk', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_shrunk-check3-negative.txt",
+          "sha256": "58149647d616aa88a797592bba793156e9208885f2fd8901f580f614570db59c"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "negative_case": "Storage adapter accepts >16384 inline bytes before logical schema validation",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_shrunk",
+            "4"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('subagent.context_shrunk', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_shrunk-check4-negative.txt",
+          "sha256": "3dcfb0d3df845438ad4c0eec00c1f69ad3f2b3b9bdd1f56308f45eef88a3168b"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "negative_case": "checkpoint adapter strips trailing LF from identifiers instead of rejecting it",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_shrunk",
+            "5"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('subagent.context_shrunk', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_shrunk-check5-negative.txt",
+          "sha256": "f9e3411853687cadbdc8e3b800188dbe2a1caa8219735c4a88de4c09207bbd14"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "negative_case": "retry semantic digest includes Storage-assigned sequence_id",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_shrunk",
+            "6"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('subagent.context_shrunk', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_shrunk-check6-negative.txt",
+          "sha256": "e9db2924a02cf56f553c86c39ad7f04383273b093cd590a86e7b3987b72dac36"
+        },
+        {
+          "check": 7,
+          "status": "FIXED",
+          "negative_case": "rebuild publishes foreign checkpoint Storage identity unchecked",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_shrunk",
+            "7"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('subagent.context_shrunk', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_shrunk-check7-negative.txt",
+          "sha256": "f8cc8d962f61e1067b9e189d3ba52cee1dadc0404a7610bb4d1f110352f9ec7f"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "negative_case": "invalid producer witness labelled a positive returns success from full checker",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "subagent.context_shrunk",
+            "8"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/subagent_context_shrunk-check8-negative.txt",
+          "sha256": "82da64c1c1bdd82a37cbc40e4f3435e294951fea49c791a2c6845a5ec7c30475"
+        }
+      ]
+    },
+    {
+      "event_type": "project.added",
+      "baseline_checkpoint_mismatch_accepted": true,
+      "fixed_checkpoint_mismatch_refused": true,
+      "exact_family_assertions": 549,
+      "application_key_applicability": "project_only_foreign_keys_refused",
+      "legal_oversized_payload_reachable": false,
+      "payload_pattern_negatives": 2,
+      "checkpoint_negatives": 37,
+      "success_exit_refused": true,
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "negative_case": "current retry accepts compatibility-only projector_replay_only",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.added",
+            "1"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('project.added', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_added-check1-negative.txt",
+          "sha256": "d26819891c18e8f861b170c52d065ca14608ce4e69d955b5d557336a7ff93213"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "negative_case": "positive writer accepts noncanonical application@1 key (project-only rows refuse any foreign key)",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.added",
+            "2"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('project.added', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_added-check2-negative.txt",
+          "sha256": "d42916a45fed81ac8c6f87ceac388e721b243f760efbddd8f58cff5d4c56d6be"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "negative_case": "project positive uses raw Project id in place of encoded project~ partition",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.added",
+            "3"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('project.added', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_added-check3-negative.txt",
+          "sha256": "844f36263535a4f764690b464d2db1893b67fac3c2e1aa0bb69a1aabc9a533de"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "negative_case": "Storage adapter accepts >16384 inline bytes before logical schema validation",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.added",
+            "4"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('project.added', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_added-check4-negative.txt",
+          "sha256": "1ca46bb26861f9e308d72ddf2bba0b3385106b627b12008c5c7255635c9bafc5"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "negative_case": "checkpoint adapter strips trailing LF from identifiers instead of rejecting it",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.added",
+            "5"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('project.added', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_added-check5-negative.txt",
+          "sha256": "b5bb8e7102edeabcc6689d914374b1ea5d364d70f2bcdb86c621366ccb202bbb"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "negative_case": "retry semantic digest includes Storage-assigned sequence_id",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.added",
+            "6"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('project.added', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_added-check6-negative.txt",
+          "sha256": "a79050db9023c0e228a116f4ea8fb26ab20ca3f82df0630de70a808e035dda9d"
+        },
+        {
+          "check": 7,
+          "status": "FIXED",
+          "negative_case": "rebuild publishes foreign checkpoint Storage identity unchecked",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.added",
+            "7"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('project.added', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_added-check7-negative.txt",
+          "sha256": "811a3e2b0c88cfd1764ad13a227ad62eaf01c17401882be30b60ba4bba5a3212"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "negative_case": "invalid producer witness labelled a positive returns success from full checker",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.added",
+            "8"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_added-check8-negative.txt",
+          "sha256": "8e38a101ae091d942517a8550cbf0f7eea1b6ea7e888a44ce09b99951914ff3b"
+        }
+      ]
+    },
+    {
+      "event_type": "project.created",
+      "baseline_checkpoint_mismatch_accepted": true,
+      "fixed_checkpoint_mismatch_refused": true,
+      "exact_family_assertions": 551,
+      "application_key_applicability": "project_only_foreign_keys_refused",
+      "legal_oversized_payload_reachable": false,
+      "payload_pattern_negatives": 3,
+      "checkpoint_negatives": 37,
+      "success_exit_refused": true,
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "negative_case": "current retry accepts compatibility-only projector_replay_only",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.created",
+            "1"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('project.created', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_created-check1-negative.txt",
+          "sha256": "a818ed59b03671c9879266b4e72dd348aa05131a2cf6cae0731c741dae7de342"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "negative_case": "positive writer accepts noncanonical application@1 key (project-only rows refuse any foreign key)",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.created",
+            "2"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('project.created', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_created-check2-negative.txt",
+          "sha256": "e63040e2c7a473fe4cb15d8ae9a781c5df6360d89ccf8c0e1cd7017a34bb1039"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "negative_case": "project positive uses raw Project id in place of encoded project~ partition",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.created",
+            "3"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('project.created', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_created-check3-negative.txt",
+          "sha256": "3fb4ecf389aaa65a3aa2f6014950135a9ce77cb37084657bbdd45679e2409187"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "negative_case": "Storage adapter accepts >16384 inline bytes before logical schema validation",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.created",
+            "4"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('project.created', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_created-check4-negative.txt",
+          "sha256": "724b9b7229ff5bcace939b15cc7853fe43e2002e00e125c6d5ace56d706ed510"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "negative_case": "checkpoint adapter strips trailing LF from identifiers instead of rejecting it",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.created",
+            "5"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('project.created', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_created-check5-negative.txt",
+          "sha256": "00469a24be264650882376a518c33714dbbf44b955491c0c1ff45a928d233114"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "negative_case": "retry semantic digest includes Storage-assigned sequence_id",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.created",
+            "6"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('project.created', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_created-check6-negative.txt",
+          "sha256": "a7e10bbe8e4c77f90e37b93ec0aa0de7dfbbfd69a7f8f04b8ea3bec9c438a553"
+        },
+        {
+          "check": 7,
+          "status": "FIXED",
+          "negative_case": "rebuild publishes foreign checkpoint Storage identity unchecked",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.created",
+            "7"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('project.created', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_created-check7-negative.txt",
+          "sha256": "28a301c48ff679ea927ecf0ff17645c9966109b9abc50bd7830e59fb79034669"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "negative_case": "invalid producer witness labelled a positive returns success from full checker",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "project.created",
+            "8"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/project_created-check8-negative.txt",
+          "sha256": "d279b1ddce3e319aa4ca85a463108a54228e64d9633daa6d9194046fc54063b0"
+        }
+      ]
+    },
+    {
+      "event_type": "git.clone.completed",
+      "baseline_checkpoint_mismatch_accepted": true,
+      "fixed_checkpoint_mismatch_refused": true,
+      "exact_family_assertions": 551,
+      "application_key_applicability": "project_only_foreign_keys_refused",
+      "legal_oversized_payload_reachable": false,
+      "payload_pattern_negatives": 2,
+      "checkpoint_negatives": 37,
+      "success_exit_refused": true,
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "negative_case": "current retry accepts compatibility-only projector_replay_only",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "git.clone.completed",
+            "1"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('git.clone.completed', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/git_clone_completed-check1-negative.txt",
+          "sha256": "6f0940c6095bb88bd0ca6918156d666216a636ebb3dbdca7e963d17c32d4c59d"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "negative_case": "positive writer accepts noncanonical application@1 key (project-only rows refuse any foreign key)",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "git.clone.completed",
+            "2"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('git.clone.completed', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/git_clone_completed-check2-negative.txt",
+          "sha256": "ba51e2f04511fb099628777d22670ab39d74d4a5c7f1f73178b7bbe8931dbca8"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "negative_case": "project positive uses raw Project id in place of encoded project~ partition",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "git.clone.completed",
+            "3"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('git.clone.completed', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/git_clone_completed-check3-negative.txt",
+          "sha256": "b40eb9fc7d76b7608555cc442b3cd36dc7943801772f3a711fd719d22e662ac4"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "negative_case": "Storage adapter accepts >16384 inline bytes before logical schema validation",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "git.clone.completed",
+            "4"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('git.clone.completed', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/git_clone_completed-check4-negative.txt",
+          "sha256": "94a6aad063ddc737960a4b8e9b4742ce9540545f89616834a0ba68d17fb01ec6"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "negative_case": "checkpoint adapter strips trailing LF from identifiers instead of rejecting it",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "git.clone.completed",
+            "5"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('git.clone.completed', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/git_clone_completed-check5-negative.txt",
+          "sha256": "7d3cdb34c907019a90ee84e2cadd230fe2962ebef24077c2bccfc7e35c5023fa"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "negative_case": "retry semantic digest includes Storage-assigned sequence_id",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "git.clone.completed",
+            "6"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('git.clone.completed', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/git_clone_completed-check6-negative.txt",
+          "sha256": "8d86b33ac63fd5134344f94650b7602ed84fadf8a41e59714abaa27e71df80a3"
+        },
+        {
+          "check": 7,
+          "status": "FIXED",
+          "negative_case": "rebuild publishes foreign checkpoint Storage identity unchecked",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "git.clone.completed",
+            "7"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError: ('git.clone.completed', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/git_clone_completed-check7-negative.txt",
+          "sha256": "2e4ca508ed563df1ec65aaf772fa00016cdab513f2b4cc41bae341d7462592ab"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "negative_case": "invalid producer witness labelled a positive returns success from full checker",
+          "full_checker_command": [
+            "/usr/bin/python3",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-fix3",
+            "git.clone.completed",
+            "8"
+          ],
+          "full_checker_exit": "nonzero; verified in first execution",
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/git_clone_completed-check8-negative.txt",
+          "sha256": "f88df5282f3a7f014ca371dfb29157beb6bf1b975a90391c1ff233245cbde0e7"
+        }
+      ]
+    }
+  ],
+  "settings": "DL-408 retirements preserved",
+  "worker": "DM-FIX3",
+  "input_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
+  "canonical_head": "1eaddcd0ed045e78ac36d59fa1648799203640ab",
+  "fix_commit": "1eaddcd0ed045e78ac36d59fa1648799203640ab"
+}

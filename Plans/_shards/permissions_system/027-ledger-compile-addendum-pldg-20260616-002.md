@@ -2,15 +2,15 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L8007-L8069
+Source lines: L8007-L8068
 
-Source SHA256: `dc1aae046c22b416b6e298461970289c3cb8e59d9d378dd3f8e6bfcfdea81c2a`
+Source SHA256: `1a77272b974e9e4bcbb74858d8be1265ddf687ead690077555ccd76caef4367d`
 
 ---
 
 ## Ledger Compile Addendum - pldg-20260616-002
 
-### PS-115 - GoalRun Write Authority And Lane Blockers
+### PS-115 - Write Authority And Lane Blockers
 
 ```yaml
 plan_unit_id: PS-115
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
 canonical_text: >-
-  Permissions_System owns GoalRun write authority checks for read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer modes, plus blocked-action payloads for missing lane bindings, overlapping worktree leases, unsafe/destructive scope, and invisible/internal goals that exceed predeclared authority. Permission decisions consume capability_lane and write_mode from contract/storage runtime records and return recoverable blockers where user, Settings, worktree, or approval action can resolve the issue.
+  Permissions_System owns write authority checks for read_only, proposal_only, patch_only, isolated_worktree, and leased_writer modes, plus blocked-action payloads for a required job with no usable model after named inheritance (MS-109), overlapping worktree leases, unsafe/destructive scope, and invisible/internal goals that exceed predeclared authority. Permission decisions consume capability_lane and write_mode from contract/storage runtime records and return recoverable blockers where user, Settings, worktree, or approval action can resolve the issue.
 gui_related: false
 gui_classification_reason: Write authority and blocker payloads are permission/runtime policy; GUI surfaces consume their visible projections.
 depends_on:
@@ -26,13 +26,13 @@ depends_on:
   - MS-109
 unblocks: []
 acceptance_criteria:
-  - Permission checks consume write_mode values read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer.
-  - Missing capability lanes and overlapping write surfaces produce typed blockers.
+  - Permission checks consume write_mode values read_only, proposal_only, patch_only, isolated_worktree, and leased_writer.
+  - A required job with no usable model after named inheritance and overlapping write surfaces produce typed blockers; legacy unconfigured-lane is read vocabulary only.
   - Invisible/internal goals cannot exceed predeclared authority.
   - Recoverable blockers name the user, Settings, worktree, or approval action needed to proceed.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future GoalRun permission/blocker review
+  - future Goal permission/blocker review
 risk_class: goalrun_write_authority_drift
 reasoning_tier: high
 context_scope: goalrun_permissions
@@ -57,7 +57,6 @@ preserved_exact_tokens:
   - "patch_only"
   - "isolated_worktree"
   - "leased_writer"
-  - "parent_writer"
   - "capability_lane"
   - "write_mode"
   - "unconfigured-lane"

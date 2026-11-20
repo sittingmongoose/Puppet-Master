@@ -1,0 +1,137 @@
+{
+  "lane": "DT",
+  "branch": "plans/ea-w2-tools-gates-approvals-20261104",
+  "part": "2A",
+  "start": "b8fea83b48893ab2044c813a575c033a9c1b4ea4",
+  "tool": "004bdedd632d9463f3535190a6ed5772338cdce1",
+  "tool_merge": "a4ede4d124",
+  "implementation_head": "3f45efdb7684ef88a453bb6a9631b1c8501c71ad",
+  "commands": [
+    {
+      "step": "generate-check",
+      "exit": 0
+    },
+    {
+      "step": "checker",
+      "exit": 0
+    },
+    {
+      "step": "type-sweep",
+      "exit": 0
+    },
+    {
+      "step": "large-retry",
+      "exit": 0
+    },
+    {
+      "step": "number-type-sweep",
+      "exit": 0
+    },
+    {
+      "step": "shard-check",
+      "exit": 0
+    },
+    {
+      "step": "standing",
+      "exit": 0
+    },
+    {
+      "step": "tool (at 3f45efdb76)",
+      "exit": 1
+    },
+    {
+      "step": "differential (rerun)",
+      "exit": 0
+    },
+    {
+      "step": "emission-cut (rerun)",
+      "exit": 0
+    }
+  ],
+  "checker": {
+    "status": "pass",
+    "checks": 27775,
+    "failures": 0,
+    "elapsed": "1:15.88",
+    "peak_rss_mb": 218
+  },
+  "differential": {
+    "base_calls": 11207,
+    "new_calls": 11207,
+    "differences": 0,
+    "base_log_sha256": "c49f4b4e5e9b9ea75beb33528c6576a01408d86394eb766b293dd3f35cc218be",
+    "new_log_sha256": "c49f4b4e5e9b9ea75beb33528c6576a01408d86394eb766b293dd3f35cc218be"
+  },
+  "emission_cut": {
+    "status": "pass",
+    "flipped_emission_vectors": [
+      "filesafe_block_saves_only_dedicated_refusal",
+      "schema_refusal_is_not_policy_denial"
+    ],
+    "cut_exit": 1,
+    "restored_exit": 0
+  },
+  "type_sweep": {
+    "flag_cases": 5236,
+    "wrong_type_acceptances": 0
+  },
+  "large_retry": {
+    "families": 17,
+    "accepted_integer_retry_exceptions": 51,
+    "valid_equal_float_digest_successes": 17,
+    "safe_integer_control_successes": 17
+  },
+  "guard_tables": {
+    "tables": 70,
+    "rows": 241,
+    "proved": 238,
+    "unproved": 3,
+    "flips": 760,
+    "own": 760,
+    "stays": 2337,
+    "unrelated": 0,
+    "masked": 0,
+    "tool_negatives": 760,
+    "tool_controls": 175,
+    "lane": 3737,
+    "excluded": 205,
+    "tool_status_fail": [
+      "src_stage",
+      "src_project_only"
+    ],
+    "witness_calls": 99300,
+    "refused_calls": 67011,
+    "findings": []
+  },
+  "standing": {
+    "status": "pass",
+    "family": "config.migrated",
+    "checks": {
+      "1": "pass",
+      "2": "pass",
+      "3": "pass",
+      "4": "pass",
+      "5": "pass",
+      "6": "pass",
+      "7": "pass",
+      "8": "pass",
+      "9": "pass",
+      "10": "pass"
+    }
+  },
+  "grades": {
+    "before": {
+      "ABSENT": 17,
+      "PASS": 166,
+      "PARTIAL": 21
+    },
+    "after": {
+      "ABSENT": 17,
+      "PARTIAL": 21,
+      "PASS": 166
+    }
+  },
+  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p2a/",
+  "ready": false,
+  "new_ids": []
+}

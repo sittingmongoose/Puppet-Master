@@ -48,7 +48,16 @@ function watchSeat() {
   seat = f;
   if (seat) ro.observe(seat);
 }
-window.addEventListener('scroll', soon, { capture: true, passive: true });
+/* only a scroll that can carry the chat's controls under the Pod: one inside the chat, or of a box that holds it (the
+   document among them). The other pages' own scrollers (Usage's board, Settings) never move the chat, and every check is
+   25 hit tests: 4.8 ms a run on an M3, several runs a second while Usage's board scrolled (2026-11-11, lane D). */
+let chatHost = null;
+window.addEventListener('scroll', function (e) {
+  const t = e.target;
+  if (!chatHost || !chatHost.isConnected) chatHost = document.querySelector('.pm56-host');
+  if (chatHost && t && t.nodeType === 1 && !t.closest('.pm56-host') && !t.contains(chatHost)) return;
+  soon();
+}, { capture: true, passive: true });
 window.addEventListener('resize', soon, { passive: true });
 new MutationObserver(soon).observe(html, { attributes: true, attributeFilter: ['data-o55-nier', 'data-o55-nier-parts'] });
 const E = window.PM56_EXT;

@@ -1,0 +1,410 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "storage_instance_id",
+    "original_operation_id",
+    "thread_id",
+    "scope",
+    "interface_id",
+    "schema_id",
+    "schema_version",
+    "profile_id",
+    "workspace_id",
+    "request_ref",
+    "result_ref",
+    "capture",
+    "original_input_body",
+    "original_output_body"
+  ],
+  "properties": {
+    "storage_instance_id": {
+      "type": "string"
+    },
+    "original_operation_id": {
+      "type": "string"
+    },
+    "thread_id": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "scope_partition",
+        "project_id",
+        "project_home_server_id",
+        "named_plan_id",
+        "server_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "type": "string"
+        },
+        "schema_version": {
+          "type": "string"
+        },
+        "scope_kind": {
+          "type": "string"
+        },
+        "scope_partition": {
+          "type": "string"
+        },
+        "project_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "project_home_server_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "named_plan_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "server_id": {
+          "type": "string"
+        }
+      }
+    },
+    "interface_id": {
+      "type": "string"
+    },
+    "schema_id": {
+      "const": "pm.ds15.browser_owner_record.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "profile_id": {
+      "type": "string"
+    },
+    "workspace_id": {
+      "type": "string"
+    },
+    "request_ref": {
+      "type": "string"
+    },
+    "result_ref": {
+      "type": "string"
+    },
+    "capture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope",
+        "thread_id",
+        "chip_id",
+        "browser_session_id",
+        "attachment_type",
+        "capture_status",
+        "source_ref",
+        "provenance_ref",
+        "target_resolution"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "project_id",
+            "user_id",
+            "computer_id",
+            "profile_id"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "project",
+                "app"
+              ]
+            },
+            "project_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            },
+            "user_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "profile_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "project"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "app"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "project_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "chip_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "browser_session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "attachment_type": {
+          "enum": [
+            "browser_element_context",
+            "browser_selection_context"
+          ]
+        },
+        "capture_status": {
+          "enum": [
+            "captured",
+            "blocked",
+            "expired",
+            "scrubbed",
+            "revoked"
+          ]
+        },
+        "source_ref": {
+          "description": "Stable non-secret reference. Raw credentials, tokens, auth values, credential paths, file contents, and provider-visible bytes are forbidden.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+        },
+        "provenance_ref": {
+          "description": "Stable non-secret reference. Raw credentials, tokens, auth values, credential paths, file contents, and provider-visible bytes are forbidden.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
+        },
+        "target_resolution": {
+          "enum": [
+            "explicit",
+            "owning_surface",
+            "explicit_new_thread"
+          ]
+        }
+      },
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.ds15.browser_context_captured.payload.v1"
+    },
+    "original_input_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "profile_id",
+        "workspace_id",
+        "generation",
+        "session_refs",
+        "page_refs",
+        "transition_source_ref",
+        "protected_auth"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser.workspace.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "profile_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "workspace_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "session_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "page_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "transition_source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "protected_auth": {
+          "const": false
+        }
+      }
+    },
+    "original_output_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "profile_id",
+        "workspace_id",
+        "generation",
+        "session_refs",
+        "page_refs",
+        "transition_source_ref",
+        "protected_auth"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser.workspace.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "profile_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "workspace_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "session_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "page_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "transition_source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "protected_auth": {
+          "const": false
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.ds15.browser_owner_record.v1"
+}

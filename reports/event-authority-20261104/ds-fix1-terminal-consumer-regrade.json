@@ -1,0 +1,439 @@
+{
+ "application_id": "EA-B1-DS-FIX1-TERMINAL-CONSUMER-REGRADE",
+ "applied_at_utc": "2026-11-04T20:35:50Z",
+ "applied_by": "claude-opus-5.5:lane-DS-FIX1-ea-b1-20261104",
+ "branch": "plans/ea-b1-seal-blockers-20261104",
+ "applied_on_revision": "2220b74e249fd8796093b0f95286a3e5bdbf1625",
+ "review_finding": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DS-sol/REVIEW.md DS-SOL-03 (blocking): terminal's consumer PASS exceeds the unchanged rubric",
+ "authority_refs": [
+  "Plans/Decision_Log.md#DL-039",
+  "Plans/Decision_Log.md#DL-045"
+ ],
+ "rubric": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+  "sha256": "81f1d8b25ee407975fea50d14ecf44f94127608b912e08b27edd7f62f9b10221"
+ },
+ "pattern": "reports/event-authority-20261104/ds-p2-august-regrade-application.json: receipted row update with before and after hashes; every citation an exact single-line quote located by script",
+ "rows": [
+  {
+   "event_type": "terminal.workgroup_moved",
+   "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_terminal.workgroup_moved.json",
+   "before_sha256": "beb9214f5bb51d9962ac0320ed20e77193a3684f542c17ecba730891aebde9d5",
+   "after_sha256": "08063c252d46f9d414be5b24c67fdbfd5ea3d1c23a85a10091001365c06f440c",
+   "ledger_line": 279,
+   "census_line": 38,
+   "ledger_line_before_sha256": "1c92293dfdbe5a7e1f756be250bde8e98a1df7360bce0d914a3bb9151bdd4a59",
+   "ledger_line_after_sha256": "c201a9c0ec6407f1e74d59a042b02eaf9ffaf1f89ffe9fba8984ef856358bc0d",
+   "census_line_before_sha256": "18a3e7d4803a06e9f048581fbdabb1b6bf3adb5e566ae5fd1780365642e4387a",
+   "census_line_after_sha256": "816a39b97d37ba9ff03b11abdead65c2d1c2b2045191cc51ed5532e1bf52b3ad",
+   "disposition_before": "KEEP_REGISTERED",
+   "disposition_after": "KEEP_REGISTERED",
+   "provisional_before": false,
+   "provisional_after": false,
+   "cells_before": {
+    "owner_doc": "PASS",
+    "producer": "PASS",
+    "membership_version": "PASS",
+    "closed_payload_schema": "PASS",
+    "scope_identity": "PASS",
+    "replay_idempotency": "PASS",
+    "retention": "PASS",
+    "redaction_custody": "PASS",
+    "transitions": "PASS",
+    "consumers_checkpoints": "PASS",
+    "compatibility_withdrawal": "PASS",
+    "positive_negative_oracles": "FAIL"
+   },
+   "cells_after": {
+    "owner_doc": "PASS",
+    "producer": "PASS",
+    "membership_version": "PASS",
+    "closed_payload_schema": "PASS",
+    "scope_identity": "PASS",
+    "replay_idempotency": "PASS",
+    "retention": "PASS",
+    "redaction_custody": "PASS",
+    "transitions": "PASS",
+    "consumers_checkpoints": "OWNER_REQUIRED",
+    "compatibility_withdrawal": "PASS",
+    "positive_negative_oracles": "FAIL"
+   },
+   "changed_fields": [
+    "citations_checked",
+    "disposition_rationale",
+    "evidence",
+    "quality_notes"
+   ],
+   "census_changed_fields": [
+    "notes"
+   ]
+  }
+ ],
+ "files": {
+  "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl": {
+   "before_sha256": "52f0ac862efe889ddb27495be462d88fe9e33770fa88381c85f8545033c5ceba",
+   "after_sha256": "00f6b80636b4e08ea87f79d1cb2626cfc4e635ab1e17f09e94aa7d4ff3858367",
+   "lines_changed": 1
+  },
+  "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl": {
+   "before_sha256": "15cd4acc993b29b612994c4d22ce2f4572a03459fa733dcd6740a8b8e322442b",
+   "after_sha256": "49a6a6c4d5662f18c86d029a3e840649156fede160fad231915a97f2d3011651",
+   "lines_changed": 1
+  }
+ },
+ "changed_cells": [
+  "consumers_checkpoints"
+ ],
+ "boundaries": {
+  "registry_changed": false,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "validator_changed": false,
+  "cohort_pins_changed": false,
+  "owner_choice_changed": false,
+  "disposition_changed": false,
+  "provisional_changed": false,
+  "consumer_invented_or_reactivated": false,
+  "denominator_removal_claimed": false,
+  "depth_pass_claimed_beyond_cells": false,
+  "seal_claimed": false
+ },
+ "citation_anchor_revision": {
+  "new_citations": "2220b74e249fd8796093b0f95286a3e5bdbf1625",
+  "note": "Every citation this application writes is an exact single-line quote located at this revision."
+ },
+ "not_updated": "individual-disposition/COVERAGE.json (generated 2026-09-11) is not regenerated, as in step 5.",
+ "cell_evidence": {
+  "terminal.workgroup_moved": {
+   "membership_version": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: registry 2026-11-04.1 keeps the family at 1.0.0; the payload schema $id matches.",
+    "evidence": [
+     {
+      "path": "Plans/event_family_registry.json",
+      "line_start": 2839,
+      "line_end": 2839,
+      "quote": "\"event_type\": \"terminal.workgroup_moved\",",
+      "excerpt_sha256": "065a95725d771fe75b27cadbdec977d1c9b8621239ce2af4fe7375e10b98aecd",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/event_payloads/terminal_workgroup_moved.schema.json",
+      "line_start": 3,
+      "line_end": 3,
+      "quote": "\"$id\": \"https://puppetmaster.local/schemas/event_payloads/terminal_workgroup_moved/1.0.0\",",
+      "excerpt_sha256": "9786a9ccb852760ebaa157879a5573af380e35981674e723f4ea0f057f872173",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "owner_doc": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: the anchored Section 15 passage is lineage after DL-181; SMPFS-170 (superseded, retained for lineage and audit) and SP-319 hold the historical contract.",
+    "evidence": [
+     {
+      "path": "Plans/event_family_registry.json",
+      "line_start": 2841,
+      "line_end": 2841,
+      "quote": "\"semantic_owner_doc\": \"Plans/Section15_MVP_Promoted_Features_Spec.md#pmconcept7-home-workspace-terminal-reconciliation\",",
+      "excerpt_sha256": "4340250800fa2ec7268dd1939c0df599f41de1a22f400684cee4f1bd48b4eacf",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "line_start": 12593,
+      "line_end": 12593,
+      "quote": "### SMPFS-170 - Terminal workgroup moved original operation and historical consumer",
+      "excerpt_sha256": "3940d27c22c844a27370c41c38ea6468001b83f70c724e3fec216f4d2572eab2",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 27060,
+      "line_end": 27060,
+      "quote": "### SP-319 - Terminal workgroup moved passive source and checkpoint disposition",
+      "excerpt_sha256": "35745e7aece14a8a1136efc4877e86df17067c9415aadd8e33c02ddabbb97888",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "producer": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04 for the historical-only disposition (DL-181, 2026-10-09): the current-writer refusal is explicit (CV-361) and the original producer never activated, so no operation was ever admitted. The 1.0.0-era move-workgroup producer row this cell cited is retired.",
+    "evidence": [
+     {
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 23713,
+      "line_end": 23713,
+      "quote": "No producer writes terminal.workgroup_moved; recorded events stay readable at 1.0.0",
+      "excerpt_sha256": "9ef4794e1163fe65cc90ebd59ece6521dcbfcb9388f28039b8f01a7b0904fda7",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "line_start": 12604,
+      "line_end": 12604,
+      "quote": "terminal.workgroup_move_commit.v1 never activates and the passive reader admits no new disclosure; no operation was",
+      "excerpt_sha256": "53f9f4d06803c34abbe81b40c63416ef341feef0baba1adbc08e419258a9f277",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "closed_payload_schema": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: closed 1.0.0 payload, unchanged; any recorded event keeps its exact 1.0.0 interpretation.",
+    "evidence": [
+     {
+      "path": "Plans/event_payloads/terminal_workgroup_moved.schema.json",
+      "line_start": 6,
+      "line_end": 6,
+      "quote": "\"additionalProperties\": false,",
+      "excerpt_sha256": "e1b6fd8541ba5542d4a83ba797ad19f93213527609df4f73e3ce1416f8991246",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "scope_identity": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: project_only; new writes are refused, and the SP-319 reader joins each stored event by its own Storage instance, Project, workgroup, event ID, global sequence and index key.",
+    "evidence": [
+     {
+      "path": "Plans/event_family_registry.json",
+      "line_start": 2840,
+      "line_end": 2840,
+      "quote": "\"scope_policy\": \"project_only\",",
+      "excerpt_sha256": "8472a5d51eb53462551949130f1f8bd4f09280814f6c7f854cccadb4de30bc95",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 26925,
+      "line_end": 26925,
+      "quote": "Storage instance, Project, workgroup, exact event ID, original global sequence and",
+      "excerpt_sha256": "82ed41301c48015b7d9037be667f676d23f851ef094d7beb8f8f36e22c70bc32",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "replay_idempotency": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: with writes withdrawn, replay is a passive single-event read with zero durable effects (SP-319); no new identity can be minted.",
+    "evidence": [
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 26928,
+      "line_end": 26928,
+      "quote": "has no pagination, durable cursor, acknowledgement or reconstructed live state.",
+      "excerpt_sha256": "91fc9398ed7b4620ab296affc13ae463a4e636fad23377e373ee44b82d449c55",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 26930,
+      "line_end": 26930,
+      "quote": "this owner assigns only a fresh one-event historical observation with zero durable",
+      "excerpt_sha256": "fa24510cc18045ca15b110ca2c42091d29ac9d36ca5611061d1d170214302b12",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "retention": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: RP-AUTHORITY-INDEFINITE@1.0.0; separate owner lifetimes for source/index/ref and original custody.",
+    "evidence": [
+     {
+      "path": "Plans/event_family_registry.json",
+      "line_start": 2870,
+      "line_end": 2870,
+      "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\",",
+      "excerpt_sha256": "218a403b240aa548ad151a5d5401bf2a73e2a57cbfe0c0ceb2f649d6f0ebc652",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 27030,
+      "line_end": 27030,
+      "quote": "The event retains `RP-AUTHORITY-INDEFINITE@1.0.0`; source/index/ref and original",
+      "excerpt_sha256": "bbb20b754aa01ea6f1fcb4c5b7972c7249401454c24c7e98c113a7ec4ae1fea6",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "redaction_custody": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: SP-319 authorized read with access/deletion rechecks and reject_unhandled_secrets; a retained event grants no access to deleted terminals or content.",
+    "evidence": [
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 27012,
+      "line_end": 27012,
+      "quote": "Current Project/access/deletion/maintenance permission must authorize every original",
+      "excerpt_sha256": "08618e22ef1873a4455cbf32d870e406a2c4feb3d53885ee37a3f02c6bdc1d90",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 27018,
+      "line_end": 27018,
+      "quote": "The existing `reject_unhandled_secrets` rule remains. A retained event never grants",
+      "excerpt_sha256": "750a756c78f9ff9937d56713c0694b36a475e24a1c6d56acd3502f2c494ef3b1",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "transitions": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: historical row predicates are explicit (exact 1.0.0 interpretation) and current transitions are refused (DL-181, CV-361).",
+    "evidence": [
+     {
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "line_start": 12605,
+      "line_end": 12605,
+      "quote": "ever admitted, and an event already recorded, if any, keeps its exact 1.0.0 interpretation and",
+      "excerpt_sha256": "03c8156505e604db4254cfe20caf6ede1c004f810103ed79e4e156f2470a42fa",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/Contracts_V0.md",
+      "line_start": 23713,
+      "line_end": 23713,
+      "quote": "No producer writes terminal.workgroup_moved; recorded events stay readable at 1.0.0",
+      "excerpt_sha256": "9ef4794e1163fe65cc90ebd59ece6521dcbfcb9388f28039b8f01a7b0904fda7",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "consumers_checkpoints": {
+    "status": "OWNER_REQUIRED",
+    "note": "Re-graded 2026-11-04 (lane DS-FIX1, review DS-SOL-03): OWNER_REQUIRED, not PASS. The step-8 rubric grades a historical-only consumers_checkpoints on the exact historical reader and checkpoint (including SP-278 adoption) and a named operating consumer, PARTIAL where the owner says that facet is open. The reader storage.terminal_workgroup_move.inspect_current.v1@1.0.0, no projector and the none_required family checkpoint with SP-278's generic checkpoint are cited; but SP-319's canonical text says no consumer operates (the producer never activated, no operation was ever admitted, terminal.workgroup_move_history_read.v1 survives only in SMPFS-170's lineage), and two owners disagree on the reader itself: SMPFS-170's withdrawal admits no new reader disclosure, while SP-319's DL-181 amendment keeps the passive reader for 1.0.0 events already written. That conflict is the terminal question stopped for Jared (reports/event-authority-20261104/DS.md); no consumer is invented or reactivated. DL-039 AUG-CP-TWM-001 is unchanged and provisional stays false: the reader, projector and checkpoint facts are cited from the Plans, which is the condition that choice set.",
+    "evidence": [
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 26921,
+      "line_end": 26921,
+      "quote": "Define `storage.terminal_workgroup_move.inspect_current.v1@1.0.0`, a private",
+      "excerpt_sha256": "5db8e4df727e0c4b566b45a16492148fdfa3d39967271eed81439b08d710a789",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 26929,
+      "line_end": 26929,
+      "quote": "The exact family projection/checkpoint disposition is **`none_required`**, because",
+      "excerpt_sha256": "ea7830a91ca7618f8b53cab6e4b1d7c6190eed209144dc2a676d3bcb2c47d7a6",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 26932,
+      "line_end": 26932,
+      "quote": "closure. SP-278's generic projector/checkpoint remains independently mandatory.",
+      "excerpt_sha256": "9b4083e36c197ad94815ff8e7989a8fd32275c1746df7cc04ec4fe3ad449950e",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 27073,
+      "line_end": 27073,
+      "quote": "No consumer operates on terminal.workgroup_moved, because its producer",
+      "excerpt_sha256": "295276183ad9ed8c065c16598ef9d3268f5a67eeb794dcc6a440013f383e7f5e",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 27072,
+      "line_end": 27072,
+      "quote": "The binding stores no read token, and any stored copy of its token is the nine-field durable token",
+      "excerpt_sha256": "545bbaa7b19a788ad31df271b479cede5a8064ec2223530c859697e0dd0be100",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "line_start": 12413,
+      "line_end": 12413,
+      "quote": "no new producer admission and no new reader disclosure",
+      "excerpt_sha256": "1241f27288e083d3e8c31ebbda018cd5fdf3d831049e13a88db099809032cfe2",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "line_start": 12604,
+      "line_end": 12604,
+      "quote": "terminal.workgroup_move_commit.v1 never activates and the passive reader admits no new disclosure; no operation was",
+      "excerpt_sha256": "53f9f4d06803c34abbe81b40c63416ef341feef0baba1adbc08e419258a9f277",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 26912,
+      "line_end": 26912,
+      "quote": "no new producer is admitted, and this passive reader stays only to read 1.0.0 events already written.",
+      "excerpt_sha256": "4665daa34ee5f8bebade4183948ff594b27dd534eb78bb254e624636a5621d50",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "compatibility_withdrawal": {
+    "status": "PASS",
+    "note": "Refreshed 2026-11-04: withdrawal applied 2026-10-09 (DL-181) under SMPFS-170's rule; recorded 1.0.0 events stay readable.",
+    "evidence": [
+     {
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "line_start": 12603,
+      "line_end": 12603,
+      "quote": "terminal.workgroup_moved is withdrawn under this unit's own withdrawal rule",
+      "excerpt_sha256": "bd1ce7f88d084d6f384f0fd8cedf1f987faa335a9458ddaa65715b78d4eb630d",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 26912,
+      "line_end": 26912,
+      "quote": "no new producer is admitted, and this passive reader stays only to read 1.0.0 events already written.",
+      "excerpt_sha256": "4665daa34ee5f8bebade4183948ff594b27dd534eb78bb254e624636a5621d50",
+      "quote_check": "exact"
+     }
+    ]
+   },
+   "positive_negative_oracles": {
+    "status": "FAIL",
+    "note": "Unchanged FAIL, stopped 2026-11-04 (lane DS-P2) with an owner question. Canon leaves open which oracles this withdrawn family still owes. SMPFS-170's withdrawal admits no new reader disclosure, while SP-319 keeps its reader for 1.0.0 events already written. SP-319 still lists original-move paired oracles and an original result/custody companion for an operation that SMPFS-170 says was never admitted. No fixture was written. The question is in reports/event-authority-20261104/DS.md.",
+    "evidence": [
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 27090,
+      "line_end": 27090,
+      "quote": "Paired static oracles and closed original/read-result companions remain required, distinct from native proof.",
+      "excerpt_sha256": "36d4a038f1280b6ab051c83fab30d37b0b0f495aa8b92b7669826a954fe68b36",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 26912,
+      "line_end": 26912,
+      "quote": "no new producer is admitted, and this passive reader stays only to read 1.0.0 events already written.",
+      "excerpt_sha256": "4665daa34ee5f8bebade4183948ff594b27dd534eb78bb254e624636a5621d50",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "line_start": 12413,
+      "line_end": 12413,
+      "quote": "no new producer admission and no new reader disclosure",
+      "excerpt_sha256": "1241f27288e083d3e8c31ebbda018cd5fdf3d831049e13a88db099809032cfe2",
+      "quote_check": "exact"
+     },
+     {
+      "path": "Plans/storage-plan.md",
+      "line_start": 27057,
+      "line_end": 27057,
+      "quote": "new disclosure. These are required paired oracles for the companion task, not",
+      "excerpt_sha256": "1053fea55a784d910b2081def4a72f59780b4fb988baeadb8f0ee88023e89fc2",
+      "quote_check": "exact"
+     }
+    ]
+   }
+  }
+ }
+}

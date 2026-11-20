@@ -1,23 +1,23 @@
 # Shard Index: Plans/Formatters_System.md
 
-Generated: 2026-09-10T02:47:39Z
+Generated: 2026-11-19T17:27:27Z
 
-Source SHA256: `1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0`
+Source SHA256: `6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `2469241581c39bf1c341e6c50e1a052c85e3f01a2a5a8968d43ced9ab28f00d4`
-- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L29 `b23e56452a1be717df4ba36ffe3637647cf7ddafc538dbda2798f5dc53b181e1`
-- [003 - 1. Definitions](003-1.-definitions.md) L31-L45 `8f2e38c6cdc32e25e458f3d122d6c301fd6afaeb92cd95f46fbebcad801bf081`
-- [004 - 2. Lifecycle](004-2.-lifecycle.md) L47-L94 `15ffb62f88db01f510b59d01b87d264e9ab1ddd02dea62fa00afef899a65a807`
-- [005 - 3. Built-in formatters](005-3.-built-in-formatters.md) L96-L130 `1821688b15a616e5ef92fa1b370fed6d2abc131982e2b9493f9f4a3cb753edf0`
-- [006 - 4. Configuration](006-4.-configuration.md) L132-L183 `4c18ebee2d5230f06e40f75f8f94ba8c3593e25f46a075ba54edd523e14aaefe`
-- [007 - 5. GUI requirements](007-5.-gui-requirements.md) L185-L220 `65b355ab1b44b5302a8e4dadb55a841b9b85eda281db0bfbe024a7cb088857d7`
-- [008 - 6. OpenCode baseline and Puppet Master deltas](008-6.-opencode-baseline-and-puppet-master-deltas.md) L222-L242 `b4848485ed7ddba1d06608e06bc4b7fb6a5f1a1df5c38d1baabfad8be5b22c43`
-- [009 - 7. Acceptance criteria](009-7.-acceptance-criteria.md) L244-L275 `21aebb30c4f19fb60ab3a20ccdba54363d81ed9995dcba96a2806fae3857c403`
-- [010 - Owner / Consumer Map](010-owner-consumer-map.md) L277-L281 `54e512de291a4c0d43822ced4384a6f300fac7beb0b4a14694b7a90ba1d3538b`
-- [011 - PlanUnits](011-planunits.md) L283-L1088 `2efd5eab3bc78e884b5767fd8dcdffbbd4450973bb1eb984ad39b8b5c978ae33`
-- [012 - Migration Coverage](012-migration-coverage.md) L1090-L1100 `80cfeea7769a9cd3f0a266d451dd971aacb4721e930b13ec7b3f7b2b6c0a1dea`
-- [013 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1102-L1106 `9ddc22204731807253e2b31b605d212c2bc4dc6db68a54b861d25b5b96d0c653`
+- [001 - Preamble](001-preamble.md) L1-L4 `6c4243b41f3d7513d1ed4ed0c332bb9bf92b70997d516322f222ed010da1e05d`
+- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L29 `ec456e253cd67f29844985e5c1f7d91b7fcc3be8bca5bb93b32720449b027443`
+- [003 - 1. Definitions](003-1.-definitions.md) L31-L45 `58775fb698d916ef34ac68d4500a024c4579c7ebae809dc46e9cf12a2c1710a0`
+- [004 - 2. Lifecycle](004-2.-lifecycle.md) L47-L94 `1103c8587171916503d2542afb1e1ddafaa4577029193c711c19c3977c11f3fd`
+- [005 - 3. Built-in formatters](005-3.-built-in-formatters.md) L96-L130 `90fafacfb2a95b69e17cb6575a96a22c24898882d32d1d7c86b25df9dd532303`
+- [006 - 4. Configuration](006-4.-configuration.md) L132-L183 `08fd52f30ce0597922b294857e80aa95df7f649f8e62e55d707de989df896f8f`
+- [007 - 5. GUI requirements](007-5.-gui-requirements.md) L185-L220 `31fec78b4765d42a14f095417d6b526956e5873b85cc5c100637b19bf661c9f3`
+- [008 - 6. OpenCode baseline and Puppet Master deltas](008-6.-opencode-baseline-and-puppet-master-deltas.md) L222-L242 `738ee9770fed46798231599e4f76ebf675ce3cf10649d563d2985601fa99b839`
+- [009 - 7. Acceptance criteria](009-7.-acceptance-criteria.md) L244-L275 `102944749c4072f9f537f65ab5d61cba162b084e24b847e332c3e3ac2b563873`
+- [010 - Owner / Consumer Map](010-owner-consumer-map.md) L277-L281 `c9b6fe7b908aaed49026306d82dad3992cd05944ca586443a84d583279c40c68`
+- [011 - PlanUnits](011-planunits.md) L283-L1088 `1fbbfec099c7c49469ed59cd21cf93ce256b9c4543e258dfe36fe3e98c0ac7a8`
+- [012 - Migration Coverage](012-migration-coverage.md) L1090-L1100 `b2e921b4588395a4e62f20acb48bbe6e3949a907e210bb64a5920819e8c53651`
+- [013 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1102-L1161 `7eecd9ff0edbb60754fd3842234708af46e4d28e33e5ffc54e0d06c450a9770d`

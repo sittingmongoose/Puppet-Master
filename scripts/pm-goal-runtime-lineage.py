@@ -38,6 +38,11 @@ def record_failures(value: dict[str, Any], schema: dict[str, Any]) -> list[str]:
     failures = [error.message for error in validator_for(schema, "goal_runtime_lineage_record").iter_errors(value)]
     if failures:
         return failures
+    # GRS-052 / DL-478: every Goal is a root Goal. JSON Schema forces
+    # parent_goal_id to null; the root equality is cross-property, so it is
+    # enforced here.
+    if value["root_goal_id"] != value["goal_id"]:
+        failures.append("root_goal_id_must_equal_goal_id")
     threads = value["threads"]
     agents = value["agents"]
     thread_ids = [item["thread_id"] for item in threads]
@@ -68,6 +73,9 @@ def transition_failures(value: dict[str, Any], schema: dict[str, Any]) -> list[s
         return failures
     previous = value["previous"]
     current = value["current"]
+    for side, record in (("previous", previous), ("current", current)):
+        if record["root_goal_id"] != record["goal_id"]:
+            failures.append(f"{side}_root_goal_id_must_equal_goal_id")
     for key in ("project_id", "goal_id", "root_goal_id"):
         if current[key] != previous[key]:
             failures.append(f"immutable_{key}_changed")
@@ -108,6 +116,10 @@ def self_test() -> dict[str, Any]:
     bad_transition = copy.deepcopy(good_transition)
     bad_transition["current"]["owner_epoch"] = valid["owner_epoch"]
     checks["owner_handoff_without_epoch_increment_rejected"] = bool(transition_failures(bad_transition, schema))
+    rooted_elsewhere = copy.deepcopy(good_transition)
+    rooted_elsewhere["previous"]["root_goal_id"] = "goal:other"
+    rooted_elsewhere["current"]["root_goal_id"] = "goal:other"
+    checks["transition_with_root_goal_id_not_goal_id_rejected"] = bool(transition_failures(rooted_elsewhere, schema))
     failures = sorted(name for name, passed in checks.items() if not passed)
     return {"checks": checks, "failures": failures, "status": "pass" if not failures else "fail"}
 

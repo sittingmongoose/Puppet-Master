@@ -1580,8 +1580,16 @@
       if (pv !== 'ask') return false;
       return !(P().allowOnce && P().allowOnce[c] && onceHere(ctx, P().allowOnce[c]));
     });
-    /* FO-128: a grant or rule that covers the missing set lets the operation run now (one-line receipt) */
-    if (missing.length && grantCovers(missing, actionLabel)) missing = [];
+    /* FO-128 C1: grants compose. The set's own For session grant or Always rule covers it whole; otherwise each
+       capability its own grant or rule covers is subtracted, so a Screenshots grant and a DOM grant made one at a time
+       together let an operation that needs both run. The receipts are written only when the operation then runs; what
+       is left is held as one set (Once grants above stay all-or-nothing, single-use and the answering chat's). */
+    if (missing.length) {
+      var A = window.PM56_ASKS, used = [], whole = A && A.grantOf ? A.grantOf(holdSpec(missing, actionLabel)) : null;
+      if (whole) { used.push([missing.slice(), whole]); missing = []; }
+      else if (A && A.grantOf) missing = missing.filter(function (c) { var g = A.grantOf(holdSpec([c], actionLabel)); if (g) { used.push([[c], g]); return false; } return true; });
+      if (!missing.length) used.forEach(function (u) { A.noteGrant(holdSpec(u[0], actionLabel), u[1]); });
+    }
     if (missing.length) {
       var prev = P().pendingAllow;
       var sameHold = prev && prev.capabilities && prev.capabilities.length === missing.length

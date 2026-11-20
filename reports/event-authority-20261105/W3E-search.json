@@ -1,0 +1,265 @@
+{
+  "files_searched": 894,
+  "families": [
+    {
+      "event_type": "backup.destination_changed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Backup_Restore_System.md",
+          "line": 794,
+          "text": "- `backup.destination_changed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "backup.state_changed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Backup_Restore_System.md",
+          "line": 793,
+          "text": "- `backup.state_changed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "remote_access.private_endpoint_state_changed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Remote_Access_System.md",
+          "line": 660,
+          "text": "- `remote_access.private_endpoint_state_changed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "remote_access.proxy_state_changed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Remote_Access_System.md",
+          "line": 658,
+          "text": "- `remote_access.proxy_state_changed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "remote_access.public_security_violation_detected",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Remote_Access_System.md",
+          "line": 661,
+          "text": "- `remote_access.public_security_violation_detected`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "remote_access.remote_link_state_changed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Remote_Access_System.md",
+          "line": 659,
+          "text": "- `remote_access.remote_link_state_changed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "remote_access.route_migration_state_changed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Remote_Access_System.md",
+          "line": 656,
+          "text": "- `remote_access.route_migration_state_changed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "remote_access.route_preference_changed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Remote_Access_System.md",
+          "line": 655,
+          "text": "- `remote_access.route_preference_changed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "remote_access.route_state_changed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Remote_Access_System.md",
+          "line": 654,
+          "text": "- `remote_access.route_state_changed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "remote_access.route_test_completed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Remote_Access_System.md",
+          "line": 657,
+          "text": "- `remote_access.route_test_completed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "restore.state_changed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Backup_Restore_System.md",
+          "line": 795,
+          "text": "- `restore.state_changed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "server.catalog_changed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Server_System.md",
+          "line": 1035,
+          "text": "- `server.catalog_changed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "server.client_pairing_state_changed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Server_System.md",
+          "line": 1040,
+          "text": "- `server.client_pairing_state_changed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "server.client_revoked",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Server_System.md",
+          "line": 1042,
+          "text": "- `server.client_revoked`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "server.client_trust_changed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Server_System.md",
+          "line": 1041,
+          "text": "- `server.client_trust_changed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "server.connection_state_changed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Server_System.md",
+          "line": 1043,
+          "text": "- `server.connection_state_changed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "server.discovery_expired",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Server_System.md",
+          "line": 1038,
+          "text": "- `server.discovery_expired`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "server.discovery_observed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Server_System.md",
+          "line": 1037,
+          "text": "- `server.discovery_observed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "server.endpoint_changed",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Server_System.md",
+          "line": 1036,
+          "text": "- `server.endpoint_changed`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    },
+    {
+      "event_type": "server.identity_mismatch_detected",
+      "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+      "scope": "All live Plans md/json/jsonl including nested schemas and fixtures; excluded generated shards/index/audits/migration/ledgers/bootstrap; exact literal family search then owner schema/service/command/state/policy inspection",
+      "hits": [
+        {
+          "path": "Plans/Server_System.md",
+          "line": 1039,
+          "text": "- `server.identity_mismatch_detected`"
+        }
+      ],
+      "negative_evidence": "No admitted family, event-specific payload schema, named family producer, family original-source/first-receipt adoption, filtered checkpoint or withdrawal contract found; current hits specify candidates/owner behavior only. Existing domain records and shared envelope/storage contracts are reused; all added bindings are newly authored, separately per family."
+    }
+  ]
+}
