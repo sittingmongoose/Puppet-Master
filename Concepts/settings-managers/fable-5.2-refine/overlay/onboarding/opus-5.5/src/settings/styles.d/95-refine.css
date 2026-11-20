@@ -112,7 +112,14 @@
 :is(#panel-settings, .pipe-host, .o55nc-host) .rf-pulse { outline: 2px solid var(--accent-primary, var(--k3-accent)); outline-offset: 2px; }
 
 /* ---- Limits & switching: each service on one line, with all of its own switching rules ---- */
-#panel-settings .setting-row.o55-row.rf-policy-row .setting-control { max-width: none; gap: 8px; flex-wrap: wrap; }
-#panel-settings .rf-policy-row .o55-policy-ctl .pm51-dd { width: 168px; }
+#panel-settings .setting-row.o55-row.rf-policy-row .setting-control { max-width: none; flex-wrap: wrap; }
 #panel-settings .rf-policy-row .rf-policy-reset { font-size: 11.5px; font-weight: 500; }
-#panel-settings .rf-policy-head { display: grid; grid-template-columns: 44px repeat(3, 168px); gap: 8px; justify-content: end; padding: 0 58px 2px 0; font-size: 11px; font-weight: 600; color: var(--k3-text-3); }
+/* the columns are the row's own: a 44 px switch and three 196 px fields, 12 px apart (61-providers.css) */
+#panel-settings .rf-policy-head { display: grid; grid-template-columns: 44px repeat(3, 196px); gap: 12px; justify-content: end; padding: 0 60px 2px 0; font-size: 11px; font-weight: 600; color: var(--k3-text-3); }
+
+/* ---- Settings Home: the search box leads, then what needs you ----
+   The headline and its paragraph said what the search box already says; the paragraph shows with Explain on. */
+#panel-settings .home-hero > :is(.home-eyebrow, .home-title) { display: none; }
+#panel-settings > #pm-settings-root:not([data-rf-explain="on"]) .home-hero > .home-lede { display: none; }
+#panel-settings .home-grid > .home-panel:nth-child(2) { order: -1; }
+#panel-settings .domain-rail .side-link.active .rf-rail-count { background: color-mix(in srgb, currentColor 20%, transparent); color: inherit; }

@@ -1,0 +1,76 @@
+# Settings managers, refined (Fable 5.2)
+
+PMConcept7's own Settings managers, made easier to look at and use. Same chapters, same managers, same tabs, same
+controls. Jared, 2026-11-20: "make the existing managers easier to use/easier to look at/ more digestible... Refine the
+current managers."
+
+This folder is not a second design. It is an **overlay of PMConcept7's sources**: changed copies of a few of its files
+and a few added files, built by PMConcept7's own build. Nothing of PMConcept7 in the repository is edited.
+
+## Build and open
+
+```sh
+tools/build.sh [out.html]     # default out: ~/.cache/smx-refine/serve/refined.html (about one minute)
+tools/take.sh <path under Concepts/>   # copy one of PMConcept7's files into overlay/ before changing it
+```
+
+`BASE` names the commit of PMConcept7's sources the overlay sits on. A build of `BASE` with an empty overlay is
+byte-identical to `Concepts/PMConcept7.html` at that commit.
+
+## What changed, everywhere
+
+| Change | Where it is made |
+|---|---|
+| **A row is its name and its control.** The sentence under a row, a section, a tab or a page shows when **Explain** is on (one button beside Page options, remembered) and in the row's "?" as before. | `styles.d/95-refine.css`, `managers/90-refine-frame.js` |
+| **One way to move, shown once.** The chapter list names the chapters. A chapter with one manager has no tab strip above it. The first manager's name is not repeated under its own tab. Tab strips sit at the left. | same |
+| **"On this page" only on long pages.** The side column listed every manager of the chapter and every tab, which the tab strips already do. It now lists the groups of the page in view, on pages without tabs that have four groups or more. | same |
+| **A page is a column you can read** (at most 1080 px wide), so a row's name and its control stay within reach. | `95-refine.css` |
+| **Status is one line of facts**, not rows that look like settings (`PM51.facts`). | `90-refine-frame.js` |
+| **Nothing here yet** is one line, not a tall box. **More options** is a quiet line, not a dashed box. Counters are one line. A list's add button says what it adds. | `95-refine.css` |
+| **Settings Home:** the search box leads, then what needs you. The rail's "Essential setup" and "Settings health" boxes repeated Home; the rail keeps one count beside Settings Home. | both |
+
+## What changed, by manager
+
+| Manager | Change |
+|---|---|
+| **Servers & Remote Access** | Its own chapter, right under AI & Providers (it was the second tab of System). Same manager, same five tabs. Every old link, search hit or saved place that names it lands on the new chapter. |
+| Servers › Home & Location | One line of facts (connected over, this device, work in progress, last change), then the three choices: Home server, Runs on, Files. |
+| Servers › Servers | The server's rows are the things you can change or act on. More options is one list. |
+| Servers › Away From Home | One card: the ways in, in the order they are tried, with "right now" and "when away" as facts above them. One filled button (the guided setup); each way in says "Set up". |
+| **Providers** › Services | The list and the service you picked come first; the three whole-list jobs sit under the list as quiet buttons. |
+| Providers › Limits & switching | Each service's own switching rules are on its line here, and only here: on or off, switch at, warn at, rest. |
+| **Editor and Terminal Customize** | Up to 1240 px wide. The options scroll on the left; the example, its meter, the presets and Try it stay on the right at full size. A line under the example names what you just changed. |
+| **Customize Pip, Adjust NieR** | 860 px wide. The parts scroll on the left; the picture, meter, presets and Play stay on the right. The same "Changed" line. |
+
+## Removed because it was there twice, or only led elsewhere
+
+Nothing a person can do was removed. Each line says where the same thing still is.
+
+| Removed | From | Still at |
+|---|---|---|
+| "Essential setup" and "Settings health" boxes | the chapter rail | Settings Home (same rows, same count) |
+| Rows Connection, Away from home, Work in progress, Last change, This device | Servers › Home & Location › Status | The facts line on the same tab; "Away from home" is the Away From Home tab |
+| Rows Role and Address | Servers › a server's details | The line under the server's name |
+| "Claim this server" (shown disabled), "Set up a new server", "Add another server", "Check this server" | Servers › a server › More options | The claim steps (when a server is not yours yet), "Add a server" on the list, "Test connection" on the server |
+| "Full server backup › Open Backup & Restore" | Servers › a server › More options | The server's menu: "Back up this server…" |
+| "Topology diagnostics" (counts of servers, devices, routes) | Servers › a server › More options | The tabs themselves; "Check server and devices" at the foot |
+| The status card "Away from home" (Right now, Preferred when away) | Servers › Away From Home | The facts line in the one card |
+| Link "Open Readiness & Doctor" | foot of Servers, Backup & Restore, App Updates | System › Readiness & Doctor |
+| Link "Check every service" | foot of Providers | The button of the same name under the list |
+| The switch "Switch accounts by themselves" and the fields Switch when, Warn when, Rest after | Providers › Services › This service | Limits & switching › Each service, on that service's line |
+| Rows "Screenshots" and "Browser status" | Testing & Debug › What it can test | Source Control › Browser & SCM, where they are set |
+| Row "Runs on" (a value, not a choice) | Source Control › Local Tools › a tool | Servers & Remote Access › Home & Location › Runs on |
+
+## Renamed, because two different settings had one name
+
+| Was | Is | Where |
+|---|---|---|
+| New chats start in (Regular / No pauses) | Pauses in new chats | Safety & Permissions › Profiles |
+| Safety level (Strict / Standard / Relaxed) | Branch safety | Source Control › Defaults & Safety |
+
+## Left alone on purpose
+
+- Personas' model lines, tag input, details line and list filter; every "Same as the project" line; every model
+  field; the Abilities "For the whole project" highlight; account-model persistence in the Models manager. Streams F
+  and P are changing those.
+- Browser & SCM › "Depends on": a check of stream F's kit names it.
