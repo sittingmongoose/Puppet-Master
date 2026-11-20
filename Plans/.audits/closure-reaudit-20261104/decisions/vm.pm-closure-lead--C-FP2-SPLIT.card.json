@@ -1,0 +1,48 @@
+{
+  "schema": "agent-reports/card@1",
+  "kind": "question",
+  "label": "C-FP2-SPLIT",
+  "project": "puppet-master",
+  "stream": "C",
+  "multiple": false,
+  "title": "Seven more old audit closures still split after two deep reviews: same majority rule as before?",
+  "now": "Stream C's final pass stage 2 re-checked 377 old audit closures after the Event Authority merge 2. 370 are settled. On 7 (rows 500, 535, 583, 584, 603, 672 and 1206) the two deep reviewers still disagree after re-judging with every earlier reading. As in stage 1, one reviewer says the cited text now covers the fix and the other says a smaller part is missing (for example an old command name still cited, one setting range not reconciled with older text). The majority of the three final readings gives: 500, 535, 603 and 672 stay closed; 584 reopens; 1206 counts as repaired; 583 has no majority (the three readings all differ). Each row's reasons are in SECOND-SPLIT-S2.md.",
+  "options": [
+    {
+      "key": "A",
+      "label": "Majority of the three readings; reopen 583",
+      "gets": "Same rule you chose for stage 1: 500, 535, 603 and 672 stay closed, 584 reopens, 1206 counts as repaired, and 583 reopens because no reading has a majority. No more review work.",
+      "costs": "One or two of the closed rows may hide a small gap that the stricter reviewer saw."
+    },
+    {
+      "key": "B",
+      "label": "Use that majority rule for every future split too",
+      "gets": "Same result as A now, and any later split after two rounds settles itself the same way without asking you again.",
+      "costs": "You stop seeing these individual cases."
+    },
+    {
+      "key": "C",
+      "label": "Reopen all seven",
+      "gets": "Nothing stays closed unless both reviewers agree; all seven go on the canon-fix list.",
+      "costs": "Seven more open audit findings to fix later, most of them small."
+    }
+  ],
+  "recommendation": {
+    "key": "B",
+    "why": "It matches your stage-1 answer, settles these seven by the evidence, and saves you the next card; fairly sure."
+  },
+  "replyTo": {
+    "pmMail": "pm-closure-lead",
+    "t3Thread": "thread:delegated-task:command%3Amcp%3A2af27c81-128f-451e-9ef3-749965d9524f%3Adelegate-task%3A2966c940-17a3-43ec-bd64-0e10e37ad499"
+  },
+  "id": "vm.pm-closure-lead--C-FP2-SPLIT",
+  "writer": "vm.pm-closure-lead",
+  "seq": 1352,
+  "writtenAt": "2026-11-19T23:51:59Z",
+  "nowAsOf": "2026-11-19T21:28:47Z",
+  "askedBy": "pm-closure-lead",
+  "state": "withdrawn",
+  "replies": [],
+  "askedAt": "2026-11-19T21:28:47Z",
+  "reason": "Answered by Jared on the deck 2026-11-19 6:49 PM EST: B, 'Use that majority rule for every future split too' (500, 535, 603, 672 stay closed; 584 and 583 reopen; 1206 repaired)."
+}
