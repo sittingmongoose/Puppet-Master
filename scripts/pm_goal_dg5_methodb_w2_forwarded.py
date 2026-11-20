@@ -28,6 +28,8 @@ PROJECTOR_ORIGINAL = {
     f'dg5/{where}/root/schema': where + '/root'
     for where in ('project/original', 'project/lower_original', 'cutover/original')
 }
+PROJECTOR_APPEND = {row.replace('/root/', '/append/root/'): code for row, code in PROJECTOR_ORIGINAL.items()}
+READ_APPEND = HISTORICAL_APPEND | PROJECTOR_APPEND
 ORIGINAL_SCHEMAS = HISTORICAL_ORIGINAL | PROJECTOR_ORIGINAL
 DEPENDENCIES = {
     'dg5/start/commit/schema': ('start/retained_native', 'commit', 'StorageCommit', 1272, 'commit'),
@@ -46,7 +48,7 @@ DEPENDENCIES = {
     REPRESENTATION: ('representation/record_equal', None, 'Projection', 486, None),
     **{
         row: (later, 'original_append', 'FullOriginalAppend', 256, 'original_append/full_value_result')
-        for row, later in HISTORICAL_APPEND.items()
+        for row, later in READ_APPEND.items()
     },
 }
 
@@ -61,8 +63,8 @@ class ForwardedCall(worker.CompleteCall):
         historical = []
 
         def observe(bank, reference, value, prefix='root'):
-            reader_append = self.row in HISTORICAL_APPEND
-            if reader_append and prefix == 'read_historical/root':
+            reader_append = self.row in READ_APPEND
+            if self.row in HISTORICAL_APPEND and prefix == 'read_historical/root':
                 target = bank.lookup(reference)
                 embedded = target.contents['properties']['original']
                 original = target.resolver.lookup(embedded['$ref'])
@@ -251,7 +253,7 @@ def check_root(out, name, specification, sites, reference, previous, alter_copy,
     proof = worker.pilot.run_gates(collector, out, [name])
     binding = proof / 'source-bindings.json'
     source_bindings = json.loads(binding.read_bytes())
-    checker = READERS if name == REPRESENTATION or name in HISTORICAL_APPEND or original else START
+    checker = READERS if name == REPRESENTATION or name in READ_APPEND or original else START
     for source in (Path(worker.__file__), Path(worker.stage.__file__), Path(__file__), worker.ROOT / checker):
         source_bindings['files'][str(source.relative_to(worker.ROOT))] = worker.sha(source)
     worker.write(binding, source_bindings)

@@ -44,8 +44,8 @@ REQUIRED_CHILDREN = ('source', 'record', 'required_children')
 
 class Fixture(stage.Fixture):
     def prepare(self):
-        if self.route.startswith('project_original/'):
-            where, _ = self.route.removeprefix('project_original/').rsplit('/', 1)
+        if self.route.startswith(('project_original/', 'read_append/project/', 'read_append/cutover/')):
+            where, _ = self.route.split('/', 1)[1].rsplit('/', 1)
             projector = stage.original.R.StartedProjector(self.world.registry, world=self.world)
             projector.install()
             generation = projector.stage()
@@ -386,7 +386,7 @@ class Fixture(stage.Fixture):
 class CompleteCall(stage.Example):
     def run(self, edit=None, cut=False):
         if (self.fixture.route not in ('publish_result', 'publish_original_append', 'projector/result') and
-                not self.fixture.route.startswith('project_original/')):
+                not self.fixture.route.startswith(('project_original/', 'read_append/project/', 'read_append/cutover/'))):
             return super().run(edit, cut)
         # These result checks run after the original call has written changes.
         # Every execution starts from an independent copy.

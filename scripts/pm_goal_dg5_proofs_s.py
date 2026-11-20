@@ -582,3 +582,17 @@ PROOFS['dg5/start/original_d01_update/schema'] = dict(
         'call records the same member at both sites.'
     ),
 )
+
+PROOFS['dg5/project/original/append/root/schema'] = dict(
+    kind='entailment',
+    families=['goal_run.started'],
+    depends_on=['dg5/project/original/root/schema'],
+    sites=[('scripts/pm_goal_dg_s_readers.py', 105), ('scripts/pm_goal_dg_s_readers.py', 253), ('scripts/pm_goal_dg_s_readers.py', 254), ('scripts/pm_goal_dg_s_readers.py', 256), ('scripts/pm_goal_dg_s_readers.py', 651)],
+    argument=(
+        'The original append document checked at 105 is assigned unchanged as original_append '
+        'in the enclosing object at 254. The schema checked at 256 requires the same append '
+        'definition. Both accepted and refused examples record the same JSON at both sites. '
+        'Disabling only the early check exposes the same first validation message at 256. '
+        'Restoring the early check restores the original refusal.'
+    ),
+)
