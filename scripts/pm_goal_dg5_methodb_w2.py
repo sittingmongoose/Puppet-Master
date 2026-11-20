@@ -43,6 +43,8 @@ REQUIRED_CHILDREN = ('source', 'record', 'required_children')
 
 
 class Fixture(stage.Fixture):
+    additional_controls = ()
+
     def prepare(self):
         if self.route == 'owner/current_goal':
             self.bank = self.goal_bank
@@ -123,6 +125,7 @@ class Fixture(stage.Fixture):
         return owner.issue, (entry['root'], value)
 
     def variants(self, document):
+        yield from self.additional_controls
         yield from super().variants(document)
         value = document['input']
         activation = self.world.edition.activation + '#/$defs/'
@@ -983,7 +986,7 @@ def replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword
     return None, (result or mismatch or {'reason': 'no example exercised the exact rule on the accepted documents'})
 
 
-def replay_root(fixture, captured, reference, examples, disable):
+def replay_root(fixture, captured, reference, examples, disable, *, checked_rules=None):
     bank = fixture.bank.original
     selector = captured['schema']['$ref']
     plain = bank.validator(selector)
@@ -1015,11 +1018,16 @@ def replay_root(fixture, captured, reference, examples, disable):
             siblings[reach['ipath']].append((location, info['node'], info['resolver']))
     require(all(not error_records(plain.iter_errors(value)) and not rules.errors_of(validator, value)
                 for value in controls), f'{root}: accepted schema control refused')
-    results, gaps, branch_cache = {}, {}, {}
+    results, gaps, branch_cache = dict(checked_rules or {}), {}, {}
+    require(set(results) <= set(ids), 'a nested workflow rule is outside the installed rule list')
     for location, info in nodes.items():
         node = info['node']
         for keyword in rules.clauses_of(node):
             rule_id = location + '/' + closure.clause_name(node, keyword)
+            if rule_id in results:
+                require(any(reach['ipath'][:1] == ('d01_current',) for reach in info['reach']),
+                        f'{rule_id}: reused rule is outside the required D01 document')
+                continue
             record, problem = replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword,
                                           examples.get(rule_id, ()), disable, branch_cache, siblings)
             (gaps if problem else results)[rule_id] = problem or record
