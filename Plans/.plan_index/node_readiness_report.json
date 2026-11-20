@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27900,
+    "depends_on_edge_count": 27901,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31135,
-    "node_count": 9633,
+    "edge_count": 31136,
+    "node_count": 9634,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3235,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-26T19:32:21Z",
+  "generated_at_utc": "2026-11-27T06:21:19Z",
   "gui_related_units": {
     "count": 3949,
     "units": [
@@ -12606,8 +12606,8 @@
         "source_location": {
           "heading": "DL-2601 - Rust Markdown Pipeline, Streaming Correctness, Sanitization, Math, Previews, And Testing Gates",
           "heading_level": 3,
-          "heading_line": 63245,
-          "line": 63247,
+          "heading_line": 63290,
+          "line": 63292,
           "path": "Plans/Decision_Log.md"
         }
       },
@@ -12617,8 +12617,8 @@
         "source_location": {
           "heading": "DL-2602 - C-FIX79: Jared takes the recommended answers to eleven closure plan questions",
           "heading_level": 3,
-          "heading_line": 63365,
-          "line": 63367,
+          "heading_line": 63410,
+          "line": 63412,
           "path": "Plans/Decision_Log.md"
         }
       },
@@ -12628,8 +12628,8 @@
         "source_location": {
           "heading": "DL-2603 - C-FIX79: how DL-2602 answer 9 (Free Models top-10) is applied",
           "heading_level": 3,
-          "heading_line": 63460,
-          "line": 63462,
+          "heading_line": 63505,
+          "line": 63507,
           "path": "Plans/Decision_Log.md"
         }
       },
@@ -12639,8 +12639,8 @@
         "source_location": {
           "heading": "DL-2604 - C-FIX79B: Jared takes the recommended answers to three more closure plan questions",
           "heading_level": 3,
-          "heading_line": 63509,
-          "line": 63511,
+          "heading_line": 63554,
+          "line": 63556,
           "path": "Plans/Decision_Log.md"
         }
       },
@@ -43463,10 +43463,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 9633,
+  "plan_unit_count": 9634,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 4945,
+      "high": 4946,
       "low": 10,
       "medium": 38,
       "standard": 4640
@@ -44713,6 +44713,7 @@
       "event_authority_contract_drift": 68,
       "event_authority_decision_drift": 1,
       "event_authority_drift": 1,
+      "event_authority_evidence_maintenance": 1,
       "event_authority_false_pass": 9,
       "event_authority_identity_and_replay": 58,
       "event_authority_identity_custody_or_replay": 62,
@@ -47736,7 +47737,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 9353,
+      "accepted": 9354,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47770,7 +47771,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 913,
+      "decision": 914,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,

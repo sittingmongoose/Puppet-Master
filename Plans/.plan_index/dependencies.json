@@ -3547,6 +3547,7 @@
     "DL-450",
     "DL-410",
     "DL-093",
+    "DL-2596",
     "ACD-221",
     "F3-477",
     "F3-460",
@@ -54098,6 +54099,11 @@
       "edge_type": "depends_on",
       "from": "DL-2595",
       "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2596",
+      "to": "DL-078"
     },
     {
       "edge_type": "depends_on",
@@ -165315,7 +165321,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-26T19:32:20Z",
+  "generated_at_utc": "2026-11-27T06:21:18Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -218817,6 +218823,23 @@
       "unit_type": "decision"
     },
     {
+      "context_scope": "event_authority_pnc019_merge3",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2596",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_evidence_maintenance",
+      "source_location": {
+        "heading": "DL-2596: Event Authority corrects the retained Goal created coverage citation",
+        "heading_level": 3,
+        "heading_line": 63076,
+        "line": 63078,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
       "context_scope": "event_authority_pnc019_merge3_dt_application_count",
       "gui_related": false,
       "owner_doc": "Plans/Decision_Log.md",
@@ -218826,8 +218849,8 @@
       "source_location": {
         "heading": "DL-2597: Queue and tool histories outside a Project have separate Application counts",
         "heading_level": 3,
-        "heading_line": 63076,
-        "line": 63078,
+        "heading_line": 63121,
+        "line": 63123,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -218843,8 +218866,8 @@
       "source_location": {
         "heading": "DL-2598: Event Authority cites the approved safe_point.created count",
         "heading_level": 3,
-        "heading_line": 63123,
-        "line": 63125,
+        "heading_line": 63168,
+        "line": 63170,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -218860,8 +218883,8 @@
       "source_location": {
         "heading": "DL-2599: Event Authority cites the approved safe_point.restored count",
         "heading_level": 3,
-        "heading_line": 63184,
-        "line": 63186,
+        "heading_line": 63229,
+        "line": 63231,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -218894,8 +218917,8 @@
       "source_location": {
         "heading": "DL-2601 - Rust Markdown Pipeline, Streaming Correctness, Sanitization, Math, Previews, And Testing Gates",
         "heading_level": 3,
-        "heading_line": 63245,
-        "line": 63247,
+        "heading_line": 63290,
+        "line": 63292,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -218911,8 +218934,8 @@
       "source_location": {
         "heading": "DL-2602 - C-FIX79: Jared takes the recommended answers to eleven closure plan questions",
         "heading_level": 3,
-        "heading_line": 63365,
-        "line": 63367,
+        "heading_line": 63410,
+        "line": 63412,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -218928,8 +218951,8 @@
       "source_location": {
         "heading": "DL-2603 - C-FIX79: how DL-2602 answer 9 (Free Models top-10) is applied",
         "heading_level": 3,
-        "heading_line": 63460,
-        "line": 63462,
+        "heading_line": 63505,
+        "line": 63507,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -218945,8 +218968,8 @@
       "source_location": {
         "heading": "DL-2604 - C-FIX79B: Jared takes the recommended answers to three more closure plan questions",
         "heading_level": 3,
-        "heading_line": 63509,
-        "line": 63511,
+        "heading_line": 63554,
+        "line": 63556,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -329085,10 +329108,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27900,
+    "depends_on_edge_count": 27901,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31135,
-    "node_count": 9633,
+    "edge_count": 31136,
+    "node_count": 9634,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3235,
     "unresolved_reference_count": 0

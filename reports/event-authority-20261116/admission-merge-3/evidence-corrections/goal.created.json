@@ -1,0 +1,77 @@
+{
+  "criterion": "positive_negative_oracles",
+  "decision_ref": "Plans/Decision_Log.md#DL-2596",
+  "event_type": "goal.created",
+  "finding": "The historical closed_members ID grouped two keyword checks at one retained-v2 schema location.",
+  "predecessor_assessments": [
+    {
+      "assessment_row_sha256": "9bddcdd59fba1c46b48f8db048622ce90259e1a331f99d16474b2d56531f6f57",
+      "commit": "3af916f4b663aced600d1929b8d9195035c97114",
+      "path": "reports/event-authority-20261115/PNC019-C12-GO-grades.json",
+      "sha256": "19b14aea9e2a382aa6648223ab5a760ab6f056c9a65c672e5678e8b82ecec965"
+    },
+    {
+      "assessment_row_sha256": "9bddcdd59fba1c46b48f8db048622ce90259e1a331f99d16474b2d56531f6f57",
+      "commit": "3af916f4b663aced600d1929b8d9195035c97114",
+      "path": "reports/event-authority-20261115/PNC019-C12-GO2-grades.json",
+      "sha256": "61a267fa783c66920e692535601949cd9d5b5642644e4db2f5cefe2aade2cdba"
+    }
+  ],
+  "preserved": {
+    "criterion_verdicts": 12,
+    "grade": "12/12",
+    "native_execution": "NOT_RUN",
+    "predecessor_assessment_bytes": true,
+    "registry_row": true
+  },
+  "registry_row": {
+    "canonical_sha256": "bd2ea459fb6dd10628931d6637cf87024805947c35f809ebe15a258d563cc5d9",
+    "commit": "3af916f4b663aced600d1929b8d9195035c97114",
+    "family_id": "event-family-goal-created",
+    "family_revision": "3.0.0",
+    "path": "Plans/event_family_registry.json",
+    "pointer": "#/families/10"
+  },
+  "replay": {
+    "checker": {
+      "path": "scripts/pm_goal_created_retained_closure_test.py",
+      "sha256": "82acb5cda183804f460df3d888fe7ea6546dfb406a1726656ad9c03e70ee7ea5"
+    },
+    "historical_invalid_sha256": "0cec1ef46448c96dd67a2efd5dcd94ced585dd5d00a047fbd19cbf338ca29a2d",
+    "historical_reports": {
+      "closure-merged.json.gz": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-go/closure/closure-merged.json.gz",
+        "rule": "pm.goal_runtime_event.goal_created.schema.v2/closed_members",
+        "sha256": "261704a83870b795b5b0d85ddf5d0ac7217f7ea12bba6cae61a13ef657f97198"
+      },
+      "v3-a.json.gz": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-go/closure/v3-a.json.gz",
+        "rule": "pm.goal_runtime_event.goal_created.schema.v2/closed_members",
+        "sha256": "ce7b77a975603bdd2d5c19d2a609633888164767adbfae06b0d261bdd410b372"
+      }
+    },
+    "main": "3af916f4b663aced600d1929b8d9195035c97114",
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/goal-methodb-pilot/goal-created-retained-closure/RESULT.json",
+    "pilot_commit": "ff51a4257a5640e5002752baf4a1b7489b810fd2",
+    "root": "go:complete/owner_schema/Plans/goal_created_reader_contracts/retained-v2.schema.json#",
+    "schema_path": "Plans/goal_created_reader_contracts/retained-v2.schema.json",
+    "schema_sha256": "80ed49a733fde275617523cf9825e85d8e4625b49c3f9d5c4890eaad5a573e92",
+    "sha256": "610a2add4b89ba08db2cea6e00da36e03db381025d7620504dc323016bb0a4a5",
+    "single_rule_tests": {
+      "additionalProperties": {
+        "both_messages_restored": true,
+        "full_reader_refusal_persisted": true,
+        "other_message_preserved": true,
+        "own_message_removed": true
+      },
+      "unevaluatedProperties": {
+        "both_messages_restored": true,
+        "full_reader_refusal_persisted": true,
+        "other_message_preserved": true,
+        "own_message_removed": true
+      }
+    }
+  },
+  "reseal_item": "P may add this replay citation when refreshing the selected goal.created assessment.",
+  "schema_id": "pm.assurance.event_authority.registered_evidence_correction.v1"
+}
