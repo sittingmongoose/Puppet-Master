@@ -74,8 +74,18 @@ def terminal_kind(directory, negative):
     return world, world.sir.terminalize, (command_id, kind), {}
 
 
+def storage_cas(directory, negative):
+    storage = updated.O.S.TestOwnerStorage.create(directory / 'storage')
+    storage.transact([dict(table='stage7', key='versioned', expected=None, value={'value': 'first'})])
+    version = storage.cell('stage7', 'versioned')['version']
+    write = dict(table='stage7', key='versioned', expected=version + int(negative),
+                 value={'value': 'second'})
+    return storage, storage.transact, ([write],), {}
+
+
 # The explicit lines match the input matrix. Validate the observed location on every run.
 CASES = {
+    'storage-cas': (STORAGE, 1657, 'tx/cas_version', storage_cas),
     'terminal-kind': (OWNERS, 803, 'dgu/sir/terminal_immutable', terminal_kind),
     'receipt-intent': (OWNERS, 1210, 'dgu/body/commit/receipt_intent', receipt_intent),
     'reservation-retry': (OWNERS, 1173, 'dgu/body/reserve/conflicting_reservation', reservation_retry),
