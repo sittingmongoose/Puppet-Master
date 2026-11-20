@@ -1,0 +1,369 @@
+{
+  "status": "PASS_GOAL_SWEEP",
+  "base": "2f44dc23cdc12ca49c82b43b16bd0310f8e11777",
+  "verified_code_commit": "34e1e0eb80a6100846fd5a430b37d6cf02b3d397",
+  "calls": 62778,
+  "guards": 1395,
+  "proved": 1378,
+  "unproved_with_proof": [
+    {
+      "guard": "restore_point.deleted/original/active checkpoint",
+      "proof": {
+        "kind": "earlier_frozen_checker_clauses",
+        "earlier_guards": [
+          "restore_point.deleted/original/unique actual current generation"
+        ],
+        "owner": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_checkpoint_check.py",
+        "owner_sha256": "c3387fdc480b26389d188326d82bb8e359a7a5344372456acd50fedac8d3be2e",
+        "line": 101,
+        "frozen_manifest_sha256": "62bbf9a084a438f03c320764778768b78c98eecb3994783b145bd50509d40923",
+        "proof": "The earlier equality makes the current-state key list exactly [curr] whenever curr is non-null. The null case returns before this row. g is then ids[curr], so g.state must be current. This applies to every key/state combination, not sampled fixtures."
+      }
+    },
+    {
+      "guard": "restore_point.deleted/original/actual key+JSON-pointer generation node",
+      "proof": {
+        "kind": "earlier_frozen_checker_clauses",
+        "earlier_guards": [
+          "restore_point.deleted/original/generation/dataset identity",
+          "restore_point.deleted/original/row/source/immutable generation-anchor join"
+        ],
+        "owner": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_checkpoint_check.py",
+        "owner_sha256": "c3387fdc480b26389d188326d82bb8e359a7a5344372456acd50fedac8d3be2e",
+        "line": 116,
+        "frozen_manifest_sha256": "62bbf9a084a438f03c320764778768b78c98eecb3994783b145bd50509d40923",
+        "proof": "The earlier complete row equality fixes checkpoint_ref to KEY plus /generations/g.generation_id. The earlier generation identity fixes that ID to its dictionary key. g is the selected dictionary node, so resolving those exact two pointer components returns the same object g, and the parsed physical key is KEY. The closed generation-ID grammar contains no slash or pointer escape."
+      }
+    },
+    {
+      "guard": "restore_point.deleted/original/created original receipt source",
+      "proof": {
+        "kind": "earlier_owner_schema_or_checker_clause",
+        "earlier_guards": [
+          "restore_point.deleted/original/receipt join",
+          "restore_point.deleted/original/receipt location",
+          "restore_point.deleted/original/created original locator",
+          "restore_point.deleted/original/created original source manifest_generation",
+          "restore_point.deleted/original/created complete original birth binding",
+          "restore_point.deleted/original/created original/current immutable event"
+        ],
+        "owner": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/dependency_runtime.py",
+        "owner_sha256": "1e7dc3dd7a3e4fa789bb7d9eac23951282219dc0cfca6e5ebb1fb8977471f5ff",
+        "line": 65,
+        "proof": "The earlier created-domain receipt join fixes event_id/sequence_id to the current event and fixes manifest_generation/durable_end_offset to source_fixture. Its receipt-location join fixes all three locator fields to source_fixture. The earlier original source cursor equality and manifest equality fix those source_fixture values to publication. The complete birth binding derives publication event_id/sequence_id from the original source frame, and the earlier immutable-event equality makes that frame the current event. Transitivity therefore establishes every conjunct of this later receipt/publication row."
+      }
+    },
+    {
+      "guard": "restore_point.deleted/original/explicit accepted summary schema",
+      "proof": {
+        "kind": "earlier_owner_schema_or_checker_clause",
+        "earlier_guards": [
+          "restore_point.deleted/original/schema/477628436f3f5e87e0501138f643cbfd68d93cb1a6bb3d942457a72976536a3a",
+          "restore_point.deleted/original/schema/744dacb4d6057ebd7f4701d2303fdb5be5efbf494de15365cabb8759152c79fd"
+        ],
+        "owner": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/validate_deleted_v3.py",
+        "owner_sha256": "a952176bc8256734cb435ed2a8b8f4f7f49430faa4e2167841c4ac098eff13da",
+        "line": 197,
+        "proof": "Version 1 selects a schema requiring exactly 1.0.0. Every other version selects a schema requiring exactly 2.0.0. A value outside the compared pair therefore always fails the selected earlier whole schema.",
+        "schema_clauses": [
+          "/properties/schema_version/const"
+        ],
+        "schema_sha256s": [
+          "477628436f3f5e87e0501138f643cbfd68d93cb1a6bb3d942457a72976536a3a",
+          "744dacb4d6057ebd7f4701d2303fdb5be5efbf494de15365cabb8759152c79fd"
+        ]
+      }
+    },
+    {
+      "guard": "restore_point.deleted/original/filtered project",
+      "proof": {
+        "kind": "earlier_owner_schema_or_checker_clause",
+        "earlier_guards": [
+          "restore_point.deleted/original/duplicate global event ID",
+          "restore_point.deleted/original/complete matching deletion set for this bounded joined fixture",
+          "restore_point.deleted/original/actual complete current source event/index identity"
+        ],
+        "owner": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/validate_deleted_v3.py",
+        "owner_sha256": "a952176bc8256734cb435ed2a8b8f4f7f49430faa4e2167841c4ac098eff13da",
+        "line": 239,
+        "proof": "The earlier complete matching set contains exactly the candidate event ID and selects only source frames whose project equals the checkpoint project. The earlier global-ID uniqueness makes that frame unique. The earlier complete source-event identity equates this same unique frame to the candidate event. Its project must therefore equal the checkpoint project before this later comparison."
+      }
+    },
+    {
+      "guard": "restore_point.deleted/original/native completion requires committed operation",
+      "proof": {
+        "kind": "earlier_owner_schema_or_checker_clause",
+        "earlier_guards": [
+          "restore_point.deleted/original/schema/c15ebf162d84881f53087e799bc95f9b9e082976c3af5d9b436350e108246118",
+          "restore_point.deleted/original/full original append acknowledgement retained through command result",
+          "restore_point.deleted/original/schema/a9ae6c4ea2e8938f9162a5976cf89733133448eb33aea2e43996e73796c1689e"
+        ],
+        "owner": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/validate_deleted_v3.py",
+        "owner_sha256": "a952176bc8256734cb435ed2a8b8f4f7f49430faa4e2167841c4ac098eff13da",
+        "line": 116,
+        "proof": "The earlier original-owner schema requires ack.original_receipt to be an object. The earlier complete acknowledgement equality makes it equal op.append_receipt. The earlier operation schema permits only pending_append/committed and requires a pending_append operation to have a null append_receipt. Therefore every pending_append candidate fails one of those earlier clauses; every candidate reaching this row must be committed.",
+        "schema_sha256s": [
+          "c15ebf162d84881f53087e799bc95f9b9e082976c3af5d9b436350e108246118",
+          "a9ae6c4ea2e8938f9162a5976cf89733133448eb33aea2e43996e73796c1689e"
+        ]
+      }
+    },
+    {
+      "guard": "restore_point.deleted/original/original append receipt publication join",
+      "proof": {
+        "kind": "earlier_owner_schema_or_checker_clause",
+        "earlier_guards": [
+          "restore_point.deleted/original/receipt join",
+          "restore_point.deleted/original/receipt location",
+          "restore_point.deleted/original/original source cursor/frame-end",
+          "restore_point.deleted/original/source witness original manifest_generation",
+          "restore_point.deleted/original/typed original publication complete binding",
+          "restore_point.deleted/original/original append/current source immutable event scope identity"
+        ],
+        "owner": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/check-sources/adoption_v4_check.py",
+        "owner_sha256": "2fa5b8168bfe30c8fee5592615f1ede66ec5bfd68b9acec2b234be0e29ff4ff9",
+        "line": 149,
+        "proof": "The earlier created-domain receipt join fixes event_id/sequence_id to the current event and fixes manifest_generation/durable_end_offset to source_fixture. Its receipt-location join fixes all three locator fields to source_fixture. The earlier original source cursor equality and manifest equality fix those source_fixture values to publication. The complete birth binding derives publication event_id/sequence_id from the original source frame, and the earlier immutable-event equality makes that frame the current event. Transitivity therefore establishes every conjunct of this later receipt/publication row."
+      }
+    },
+    {
+      "guard": "restore_point.deleted/original/read token schema",
+      "proof": {
+        "kind": "earlier_owner_schema_or_checker_clause",
+        "earlier_guards": [
+          "restore_point.deleted/original/exact current generation/anchor/frontier/source/redb snapshot token",
+          "restore_point.deleted/original/closed checkpoint schema"
+        ],
+        "owner": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/check-sources/adoption_v4_check.py",
+        "owner_sha256": "2fa5b8168bfe30c8fee5592615f1ede66ec5bfd68b9acec2b234be0e29ff4ff9",
+        "line": 22,
+        "proof": "The earlier exact-token equality fixes all ten members to token(v). generic_validate has already validated the selected generation/frontier. Storage is the fixed valid UUID SID; both keys and the snapshot prefix are nonempty constructed strings; generation_id comes from the validated selected node; revision is its bounded uint64 publication_revision; index_dataset_name is the validated nonempty dataset name; source_selection is copied from the validated frontier; both digests are SHA-256 hexdigests. The constructed token contains exactly the required closed shape. Thus equality plus the earlier complete checkpoint schema implies this later read-token schema.",
+        "schema_sha256": "71dbfd352c5854a3b072a675ee7f785a5369fe9cf8fb8cdc66ee98f9e4ea4567",
+        "constructor_source_sha256": "2fa5b8168bfe30c8fee5592615f1ede66ec5bfd68b9acec2b234be0e29ff4ff9"
+      }
+    },
+    {
+      "guard": "restore_point.deleted/original/six immutable runtime owner references",
+      "proof": {
+        "kind": "earlier_owner_schema_or_checker_clause",
+        "earlier_guards": [
+          "restore_point.deleted/original/run snapshot schema"
+        ],
+        "owner": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/check-sources/adoption_v4_check.py",
+        "owner_sha256": "2fa5b8168bfe30c8fee5592615f1ede66ec5bfd68b9acec2b234be0e29ff4ff9",
+        "line": 143,
+        "proof": "shape validates the complete immutable snapshot before this row. All six named owner references are required strings with minLength at least one. Every falsey value therefore fails that earlier whole snapshot schema.",
+        "schema_path": "Plans/requested_effective_runtime.schema.json",
+        "schema_sha256": "1e18bb2b0ae2e530649187cc8a30f546526df5091c73355c454f98a112360048"
+      }
+    },
+    {
+      "guard": "restore_point.deleted/retained/all actual current admission gates hold at disclosure",
+      "proof": {
+        "kind": "earlier_owner_schema_or_checker_clause",
+        "earlier_guards": [
+          "restore_point.deleted/retained/native boundary must verify actual registered/coherent admitted store origin",
+          "restore_point.deleted/retained/current actual disclosure permissions",
+          "restore_point.deleted/retained/new reader explicitly installed; no old binding widening",
+          "restore_point.deleted/retained/all actual admission/registration/installation/origin facts unchanged before disclosure"
+        ],
+        "owner": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/fixture_store.py",
+        "owner_sha256": "a09d61d58888dbe4289927eb7bfe8da13f573ad8c061e447782d72b75474365e",
+        "line": 81,
+        "proof": "On this complete read path only successful open_read issues a lease. Its three earlier admission predicates establish every conjunct and capture current_admission_facts. That captured dictionary contains every gate flag, reader_binding and installed_bindings. The earlier final equality requires all those facts unchanged, so every conjunct remains true. This proof concerns the sequential TEST_ONLY complete-read model; it makes no native atomicity claim.",
+        "scope": "complete sealed read through real issued lease; no fabricated issued-state inputs"
+      }
+    },
+    {
+      "guard": "restore_point.deleted/retained/full current token before disclosure",
+      "proof": {
+        "kind": "earlier_owner_schema_or_checker_clause",
+        "earlier_guards": [
+          "restore_point.deleted/retained/actual native owner read differs from caller snapshot",
+          "restore_point.deleted/retained/exact authenticated canonical rows/source/origin unchanged before disclosure"
+        ],
+        "owner": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/fixture_store.py",
+        "owner_sha256": "a09d61d58888dbe4289927eb7bfe8da13f573ad8c061e447782d72b75474365e",
+        "line": 84,
+        "proof": "authenticate_exact_snapshot first establishes the supplied snapshot equals the independently resolved native snapshot, then stores its exact copy. read_present passes supplied.read_token to this fence. The earlier final whole-snapshot equality makes actual equal that stored copy, including read_token. Therefore actual.read_token equals the argument. No mutable callback runs between that equality and the token comparison in this sequential fixture.",
+        "scope": "complete sealed read through real issued lease; no fabricated issued-state inputs"
+      }
+    },
+    {
+      "guard": "restore_point.deleted/retained/original native hash recipe",
+      "proof": {
+        "kind": "earlier_owner_schema_or_checker_clause",
+        "earlier_guards": [
+          "restore_point.deleted/original/schema/e75d33b603a3b4caaba0a5c1fb4f796b21bf83ebb92a3679c3c92c260aca3515"
+        ],
+        "owner": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/retained_read.py",
+        "owner_sha256": "0615772c63ad151dbdb4a44bf267fd4aaf480d951c03212cb331ed286813ebf0",
+        "line": 54,
+        "proof": "The complete creation-companion schema runs before this row and its record_hash_recipe_id const is exactly the compared literal. Every value making this row false is refused by that earlier schema. The schema boundary has its own first-refusal witness.",
+        "schema_clause": "/properties/record_hash_recipe_id/const",
+        "schema_sha256": "e75d33b603a3b4caaba0a5c1fb4f796b21bf83ebb92a3679c3c92c260aca3515"
+      }
+    },
+    {
+      "guard": "schema/23e31dc0b8fb6a33/type",
+      "proof": {
+        "kind": "earlier_owner_union",
+        "earlier_guard": "schema/71ebd528555cf8ea/anyOf",
+        "owner": "Plans/event_record.schema.json#/$defs/nullable_non_negative_integer",
+        "owner_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "checker": "scripts/pm_goal_oracle_common.py:491",
+        "proof": "The branch declaration selects one nullable alternative. A valid other alternative accepts without a refusal. If the complete union fails, schema_guards returns the parent anyOf refusal before branch attribution. Thus this branch row can never refuse first; the parent row is separately proved."
+      }
+    },
+    {
+      "guard": "schema/514ea0705639075d/type",
+      "proof": {
+        "kind": "earlier_owner_union",
+        "earlier_guard": "schema/71ebd528555cf8ea/anyOf",
+        "owner": "Plans/event_record.schema.json#/$defs/nullable_non_negative_integer",
+        "owner_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "checker": "scripts/pm_goal_oracle_common.py:491",
+        "proof": "The branch declaration selects one nullable alternative. A valid other alternative accepts without a refusal. If the complete union fails, schema_guards returns the parent anyOf refusal before branch attribution. Thus this branch row can never refuse first; the parent row is separately proved."
+      }
+    },
+    {
+      "guard": "schema/98246b4781022e26/type",
+      "proof": {
+        "kind": "earlier_owner_edition_union",
+        "earlier_guard": "schema/ee57e450933a6833/oneOf",
+        "owner": "Plans/event_append_receipt_contracts.schema.json#/$defs/custody_reader",
+        "owner_sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "checker": "scripts/pm_goal_oracle_common.py:schema_guards",
+        "proof": "Both supported editions require an object. On a non-object both branch types fail and schema_guards reports the complete oneOf before branch attribution. On an object both root type predicates hold. Therefore neither edition root type can refuse first; the earlier edition-union predicate is separately proved."
+      }
+    },
+    {
+      "guard": "schema/d7f4eabd194b120a/type",
+      "proof": {
+        "kind": "earlier_owner_edition_union",
+        "earlier_guard": "schema/ee57e450933a6833/oneOf",
+        "owner": "Plans/event_append_receipt_contracts.schema.json#/$defs/custody_reader",
+        "owner_sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "checker": "scripts/pm_goal_oracle_common.py:schema_guards",
+        "proof": "Both supported editions require an object. On a non-object both branch types fail and schema_guards reports the complete oneOf before branch attribution. On an object both root type predicates hold. Therefore neither edition root type can refuse first; the earlier edition-union predicate is separately proved."
+      }
+    },
+    {
+      "guard": "schema/e718b5042c897bbe/type",
+      "proof": {
+        "kind": "earlier_owner_union",
+        "earlier_guard": "schema/b34f9a375418a2bc/anyOf",
+        "owner": "Plans/event_record.schema.json#/$defs/nullable_non_empty_string",
+        "owner_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "checker": "scripts/pm_goal_oracle_common.py:491",
+        "proof": "The branch declaration selects one nullable alternative. A valid other alternative accepts without a refusal. If the complete union fails, schema_guards returns the parent anyOf refusal before branch attribution. Thus this branch row can never refuse first; the parent row is separately proved."
+      }
+    }
+  ],
+  "maximum_rows_per_table": 1,
+  "exact_expected_refusal_kills": 1378,
+  "whole_checker_cut_accepts": 1223,
+  "whole_checker_cut_later_refusals": 135,
+  "whole_checker_cut_exceptions": 20,
+  "mutation_without_credit": 17,
+  "authored_expectation_failures": 0,
+  "source_changed_during_run": [],
+  "extension_family_scopes": {
+    "restore_point.deleted": {
+      "rows": 434,
+      "proved": 424,
+      "earlier_clause_proofs": 10
+    },
+    "run.started": {
+      "rows": 214,
+      "proved": 209,
+      "earlier_clause_proofs": 5
+    }
+  },
+  "store_snapshots": 193,
+  "native_execution": "NOT_RUN",
+  "proof_scope": "Boolean observation dispatch after the complete checker derives each real predicate from full inputs. No schema keyword occurrence proof or universal whole-checker cut acceptance is inferred.",
+  "pending": [],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/joint-final-v76/collection.json",
+      "sha256": "cf2717465d8ccca03178371f64b7b32b3b5260f516f803a1a339289317336b38"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/joint-final-v76/tables/summary.json",
+      "sha256": "30ed4045e083e4ce6193d8e0cf3fd7a1d3b38bf7a5d2bda5353afbc50da125c4"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/joint-final-v76/mutations.json",
+      "sha256": "8c14f7d5b075f9ae1b5e4bf041f2e134bd77f8a401eac0c6ddfcce2149cdee69"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/joint-final-v76/schema-inventory.json",
+      "sha256": "76fb05b47270dd45a287d035e826dd5f4d666b3925f4752d736ad0c776677a02"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/joint-final-v76/source-bindings.json",
+      "sha256": "382676008a40ddae44000b5563d408d630f09aee7b8af771bd49c0d4d8fe0460"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/joint-final-v76/retained-store-snapshots.json",
+      "sha256": "9ba6f01d7896145a9354d3c568d5dae53217ed66ee2588fb4a4f877f62326724"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/joint-final-v76/SHA256SUMS",
+      "sha256": "449f9d4560e6a43d5ce4f6c4abe0c3978537667c8b4e92ac157c0937fb7a23d5"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/judge-final-v77/judge-self-test.json",
+      "sha256": "daa51baa9d0f0c0e14787f99fd9e52a5f7ac55937637eeceb12ce49918383cd1"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/retained-snapshots-final-v78/capture.json",
+      "sha256": "a407f51760759733b346f35b398363daded0b367b5472e33c03d64fe544f8112"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/retained-snapshots-final-v78/full-backing-snapshots.json",
+      "sha256": "c947d9bc674b52636e701b3f2e58a90f09db1af53c0bf1f4a96922ee72eb4a51"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/retained-snapshots-final-v78/capture.py",
+      "sha256": "ddf7e1b560d5d5a1f7d74514e3febef95eac86f61b774370cf09ecad5145b0a2"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/pinned-regressions-v29/regressions.json",
+      "sha256": "cdd08a936536e76c6567088656167054065342fb64d150c4131031b8d86cb6b8"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/final-pin-check.json",
+      "sha256": "c6d445297f585be28f9bc6582987332c5acd03147528c882ecce10bfb85c6442"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/timestamp-role-audit.json",
+      "sha256": "bc5c38322ec4b33bfe64ed494e80d54cb054735885504545f512e2a5084dae81"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/copied-timestamp-refusal.json",
+      "sha256": "1268a384b4a3aef3b678b6fff35bd9ec71fee049ed0cb07f75e2b8bc908ef094"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/owner-format-preservation.json",
+      "sha256": "dc041ee850ab78939411095ff14bc55e120fc01c3ff9db8924f39ef5f8f90608"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/frozen-large-integer.json",
+      "sha256": "11b493312ccac326c849e03bfeea5e597bdfb52159c8d494a40519609c9ebad7"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/grade-vector-tamper.json",
+      "sha256": "89283d95e804826b827d2bb0f9aafbacab54ba5f5b66ef201342657da7a7068c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/numbers.log",
+      "sha256": "498c4ebe809cf5afad2e737a2137648bdb541b613c0480c58f2c316f178b0221"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/datetime-inventory-v5.log",
+      "sha256": "0accb1ae14ea2a64eba143c28ff617e77bbdc1abdcf88da572be241bb24a9f68"
+    }
+  ]
+}

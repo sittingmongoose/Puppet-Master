@@ -165,14 +165,11 @@ SHARED.update({
         ('operation_source_ref', 'Operation source_state_ref names the exact immutable source wrapper for this operation.',
          'operation_source_ref_mismatch'),
     ])),
-    'operation_size_entailed': ('Operation 16 KiB inline limit (entailed, no single-defect witness)', [
+    'operation_size': ('Operation 16 KiB inline limit', [
         ('OZ01_operation_size', 'OZ01_operation_size',
-         'The complete encoded operation value is at most 16 KiB. ENTAILED: the operation stores only redacted refs and '
-         'identity (SP-1350, Plans/storage-plan.md:29614); bodies are externalized via SP-337 first. Every inline field is '
-         'schema-bounded (const tags/media, sha256 digest, uint64 byte_size, safe_ref<=512 source_state_ref, enum state, '
-         'null-or-AppendReceipt receipt) or an identifier joined earlier at OP03/OP04/OP05/OP06, or refused by the '
-         'preceding envelope/identity phases (EN17, ID rows). No single-defect input is first refused here.',
-         'operation_oversize'),
+         'The complete encoded operation value is at most 16 KiB (SP-1350). Reachable: a long authentic original '
+         'source identity makes the operation (owner_operation_id plus its hex copies in event_id and idempotency_key) '
+         'exceed 16 KiB while the envelope metadata stays within EN17.', 'operation_oversize'),
     ]),
     'pack': ('SP-337 durable packs: event intent and logical source body', _rows('PK', [
         ('pack_present', 'The referenced event payload pack exists in the durable store.', 'pack_missing'),
@@ -256,6 +253,14 @@ SHARED.update({
         ('CP26_token_uint64', 'CP26_token_uint64',
          'Every durable token uint64 slot is an exact Storage uint64 (shared storage_uint64), even where jsonschema admits a float spelling.',
          'token_uint64_out_of_domain'),
+        ('CP27_token_storage_uuid', 'CP27_token_storage_uuid',
+         'The durable token storage_instance_id satisfies its owner schema format uuid (JSON Schema format checker), never a silently skipped annotation.',
+         'token_storage_not_uuid'),
+        ('CP27_selection_storage_uuid', 'CP27_selection_storage_uuid',
+         'The token source_selection storage_instance_id satisfies its owner schema format uuid.', 'selection_storage_not_uuid'),
+        ('CZ01_checkpoint_size', 'CZ01_checkpoint_size',
+         'The complete encoded checkpoint value is at most 16 KiB (SP-1350). Reachable: the joined live Storage control '
+         'strings (checkpoint_key, checkpoint_ref, index_dataset_name) are unbounded.', 'checkpoint_oversize'),
     ]),
     'checkpoint_type_entailed': ('Checkpoint selected_event_type (entailed by CP01 const)', [
         ('CP03_checkpoint_type', 'CP03_checkpoint_type',
@@ -275,15 +280,6 @@ SHARED.update({
          'closed schema with exactly these required fields and additionalProperties=false '
          '(Plans/bsd_event_storage_contracts.schema.json). An extra or missing field is refused by CP01_root_schema first, so no '
          'single-defect input is first refused here.', 'snapshot_persisted'),
-    ]),
-    'checkpoint_size_entailed': ('Checkpoint 16 KiB inline limit (entailed, no single-defect witness)', [
-        ('CZ01_checkpoint_size', 'CZ01_checkpoint_size',
-         'The complete encoded checkpoint value is at most 16 KiB. ENTAILED: the checkpoint stores only the nine-field '
-         'durable token, the cursor and identity (SP-1350, Plans/storage-plan.md:29615); no body is inline. Every '
-         'unbounded token field (checkpoint_key, checkpoint_ref, index_dataset_name) is joined earlier at '
-         'CP08/CP09/CP14, and every other field is schema-bounded (uuid, eig_[64hex], sha256, uint64, const). No '
-         'single-defect input is first refused here.',
-         'checkpoint_oversize'),
     ]),
     'scan': ('Complete scanned-range proof and verified matches', _rows('SC', [
         ('generic_source', 'SP-278 actual CURRENT-selected global complete index coverage is proved, not caller flags.',
@@ -322,32 +318,37 @@ SHARED.update({
         ('HI11_not_deleted', 'HI11_not_deleted', 'A deleted/withdrawn linked body is unavailable and never resurrected.', 'body_deleted'),
         ('HI12_ref_available', 'HI12_ref_available', 'The original reference resolves; missing source is explicitly unavailable.', 'original_unavailable'),
         ('HI13_retained_recipe', 'HI13_retained_recipe', 'Historical reading uses the authenticated original admission/version/number/format recipe without current live-state tests.', 'retained_recipe_invalid'),
-        ('HI14_backup_coherent', 'HI14_backup_coherent', 'Canonical operation, original lifecycle records, receipt, pack refs and controls restore as one verified coherent cut.', 'backup_cut_incoherent'),
+        ('HI14_backup_coherent', 'HI14_backup_coherent', 'Canonical operation, original lifecycle records, receipt, pack refs and controls restore as one verified coherent cut (computed by the restore model).', 'backup_cut_incoherent'),
+        ('HI08_not_foreign', 'HI08_not_foreign', 'The original belongs to this Storage instance. Reachable: a fully coherent original sealed by another Storage instance passes every frozen recomputation.', 'original_foreign'),
+        ('HI11_body_not_deleted', 'HI11_body_not_deleted', 'The linked logical body is not tombstoned; a deleted body is unavailable and never resurrected.', 'linked_body_deleted'),
     ]),
-    'foreign_original_entailed': ('Original Storage-instance ownership (entailed by HI05 identity)', [
-        ('HI08_not_foreign', 'HI08_not_foreign',
-         'The original belongs to this Storage instance and Project partition. ENTAILED: a foreign storage_instance_id changes '
-         'the event_id recipe preimage; HI05_original_verifies recomputes event_id from the binding storage and refuses first '
-         '(frozen_verify identity_ok, scripts/pm_w3d_bsd_events.py). No single-defect input is first refused here.',
-         'original_foreign'),
-    ]),
-    'replay': ('No-effect historical replay', _rows('RP', [
-        (f'no_{e}', f'Replay performs no {e} effect; only the rebuildable projection/checkpoint changes.',
+    'replay': ('No-effect historical replay (instrumented replay model)', _rows('RP', [
+        (f'no_{e}', f'Replay performs no {e} effect; only the rebuildable projection/checkpoint changes (sink snapshot).',
          f'replay_effect_{e}') for e in EFFECTS
-    ])),
-    'withdrawal': ('Writer cutoff and governed withdrawal', _rows('WD', [
-        ('cutoff_recorded', 'The writer cutoff fences new owner operations and records the exact cutoff under Storage governance.',
+    ] + [('projection_rebuilt', 'Replay rebuilds exactly the derived projection of the authentic original event.',
+          'replay_projection_invalid')])),
+    'withdrawal': ('Writer cutoff and governed withdrawal (withdrawal model)', _rows('WD', [
+        ('cutoff_recorded', 'The writer cutoff for this exact family is recorded under Storage governance.',
          'cutoff_not_recorded'),
-        ('pending_drained', 'Previously issued pending inputs are drained/resolved before withdrawal.', 'pending_not_drained'),
-        ('selector_withdrawn', 'The reader selector is withdrawn and publications/checkpoints invalidated.', 'selector_not_withdrawn'),
-        ('no_advance', 'A withdrawn publication never advances.', 'withdrawn_advance'),
-        ('no_event_created', 'Withdrawal creates no event.', 'withdrawal_event_created'),
+        ('pending_drained', 'No previously issued pending operation is left pending after withdrawal.', 'pending_not_drained'),
+        ('selector_withdrawn', 'The family reader selector is withdrawn.', 'selector_not_withdrawn'),
+        ('publication_invalidated', 'Reader publications/checkpoints are invalidated (publication_state withdrawn).',
+         'publication_not_invalidated'),
+        ('no_event_created', 'Withdrawal creates no event (log snapshot unchanged).', 'withdrawal_event_created'),
+        ('order', 'Cutoff fences first, pending inputs drain next, then the selector and publications are withdrawn.',
+         'withdrawal_order_invalid'),
+        ('drain_honest', 'Each drained operation settles with its own original receipt or is explicitly unavailable; no success is fabricated.',
+         'withdrawal_drain_fabricated'),
     ])),
 })
 
 # Independent compound clauses found in the lane-wide derivation audit.
 _extras = {
-    'AD01_registration': [('AD01_cutoff', 'No writer cutoff is active.', 'writer_cutoff')],
+    'AD01_registration': [('AD01_cutoff', 'No writer cutoff is recorded under Storage governance for this exact family.', 'writer_cutoff')],
+    'AD09_current_writer_generation': [('AD09_writer_generation_domain',
+        'The owner writer_generation is an exact non-negative current integer (shared current_integer); typed equality alone admits matching floats.',
+        'writer_generation_out_of_domain')],
+
     'AD04_project_scope': [('AD04_scope_kind', 'The actual source scope kind is Project.', 'scope_kind_mismatch')],
     'EN13_migration_null': [('EN13_migration_' + k, 'This migration member remains null: ' + k,
                             'migration_' + k + '_not_null') for k in MIGRATION_FIELDS],
@@ -356,7 +357,7 @@ _extras = {
                           k + '_out_of_domain') for k in CHECKPOINT_INTEGERS],
     'SC04_cursor_sequence': [('SC04_no_regression', 'The scanned cursor does not regress behind its prior.', 'cursor_regressed')],
     'SC05_cursor_value': [('SC05_cursor_unique', 'Exactly one stored record matches a non-empty selected cursor.', 'cursor_ambiguous')],
-    'SC06_matched_verified': [('SC06_custody_event', 'The selected custody belongs to the original event.', 'scan_custody_event_mismatch')],
+    'SC06_matched_verified': [('SC06_custody_event', 'The resolved custody full-value commitment equals the matched record (original custody verified, not merely present).', 'scan_custody_event_mismatch')],
 }
 for _phase in ('admission', 'admission_config', 'envelope', 'pack', 'checkpoint', 'scan'):
     _title, _rows0 = SHARED[_phase]
@@ -376,15 +377,167 @@ _title, _receipt_rows = SHARED['receipt']
 SHARED['receipt'] = (_title, [r for row in _receipt_rows for r in
     [row] + [(n, n, inv, code) for n, inv, code in _receipt_extras.get(row[0], [])]])
 
+# --- PNC-019 s4d: appended rows (stable existing ids preserved) -----------------------------------------
+def _append(phase, entries):
+    title, rows0 = SHARED[phase]
+    SHARED[phase] = (title, rows0 + [(n, n, inv, code) for n, inv, code in entries])
+
+
+_append('receipt', [
+    ('RC27_head_schema', 'The published head value validates under its exact closed head schema.', 'head_schema_invalid'),
+    ('RC28_operation_complete_schema', 'The settled complete operation validates under its closed operation schema; state complete carries the receipt.',
+     'operation_complete_invalid'),
+    ('RC29_operation_receipt_join', 'The complete operation stores exactly the original first AppendReceipt.', 'operation_receipt_mismatch'),
+    ('RC30_head_receipt_join', 'The published head stores exactly the original first AppendReceipt.', 'head_receipt_mismatch'),
+    ('RC31_operation_complete_identity', 'Settlement changes only state and receipt; every other pending operation field is preserved.',
+     'operation_settlement_rewrote'),
+])
+_append('retry', [
+    ('RT11_retry_no_new_event', 'Retry appends no EventRecord (Storage log snapshot unchanged).', 'retry_appended_event'),
+    ('RT12_retry_no_new_receipt', 'Retry mints no receipt custody (receipt index snapshot unchanged).', 'retry_minted_receipt'),
+])
+_append('scan', [
+    ('SC09_degraded_state', 'An unverifiable frame in the captured range makes the publication degraded at its survivor prefix; it is never skipped as empty or current.',
+     'scan_corruption_skipped'),
+    ('SC10_inclusive_restart', 'Restart rescans the retained prior cursor frame inclusively.', 'scan_restart_exclusive'),
+])
+_append('cas', [('CS07_publication_not_withdrawn', 'A withdrawn publication never advances.', 'withdrawn_advance')])
+
+BODY_JOINS = {
+    'policy': ('project_id', 'revision'),
+    'workflow_binding': ('binding_id', 'policy_revision'),
+    'assignment': ('bsd_assignment_id', 'binding_id', 'primary_run_id', 'epoch'),
+    'review_cycle': ('review_cycle_id', 'bsd_assignment_id', 'primary_generation'),
+    'finding': ('bsd_finding_id', 'assignment_id', 'finding_key'),
+    'quarantine': ('quarantine_id', 'assignment_id', 'review_cycle_id'),
+    'review_start': ('project_id', 'policy_revision', 'binding_id', 'bsd_assignment_id', 'primary_run_id', 'epoch',
+                     'primary_generation', 'review_cycle_id'),
+}
+for _kind, _fields in BODY_JOINS.items():
+    SHARED[f'body_{_kind}'] = (f'Stored logical {_kind} body identity joined to the authentic source (SP-1365)', [
+        (f'BJ_{f}', f'BJ_{f}', f'The stored logical {_kind} body {f} equals the authentic owner source for this transition.',
+         f'body_{f}_mismatch') for f in _fields])
+
+SHARED['redaction'] = ('Protected owner content never enters the event', _rows('RD', [
+    ('payload_no_protected', 'No protected owner content (claim, transcript, raw output, instructions, authentication session) appears in the event payload.',
+     'payload_protected_content'),
+    ('envelope_no_protected', 'No protected owner content appears in envelope metadata.', 'envelope_protected_content'),
+]))
+SHARED['projection'] = ('Derived projection value of the matched original event', _rows('PJ', [
+    ('projection_schema', 'The derived projection validates under its exact closed projection schema.', 'projection_schema_invalid'),
+    ('projection_key', 'The projection key is bsd_<family>_projection.v1:{scope_partition}:{hex(owner_operation_id)}.', 'projection_key_invalid'),
+    ('projection_event', 'The projection event_id equals the matched original event.', 'projection_event_mismatch'),
+    ('projection_sequence', 'The projection sequence_id equals the matched original Storage sequence.', 'projection_sequence_mismatch'),
+    ('projection_operation', 'The projection owner_operation_id equals the matched original operation.', 'projection_operation_mismatch'),
+    ('projection_source', 'The projection source_state_ref equals the matched original source wrapper.', 'projection_source_mismatch'),
+    ('projection_event_ref', 'The projection source_event_ref resolves exactly the matched original Storage record.', 'projection_event_ref_invalid'),
+]))
+SHARED['projection_size_entailed'] = ('Projection 16 KiB inline limit (entailed by EN17 on the admitted record)', [
+    ('PJ08_projection_size', 'PJ08_projection_size',
+     'The complete encoded projection is at most 16 KiB. ENTAILED: every projection string is joined to the admitted record '
+     '(PJ03-PJ07) except constants, source_state_ref (safe_ref <= 512) and the fixed-width Storage locator. Write P for the '
+     'projection strings and E for the record envelope strings EN17 bounded at append: E includes event_id, '
+     'idempotency_key = "bsd-key@1:" + hex(project) + ":" + hex(op) (length 2p + 2o + 11) and project_id, so '
+     'p + o + |event_id| <= E - o - 2p - 11. The non-joined projection parts total below 800 bytes, so P > 16384 needs '
+     'o + 2p < E - 15595 <= 789, which bounds |event_id| (87 + 2|type| + 2p + 2o) and P below 2,700 bytes: a contradiction. '
+     'No admitted record makes a projection first refused here.', 'projection_oversize'),
+])
+SHARED['rebuild'] = ('Governed successor rebuild after withdrawal (rebuild model)', _rows('RB', [
+    ('successor_admitted', 'Rebuild runs only under an explicitly admitted successor reader recorded by Storage governance.', 'successor_not_admitted'),
+    ('canonical_preserved', 'Canonical original EventRecord bytes are unchanged by rebuild.', 'canonical_bytes_changed'),
+    ('derived_only', 'Rebuild discards and rewrites only derived rows; canonical operations, sources and heads are unchanged.', 'canonical_rows_changed'),
+    ('lost_source_unavailable', 'A lost or expired source is reported unavailable, never rebuilt as empty or success.', 'lost_source_rebuilt'),
+    ('no_fresh_effects', 'Rebuild performs no review, tool, Usage, note, notification, lifecycle write or event append.', 'rebuild_effect'),
+    ('successor_reader', 'Rebuilt rows name the admitted successor reader, never a fallback alias of the withdrawn reader.', 'rebuild_reader_alias'),
+    ('derived_rebuilt', 'Each rebuilt projection equals the deterministic projection of its canonical original.', 'rebuild_projection_invalid'),
+]))
+RESTORE_PARTS = ('source_wrapper', 'logical_pack', 'operation', 'payload_pack', 'receipt_custody', 'head', 'controls')
+RESTORE_CHAIN_PARTS = ('start_wrapper', 'start_pack')
+
+
+def _restore_rows(parts, joins):
+    out = []
+    for part in parts:
+        out.append((f'{part}_present', f'The backup cut contains the required {part}.', f'restore_{part}_missing'))
+        out.append((f'{part}_cut', f'The backed-up {part} belongs to the one selected coherent cut.', f'restore_{part}_other_cut'))
+    return [(f'RS_{n}', f'RS_{n}', inv, code) for n, inv, code in out + joins]
+
+
+SHARED['restore'] = ('Coherent mandatory backup cut and restore (restore model)', _restore_rows(RESTORE_PARTS, [
+    ('operation_source', 'The restored operation source_state_ref names the restored source wrapper.', 'restore_operation_source_mismatch'),
+    ('custody_event', 'The restored receipt custody belongs to the restored operation event.', 'restore_custody_event_mismatch'),
+    ('payload_pack_digest', 'The restored payload pack bytes match the operation payload_ref digest and size.', 'restore_payload_pack_mismatch'),
+    ('logical_pack_digest', 'The restored logical pack bytes match the wrapper logical_payload_ref digest and size.', 'restore_logical_pack_mismatch'),
+    ('head_source', 'The restored head names the restored source wrapper.', 'restore_head_source_mismatch'),
+    ('head_receipt', 'The restored head carries the restored original first receipt.', 'restore_head_receipt_mismatch'),
+    ('controls_selection', 'The restored recovery controls select the restored Storage instance and manifest generation.', 'restore_controls_mismatch'),
+    ('restored_equal', 'Restore writes exactly the backed-up bytes; nothing is altered or reconstructed.', 'restore_bytes_altered'),
+]))
+SHARED['restore_review_chain'] = ('Coherent backup of the immutable review start (restore model, review chain)', _restore_rows(RESTORE_CHAIN_PARTS, [
+    ('start_pack_digest', 'The restored start pack bytes match the start wrapper logical_payload_ref.', 'restore_start_pack_mismatch'),
+]))
+_DERIVED_POLICY_ROWS = [
+    (f'RN{13 + i}_{k}_policy', f'The candidate {k} row keeps its own {p} policy, never the event policy.', f'retention_{k}_policy_mismatch')
+    for i, (k, p) in enumerate((('operation', 'RP-EVENT-IDENTITY-APPROOT'), ('projection', 'RP-PROJECTION-3GEN'),
+                                ('checkpoint', 'RP-PROJECTION-3GEN')))]
+
+
+def _numbered(entries):
+    return [(n, n, inv, code) for n, inv, code in entries]
+
+
+SHARED['retention_runtime'] = ('Event retention RP-RUNTIME-365D binding (retention model)', _numbered([
+    ('RN01_policy_bound', 'The family record carries exactly the retention_policy_ref bound for this family.', 'retention_policy_mismatch'),
+    ('RN02_policy_in_catalog', 'The bound policy is an exact object of the Storage retention catalog.', 'retention_policy_unknown'),
+    ('RN03_anchor_run', 'The expiry anchor is the recorded completion of the actual primary_run_id this record names.', 'retention_anchor_wrong_run'),
+    ('RN04_no_fabricated_anchor', 'A missing or nonterminal run completion never fabricates an anchor; the record stays ineligible.', 'retention_anchor_fabricated'),
+    ('RN05_no_restart', 'Retry, replay and restore never restart the expiry anchor.', 'retention_anchor_restarted'),
+    ('RN06_ttl_inclusive', 'Expiry is inclusive at anchor plus 31,536,000 seconds (catalog ttl_seconds).', 'retention_ttl_boundary_invalid'),
+    ('RN07_hold_override', 'Holds and protecting references override expiry eligibility.', 'retention_hold_ignored'),
+    ('RN08_cap_rolls_successor', 'Past 1,000,000 per run or 5,000,000 per Project the overflow action is roll_successor.',
+     'retention_overflow_not_rolled'),
+    ('RN08_cap_keeps_history', 'Overflow deletes no unexpired history.', 'retention_overflow_deleted'),
+] + _DERIVED_POLICY_ROWS))
+SHARED['retention_indefinite'] = ('Event retention RP-AUTHORITY-INDEFINITE binding, DL-453 (retention model)', _numbered([
+    ('RN01_policy_bound', 'The family record carries exactly the retention_policy_ref bound for this family.', 'retention_policy_mismatch'),
+    ('RN02_policy_in_catalog', 'The bound policy is an exact object of the Storage retention catalog.', 'retention_policy_unknown'),
+    ('RN09_no_age_expiry', 'The history has no age expiry.', 'retention_age_expiry'),
+    ('RN10_no_count_expiry', 'The history has no count expiry or eviction.', 'retention_count_expiry'),
+    ('RN11_explicit_delete_only', 'Only explicit Delete Puppet Master project data removes it; Remove project from list does not.', 'retention_delete_rule_invalid'),
+    ('RN12_pressure_refuses_new', 'Under disk pressure a new record is refused.', 'retention_pressure_accepted'),
+    ('RN12_pressure_keeps_history', 'Under disk pressure existing history is kept (nothing evicted).', 'retention_pressure_evicted'),
+] + _DERIVED_POLICY_ROWS))
+SHARED['crash'] = ('Producer crash boundaries and recovery (producer model)', [(n, n, inv, code) for n, inv, code in [
+    ('CR01_packs_before_refs', 'Payload and body packs are durable before any committed value references them.', 'crash_ref_before_pack'),
+    ('CR02_source_op_atomic', 'The source wrapper and pending operation commit together: every cut holds both or neither.', 'crash_source_op_split'),
+    ('CR03_head_prior_until_receipt', 'The lifecycle head stays at its prior state at every cut until the operation completes with its original receipt (the head never leads).', 'crash_head_early'),
+    ('CR05_frozen_intent', 'Recovery appends exactly the frozen pending intent bytes, never a re-derived input.', 'crash_intent_rederived'),
+    ('CR06_single_append', 'After recovery exactly one EventRecord exists for this idempotency identity.', 'crash_second_append'),
+    ('CR07_original_receipt', 'Recovery resolves the original first receipt; it never mints a second one.', 'crash_receipt_reminted'),
+    ('CR08_complete_before_result', 'No successful result is exposed at any cut before the complete operation with its original receipt is durable, so never before the first receipt.', 'crash_result_before_complete'),
+    ('CR09_head_with_operation', 'Whenever the operation is complete the head is published with it in the same atomic step (the head never lags).', 'crash_head_split'),
+    ('CR10_outcome_preserved', 'The recovered outcome equals the uncrashed outcome (event id, receipt, head).', 'crash_outcome_changed'),
+    ('CR11_settled_values_valid', 'The settled operation and head validate under their closed schemas.', 'crash_settled_invalid'),
+]])
+SHARED['crash_review_start'] = ('Review start settles before provider dispatch (producer model, review_started)', _rows('CD', [
+    ('dispatch_after_receipt', 'Provider dispatch happens only after the start barrier receipt settles, and recovery never dispatches twice.',
+     'crash_dispatch_early'),
+]))
+
 # Shared phase order of each path through the complete checker.
 PATHS = {
-    'append': ['admission', 'eligibility', 'envelope', 'joins', 'identity', 'payload', 'source', 'operation', 'pack'],
+    'append': ['admission', 'eligibility', 'envelope', 'joins', 'identity', 'payload', 'source', 'operation',
+               'operation_size', 'pack', 'body', 'owner', 'redaction'],
     'settle': ['receipt'],
     'retry': ['retry'],
-    'publish': ['checkpoint', 'scan', 'cas'],
+    'publish': ['checkpoint', 'scan', 'cas', 'projection'],
     'read': ['history'],
     'replay': ['replay'],
     'withdraw': ['withdrawal'],
+    'rebuild': ['rebuild'],
+    'restore': ['restore', 'restore_review_chain'],
+    'retention': ['retention'],
+    'crash': ['crash', 'crash_review_start'],
 }
 
 
@@ -579,9 +732,29 @@ REVIEW_CHAIN = ('advice_emitted', 'finding_cleared', 'finding_held', 'finding_re
                 'review_timed_out')
 
 
+def owner_rows(fam):
+    rows = []
+    for field, src in fam['owner_sources']:
+        what = {'scope': 'the authentic Project scope', 'operation': 'the operation recomputed from the authentic source',
+                'fact': 'the authentic owner decision', 'fact_map': 'the authentic owner decision mapped to its payload tag',
+                'body': 'the authentic stored logical source body', 'start': 'the authentic immutable review start',
+                'ref': 'the reference named by the authentic owner decision', 'evidence': 'the evidence owner commitment',
+                'null': 'null: no such object exists at this transition'}[src[0]]
+        rows.append((f'OW_{field}_join', f'Payload {field} equals {what}.', f'owner_{field}_mismatch'))
+        if field in spec.REF_KINDS and src[0] != 'null':
+            kind = spec.REF_KINDS[field]
+            rows.append((f'OW_{field}_resolved', f'Payload {field} resolves an owner-held object; a matching string is never source authority.',
+                         f'owner_{field}_unresolved'))
+            rows.append((f'OW_{field}_kind', f'The {field} object is a {kind}.', f'owner_{field}_kind_mismatch'))
+            rows.append((f'OW_{field}_subject', f'The {field} object belongs to this exact subject.', f'owner_{field}_subject_mismatch'))
+            rows.append((f'OW_{field}_project', f'The {field} object belongs to this Project.', f'owner_{field}_project_mismatch'))
+    return [(n, n, inv, code) for n, inv, code in rows]
+
+
 def family_phases():
     out = {}
     for fam in spec.FAMILIES:
+        out[f'owner_{fam["slug"]}'] = (f'Payload fields joined to authentic owner sources: {fam["event_type"]}', owner_rows(fam))
         out[f'payload_{fam["slug"]}'] = (f'Closed payload schema and source joins: {fam["event_type"]}',
                                          payload_rows(fam))
         out[f'source_{fam["slug"]}'] = (f'Original source custody and transition semantics: {fam["event_type"]}',
@@ -643,6 +816,16 @@ def chunked_phases():
 
 
 def phase_name(phase, fam):
+    if phase == 'owner':
+        return f'owner_{fam["slug"]}'
+    if phase == 'body':
+        return f'body_{fam["source_kind"]}'
+    if phase == 'retention':
+        return 'retention_runtime' if fam['assignment_backed'] else 'retention_indefinite'
+    if phase == 'restore_review_chain':
+        return phase if fam['slug'] in REVIEW_CHAIN else None
+    if phase == 'crash_review_start':
+        return phase if fam['slug'] == 'review_started' else None
     if phase == 'payload':
         return f'payload_{fam["slug"]}'
     if phase == 'source':
@@ -654,6 +837,19 @@ def phase_name(phase, fam):
     if phase == 'eligibility':
         return 'eligibility' if fam['slug'] == 'assignment_started' else None
     return phase
+
+
+def family_phase_names(fam):
+    """Every unchunked phase a family's paths evaluate (used for the per-family witness requirement)."""
+    out = []
+    for path in PATHS:
+        for phase in PATHS[path]:
+            if phase == 'source' and fam['slug'] == 'review_started':
+                out.append('start_body_review_started')
+            name = phase_name(phase, fam)
+            if name is not None and name not in out:
+                out.append(name)
+    return out
 
 
 def path_phases(path, fam):

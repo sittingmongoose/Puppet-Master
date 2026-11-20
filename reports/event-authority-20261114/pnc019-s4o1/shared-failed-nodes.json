@@ -1,0 +1,485 @@
+{
+  "inventory_status": "pass",
+  "failures": [
+    {
+      "check": "datetime_node_685fb507bb81",
+      "path": "Plans/event_payloads/w3h/assistant_plan_schedule_invalidated.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "assistant_plan.schedule_invalidated/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_9010f1e2a76a",
+      "path": "Plans/event_payloads/w3h/docker_compose_scenario_deleted.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "docker.compose.scenario.deleted/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_73430c55d715",
+      "path": "Plans/event_payloads/w3h/docker_compose_scenario_edited.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "docker.compose.scenario.edited/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_c05e08ef498b",
+      "path": "Plans/event_payloads/w3h/docker_compose_scenario_run.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "docker.compose.scenario.run/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_11a552d17d68",
+      "path": "Plans/event_payloads/w3h/docker_compose_scenario_saved.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "docker.compose.scenario.saved/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_f8ea83fa6e08",
+      "path": "Plans/event_payloads/w3h/execution_window_created.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "execution_window.created/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_92beaff9ac5e",
+      "path": "Plans/event_payloads/w3h/execution_window_invalidated.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "execution_window.invalidated/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_e768c31f8800",
+      "path": "Plans/event_payloads/w3h/execution_window_updated.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "execution_window.updated/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_b9c57419e9ff",
+      "path": "Plans/event_payloads/w3h/goal_continuation_evaluated.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "goal.continuation_evaluated/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_bd033979f6f5",
+      "path": "Plans/event_payloads/w3h/named_plan_archived.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "named_plan.archived/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_a8137dbec0d7",
+      "path": "Plans/event_payloads/w3h/named_plan_child_refs_changed.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "named_plan.child_refs_changed/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_b16b646bda56",
+      "path": "Plans/event_payloads/w3h/named_plan_created.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "named_plan.created/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_b8dafb4e74b5",
+      "path": "Plans/event_payloads/w3h/named_plan_priority_changed.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "named_plan.priority_changed/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_f281ca3c8898",
+      "path": "Plans/event_payloads/w3h/named_plan_renamed.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "named_plan.renamed/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_19268dc2c092",
+      "path": "Plans/event_payloads/w3h/named_plan_restored.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "named_plan.restored/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_149827e37305",
+      "path": "Plans/event_payloads/w3h/runtime_automation_pause_changed.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "runtime.automation_pause_changed/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_3386e99799d1",
+      "path": "Plans/event_payloads/w3h/runtime_quota_resume_attempted.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "runtime.quota_resume_attempted/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_5e5ccf39cb46",
+      "path": "Plans/event_payloads/w3h/runtime_quota_resume_consent_changed.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "runtime.quota_resume_consent_changed/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_4dc8b236f9a6",
+      "path": "Plans/event_payloads/w3h/runtime_quota_wait_started.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "runtime.quota_wait_started/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_3cf13a3194fd",
+      "path": "Plans/event_payloads/w3h/scheduled_dispatch_cancelled.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "scheduled_dispatch.cancelled/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_e465189d57f9",
+      "path": "Plans/event_payloads/w3h/scheduled_dispatch_created.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "scheduled_dispatch.created/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_086b5a2a8896",
+      "path": "Plans/event_payloads/w3h/scheduled_dispatch_dispatched.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "scheduled_dispatch.dispatched/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_82b97ea9dad7",
+      "path": "Plans/event_payloads/w3h/scheduled_dispatch_failed.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "scheduled_dispatch.failed/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_a01182d57df0",
+      "path": "Plans/event_payloads/w3h/scheduled_dispatch_held.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "scheduled_dispatch.held/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_4005d3fdfa19",
+      "path": "Plans/event_payloads/w3h/scheduled_dispatch_updated.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "scheduled_dispatch.updated/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_e39397582e20",
+      "path": "Plans/event_payloads/w3h/todo_created.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "todo.created/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_c9b0f6722cd2",
+      "path": "Plans/event_payloads/w3h/todo_dependency_changed.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "todo.dependency_changed/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_bc18b8a5e184",
+      "path": "Plans/event_payloads/w3h/todo_removed_from_current_list.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "todo.removed_from_current_list/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_8481c9dac7c3",
+      "path": "Plans/event_payloads/w3h/todo_reordered.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "todo.reordered/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_b252ee01b6bd",
+      "path": "Plans/event_payloads/w3h/todo_status_changed.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "todo.status_changed/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_42f2202b6659",
+      "path": "Plans/event_payloads/w3h/todo_updated.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "todo.updated/project/settled/external/publication/prepared_event"
+      }
+    },
+    {
+      "check": "datetime_node_8a3ac0c22b7a",
+      "path": "Plans/event_payloads/w3h/todo_work_bound.schema.json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "profile": "storage_utc_z",
+      "control_source": {
+        "path": "scripts/pm_w3h_events.py",
+        "origin": "build_world",
+        "pointer": "todo.work_bound/project/settled/external/publication/prepared_event"
+      }
+    }
+  ]
+}

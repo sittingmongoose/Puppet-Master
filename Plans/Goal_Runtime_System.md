@@ -2904,7 +2904,7 @@ Event-specific minima:
 | `goal.blocked` | `blocker_class`, `blocked_reason_code`, `cause`, `affected_scope`, `last_recovery_attempt_ref?`, `autonomous_recovery_stop_reason`, `next_safe_action`, `allowed_action_ids[]`  Whole historical v2 only; current Project v3 prepared at GRS-203/SP-429/CV-422, activation refused on the explicit source/edge gaps. |
 | `goal.cancelled` (whole historical v2 only; active v3: GRS-073) | `cancel_reason`, `mutation_started`, `cancellation_scope`, `settlement_refs[]`, `rollback_refs[]?` |
 | `goal_run.started` (whole historical v2 only; active v3: GRS-079 with SP-311) | `goal_run_id`, `workgraph_ref`, `activation_receipt_ref`, `active_worknode_request_refs[]`, `write_mode`, `certification_tier` |
-| `goal_run.replanned` | `goal_run_id`, `previous_workgraph_ref`, `new_workgraph_ref`, `replan_generation`, `affected_worknode_refs[]`, `cancelled_or_resteered_refs[]`, `next_action` |
+| `goal_run.replanned` | `goal_run_id`, `previous_workgraph_ref`, `new_workgraph_ref`, `replan_generation`, `affected_worknode_refs[]`, `cancelled_or_resteered_refs[]`, `next_action` Current v3 (prepared, DL-080 option 1): GRS-3100 with CV-3100, SP-3100 and EP-3101 on `all_writers.v8` births, adding `original_graph_patch` and `original_graph_patch_history`; this v2 row stays the historical reader. |
 | `goal_run.blocked` | `goal_run_id`, `blocked_reason_code`, `blocked_scope`, `allowed_action_ids[]`, `preserved_work_refs[]`, `block_receipt_ref` Current v3 (prepared, DL-080): GRS-201 with CV-420/421, SP-426/427 and EP-200; this v2 row stays the historical reader. |
 | `goal_run.certified` | Active v3: the complete `pm.goal_runtime_event.goal_run_certified.schema.v3` payload and coordinator identity EventRecord root that GRS-084 selects (schema roots bound by CV-352), only for a genuine fresh `pm.executor.workflow_source.all_writers.v7` birth and `pm.goal_run_certified.producer_source.v2` prepare.v2 binding, with GRS-085 governing its mandatory started/cancelled/certified prefix projection, SP-316 its compact original authority families and v7 wrapper routes, and SP-317 its projection/checkpoint families. Retained whole-v2 only: `goal_run_id`, `certification_receipt_ref`, `validator_outputs[]`, `worknode_receipt_refs[]`, `unresolved_risk_refs[]`, `final_certifier_decision`. |
 | `goal_run.cancelled` (whole historical v2 only; active v3: GRS-080 with SP-312) | `goal_run_id`, `cancel_reason`, `mutation_started`, `settlement_refs[]`, `rollback_refs[]?` |
@@ -3723,6 +3723,8 @@ A contradiction at steps 1-4 appends nothing. Storage may not pick a value to re
 
 `certified`, `failed`, and `cancelled` are terminal. `blocked` and `stopped` are fenced, resumable only through a new revision and valid `goal_run.replanned` admission. Worker or WorkNode success produces `provisional_success`, never `certified`.
 
+Amended 2026-11-14 (DL-080 option 1, PNC-019 lane rv8b): the valid `goal_run.replanned` admission is GRS-3100's v3 contract, written only by EP-3101's Replan writer on a genuine `all_writers.v8` birth. A run born under a profile without that writer keeps the fence: its blocked or stopped status leaves only by D06 cancellation (GRS-080, GRS-200, GRS-201). A stopped run whose stop recorded `resumable=false` is resumed only by a replan whose original sources prove changed admission conditions (D-R21).
+
 ##### 4.3 Activation state
 
 `ActivationState = activation_pending | records_materialized | entrypoints_queued | start_event_pending | active | cancelled_before_mutation`
@@ -4015,6 +4017,7 @@ Historical interpretation only under GRS-072/CV-346: preserve the complete follo
 - Branches: workgraph refs differ; generation is previous generation + 1; each affected WorkNode has exactly one referenced `cancelled|resteered` disposition record. Allowed action is `continue_running|repair|remain_blocked|stop|cancel|begin_verification`.
 - Transition: `running|provisional_success|verifying|failed_verification|repairing|blocked|stopped ->` successor by action: `continue_running=>running`, `repair=>repairing`, `remain_blocked=>blocked`, `stop=>stopped`, `cancel=>cancelled`, `begin_verification=>verifying`. `ready` and terminal sources are illegal.
 - Basis: `C-GRS-MIN`, `C-GRS-LIFE` (`GRS-026..027`), `D-R19`.
+- Current writes (amended 2026-11-14, DL-080 option 1): these fields and edges describe the v2 row. Current writes use GRS-3100's v3 payload (CV-3100) on `all_writers.v8` births, with the same six actions and successors; `cancel=>cancelled` is reached only through D06 and `goal_run.cancelled` v3, never published by a replan (adoption correction C7).
 
 ##### `EA-UND-0020-GOAL` — `goal_run.started` (`D-R20`)
 
@@ -6320,66 +6323,86 @@ plan_unit_id: GRS-064
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: >-
-  Preserve the exact eleven-field GoalRecordV2, nine-field objective revision and seven-field accepted
-  origin. The Goal body currentness and history contract defines the exact local canonical JSON semantic
-  hashes, concrete scalar limit, single ordinary revision/history chain and owner.goal.body.mutation@1.0.0
-  shared body/control transaction. Original accepted source authority, current approval/owner/stop/access
-  facts and whole reserved control gate terminal writes. Independent current body/history and content-free
-  receipt readers use actual canonical origin; original receipt audit survives lawful body purge without
-  recreating text. SP-287 supplies separate physical wrappers/custody and DL-047 lifetime. The explicitly
-  adopted active updated-v3 Activity/body/control/history views use those current canonical readers;
-  separate SP-299 event/audit/input and original SIR replay boundaries preserve accepted effects and
-  original terminal meaning without event-built Goal state. GRS-073/SP-304 select the shared current
-  BodyControlV2 with independent cancellation_pending; every current mutation/read/backup route preserves
-  genuine Stop and cancellation effects. No sibling Goal event or Workflow certification closure follows
-  from this prerequisite. These exact Project semantic/physical editions remain immutable. GRS-086
-  requires separately versioned app body/origin/control/history/currentness and backup/source siblings as
-  one adopted graph, using real thread/Computer authority. Ordinary updates still cannot change
-  goal_id/project_id/thread_id/created_at, including a null binding; GRS-087 supplies conversion by linked
-  birth or separate association-owner transaction.
+canonical_text: Preserve the exact eleven-field GoalRecordV2, nine-field objective revision and seven-field accepted
+  origin. The Goal body currentness and history contract defines the exact local canonical JSON semantic hashes,
+  concrete scalar limit, single ordinary revision/history chain and owner.goal.body.mutation@1.0.0 shared body/control
+  transaction. Original accepted source authority, current approval/owner/stop/access facts and whole reserved control
+  gate terminal writes. Independent current body/history and content-free receipt readers use actual canonical origin;
+  original receipt audit survives lawful body purge without recreating text. SP-287 supplies separate physical wrappers/custody
+  and DL-047 lifetime. The explicitly adopted active updated-v3 Activity/body/control/history views use those current
+  canonical readers; separate SP-299 event/audit/input and original SIR replay boundaries preserve accepted effects
+  and original terminal meaning without event-built Goal state. GRS-073/SP-304 select the shared current BodyControlV2
+  with independent cancellation_pending; every current mutation/read/backup route preserves genuine Stop and cancellation
+  effects. No sibling Goal event or Workflow certification closure follows from this prerequisite. These exact Project
+  semantic/physical editions remain immutable. GRS-086 requires separately versioned app body/origin/control/history/currentness
+  and backup/source siblings as one adopted graph, using real thread/Computer authority. Ordinary updates still
+  cannot change goal_id/project_id/thread_id/created_at, including a null binding; GRS-087 supplies conversion by
+  linked birth or separate association-owner transaction. For goal.blocked explicitly adopt GRS-1120/SP-1120 and
+  for goal.completed adopt GRS-1121/SP-1121; approved exception is separately GRS-1122/SP-1122. All use this one
+  body/control metadata CAS, including atomic lifecycle pending and original body receipt; no parallel body writer
+  is admitted.
 gui_related: true
-gui_classification_reason: Preserves exact accepted Goal text, direct Save/approval behavior and authorized history visibility through deletion and recovery.
-depends_on: [GRS-048, GRS-050, GRS-051, GRS-054, GRS-056, DL-045, DL-047]
+gui_classification_reason: Preserves exact accepted Goal text, direct Save/approval behavior and authorized history
+  visibility through deletion and recovery.
+depends_on:
+- GRS-048
+- GRS-050
+- GRS-051
+- GRS-054
+- GRS-056
+- DL-045
+- DL-047
 unblocks: []
 acceptance_criteria:
-  - Semantic 11/9/7 records and four-state Goal remain exact; hidden control and physical wrappers add no Goal fields.
-  - Every body writer uses shared ordinary revision/currentness and whole-control CAS; metadata creates no fake objective revision.
-  - Direct Save has null message/approval IDs, completed rejects editing, and approved proposals require exact current owner/approval/lineage.
-  - Pending recovery preserves original accepted intent without raw-source reconstruction and never waives current approval/stop/external/access fences.
-  - Stop defeats continuation immediately despite reservation; pure body receipt grants no event, SIR or completion success.
-  - Current and audit readers authenticate canonical origin and final current facts; deleted text is never recreated from receipt/reference evidence.
-  - Active goal.created Activity/body/history consumption uses the existing canonical readers and original durable body/command custody, not a deferred event-built Goal projection or invented checkpoint; passive creation inspection retains its separate complete source checks.
-  - Active goal.updated Activity/control/history uses current SP-287 custody and SP-299 complete original event/audit/input composition; no event reconstructs content, supplies action authority or substitutes for a terminal-selected original SIR replay epoch.
+- Semantic 11/9/7 records and four-state Goal remain exact; hidden control and physical wrappers add no Goal fields.
+- Every body writer uses shared ordinary revision/currentness and whole-control CAS; metadata creates no fake objective
+  revision.
+- Direct Save has null message/approval IDs, completed rejects editing, and approved proposals require exact current
+  owner/approval/lineage.
+- Pending recovery preserves original accepted intent without raw-source reconstruction and never waives current
+  approval/stop/external/access fences.
+- Stop defeats continuation immediately despite reservation; pure body receipt grants no event, SIR or completion
+  success.
+- Current and audit readers authenticate canonical origin and final current facts; deleted text is never recreated
+  from receipt/reference evidence.
+- Active goal.created Activity/body/history consumption uses the existing canonical readers and original durable
+  body/command custody, not a deferred event-built Goal projection or invented checkpoint; passive creation inspection
+  retains its separate complete source checks.
+- Active goal.updated Activity/control/history uses current SP-287 custody and SP-299 complete original event/audit/input
+  composition; no event reconstructs content, supplies action authority or substitutes for a terminal-selected original
+  SIR replay epoch.
 validation_surfaces:
-  - Plans/goal_body_custody.schema.json
-  - Plans/goal_body_custody_fixtures.json
-  - Plans/goal_updated_consumer_contracts.schema.json
-  - Plans/goal_updated_consumer_resources.json
-  - reports/event-authority-20260911/step-08-goal-body-validation.md
+- Plans/goal_body_custody.schema.json
+- Plans/goal_body_custody_fixtures.json
+- Plans/goal_updated_consumer_contracts.schema.json
+- Plans/goal_updated_consumer_resources.json
+- reports/event-authority-20260911/step-08-goal-body-validation.md
+- python3 scripts/pm_goal_own_b_oracles.py
 risk_class: goal_body_currentness_accepted_history_or_receipt_authority_escape
 reasoning_tier: high
 context_scope: shared_goal_body_history_custody_only
 implementation_surfaces:
-  - Plans/Goal_Runtime_System.md
-  - Plans/goal_body_custody.schema.json
-  - Plans/storage-plan.md
+- Plans/Goal_Runtime_System.md
+- Plans/goal_body_custody.schema.json
+- Plans/storage-plan.md
 node_compile_hint:
   mode: owner_contract_only
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Goal_Runtime_System.md#GRS-048"
-  - "Plans/Goal_Runtime_System.md#GRS-054"
-  - "Plans/Goal_Runtime_System.md#GRS-056"
-  - "Plans/Decision_Log.md#DL-045"
-  - "Plans/Decision_Log.md#DL-047"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- Plans/Goal_Runtime_System.md#GRS-048
+- Plans/Goal_Runtime_System.md#GRS-054
+- Plans/Goal_Runtime_System.md#GRS-056
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning wizard/prd
+  builder/orchestrator that isn''t.'
 negative_constraints:
-  - No Goal title/phase/child/budget/role fields, fifth state, inferred Goal, fabricated accepted lineage or certification exception.
-  - No automatic Goal event adoption/depth, native proof, WorkNode, NodeSeed, readiness or governance seal.
+- No Goal title/phase/child/budget/role fields, fifth state, inferred Goal, fabricated accepted lineage or certification
+  exception.
+- No automatic Goal event adoption/depth, native proof, WorkNode, NodeSeed, readiness or governance seal.
 ```
 
 The exact schema/static transaction evidence and native obligations are recorded in `reports/event-authority-20260911/step-08-goal-body-validation.md`. Supplied model origin seals, owner/approval observations, rollback sets and transaction captures are test adapters, not new durable authority services. Actual global writer adoption, native canonical origin/authentication, shared CAS/stop priority, coherent restore/tombstone replay and 24-hour/30-day purge enforcement remain `NOT_RUN`; no runtime/depth/readiness/seal claim follows.
@@ -6402,7 +6425,7 @@ The original typed receipt retains the exact source/graph/authority hashes and r
 
 ### Standard scope and truthful exceptions
 
-The newly bound route is exactly `certification_tier = standard`, `final_certifier_decision = certified`, truthful label `certified`, no unresolved risks or exception approvals, and passing validators. The existing D-R18 branch `certified_with_approved_exception`, approval/residual-risk evidence and truthful `completed_with_approved_verification_exception` remain semantically preserved in CV-340. They are excluded from this Standard writer. An approved testing restriction or incomplete-item disposition alone supplies neither an original final Workflow decision nor an automated pass. The selected Plans-to-Code source has no exception decision; the exact original exception/waiver owner route remains separately unbound. This prerequisite does not invent it, widen the source enum or revoke D-R18's already specified distinction.
+The newly bound route is exactly `certification_tier = standard`, `final_certifier_decision = certified`, truthful label `certified`, no unresolved risks or exception approvals, and passing validators. The existing D-R18 branch `certified_with_approved_exception`, approval/residual-risk evidence and truthful `completed_with_approved_verification_exception` remain semantically preserved in CV-340. They are excluded from this Standard writer. An approved testing restriction or incomplete-item disposition alone supplies neither an original final Workflow decision nor an automated pass. The selected Plans-to-Code Standard source has no exception decision. GRS-1122 and EP-1120 separately define the newly authored original exception/waiver source and result mapping under DL-081; actual installation remains required. This prerequisite does not widen the Standard source enum or revoke D-R18's distinction.
 
 The broad generic v1 receipt grammar and all original kinds/tiers keep their own meaning. A string `accepted`, a receipt kind, worker success, a body mutation receipt, a projected state or an event observation is not the original Standard receipt. Actual original receipt durability precedes D-R18's eventual `provisional_success|verifying -> certified` GoalRun transition/event; projection follows append. This prerequisite performs neither transition nor event append.
 
@@ -6421,55 +6444,69 @@ plan_unit_id: GRS-065
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: >-
-  Original Standard certification comes from the actual owning Workflow controller or assigned canonical
-  artifact owner and complete independently resolved source, target authority, workgraph, validator,
-  WorkNode and acceptance evidence, with authentically empty current child-Goal requirements under
-  GRS-052/GRS-075 and unchanged historical receipt grammar. The Original Standard certification receipt
-  contract preserves its immutable decision and truthful labels through SP-289 custody, keeps existing
-  generic receipts and exception semantics separate, and grants no Goal/body/event action. This exact
-  historical/Project Workflow source edition remains Project-bound and unchanged in its schema, hashes and
-  original predicates. Ordinary application Goal continuation is GRS-086 and cannot synthesize this
-  Workflow/WorkGraph/WorkNode/certification evidence. An app-needed source/event requires its own complete
-  admitted sibling rather than casting a null Project into this contract; native proof remains separate.
+canonical_text: Original Standard certification comes from the actual owning Workflow controller or assigned canonical
+  artifact owner and complete independently resolved source, target authority, workgraph, validator, WorkNode and
+  acceptance evidence, with authentically empty current child-Goal requirements under GRS-052/GRS-075 and unchanged
+  historical receipt grammar. The Original Standard certification receipt contract preserves its immutable decision
+  and truthful labels through SP-289 custody, keeps existing generic receipts and exception semantics separate,
+  and grants no Goal/body/event action. This exact historical/Project Workflow source edition remains Project-bound
+  and unchanged in its schema, hashes and original predicates. Ordinary application Goal continuation is GRS-086
+  and cannot synthesize this Workflow/WorkGraph/WorkNode/certification evidence. An app-needed source/event requires
+  its own complete admitted sibling rather than casting a null Project into this contract; native proof remains
+  separate. DL-081 exception materialization is separately GRS-1122/EP-1120/HITL-1120/PS-1120/SIR-1120/CV-1122/SP-1122.
+  This Standard writer and its source enums stay clean-only.
 gui_related: false
-gui_classification_reason: Defines internal original certification metadata, custody and owner interfaces; no GUI presentation is specified.
-depends_on: [GRS-042, GRS-064, CV-288, CV-340, DL-045]
+gui_classification_reason: Defines internal original certification metadata, custody and owner interfaces; no GUI
+  presentation is specified.
+depends_on:
+- GRS-042
+- GRS-064
+- CV-288
+- CV-340
+- DL-045
 unblocks: []
 acceptance_criteria:
-  - "The actual original source and certifier/target/scope/revision/time evidence independently establish every required dependency and Standard final decision."
-  - "Original issuer/Storage outputs exactly match actual complete source projection and remain guarded through final current owner/origin checks."
-  - "Generic accepted markers, worker success and body receipts never substitute for original Standard certification."
-  - "Current original child-Goal requirements and both stored child-receipt arrays are authenticated empty; nonempty or unknown input refuses without rewriting it, while retained grammar stays exact."
-  - "D-R18 exception/waiver semantics stay distinct and unavailable through this Standard route; no new policy or source enum is granted."
-  - "Receipt disclosure preserves original metadata after lawful source/body disposal and grants no current action, event proof or Goal/GoalRun transition."
+- The actual original source and certifier/target/scope/revision/time evidence independently establish every required
+  dependency and Standard final decision.
+- Original issuer/Storage outputs exactly match actual complete source projection and remain guarded through final
+  current owner/origin checks.
+- Generic accepted markers, worker success and body receipts never substitute for original Standard certification.
+- Current original child-Goal requirements and both stored child-receipt arrays are authenticated empty; nonempty
+  or unknown input refuses without rewriting it, while retained grammar stays exact.
+- D-R18 exception/waiver semantics stay distinct and unavailable through this Standard route; no new policy or source
+  enum is granted.
+- Receipt disclosure preserves original metadata after lawful source/body disposal and grants no current action,
+  event proof or Goal/GoalRun transition.
 validation_surfaces:
-  - Plans/goal_certification_custody.schema.json
-  - Plans/goal_certification_custody_fixtures.json
-  - Plans/goal_receipt_version_routes.json
-  - reports/event-authority-20260911/step-08-certified-custody-validation.md
+- Plans/goal_certification_custody.schema.json
+- Plans/goal_certification_custody_fixtures.json
+- Plans/goal_receipt_version_routes.json
+- reports/event-authority-20260911/step-08-certified-custody-validation.md
+- python3 scripts/pm_goal_own_b_oracles.py
 risk_class: false_certification_or_lost_original_decision_authority
 reasoning_tier: high
 context_scope: original_standard_workflow_certification
 implementation_surfaces:
-  - Plans/Goal_Runtime_System.md
-  - Plans/storage_value_registry.json
+- Plans/Goal_Runtime_System.md
+- Plans/storage_value_registry.json
 node_compile_hint:
   mode: original_standard_workflow_certification
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "reports/event-authority-20260911/step-08-certified-custody-checks.json"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- reports/event-authority-20260911/step-08-certified-custody-checks.json
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning wizard/prd
+  builder/orchestrator that isn''t.'
 negative_constraints:
-  - Do not infer certification from an accepted marker, worker success, body receipt, event or projection.
-  - Do not claim native installation, event/body publication, exception authority or complete event depth from this prerequisite.
+- Do not infer certification from an accepted marker, worker success, body receipt, event or projection.
+- Do not claim native installation, event/body publication, exception authority or complete event depth from this
+  prerequisite.
 owner_hints:
-  - Plans/Goal_Runtime_System.md
-  - Plans/storage-plan.md
-  - Plans/Contracts_V0.md
+- Plans/Goal_Runtime_System.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
 ```
 
 ## Original Goal creation command settlement
@@ -8408,6 +8445,8 @@ Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): curr
 
 Amended 2026-11-04 (DL-080, DL-045 depth): GRS-202 extends this projection to same-run goal_run.blocked and goal_run.stopped v3 rows for births whose Workflow source edition lists EP-200's writers; every other birth keeps the halt above.
 
+Amended 2026-11-14 (DL-080 option 1, PNC-019 lane rv8b): GRS-3101 adds the branch for genuine `all_writers.v8` births, which accept same-run `goal_run.replanned` v3 rows with started, certified and cancelled rows authenticated against the v8 source profiles; the branch is chosen by the authentic birth profile, and this unit's v7 branch is unchanged.
+
 ### GRS-200 - Current goal_run.stopped contract
 
 ```yaml
@@ -8416,7 +8455,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: |-
-  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04), for exactly goal_run.stopped, Project edition. Producer: owner.executor.workflow_run.stop.v1 (EP-200), from cmd.orchestrator.pause and cmd.runtime.abort_run. Payload: pm.goal_runtime_event.goal_run_stopped.schema.v3 (CV-420) on the current GoalRun envelope; the Goal revision is unchanged. Transitions adopt D-R21 over the native Workflow status set: ready|running|provisional_success|verifying|failed_verification|repairing|blocked -> stopped; stopped -> stopped only with new settlement or recovery evidence; certified, failed and cancelled sources are illegal. "All child settlements" now means the run's own in-flight effect settlements (settlement_refs), and child_settlement_refs is authenticated empty under GRS-075. A stopped run leaves stopped only by D06 cancellation (GRS-080) until a resume or replan writer is admitted; resumable=true records eligibility, not a resume. Prepared without admission: the registry row keeps v2 until its own admission landing.
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04), for exactly goal_run.stopped, Project edition. Producer: owner.executor.workflow_run.stop.v1 (EP-200), from cmd.orchestrator.pause and cmd.runtime.abort_run. Payload: pm.goal_runtime_event.goal_run_stopped.schema.v3 (CV-420) on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478, as the Workflow run's identity grammar; it carries no retired GoalRun build-flow obligation; the Goal revision is unchanged. Transitions adopt D-R21 over the native Workflow status set: ready|running|provisional_success|verifying|failed_verification|repairing|blocked -> stopped; stopped -> stopped only with new settlement or recovery evidence; certified, failed and cancelled sources are illegal. "All child settlements" now means the run's own in-flight effect settlements (settlement_refs), and child_settlement_refs is authenticated empty under GRS-075. A stopped run leaves stopped only by D06 cancellation (GRS-080) until a resume or replan writer is admitted; resumable=true records eligibility, not a resume. Prepared without admission: the registry row keeps v2 until its own admission landing.
 gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
@@ -8474,6 +8513,9 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Contracts_V0.md#CV-420, ContractName:Plans/storage-plan.md#SP-426, ContractName:Plans/Goal_Runtime_System.md#GRS-202, ContractName:Plans/Decision_Log.md#DL-080
 
+
+**DG-OWN-A adoption.** Original stop source adoption: EP-1110/EP-1111 and SP-1110 supply the complete fresh birth, original source/method/result, first/full-value receipt and terminal publication contract.
+
 ### GRS-201 - Current goal_run.blocked contract
 
 ```yaml
@@ -8482,7 +8524,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: |-
-  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04), for exactly goal_run.blocked, Project edition. Producer: owner.executor.workflow_run.block.v1 (EP-200), from the Executor scheduler. Payload: pm.goal_runtime_event.goal_run_blocked.schema.v3 (CV-421) on the current GoalRun envelope; the Goal revision is unchanged and the payload fields are those of v2. Transitions adopt D-R16 over the native Workflow status set: ready|running|provisional_success|verifying|failed_verification|repairing -> blocked; blocked -> blocked only with new evidence, action or recovery revision; certified, failed, cancelled and stopped sources are illegal. The block receipt exists before append. A blocked run leaves blocked by EP-200's stop writer or D06 cancellation; any other exit needs a writer not admitted here. The dormant application edition (DL-300, GRS-086) is unchanged. Prepared without admission: the registry row keeps v2 until its own admission landing.
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04), for exactly goal_run.blocked, Project edition. Producer: owner.executor.workflow_run.block.v1 (EP-200), from the Executor scheduler. Payload: pm.goal_runtime_event.goal_run_blocked.schema.v3 (CV-421) on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478, as the Workflow run's identity grammar; it carries no retired GoalRun build-flow obligation; the Goal revision is unchanged and the payload fields are those of v2. Transitions adopt D-R16 over the native Workflow status set: ready|running|provisional_success|verifying|failed_verification|repairing -> blocked; blocked -> blocked only with new evidence, action or recovery revision; certified, failed, cancelled and stopped sources are illegal. The block receipt exists before append. A blocked run leaves blocked by EP-200's stop writer or D06 cancellation; any other exit needs a writer not admitted here. The dormant application edition (DL-300, GRS-086) is unchanged. Prepared without admission: the registry row keeps v2 until its own admission landing.
 gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
@@ -8540,6 +8582,9 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Contracts_V0.md#CV-421, ContractName:Plans/storage-plan.md#SP-427, ContractName:Plans/Goal_Runtime_System.md#GRS-202, ContractName:Plans/Decision_Log.md#DL-080
 
+
+**DG-OWN-A adoption.** Original block source adoption: EP-1110/EP-1112 and SP-1111 supply the complete fresh birth, cause-owned original source/method/result, first/full-value receipt and scheduler publication contract.
+
 ### GRS-202 - Run-history projection extension for stopped and blocked rows
 
 ```yaml
@@ -8548,7 +8593,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: |-
-  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). It extends GRS-085's mandatory per-run projection, as DL-080 requires, to same-run goal_run.blocked v3 and goal_run.stopped v3 rows, only for a run whose birth used a fresh Workflow source edition that lists EP-200's writers. For such a run the reducer accepts started, then any of blocked and stopped by D-R16 and D-R21, blocked -> blocked and stopped -> stopped with a higher GoalRun revision, and positive D06 cancelled from blocked or stopped; certified from blocked or stopped is a conflicting lifecycle and halts. On every other birth, and for any v2 row of either family, the row stays unsupported and halts before it, exactly as GRS-085 says today. SP-428 owns the projection value and checkpoint delta.
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). It extends GRS-085's mandatory per-run projection, as DL-080 requires, to same-run goal_run.blocked v3 and goal_run.stopped v3 rows, only for a run whose birth used a fresh Workflow source edition that lists EP-200's writers. For such a run the reducer accepts started, then any of blocked and stopped by D-R16 and D-R21, blocked -> blocked and stopped -> stopped with a higher GoalRun revision, and positive D06 cancelled from blocked or stopped; certified from blocked or stopped is a conflicting lifecycle and halts. Revision relation (amended 2026-11-14 under DL-045, PNC-019 lane s3a, after Sol's DG-OWN-A review F1): a row's expected_goal_run_revision is the authentic native Workflow body revision immediately before its own stop or block mutation, read from the row's original native/D01 before-commitment, and its goal_run_revision is exactly one higher (EP-200's single native move). The expected revision may exceed the last projected revision only when the original D01/native chronology authenticates every intervening body revision as a supported non-emitting native step (original_execution_progress or provisional success under the native-v7 protocol); it never falls below the projected revision. An unauthenticated gap, a lower revision or an intervening actual same-run Event the reducer does not support halts before the row; the reducer never invents an Event for a non-emitting native step. On every other birth, and for any v2 row of either family, the row stays unsupported and halts before it, exactly as GRS-085 says today. SP-428 explicitly adopts the concrete SP-1112 profile, physical keys, whole checkpoint schema and atomic CAS/cutover contract; GRS-1110 fixes the fresh-birth map.
 gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
@@ -8565,7 +8610,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - For a qualifying birth, a verified same-run blocked or stopped v3 row on a legal edge advances the projection and its checkpoint atomically.
-- Each accepted row must carry expected_goal_run_revision equal to the projected revision and goal_run_revision one higher.
+- Each accepted row carries goal_run_revision exactly one above its own expected_goal_run_revision, and that expected revision equals the projected revision or exceeds it only across intervening native body revisions that the original D01/native chronology authenticates as supported non-emitting steps.
+- An unauthenticated revision gap, a revision below the projected revision, or an intervening unsupported same-run Event halts before the row.
 - Certified after blocked or stopped, started after either, and any v2 row of either family halt before the row.
 - Non-qualifying births keep GRS-085's halt unchanged; no existing projection generation is reinterpreted.
 validation_surfaces:
@@ -8598,11 +8644,13 @@ owner_hints:
 - Plans/Goal_Runtime_System.md
 ```
 
-**Rule table** (same run, after a verified `goal_run.started`): `started -> blocked`, `started -> stopped`, `blocked -> blocked` (higher revision, new evidence), `blocked -> stopped`, `stopped -> stopped` (higher revision, new settlement or recovery evidence), `blocked -> cancelled` and `stopped -> cancelled` (positive D06), `started -> cancelled` and `started -> certified` as before. Halts: `blocked -> certified`, `stopped -> certified`, `stopped -> blocked`, anything after `cancelled` or `certified`, a revision that is not exactly one higher, a v2 row of either family, `goal_run.replanned` (still unsupported until its own contract). The projection never infers a Goal state, and a `stopped` row with `resumable=true` gives no resume authority.
+**Rule table** (same run, after a verified `goal_run.started`): `started -> blocked`, `started -> stopped`, `blocked -> blocked` (higher revision, new evidence), `blocked -> stopped`, `stopped -> stopped` (higher revision, new settlement or recovery evidence), `blocked -> cancelled` and `stopped -> cancelled` (positive D06), `started -> cancelled` and `started -> certified` as before. Halts: `blocked -> certified`, `stopped -> certified`, `stopped -> blocked`, anything after `cancelled` or `certified`, a `goal_run_revision` that is not exactly one above the row's own `expected_goal_run_revision`, an `expected_goal_run_revision` below the projected revision, an `expected_goal_run_revision` above it without an authenticated chronology of supported non-emitting native steps (`original_execution_progress`, provisional success) covering every intervening revision, a v2 row of either family, `goal_run.replanned` (still unsupported until its own contract). The projection never infers a Goal state, and a `stopped` row with `resumable=true` gives no resume authority.
 
-**Why only qualifying births.** GRS-085 is bound to the `all_writers.v7` birth and the `prepare.v2` producer source. A v7 birth cannot produce these rows (EP-200), so extending its reducer would change nothing real and would risk accepting rows from an unlisted writer. The extension therefore applies only where the source edition lists the writers.
+**Why only qualifying births.** GRS-085 is bound to the `all_writers.v7` birth and the `prepare.v2` producer source. A v7 birth cannot produce these rows (EP-200), so extending its reducer would change nothing real and would risk accepting rows from an unlisted writer. The extension therefore applies only to the genuine EP-1110 fresh source edition under GRS-1110; its installed descriptor is independently authenticated and cannot be supplied as an admission flag.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-085, ContractName:Plans/storage-plan.md#SP-428, ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Decision_Log.md#DL-080
+
+Amended 2026-11-14 (PNC-019 lane rv8b): `goal_run.replanned` now has its own contract (GRS-3100), and this branch still halts on it, because `all_writers.stop_block.v1` lists no Replan writer; replanned rows are read only by the v8 branch of GRS-3101.
 
 ### GRS-086 - Application Goal Birth Continuation And Versioned Custody
 
@@ -9083,7 +9131,9 @@ unit_type: owner_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: Newly authored Project goal.blocked v3 contract preserves GRS-048/050 and GREPLAY-004..010, uses
-  only the shared body metadata CAS, and refuses unbound host-source and lifecycle edges.
+  only the shared body metadata CAS, and refuses unbound host-source and lifecycle edges. GRS-1120/CV-1120/SP-1120
+  supply the newly authored original host source and result bank; installation and exact v3 registry selection remain
+  separately required, with native execution NOT_RUN.
 gui_related: false
 gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
 split_recommended: false
@@ -9095,13 +9145,14 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Exact original host, body/currentness/epoch and caller evidence precede the lifecycle metadata commit.
-- Retained whole-v2 interpretation is unchanged; native activation waits for the named unbound original source edition.
+- Retained whole-v2 interpretation is unchanged; native activation waits for actual whole-bank source installation and exact v3 selector adoption.
 - No event, model claim or helper witness can bypass Stop, cancellation or the complete shared body fence.
 validation_surfaces:
 - Plans/event_payloads/goal_runtime/goal_blocked.v3.schema.json
 - Plans/goal_lifecycle_successor_fixtures.json
 - python3 scripts/pm_goal_lifecycle_successor_oracles.py
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm_goal_own_b_oracles.py
 risk_class: goal_event_authority
 reasoning_tier: high
 context_scope: grs-203_event_authority
@@ -9121,7 +9172,7 @@ owner_hints:
 - Plans/Goal_Runtime_System.md
 ```
 
-**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.blocked` and `pm.goal_runtime_event.goal_blocked.schema.v3`. The existing whole `goal_blocked.schema.json` v2 resource, original envelope/identity, D-R01 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. The registry still selects v2 pending review and integration.
+**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.blocked` and `pm.goal_runtime_event.goal_blocked.schema.v3`. The existing whole `goal_blocked.schema.json` v2 resource, original envelope/identity, D-R01 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. Current Project selection (2026-11-19): Plans/event_family_registry.json selects pm.goal_runtime_event.goal_blocked.schema.v3 under Plans/Decision_Log.md#DL-2435. The former v2 selector is retained history, alongside the existing v1 reader; neither historical meaning is cast to v3. This Project revision does not adopt the dormant application sibling or certify native installation.
 
 **Per-family current-source search.** At base `0c40a7809826bcf509bbb16483bbdd8f4c48760b`, searched every live top-level `Plans/*.md`, `Plans/*.json`, event payloads, Goal body/source schemas, all Goal named bindings and the admission-record directory for `goal.blocked`. Found the required Goal V2 name, its old D-R row and schema, GRS-048/050, GREPLAY-004..010, GRS-064/SP-287 sole body custody and dormant CV-366 app selector. Found no current V2-compatible family producer, original host-source edition, family observation binding or v3 identity. The old generic v2 recipe cannot supply current source authority. These technical bindings are authored here for this exact family; no sibling binding is inferred.
 
@@ -9129,7 +9180,7 @@ owner_hints:
 
 **Sole writer, ordering and fences.** The host-only semantic producer `owner.goal.lifecycle.blocked.v1` uses only `owner.goal.body.mutation@1.0.0` under GRS-064/SP-287. It admits a metadata_update, never an objective write: increment the one ordinary revision by exactly one, preserve objective/accepted-head/history/origin bytes, identity, created_at and active_run_ref unless its separate association owner supplies an admitted mutation. Authenticate exact prior body/control/currentness/accepted head, native host owner and permissions, cancellation/Stop/continuation epochs, caller/run identity and current Storage writer/maintenance/deletion/hold state. Capture every original input independently before helpers. Reserve the complete original metadata intent and genuine external authority under the shared body/control CAS; before terminal commit compare the whole actual reserved preimage and all original/current owner predicates after the final helper, with no helper between the pure predicate and commit.
 
-The family protocol orders original host decision and original caller evidence, original producer custody/reservation, narrow atomic body/control/receipt commit, frozen EventRecord input, SP-286 first AppendReceipt, then terminal producer publication. Before body commit, a proven no-effect outcome produces no event or success; after a body commit, event failure cannot undo or repeat it and must preserve the original pending producer operation until exact append/receipt resolution. Unknown is fenced, never converted to no-effect by timeout or absence. The standalone shared body receipt proves only its body effect. A terminal producer publication requires the exact retained body receipt and original event's first SP-286 receipt/full-value commitment; an event observation does not alone publish success or allow another continuation. **Unbound producer edge:** no complete registered physical original host-decision/source-and-pending-result edition currently carries this family protocol across the body-to-event boundary. Authoring this order does not invent one: native reserve/append is refused until that source edition, method installation, backup coherence and original-result resolver are supplied and adopted. This is owner implementation work, not a new product decision.
+The family protocol orders original host decision and original caller evidence, original producer custody/reservation, narrow atomic body/control/receipt commit, frozen EventRecord input, SP-286 first AppendReceipt, then terminal producer publication. Before body commit, a proven no-effect outcome produces no event or success; after a body commit, event failure cannot undo or repeat it and must preserve the original pending producer operation until exact append/receipt resolution. Unknown is fenced, never converted to no-effect by timeout or absence. The standalone shared body receipt proves only its body effect. A terminal producer publication requires the exact retained body receipt and original event's first SP-286 receipt/full-value commitment; an event observation does not alone publish success or allow another continuation. **Prepared original source:** GRS-1120/CV-1120/SP-1120 now define this family's original source, methods, backup and result resolver. Native reserve/append stays refused until the whole bank is actually installed and this exact v3 selector separately admitted.
 
 Continuation operation identity preserves GRS-050's tuple `(goal_id, goal_revision, owning_run_id, next_attempt_ref)`; completion has no new next dispatch. Capture its original nullable next_attempt_ref exactly. Rechecking an already accepted tuple resolves the immutable original effect/result, rather than creating a new lifecycle revision. Stop/Pause/Cancel, objective/bound-Plan revision and run replacement fence the appropriate epochs under GREPLAY-009..010; a stale epoch is never refreshed into success. An owner outage, missing source, unresolved receipt, required-work barrier or unknown recovery fact is unavailable/fenced, never completion or permission to resume.
 **Exact blocked predicates and bounded edges.** GRS-048 defines blocked as an owner-supplied condition preventing safe progress and requires blocked_reason_ref. GRS-050's host continuation result must be blocked, its nonnull reason must resolve to that exact original caller's condition/currentness, and the same reason is committed into GoalRecordV2 and the payload. The ordinary active -> blocked edge is bound here. blocked -> blocked may commit only a new ordinary revision with changed original blocker evidence/reason; an equal continuation identity returns its original result, with no new revision. This event does not clear Stop or dispatch any allowed action. A completed source refuses. **Unbound individual edge:** paused -> blocked while a manual Stop latch is held lacks an owner contract reconciling that authoritative pause with a new continuation evaluation; it remains refused. Clearing a blocked condition, resume and any required named event retain their own independent admission; this event grants none. Old D-R01 action sets/recovery choices do not become new Goal fields. Their actual permission/recovery owners remain authoritative; unknown recovery truth never becomes completed.
@@ -9142,7 +9193,9 @@ unit_type: owner_contract
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: Newly authored Project goal.completed v3 contract preserves GRS-048/050 and GREPLAY-004..010, uses
-  only the shared body metadata CAS, and refuses unbound host-source and lifecycle edges.
+  only the shared body metadata CAS, and refuses unbound host-source and lifecycle edges. GRS-1121/CV-1121/SP-1121
+  supply the ordinary source bank; GRS-1122/CV-1122/SP-1122 independently supply DL-081 exception completion. Native
+  installation and exact v3 registry selection remain separately required.
 gui_related: false
 gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
 split_recommended: false
@@ -9154,13 +9207,14 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Exact original host, body/currentness/epoch and caller evidence precede the lifecycle metadata commit.
-- Retained whole-v2 interpretation is unchanged; native activation waits for the named unbound original source edition.
+- Retained whole-v2 interpretation is unchanged; native activation waits for actual whole-bank source installation and exact v3 selector adoption.
 - No event, model claim or helper witness can bypass Stop, cancellation or the complete shared body fence.
 validation_surfaces:
 - Plans/event_payloads/goal_runtime/goal_completed.v3.schema.json
 - Plans/goal_lifecycle_successor_fixtures.json
 - python3 scripts/pm_goal_lifecycle_successor_oracles.py
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm_goal_own_b_oracles.py
 risk_class: goal_event_authority
 reasoning_tier: high
 context_scope: grs-204_event_authority
@@ -9180,7 +9234,7 @@ owner_hints:
 - Plans/Goal_Runtime_System.md
 ```
 
-**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.completed` and `pm.goal_runtime_event.goal_completed.schema.v3`. The existing whole `goal_completed.schema.json` v2 resource, original envelope/identity, D-R04 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. The registry still selects v2 pending review and integration.
+**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.completed` and `pm.goal_runtime_event.goal_completed.schema.v3`. The existing whole `goal_completed.schema.json` v2 resource, original envelope/identity, D-R04 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. Current Project selection (2026-11-19): Plans/event_family_registry.json selects pm.goal_runtime_event.goal_completed.schema.v3 under Plans/Decision_Log.md#DL-2436. The former v2 selector is retained history, alongside the existing v1 reader; neither historical meaning is cast to v3. This Project revision does not adopt the dormant application sibling or certify native installation.
 
 **Per-family current-source search.** At base `0c40a7809826bcf509bbb16483bbdd8f4c48760b`, searched every live top-level `Plans/*.md`, `Plans/*.json`, event payloads, Goal body/source schemas, all Goal named bindings and the admission-record directory for `goal.completed`. Found the required Goal V2 name, its old D-R row and schema, GRS-048/050, GREPLAY-004..010, GRS-064/SP-287 sole body custody and dormant CV-366 app selector. Found no current V2-compatible family producer, original host-source edition, family observation binding or v3 identity. The old generic v2 recipe cannot supply current source authority. These technical bindings are authored here for this exact family; no sibling binding is inferred.
 
@@ -9188,12 +9242,12 @@ owner_hints:
 
 **Sole writer, ordering and fences.** The host-only semantic producer `owner.goal.lifecycle.completed.v1` uses only `owner.goal.body.mutation@1.0.0` under GRS-064/SP-287. It admits a metadata_update, never an objective write: increment the one ordinary revision by exactly one, preserve objective/accepted-head/history/origin bytes, identity, created_at and active_run_ref unless its separate association owner supplies an admitted mutation. Authenticate exact prior body/control/currentness/accepted head, native host owner and permissions, cancellation/Stop/continuation epochs, caller/run identity and current Storage writer/maintenance/deletion/hold state. Capture every original input independently before helpers. Reserve the complete original metadata intent and genuine external authority under the shared body/control CAS; before terminal commit compare the whole actual reserved preimage and all original/current owner predicates after the final helper, with no helper between the pure predicate and commit.
 
-The family protocol orders original host decision and original caller evidence, original producer custody/reservation, narrow atomic body/control/receipt commit, frozen EventRecord input, SP-286 first AppendReceipt, then terminal producer publication. Before body commit, a proven no-effect outcome produces no event or success; after a body commit, event failure cannot undo or repeat it and must preserve the original pending producer operation until exact append/receipt resolution. Unknown is fenced, never converted to no-effect by timeout or absence. The standalone shared body receipt proves only its body effect. A terminal producer publication requires the exact retained body receipt and original event's first SP-286 receipt/full-value commitment; an event observation does not alone publish success or allow another continuation. **Unbound producer edge:** no complete registered physical original host-decision/source-and-pending-result edition currently carries this family protocol across the body-to-event boundary. Authoring this order does not invent one: native reserve/append is refused until that source edition, method installation, backup coherence and original-result resolver are supplied and adopted. This is owner implementation work, not a new product decision.
+The family protocol orders original host decision and original caller evidence, original producer custody/reservation, narrow atomic body/control/receipt commit, frozen EventRecord input, SP-286 first AppendReceipt, then terminal producer publication. Before body commit, a proven no-effect outcome produces no event or success; after a body commit, event failure cannot undo or repeat it and must preserve the original pending producer operation until exact append/receipt resolution. Unknown is fenced, never converted to no-effect by timeout or absence. The standalone shared body receipt proves only its body effect. A terminal producer publication requires the exact retained body receipt and original event's first SP-286 receipt/full-value commitment; an event observation does not alone publish success or allow another continuation. **Prepared original source:** GRS-1121/CV-1121/SP-1121 now define this family's ordinary source, methods, backup and result resolver. Native reserve/append stays refused until the whole bank is actually installed and this exact v3 selector separately admitted.
 
 Continuation operation identity preserves GRS-050's tuple `(goal_id, goal_revision, owning_run_id, next_attempt_ref)`; completion has no new next dispatch. Capture its original nullable next_attempt_ref exactly. Rechecking an already accepted tuple resolves the immutable original effect/result, rather than creating a new lifecycle revision. Stop/Pause/Cancel, objective/bound-Plan revision and run replacement fence the appropriate epochs under GREPLAY-009..010; a stale epoch is never refreshed into success. An owner outage, missing source, unresolved receipt, required-work barrier or unknown recovery fact is unavailable/fenced, never completion or permission to resume.
 **Exact ordinary completion predicates and bounded edges.** The host alone decides complete from an original GRS-050 continuation evaluation with nonempty owning-caller completion_evidence_refs, not a model final message, provider final, body receipt, event or generic accepted marker. At the final body boundary, reload exact canonical Goal/currentness/Stop epoch and adopt GREPLAY-004..008 by name: (1) every required current To-Do in the exact current list identity/revision is resolved, with a skipped item requiring an explicit accepted skip disposition; a removed historical item cannot satisfy it; (2) no admitted tool/background subagent/work, bound PlanRun or recovery-required/unresolved work remains; (3) an internal workflow predicate is met by reference to that actual owner and current source identity, without copying phases or criteria into Goal state. The ordinary bound edge is active -> completed after all these predicates. The committed body clears blocked_reason_ref. Repeated original continuation identity returns the original effect/result. A completed source accepts no new transition. **Unbound individual edges:** completion directly from paused under a manual Stop, or from blocked without a separately admitted resolution/current continuation evaluation, is refused until its owner binding is explicit. Neither current evidence alone nor a late callback bypasses Stop, body CAS or those barriers.
 
-**DL-081 route stays refused.** The approved-exception completion semantics remain approved and historically preserved, but GRS-065 still lacks the separate Goal/Workflow/HITL original exception/waiver route. This v3 successor admits only ordinary evidence-gated completion. It cannot consume certified_with_approved_exception, truthful completed_with_approved_verification_exception or an incomplete-item disposition as ordinary proof. No new product question is raised; the missing route is a specific owner contract dependency.
+**Separate DL-081 route.** GRS-1122/EP-1120/HITL-1120/PS-1120/SIR-1120/CV-1122/SP-1122 define the approved-exception route and original result mapping. Ordinary completion still cannot consume certified_with_approved_exception, completed_with_approved_verification_exception or an incomplete-item disposition as clean proof. Exception use requires its actual distinct source installation and separate event selector adoption; no new product decision or Standard-writer expansion follows.
 
 ### GRS-205 - Historical-only goal.evidence_captured in both scopes
 
@@ -9356,6 +9410,395 @@ The executing Workflow/run owns tool checks and evidence; Permissions owns polic
 The unchanged whole Project v2 resource `pm.goal_runtime_event.goal_tool_check_recorded.schema.v2` at `Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json#` and original v1 compatibility route retain their exact historical bytes/semantics. Current four-state Goal/currentness and Workflow facts never fill historical gaps or resurrect old Goal structure. SP-433 owns the sole exact historical reader `storage.goal_tool_check_recorded_history_read.v1@1.0.0`, explicitly adopted by SP-339 pm inspect and F3-666 only for that EventRecord's original interpretation. Neither pm tail nor pm export invokes it; their generic raw read remains SP-339. No current Goal state, To-Do, notification, continuation, tool action, certification or replacement event is derived. Withdrawing this reader disables interpretation and preserves original custody. CV-426 qualifies every old current-write roster/matrix claim for this exact family. ATS-211 covers conditional original-lawful and refusal oracles; no historical instance or native reader is asserted.
 
 **Approved checkpoint follow-up.** Withdraw only `goal.tool_check_recorded`'s unused application edition at the next registry checkpoint under Card 3 A; keep old Project records, v2 schema and retention unchanged. This branch records the approved instruction and edits neither registry nor app schema/source edition. It does not choose permanent frozen registration or future app writers.
+
+### GRS-1110 - Fresh-birth stop/block mapping and passive history
+
+```yaml
+plan_unit_id: GRS-1110
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: Newly authored DL-045 owner contract. GRS-200 independently adopts EP-1111/SP-1110 for goal_run.stopped;
+  GRS-201 independently adopts EP-1112/SP-1111 for goal_run.blocked. GRS-202 adopts EP-1110 qualifying fresh
+  birth and the concrete SP-1112/SB5 consumer/checkpoint profile. For GRS-085 fresh-birth mapping only, the
+  full original started/positive-D06-cancelled/clean-certified branch arguments and all original source predicates
+  are explicitly rebound to the fresh source edition through resource-map.json, its seven consumer realms in
+  consumer-resource-bank.json and the typed methods.json consumer methods (amended 2026-11-14, PNC-019 lane s3d,
+  DG-OWN-A review F9); historical v7/native generations
+  retain GRS-085 unchanged. Stop and block events preserve Goal objective/revision/four-state lifecycle and
+  never grant a resume, Replan, action or certification. Every source transition uses actual D01/native revision,
+  exact cause/settlement and first receipt; readers independently resolve original source and current disclosure
+  fences before and after helpers. A row's expected revision follows GRS-202's revision relation over the
+  D01-authenticated native chronology. The distinct application edition of goal_run.stopped that DL-448 approves
+  is prepared and admitted at its own registry checkpoint; this unit authors none of it. Application goal_run.blocked
+  remains dormant.
+gui_related: false
+gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
+  visual surface.
+split_recommended: false
+depends_on:
+- GRS-085
+- GRS-200
+- GRS-201
+- GRS-202
+- EP-1110
+- EP-1111
+- EP-1112
+- SP-1112
+unblocks: []
+acceptance_criteria:
+- Fresh mapping never enrolls an old birth or upgrades an old generation.
+- Each stop/block original source joins unchanged Goal context and advancing native revision field by field.
+- Historical lawful originals survive current live-state/writer changes; current views require exact complete
+  frontier and native/Goal graph.
+validation_surfaces:
+- Plans/goal_run_stop_block_contracts/protocol.md
+- Plans/goal_run_stop_block_contracts/contracts.schema.json
+- python3 scripts/pm_goal_own_a_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: original_stop_block_source_custody_and_publication
+reasoning_tier: high
+context_scope: event_authority_dg_own_a_20261105
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+- Plans/goal_run_stop_block_contracts/
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-080
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No application stopped edition, old-birth enrollment, registry/admission/Decision Log change or retention
+  policy.
+- No native installation/execution, runtime/readiness, WorkNode, NodeSeed or governance qualification.
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-085, ContractName:Plans/Goal_Runtime_System.md#GRS-200, ContractName:Plans/Goal_Runtime_System.md#GRS-201, ContractName:Plans/Goal_Runtime_System.md#GRS-202, ContractName:Plans/Executor_Protocol.md#EP-1110, ContractName:Plans/Executor_Protocol.md#EP-1111, ContractName:Plans/Executor_Protocol.md#EP-1112, ContractName:Plans/storage-plan.md#SP-1112
+
+### GRS-1120 - Original blocked host decision and pending result
+
+```yaml
+plan_unit_id: GRS-1120
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly goal.blocked, Project scope, prepared without
+  admission. GRS-203 adopts owner.goal.lifecycle.blocked.v1@1.0.0, source edition pm.goal.host.blocked_source.v1
+  and method bank Plans/goal_lifecycle_host_contracts/methods.json#/goal.blocked. Its capture, reserve, commit_body,
+  freeze_event, append, resolve, publish and inspect methods are individually closed; no method dispatches a continuation.
+  This source is not a Workflow all-writers edition and installs nothing on an old birth.
+
+
+  Search at cfb7e550746c08a989bb41583286d72acc47e68d covered all live top-level Plans Markdown/JSON, Goal payload/source/custody/resource
+  banks and admission records for goal.blocked, host.goal.continuation and original lifecycle pending/result. GRS-048/050/064/203,
+  GREPLAY-004..010, SP-287/429 and CV-422 define body and order, but no complete original host decision plus body-to-event
+  result bank. Reuse the sole body writer and SP-286 rather than infer the completed sibling. The lane report records
+  exact search captures and current-main premise comparisons.
+
+
+  The native host authenticates the actual original owning caller, Project/thread/Goal/Storage, continuation_id,
+  owning_run_id, next_attempt_ref, caller source ref/revision and origin, actor/account/correlation/causation, accepted
+  head/history, whole body/control preimage and Stop/owner/continuation epochs. Independently resolve the caller''s
+  blocked result and reason/evidence against that source and revision. Reason and evidence must refer to this exact
+  caller''s condition. Bind permission, cancellation_pending/receipt, manual Stop, writer lease, maintenance/root
+  generation, deletion/hold/secret fences. Store original source identities, versions, hashes and resolved decision;
+  caller booleans are not authentication. Source and method resource selection is installed out of band, never chosen
+  by a request''s admitted flag.
+
+
+  Only active -> blocked or blocked -> blocked with changed original blocker evidence/reason is admitted. Equal
+  continuation tuple returns the immutable original operation even after the live Goal advances. paused under Stop,
+  completed, unknown recovery or an unresolved new evaluation refuses; it never clears Stop or authorizes resume.
+  Capture a source decision and reservation, then use only owner.goal.body.mutation@1.0.0 metadata_update. The exact
+  whole control CAS includes cancellation_pending and accepted head, increments the single ordinary revision by
+  one, preserves objective bytes, origin, history, created_at and active_run_ref, and sets blocked_reason_ref. Original
+  body intent hash uses the shared recipe, not an event-derived body. Revalidate all captured actual owners after
+  the last helper immediately before the narrow body/control/receipt transaction, with no subsequent helper.
+
+
+  Commit the lifecycle pending phase atomically with that body/control/receipt transaction in the same admitted
+  Storage store; a lost acknowledgment is resolved by the retained operation receipt, never by another CAS. Freeze
+  EventRecord pm.event.v0@2.0.0 and exactly CV-422''s v3 payload after that genuine body receipt. SP-429 supplies
+  the unchanged identity. Resolve receipt bytes independently through the SP-287 operation key, compare all fields
+  and their digest, then append through the actual exact selector. SP-286 first eleven-field receipt and full-value
+  v2 commitment must independently resolve and match the entire frozen producer input before terminal publication.
+  A plausible supplied hash, event or body receipt alone is insufficient.
+
+
+  Phases are reserved, body_committed, event_pending, event_committed, published; terminal no_effect is allowed
+  only with positive no-body-effect proof; terminal unknown is immutable and confers no completion. A transient
+  unavailable resolve remains pending. Post-body/pre-event failure preserves revision and original intent, never
+  rolls back, repeats body mutation or invents a no-effect result. Recovery reuses the exact frozen event; missing
+  original receipt, incompatible source edition or unknown custody fences the operation. Later Stop or withdrawal
+  prevents new work, while exact audit/reconciliation preserves already committed effects without granting any new
+  dispatch. Final publication compares original decision, source edition, body receipt, first receipt/full event
+  and terminal result after the final resolver helper. SP-1120 owns physical/read/restore custody; ATS-1113 owns
+  separate entry/helper/final oracles. Native execution remains NOT_RUN.
+
+
+  The native commit_body method holds the actual source owners'' read/currentness permits and the shared body/control
+  writer fence through one serializable commit of body, control, receipt and the selected lifecycle pending phase.
+  Validate the exact captured read set inside that admitted boundary, including caller, permission/Stop, ToDoController
+  and its complete required-item selection, admitted work, bound Plan, recovery and internal owner where this route
+  requires them. Every actual participant writer must obey that same owner fence/epoch protocol before this source
+  edition is installed. An unlocked check followed by a write is forbidden; missing participant support is unavailable,
+  not an all-true admission descriptor. The permits are native owner capabilities resolved by this method from the
+  original source_ref, never caller-supplied permission booleans. This binding changes no To-Do writer, record or
+  five-status enum.'
+gui_related: false
+gui_classification_reason: Original lifecycle source, receipt custody and protocol predicates.
+depends_on:
+- GRS-203
+- GRS-064
+- SP-287
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Independently resolved original source, complete identity and receipt bytes gate every applicable boundary.
+- No partial effect is repeated or promoted to success after an unknown outcome.
+- Prepared without admission; existing historical resources and policies remain exact.
+validation_surfaces:
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+- Plans/goal_lifecycle_host_contracts/methods.json
+- python3 scripts/pm_goal_own_b_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_lifecycle_original_authority
+reasoning_tier: high
+context_scope: dg_own_b_20261105
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry/admission, new retention policy, native proof, WorkNode, readiness or governance seal.
+```
+
+### GRS-1121 - Original ordinary completion host decision and pending result
+
+```yaml
+plan_unit_id: GRS-1121
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly ordinary goal.completed, Project scope,
+  prepared without admission. GRS-204 adopts owner.goal.lifecycle.completed.v1@1.0.0, pm.goal.host.completed_source.v1
+  and Plans/goal_lifecycle_host_contracts/methods.json#/goal.completed. This family independently adopts the full
+  SP-287 body transaction and SP-286 first receipt/full-value v2 resolution. It is not authorized by the blocked
+  source or a Standard certification event.
+
+
+  Search at cfb7e550746c08a989bb41583286d72acc47e68d across live Plans top-level prose/JSON, Goal schemas, source/method
+  banks and admissions found GRS-048/050/064/204, GREPLAY-004..010, SP-287/430 and CV-423, but no complete original
+  host source/pending/result resolver. Existing body, continuation and receipt owners are reused. Search evidence
+  and current-main premise comparison are in DG-OWN-B''s report; these bindings are newly authored rather than discovered
+  installations.
+
+
+  Authenticate the actual host continuation and owning caller at its exact Project/thread/Goal/run/Storage/source
+  revision, original nonempty completion_evidence_refs, complete body/control/currentness/accepted head/history
+  and Stop/owner/continuation epochs. Evidence resolves under that caller, original revision and target. Capture
+  actual independently enumerated current To-Do list identity/revision and every item, complete admitted tool/background/subagent
+  work set, bound PlanRun and recovery owner, plus an internal Workflow''s own current completion predicate when
+  applicable. A caller-supplied smaller set or an empty response from an unavailable owner never establishes completeness.
+  ToDo_Runtime.md TDR-004/005 owns the exact pending|in_progress|completed|blocked|skipped statuses and ToDoController
+  remains the sole status writer. The completion observation preserves todo_id and actual item/list revisions; required
+  is an exact boolean derived from the actual owning caller''s independently enumerated complete required_todo_ids,
+  never a new TodoItemV2 field or a caller-supplied exemption. Original source custody stores the exact list/required-set/admitted-work/bound-Plan/recovery/internal-owner
+  observations as well as their original source refs so restart cannot refresh the same decision into success. A
+  required item is completed, or skipped with a nonempty string accepted_skip_ref resolving to an authentic accepted
+  disposition for that exact item/list/revision and actor. Wrong-type, denied, stale, foreign or unresolved disposition
+  refuses. Optional items do not bypass the complete admitted-work, bound-Plan or recovery barriers.
+
+
+  The ordinary host result complete admits only active -> completed, clears blocked_reason_ref, increments ordinary
+  revision once through shared metadata_update and preserves objective/history/origin/identity/active_run_ref. All
+  admitted work is settled; bound Plan is absent with actual absence proof or settled; recovery is clear; internal
+  owner predicate is met at its exact current source. paused-under-Stop and unresolved blocked do not become new
+  edges. Stop, cancellation_pending/receipt, permission, source currentness and actual Storage root/lease/maintenance/deletion/hold/secret
+  guards run at capture, before every independently callable helper and after the final helper before body commit.
+  A model final message, generic accepted marker or certification label supplies none of this authority.
+
+
+  The original decision/reservation precedes the single atomic body/control/receipt plus lifecycle-pending commit.
+  Independently resolve the full original body receipt by operation key; its exact source/owner/intent/predecessor/successor/currentness/accepted-head
+  fields and digest must match. Freeze the full EventRecord caller input and CV-423 payload with SP-430''s identity,
+  then append and independently resolve SP-286''s first receipt and v2 full-value commitment. Exact typed source/method/result
+  schemas are CV-1121. New normal/equal-retry append refuses projector_replay_only before dedupe. Equal original
+  tuple is reconciliation of the immutable operation, not a fresh body effect; changed semantic input conflicts,
+  while Storage-assigned metadata is excluded from semantic retry comparison.
+
+
+  Use reserved -> body_committed -> event_pending -> event_committed -> published, independently for this family.
+  Pre-body proven no-effect produces no event. Post-body/pre-event unavailable stays pending/unknown and cannot
+  repeat or undo the body effect. A terminal unknown remains unknown; replay never upgrades it. Lost event acknowledgment
+  resolves the exact original first receipt, frozen event and full-value commitment. Final original publication
+  runs its own post-last-helper joint guard, returns exactly the original ordinary result, and confers no next-turn
+  dispatch. Retained inspection authenticates original custody and issue-time edition while applying current disclosure
+  fences; a later live-state change is not an original-source defect. SP-1121 owns the physical/read/backup contract;
+  ATS-1114 names the full boundary suite. GRS-1122 is a different approved-exception route; its result never passes
+  as ordinary completion. Native execution remains NOT_RUN.
+
+
+  The native commit_body method holds the actual source owners'' read/currentness permits and the shared body/control
+  writer fence through one serializable commit of body, control, receipt and the selected lifecycle pending phase.
+  Validate the exact captured read set inside that admitted boundary, including caller, permission/Stop, ToDoController
+  and its complete required-item selection, admitted work, bound Plan, recovery and internal owner where this route
+  requires them. Every actual participant writer must obey that same owner fence/epoch protocol before this source
+  edition is installed. An unlocked check followed by a write is forbidden; missing participant support is unavailable,
+  not an all-true admission descriptor. The permits are native owner capabilities resolved by this method from the
+  original source_ref, never caller-supplied permission booleans. This binding changes no To-Do writer, record or
+  five-status enum.'
+gui_related: false
+gui_classification_reason: Original lifecycle source, receipt custody and protocol predicates.
+depends_on:
+- GRS-204
+- GRS-064
+- GRS-050
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Independently resolved original source, complete identity and receipt bytes gate every applicable boundary.
+- No partial effect is repeated or promoted to success after an unknown outcome.
+- Prepared without admission; existing historical resources and policies remain exact.
+validation_surfaces:
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+- Plans/goal_lifecycle_host_contracts/methods.json
+- python3 scripts/pm_goal_own_b_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_lifecycle_original_authority
+reasoning_tier: high
+context_scope: dg_own_b_20261105
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry/admission, new retention policy, native proof, WorkNode, readiness or governance seal.
+```
+
+### GRS-1122 - Approved verification exception original completion route
+
+```yaml
+plan_unit_id: GRS-1122
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: 'Newly authored DL-045 technical materialization of DL-081''s already approved Project verification-exception
+  completion route, prepared without admission. GRS-065 and GRS-204 adopt owner.goal.lifecycle.approved_exception.v1@1.0.0,
+  pm.goal.host.exception_source.v1, CV-1122, EP-1120, HITL-1120, PS-1120, SIR-1120 and SP-1122 explicitly. This
+  does not expand the Standard certified source, its enum, native-v7 all-writers profile or goal_run.certified writer.
+
+
+  The per-family goal.completed search at cfb7e550746c08a989bb41583286d72acc47e68d found DL-081, preserved D-R18/CV-340
+  exception meanings and GRS-065/204''s specific unbound-route disclaimer, but no complete original exception request/approval/Workflow-result/Goal
+  mapping. DL-081''s premise remains current: the Project-owning user approves each specific residual risk through
+  existing HITL; the truthful label is completed_with_approved_verification_exception and original final decision
+  certified_with_approved_exception. The newer application Goal edition does not adopt Project Workflow certification
+  or override that approver.
+
+
+  The actual Workflow controller independently enumerates the original graph/revision/hash, all WorkNodes, validators,
+  criteria, unresolved verification findings and residual risks. Unknown/missing dependencies refuse. Current child-Goal
+  requirements remain authentically empty under GRS-052/075. The request identifies exact Project/Goal/run, source/graph/accepted
+  Goal currentness, every verification finding with original evidence/result and corresponding proposed waiver,
+  residual risk and any incomplete-item disposition. Permissions and safety authority are not verification waivers:
+  Stop, cancellation, missing mutation/source/SCM/safe-point/rollback custody, secrets, unknown effects or unauthorized
+  target cannot be waived. Required execution dependencies must have actual terminal results. Every non-passing
+  verification item needs the exact still-valid human-approved disposition; passing/waived does not relabel a failed
+  test as passed.
+
+
+  HITL resolves the existing exact request and immutable resolution, authenticates the Project-owning user and one-time
+  exact-risk scope, and rejects denial/expiry/revocation/wrong person/wrong target/stale graph/new risk or unused
+  blanket approval. No synthetic blocked_sequence is minted for a host-only request; an actual blocked Workflow
+  episode retains its own existing anchor. PS-1120 independently confirms the approver still owns this Project and
+  has current authority. Automation mode, worker, model, delegated reviewer and generic tool Always grants cannot
+  approve this route. Re-read original approval and owner facts after each helper and at the final exception decision
+  and Goal body boundary. Added risk requires a new exact approval; this contract asks no new policy question.
+
+
+  EP-1120''s original exception decision retains the complete source projection, original failed/blocked/skipped
+  results, exact approval/disposition/risk set, certifier and issue time. It issues a distinct exception receipt/result
+  in SP-1122 before the Goal host consumes it. No standard certification source or existing goal_run.certified append
+  is invoked. The Workflow''s final original outcome mapping records certified_with_approved_exception and truthful
+  completed_with_approved_verification_exception; this is result evidence, not a new Workflow enum or rewritten
+  clean receipt. It grants no run transition/event beyond the actual installed exception result mapping. If a native
+  Workflow cannot install that distinct mapping, the route is unavailable rather than casting it to clean certification.
+
+
+  The host then independently satisfies GRS-1121''s current To-Do/admitted-work/bound-Plan/recovery/Stop/body guards
+  using original exception receipt as caller evidence and completion_route approved_verification_exception. A required
+  skipped To-Do has its own accepted disposition, not a generic risk approval. Only active -> completed is bound.
+  GoalRecordV2 keeps its four states and no new outcome field; the separate original lifecycle result carries the
+  truthful exception label, approver and residual-risk refs. Exactly CV-423''s unchanged completed-v3 payload references
+  that original evidence. It cannot pass the ordinary method or be presented as a clean pass. One shared body metadata
+  effect precedes frozen event, SP-286 first receipt/full-value resolution and immutable original exception publication.
+  All post-body unknown/recovery rules apply; final receipt/source/approval comparison follows the last helper.
+  ATS-1115 tests this separate route. Content/approval/evidence retain their existing owner clocks, content-free
+  effect/receipt authority is retained under the existing policy and refs create no hold. Native execution remains
+  NOT_RUN.
+
+
+  The native commit_body method holds the actual source owners'' read/currentness permits and the shared body/control
+  writer fence through one serializable commit of body, control, receipt and the selected lifecycle pending phase.
+  Validate the exact captured read set inside that admitted boundary, including caller, permission/Stop, ToDoController
+  and its complete required-item selection, admitted work, bound Plan, recovery and internal owner where this route
+  requires them. Every actual participant writer must obey that same owner fence/epoch protocol before this source
+  edition is installed. An unlocked check followed by a write is forbidden; missing participant support is unavailable,
+  not an all-true admission descriptor. The permits are native owner capabilities resolved by this method from the
+  original source_ref, never caller-supplied permission booleans. This binding changes no To-Do writer, record or
+  five-status enum.'
+gui_related: true
+gui_classification_reason: Preserves the approved truthful verification-exception label and human approval identity.
+depends_on:
+- GRS-065
+- GRS-1121
+- DL-081
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Independently resolved original source, complete identity and receipt bytes gate every applicable boundary.
+- No partial effect is repeated or promoted to success after an unknown outcome.
+- Prepared without admission; existing historical resources and policies remain exact.
+validation_surfaces:
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+- Plans/goal_lifecycle_host_contracts/methods.json
+- python3 scripts/pm_goal_own_b_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_lifecycle_original_authority
+reasoning_tier: high
+context_scope: dg_own_b_20261105
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry/admission, new retention policy, native proof, WorkNode, readiness or governance seal.
+```
 
 ## DG-OWN-C original source and boundary contracts (2026-11-05)
 
@@ -9858,3 +10301,145 @@ owner_hints:
 12. **Oracles.** `goal.continuation_evaluated` has its own positive, schema, source, identity, retry, receipt, retention/access, transition, token and withdrawal plan in `reports/event-authority-20261105/W3H-oracle-plan.json`. Every planned negative starts from a valid case and changes one input invariant, with all unrelated derived values recomputed. No oracle implementation or guard-removal proof is claimed in phase 1: criterion 12 **PARTIAL**, native **NOT_RUN**. Phase 2 adopts the reviewed shared numeric/time helper and shared guard-isolation tool before Sol/Astra review.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Contracts_V0.md#CV-1558, ContractName:Plans/storage-plan.md#SP-1558, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+## Goal Workflow Replan v8 current contract (PNC-019 lane rv8b, 2026-11-14)
+
+DL-080 option 1 made `goal_run.replanned` a current event, written after `goal_run.stopped` and `goal_run.blocked` and after the Workflow Replan source work. That source work is the frozen `pm.executor.workflow_source.all_writers.v8` package, accepted by an independent review on 2026-11-14 (ACCEPT_WITH_NOTES) and adopted by EP-3100. The two units below are the family's current Goal Runtime contract. They are newly authored owner contracts under DL-045 and choose no product behaviour: the six next actions, their successors and the resume fence are D-R19, D-R21 and Known-37 4.2 as written; the cancel reconciliation follows GRS-080's ownership of positive cancellation.
+
+### GRS-3100 - Current goal_run.replanned contract
+
+```yaml
+plan_unit_id: GRS-3100
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: |-
+  Newly authored owner contract under DL-045, written for DL-080 option 1 (PNC-019 lane rv8b, 2026-11-14), for exactly goal_run.replanned, Project edition. Producer: owner.executor.workflow_run.replan.v1 (EP-3101), installed only at a genuine fresh pm.executor.workflow_source.all_writers.v8 birth (EP-3100); every other birth refuses it. Payload: pm.goal_runtime_event.goal_run_replanned.schema.v3 (CV-3100) on the GoalRun envelope grammar CV-288 keeps for Event Authority custody after DL-478: the Goal revision is unchanged context, expected_goal_run_revision is the authentic native Workflow body revision immediately before the replan's native application and goal_run_revision is exactly one higher; neither is graph generation. Transitions adopt D-R19 over the native Workflow status set: running|provisional_success|verifying|failed_verification|repairing|blocked|stopped -> successor by action, continue_running=>running, repair=>repairing, remain_blocked=>blocked, stop=>stopped, begin_verification=>verifying; ready, certified, failed and cancelled sources are illegal. The cancel action is never published by a replan: the manager's cancel decision is carried out only by genuine D06 positive cancellation (GRS-080), whose goal_run.cancelled v3 row supplies the cancelled successor D-R19 names (adoption correction C7). replan_generation is the authentic prior generation plus one under the checked u32 rule; previous and new WorkGraph refs differ; every affected WorkNode has exactly one cancelled or resteered original disposition record (a total bijection); the payload carries the exact requested, validated and applied graph-patch history and the applied record equals the validated one except status. Resume: on a v8 birth, blocked and stopped are left only through a later valid goal_run.replanned row (Known-37 4.2) or D06 cancellation; a stopped run whose last stop said resumable=false needs a replan whose original sources prove changed admission conditions (D-R21). Births without the v8 Replan writer keep their fence: a stopped or blocked run there leaves only by D06 (GRS-200, GRS-201). The whole v2 payload stays the historical reader. Prepared without admission: the registry row keeps v2 until the S5b switch.
+gui_related: false
+gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
+split_recommended: false
+depends_on:
+- GRS-075
+- GRS-079
+- GRS-080
+- EP-3101
+- CV-3100
+- SP-3100
+- DL-080
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Only EP-3101's Replan writer appends goal_run.replanned v3, after native application and producer finalization, on a v8 birth only.
+- Every D-R19 edge is checked against the authentic native Workflow status before the replan's native application; ready and terminal sources refuse.
+- A replan whose next_action is cancel is refused before any effect; the cancelled successor is reached only through D06 and goal_run.cancelled v3.
+- replan_generation is the prior generation plus one, below 4294967295; the WorkGraph refs differ; affected WorkNodes and disposition records are a total bijection.
+- goal_run_revision is expected_goal_run_revision plus one and the Goal revision is unchanged; a v2 expected_goal_revision is never read as a Workflow clock.
+- A stopped run with resumable=false is resumed only by a replan whose original sources prove changed admission conditions.
+- On a birth whose profile lists no Replan writer, a blocked or stopped run is not resumed by any replan.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json
+- Plans/goal_run_replan_contracts/oracle-fixtures.json
+- python3 scripts/pm_goal_run_replan_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_run_replanned_contract
+reasoning_tier: high
+context_scope: goal_run_replanned_current
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-080
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PM-Experiments/goal-replan-combined-source-20260921/v3/manifest.json (sha256 9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e)
+- /mnt/Cursor/PM-Experiments/goal-replan-combined-root-review-20260921/v3/REVIEW.md (ACCEPT_WITH_NOTES, adoption items 2 and 7)
+preserved_exact_tokens:
+- "goal_run.replanned"
+- "pm.goal_runtime_event.goal_run_replanned.schema.v3"
+- "owner.executor.workflow_run.replan.v1"
+- "D-R19"
+negative_constraints:
+- No Goal-state change, child Goal, alias of goal.replanned or replan on a birth whose profile lists no Replan writer.
+- No cancellation by replan and no registry change before the S5b switch.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+```
+
+**Premise check of DL-080 (2026-11-14).** DL-080 asked for this contract because the resume fence depends on the event, the Workflow writer list names no Replan writer and GRS-085 halts on the row. Today's text: Known-37 4.2 still makes `blocked` and `stopped` resumable only through a new revision and valid `goal_run.replanned` admission; EP-118 still refuses unlisted writers; GRS-085 and GRS-202 still halt on same-run replanned rows; GRS-070 keeps WorkGraph regeneration with "the actual workflow and separately governed goal_run.replanned". The premise holds. Newer facts: the stopped and blocked writers (EP-200) are listed only by `all_writers.stop_block.v1`, a fresh edition distinct from v8, so neither edition composes the other's writers (GRS-3101 says what each birth accepts).
+
+**Clocks.** The v2 payload advanced the Goal revision through `expected_goal_revision` (D-CAS-01). The accepted v8 source keeps the Goal revision fixed and adds the Workflow clock pair; CV-3100 places that on the GoalRun envelope by dropping the redundant `expected_goal_revision` and the retired `parent_goal_id` and requiring the inner `idempotency_key`. Graph generation is a third, independent clock (checked u32, advanced once per applied structural replan by the graph-lock owner).
+
+**Who decides.** The bounded manager (Crosswalk scheduler plus bounded manager) chooses the replacement graph and one of the six actions; this contract and the v8 source choose none. B01's whole-Workflow blocked trigger stays pending and grants no authority. `cmd.runtime.replan` (EP-3101) requests a replan of a live blocked episode; it never names the action or the graph.
+
+**Cancel and stop.** `cancel` stays in the closed next_action grammar so the v2 historical reader keeps its meaning, but no current writer publishes it (C7). `stop` and `remain_blocked` are published by the replan itself on a v8 birth, because that birth has no EP-200 writer; a later replan or D06 leaves them. The limited execution revocation of the v8 Stop protocol revokes capabilities only: it is never a stopped row, a cancelled row, SchedulerStop or D06 (`Plans/goal_run_replan_contracts/cancellation-dependencies.json`).
+
+**Historical rows.** The v2 payload, the Known-37 v2 key and the EA-UND-0019-GOAL oracle pair describe v2 only; ATS-3100 supersedes that pair for current writes. Same-run v2 rows remain unsupported by every current reducer and are read only by the historical reader.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-3101, ContractName:Plans/Contracts_V0.md#CV-3100, ContractName:Plans/storage-plan.md#SP-3100, ContractName:Plans/Goal_Runtime_System.md#GRS-3101, ContractName:Plans/Decision_Log.md#DL-080
+
+### GRS-3101 - Unified run-history projection branch for all_writers.v8 births
+
+```yaml
+plan_unit_id: GRS-3101
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: |-
+  Newly authored owner contract under DL-045, written for DL-080 (PNC-019 lane rv8b, 2026-11-14). It extends GRS-085's mandatory per-run projection, as DL-080 requires, so that one reducer reads the whole same-run lifecycle of a run born under pm.executor.workflow_source.all_writers.v8. The reducer consumes the complete SP-278 global prefix and selects each run's accepted row set from the authentic installed profile of its original Workflow birth (the original WorkflowBirth and combined Enrollment custody), never from a row, a payload or a caller: all_writers.v7 keeps GRS-085 (started, cancelled, certified); all_writers.stop_block.v1 keeps GRS-202 (adds blocked and stopped); all_writers.v8 accepts started, replanned, certified and cancelled. A row of a family the birth profile does not list halts before the row. For v8 births: started-v3 rows authenticate against the v8 native start roots, cancelled-v3 rows against the v8 positive D06 roots, certified-v3 rows against the v8 coordinator and pm.goal_run_certified.producer_source.v3 custody, and replanned-v3 rows against the actual native application, completion and their origins, the observer origin, SP-286 first custody and the full Event (Plans/goal_run_replan_contracts/consumer-bindings.json); no v7 consumer, checkpoint or generation is cast. Rule table: started -> replanned; replanned -> replanned; started or replanned -> cancelled (positive D06 from any legal nonterminal status, including blocked or stopped); started or replanned -> certified when the event-implied status is running, repairing or verifying and the certified row's own sources authenticate provisional success or verifying; nothing after certified or cancelled. Each replanned row is accepted only when its source native status (read from the row's original native before-commitment) is a D-R19 source, its next_action is not cancel, its goal_run_revision is exactly one above its own expected_goal_run_revision, that expected revision equals the projected revision or exceeds it only across intervening body revisions the original D01/native chronology authenticates as supported non-emitting native steps, and its replan_generation is exactly the projected generation plus one. A gap, a lower revision, a skipped or repeated generation, an intervening unsupported same-run Event, a v2 row, a blocked or stopped row or an unknown profile halts before the row. SP-3102 owns the value and checkpoint.
+gui_related: false
+gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
+split_recommended: false
+depends_on:
+- GRS-085
+- GRS-202
+- GRS-3100
+- SP-3102
+- SP-278
+- DL-080
+- DL-045
+unblocks: []
+acceptance_criteria:
+- One reducer processes the whole global prefix; the branch is chosen by the authentic birth profile, and no branch skips or casts a row another branch accepts.
+- On a v8 birth a verified replanned v3 row on a legal edge advances the projection and its checkpoint atomically; started, certified and cancelled rows of that birth authenticate against the v8 source profiles named in consumer-bindings.json.
+- A replanned row with next_action cancel, an illegal source status, a revision or generation that does not follow, or an unauthenticated revision gap halts before the row.
+- Blocked or stopped rows on a v8 birth, replanned rows on a v7 or stop_block.v1 birth, v2 rows and unknown profiles halt before the row.
+- No existing GRS-085 or GRS-202 generation is reinterpreted; a v8 run's projection is built only in a new generation from a full scan.
+validation_surfaces:
+- Plans/goal_run_replan_contracts/consumer-bindings.json
+- Plans/goal_run_replan_contracts/projection.schema.json
+- Plans/goal_run_replan_contracts/oracle-fixtures.json
+- python3 scripts/pm_goal_run_replan_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: run_history_projection_gap
+reasoning_tier: high
+context_scope: grs085_v8_replan_extension
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-080
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PM-Experiments/goal-replan-combined-root-review-20260921/v3/REVIEW.md (adoption item 3)
+preserved_exact_tokens:
+- "GRS-085"
+- "goal_run.replanned"
+- "pm.executor.workflow_source.all_writers.v8"
+negative_constraints:
+- No action, resume, replan, cancellation or Goal authority from a projected row.
+- No change to earlier births, their branches or their generations.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+```
+
+**Why one reducer with branches.** The v8 source ships a Replan projector that knows started, cancelled and replanned but not certified, while the certified consumer knows started, cancelled and certified but not replanned. Installed side by side, each would halt at the other's row. The branch rule replaces both with one state machine per birth profile; the frozen projector stays source lineage (adoption correction C9).
+
+**What a projected row says.** `lifecycle_status` is the last supported Event kind; `projected_run_status` is the status that Event implies (D-R19 successor for a replan, running after start, certified, cancelled). Non-emitting native steps (progress, provisional success, verification, failed verification) change native status without an Event, so the projection never claims the current native status; current readers consult the native owner, as GRS-079 says.
+
+**Composition limit (open, technical).** No current fresh edition lists both the EP-200 stop and block writers and the v8 Replan writer. So Pause and Abort Run, which expect `goal_run.stopped`, have no installed writer on a v8 birth and return `handler_unavailable` there, and a stop_block.v1 birth cannot be replanned. Composing both writer sets needs a further fresh source edition with its own review; it is not a product choice and is recorded in the lane report.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-085, ContractName:Plans/Goal_Runtime_System.md#GRS-202, ContractName:Plans/storage-plan.md#SP-3102, ContractName:Plans/Decision_Log.md#DL-080

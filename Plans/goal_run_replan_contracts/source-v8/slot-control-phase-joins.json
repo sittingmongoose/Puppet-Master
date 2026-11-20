@@ -1,0 +1,72 @@
+{
+  "phase_selection": "Actual native slot and original coordinator control/custody determine the unique phase; callers do not choose. All full original phase predicates remain conjunctive.",
+  "rows": [
+    {
+      "slot": "replan:claimed",
+      "control": null,
+      "required": "Complete original prefix census proves no current operation PublicationControl yet; previous other-operation released controls remain authentic history."
+    },
+    {
+      "slot": "replan:prepared",
+      "control": "prepared",
+      "required": "Exact source/prepared commitments and intent refs present; native/application/append/completion/release refs absent."
+    },
+    {
+      "slot": "replan:native_applied",
+      "control": "native_applied",
+      "required": "Native application and original origin authentic; finalization ref absent before actual finalization and authentic present thereafter. Slot control selector updates atomically whenever that control changes."
+    },
+    {
+      "slot": "replan:appended_held",
+      "control": "append_verified",
+      "required": "Original finalized producer and full authentic append/link; completion ref absent before actual completion."
+    },
+    {
+      "slot": "replan:completed",
+      "control": "append_verified",
+      "required": "Authentic compact completion/origin refs present; actual old D01 is before-observer, never current after-native."
+    },
+    {
+      "slot": "replan:observed",
+      "control": [
+        "observer_verified",
+        "whole_verified"
+      ],
+      "required": "Actual complete new D01 observer/inventory/native source. Whole_verified additionally requires genuine complete readback. Every control hash change coissues slot revision/origin."
+    },
+    {
+      "slot": "certified:claimed",
+      "control": "empty",
+      "required": "Full authentic original certified birth/empty control and original source identity; no original intent/Event/native certification yet."
+    },
+    {
+      "slot": "certified:prepared",
+      "control": "armed",
+      "required": "Whole authentic original prepared intent, exact before native source/candidates and original installed birth."
+    },
+    {
+      "slot": "certified:appended_held",
+      "control": "event_durable",
+      "required": "Authentic original append barriers/custody/held Event phase; native certification not yet claimed."
+    },
+    {
+      "slot": "certified:completed",
+      "control": "native_committed",
+      "required": "Authentic complete native certification/D01/receipt/commit/origin and current full native readback."
+    },
+    {
+      "slot": "idle",
+      "control": [
+        "no earlier operation at genuine birth",
+        "last authentic replan released",
+        "last authentic certified released"
+      ],
+      "required": "Complete authentic slot journal, issuer origins, prefix census and exact last original release; all other family controls must be empty or genuinely earlier released."
+    }
+  ],
+  "revocation_recovery": "A recovering or revoked slot retains the real operation and authentic prior phase. Replan null control is allowed only when the complete journal/census proves revocation or recovery occurred before prepare. Certified empty birth control remains required before arm. Missing/contradictory controls are unavailable, never absence. Stop does not forge an original coordinator phase or release.",
+  "durable_gap": "If Event append succeeded but native slot/control advancement did not, the slot remains at its prior authentic phase and recovery uses actual original Event custody to advance exactly once. A retained slot phase alone never asserts uncommitted cross-store facts.",
+  "stop_successor": "STOP-PROTOCOL.md R02-R05: claimed/revoked/recovering preprepare uses whole coherent ordinary CurrentSource, true null control, lower native capability revocation plus existing slot/revision/origin. No fake prepare or native cancellation.",
+  "v3_stop_acquisition": "Current original Goal Stop is independently acquired before first held slot revocation; no newly revoked slot or lower result is needed as input. Already-revoked still authenticates prior immutable custody/current native invalidation.",
+  "v3_released_readback": "Exact current idle guard and authentic original release join to the immutable earlier revoked SlotRevision/origin and independent complete current Goal/native/D01 source. No obsolete mutable slot/held phase/D06 substitute."
+}

@@ -1,0 +1,5738 @@
+{
+ "checker_sha256": "48852ffb211beb7be3a04fba9db68de1844ef8d4c200d45e559ef8e053be6da3",
+ "collect_seconds": 942.9,
+ "failed": [],
+ "findings": [
+  {
+   "kind": "excluded_from_table_proof",
+   "pair": "source/source_collaboration_created_project:roster",
+   "reason": "two rows by construction: an extra slot in slot_requirements contradicts every copy of the roster (captured control SF45, record specs SF46, body roster SF47); original_control:participant_slot_ids, r2:semantic_roster and the p2a roster witnesses prove each row alone"
+  },
+  {
+   "kind": "excluded_from_table_proof",
+   "pair": "source/source_collaboration_created_application:roster",
+   "reason": "two rows by construction: an extra slot in slot_requirements contradicts every copy of the roster (captured control SF45, record specs SF46, body roster SF47); original_control:participant_slot_ids, r2:semantic_roster and the p2a roster witnesses prove each row alone"
+  },
+  {
+   "kind": "excluded_from_table_proof",
+   "pair": "source/source_collaboration_configuration_changed_project:roster",
+   "reason": "two rows by construction: an extra slot in slot_requirements contradicts every copy of the roster (captured control SF45, record specs SF46, body roster SF47); original_control:participant_slot_ids, r2:semantic_roster and the p2a roster witnesses prove each row alone"
+  },
+  {
+   "kind": "excluded_from_table_proof",
+   "pair": "source/source_collaboration_configuration_changed_application:roster",
+   "reason": "two rows by construction: an extra slot in slot_requirements contradicts every copy of the roster (captured control SF45, record specs SF46, body roster SF47); original_control:participant_slot_ids, r2:semantic_roster and the p2a roster witnesses prove each row alone"
+  }
+ ],
+ "lane_matrix_problems": 0,
+ "masked": 0,
+ "proved": 340,
+ "rows": 340,
+ "rows_without_negative": [],
+ "seconds": 7328.4,
+ "source_sha256": {
+  "scripts/pm_collab_guard_suites.py": "0bb553b8403ccfdd31859f52955d4d0b4158a91675dd7a0e79ef6bbf1d3b73a8",
+  "scripts/pm_collab_p2a_cases.py": "6271b4d748dc20c6ed5d2b725ef7f68b2129d3f944ae302a4214adab080dba80",
+  "scripts/pm_collab_p2b_cases.py": "ee66af088d36e4887b54df9395a18e4c339df57a196512fd761c2e213fec0a93",
+  "scripts/pm_collab_table_checkpoint_cursor.py": "376eab9c9852d912019fb78a3c5cec321f61d441b6f5795ca21896470067f49a",
+  "scripts/pm_collab_table_checkpoint_empty_cursor.py": "29fbc580ac63880c53040c7dc1eca01e479b22be795e2cab1f4d9eea84877da2",
+  "scripts/pm_collab_table_checkpoint_event.py": "9b27cd36bb6e96b5bc56ea4722755463a400d4ce7952104e23838ec9b6e91e55",
+  "scripts/pm_collab_table_checkpoint_instance.py": "4ecf20c1dd5607bb608e78319c580146b5c80f6ea1008a0fc4e6957b5d816e9f",
+  "scripts/pm_collab_table_checkpoint_join.py": "a838d97ddbefa45116ef4719784d8d125274650e95734f25bcc6a4c5563e7c94",
+  "scripts/pm_collab_table_checkpoint_recipe.py": "87419935f407446a96d095cc7dac559de73d483007a032d843d403f17d0ee540",
+  "scripts/pm_collab_table_checkpoint_schema.py": "2034430322200bd6ba1fab515bf73abb8f015d207da48ec80a11b2d80c933bb9",
+  "scripts/pm_collab_table_checkpoint_values.py": "41f80a230af767d662d08cec5accec0d183e7190452da8ef1a25437e61958228",
+  "scripts/pm_collab_table_envelope_datetime.py": "7cb63953ba5f84d9f952833a5e8d36927a31fba5a3faf675a221e876b1f250a2",
+  "scripts/pm_collab_table_envelope_family.py": "876b36b0c94d1d77fd541b96f2a6896d440708654f1c6c696714f9dc1f879132",
+  "scripts/pm_collab_table_envelope_identity.py": "0240cc859026a46ea8434e5288064203f43e5c3e2646bfe8674ae71381322b50",
+  "scripts/pm_collab_table_envelope_joins.py": "b397c6f57878703629bfc6365e8116d055b2a2d90d2ddd49658fc86de6a46eaf",
+  "scripts/pm_collab_table_envelope_numbers.py": "6c20703c4b7c3bc318721ce6d0d33f2e9b349655d1011fbe99bb12dc2e41b9c0",
+  "scripts/pm_collab_table_envelope_replay.py": "3c1adcaff5056ca3edc13b7892095807691d9f96492e9b604591ac4c97a898f0",
+  "scripts/pm_collab_table_envelope_schema.py": "c5f893059454e4d520c6e745b6887ee648b9038b03c1d29c8563128e5fafc260",
+  "scripts/pm_collab_table_envelope_scope.py": "9f7ef8ad8dd431613827ecba8cb6dfb66d5f936977646ea841a46cb71303d99f",
+  "scripts/pm_collab_table_fix_event.py": "eceb20497da21bcfd1975117b7cd8e8e89addfba36f74cb102dea6f8acd47f8d",
+  "scripts/pm_collab_table_fix_final_state.py": "bf30f4ec4492218dbe1fd26f42d26763745f37ff962e3d8205ca044f758ca845",
+  "scripts/pm_collab_table_fix_floor.py": "552ec2a68751505b45577f9c961d7807dde7581f0f54f3329a29d6525d9a54fc",
+  "scripts/pm_collab_table_fix_identity.py": "e4149b77f8084d3196ac5b566a64e3c642460f81c49be50f9363a6bd6056b95a",
+  "scripts/pm_collab_table_fix_native.py": "860e4ff61aa51383626075ab87ba676c064025ccd419cf45801bcd9f8ccc51d6",
+  "scripts/pm_collab_table_fix_numeric.py": "cc0d043549308de8d297d69a004c8741fa53b10e046a70fecbbf61aeaeecab4d",
+  "scripts/pm_collab_table_fix_numeric_family.py": "e97a4cdf9f709f8520b42d110d5bdabf09bcfffa140eb19d39438fea99254a98",
+  "scripts/pm_collab_table_fix_payload.py": "530d40fc55b35be3c4f151dd70d66cdcb360ae3b03f4f5e4f8dfb20ed4d62688",
+  "scripts/pm_collab_table_fix_prepared.py": "37ccf56674706759e370731ab8d141fc2f2459c014f05fed5289981575bbcc07",
+  "scripts/pm_collab_table_fix_projection.py": "ccd48dbf32a32b19385d503f625c634aab52f0b3f786caf2704ed953d5488e85",
+  "scripts/pm_collab_table_fix_sequence.py": "5b6f9178072347fa211cadf1d632afd8f3a3249294ad4b0f0b3ec3da7ac97e95",
+  "scripts/pm_collab_table_fix_transition_case.py": "261989e0dfb2e71fc0a3df8ff5a6c556fe42a551397d7aab13f1c01c1a30aec8",
+  "scripts/pm_collab_table_historical_context.py": "eba534fbec95b531bcc270e4141e3ee09516f434ea92695d5ca4dae752920dc1",
+  "scripts/pm_collab_table_historical_flags.py": "ecbb2cbd207c8716f9bfc6e0221a1c7edab2ebfbc4cf1cbfad26c653085e21a2",
+  "scripts/pm_collab_table_historical_recipe.py": "873033326b5b55f05737d843ef370177a03d7027d5f87a5b7e769f6fd9068851",
+  "scripts/pm_collab_table_int_ats.py": "4c419787b2eb2f1c22a4127a4289e08c5cab62b099d9b9e413b31ad3b9947ffd",
+  "scripts/pm_collab_table_int_ledger.py": "527ceb6f929c95f1747c61c933f151fa35dc802083c23a51e6be5c97ca61519e",
+  "scripts/pm_collab_table_int_ledger_edition.py": "81daf7b783a5a6ecba5b9d5d2885db0abfdaa1802fb6a2557cd0561fbb1b81e4",
+  "scripts/pm_collab_table_int_ledger_ref.py": "27dc08ffab05b4fa476ee661601c15f0a22520f551645901256c67992f69d393",
+  "scripts/pm_collab_table_int_ledger_row_a.py": "4e4b7c14b94aebb35f249453274053981fca304a6404688763269430503aeff0",
+  "scripts/pm_collab_table_int_ledger_row_b.py": "ac6f1e07c6d702f5362cb01318963f63ca21cca2f7dd0eaf0f0b8b9afbc163fb",
+  "scripts/pm_collab_table_int_ledger_scope.py": "702f8c8f51ba3cb7a30f1b3dc6b81b9b4d1b64aff8f15bebf8d4f22c84cf7354",
+  "scripts/pm_collab_table_int_membership_ledger.py": "4785e9fcdc6ffc29948627756a8d43d4db5ed2780fc28efcedbccea2e4b193b2",
+  "scripts/pm_collab_table_int_membership_row.py": "2ed8070cf0471c5204b8e5170b7d14fb2689ce7eba05d58edd2eaf4296634da7",
+  "scripts/pm_collab_table_int_owner_family.py": "e14e0b1764d02504fbadaf257d6ae5dcad1592ce715aae4fd7b2460913d5ee34",
+  "scripts/pm_collab_table_int_owner_section.py": "0cd75658590ce655a7521d8772e4eaad68ec6ce15cbebccc27cb29741fa092cd",
+  "scripts/pm_collab_table_int_owner_unit.py": "fea13cda554bc67519d005d88194880ea8a0f86cdfa02cc49e803f2d1edc78cd",
+  "scripts/pm_collab_table_int_payload_def.py": "87fb40f42b95c56fae4ed9b8dab90c8b77afa3f6690b43a706f06b7696d1db8a",
+  "scripts/pm_collab_table_int_payload_defs.py": "636e648ac9cdd312d9836a699c106d5bc168ca5560f8d962bff6187d4e7b17cc",
+  "scripts/pm_collab_table_int_payload_kind.py": "0182c54a3132de7e2588d3f523d40b9bbcb5415eb7af7429414c7f96dfa590e9",
+  "scripts/pm_collab_table_int_payload_reason.py": "41a345d637bc02d15ffcae12c23d132f94b79152457611242b3c88084f3b0a3e",
+  "scripts/pm_collab_table_int_payload_reconfigure.py": "8f37fff81847e8b4a83862de38b0dd45d8dc1d1733a9fc313c8a3771c2bbb344",
+  "scripts/pm_collab_table_int_payload_state.py": "fc02aff2255d3a045af947bec21526ec15f37b9157ae71c3388c8adfe77bcca2",
+  "scripts/pm_collab_table_int_physical_a.py": "23f3f77a8e4f60d668a2ffc3b7cd7a1a62365cc7136d7677d4330ba9f778fd99",
+  "scripts/pm_collab_table_int_physical_b.py": "88b3a8f580322292bf4d436d9a7606901f89e6d8b258c5ef2463367a8325c099",
+  "scripts/pm_collab_table_int_physical_composition.py": "51c5f515d29419f56696b173b3314fbc384036186d83aad5250c7dffbc555452",
+  "scripts/pm_collab_table_int_physical_presence.py": "e46540c7cc1354db2bf561fdfaf5cf139ddd81f95baf5dfd58286ad962fd1e0f",
+  "scripts/pm_collab_table_int_probe.py": "a6a15b6165214dc64f383217e7125faea77814893d8d2c5993eefcde0ead84ea",
+  "scripts/pm_collab_table_int_projection_a.py": "14ffcb962082f17f9ce51cd41998376615121b0cbd26a85092d81bb15ae313ef",
+  "scripts/pm_collab_table_int_projection_adoptions.py": "da060deb210020d128bcadb71fe53bfdebd4105890b6b0b474e0aee2892cbb57",
+  "scripts/pm_collab_table_int_projection_def.py": "550fbf80a0c793127cbcc77102d4647e16b77320be7fde98388a43a6a7f15430",
+  "scripts/pm_collab_table_int_projection_family.py": "13fc9ff95e626c3ba6bca6d608f81c514255141dcf7ef0ef8ca4df31ff32d2b3",
+  "scripts/pm_collab_table_int_references.py": "7bcb83ddb51d7b9ceca7bbd5bbe0a9670c42696c841bc4962d69821c043b4e7e",
+  "scripts/pm_collab_table_int_source_physical_a.py": "687f67d61029cb2b1aaa6e6e3fb38fcad22d5c528dea04a235c9a8512b75f99a",
+  "scripts/pm_collab_table_int_source_physical_b.py": "c52ff285e3ddee21713f2eae182819096a254fcee18cd8b39d5eb1915e7f6782",
+  "scripts/pm_collab_table_int_source_physical_presence.py": "e26c2fd5ddb6bb8289347c30d342c15591b124f0db819314e3034ec5a045aa2c",
+  "scripts/pm_collab_table_payload_numbers.py": "e9c531f91bb4344852e1d05d61ed3b530682a6dd2ca842ebd604b5908654ee9d",
+  "scripts/pm_collab_table_payload_object.py": "1b08a61e02c0488cffe7010bb0d91eaec2789f6208583ce557e57a2c28bf7f5e",
+  "scripts/pm_collab_table_payload_rules.py": "9e6b73720b23de0b44f284c9c6eb80e982c2f8e028cb616e973349830db40630",
+  "scripts/pm_collab_table_payload_schema.py": "ee329f7e7335c1a3b1a49706380d362bc3e26f30c4e09f9b5ccf4a6e8485b39f",
+  "scripts/pm_collab_table_prepared_join.py": "f768abca2ec8999bb031ca6c880f69d0400bd1b1ffb307014b9a4ca6c93f802e",
+  "scripts/pm_collab_table_projection_value_schema.py": "464d5d8acb75579c8ed3b83609342b6da71c910ce12927ef00d345414fd71381",
+  "scripts/pm_collab_table_projection_value_times.py": "1fc6a6e4969e23cfdedc2500c27a033430b3fd541e2ee9745bf216adb388d018",
+  "scripts/pm_collab_table_read_token.py": "9166081c5cf823b3c30322169b30581f5f6e3455e8677a0623913954631fd765",
+  "scripts/pm_collab_table_reference_body.py": "06b140d9cb0e9d06f7f100346a3b0d18d2ca767686efa4b77a37f9c932e45860",
+  "scripts/pm_collab_table_reference_format.py": "01d6c1f7db986f77b4a7b156fa95d2509cba6326d2b339e258a16649aa406750",
+  "scripts/pm_collab_table_representation.py": "c638d7f6df9ce01c90b87c60a15c65f04f87734a74951d904ee1ecc4239c1093",
+  "scripts/pm_collab_table_retention_presence.py": "a072d9f7a04be466d1f038d7dddac2757c5b2758bded54117f11c8c8e7863c9c",
+  "scripts/pm_collab_table_retention_shape.py": "a096e26a844284c00afdc4ee84d32649650287e1d7da4ef2120907eae8592e23",
+  "scripts/pm_collab_table_retention_values_a.py": "5eae5b00888cf908d19e556d827f50a54cae4a58a1e3bc3140e2771c61210855",
+  "scripts/pm_collab_table_retention_values_b.py": "74e47aef188b7d8295ce9c23980df742aab71959051051b5a22d3bfe0be21c68",
+  "scripts/pm_collab_table_retention_values_c.py": "9e38aca2588adec3851b055b0b119db6880f0374bfbdbeccaf3f88649c7ea352",
+  "scripts/pm_collab_table_shape_schema.py": "958b3a9ff222b4c73e34a186715eada8180b18f9510d9def778338ad734edce2",
+  "scripts/pm_collab_table_shared_table_order.py": "3034f1d2446bbc0353fd0bd3eaa647ad0531247679351674d13200983234b007",
+  "scripts/pm_collab_table_source_context_keys.py": "5b314f0f4a9e798dcb75623735dc3ff8eeab01574751b76701c241f4a3ab2e22",
+  "scripts/pm_collab_table_source_context_type.py": "88aca5cea800c52636a85f95b003abf4ce2f77f48a45660815bdba565661379f",
+  "scripts/pm_collab_table_source_digests.py": "e5c10d8f33043837c468ee50c0b4a323f898f598c07e899ec60413f220e5eaca",
+  "scripts/pm_collab_table_source_family.py": "ce1b573e3ae28a36c1e91c5640ab825a1698ff3b78ef7732b2af1312abd0b972",
+  "scripts/pm_collab_table_source_identity.py": "798db9c235a04960dc63bebc0a28117968d518d633e7420631a32c8aed93cb71",
+  "scripts/pm_collab_table_source_numbers.py": "32f64377e744ba24530ffaa221eb1e3833c96620bcd1bd8a20e22b35874facd1",
+  "scripts/pm_collab_table_source_object.py": "f17c33fa5af56a25dffd018b8e5e4960839e04dcc4410f4a66f455eefd25ab2b",
+  "scripts/pm_collab_table_source_outputs.py": "f14c5774991c053379ea1107e4689202bfda63495dc802973e65498dd759bf5d",
+  "scripts/pm_collab_table_source_owner_facts.py": "ffaff51a1f5328f4c9d23afe75c3a0d141ff2063d8ee646354426119f2e7a796",
+  "scripts/pm_collab_table_source_participant.py": "4a170648d4653d0d509391958ab008a906e20e00e94556fb6dabfd9adb19f6ec",
+  "scripts/pm_collab_table_source_record_identity.py": "f589f6d583abf56b56ba1757fc3c869ce71f6a44b10e3d05d25d182231c89b20",
+  "scripts/pm_collab_table_source_record_state.py": "86544e06159f18bcd257040f02428a3852445510ee407057d18d11db7fd0b3cc",
+  "scripts/pm_collab_table_source_requirements.py": "53695868b39680bdad7818b346c96d21431e8824d4213d23e8c14871deca8bc0",
+  "scripts/pm_collab_table_source_review.py": "46822dea4b8f70a32336f53e09d7557299c81a8089d974584806ad224f3c0dd0",
+  "scripts/pm_collab_table_source_review_pack.py": "caf7be3d19c7e264ce1534528bba644dd50265f8b35221b2f64fec81163f7499",
+  "scripts/pm_collab_table_source_roster.py": "35ffb3d46e38c3b76008d5fef5884f91b2c6213b2a0ef0241f89c09045107863",
+  "scripts/pm_collab_table_source_schema.py": "70b40fd8225c80de3c207e030c2469d9063f64d0455705898be53b2b5b5ff142",
+  "scripts/pm_collab_table_source_times.py": "f94fa9652b0f641d10586e7988ed42a65ec2fdeb2b36a9fda4cbca4d9ea08054",
+  "scripts/pm_collab_table_transition_active.py": "20a47c6503b2f7e2514f83752528a2ca81514fdc40c7e110444f576ef7e06898",
+  "scripts/pm_collab_table_transition_admitted.py": "9a7a36efaf4295534c4ea8658cf32c7d2f6a9b0ca95ff1c3cf82c28c9a714f2f",
+  "scripts/pm_collab_table_transition_artifact_added.py": "5429f1e79970a45dbcc6c98e329a98d65c021644a06619fed8cda06027d59507",
+  "scripts/pm_collab_table_transition_completed.py": "b0ee67931208883808ac5510fdbd92a9139d3afe42537c7d169e783c2159123c",
+  "scripts/pm_collab_table_transition_contribution.py": "b44fe60baeb3ead1ea9baa05a7ab4d89cb4652219c4f1d27d16cc9b91163ddbe",
+  "scripts/pm_collab_table_transition_created.py": "cf2e6cd276f0f8f079237d99165cc78a8748e0baef051c355cd76a7bf0fc1326",
+  "scripts/pm_collab_table_transition_dedupe.py": "5422d36f105ee1227982ddc2d623a05ed1d8aae63e79aaa38ad48061109fcfb1",
+  "scripts/pm_collab_table_transition_definition.py": "61aadd4530098fc6eebba24b3e09745a5bf8badd3f40cab7b7eb8d59ac610dd3",
+  "scripts/pm_collab_table_transition_definition_lineage.py": "5dad441105334ef9239f2013c160519597d092f63f801495e96b7a5a633bfac8",
+  "scripts/pm_collab_table_transition_finalized.py": "8aef1fd6d067767742d48cb844287f4a246394f27360799666cc526481db1039",
+  "scripts/pm_collab_table_transition_finding_added.py": "fbbb3936efdc61dce744f448274b2311d4ee85eb234362799c9cb2daca636189",
+  "scripts/pm_collab_table_transition_finding_dispositioned.py": "799bcde6e67c5d1d635f9d61f195e15e1de9c2787dcf55dbe8478d7ec997e6b0",
+  "scripts/pm_collab_table_transition_lifecycle.py": "6d568a708d574313627dc0778b5ea88e36b340f8071034bffe7d83336aeada14",
+  "scripts/pm_collab_table_transition_message.py": "89da6872f6d7f938e7319e97ea47a70963748bdd76ae80c6f9f89735069e8be3",
+  "scripts/pm_collab_table_transition_participant_completed.py": "7cfd6760b90d00a376619bed256a3fd3bb9926a933dfbe54bdbf0d77189ef6de",
+  "scripts/pm_collab_table_transition_participant_started.py": "736b0b0cb08812c9506490e560fe7bde087828e24931162ca4e3c1e5969ba439",
+  "scripts/pm_collab_table_transition_run.py": "2b97f1a97faa2aa383c09c12c528b1d5c43458e4a2187e0d103105c4a64b7598",
+  "scripts/pm_collab_table_transition_run_presence.py": "878bde8d99f31d66231547b9beb26ceda6d553ba1aeff018e3700c4d20bab122",
+  "scripts/pm_collab_table_transition_start.py": "9034423044350afa5ae91aa4790d93629b8e74d1bc13b73e9bd846db25cde2ed",
+  "scripts/pm_collab_table_transition_synthesized.py": "e1d2101fa7b075151338a3ca30653acfcef73f9ed320c7a7289c2528648cca0e",
+  "scripts/pm_collab_table_transition_vote.py": "a2f51ab43570831e1f6f8d7eee1238f2adf1ed764753f46a5a75d17e381c6023",
+  "scripts/pm_collab_table_wrapper_join.py": "d7a9ba6caec27e313bf7657cd15a3d80a3159c2a61980b56938b4fb04b2cf407",
+  "scripts/pm_collab_table_wrapper_shape.py": "7f56fa15015a68c922b39b3a3b5185e9e053b8cad9dbc3dfdd518f054ee7ff1f",
+  "scripts/pm_collaboration_events.py": "48852ffb211beb7be3a04fba9db68de1844ef8d4c200d45e559ef8e053be6da3",
+  "scripts/pm_guard_isolation.py": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8"
+ },
+ "suites": [
+  {
+   "aliases": 5,
+   "complete_boundary_flips": {
+    "accepted": 12,
+    "refused_later": [
+     "refused_later:checkpoint_recipe:CK22_last_event_custody"
+    ],
+    "refused_later_count": 3
+   },
+   "controls": 2,
+   "negatives": 10,
+   "phase": "checkpoint_cursor",
+   "proved": [
+    "CK12_cursor_context",
+    "CK13_cursor_generation",
+    "CK14_cursor_frame",
+    "CK15_cursor_event_id",
+    "CK16_cursor_sequence"
+   ],
+   "report": "checkpoint_cursor.json.gz",
+   "report_sha256": "112fb8cab33af26455d481fec6eea622d88fc5f4219da7a420cf148ad1f0058a",
+   "row_families": {
+    "CK12_cursor_context": [
+     "shared"
+    ],
+    "CK13_cursor_generation": [
+     "shared"
+    ],
+    "CK14_cursor_frame": [
+     "shared"
+    ],
+    "CK15_cursor_event_id": [
+     "shared"
+    ],
+    "CK16_cursor_sequence": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "CK12_cursor_context",
+    "CK13_cursor_generation",
+    "CK14_cursor_frame",
+    "CK15_cursor_event_id",
+    "CK16_cursor_sequence"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "checkpoint_empty_cursor",
+   "proved": [
+    "CK19_empty_cursor"
+   ],
+   "report": "checkpoint_empty_cursor.json.gz",
+   "report_sha256": "2aa8550ac2daca91250ea3057763b1fe9147191095f1a698820e6ff7d1753ea4",
+   "row_families": {
+    "CK19_empty_cursor": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "CK19_empty_cursor"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 2,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:checkpoint_recipe:CK22_last_event_custody"
+    ],
+    "refused_later_count": 6
+   },
+   "controls": 2,
+   "negatives": 4,
+   "phase": "checkpoint_event",
+   "proved": [
+    "CK17_event_scope",
+    "CK18_event_project"
+   ],
+   "report": "checkpoint_event.json.gz",
+   "report_sha256": "81ecaa5783dc7019f28c1bd0ba94f9280eaccc325f3eeeb2b60765cf709619c6",
+   "row_families": {
+    "CK17_event_scope": [
+     "shared"
+    ],
+    "CK18_event_project": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "CK17_event_scope",
+    "CK18_event_project"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 12,
+   "complete_boundary_flips": {
+    "accepted": 23,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 2,
+   "negatives": 11,
+   "phase": "checkpoint_instance",
+   "proved": [
+    "CK02_checkpoint_instance",
+    "CK03_token_instance",
+    "CK04_selection_instance",
+    "CK05_context_token_instance",
+    "CK06_context_selection_instance",
+    "CK07_partition"
+   ],
+   "report": "checkpoint_instance.json.gz",
+   "report_sha256": "8b18c7cf6f056eefe5eb8a7b6c38d757f6b46d405df68757055137d0e0acc5f8",
+   "row_families": {
+    "CK02_checkpoint_instance": [
+     "shared"
+    ],
+    "CK03_token_instance": [
+     "shared"
+    ],
+    "CK04_selection_instance": [
+     "shared"
+    ],
+    "CK05_context_token_instance": [
+     "shared"
+    ],
+    "CK06_context_selection_instance": [
+     "shared"
+    ],
+    "CK07_partition": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "CK02_checkpoint_instance",
+    "CK03_token_instance",
+    "CK04_selection_instance",
+    "CK05_context_token_instance",
+    "CK06_context_selection_instance",
+    "CK07_partition"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 22,
+   "complete_boundary_flips": {
+    "accepted": 35,
+    "refused_later": [
+     "refused_later:checkpoint_cursor:CK16_cursor_sequence"
+    ],
+    "refused_later_count": 6
+   },
+   "controls": 2,
+   "negatives": 19,
+   "phase": "checkpoint_join",
+   "proved": [
+    "CK08_token",
+    "CK09_admitted",
+    "CK10_coverage",
+    "CK11_cursor_through"
+   ],
+   "report": "checkpoint_join.json.gz",
+   "report_sha256": "eab9ada7305e876fa9239dd8e5a3da89dcb8e5ff59b31dfebf2c2522a6c9359f",
+   "row_families": {
+    "CK08_token": [
+     "shared"
+    ],
+    "CK09_admitted": [
+     "shared"
+    ],
+    "CK10_coverage": [
+     "shared"
+    ],
+    "CK11_cursor_through": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "CK08_token",
+    "CK09_admitted",
+    "CK10_coverage",
+    "CK11_cursor_through"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 5,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:envelope_identity:EV14_event_id",
+     "refused_later:envelope_schema:EV01_record_schema"
+    ],
+    "refused_later_count": 6
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "checkpoint_recipe",
+   "proved": [
+    "CK22_last_event_custody"
+   ],
+   "report": "checkpoint_recipe.json.gz",
+   "report_sha256": "147aa59bcab7306e9fcc0e581e1ef4c667c1c466d53239247010dcc94ebd0a7e",
+   "row_families": {
+    "CK22_last_event_custody": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "CK22_last_event_custody"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 3,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:checkpoint_values:CK20_times"
+    ],
+    "refused_later_count": 4
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "checkpoint_schema",
+   "proved": [
+    "CK01_schema"
+   ],
+   "report": "checkpoint_schema.json.gz",
+   "report_sha256": "750ddcf960f767d7e6867429ed6f3d92276a71ff8349472ac2a61be93c01dace",
+   "row_families": {
+    "CK01_schema": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "CK01_schema"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 16,
+   "complete_boundary_flips": {
+    "accepted": 18,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 2,
+   "phase": "checkpoint_values",
+   "proved": [
+    "CK20_times",
+    "CK21_integers"
+   ],
+   "report": "checkpoint_values.json.gz",
+   "report_sha256": "989aced985ec155bdf37deea0ed77f3ce2ae38a529f6edd68a42094c02bd66ed",
+   "row_families": {
+    "CK20_times": [
+     "shared"
+    ],
+    "CK21_integers": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "CK20_times",
+    "CK21_integers"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 213,
+   "complete_boundary_flips": {
+    "accepted": 144,
+    "refused_later": [
+     "refused_later:envelope_joins:EV13_occurred_at",
+     "refused_later:payload_rules:PR03_family_timestamp"
+    ],
+    "refused_later_count": 72
+   },
+   "controls": 1,
+   "negatives": 3,
+   "phase": "envelope_datetime",
+   "proved": [
+    "EV15_occurred_at_format",
+    "EV16_observed_at_format",
+    "EV17_persisted_at_format"
+   ],
+   "report": "envelope_datetime.json.gz",
+   "report_sha256": "cd838c2b9da0e06a89978e2f1cbedb05e29704fd05b7384d2964008d436e387f",
+   "row_families": {
+    "EV15_occurred_at_format": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "EV16_observed_at_format": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "EV17_persisted_at_format": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "EV15_occurred_at_format",
+    "EV16_observed_at_format",
+    "EV17_persisted_at_format"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 36,
+   "complete_boundary_flips": {
+    "accepted": 72,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 19,
+   "negatives": 36,
+   "phase": "envelope_family",
+   "proved": [
+    "EV02_event_type"
+   ],
+   "report": "envelope_family.json.gz",
+   "report_sha256": "6006809d4938a786c27b3f4c425950b7553971d92963cd089307eb15eb4ad2fe",
+   "row_families": {
+    "EV02_event_type": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "EV02_event_type"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 19,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 40,
+   "negatives": 19,
+   "phase": "envelope_identity",
+   "proved": [
+    "EV14_event_id"
+   ],
+   "report": "envelope_identity.json.gz",
+   "report_sha256": "fc56a400bea42505ef4759e22df0e55bbe7870e13e277179fcaee8c45d43eaa4",
+   "row_families": {
+    "EV14_event_id": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "EV14_event_id"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 76,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 40,
+   "negatives": 76,
+   "phase": "envelope_joins",
+   "proved": [
+    "EV07_node",
+    "EV08_attempt",
+    "EV09_thread",
+    "EV10_run",
+    "EV11_idempotency",
+    "EV12_schema_id",
+    "EV13_occurred_at"
+   ],
+   "report": "envelope_joins.json.gz",
+   "report_sha256": "33591731f359feeb9bd3d96979ab6704ace5b1cfe0436f80c04105ab50731645",
+   "row_families": {
+    "EV07_node": [
+     "collaboration.started"
+    ],
+    "EV08_attempt": [
+     "collaboration.started"
+    ],
+    "EV09_thread": [
+     "collaboration.started"
+    ],
+    "EV10_run": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "EV11_idempotency": [
+     "collaboration.started"
+    ],
+    "EV12_schema_id": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "EV13_occurred_at": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "EV07_node",
+    "EV08_attempt",
+    "EV09_thread",
+    "EV10_run",
+    "EV11_idempotency",
+    "EV12_schema_id",
+    "EV13_occurred_at"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 70,
+   "complete_boundary_flips": {
+    "accepted": 54,
+    "refused_later": [
+     "refused_later:representation:RP03_event_value"
+    ],
+    "refused_later_count": 18
+   },
+   "controls": 1,
+   "negatives": 2,
+   "phase": "envelope_numbers",
+   "proved": [
+    "EV18_sequence_id",
+    "EV19_producer_sequence_id"
+   ],
+   "report": "envelope_numbers.json.gz",
+   "report_sha256": "e6300b347bdf84653265f0bab473a49dc332b7f2d7c9ba666792c0f19027525b",
+   "row_families": {
+    "EV18_sequence_id": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "EV19_producer_sequence_id": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "EV18_sequence_id",
+    "EV19_producer_sequence_id"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 35,
+   "complete_boundary_flips": {
+    "accepted": 37,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 2,
+   "phase": "envelope_replay",
+   "proved": [
+    "EV06_replay_policy"
+   ],
+   "report": "envelope_replay.json.gz",
+   "report_sha256": "d8e5f7ce21c4909d51ae8ac259dce853010cea8719969fb4e9a03f574d2c6ffc",
+   "row_families": {
+    "EV06_replay_policy": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "EV06_replay_policy"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 35,
+   "complete_boundary_flips": {
+    "accepted": 36,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "envelope_schema",
+   "proved": [
+    "EV01_record_schema"
+   ],
+   "report": "envelope_schema.json.gz",
+   "report_sha256": "08b12680eba0cbcb6805ce44f72d69ab8e8b1ed0c2dd5a99b6fcc21e6eb75e98",
+   "row_families": {
+    "EV01_record_schema": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "EV01_record_schema"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 3,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 2,
+   "negatives": 3,
+   "phase": "envelope_scope",
+   "proved": [
+    "EV03_scope_kind",
+    "EV04_project_id",
+    "EV05_redaction"
+   ],
+   "report": "envelope_scope.json.gz",
+   "report_sha256": "1e03bfeb7b16701692d4bd1158bcaa2c4939cc9328f24d73eeb5ab8c7f47ffa0",
+   "row_families": {
+    "EV03_scope_kind": [
+     "collaboration.started"
+    ],
+    "EV04_project_id": [
+     "collaboration.started"
+    ],
+    "EV05_redaction": [
+     "collaboration.started"
+    ]
+   },
+   "rows": [
+    "EV03_scope_kind",
+    "EV04_project_id",
+    "EV05_redaction"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 3,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 46,
+   "negatives": 3,
+   "phase": "fix_event",
+   "proved": [
+    "IF07_valid_event",
+    "IF08_valid_event_payload",
+    "IF09_invalid_event"
+   ],
+   "report": "fix_event.json.gz",
+   "report_sha256": "b87e73d7558dd1ff147dd20d247ec41af2ce44b0315fba564487c9d4a7cbbc1e",
+   "row_families": {
+    "IF07_valid_event": [
+     "shared"
+    ],
+    "IF08_valid_event_payload": [
+     "shared"
+    ],
+    "IF09_invalid_event": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IF07_valid_event",
+    "IF08_valid_event_payload",
+    "IF09_invalid_event"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 12,
+   "negatives": 1,
+   "phase": "fix_final_state",
+   "proved": [
+    "IF15_final_state"
+   ],
+   "report": "fix_final_state.json.gz",
+   "report_sha256": "dafcadcaaf214d042e13f26196b157635ea8e324c3755d2fd7365023b3bfe7fa",
+   "row_families": {
+    "IF15_final_state": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IF15_final_state"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 7,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 16,
+   "negatives": 7,
+   "phase": "fix_floor",
+   "proved": [
+    "IF23_floor_positive",
+    "IF24_floor_negative",
+    "IF25_floor_vectors",
+    "IF26_floor_sequences_appended",
+    "IF27_floor_sequences_refused",
+    "IF28_floor_editions",
+    "IF29_floor_joins"
+   ],
+   "report": "fix_floor.json.gz",
+   "report_sha256": "4f342653396e931d286d9213cc26a446b2160ae048a90b6b0212f556d0954cd7",
+   "row_families": {
+    "IF23_floor_positive": [
+     "shared"
+    ],
+    "IF24_floor_negative": [
+     "shared"
+    ],
+    "IF25_floor_vectors": [
+     "shared"
+    ],
+    "IF26_floor_sequences_appended": [
+     "shared"
+    ],
+    "IF27_floor_sequences_refused": [
+     "shared"
+    ],
+    "IF28_floor_editions": [
+     "shared"
+    ],
+    "IF29_floor_joins": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IF23_floor_positive",
+    "IF24_floor_negative",
+    "IF25_floor_vectors",
+    "IF26_floor_sequences_appended",
+    "IF27_floor_sequences_refused",
+    "IF28_floor_editions",
+    "IF29_floor_joins"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 3,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 108,
+   "negatives": 3,
+   "phase": "fix_identity",
+   "proved": [
+    "IF10_identity_vector",
+    "IF11_identity_partition",
+    "IF12_new_epoch_key"
+   ],
+   "report": "fix_identity.json.gz",
+   "report_sha256": "ee915401acb64599f8373b0790479e98259ac9e359f24561b0bac5d2c45a8ad7",
+   "row_families": {
+    "IF10_identity_vector": [
+     "shared"
+    ],
+    "IF11_identity_partition": [
+     "shared"
+    ],
+    "IF12_new_epoch_key": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IF10_identity_vector",
+    "IF11_identity_partition",
+    "IF12_new_epoch_key"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "fix_native",
+   "proved": [
+    "IF30_native_status"
+   ],
+   "report": "fix_native.json.gz",
+   "report_sha256": "bbed8f997df0a453c3715f1dab7d11bb8eff6a08945b9a8821acb2d659f29f68",
+   "row_families": {
+    "IF30_native_status": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IF30_native_status"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 9,
+   "negatives": 1,
+   "phase": "fix_numeric",
+   "proved": [
+    "IF01_numeric_canonical"
+   ],
+   "report": "fix_numeric.json.gz",
+   "report_sha256": "1fbebe523a99da6a745543501b3646c8878e2ccfdccde70d8e90ea9f530ca0f7",
+   "row_families": {
+    "IF01_numeric_canonical": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IF01_numeric_canonical"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 3,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 252,
+   "negatives": 3,
+   "phase": "fix_numeric_family",
+   "proved": [
+    "IF02_numeric_identity",
+    "IF03_numeric_current"
+   ],
+   "report": "fix_numeric_family.json.gz",
+   "report_sha256": "fb1029b311b35efabd0b0e6d7d3102d32ef45baf363895c36d9aa8c1b65be66b",
+   "row_families": {
+    "IF02_numeric_identity": [
+     "shared"
+    ],
+    "IF03_numeric_current": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IF02_numeric_identity",
+    "IF03_numeric_current"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 3,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 7,
+   "negatives": 3,
+   "phase": "fix_payload",
+   "proved": [
+    "IF04_positive_payload",
+    "IF05_positive_edition",
+    "IF06_negative_layer"
+   ],
+   "report": "fix_payload.json.gz",
+   "report_sha256": "feb275077b168792c9c6d785934920a574e6d08829dec649e57cad16ff4404b6",
+   "row_families": {
+    "IF04_positive_payload": [
+     "shared"
+    ],
+    "IF05_positive_edition": [
+     "shared"
+    ],
+    "IF06_negative_layer": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IF04_positive_payload",
+    "IF05_positive_edition",
+    "IF06_negative_layer"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 2,
+   "phase": "fix_prepared",
+   "proved": [
+    "IF18_prepared_source",
+    "IF19_prepared_event"
+   ],
+   "report": "fix_prepared.json.gz",
+   "report_sha256": "62a3f54cb5b3268046c2dd0ee87753251300c6f2f5ee60feae7ddb0ead64a38d",
+   "row_families": {
+    "IF18_prepared_source": [
+     "shared"
+    ],
+    "IF19_prepared_event": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IF18_prepared_source",
+    "IF19_prepared_event"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 3,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 3,
+   "phase": "fix_projection",
+   "proved": [
+    "IF20_projection_value",
+    "IF21_checkpoint",
+    "IF22_invalid_projection"
+   ],
+   "report": "fix_projection.json.gz",
+   "report_sha256": "b7010242a00721ba944e5131529807aba4bc07c5df66028e42a7fbe3241aafb8",
+   "row_families": {
+    "IF20_projection_value": [
+     "shared"
+    ],
+    "IF21_checkpoint": [
+     "shared"
+    ],
+    "IF22_invalid_projection": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IF20_projection_value",
+    "IF21_checkpoint",
+    "IF22_invalid_projection"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [
+     "refused_later:fix_sequence:IF14_step_result"
+    ],
+    "refused_later_count": 1
+   },
+   "controls": 3,
+   "negatives": 2,
+   "phase": "fix_sequence",
+   "proved": [
+    "IF13_step_payload",
+    "IF14_step_result"
+   ],
+   "report": "fix_sequence.json.gz",
+   "report_sha256": "10952e9ed1af374324e0fffa503dbcb2c53e1e79db2072b6ccd71fcc69daaf14",
+   "row_families": {
+    "IF13_step_payload": [
+     "shared"
+    ],
+    "IF14_step_result": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IF13_step_payload",
+    "IF14_step_result"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 42,
+   "negatives": 2,
+   "phase": "fix_transition_case",
+   "proved": [
+    "IF16_transition_case",
+    "IF17_transition_counterpart"
+   ],
+   "report": "fix_transition_case.json.gz",
+   "report_sha256": "a799f98a06f720446b56a4b75ced2958b5b5734a348c431cc10ef9b8b04abb2b",
+   "row_families": {
+    "IF16_transition_case": [
+     "shared"
+    ],
+    "IF17_transition_counterpart": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IF16_transition_case",
+    "IF17_transition_counterpart"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 32,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:AttributeError"
+    ],
+    "refused_later_count": 36
+   },
+   "controls": 1,
+   "negatives": 4,
+   "phase": "historical_context",
+   "proved": [
+    "HI01_context_object"
+   ],
+   "report": "historical_context.json.gz",
+   "report_sha256": "82bfe9ab5a54d5587d1d18e9c928215fa3cc01662e225cc389f82e5aa5536a37",
+   "row_families": {
+    "HI01_context_object": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "HI01_context_object"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 144,
+   "complete_boundary_flips": {
+    "accepted": 792,
+    "refused_later": [
+     "refused_later:historical_recipe:HR01_recipe_custody",
+     "refused_later:historical_recipe:HR02_write_epoch"
+    ],
+    "refused_later_count": 360
+   },
+   "controls": 108,
+   "negatives": 1008,
+   "phase": "historical_flags",
+   "proved": [
+    "HI02_withdrawn_type",
+    "HI03_not_withdrawn",
+    "HI04_retained_type",
+    "HI05_retained",
+    "HI06_epoch_type",
+    "HI07_epoch_nonnegative",
+    "HI08_original"
+   ],
+   "report": "historical_flags.json.gz",
+   "report_sha256": "fae365004e6ffab472e61e6b7d6f01bfb804bf973cf5a045b2d8eedd19aad1f6",
+   "row_families": {
+    "HI02_withdrawn_type": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "HI03_not_withdrawn": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "HI04_retained_type": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "HI05_retained": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "HI06_epoch_type": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "HI07_epoch_nonnegative": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "HI08_original": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "HI02_withdrawn_type",
+    "HI03_not_withdrawn",
+    "HI04_retained_type",
+    "HI05_retained",
+    "HI06_epoch_type",
+    "HI07_epoch_nonnegative",
+    "HI08_original"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 175,
+   "complete_boundary_flips": {
+    "accepted": 36,
+    "refused_later": [
+     "refused_later:envelope_datetime:EV15_occurred_at_format",
+     "refused_later:envelope_identity:EV14_event_id",
+     "refused_later:representation:RP03_event_value"
+    ],
+    "refused_later_count": 144
+   },
+   "controls": 1,
+   "negatives": 5,
+   "phase": "historical_recipe",
+   "proved": [
+    "HR01_recipe_custody",
+    "HR02_write_epoch"
+   ],
+   "report": "historical_recipe.json.gz",
+   "report_sha256": "23ec254e0f077ce772326e1a14cc32d93af76362d2f60bb97bacde2a4def6f77",
+   "row_families": {
+    "HR01_recipe_custody": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "HR02_write_epoch": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "HR01_recipe_custody",
+    "HR02_write_epoch"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "int_ats",
+   "proved": [
+    "IA01_cited"
+   ],
+   "report": "int_ats.json.gz",
+   "report_sha256": "08562a5fd3438b4e40909c6e4bd19b47b824a133116dc6e6505aad35919b8525",
+   "row_families": {
+    "IA01_cited": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IA01_cited"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 2,
+   "phase": "int_ledger",
+   "proved": [
+    "IL01_ledger_schema",
+    "IL02_ledger_order"
+   ],
+   "report": "int_ledger.json.gz",
+   "report_sha256": "75375282114520b5a540f366c885a5025e5bf8bcd08e3531859b1ffb4deb3a0f",
+   "row_families": {
+    "IL01_ledger_schema": [
+     "shared"
+    ],
+    "IL02_ledger_order": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IL01_ledger_schema",
+    "IL02_ledger_order"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 2,
+   "negatives": 2,
+   "phase": "int_ledger_edition",
+   "proved": [
+    "IL15_producer_admission",
+    "IL16_edition_retention"
+   ],
+   "report": "int_ledger_edition.json.gz",
+   "report_sha256": "66bec54b78ef94da58395ab29a522912099779c88fa916de861915d04595c58a",
+   "row_families": {
+    "IL15_producer_admission": [
+     "shared"
+    ],
+    "IL16_edition_retention": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IL15_producer_admission",
+    "IL16_edition_retention"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 3,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 36,
+   "negatives": 3,
+   "phase": "int_ledger_ref",
+   "proved": [
+    "IL10_ref_path",
+    "IL11_ref_def",
+    "IL12_ref_schema_id"
+   ],
+   "report": "int_ledger_ref.json.gz",
+   "report_sha256": "acbf76e7c55b4640c26056dfd2541495bf00d1f0cb96aeb558884d57e1f1611c",
+   "row_families": {
+    "IL10_ref_path": [
+     "shared"
+    ],
+    "IL11_ref_def": [
+     "shared"
+    ],
+    "IL12_ref_schema_id": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IL10_ref_path",
+    "IL11_ref_def",
+    "IL12_ref_schema_id"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 7,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 18,
+   "negatives": 7,
+   "phase": "int_ledger_row_a",
+   "proved": [
+    "IL03_row_schema",
+    "IL04_row_sha256",
+    "IL05_row_event_type",
+    "IL06_row_family_id",
+    "IL07_family_id_form",
+    "IL08_semantic_anchor",
+    "IL09_payload_anchor"
+   ],
+   "report": "int_ledger_row_a.json.gz",
+   "report_sha256": "2970b8c40f5800e2514f89de856c9d32145e08c9fcfb06fb4d8359cb7f8568c2",
+   "row_families": {
+    "IL03_row_schema": [
+     "shared"
+    ],
+    "IL04_row_sha256": [
+     "shared"
+    ],
+    "IL05_row_event_type": [
+     "shared"
+    ],
+    "IL06_row_family_id": [
+     "shared"
+    ],
+    "IL07_family_id_form": [
+     "shared"
+    ],
+    "IL08_semantic_anchor": [
+     "shared"
+    ],
+    "IL09_payload_anchor": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IL03_row_schema",
+    "IL04_row_sha256",
+    "IL05_row_event_type",
+    "IL06_row_family_id",
+    "IL07_family_id_form",
+    "IL08_semantic_anchor",
+    "IL09_payload_anchor"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 5,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 5,
+   "phase": "int_ledger_row_b",
+   "proved": [
+    "IL17_retention_policy",
+    "IL18_no_alias",
+    "IL19_source_ref",
+    "IL20_case_ids",
+    "IL21_authority_ref"
+   ],
+   "report": "int_ledger_row_b.json.gz",
+   "report_sha256": "7c6d7be397a61bc387413fa39d7da88b7f31c085336e402ec35fa5b184e34416",
+   "row_families": {
+    "IL17_retention_policy": [
+     "shared"
+    ],
+    "IL18_no_alias": [
+     "shared"
+    ],
+    "IL19_source_ref": [
+     "shared"
+    ],
+    "IL20_case_ids": [
+     "shared"
+    ],
+    "IL21_authority_ref": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IL17_retention_policy",
+    "IL18_no_alias",
+    "IL19_source_ref",
+    "IL20_case_ids",
+    "IL21_authority_ref"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 2,
+   "phase": "int_ledger_scope",
+   "proved": [
+    "IL13_scope_policy",
+    "IL14_editions"
+   ],
+   "report": "int_ledger_scope.json.gz",
+   "report_sha256": "c142c29ee64696af23d6ccb3125ffa2d1ea2302e0e730f4047785905dc836b69",
+   "row_families": {
+    "IL13_scope_policy": [
+     "shared"
+    ],
+    "IL14_editions": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IL13_scope_policy",
+    "IL14_editions"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 2,
+   "negatives": 1,
+   "phase": "int_membership_ledger",
+   "proved": [
+    "IM03_admitted_present"
+   ],
+   "report": "int_membership_ledger.json.gz",
+   "report_sha256": "7200255a087fad7b464a92d1a659663d280b0822f27f3aef1d51c7507179e410",
+   "row_families": {
+    "IM03_admitted_present": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IM03_admitted_present"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 2,
+   "phase": "int_membership_row",
+   "proved": [
+    "IM01_prepared_absent",
+    "IM02_admitted_equal"
+   ],
+   "report": "int_membership_row.json.gz",
+   "report_sha256": "2c046fd266dc30bfd5a3c8fda382f49f91158c4d94c2bfaac37204f413ad7d71",
+   "row_families": {
+    "IM01_prepared_absent": [
+     "shared"
+    ],
+    "IM02_admitted_equal": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IM01_prepared_absent",
+    "IM02_admitted_equal"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "int_owner_family",
+   "proved": [
+    "IU02_unit_names_family"
+   ],
+   "report": "int_owner_family.json.gz",
+   "report_sha256": "497b691a49b2843e66bbcd0ebbd34c71db8160bcfc9336b11aa469b68e95aafc",
+   "row_families": {
+    "IU02_unit_names_family": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IU02_unit_names_family"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "int_owner_section",
+   "proved": [
+    "IU03_section_13"
+   ],
+   "report": "int_owner_section.json.gz",
+   "report_sha256": "88a23e615ffe0961d484ea3bfe84258ab5c164d91a281562c6ded442a0be3d13",
+   "row_families": {
+    "IU03_section_13": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IU03_section_13"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "int_owner_unit",
+   "proved": [
+    "IU01_unit_present"
+   ],
+   "report": "int_owner_unit.json.gz",
+   "report_sha256": "5e8f3657a60fdabf14ee297b3bb9c806cc2859f45f8367629d92684fa9e94f99",
+   "row_families": {
+    "IU01_unit_present": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IU01_unit_present"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 7,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 36,
+   "negatives": 7,
+   "phase": "int_payload_def",
+   "proved": [
+    "IP02_schema_id",
+    "IP03_closed",
+    "IP04_object",
+    "IP05_required_properties",
+    "IP06_null_nodes",
+    "IP07_family_timestamp",
+    "IP08_subject_fields"
+   ],
+   "report": "int_payload_def.json.gz",
+   "report_sha256": "fabec6e570acfb7e904b70b13e63a74145ebfc3114ea2501f2059367881fdac7",
+   "row_families": {
+    "IP02_schema_id": [
+     "shared"
+    ],
+    "IP03_closed": [
+     "shared"
+    ],
+    "IP04_object": [
+     "shared"
+    ],
+    "IP05_required_properties": [
+     "shared"
+    ],
+    "IP06_null_nodes": [
+     "shared"
+    ],
+    "IP07_family_timestamp": [
+     "shared"
+    ],
+    "IP08_subject_fields": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IP02_schema_id",
+    "IP03_closed",
+    "IP04_object",
+    "IP05_required_properties",
+    "IP06_null_nodes",
+    "IP07_family_timestamp",
+    "IP08_subject_fields"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "int_payload_defs",
+   "proved": [
+    "IP01_payload_defs"
+   ],
+   "report": "int_payload_defs.json.gz",
+   "report_sha256": "003076eba2a154bcf57f483f34795b3cfdab1601556d936e2daa7ac6c95332a7",
+   "row_families": {
+    "IP01_payload_defs": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IP01_payload_defs"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 3,
+   "negatives": 1,
+   "phase": "int_payload_kind",
+   "proved": [
+    "IP09_kind_constant"
+   ],
+   "report": "int_payload_kind.json.gz",
+   "report_sha256": "879c5e2975de76af6ce54e04870c6ffa8a42a417b8fc22babf30707ad36a23bf",
+   "row_families": {
+    "IP09_kind_constant": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IP09_kind_constant"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "int_payload_reason",
+   "proved": [
+    "IP11_reason_enum"
+   ],
+   "report": "int_payload_reason.json.gz",
+   "report_sha256": "12208778ff394aff6ae27cac1b63123e9b90f0013c64d49da0384d0b52683b9e",
+   "row_families": {
+    "IP11_reason_enum": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IP11_reason_enum"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "int_payload_reconfigure",
+   "proved": [
+    "IP10_reconfigure_kinds"
+   ],
+   "report": "int_payload_reconfigure.json.gz",
+   "report_sha256": "fce0295119dc04efd78d5b91ec6b1ebdb2d161590470cec47a0015f5308157ef",
+   "row_families": {
+    "IP10_reconfigure_kinds": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IP10_reconfigure_kinds"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 2,
+   "negatives": 1,
+   "phase": "int_payload_state",
+   "proved": [
+    "IP12_state_subset"
+   ],
+   "report": "int_payload_state.json.gz",
+   "report_sha256": "34a1f784944d0961486d1b05258d08ff9a036a42566858627bb7aebf44025467",
+   "row_families": {
+    "IP12_state_subset": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IP12_state_subset"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 7,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 8,
+   "negatives": 7,
+   "phase": "int_physical_a",
+   "proved": [
+    "IB02_key_shape",
+    "IB03_encoding",
+    "IB04_owner_doc",
+    "IB05_producer",
+    "IB06_retention_policy_ref",
+    "IB07_value_schema_ref",
+    "IB08_value_schema"
+   ],
+   "report": "int_physical_a.json.gz",
+   "report_sha256": "c70a7bd8b7db4cfb115215ef749469cf515ef8462abbcefbfcc6e0aa1cae904b",
+   "row_families": {
+    "IB02_key_shape": [
+     "shared"
+    ],
+    "IB03_encoding": [
+     "shared"
+    ],
+    "IB04_owner_doc": [
+     "shared"
+    ],
+    "IB05_producer": [
+     "shared"
+    ],
+    "IB06_retention_policy_ref": [
+     "shared"
+    ],
+    "IB07_value_schema_ref": [
+     "shared"
+    ],
+    "IB08_value_schema": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IB02_key_shape",
+    "IB03_encoding",
+    "IB04_owner_doc",
+    "IB05_producer",
+    "IB06_retention_policy_ref",
+    "IB07_value_schema_ref",
+    "IB08_value_schema"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 4,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 8,
+   "negatives": 4,
+   "phase": "int_physical_b",
+   "proved": [
+    "IB09_schema_version",
+    "IB10_value_schema_id",
+    "IB11_not_backed_up",
+    "IB12_derived"
+   ],
+   "report": "int_physical_b.json.gz",
+   "report_sha256": "4d81d7b52e85306f2528d512a57dd4a5df4ecdff583656144bed05bbd568e188",
+   "row_families": {
+    "IB09_schema_version": [
+     "shared"
+    ],
+    "IB10_value_schema_id": [
+     "shared"
+    ],
+    "IB11_not_backed_up": [
+     "shared"
+    ],
+    "IB12_derived": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IB09_schema_version",
+    "IB10_value_schema_id",
+    "IB11_not_backed_up",
+    "IB12_derived"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "int_physical_composition",
+   "proved": [
+    "IB13_composition"
+   ],
+   "report": "int_physical_composition.json.gz",
+   "report_sha256": "e52f8b24dbe3588d8d7ffd3a6d6662b7556f91af885242df3339e9d2564f8b62",
+   "row_families": {
+    "IB13_composition": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IB13_composition"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:AttributeError"
+    ],
+    "refused_later_count": 1
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "int_physical_presence",
+   "proved": [
+    "IB01_present"
+   ],
+   "report": "int_physical_presence.json.gz",
+   "report_sha256": "6a4f91938982fb7cefc19711fc1b985bc62f4abf3249610357497381995bbb1a",
+   "row_families": {
+    "IB01_present": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IB01_present"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 130,
+   "negatives": 1,
+   "phase": "int_probe",
+   "proved": [
+    "IQ01_probe"
+   ],
+   "report": "int_probe.json.gz",
+   "report_sha256": "9d10117663516cb2f7491170ad3e27c0364574fb0a3221ccf67013b256a2a3ec",
+   "row_families": {
+    "IQ01_probe": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IQ01_probe"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 5,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 5,
+   "phase": "int_projection_a",
+   "proved": [
+    "IJ01_token_copy",
+    "IJ02_redb_snapshot",
+    "IJ03_nine_fields",
+    "IJ04_admitted_types",
+    "IJ05_binding_families"
+   ],
+   "report": "int_projection_a.json.gz",
+   "report_sha256": "70e59e6ff1d3beb8d78d4a74b4971de3fdc876015cbe7e6c942cb4dde2a4b828",
+   "row_families": {
+    "IJ01_token_copy": [
+     "shared"
+    ],
+    "IJ02_redb_snapshot": [
+     "shared"
+    ],
+    "IJ03_nine_fields": [
+     "shared"
+    ],
+    "IJ04_admitted_types": [
+     "shared"
+    ],
+    "IJ05_binding_families": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IJ01_token_copy",
+    "IJ02_redb_snapshot",
+    "IJ03_nine_fields",
+    "IJ04_admitted_types",
+    "IJ05_binding_families"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 2,
+   "phase": "int_projection_adoptions",
+   "proved": [
+    "IJ11_checkpoint_adopts",
+    "IJ12_receipt_resolver"
+   ],
+   "report": "int_projection_adoptions.json.gz",
+   "report_sha256": "870b46c44c31c6a6baa9d88fc46a8c7bb85e1f1ae17046c6116936503ab67c1f",
+   "row_families": {
+    "IJ11_checkpoint_adopts": [
+     "shared"
+    ],
+    "IJ12_receipt_resolver": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IJ11_checkpoint_adopts",
+    "IJ12_receipt_resolver"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 21,
+   "negatives": 1,
+   "phase": "int_projection_def",
+   "proved": [
+    "IJ10_closed"
+   ],
+   "report": "int_projection_def.json.gz",
+   "report_sha256": "d181e373c7763b8585cb9f6cae38fc741c9e8dd47c46183b438cefe6c2a1b47c",
+   "row_families": {
+    "IJ10_closed": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IJ10_closed"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 4,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 18,
+   "negatives": 4,
+   "phase": "int_projection_family",
+   "proved": [
+    "IJ06_units",
+    "IJ07_source_family",
+    "IJ08_source_schema",
+    "IJ09_owner_schemas"
+   ],
+   "report": "int_projection_family.json.gz",
+   "report_sha256": "8df062b127e68e21c01fa7d43b68eef2cce7adeeffd6da57f3b98ef6ef7305d1",
+   "row_families": {
+    "IJ06_units": [
+     "shared"
+    ],
+    "IJ07_source_family": [
+     "shared"
+    ],
+    "IJ08_source_schema": [
+     "shared"
+    ],
+    "IJ09_owner_schemas": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IJ06_units",
+    "IJ07_source_family",
+    "IJ08_source_schema",
+    "IJ09_owner_schemas"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "int_references",
+   "proved": [
+    "IX01_references"
+   ],
+   "report": "int_references.json.gz",
+   "report_sha256": "71f1dcb867d05e75cd8e7c32456151dc16237b742489cf6164394b76962c346d",
+   "row_families": {
+    "IX01_references": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IX01_references"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 5,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 5,
+   "phase": "int_source_physical_a",
+   "proved": [
+    "IS02_value_schema_ref",
+    "IS03_encoding",
+    "IS04_producer",
+    "IS05_backup_required",
+    "IS06_value_schema"
+   ],
+   "report": "int_source_physical_a.json.gz",
+   "report_sha256": "43a7a31226a31e4f0244e3ed41b8ad365f82946f2aa067c0d97254cc8313b6c7",
+   "row_families": {
+    "IS02_value_schema_ref": [
+     "shared"
+    ],
+    "IS03_encoding": [
+     "shared"
+    ],
+    "IS04_producer": [
+     "shared"
+    ],
+    "IS05_backup_required": [
+     "shared"
+    ],
+    "IS06_value_schema": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IS02_value_schema_ref",
+    "IS03_encoding",
+    "IS04_producer",
+    "IS05_backup_required",
+    "IS06_value_schema"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 4,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 4,
+   "phase": "int_source_physical_b",
+   "proved": [
+    "IS07_value_schema_id",
+    "IS08_key_shape",
+    "IS09_retention_policy_ref",
+    "IS10_authority_class"
+   ],
+   "report": "int_source_physical_b.json.gz",
+   "report_sha256": "add8b874e3a559af36a108eded37aaf4f0e9355da504bc5b2d3c8c41b3889f00",
+   "row_families": {
+    "IS07_value_schema_id": [
+     "shared"
+    ],
+    "IS08_key_shape": [
+     "shared"
+    ],
+    "IS09_retention_policy_ref": [
+     "shared"
+    ],
+    "IS10_authority_class": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IS07_value_schema_id",
+    "IS08_key_shape",
+    "IS09_retention_policy_ref",
+    "IS10_authority_class"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:AttributeError"
+    ],
+    "refused_later_count": 1
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "int_source_physical_presence",
+   "proved": [
+    "IS01_present"
+   ],
+   "report": "int_source_physical_presence.json.gz",
+   "report_sha256": "90d46bf9efd533b13cd624925154c32f2b2456c16444bedfad33e7d91313a152",
+   "row_families": {
+    "IS01_present": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "IS01_present"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 386,
+   "complete_boundary_flips": {
+    "accepted": 387,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "payload_numbers",
+   "proved": [
+    "PN01_integer_slots"
+   ],
+   "report": "payload_numbers.json.gz",
+   "report_sha256": "83c18cad56678a7c109ecb48d9aff5e79ea9aabe7a6b07a3a4537cf5807620cf",
+   "row_families": {
+    "PN01_integer_slots": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "PN01_integer_slots"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 3,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:AttributeError"
+    ],
+    "refused_later_count": 4
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "payload_object",
+   "proved": [
+    "PO01_payload_object"
+   ],
+   "report": "payload_object.json.gz",
+   "report_sha256": "dcae2542ed5dbeec17a378161f294be90e4bcce42f2bbc53c305e3a3d3050d2a",
+   "row_families": {
+    "PO01_payload_object": [
+     "collaboration.created",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started"
+    ]
+   },
+   "rows": [
+    "PO01_payload_object"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 91,
+   "complete_boundary_flips": {
+    "accepted": 549,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 97,
+   "negatives": 458,
+   "phase": "payload_rules",
+   "proved": [
+    "PR01_epoch_integer",
+    "PR02_epoch_nonnegative",
+    "PR03_family_timestamp",
+    "PR04_idempotency_recipe",
+    "PR05_revision_rule",
+    "PR06_review_counts"
+   ],
+   "report": "payload_rules.json.gz",
+   "report_sha256": "71ee3f2c5def580e0f235d6e3fc9b59ef46de8ff2679f8a87342e374cec385ce",
+   "row_families": {
+    "PR01_epoch_integer": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "PR02_epoch_nonnegative": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "PR03_family_timestamp": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "PR04_idempotency_recipe": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "PR05_revision_rule": [
+     "collaboration.configuration_changed"
+    ],
+    "PR06_review_counts": [
+     "review.artifact_finalized"
+    ]
+   },
+   "rows": [
+    "PR01_epoch_integer",
+    "PR02_epoch_nonnegative",
+    "PR03_family_timestamp",
+    "PR04_idempotency_recipe",
+    "PR05_revision_rule",
+    "PR06_review_counts"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 1515,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:payload_numbers:PN01_integer_slots"
+    ],
+    "refused_later_count": 1516
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "payload_schema",
+   "proved": [
+    "PS01_payload_schema"
+   ],
+   "report": "payload_schema.json.gz",
+   "report_sha256": "c31f445cb688874a22c4a877d95ebd2e44fc99effbc898472d540698cb892eb3",
+   "row_families": {
+    "PS01_payload_schema": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "PS01_payload_schema"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 80,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 64,
+   "negatives": 80,
+   "phase": "prepared_join",
+   "proved": [
+    "QP01_body",
+    "QP02_metadata"
+   ],
+   "report": "prepared_join.json.gz",
+   "report_sha256": "71a4065c38f13445b8815965ece24473a3df2cfe4879629bf74665185c812373",
+   "row_families": {
+    "QP01_body": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "QP02_metadata": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "QP01_body",
+    "QP02_metadata"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 14,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:projection_value_times:PV02_times"
+    ],
+    "refused_later_count": 15
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "projection_value_schema",
+   "proved": [
+    "PV01_schema"
+   ],
+   "report": "projection_value_schema.json.gz",
+   "report_sha256": "6bdc1d823427ae24af14cb7475d87ab3633272fe163d87657e5e08079b13800e",
+   "row_families": {
+    "PV01_schema": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "PV01_schema"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "projection_value_times",
+   "proved": [
+    "PV02_times"
+   ],
+   "report": "projection_value_times.json.gz",
+   "report_sha256": "75a964044bdffa77c52d2f25f335e9067a47a0b7080a5bf43788b57f9f3f2b26",
+   "row_families": {
+    "PV02_times": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "PV02_times"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 4,
+   "complete_boundary_flips": {
+    "accepted": 5,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "read_token",
+   "proved": [
+    "TK01_canonical_token"
+   ],
+   "report": "read_token.json.gz",
+   "report_sha256": "08309c49ef29799b6320eb8b406a643d7179b3f5d20d4bd0b7fb805fa7be5dc2",
+   "row_families": {
+    "TK01_canonical_token": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "TK01_canonical_token"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 112,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:ValueError",
+     "refused_later:payload_schema:PS01_payload_schema"
+    ],
+    "refused_later_count": 576
+   },
+   "controls": 234,
+   "negatives": 688,
+   "phase": "reference_body",
+   "proved": [
+    "RF03_size",
+    "RF04_hash",
+    "RF05_json_object",
+    "RF06_canonical"
+   ],
+   "report": "reference_body.json.gz",
+   "report_sha256": "0c858850d565f4bcab76d8e61f8b9852be87e063913aff86c2bb6e33c1cbdb30",
+   "row_families": {
+    "RF03_size": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned",
+     "shared"
+    ],
+    "RF04_hash": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned",
+     "shared"
+    ],
+    "RF05_json_object": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned",
+     "shared"
+    ],
+    "RF06_canonical": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned",
+     "shared"
+    ]
+   },
+   "rows": [
+    "RF03_size",
+    "RF04_hash",
+    "RF05_json_object",
+    "RF06_canonical"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 40,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:AttributeError"
+    ],
+    "refused_later_count": 41
+   },
+   "controls": 1,
+   "negatives": 2,
+   "phase": "reference_format",
+   "proved": [
+    "RF01_format",
+    "RF02_present"
+   ],
+   "report": "reference_format.json.gz",
+   "report_sha256": "0aa9d8a654ac21b13077e353b9a9e50a220db4cb1be6b65dad4ddf840ade66c7",
+   "row_families": {
+    "RF01_format": [
+     "shared"
+    ],
+    "RF02_present": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned",
+     "shared"
+    ]
+   },
+   "rows": [
+    "RF01_format",
+    "RF02_present"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 27,
+   "complete_boundary_flips": {
+    "accepted": 80,
+    "refused_later": [
+     "refused_later:payload_schema:PS01_payload_schema"
+    ],
+    "refused_later_count": 32
+   },
+   "controls": 93,
+   "negatives": 85,
+   "phase": "representation",
+   "proved": [
+    "RP01_inline_limit",
+    "RP02_reference_body",
+    "RP03_event_value"
+   ],
+   "report": "representation.json.gz",
+   "report_sha256": "a0e1a02618876289cb968662baaf30a7e5130f32f054e559f7317860be30d85c",
+   "row_families": {
+    "RP01_inline_limit": [
+     "brainstorm.vote_added",
+     "collaboration.created",
+     "collaboration.message_added",
+     "collaboration.started"
+    ],
+    "RP02_reference_body": [
+     "collaboration.created",
+     "collaboration.started"
+    ],
+    "RP03_event_value": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "RP01_inline_limit",
+    "RP02_reference_body",
+    "RP03_event_value"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:retention_shape:RT02_object"
+    ],
+    "refused_later_count": 1
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "retention_presence",
+   "proved": [
+    "RT01_present"
+   ],
+   "report": "retention_presence.json.gz",
+   "report_sha256": "7a2a7f9e918e6acc3417004922a01bb8db507c458ff49b8a3792f3eaea41d486",
+   "row_families": {
+    "RT01_present": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "RT01_present"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 1,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:AttributeError"
+    ],
+    "refused_later_count": 5
+   },
+   "controls": 1,
+   "negatives": 4,
+   "phase": "retention_shape",
+   "proved": [
+    "RT02_object"
+   ],
+   "report": "retention_shape.json.gz",
+   "report_sha256": "3e051a2862756b1e157c66f0903e5ec69afeac521257efb03ace8064cffad6bd",
+   "row_families": {
+    "RT02_object": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "RT02_object"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 3,
+   "complete_boundary_flips": {
+    "accepted": 26,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 23,
+   "phase": "retention_values_a",
+   "proved": [
+    "RT03_retention_mode_type",
+    "RT04_retention_mode_value",
+    "RT05_anchor_kind_type",
+    "RT06_anchor_kind_value",
+    "RT07_max_cardinality_type",
+    "RT08_max_cardinality_value"
+   ],
+   "report": "retention_values_a.json.gz",
+   "report_sha256": "99ab6020345832c6ea72027403b112cd799ad3e595e2c0afa21648832b202c20",
+   "row_families": {
+    "RT03_retention_mode_type": [
+     "shared"
+    ],
+    "RT04_retention_mode_value": [
+     "shared"
+    ],
+    "RT05_anchor_kind_type": [
+     "shared"
+    ],
+    "RT06_anchor_kind_value": [
+     "shared"
+    ],
+    "RT07_max_cardinality_type": [
+     "shared"
+    ],
+    "RT08_max_cardinality_value": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "RT03_retention_mode_type",
+    "RT04_retention_mode_value",
+    "RT05_anchor_kind_type",
+    "RT06_anchor_kind_value",
+    "RT07_max_cardinality_type",
+    "RT08_max_cardinality_value"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 3,
+   "complete_boundary_flips": {
+    "accepted": 28,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 25,
+   "phase": "retention_values_b",
+   "proved": [
+    "RT09_cardinality_scope_type",
+    "RT10_cardinality_scope_value",
+    "RT11_overflow_action_type",
+    "RT12_overflow_action_value",
+    "RT13_hold_eligible_type",
+    "RT14_hold_eligible_value"
+   ],
+   "report": "retention_values_b.json.gz",
+   "report_sha256": "91c8ce0a4ab7c4776989720e70f2356c6b2f4fcdf6aeea6ad80a4a55b2f1c806",
+   "row_families": {
+    "RT09_cardinality_scope_type": [
+     "shared"
+    ],
+    "RT10_cardinality_scope_value": [
+     "shared"
+    ],
+    "RT11_overflow_action_type": [
+     "shared"
+    ],
+    "RT12_overflow_action_value": [
+     "shared"
+    ],
+    "RT13_hold_eligible_type": [
+     "shared"
+    ],
+    "RT14_hold_eligible_value": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "RT09_cardinality_scope_type",
+    "RT10_cardinality_scope_value",
+    "RT11_overflow_action_type",
+    "RT12_overflow_action_value",
+    "RT13_hold_eligible_type",
+    "RT14_hold_eligible_value"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 1,
+   "complete_boundary_flips": {
+    "accepted": 8,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 7,
+   "phase": "retention_values_c",
+   "proved": [
+    "RT15_policy_version_type",
+    "RT16_policy_version_value"
+   ],
+   "report": "retention_values_c.json.gz",
+   "report_sha256": "f5c47528bafe1c648c1d05e9e1f691020fc67e757b814a91cff195b39cbb2c38",
+   "row_families": {
+    "RT15_policy_version_type": [
+     "shared"
+    ],
+    "RT16_policy_version_value": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "RT15_policy_version_type",
+    "RT16_policy_version_value"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 19335,
+   "complete_boundary_flips": {
+    "accepted": 19336,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "shape_schema",
+   "proved": [
+    "SH01_schema"
+   ],
+   "report": "shape_schema.json.gz",
+   "report_sha256": "b3edb0706a61f7da5b275d330450c76f21fc2e2d2f7ebaf72f34a2ac45750e02",
+   "row_families": {
+    "SH01_schema": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned",
+     "shared"
+    ]
+   },
+   "rows": [
+    "SH01_schema"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 121,
+   "negatives": 1,
+   "phase": "shared_table_order",
+   "proved": [
+    "TO01_require_order"
+   ],
+   "report": "shared_table_order.json.gz",
+   "report_sha256": "8ecd6e33d8e15640d62fccfef088d34374542f8c3c468816c3641f4ee0d51551",
+   "row_families": {
+    "TO01_require_order": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "TO01_require_order"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 390,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:KeyError",
+     "refused_later:source_digests:SF10_context_record_digest",
+     "refused_later:source_identity:SF02_epoch_type",
+     "refused_later:source_owner_facts:SF59_owner_facts",
+     "refused_later:source_record_identity:SF13_binding",
+     "refused_later:source_record_state:SF21_envelope_metadata",
+     "refused_later:source_requirements:SF36_required_control",
+     "refused_later:source_requirements:SF40_currentness",
+     "refused_later:source_roster:SF42_roster_control"
+    ],
+    "refused_later_count": 400
+   },
+   "controls": 1,
+   "negatives": 10,
+   "phase": "source_context_keys",
+   "proved": [
+    "SO05_context_slots"
+   ],
+   "report": "source_context_keys.json.gz",
+   "report_sha256": "30633d57e7db9a86fecd171d2da68e4da7f7d898fae50903033556a519a6f828",
+   "row_families": {
+    "SO05_context_slots": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "SO05_context_slots"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 276,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:AttributeError"
+    ],
+    "refused_later_count": 280
+   },
+   "controls": 1,
+   "negatives": 4,
+   "phase": "source_context_type",
+   "proved": [
+    "SO04_context_object"
+   ],
+   "report": "source_context_type.json.gz",
+   "report_sha256": "3e8bfc1d803e6476923123b84c1fe05aedfaae5393a52844a53a1341db61dc7e",
+   "row_families": {
+    "SO04_context_object": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "SO04_context_object"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 200,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 108,
+   "negatives": 200,
+   "phase": "source_digests",
+   "proved": [
+    "SF08_semantic_digest",
+    "SF09_record_digest",
+    "SF10_context_record_digest",
+    "SF11_record_ref",
+    "SF12_context_record_ref"
+   ],
+   "report": "source_digests.json.gz",
+   "report_sha256": "fd59b80840e94b9d7900ac7f65e396a2aeefa7ca906a6bfbd228d72e4a4ce297",
+   "row_families": {
+    "SF08_semantic_digest": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF09_record_digest": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF10_context_record_digest": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF11_record_ref": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF12_context_record_ref": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "SF08_semantic_digest",
+    "SF09_record_digest",
+    "SF10_context_record_digest",
+    "SF11_record_ref",
+    "SF12_context_record_ref"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 39,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:KeyError"
+    ],
+    "refused_later_count": 40
+   },
+   "controls": 18,
+   "negatives": 1,
+   "phase": "source_family",
+   "proved": [
+    "SO02_family"
+   ],
+   "report": "source_family.json.gz",
+   "report_sha256": "a8c5029eb8989a3534e00b3592b27ffa40677173601843cf4fdcc0e5722233bc",
+   "row_families": {
+    "SO02_family": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "SO02_family"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 560,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 40,
+   "negatives": 560,
+   "phase": "source_identity",
+   "proved": [
+    "SF01_instance",
+    "SF02_epoch_type",
+    "SF03_epoch",
+    "SF04_key",
+    "SF05_partition",
+    "SF06_operation",
+    "SF07_event_id"
+   ],
+   "report": "source_identity.json.gz",
+   "report_sha256": "22c06c0c7348497cc705ad77cf0f72260e7eef610d013bb296719a499fc4edd8",
+   "row_families": {
+    "SF01_instance": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF02_epoch_type": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF03_epoch": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF04_key": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF05_partition": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF06_operation": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF07_event_id": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "SF01_instance",
+    "SF02_epoch_type",
+    "SF03_epoch",
+    "SF04_key",
+    "SF05_partition",
+    "SF06_operation",
+    "SF07_event_id"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 53,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:payload_rules:PR01_epoch_integer",
+     "refused_later:wrapper_shape:WR08_integers"
+    ],
+    "refused_later_count": 54
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "source_numbers",
+   "proved": [
+    "SO07_integer_slots"
+   ],
+   "report": "source_numbers.json.gz",
+   "report_sha256": "0abeb44cc48ee2a065add6db9b615d5a196c498d6527e9302332dac02a2ee0ce",
+   "row_families": {
+    "SO07_integer_slots": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "SO07_integer_slots"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:AttributeError"
+    ],
+    "refused_later_count": 1
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "source_object",
+   "proved": [
+    "SO01_object"
+   ],
+   "report": "source_object.json.gz",
+   "report_sha256": "42aa746f87b14b1167ca8f6619dd041b2f983bd1bfb97986069910e0be5a3da3",
+   "row_families": {
+    "SO01_object": [
+     "shared"
+    ]
+   },
+   "rows": [
+    "SO01_object"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 5,
+   "complete_boundary_flips": {
+    "accepted": 18,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 7,
+   "negatives": 13,
+   "phase": "source_outputs",
+   "proved": [
+    "SF48_producer_attempt",
+    "SF49_vote_constraints",
+    "SF50_plan_result",
+    "SF51_artifact_custody"
+   ],
+   "report": "source_outputs.json.gz",
+   "report_sha256": "4847eb02d9db84cf76845df4c4194c72dec931ae4735a1372341046d7b12d0e4",
+   "row_families": {
+    "SF48_producer_attempt": [
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added"
+    ],
+    "SF49_vote_constraints": [
+     "brainstorm.vote_added"
+    ],
+    "SF50_plan_result": [
+     "brainstorm.plan_synthesized"
+    ],
+    "SF51_artifact_custody": [
+     "collaboration.artifact_added",
+     "review.artifact_finalized"
+    ]
+   },
+   "rows": [
+    "SF48_producer_attempt",
+    "SF49_vote_constraints",
+    "SF50_plan_result",
+    "SF51_artifact_custody"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 142,
+   "complete_boundary_flips": {
+    "accepted": 412,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 24,
+   "negatives": 270,
+   "phase": "source_owner_facts",
+   "proved": [
+    "SF59_owner_facts"
+   ],
+   "report": "source_owner_facts.json.gz",
+   "report_sha256": "9c7332ca8b8bad937672c35ebcc8753698dda68803aca60f818ed0618535d4ca",
+   "row_families": {
+    "SF59_owner_facts": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "SF59_owner_facts"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 9,
+   "complete_boundary_flips": {
+    "accepted": 18,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 4,
+   "negatives": 9,
+   "phase": "source_participant",
+   "proved": [
+    "SF24_waiver_currentness",
+    "SF25_waiver_actor",
+    "SF26_waiver_actor_ref",
+    "SF27_identity_slot",
+    "SF28_identity_participant",
+    "SF29_identity_context"
+   ],
+   "report": "source_participant.json.gz",
+   "report_sha256": "8cd5c609c68e4be9bf633f6071f501888621b545ca13694fc33e5e4811e5e60a",
+   "row_families": {
+    "SF24_waiver_currentness": [
+     "collaboration.participant_completed"
+    ],
+    "SF25_waiver_actor": [
+     "collaboration.participant_completed"
+    ],
+    "SF26_waiver_actor_ref": [
+     "collaboration.participant_completed"
+    ],
+    "SF27_identity_slot": [
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added"
+    ],
+    "SF28_identity_participant": [
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added"
+    ],
+    "SF29_identity_context": [
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added"
+    ]
+   },
+   "rows": [
+    "SF24_waiver_currentness",
+    "SF25_waiver_actor",
+    "SF26_waiver_actor_ref",
+    "SF27_identity_slot",
+    "SF28_identity_participant",
+    "SF29_identity_context"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 574,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 50,
+   "negatives": 574,
+   "phase": "source_record_identity",
+   "proved": [
+    "SF13_binding",
+    "SF14_shared_fields",
+    "SF15_joined_fields",
+    "SF16_coordinator"
+   ],
+   "report": "source_record_identity.json.gz",
+   "report_sha256": "0fdcdac66195e59a2bd4019811879ec6ecdecf608bc25b6ba3170f7ff00af18c",
+   "row_families": {
+    "SF13_binding": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF14_shared_fields": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF15_joined_fields": [
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.participant_completed",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF16_coordinator": [
+     "collaboration.created"
+    ]
+   },
+   "rows": [
+    "SF13_binding",
+    "SF14_shared_fields",
+    "SF15_joined_fields",
+    "SF16_coordinator"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 221,
+   "complete_boundary_flips": {
+    "accepted": 384,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 28,
+   "negatives": 163,
+   "phase": "source_record_state",
+   "proved": [
+    "SF17_started_time",
+    "SF18_message_time",
+    "SF19_state",
+    "SF20_terminal_time",
+    "SF21_envelope_metadata",
+    "SF22_output_refs",
+    "SF23_attempt"
+   ],
+   "report": "source_record_state.json.gz",
+   "report_sha256": "c65e026f7d169f5796c3f3d23e41201845d3b763fa7a38eea8c822eb8f90de79",
+   "row_families": {
+    "SF17_started_time": [
+     "collaboration.started"
+    ],
+    "SF18_message_time": [
+     "collaboration.message_added"
+    ],
+    "SF19_state": [
+     "collaboration.resumed",
+     "collaboration.started"
+    ],
+    "SF20_terminal_time": [
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.failed"
+    ],
+    "SF21_envelope_metadata": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF22_output_refs": [
+     "collaboration.completed"
+    ],
+    "SF23_attempt": [
+     "collaboration.participant_completed"
+    ]
+   },
+   "rows": [
+    "SF17_started_time",
+    "SF18_message_time",
+    "SF19_state",
+    "SF20_terminal_time",
+    "SF21_envelope_metadata",
+    "SF22_output_refs",
+    "SF23_attempt"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 337,
+   "complete_boundary_flips": {
+    "accepted": 494,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 78,
+   "negatives": 157,
+   "phase": "source_requirements",
+   "proved": [
+    "SF36_required_control",
+    "SF37_required_snapshot",
+    "SF38_required_body",
+    "SF39_required_flag",
+    "SF40_currentness",
+    "SF41_record_currentness"
+   ],
+   "report": "source_requirements.json.gz",
+   "report_sha256": "06dd88880a599185a75f249e073fb771470b55303244fb6be9c755b4c9a009a9",
+   "row_families": {
+    "SF36_required_control": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF37_required_snapshot": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF38_required_body": [
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created"
+    ],
+    "SF39_required_flag": [
+     "collaboration.participant_completed",
+     "collaboration.participant_started"
+    ],
+    "SF40_currentness": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF41_record_currentness": [
+     "collaboration.participant_completed"
+    ]
+   },
+   "rows": [
+    "SF36_required_control",
+    "SF37_required_snapshot",
+    "SF38_required_body",
+    "SF39_required_flag",
+    "SF40_currentness",
+    "SF41_record_currentness"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 11,
+   "complete_boundary_flips": {
+    "accepted": 22,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 3,
+   "negatives": 11,
+   "phase": "source_review",
+   "proved": [
+    "SF52_review_targets",
+    "SF53_reviewer_control",
+    "SF54_vote_targets",
+    "SF55_vote_reviewers",
+    "SF56_counted_votes",
+    "SF57_votes_unique",
+    "SF58_dissent"
+   ],
+   "report": "source_review.json.gz",
+   "report_sha256": "18dde3170eda7888e3aafef889ebe49e179a1f5a1644ccfe6dc8ba2c0a062b69",
+   "row_families": {
+    "SF52_review_targets": [
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF53_reviewer_control": [
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF54_vote_targets": [
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF55_vote_reviewers": [
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF56_counted_votes": [
+     "review.finding_dispositioned"
+    ],
+    "SF57_votes_unique": [
+     "review.finding_dispositioned"
+    ],
+    "SF58_dissent": [
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "SF52_review_targets",
+    "SF53_reviewer_control",
+    "SF54_vote_targets",
+    "SF55_vote_reviewers",
+    "SF56_counted_votes",
+    "SF57_votes_unique",
+    "SF58_dissent"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 53,
+   "complete_boundary_flips": {
+    "accepted": 74,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 5,
+   "negatives": 21,
+   "phase": "source_review_pack",
+   "proved": [
+    "SF30_pack_run",
+    "SF31_pack_targets",
+    "SF32_pack_context",
+    "SF33_app_instance",
+    "SF34_app_server",
+    "SF35_app_thread"
+   ],
+   "report": "source_review_pack.json.gz",
+   "report_sha256": "7cd572b2281ccaa6fd21649f204f2606116e8d6187936db65daa28537f177fff",
+   "row_families": {
+    "SF30_pack_run": [
+     "collaboration.started"
+    ],
+    "SF31_pack_targets": [
+     "collaboration.started"
+    ],
+    "SF32_pack_context": [
+     "collaboration.started"
+    ],
+    "SF33_app_instance": [
+     "brainstorm.plan_synthesized",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized"
+    ],
+    "SF34_app_server": [
+     "brainstorm.plan_synthesized",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized"
+    ],
+    "SF35_app_thread": [
+     "brainstorm.plan_synthesized",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized"
+    ]
+   },
+   "rows": [
+    "SF30_pack_run",
+    "SF31_pack_targets",
+    "SF32_pack_context",
+    "SF33_app_instance",
+    "SF34_app_server",
+    "SF35_app_thread"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 440,
+   "complete_boundary_flips": {
+    "accepted": 460,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 4,
+   "negatives": 20,
+   "phase": "source_roster",
+   "proved": [
+    "SF42_roster_control",
+    "SF43_roster_unique",
+    "SF44_record_unique",
+    "SF45_roster_context",
+    "SF46_roster_record",
+    "SF47_roster_body"
+   ],
+   "report": "source_roster.json.gz",
+   "report_sha256": "b90c6a5a6b9dc78b144ad61d04d13b4db1fb917eb8e3f667a88fed346b7d68d6",
+   "row_families": {
+    "SF42_roster_control": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF43_roster_unique": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF44_record_unique": [
+     "collaboration.configuration_changed",
+     "collaboration.created"
+    ],
+    "SF45_roster_context": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ],
+    "SF46_roster_record": [
+     "collaboration.configuration_changed",
+     "collaboration.created"
+    ],
+    "SF47_roster_body": [
+     "collaboration.created",
+     "collaboration.started"
+    ]
+   },
+   "rows": [
+    "SF42_roster_control",
+    "SF43_roster_unique",
+    "SF44_record_unique",
+    "SF45_roster_context",
+    "SF46_roster_record",
+    "SF47_roster_body"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 39,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:source_times:SO06_owner_times"
+    ],
+    "refused_later_count": 40
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "source_schema",
+   "proved": [
+    "SO03_schema"
+   ],
+   "report": "source_schema.json.gz",
+   "report_sha256": "c490418d9e3baa56f3fdefc0327a01f183146b513797566e7353eac47d6adf54",
+   "row_families": {
+    "SO03_schema": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "brainstorm.vote_added",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized",
+     "review.finding_added",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "SO03_schema"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 35,
+   "complete_boundary_flips": {
+    "accepted": 36,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "source_times",
+   "proved": [
+    "SO06_owner_times"
+   ],
+   "report": "source_times.json.gz",
+   "report_sha256": "80405856ef6f2563b4b6b33160eadd2d7298f99eac766250e08f32d8297c46a2",
+   "row_families": {
+    "SO06_owner_times": [
+     "brainstorm.plan_synthesized",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.failed",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized"
+    ]
+   },
+   "rows": [
+    "SO06_owner_times"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 1,
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "transition_active",
+   "proved": [
+    "TR27_run_active"
+   ],
+   "report": "transition_active.json.gz",
+   "report_sha256": "91cb223f29d36bdf55b9bd06db9bbeafcc4da4b52c0e62e342836bef69772219",
+   "row_families": {
+    "TR27_run_active": [
+     "collaboration.participant_started"
+    ]
+   },
+   "rows": [
+    "TR27_run_active"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 2,
+   "complete_boundary_flips": {
+    "accepted": 3,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "transition_admitted",
+   "proved": [
+    "TR02_admitted"
+   ],
+   "report": "transition_admitted.json.gz",
+   "report_sha256": "be55f88235b887ea01b93858caf4b5132e985cc0705b71acaf2fe1149adeb886",
+   "row_families": {
+    "TR02_admitted": [
+     "collaboration.created",
+     "collaboration.message_added"
+    ]
+   },
+   "rows": [
+    "TR02_admitted"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 1,
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "transition_artifact_added",
+   "proved": [
+    "TR44_artifact_new"
+   ],
+   "report": "transition_artifact_added.json.gz",
+   "report_sha256": "47eeee2e17c8079d0e63da6cb55440bc2bdedee5019607a61b5075585dd191eb",
+   "row_families": {
+    "TR44_artifact_new": [
+     "collaboration.artifact_added"
+    ]
+   },
+   "rows": [
+    "TR44_artifact_new"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 3,
+   "complete_boundary_flips": {
+    "accepted": 10,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 6,
+   "negatives": 7,
+   "phase": "transition_completed",
+   "proved": [
+    "TR20_required_set",
+    "TR21_waived_set",
+    "TR22_required_resolved",
+    "TR23_brainstorm_output",
+    "TR24_review_output",
+    "TR25_brainstorm_refs",
+    "TR26_review_refs"
+   ],
+   "report": "transition_completed.json.gz",
+   "report_sha256": "e2215de3039abf7829b548649e463f226aeb076d832d4b8ac54d60c0c26ef7c1",
+   "row_families": {
+    "TR20_required_set": [
+     "collaboration.completed"
+    ],
+    "TR21_waived_set": [
+     "collaboration.completed"
+    ],
+    "TR22_required_resolved": [
+     "collaboration.completed"
+    ],
+    "TR23_brainstorm_output": [
+     "collaboration.completed"
+    ],
+    "TR24_review_output": [
+     "collaboration.completed"
+    ],
+    "TR25_brainstorm_refs": [
+     "collaboration.completed"
+    ],
+    "TR26_review_refs": [
+     "collaboration.completed"
+    ]
+   },
+   "rows": [
+    "TR20_required_set",
+    "TR21_waived_set",
+    "TR22_required_resolved",
+    "TR23_brainstorm_output",
+    "TR24_review_output",
+    "TR25_brainstorm_refs",
+    "TR26_review_refs"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 5,
+   "complete_boundary_flips": {
+    "accepted": 12,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 4,
+   "negatives": 7,
+   "phase": "transition_contribution",
+   "proved": [
+    "TR45_vote_proposal",
+    "TR46_attempt_known",
+    "TR47_attempt_slot",
+    "TR48_core_proposer",
+    "TR49_proposal_new",
+    "TR50_not_wonderer",
+    "TR51_current_attempt"
+   ],
+   "report": "transition_contribution.json.gz",
+   "report_sha256": "2c4786b89646e53704debaeff60e286d3cc0646486ac42a1855f2db9eb22c7ea",
+   "row_families": {
+    "TR45_vote_proposal": [
+     "brainstorm.vote_added"
+    ],
+    "TR46_attempt_known": [
+     "brainstorm.proposal_added"
+    ],
+    "TR47_attempt_slot": [
+     "brainstorm.proposal_added"
+    ],
+    "TR48_core_proposer": [
+     "brainstorm.proposal_added"
+    ],
+    "TR49_proposal_new": [
+     "brainstorm.proposal_added"
+    ],
+    "TR50_not_wonderer": [
+     "brainstorm.vote_added"
+    ],
+    "TR51_current_attempt": [
+     "brainstorm.vote_added"
+    ]
+   },
+   "rows": [
+    "TR45_vote_proposal",
+    "TR46_attempt_known",
+    "TR47_attempt_slot",
+    "TR48_core_proposer",
+    "TR49_proposal_new",
+    "TR50_not_wonderer",
+    "TR51_current_attempt"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 1,
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "transition_created",
+   "proved": [
+    "TR03_already_created"
+   ],
+   "report": "transition_created.json.gz",
+   "report_sha256": "33f7179a8f5dfb1375269668e3c9986df298d3eab099fdd75564b25161ae4404",
+   "row_families": {
+    "TR03_already_created": [
+     "collaboration.created"
+    ]
+   },
+   "rows": [
+    "TR03_already_created"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 3,
+   "complete_boundary_flips": {
+    "accepted": 11,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 122,
+   "negatives": 8,
+   "phase": "transition_dedupe",
+   "proved": [
+    "TR01_idempotency_conflict"
+   ],
+   "report": "transition_dedupe.json.gz",
+   "report_sha256": "0117821a6ef68d61a9a67352126d8367eae0b8258655781aa699651e9e2ad230",
+   "row_families": {
+    "TR01_idempotency_conflict": [
+     "brainstorm.plan_synthesized",
+     "brainstorm.proposal_added",
+     "collaboration.artifact_added",
+     "collaboration.created",
+     "collaboration.message_added",
+     "collaboration.participant_completed",
+     "review.artifact_finalized",
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "TR01_idempotency_conflict"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 1,
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:TypeError"
+    ],
+    "refused_later_count": 2
+   },
+   "controls": 2,
+   "negatives": 2,
+   "phase": "transition_definition",
+   "proved": [
+    "TR04_definition_recorded",
+    "TR05_started_revision"
+   ],
+   "report": "transition_definition.json.gz",
+   "report_sha256": "565f314b5fb27a23e92a2789ea5067bcc3bc78bdd80be95146b0cd9709fe600a",
+   "row_families": {
+    "TR04_definition_recorded": [
+     "collaboration.started"
+    ],
+    "TR05_started_revision": [
+     "collaboration.started"
+    ]
+   },
+   "rows": [
+    "TR04_definition_recorded",
+    "TR05_started_revision"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 4,
+   "negatives": 2,
+   "phase": "transition_definition_lineage",
+   "proved": [
+    "TR06_definition_kind",
+    "TR07_definition_thread"
+   ],
+   "report": "transition_definition_lineage.json.gz",
+   "report_sha256": "ade7bd65d60b93a41682aed5b50cec0ec62ee834b908c1ad5db825f900dc192b",
+   "row_families": {
+    "TR06_definition_kind": [
+     "collaboration.started"
+    ],
+    "TR07_definition_thread": [
+     "collaboration.started"
+    ]
+   },
+   "rows": [
+    "TR06_definition_kind",
+    "TR07_definition_thread"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 6,
+   "complete_boundary_flips": {
+    "accepted": 13,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 2,
+   "negatives": 7,
+   "phase": "transition_finalized",
+   "proved": [
+    "TR61_not_finalized",
+    "TR62_findings_dispositioned",
+    "TR63_artifact_added",
+    "TR64_targets",
+    "TR65_partial_accepted",
+    "TR66_partial_waivers",
+    "TR67_stale_accepted"
+   ],
+   "report": "transition_finalized.json.gz",
+   "report_sha256": "81555d664e0c6417d947a9e44e1830521133d441e314f16ed686474934623390",
+   "row_families": {
+    "TR61_not_finalized": [
+     "review.artifact_finalized"
+    ],
+    "TR62_findings_dispositioned": [
+     "review.artifact_finalized"
+    ],
+    "TR63_artifact_added": [
+     "review.artifact_finalized"
+    ],
+    "TR64_targets": [
+     "review.artifact_finalized"
+    ],
+    "TR65_partial_accepted": [
+     "review.artifact_finalized"
+    ],
+    "TR66_partial_waivers": [
+     "review.artifact_finalized"
+    ],
+    "TR67_stale_accepted": [
+     "review.artifact_finalized"
+    ]
+   },
+   "rows": [
+    "TR61_not_finalized",
+    "TR62_findings_dispositioned",
+    "TR63_artifact_added",
+    "TR64_targets",
+    "TR65_partial_accepted",
+    "TR66_partial_waivers",
+    "TR67_stale_accepted"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 3,
+   "complete_boundary_flips": {
+    "accepted": 6,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 3,
+   "phase": "transition_finding_added",
+   "proved": [
+    "TR55_targets",
+    "TR56_reviewers",
+    "TR57_finding_new"
+   ],
+   "report": "transition_finding_added.json.gz",
+   "report_sha256": "723098b007118d4ff695e5582c0eaf0d6d98fea5ccdf9ed810edd91fdae78c61",
+   "row_families": {
+    "TR55_targets": [
+     "review.finding_added"
+    ],
+    "TR56_reviewers": [
+     "review.finding_added"
+    ],
+    "TR57_finding_new": [
+     "review.finding_added"
+    ]
+   },
+   "rows": [
+    "TR55_targets",
+    "TR56_reviewers",
+    "TR57_finding_new"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 2,
+   "complete_boundary_flips": {
+    "accepted": 5,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 3,
+   "phase": "transition_finding_dispositioned",
+   "proved": [
+    "TR58_finding_known",
+    "TR59_finding_open",
+    "TR60_finding_targets"
+   ],
+   "report": "transition_finding_dispositioned.json.gz",
+   "report_sha256": "9b248f0b800824e4d248646bab8b666b05d86e4568ac6aca2e3238dec7339bbc",
+   "row_families": {
+    "TR58_finding_known": [
+     "review.finding_dispositioned"
+    ],
+    "TR59_finding_open": [
+     "review.finding_dispositioned"
+    ],
+    "TR60_finding_targets": [
+     "review.finding_dispositioned"
+    ]
+   },
+   "rows": [
+    "TR58_finding_known",
+    "TR59_finding_open",
+    "TR60_finding_targets"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 2,
+   "complete_boundary_flips": {
+    "accepted": 9,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 7,
+   "negatives": 7,
+   "phase": "transition_lifecycle",
+   "proved": [
+    "TR17_lifecycle_state",
+    "TR18_lifecycle_seq",
+    "TR19_open_attempts"
+   ],
+   "report": "transition_lifecycle.json.gz",
+   "report_sha256": "bc77022a46e02ef2e68452dab10ddd54a50d113ff21baf69f313f1a2bb30bb9d",
+   "row_families": {
+    "TR17_lifecycle_state": [
+     "collaboration.paused",
+     "collaboration.resumed"
+    ],
+    "TR18_lifecycle_seq": [
+     "collaboration.cancelled",
+     "collaboration.resumed"
+    ],
+    "TR19_open_attempts": [
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.failed"
+    ]
+   },
+   "rows": [
+    "TR17_lifecycle_state",
+    "TR18_lifecycle_seq",
+    "TR19_open_attempts"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 2,
+   "complete_boundary_flips": {
+    "accepted": 7,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 5,
+   "negatives": 5,
+   "phase": "transition_message",
+   "proved": [
+    "TR39_message_new",
+    "TR40_sequence_next",
+    "TR41_sender_roster",
+    "TR42_sender_attempt",
+    "TR43_sender_attempt_slot"
+   ],
+   "report": "transition_message.json.gz",
+   "report_sha256": "79eb995c28e0dc27650cc89fd9f432c2a6144e66d296b6a5bb93ddd17966a607",
+   "row_families": {
+    "TR39_message_new": [
+     "collaboration.message_added"
+    ],
+    "TR40_sequence_next": [
+     "collaboration.message_added"
+    ],
+    "TR41_sender_roster": [
+     "collaboration.message_added"
+    ],
+    "TR42_sender_attempt": [
+     "collaboration.message_added"
+    ],
+    "TR43_sender_attempt_slot": [
+     "collaboration.message_added"
+    ]
+   },
+   "rows": [
+    "TR39_message_new",
+    "TR40_sequence_next",
+    "TR41_sender_roster",
+    "TR42_sender_attempt",
+    "TR43_sender_attempt_slot"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 3,
+   "complete_boundary_flips": {
+    "accepted": 10,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 14,
+   "negatives": 7,
+   "phase": "transition_participant_completed",
+   "proved": [
+    "TR32_attempt_known",
+    "TR33_attempt_slot",
+    "TR34_attempt_revision",
+    "TR35_attempt_open",
+    "TR36_slot_in_roster",
+    "TR37_revision_open",
+    "TR38_waiver_recorded"
+   ],
+   "report": "transition_participant_completed.json.gz",
+   "report_sha256": "532bf1acd34d6afb5372217e77e5995957e979cb600212d90db1acadb7c546b6",
+   "row_families": {
+    "TR32_attempt_known": [
+     "collaboration.participant_completed"
+    ],
+    "TR33_attempt_slot": [
+     "collaboration.participant_completed"
+    ],
+    "TR34_attempt_revision": [
+     "collaboration.participant_completed"
+    ],
+    "TR35_attempt_open": [
+     "collaboration.participant_completed"
+    ],
+    "TR36_slot_in_roster": [
+     "collaboration.participant_completed"
+    ],
+    "TR37_revision_open": [
+     "collaboration.participant_completed"
+    ],
+    "TR38_waiver_recorded": [
+     "collaboration.participant_completed"
+    ]
+   },
+   "rows": [
+    "TR32_attempt_known",
+    "TR33_attempt_slot",
+    "TR34_attempt_revision",
+    "TR35_attempt_open",
+    "TR36_slot_in_roster",
+    "TR37_revision_open",
+    "TR38_waiver_recorded"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 2,
+   "complete_boundary_flips": {
+    "accepted": 6,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 2,
+   "negatives": 4,
+   "phase": "transition_participant_started",
+   "proved": [
+    "TR28_slot_in_roster",
+    "TR29_slot_not_removed",
+    "TR30_new_attempt",
+    "TR31_assignment_revision"
+   ],
+   "report": "transition_participant_started.json.gz",
+   "report_sha256": "033257f2dc99af96794aca9ba88585bb3cb39452692659dcc22ca58da6dc9bc1",
+   "row_families": {
+    "TR28_slot_in_roster": [
+     "collaboration.participant_started"
+    ],
+    "TR29_slot_not_removed": [
+     "collaboration.participant_started"
+    ],
+    "TR30_new_attempt": [
+     "collaboration.participant_started"
+    ],
+    "TR31_assignment_revision": [
+     "collaboration.participant_started"
+    ]
+   },
+   "rows": [
+    "TR28_slot_in_roster",
+    "TR29_slot_not_removed",
+    "TR30_new_attempt",
+    "TR31_assignment_revision"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 1,
+   "complete_boundary_flips": {
+    "accepted": 11,
+    "refused_later": [
+     "refused_later:transition_active:TR27_run_active",
+     "refused_later:transition_lifecycle:TR17_lifecycle_state"
+    ],
+    "refused_later_count": 5
+   },
+   "controls": 24,
+   "negatives": 15,
+   "phase": "transition_run",
+   "proved": [
+    "TR11_run_thread",
+    "TR12_run_kind",
+    "TR13_run_collaboration",
+    "TR14_not_terminal",
+    "TR15_run_revision",
+    "TR16_latest_revision"
+   ],
+   "report": "transition_run.json.gz",
+   "report_sha256": "b3f55eca4d08a2d65e019f63883d9976acaa2d306bca1db5b20adeca5d3ef2c1",
+   "row_families": {
+    "TR11_run_thread": [
+     "brainstorm.proposal_added",
+     "collaboration.cancelled",
+     "collaboration.message_added",
+     "review.finding_added"
+    ],
+    "TR12_run_kind": [
+     "collaboration.cancelled"
+    ],
+    "TR13_run_collaboration": [
+     "collaboration.cancelled"
+    ],
+    "TR14_not_terminal": [
+     "collaboration.cancelled",
+     "collaboration.configuration_changed",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.resumed",
+     "review.finding_added"
+    ],
+    "TR15_run_revision": [
+     "collaboration.cancelled",
+     "collaboration.configuration_changed"
+    ],
+    "TR16_latest_revision": [
+     "collaboration.configuration_changed"
+    ]
+   },
+   "rows": [
+    "TR11_run_thread",
+    "TR12_run_kind",
+    "TR13_run_collaboration",
+    "TR14_not_terminal",
+    "TR15_run_revision",
+    "TR16_latest_revision"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 2,
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:TypeError"
+    ],
+    "refused_later_count": 3
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "transition_run_presence",
+   "proved": [
+    "TR10_run_started"
+   ],
+   "report": "transition_run_presence.json.gz",
+   "report_sha256": "14e0b2d38a10cd3039422d28b7f5fed2e0f50c2a70c076b04cafe17185b0b9b8",
+   "row_families": {
+    "TR10_run_started": [
+     "collaboration.cancelled",
+     "collaboration.paused"
+    ]
+   },
+   "rows": [
+    "TR10_run_started"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 2,
+   "negatives": 2,
+   "phase": "transition_start",
+   "proved": [
+    "TR08_already_started",
+    "TR09_start_commit_revision"
+   ],
+   "report": "transition_start.json.gz",
+   "report_sha256": "35a054ae8dd5381c3f63a3202ed8b0ddea9408fa4473e4dca683bfa6576b8fca",
+   "row_families": {
+    "TR08_already_started": [
+     "collaboration.started"
+    ],
+    "TR09_start_commit_revision": [
+     "collaboration.configuration_changed"
+    ]
+   },
+   "rows": [
+    "TR08_already_started",
+    "TR09_start_commit_revision"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 1,
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 1,
+   "phase": "transition_synthesized",
+   "proved": [
+    "TR54_not_synthesized"
+   ],
+   "report": "transition_synthesized.json.gz",
+   "report_sha256": "18d7a3f0c2e6c46593dc3ee969fd18ec08105fe54b9f9cf9cc5234e188cc1bef",
+   "row_families": {
+    "TR54_not_synthesized": [
+     "brainstorm.plan_synthesized"
+    ]
+   },
+   "rows": [
+    "TR54_not_synthesized"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 2,
+   "complete_boundary_flips": {
+    "accepted": 4,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 1,
+   "negatives": 2,
+   "phase": "transition_vote",
+   "proved": [
+    "TR52_attempt_outcome",
+    "TR53_vote_new"
+   ],
+   "report": "transition_vote.json.gz",
+   "report_sha256": "34d4cce7eec1bf3348e9348d413634fe874307a8bb3bb496c9cbc04306a2c0bb",
+   "row_families": {
+    "TR52_attempt_outcome": [
+     "brainstorm.vote_added"
+    ],
+    "TR53_vote_new": [
+     "brainstorm.vote_added"
+    ]
+   },
+   "rows": [
+    "TR52_attempt_outcome",
+    "TR53_vote_new"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 0,
+   "complete_boundary_flips": {
+    "accepted": 70,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "controls": 53,
+   "negatives": 70,
+   "phase": "wrapper_join",
+   "proved": [
+    "WR03_record",
+    "WR04_instance",
+    "WR05_server",
+    "WR06_scope"
+   ],
+   "report": "wrapper_join.json.gz",
+   "report_sha256": "bbb2392e42bde205a0d09a114ae676e597da4c06f62363c728e74f82d1a72923",
+   "row_families": {
+    "WR03_record": [
+     "brainstorm.plan_synthesized",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized"
+    ],
+    "WR04_instance": [
+     "brainstorm.plan_synthesized",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized"
+    ],
+    "WR05_server": [
+     "brainstorm.plan_synthesized",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized"
+    ],
+    "WR06_scope": [
+     "brainstorm.plan_synthesized",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized"
+    ]
+   },
+   "rows": [
+    "WR03_record",
+    "WR04_instance",
+    "WR05_server",
+    "WR06_scope"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  },
+  {
+   "aliases": 30,
+   "complete_boundary_flips": {
+    "accepted": 32,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:TypeError"
+    ],
+    "refused_later_count": 14
+   },
+   "controls": 38,
+   "negatives": 16,
+   "phase": "wrapper_shape",
+   "proved": [
+    "WR01_schema",
+    "WR02_limit",
+    "WR07_physical",
+    "WR08_integers"
+   ],
+   "report": "wrapper_shape.json.gz",
+   "report_sha256": "7e99dacb00d9b46cb1b1500e3238afbbc987e8dc22bf2cab59280d04b23e890e",
+   "row_families": {
+    "WR01_schema": [
+     "brainstorm.plan_synthesized",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized"
+    ],
+    "WR02_limit": [
+     "collaboration.created",
+     "collaboration.message_added",
+     "collaboration.participant_started",
+     "collaboration.started"
+    ],
+    "WR07_physical": [
+     "brainstorm.plan_synthesized",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized"
+    ],
+    "WR08_integers": [
+     "brainstorm.plan_synthesized",
+     "collaboration.artifact_added",
+     "collaboration.cancelled",
+     "collaboration.completed",
+     "collaboration.configuration_changed",
+     "collaboration.created",
+     "collaboration.failed",
+     "collaboration.message_added",
+     "collaboration.participant_started",
+     "collaboration.paused",
+     "collaboration.resumed",
+     "collaboration.started",
+     "review.artifact_finalized"
+    ]
+   },
+   "rows": [
+    "WR01_schema",
+    "WR02_limit",
+    "WR07_physical",
+    "WR08_integers"
+   ],
+   "tool_status": "PASS",
+   "unproved": []
+  }
+ ],
+ "tables": 121,
+ "tool_sha256": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8"
+}

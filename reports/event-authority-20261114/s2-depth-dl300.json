@@ -1,0 +1,1674 @@
+{
+ "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
+ "assessment_id": "EA-PNC019-S2-DL300-DEPTH-20261114",
+ "assessment_kind": "lane_regrade_pending_merge_review",
+ "rubric": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+  "note": "Twelve criteria with the 2026-09-24 clarifications, unchanged."
+ },
+ "assessed_tree": {
+  "branch": "plans/ea-pnc-s2-20261114",
+  "commit": "2a25a02d6ab7396e60c2fd49bee81591e1e0e582",
+  "note": "Every quote is exact at this commit and at the commit that adds this file (no Plans change between them)."
+ },
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-04.1",
+  "sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+  "families": 46
+ },
+ "prior": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+  "note": "D1b survey of 2026-11-04: 4 of 12 for each family."
+ },
+ "status_counts": {
+  "PASS": 36,
+  "PARTIAL": 0,
+  "ABSENT": 0,
+  "CONFLICT": 0
+ },
+ "normative_depth_complete_families": [
+  "settings.layer.changed",
+  "approval.chat_tool_requested",
+  "approval.chat_tool_resolved"
+ ],
+ "native_execution": "NOT_RUN for every family",
+ "rows": [
+  {
+   "event_type": "settings.layer.changed",
+   "family_id": "event-family-settings-layer-changed",
+   "family_revision": "1.0.0",
+   "registry_pointer": "#/families/43",
+   "disposition": "CURRENT_WRITER",
+   "pass_count": 12,
+   "normative_depth_complete": true,
+   "native_execution": "NOT_RUN",
+   "current_owner_units": [
+    "CV-2300",
+    "SP-2300",
+    "SSYS-060",
+    "SP-348",
+    "CV-366",
+    "ATS-2301",
+    "DL-300",
+    "DL-411"
+   ],
+   "remaining_gaps": [],
+   "grading_batch": "PNC019-S2",
+   "notes": "Lane grade for PNC-019 S2 (not an independent review). The current-writer contract is the owner contract; native producer adoption (requires_owner_adoption) and native execution are separate later claims.",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Registry 2026-11-04.1 registers event-family-settings-layer-changed at 1.0.0 with its registered payload schema and explicit scope policy; no alias or extension. DL-300 approved the checkpoint; S2 changes no registry row.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "registry header",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-11-04.1\",",
+       "excerpt_sha256": "b09c2dd6f80b66cf0ea78cc8bf5dd82e460910d46ac90fdaf930f7643090b56a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/43",
+       "line_start": 3089,
+       "line_end": 3089,
+       "quote": "\"event_type\": \"settings.layer.changed\",",
+       "excerpt_sha256": "05f6d134386dcc894e7940d6c7a6bd94009036441c58c4afefa79131ac40159d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/43",
+       "line_start": 3088,
+       "line_end": 3088,
+       "quote": "\"family_revision\": \"1.0.0\",",
+       "excerpt_sha256": "2aabfe6e40bb0022875751bff15a57de8a286fa0b23f635f8e543144d2e6ffe7",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/43",
+       "line_start": 3100,
+       "line_end": 3100,
+       "quote": "\"aliases\": [],",
+       "excerpt_sha256": "9917b1325ccdc793a2a6ffbb556263fe9989cfc5390c15389ba8ad7b44737b39",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/settings_system_contracts.schema.json",
+       "unit": "#/$defs/settings_layer_changed_payload_v1",
+       "line_start": 10315,
+       "line_end": 10315,
+       "quote": "\"const\": \"pm.settings.layer_changed.v1\"",
+       "excerpt_sha256": "b6392eaea3a36158f176ac9330bdb211a9f200e6d4c3db28578042b40dfc0450",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the S2 head; still supported."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The semantic and payload anchors resolve to the governing owner unit, which now names its DL-411 technical parts (CV-2300, SP-2300).",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/43",
+       "line_start": 3091,
+       "line_end": 3091,
+       "quote": "\"semantic_owner_doc\": ",
+       "excerpt_sha256": "4db70bf779cdeb0152d2f281c43ef9614e526a94409b0eb33cf12b3ddbc756e3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Settings_System.md",
+       "unit": "SSYS-060",
+       "line_start": 1686,
+       "line_end": 1686,
+       "quote": "its DL-411 producer, identity, replay, custody,",
+       "excerpt_sha256": "b687063273b35c5da821252d050047adef2cd4570a8f5b4f6be1e5e9dc435c9a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Settings_System.md",
+       "unit": "SSYS-060",
+       "line_start": 1684,
+       "line_end": 1684,
+       "quote": "The settings.layer.changed family (registered by DL-300) is application_only",
+       "excerpt_sha256": "6f4a7c65692c9f6fb23171cc4ad56e33592013062bc1180b23d1dbdf683d2796",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the S2 head; still supported."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-2300 names SettingsLevelWriter::commit_level_transaction, the SSYS-060/SP-348 sole writer per level, and the order: admission, own rows plus prepared journal in one body transaction, SP-286/CV-339 append and first receipt, CAS to settled, then the acknowledgement. Device/provider/account levels have no Server writer and emit nothing.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2300",
+       "line_start": 51335,
+       "line_end": 51335,
+       "quote": "The producer is `SettingsLevelWriter::commit_level_transaction`, the sole writer that SSYS-060 and SP-348 name",
+       "excerpt_sha256": "2b112b902f2fc2ebfc5c7668a1f504fedf24b12b7ea3164efdaa3dc1a7cdd399",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2300",
+       "line_start": 51335,
+       "line_end": 51335,
+       "quote": "so this family has no producer there",
+       "excerpt_sha256": "2c5ba125d92d915ea61f4154710abc6c91d091ea8342a48fc37e962e5013da3a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2300",
+       "line_start": 51337,
+       "line_end": 51337,
+       "quote": "SP-286 and CV-339 (`storage.first_append_receipt.resolve.v2`, full-value custody) append the frozen event",
+       "excerpt_sha256": "b9a296e1e9983fa04122640a07b80e3388f2623f2bfcc91b68e766de145ee77c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2300",
+       "line_start": 51337,
+       "line_end": 51337,
+       "quote": "The Settings transaction result is acknowledged only after `settled`.",
+       "excerpt_sha256": "c768a5e1c1ab5059dd385bbc2da060532aca3cd3f91a7794c3f3dd26a0b07f20",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "The registered payload definition is a closed object (additionalProperties false) with const schema_id/version; S2 references it unchanged from Plans/event_payloads/s2/settings_layer_changed.schema.json.",
+     "evidence": [
+      {
+       "path": "Plans/settings_system_contracts.schema.json",
+       "unit": "#/$defs/settings_layer_changed_payload_v1",
+       "line_start": 10315,
+       "line_end": 10315,
+       "quote": "\"const\": \"pm.settings.layer_changed.v1\"",
+       "excerpt_sha256": "b6392eaea3a36158f176ac9330bdb211a9f200e6d4c3db28578042b40dfc0450",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/settings_system_contracts.schema.json",
+       "unit": "#/$defs/settings_layer_changed_payload_v1",
+       "line_start": 10298,
+       "line_end": 10298,
+       "quote": "\"additionalProperties\": false,",
+       "excerpt_sha256": "caf6261bd51214e3f0e1f79bb4be170af948f47d47080f04b366668a8b5af3bd",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payloads/s2/settings_layer_changed.schema.json",
+       "unit": "#/$defs/payload",
+       "line_start": 9,
+       "line_end": 9,
+       "quote": "\"description\": \"The registered payload definition",
+       "excerpt_sha256": "7ba46350331e66b7d93a4f847cc946720932a65168202aa32fc5a0700271d028",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the S2 head; still supported."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "application_only; owner_operation_id from the accepted Settings transaction with component and level_key; CV-366 application key, s2dl300 event_id, partition app; scope.server_id is the sole writer; envelope nulls and actor stated.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/43",
+       "line_start": 3090,
+       "line_end": 3090,
+       "quote": "\"scope_policy\": \"application_only\",",
+       "excerpt_sha256": "1176da4b1e46684bd02a2114a525937ff54d709edf5dd3e90bb727e0aa9ac524",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2300",
+       "line_start": 51341,
+       "line_end": 51341,
+       "quote": "The idempotency key is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`, with no suffix",
+       "excerpt_sha256": "4418a47ae9ce8aa0fa7e5bb94a884c35903bdeb1db66fd8babac6a5b7251ffca",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2300",
+       "line_start": 51341,
+       "line_end": 51341,
+       "quote": "with the declared component `settings.layer.changed` and the exact `level_key` included before issuance",
+       "excerpt_sha256": "301e63c47ce2b8137cfd0d59eb891e2c3514c64a9aa4c0242bf38ea413633bfa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2300",
+       "line_start": 51339,
+       "line_end": 51339,
+       "quote": "`scope` is WorkflowScopeV2 application with `server_id` the sole writer Server",
+       "excerpt_sha256": "0b7167499fb8648ab8555e665dcfebc73c3bb4d5f4e791b38f62629a52458724",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Same scoped identity and producer digest returns the original receipt with no effect; different digest identity_conflict; missing dedupe zero-effect; lost acknowledgement or restart resolves the same original and never re-applies a setting.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2300",
+       "line_start": 51343,
+       "line_end": 51343,
+       "quote": "with the same CV-317 producer digest returns the original first receipt with no effect",
+       "excerpt_sha256": "569704bbf9236dc164d72ece655a3eeb21cdfe82f57306847b315c0ce30f78e3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2300",
+       "line_start": 51343,
+       "line_end": 51343,
+       "quote": "a lost acknowledgement or restart resolves the same original and never re-applies a setting",
+       "excerpt_sha256": "be4110d7098dbb6345961978a98552707e12c6af38e6fe5c5af737ab6437e513",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The registry assigns RP-AUTHORITY-INDEFINITE@1.0.0; the publication journal binds the same policy directly (SP-2300) and is canonical non-rebuildable with mandatory backup; no open retention choice.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/43",
+       "line_start": 3121,
+       "line_end": 3121,
+       "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\",",
+       "excerpt_sha256": "fe0cb5dfc30383cc74c52093250d8f4d225ea27919f5d113322bd9c010552237",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2300",
+       "line_start": 66169,
+       "line_end": 66169,
+       "quote": "binds `RP-AUTHORITY-INDEFINITE@1.0.0` directly, the policy the DL-300 registry row assigns to `settings.layer.changed`",
+       "excerpt_sha256": "9f6d6e9c0444a9ddacf65c7102a8cb5bb72172a6fc423b800d3895d4c14318c2",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "ea_s2_settings_layer_changed_publication",
+       "line_start": 276763,
+       "line_end": 276763,
+       "quote": "\"retention_policy_ref\": \"RP-AUTHORITY-INDEFINITE\",",
+       "excerpt_sha256": "30efce93203d663b4c47c85b0d5341a9c29437a52149b9ac6a37e6a2c18d173c",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the S2 head; still supported."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Refs and hashes only, summary redacted before persistence, secret_refs_only; the writer holds canonical rows; reads recheck the level read permission and hide removed levels; Full Server Backup restores rows, journal, packs and receipts coherently.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/43",
+       "line_start": 3110,
+       "line_end": 3110,
+       "quote": "\"mode\": \"reject_unhandled_secrets\",",
+       "excerpt_sha256": "69b326f5100c3747e56823aea733477b3b41747a52c403f57851d9d32534e475",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2300",
+       "line_start": 51339,
+       "line_end": 51339,
+       "quote": "no secret, key, profile, pairing, memory or notebook body enters the payload (SP-348)",
+       "excerpt_sha256": "bfffb6675f84826b234c690db72719161e4893eefc1490ec757f57ae2fda79b9",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2300",
+       "line_start": 66167,
+       "line_end": 66167,
+       "quote": "Reads require the reader's current Settings read permission for that exact level",
+       "excerpt_sha256": "1385f827160fe54e04333b50869520af2c0334d8259917986ff363736f1041e3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2300",
+       "line_start": 66167,
+       "line_end": 66167,
+       "quote": "Full Server Backup carries the home, Everywhere and Computer canonical values and history (SP-348) with these journals",
+       "excerpt_sha256": "2a29bfc2da9dc58a08678b6e701c8b24063c89369c0944812d03e201360eb8db",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Per-setting CAS advances each changed row by one and the event commits with the rows; a no-op or empty transaction emits nothing; the journal moves prepared, appended, settled by exact CAS with no skip or regression.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2300",
+       "line_start": 51339,
+       "line_end": 51339,
+       "quote": "each advanced by exactly one per-setting CAS",
+       "excerpt_sha256": "3e696fcbb247de77f623a923a8b5a95c60dc72d343c6220f7002c0f9a4b36b88",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2300",
+       "line_start": 51337,
+       "line_end": 51337,
+       "quote": "or leaves the level snapshot hash unchanged, emits nothing",
+       "excerpt_sha256": "b34524d954a91783b79a88a416b24cfb7a77a2cb8e205dd0692afa4a6b87e89a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2300",
+       "line_start": 66163,
+       "line_end": 66163,
+       "quote": "Legal writes are absent to prepared, prepared to appended, appended to settled",
+       "excerpt_sha256": "5f2a3a2a85cf828ccbc9700f87177c74e4990aeb5acb5a6395edbb83ccfbf729",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact reader storage.s2.settings_layer_changed.recovery_read.v1@1.0.0 is read-only over SP-278: no family projector, projection, checkpoint or stored token exists (so DL-076 has nothing to hold); each read revalidates the live ten-field read_token at release; generic index CAS and rebuild stay SP-278s.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2300",
+       "line_start": 66167,
+       "line_end": 66167,
+       "quote": "`storage.s2.settings_layer_changed.recovery_read.v1@1.0.0` is the family",
+       "excerpt_sha256": "62f2bee2e0cf264e450e6c03cf84a507b41fc7bbacf3d4a33d75fbd1f8a4bd7b",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2300",
+       "line_start": 66167,
+       "line_end": 66167,
+       "quote": "**No family projector, projection, checkpoint key or durable advance exists**",
+       "excerpt_sha256": "503da6004b105a2f023bea4f1a8bfb78a0e13a181efa55b38884909e896d4549",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2300",
+       "line_start": 66167,
+       "line_end": 66167,
+       "quote": "Each read captures the live ten-field SP-278 `read_token`",
+       "excerpt_sha256": "1362fd2174ed0542381c874fd7d1cb366f0bc43dc1bfb4be963fc9a5311bf10c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2300",
+       "line_start": 66167,
+       "line_end": 66167,
+       "quote": "Generic index CAS and rebuild stay SP-278",
+       "excerpt_sha256": "11cc73c58db0ec380998590460389ccba0dae308b735284fc8a0e7f950693faa",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Only 1.0.0; settings.updated and settings.theme.updated are retired by DL-408 and never aliases; old DRY records stay readable; writer withdrawal under the append lock, reader withdrawal fences reads, successor via a new registry revision and StorageMigrationCoordinator.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2300",
+       "line_start": 51345,
+       "line_end": 51345,
+       "quote": "`settings.updated` and `settings.theme.updated` are retired by DL-408 and are never aliases",
+       "excerpt_sha256": "d886abc554031dc21770465bbb0a0ed77dc2cace3423e68d1133ee3f6e2c232d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2300",
+       "line_start": 51345,
+       "line_end": 51345,
+       "quote": "Writer withdrawal, under the append lock, refuses new preparation",
+       "excerpt_sha256": "df2b6d80bdf851df430d2ebdb62a34264489f731b96ac244b4f01bf4e4516748",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2300",
+       "line_start": 66171,
+       "line_end": 66171,
+       "quote": "reader withdrawal fences reads with `reader_withdrawn` while retained custody stays intact",
+       "excerpt_sha256": "f698ae10dc15517f7c755d816cfe341d0ce6bcbca986de0dd891ae648664d923",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "ATS-2301: the complete checker passes 886 cases (180 positives, 706 single-defect negatives refused first at their own row); every refusal is a row of 28 generated tables (181 rows, at most 8 each); the gated tool proves 180, the 181st sits alone with its proof; NUMRULE corpus and shared date-time profiles; SP-1101 retained reads. Native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-2301",
+       "line_start": 14209,
+       "line_end": 14209,
+       "quote": "plan_unit_id: ATS-2301",
+       "excerpt_sha256": "27aad95af47e380b4eff9dfb737e3f422f819582fd58d1036cd0dd1585c773f1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-2301",
+       "line_start": 14214,
+       "line_end": 14214,
+       "quote": "runs the complete checker scripts/pm_s2_dl300_events.py over 886 cases",
+       "excerpt_sha256": "68e5696efcc427aaf7fb2878d4fd29c921a2e6036481fdb6c07230ef7eb46c0e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-2301",
+       "line_start": 14214,
+       "line_end": 14214,
+       "quote": "proves 180 rows by single-row cuts in which only the row",
+       "excerpt_sha256": "1847bcfc82b5b7a849bb50a48797395cddef1a39dd5e11b1e39a43eb977b76f8",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-2301",
+       "line_start": 14214,
+       "line_end": 14214,
+       "quote": "28 tables and 181 rows, at most eight rows each",
+       "excerpt_sha256": "cfa7efdfdc49cace2c157b51ef420d70bff38b4cc1456f2a0cfa3d5657b5b743",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "ABSENT"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    }
+   }
+  },
+  {
+   "event_type": "approval.chat_tool_requested",
+   "family_id": "event-family-approval-chat-tool-requested",
+   "family_revision": "1.0.0",
+   "registry_pointer": "#/families/44",
+   "disposition": "CURRENT_WRITER",
+   "pass_count": 12,
+   "normative_depth_complete": true,
+   "native_execution": "NOT_RUN",
+   "current_owner_units": [
+    "CV-2301",
+    "SP-2301",
+    "PS-145",
+    "HITL-038",
+    "SP-353",
+    "SP-2303",
+    "CV-366",
+    "ATS-2301",
+    "DL-300",
+    "DL-411"
+   ],
+   "remaining_gaps": [],
+   "grading_batch": "PNC019-S2",
+   "notes": "Lane grade for PNC-019 S2 (not an independent review). The current-writer contract is the owner contract; native producer adoption (requires_owner_adoption) and native execution are separate later claims.",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Registry 2026-11-04.1 registers event-family-approval-chat-tool-requested at 1.0.0 with its registered payload schema and explicit scope policy; no alias or extension. DL-300 approved the checkpoint; S2 changes no registry row.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "registry header",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-11-04.1\",",
+       "excerpt_sha256": "b09c2dd6f80b66cf0ea78cc8bf5dd82e460910d46ac90fdaf930f7643090b56a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/44",
+       "line_start": 3150,
+       "line_end": 3150,
+       "quote": "\"event_type\": \"approval.chat_tool_requested\",",
+       "excerpt_sha256": "01356506bfb74a4ee7513a281b36f15058a94225c019153bda52ed960eb6ed8c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/44",
+       "line_start": 3149,
+       "line_end": 3149,
+       "quote": "\"family_revision\": \"1.0.0\",",
+       "excerpt_sha256": "2aabfe6e40bb0022875751bff15a57de8a286fa0b23f635f8e543144d2e6ffe7",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/44",
+       "line_start": 3161,
+       "line_end": 3161,
+       "quote": "\"aliases\": [],",
+       "excerpt_sha256": "9917b1325ccdc793a2a6ffbb556263fe9989cfc5390c15389ba8ad7b44737b39",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/automation_authority_contracts.schema.json",
+       "unit": "#/$defs/ChatToolApprovalRequest",
+       "line_start": 1353,
+       "line_end": 1353,
+       "quote": "\"const\": \"pm.chat_tool_approval_request.v1\"",
+       "excerpt_sha256": "d851451e76c74010dcd653638f2bec3d541496f2127eafd4de92edeaa83b8f1f",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the S2 head; still supported."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The semantic and payload anchors resolve to the governing owner unit, which now names its DL-411 technical parts (CV-2301, SP-2301).",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/44",
+       "line_start": 3152,
+       "line_end": 3152,
+       "quote": "\"semantic_owner_doc\": ",
+       "excerpt_sha256": "4db70bf779cdeb0152d2f281c43ef9614e526a94409b0eb33cf12b3ddbc756e3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Permissions_System.md",
+       "unit": "PS-145",
+       "line_start": 10417,
+       "line_end": 10417,
+       "quote": "their DL-411 technical parts are CV-2301, CV-2302 and SP-2301 to SP-2303",
+       "excerpt_sha256": "ef7164de00645397dc1aa043369ebb9e5242b9a1cd7f4e38414daa87f548fa4c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/human-in-the-loop.md",
+       "unit": "HITL-038",
+       "line_start": 2739,
+       "line_end": 2739,
+       "quote": "The host producers, request pairing and storage custody of approval.chat_tool_requested",
+       "excerpt_sha256": "cefaeefd01c2d80b9d3d865f1c4d3b61a166b3a6673ad67e88574395015b913d",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the S2 head; still supported."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-2301 names the shared approval host ApprovalHost::open_chat_tool_request and the order: admission, pending record (SP-353 or SP-2303) plus prepared journal in one transaction, append and first receipt, CAS to settled, then the ask is shown.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2301",
+       "line_start": 51404,
+       "line_end": 51404,
+       "quote": "The producer is the shared approval host (HITL-038), `ApprovalHost::open_chat_tool_request`",
+       "excerpt_sha256": "69e233d1b90073e7726221f1a42c174253b9b705c7b5da4b87a684f4d831cf56",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2301",
+       "line_start": 51406,
+       "line_end": 51406,
+       "quote": "The host presents the ask only after `settled`.",
+       "excerpt_sha256": "8084b8e893869f495a4d30ab322f59afe665bdc5f805a4ea2da5947b67479b99",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2303",
+       "line_start": 66320,
+       "line_end": 66320,
+       "quote": "plan_unit_id: SP-2303",
+       "excerpt_sha256": "dd52996eac9db071e9688c6005a3bd8a1986e25c07fdc12b7ab49d338d3611f3",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "The registered payload definition is a closed object (additionalProperties false) with const schema_id/version; S2 references it unchanged from Plans/event_payloads/s2/approval_chat_tool_requested.schema.json.",
+     "evidence": [
+      {
+       "path": "Plans/automation_authority_contracts.schema.json",
+       "unit": "#/$defs/ChatToolApprovalRequest",
+       "line_start": 1353,
+       "line_end": 1353,
+       "quote": "\"const\": \"pm.chat_tool_approval_request.v1\"",
+       "excerpt_sha256": "d851451e76c74010dcd653638f2bec3d541496f2127eafd4de92edeaa83b8f1f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/automation_authority_contracts.schema.json",
+       "unit": "#/$defs/ChatToolApprovalRequest",
+       "line_start": 1338,
+       "line_end": 1338,
+       "quote": "\"additionalProperties\": false,",
+       "excerpt_sha256": "caf6261bd51214e3f0e1f79bb4be170af948f47d47080f04b366668a8b5af3bd",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payloads/s2/approval_chat_tool_requested.schema.json",
+       "unit": "#/$defs/payload",
+       "line_start": 9,
+       "line_end": 9,
+       "quote": "\"description\": \"The registered payload definition",
+       "excerpt_sha256": "7ba46350331e66b7d93a4f847cc946720932a65168202aa32fc5a0700271d028",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the S2 head; still supported."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "application_or_project with exact edition selection; operation from the request with component and request_id; CV-366 app key, s2dl300 Project key and event id, partition app or project~base64url; context.scope equals the record and event scope.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/44",
+       "line_start": 3225,
+       "line_end": 3225,
+       "quote": "\"payload_selection_policy\": \"exact_scope_and_schema_id_no_fallback\"",
+       "excerpt_sha256": "c174b2605293a5c6025bbd4d582b561bb23622565cd71315f6e5c37ce1af89eb",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2301",
+       "line_start": 51410,
+       "line_end": 51410,
+       "quote": "with the declared component `approval.chat_tool_requested` and the exact `request_id` included before issuance",
+       "excerpt_sha256": "b7b650a6a0c2db438c7c01da16384388b7beb2e86cc1d5c4c5f7ad69e38b3325",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2301",
+       "line_start": 51410,
+       "line_end": 51410,
+       "quote": "the Project key is `s2dl300@1:{hex(owner_operation_id)}`",
+       "excerpt_sha256": "a838866aec4b3d1cf6ca97a15bcd3dcd4fe4b8c6c399d22c61eb8320e6e345bf",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2301",
+       "line_start": 51408,
+       "line_end": 51408,
+       "quote": "and its `scope_kind` and `project_id` are the event",
+       "excerpt_sha256": "ba88eb71ed58c48f5911f9f9619169c41583465617ec2027b9dcb78620d1edef",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "As CV-2300: same identity and digest returns the original receipt with no effect, a different digest conflicts, missing dedupe is zero-effect, and no retry opens a second ask or reprompts a person.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2301",
+       "line_start": 51412,
+       "line_end": 51412,
+       "quote": "no retry opens a second ask or reprompts a person",
+       "excerpt_sha256": "52662914da8d99c061a986940283ca445474fd53aec90ce7e2722ceaff0522ea",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The registry assigns RP-AUTHORITY-INDEFINITE@1.0.0; the publication journal binds the same policy directly (SP-2301) and is canonical non-rebuildable with mandatory backup; no open retention choice.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/44",
+       "line_start": 3182,
+       "line_end": 3182,
+       "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\",",
+       "excerpt_sha256": "fe0cb5dfc30383cc74c52093250d8f4d225ea27919f5d113322bd9c010552237",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2301",
+       "line_start": 66240,
+       "line_end": 66240,
+       "quote": "binds `RP-AUTHORITY-INDEFINITE@1.0.0` directly, the policy the DL-300 registry row assigns to `approval.chat_tool_requested`",
+       "excerpt_sha256": "cac03c0c0ef6450f98175bd02b4ce3e78fcafeda83bdd6be4cdc5a8e15bb0cb1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "ea_s2_approval_chat_tool_requested_publication",
+       "line_start": 276967,
+       "line_end": 276967,
+       "quote": "\"retention_policy_ref\": \"RP-AUTHORITY-INDEFINITE\",",
+       "excerpt_sha256": "30efce93203d663b4c47c85b0d5341a9c29437a52149b9ac6a37e6a2c18d173c",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the S2 head; still supported."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Evidence refs only (secret_refs_only); the approval host holds the canonical record (SP-353 or SP-2303); reads recheck thread and scope access; app edition in Full Server app backup and Project edition in Project Backup, coherent with record, packs and receipts.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/44",
+       "line_start": 3171,
+       "line_end": 3171,
+       "quote": "\"mode\": \"reject_unhandled_secrets\",",
+       "excerpt_sha256": "69b326f5100c3747e56823aea733477b3b41747a52c403f57851d9d32534e475",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2301",
+       "line_start": 66238,
+       "line_end": 66238,
+       "quote": "Reads require current access to the approval's thread and scope under PS-145, rechecked at final release; protected",
+       "excerpt_sha256": "fe3232e4ede4cb3ce3f2660d545c0a3d77120c2da48e1a553fc877a3f83af957",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2301",
+       "line_start": 66238,
+       "line_end": 66238,
+       "quote": "The application edition is backed up with the Full Server app backup and the Project edition with Project Backup",
+       "excerpt_sha256": "0a91d88fe1fea6fdf6fa3c90dae10717a3de2d02472de5f281538d600fac0bd7",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The record is created pending with null resolution_ref in the same transaction as the journal; asks covered by mode or grant authority open nothing; expires_at_utc is after the request time; journal CAS has no skip or regression.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2301",
+       "line_start": 51406,
+       "line_end": 51406,
+       "quote": "with `decision` `pending` and null `resolution_ref`",
+       "excerpt_sha256": "109b8b4081d21fe4f75ed557580235179cbfafd2cffaa9b9343be8266aa303c6",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2301",
+       "line_start": 51404,
+       "line_end": 51404,
+       "quote": "An action that task-scoped mode authority or a previously approved build grant covers opens no request",
+       "excerpt_sha256": "19a3d82f90bc2ed99a89682fb3594073768ef56e04b8b1c31673fb17c7c4e5f7",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2301",
+       "line_start": 51408,
+       "line_end": 51408,
+       "quote": "is after the accepted request time",
+       "excerpt_sha256": "d0188ef8f1e1e3ccd6e2c836a0b2094fb8a11dfbd5bd95515ae608ff43446597",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2301",
+       "line_start": 66234,
+       "line_end": 66234,
+       "quote": "Legal writes are absent to prepared, prepared to appended, appended to settled",
+       "excerpt_sha256": "5f2a3a2a85cf828ccbc9700f87177c74e4990aeb5acb5a6395edbb83ccfbf729",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact reader storage.s2.approval_chat_tool_requested.recovery_read.v1@1.0.0 is read-only over SP-278: no family projector, projection, checkpoint or stored token exists (so DL-076 has nothing to hold); each read revalidates the live ten-field read_token at release; generic index CAS and rebuild stay SP-278s.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2301",
+       "line_start": 66238,
+       "line_end": 66238,
+       "quote": "`storage.s2.approval_chat_tool_requested.recovery_read.v1@1.0.0` is the family",
+       "excerpt_sha256": "a37368a93bb4c7aca15a70d5b1f8cca9dda48d2b84e31e001aa8b421968c4f40",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2301",
+       "line_start": 66238,
+       "line_end": 66238,
+       "quote": "**No family projector, projection, checkpoint key or durable advance exists**",
+       "excerpt_sha256": "503da6004b105a2f023bea4f1a8bfb78a0e13a181efa55b38884909e896d4549",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2301",
+       "line_start": 66238,
+       "line_end": 66238,
+       "quote": "Each read captures the live ten-field SP-278 `read_token`",
+       "excerpt_sha256": "1362fd2174ed0542381c874fd7d1cb366f0bc43dc1bfb4be963fc9a5311bf10c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2301",
+       "line_start": 66238,
+       "line_end": 66238,
+       "quote": "Generic index CAS and rebuild stay SP-278",
+       "excerpt_sha256": "11cc73c58db0ec380998590460389ccba0dae308b735284fc8a0e7f950693faa",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "ABSENT"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Only 1.0.0 per scope, no fallback between editions, no alias; writer withdrawal as CV-2300 leaving pending asks to resolve through CV-2302; reader withdrawal and successor installation per SP-2301.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2301",
+       "line_start": 51414,
+       "line_end": 51414,
+       "quote": "no fallback between scope editions (`exact_scope_and_schema_id_no_fallback`)",
+       "excerpt_sha256": "fc9be5dde8d5385dd1ab3244443065c50efa13479a4fd05f8c7153f1dd57b1eb",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2301",
+       "line_start": 51414,
+       "line_end": 51414,
+       "quote": "a withdrawn writer leaves pending asks to resolve through CV-2302",
+       "excerpt_sha256": "f1fa90010ef68e1c3ebcd64ed18a6f45794d3229f0f918a1fd0abe7aff2926a7",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2301",
+       "line_start": 66242,
+       "line_end": 66242,
+       "quote": "a successor installs only through a new registry revision and the StorageMigrationCoordinator",
+       "excerpt_sha256": "a28a7da2dad72cdfc1ec3f13d7d0a7f338d427bb731162314869aa44e406d397",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "ATS-2301: the complete checker passes 886 cases (180 positives, 706 single-defect negatives refused first at their own row); every refusal is a row of 28 generated tables (181 rows, at most 8 each); the gated tool proves 180, the 181st sits alone with its proof; NUMRULE corpus and shared date-time profiles; SP-1101 retained reads. Native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-2301",
+       "line_start": 14209,
+       "line_end": 14209,
+       "quote": "plan_unit_id: ATS-2301",
+       "excerpt_sha256": "27aad95af47e380b4eff9dfb737e3f422f819582fd58d1036cd0dd1585c773f1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-2301",
+       "line_start": 14214,
+       "line_end": 14214,
+       "quote": "runs the complete checker scripts/pm_s2_dl300_events.py over 886 cases",
+       "excerpt_sha256": "68e5696efcc427aaf7fb2878d4fd29c921a2e6036481fdb6c07230ef7eb46c0e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-2301",
+       "line_start": 14214,
+       "line_end": 14214,
+       "quote": "proves 180 rows by single-row cuts in which only the row",
+       "excerpt_sha256": "1847bcfc82b5b7a849bb50a48797395cddef1a39dd5e11b1e39a43eb977b76f8",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-2301",
+       "line_start": 14214,
+       "line_end": 14214,
+       "quote": "28 tables and 181 rows, at most eight rows each",
+       "excerpt_sha256": "cfa7efdfdc49cace2c157b51ef420d70bff38b4cc1456f2a0cfa3d5657b5b743",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "ABSENT"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    }
+   }
+  },
+  {
+   "event_type": "approval.chat_tool_resolved",
+   "family_id": "event-family-approval-chat-tool-resolved",
+   "family_revision": "1.0.0",
+   "registry_pointer": "#/families/45",
+   "disposition": "CURRENT_WRITER",
+   "pass_count": 12,
+   "normative_depth_complete": true,
+   "native_execution": "NOT_RUN",
+   "current_owner_units": [
+    "CV-2302",
+    "SP-2302",
+    "PS-145",
+    "HITL-038",
+    "SP-353",
+    "SP-2303",
+    "CV-366",
+    "ATS-2301",
+    "DL-300",
+    "DL-411"
+   ],
+   "remaining_gaps": [],
+   "grading_batch": "PNC019-S2",
+   "notes": "Lane grade for PNC-019 S2 (not an independent review). The current-writer contract is the owner contract; native producer adoption (requires_owner_adoption) and native execution are separate later claims.",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Registry 2026-11-04.1 registers event-family-approval-chat-tool-resolved at 1.0.0 with its registered payload schema and explicit scope policy; no alias or extension. DL-300 approved the checkpoint; S2 changes no registry row.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "registry header",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-11-04.1\",",
+       "excerpt_sha256": "b09c2dd6f80b66cf0ea78cc8bf5dd82e460910d46ac90fdaf930f7643090b56a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/45",
+       "line_start": 3230,
+       "line_end": 3230,
+       "quote": "\"event_type\": \"approval.chat_tool_resolved\",",
+       "excerpt_sha256": "cce3ed7aa8bd8738e88ccfc2d96b927ba6ae8f53e274d1bbf56e009aa4bdf7c1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/45",
+       "line_start": 3229,
+       "line_end": 3229,
+       "quote": "\"family_revision\": \"1.0.0\",",
+       "excerpt_sha256": "2aabfe6e40bb0022875751bff15a57de8a286fa0b23f635f8e543144d2e6ffe7",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/45",
+       "line_start": 3241,
+       "line_end": 3241,
+       "quote": "\"aliases\": [],",
+       "excerpt_sha256": "9917b1325ccdc793a2a6ffbb556263fe9989cfc5390c15389ba8ad7b44737b39",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/automation_authority_contracts.schema.json",
+       "unit": "#/$defs/ChatToolApprovalResult",
+       "line_start": 1409,
+       "line_end": 1409,
+       "quote": "\"const\": \"pm.chat_tool_approval_result.v1\"",
+       "excerpt_sha256": "42431d75a62281398fe819fff4535724a043e5874afe3d73cbb4fd36906e526e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the S2 head; still supported."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The semantic and payload anchors resolve to the governing owner unit, which now names its DL-411 technical parts (CV-2302, SP-2302).",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/45",
+       "line_start": 3232,
+       "line_end": 3232,
+       "quote": "\"semantic_owner_doc\": ",
+       "excerpt_sha256": "4db70bf779cdeb0152d2f281c43ef9614e526a94409b0eb33cf12b3ddbc756e3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Permissions_System.md",
+       "unit": "PS-145",
+       "line_start": 10417,
+       "line_end": 10417,
+       "quote": "their DL-411 technical parts are CV-2301, CV-2302 and SP-2301 to SP-2303",
+       "excerpt_sha256": "ef7164de00645397dc1aa043369ebb9e5242b9a1cd7f4e38414daa87f548fa4c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/human-in-the-loop.md",
+       "unit": "HITL-038",
+       "line_start": 2739,
+       "line_end": 2739,
+       "quote": "The host producers, request pairing and storage custody of approval.chat_tool_requested",
+       "excerpt_sha256": "cefaeefd01c2d80b9d3d865f1c4d3b61a166b3a6673ad67e88574395015b913d",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the S2 head; still supported."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-2302 names ApprovalHost::resolve_chat_tool_request (RuntimeApproveV3/DeclineV3 chat_tool branch, expiry, Stop or revoke) and the order: paired request settled first, terminal decision plus journal in one transaction, append, CAS to settled, then the result returns.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2302",
+       "line_start": 51475,
+       "line_end": 51475,
+       "quote": "The producer is the shared approval host, `ApprovalHost::resolve_chat_tool_request`",
+       "excerpt_sha256": "5ebfb12e4ef4f88914e28d3ac3eebce92083d62fe641acf5c43328a807ae6b06",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2302",
+       "line_start": 51477,
+       "line_end": 51477,
+       "quote": "must exist and be `settled` (its first receipt resolved) before this append",
+       "excerpt_sha256": "2c7c1c15d97cdc696ed896bbc6c09656ce5f0b75066dd3c11254cbe6f2009f85",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2302",
+       "line_start": 51477,
+       "line_end": 51477,
+       "quote": "the result returns to `return_context_ref` only after `settled`",
+       "excerpt_sha256": "4fee67371c134edb89a681d3133bc99cd3ee11f7d068f8efc5e2cdfd314986c6",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "The registered payload definition is a closed object (additionalProperties false) with const schema_id/version; S2 references it unchanged from Plans/event_payloads/s2/approval_chat_tool_resolved.schema.json.",
+     "evidence": [
+      {
+       "path": "Plans/automation_authority_contracts.schema.json",
+       "unit": "#/$defs/ChatToolApprovalResult",
+       "line_start": 1409,
+       "line_end": 1409,
+       "quote": "\"const\": \"pm.chat_tool_approval_result.v1\"",
+       "excerpt_sha256": "42431d75a62281398fe819fff4535724a043e5874afe3d73cbb4fd36906e526e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/automation_authority_contracts.schema.json",
+       "unit": "#/$defs/ChatToolApprovalResult",
+       "line_start": 1396,
+       "line_end": 1396,
+       "quote": "\"additionalProperties\": false,",
+       "excerpt_sha256": "caf6261bd51214e3f0e1f79bb4be170af948f47d47080f04b366668a8b5af3bd",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payloads/s2/approval_chat_tool_resolved.schema.json",
+       "unit": "#/$defs/payload",
+       "line_start": 9,
+       "line_end": 9,
+       "quote": "\"description\": \"The registered payload definition",
+       "excerpt_sha256": "7ba46350331e66b7d93a4f847cc946720932a65168202aa32fc5a0700271d028",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the S2 head; still supported."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Operation from the resolution with component and request_id, so a second different resolution conflicts; keys and partition as CV-2301; causation is the request event; partition, Project, thread and run equal the request.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/45",
+       "line_start": 3305,
+       "line_end": 3305,
+       "quote": "\"payload_selection_policy\": \"exact_scope_and_schema_id_no_fallback\"",
+       "excerpt_sha256": "c174b2605293a5c6025bbd4d582b561bb23622565cd71315f6e5c37ce1af89eb",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2302",
+       "line_start": 51481,
+       "line_end": 51481,
+       "quote": "so a second, different resolution of the same approval has the same scoped identity",
+       "excerpt_sha256": "d6f5f47a9e6a1496fc27b0b41ab00dfafcd889e0d99d77300860a1340aec955d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2302",
+       "line_start": 51479,
+       "line_end": 51479,
+       "quote": "The envelope `causation_event_id` is the paired request's `event_id`",
+       "excerpt_sha256": "e02ac253d97b263000ac2656b61e07128cf3b16b7893fb7ce86a766f63c722dd",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "As CV-2301; a retry returns the original resolution and never re-dispatches the tool or re-answers the ask; exactly one resolution per approval.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2302",
+       "line_start": 51483,
+       "line_end": 51483,
+       "quote": "A retry returns the original resolution; no retry re-dispatches the tool or re-answers the ask.",
+       "excerpt_sha256": "b1c15b14b1879359756e473f4a2122cadce51469760e11dceeeff8773a3b05d1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2302",
+       "line_start": 51479,
+       "line_end": 51479,
+       "quote": "Exactly one resolution exists per approval.",
+       "excerpt_sha256": "f03ec523727c2cb1c5e09436280f0a72fbd6b29c7c6bbefbc5cc3825f10997f9",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The registry assigns RP-AUTHORITY-INDEFINITE@1.0.0; the publication journal binds the same policy directly (SP-2302) and is canonical non-rebuildable with mandatory backup; no open retention choice.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/45",
+       "line_start": 3262,
+       "line_end": 3262,
+       "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\",",
+       "excerpt_sha256": "fe0cb5dfc30383cc74c52093250d8f4d225ea27919f5d113322bd9c010552237",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2302",
+       "line_start": 66311,
+       "line_end": 66311,
+       "quote": "binds `RP-AUTHORITY-INDEFINITE@1.0.0` directly, the policy the DL-300 registry row assigns to `approval.chat_tool_resolved`",
+       "excerpt_sha256": "bbafc25d06c125d650ccbfe81dccd12abe51aa0d84cce4bbc2e4f914097cacbb",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "ea_s2_approval_chat_tool_resolved_publication",
+       "line_start": 277171,
+       "line_end": 277171,
+       "quote": "\"retention_policy_ref\": \"RP-AUTHORITY-INDEFINITE\",",
+       "excerpt_sha256": "30efce93203d663b4c47c85b0d5341a9c29437a52149b9ac6a37e6a2c18d173c",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the S2 head; still supported."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Evidence refs only; the host holds the record terminal decision and resolution_ref; reads recheck thread and scope access; backup coherent with the paired request, never a resolution without its settled request.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/45",
+       "line_start": 3251,
+       "line_end": 3251,
+       "quote": "\"mode\": \"reject_unhandled_secrets\",",
+       "excerpt_sha256": "69b326f5100c3747e56823aea733477b3b41747a52c403f57851d9d32534e475",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2302",
+       "line_start": 66309,
+       "line_end": 66309,
+       "quote": "Reads require current access to the approval's thread and scope under PS-145, rechecked at final release. Backup",
+       "excerpt_sha256": "16650bba3a162df1867b071b433cf43006349c9ff7234228e97e905f90fa40f3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2302",
+       "line_start": 66309,
+       "line_end": 66309,
+       "quote": "a restore never keeps a resolution without its settled request",
+       "excerpt_sha256": "0051499c9bf530c0820754e3d5d5a2789a891505f9e882fbcb9a6a68fb6667ae",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Pending to exactly one terminal decision; request_sha256 binds the exact request payload; expired exactly at or after expiry and the others only before; approved and declined need an actual human decision; never node.unblocked.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2302",
+       "line_start": 51479,
+       "line_end": 51479,
+       "quote": "`request_sha256` is the lowercase SHA-256 of the CV-1100 qualified RFC 8785 bytes",
+       "excerpt_sha256": "86833df0c48fbc8eb3faacc2aa1d7abd6ac7e90f2b607fed1a91a323b87fca7a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2302",
+       "line_start": 51479,
+       "line_end": 51479,
+       "quote": "`expired` is chosen exactly when the accepted resolution time is at or after",
+       "excerpt_sha256": "97166f835768ebd7aab44be461ba2c281ee91d247338a6cb91ffb30578cb03d3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2302",
+       "line_start": 51479,
+       "line_end": 51479,
+       "quote": "`approved` and `declined` carry an actual human decision in `person_evidence`",
+       "excerpt_sha256": "2d667767527f8747515f26cc30d88af00ce86b5d50982e24085d80f173cdd692",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2302",
+       "line_start": 51475,
+       "line_end": 51475,
+       "quote": "Chat-tool decisions never emit `node.unblocked`.",
+       "excerpt_sha256": "38b13bb4d44bec00c262fb373b42c5f4001f28db7297944c0ef580bdbbf6c729",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact reader storage.s2.approval_chat_tool_resolved.recovery_read.v1@1.0.0 is read-only over SP-278: no family projector, projection, checkpoint or stored token exists (so DL-076 has nothing to hold); each read revalidates the live ten-field read_token at release; generic index CAS and rebuild stay SP-278s.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2302",
+       "line_start": 66309,
+       "line_end": 66309,
+       "quote": "`storage.s2.approval_chat_tool_resolved.recovery_read.v1@1.0.0` is the family",
+       "excerpt_sha256": "08ce9f032f5423050622f442dbb323fffdc14024350cdbaf05aa67fe66526ee1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2302",
+       "line_start": 66309,
+       "line_end": 66309,
+       "quote": "**No family projector, projection, checkpoint key or durable advance exists**",
+       "excerpt_sha256": "503da6004b105a2f023bea4f1a8bfb78a0e13a181efa55b38884909e896d4549",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2302",
+       "line_start": 66309,
+       "line_end": 66309,
+       "quote": "Each read captures the live ten-field SP-278 `read_token`",
+       "excerpt_sha256": "1362fd2174ed0542381c874fd7d1cb366f0bc43dc1bfb4be963fc9a5311bf10c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2302",
+       "line_start": 66309,
+       "line_end": 66309,
+       "quote": "Generic index CAS and rebuild stay SP-278",
+       "excerpt_sha256": "11cc73c58db0ec380998590460389ccba0dae308b735284fc8a0e7f950693faa",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "ABSENT"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "As CV-2301: only 1.0.0 per scope with no fallback or alias; writer and reader withdrawal and successor installation per SP-2302.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2302",
+       "line_start": 51483,
+       "line_end": 51483,
+       "quote": "**Replay, compatibility and withdrawal.** As CV-2301.",
+       "excerpt_sha256": "ce6faab7cda4712abfbcb60e3436644ba474f9d142c423068ded946431ce9a21",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2302",
+       "line_start": 66313,
+       "line_end": 66313,
+       "quote": "Writer withdrawal under the append lock refuses new preparation",
+       "excerpt_sha256": "bfff7c1c6c239238b8a6b683eff5d0c97cb225b06e1077071c9e0f8713608760",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "ATS-2301: the complete checker passes 886 cases (180 positives, 706 single-defect negatives refused first at their own row); every refusal is a row of 28 generated tables (181 rows, at most 8 each); the gated tool proves 180, the 181st sits alone with its proof; NUMRULE corpus and shared date-time profiles; SP-1101 retained reads. Native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-2301",
+       "line_start": 14209,
+       "line_end": 14209,
+       "quote": "plan_unit_id: ATS-2301",
+       "excerpt_sha256": "27aad95af47e380b4eff9dfb737e3f422f819582fd58d1036cd0dd1585c773f1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-2301",
+       "line_start": 14214,
+       "line_end": 14214,
+       "quote": "runs the complete checker scripts/pm_s2_dl300_events.py over 886 cases",
+       "excerpt_sha256": "68e5696efcc427aaf7fb2878d4fd29c921a2e6036481fdb6c07230ef7eb46c0e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-2301",
+       "line_start": 14214,
+       "line_end": 14214,
+       "quote": "proves 180 rows by single-row cuts in which only the row",
+       "excerpt_sha256": "1847bcfc82b5b7a849bb50a48797395cddef1a39dd5e11b1e39a43eb977b76f8",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-2301",
+       "line_start": 14214,
+       "line_end": 14214,
+       "quote": "28 tables and 181 rows, at most eight rows each",
+       "excerpt_sha256": "cfa7efdfdc49cace2c157b51ef420d70bff38b4cc1456f2a0cfa3d5657b5b743",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1b/DEPTH.jsonl",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "Closed by the DL-411 technical parts newly authored in PNC-019 S2 (CV-2300..2302, SP-2300..2303, ATS-2301)."
+    }
+   }
+  }
+ ]
+}

@@ -1,17 +1,17 @@
-# DCW named phase guard results (sweep part 2B)
+# DCW named phase guard results (C12-DCW, PNC-019)
 
-Gated tool `004bdedd632d9463f3535190a6ed5772338cdce1`, rerun in full after the shared date_time adoption. All credit below is synthetic assertion/phase scope, exactly as the tool reported it. Individual schema keywords, loop occurrences, compound predicate members and complete Python boundaries retain no automatic proof credit. No duplicate set is credited.
+Gated tool `004bdedd632d9463f3535190a6ed5772338cdce1`, rerun in full for C12-DCW after adding row O234 and the C12 complete-boundary witnesses (`scripts/pm_dcw_c12_cases.py`). All credit below is synthetic assertion/phase scope, exactly as the tool reported it. Individual schema keywords, loop occurrences, compound predicate members and complete Python boundaries retain no automatic proof credit. No duplicate set is credited.
 
 ## Counts
 
 | Checker | Guards | Proved | Unproved |
 |---|---:|---:|---:|
-| `pm_dcw_event_oracles` | 250 | 240 | 10 |
+| `pm_dcw_event_oracles` | 251 | 241 | 10 |
 | `pm_dcw_blockage_events` | 108 | 106 | 2 |
 | `pm_bundle_revision_events` | 22 | 20 | 2 |
 | `pm_dcw_registered_schemas` | 13 | 13 | 0 |
 
-Collection: 6985 executions, 0 mismatches, 0 untracked exceptions, 393 controls, 1099 distinct negatives. Tables: FAIL 14, PASS 153.
+Collection: 7089 executions, 0 mismatches, 0 untracked exceptions, 394 controls, 1119 distinct negatives. Tables: FAIL 14, PASS 154.
 
 ## Every cut row
 
@@ -31,16 +31,16 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `O010` | `scripts/pm_dcw_event_oracles.py:250` | PROVED | 6 / 6 | 38 | matches |
 | `O011` | `scripts/pm_dcw_event_oracles.py:251` | PROVED | 8 / 8 | 36 | matches |
 | `O012` | `scripts/pm_dcw_event_oracles.py:253` | PROVED | 6 / 6 | 38 | matches |
-| `O013` | `scripts/pm_dcw_event_oracles.py:262` | PROVED | 1 / 1 | 0 | matches |
+| `O013` | `scripts/pm_dcw_event_oracles.py:262` | PROVED | 2 / 2 | 0 | matches |
 | `O014` | `scripts/pm_dcw_event_oracles.py:263` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O015` | `scripts/pm_dcw_event_oracles.py:264` | PROVED | 6 / 6 | 15 | matches |
-| `O016` | `scripts/pm_dcw_event_oracles.py:265` | PROVED | 6 / 6 | 15 | matches |
+| `O015` | `scripts/pm_dcw_event_oracles.py:264` | PROVED | 6 / 6 | 16 | matches |
+| `O016` | `scripts/pm_dcw_event_oracles.py:265` | PROVED | 6 / 6 | 16 | matches |
 | `O017` | `scripts/pm_dcw_event_oracles.py:266` | PROVED | 1 / 1 | 0 | matches |
-| `O018` | `scripts/pm_dcw_event_oracles.py:268` | PROVED | 2 / 2 | 19 | matches |
-| `O019` | `scripts/pm_dcw_event_oracles.py:270` | PROVED | 1 / 1 | 20 | matches |
-| `O020` | `scripts/pm_dcw_event_oracles.py:271` | PROVED | 4 / 4 | 17 | matches |
-| `O021` | `scripts/pm_dcw_event_oracles.py:272` | PROVED | 1 / 1 | 0 | matches |
-| `O022` | `scripts/pm_dcw_event_oracles.py:273` | PROVED | 2 / 2 | 19 | matches |
+| `O018` | `scripts/pm_dcw_event_oracles.py:268` | PROVED | 2 / 2 | 20 | matches |
+| `O019` | `scripts/pm_dcw_event_oracles.py:270` | PROVED | 1 / 1 | 21 | matches |
+| `O020` | `scripts/pm_dcw_event_oracles.py:271` | PROVED | 5 / 5 | 17 | matches |
+| `O021` | `scripts/pm_dcw_event_oracles.py:272` | PROVED | 2 / 2 | 0 | matches |
+| `O022` | `scripts/pm_dcw_event_oracles.py:273` | PROVED | 2 / 2 | 20 | matches |
 | `O023` | `scripts/pm_dcw_event_oracles.py:274` | PROVED | 2 / 2 | 8 | matches |
 | `O024` | `scripts/pm_dcw_event_oracles.py:275` | PROVED | 4 / 4 | 6 | matches |
 | `O025` | `scripts/pm_dcw_event_oracles.py:276` | PROVED | 1 / 1 | 9 | matches |
@@ -55,14 +55,14 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `O034` | `scripts/pm_dcw_event_oracles.py:306` | PROVED | 1 / 1 | 0 | matches |
 | `O035` | `scripts/pm_dcw_event_oracles.py:307` | PROVED | 2 / 2 | 16 | matches |
 | `O036` | `scripts/pm_dcw_event_oracles.py:315` | PROVED | 7 / 7 | 11 | matches |
-| `O037` | `scripts/pm_dcw_event_oracles.py:316` | PROVED | 106 / 106 | 27 | matches |
-| `O038` | `scripts/pm_dcw_event_oracles.py:317` | PROVED | 9 / 9 | 124 | matches |
-| `O039` | `scripts/pm_dcw_event_oracles.py:319` | PROVED | 1 / 1 | 0 | matches |
-| `O040` | `scripts/pm_dcw_event_oracles.py:320` | PROVED | 6 / 6 | 127 | matches |
+| `O037` | `scripts/pm_dcw_event_oracles.py:316` | PROVED | 106 / 106 | 28 | matches |
+| `O038` | `scripts/pm_dcw_event_oracles.py:317` | PROVED | 9 / 9 | 125 | matches |
+| `O039` | `scripts/pm_dcw_event_oracles.py:319` | PROVED | 2 / 2 | 0 | matches |
+| `O040` | `scripts/pm_dcw_event_oracles.py:320` | PROVED | 7 / 7 | 127 | matches |
 | `O041` | `scripts/pm_dcw_event_oracles.py:321` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O042` | `scripts/pm_dcw_event_oracles.py:322` | PROVED | 5 / 5 | 128 | matches |
-| `O043` | `scripts/pm_dcw_event_oracles.py:324` | PROVED | 6 / 6 | 127 | matches |
-| `O044` | `scripts/pm_dcw_event_oracles.py:326` | PROVED | 1 / 1 | 132 | matches |
+| `O042` | `scripts/pm_dcw_event_oracles.py:322` | PROVED | 5 / 5 | 129 | matches |
+| `O043` | `scripts/pm_dcw_event_oracles.py:324` | PROVED | 6 / 6 | 128 | matches |
+| `O044` | `scripts/pm_dcw_event_oracles.py:326` | PROVED | 1 / 1 | 133 | matches |
 | `O045` | `scripts/pm_dcw_event_oracles.py:328` | PROVED | 1 / 1 | 0 | matches |
 | `O046` | `scripts/pm_dcw_event_oracles.py:329` | PROVED | 1 / 1 | 6 | matches |
 | `O047` | `scripts/pm_dcw_event_oracles.py:330` | PROVED | 1 / 1 | 6 | matches |
@@ -99,12 +99,12 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `O078` | `scripts/pm_dcw_event_oracles.py:407` | PROVED | 1 / 1 | 8 | matches |
 | `O079` | `scripts/pm_dcw_event_oracles.py:410` | PROVED | 1 / 1 | 8 | matches |
 | `O080` | `scripts/pm_dcw_event_oracles.py:411` | PROVED | 4 / 4 | 5 | matches |
-| `O081` | `scripts/pm_dcw_event_oracles.py:412` | PROVED | 1 / 1 | 8 | matches |
-| `O082` | `scripts/pm_dcw_event_oracles.py:424` | PROVED | 3 / 3 | 6 | matches |
-| `O083` | `scripts/pm_dcw_event_oracles.py:425` | PROVED | 1 / 1 | 8 | matches |
-| `O084` | `scripts/pm_dcw_event_oracles.py:426` | PROVED | 2 / 2 | 7 | matches |
-| `O085` | `scripts/pm_dcw_event_oracles.py:428` | PROVED | 1 / 1 | 8 | matches |
-| `O086` | `scripts/pm_dcw_event_oracles.py:429` | PROVED | 1 / 1 | 8 | matches |
+| `O081` | `scripts/pm_dcw_event_oracles.py:412` | PROVED | 1 / 1 | 10 | matches |
+| `O082` | `scripts/pm_dcw_event_oracles.py:424` | PROVED | 3 / 3 | 8 | matches |
+| `O083` | `scripts/pm_dcw_event_oracles.py:425` | PROVED | 2 / 2 | 9 | matches |
+| `O084` | `scripts/pm_dcw_event_oracles.py:426` | PROVED | 2 / 2 | 9 | matches |
+| `O085` | `scripts/pm_dcw_event_oracles.py:428` | PROVED | 2 / 2 | 9 | matches |
+| `O086` | `scripts/pm_dcw_event_oracles.py:429` | PROVED | 1 / 1 | 10 | matches |
 | `O087` | `scripts/pm_dcw_event_oracles.py:430` | PROVED | 1 / 1 | 12 | matches |
 | `O088` | `scripts/pm_dcw_event_oracles.py:431` | PROVED | 1 / 1 | 12 | matches |
 | `O089` | `scripts/pm_dcw_event_oracles.py:432` | PROVED | 8 / 8 | 5 | matches |
@@ -129,31 +129,31 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `O108` | `scripts/pm_dcw_event_oracles.py:453` | UNPROVED | 0 / 0 | 0 | unproved |
 | `O109` | `scripts/pm_dcw_event_oracles.py:454` | UNPROVED | 0 / 0 | 0 | unproved |
 | `O110` | `scripts/pm_dcw_event_oracles.py:456` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O111` | `scripts/pm_dcw_event_oracles.py:458` | PROVED | 1 / 1 | 23 | matches |
+| `O111` | `scripts/pm_dcw_event_oracles.py:458` | PROVED | 1 / 1 | 25 | matches |
 | `O112` | `scripts/pm_dcw_event_oracles.py:459` | PROVED | 1 / 1 | 0 | matches |
-| `O113` | `scripts/pm_dcw_event_oracles.py:463` | PROVED | 1 / 1 | 23 | matches |
-| `O114` | `scripts/pm_dcw_event_oracles.py:465` | PROVED | 4 / 4 | 20 | matches |
+| `O113` | `scripts/pm_dcw_event_oracles.py:463` | PROVED | 2 / 2 | 24 | matches |
+| `O114` | `scripts/pm_dcw_event_oracles.py:465` | PROVED | 4 / 4 | 22 | matches |
 | `O115` | `scripts/pm_dcw_event_oracles.py:474` | PROVED | 1 / 1 | 0 | matches |
-| `O116` | `scripts/pm_dcw_event_oracles.py:475` | PROVED | 6 / 6 | 18 | matches |
+| `O116` | `scripts/pm_dcw_event_oracles.py:475` | PROVED | 7 / 7 | 19 | matches |
 | `O117` | `scripts/pm_dcw_event_oracles.py:476` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O118` | `scripts/pm_dcw_event_oracles.py:478` | PROVED | 11 / 11 | 13 | matches |
+| `O118` | `scripts/pm_dcw_event_oracles.py:478` | PROVED | 11 / 11 | 15 | matches |
 | `O119` | `scripts/pm_dcw_event_oracles.py:479` | PROVED | 1 / 1 | 0 | matches |
-| `O120` | `scripts/pm_dcw_event_oracles.py:480` | PROVED | 1 / 1 | 23 | matches |
-| `O121` | `scripts/pm_dcw_event_oracles.py:481` | PROVED | 12 / 12 | 28 | matches |
-| `O122` | `scripts/pm_dcw_event_oracles.py:482` | PROVED | 8 / 8 | 32 | matches |
-| `O123` | `scripts/pm_dcw_event_oracles.py:483` | PROVED | 12 / 12 | 28 | matches |
+| `O120` | `scripts/pm_dcw_event_oracles.py:480` | PROVED | 1 / 1 | 25 | matches |
+| `O121` | `scripts/pm_dcw_event_oracles.py:481` | PROVED | 12 / 12 | 29 | matches |
+| `O122` | `scripts/pm_dcw_event_oracles.py:482` | PROVED | 8 / 8 | 33 | matches |
+| `O123` | `scripts/pm_dcw_event_oracles.py:483` | PROVED | 12 / 12 | 29 | matches |
 | `O124` | `scripts/pm_dcw_event_oracles.py:484` | UNPROVED | 0 / 0 | 0 | unproved |
 | `O125` | `scripts/pm_dcw_event_oracles.py:485` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O126` | `scripts/pm_dcw_event_oracles.py:487` | PROVED | 6 / 6 | 34 | matches |
+| `O126` | `scripts/pm_dcw_event_oracles.py:487` | PROVED | 6 / 6 | 35 | matches |
 | `O127` | `scripts/pm_dcw_event_oracles.py:488` | PROVED | 1 / 1 | 0 | matches |
 | `O128` | `scripts/pm_dcw_event_oracles.py:489` | PROVED | 1 / 1 | 0 | matches |
 | `O129` | `scripts/pm_dcw_event_oracles.py:490` | PROVED | 1 / 1 | 0 | matches |
 | `O130` | `scripts/pm_dcw_event_oracles.py:491` | PROVED | 1 / 1 | 0 | matches |
 | `O131` | `scripts/pm_dcw_event_oracles.py:492` | PROVED | 1 / 1 | 0 | matches |
-| `O132` | `scripts/pm_dcw_event_oracles.py:493` | PROVED | 1 / 1 | 39 | matches |
+| `O132` | `scripts/pm_dcw_event_oracles.py:493` | PROVED | 2 / 2 | 39 | matches |
 | `O133` | `scripts/pm_dcw_event_oracles.py:494` | PROVED | 1 / 1 | 0 | matches |
 | `O134` | `scripts/pm_dcw_event_oracles.py:495` | PROVED | 1 / 1 | 0 | matches |
-| `O135` | `scripts/pm_dcw_event_oracles.py:496` | PROVED | 1 / 1 | 39 | matches |
+| `O135` | `scripts/pm_dcw_event_oracles.py:496` | PROVED | 1 / 1 | 40 | matches |
 | `O136` | `scripts/pm_dcw_event_oracles.py:497` | PROVED | 6 / 6 | 21 | matches |
 | `O137` | `scripts/pm_dcw_event_oracles.py:509` | PROVED | 1 / 1 | 0 | matches |
 | `O138` | `scripts/pm_dcw_event_oracles.py:510` | PROVED | 1 / 1 | 0 | matches |
@@ -199,58 +199,59 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `O178` | `scripts/pm_dcw_event_oracles.py:593` | PROVED | 12 / 12 | 21 | matches |
 | `O179` | `scripts/pm_dcw_event_oracles.py:596` | PROVED | 9 / 9 | 24 | matches |
 | `O180` | `scripts/pm_dcw_event_oracles.py:597` | PROVED | 1 / 1 | 32 | matches |
-| `O181` | `scripts/pm_dcw_event_oracles.py:599` | PROVED | 8 / 8 | 48 | matches |
-| `O182` | `scripts/pm_dcw_event_oracles.py:600` | PROVED | 8 / 8 | 48 | matches |
-| `O183` | `scripts/pm_dcw_event_oracles.py:604` | PROVED | 1 / 1 | 55 | matches |
-| `O184` | `scripts/pm_dcw_event_oracles.py:607` | PROVED | 1 / 1 | 55 | matches |
-| `O185` | `scripts/pm_dcw_event_oracles.py:609` | PROVED | 36 / 36 | 20 | matches |
-| `O186` | `scripts/pm_dcw_event_oracles.py:621` | PROVED | 2 / 2 | 54 | matches |
+| `O181` | `scripts/pm_dcw_event_oracles.py:599` | PROVED | 8 / 8 | 49 | matches |
+| `O182` | `scripts/pm_dcw_event_oracles.py:600` | PROVED | 8 / 8 | 49 | matches |
+| `O183` | `scripts/pm_dcw_event_oracles.py:604` | PROVED | 2 / 2 | 55 | matches |
+| `O184` | `scripts/pm_dcw_event_oracles.py:607` | PROVED | 1 / 1 | 56 | matches |
+| `O185` | `scripts/pm_dcw_event_oracles.py:609` | PROVED | 36 / 36 | 21 | matches |
+| `O186` | `scripts/pm_dcw_event_oracles.py:621` | PROVED | 2 / 2 | 55 | matches |
 | `O187` | `scripts/pm_dcw_event_oracles.py:686` | PROVED | 1 / 1 | 6 | matches |
 | `O188` | `scripts/pm_dcw_event_oracles.py:687` | PROVED | 1 / 1 | 6 | matches |
 | `O189` | `scripts/pm_dcw_event_oracles.py:688` | PROVED | 1 / 1 | 6 | matches |
 | `O190` | `scripts/pm_dcw_event_oracles.py:696` | PROVED | 1 / 1 | 6 | matches |
 | `O191` | `scripts/pm_dcw_event_oracles.py:697` | PROVED | 1 / 1 | 6 | matches |
 | `O192` | `scripts/pm_dcw_event_oracles.py:698` | PROVED | 2 / 2 | 5 | matches |
-| `O193` | `scripts/pm_dcw_event_oracles.py:699` | PROVED | 1 / 1 | 17 | matches |
-| `O194` | `scripts/pm_dcw_event_oracles.py:700` | PROVED | 1 / 1 | 17 | matches |
-| `O195` | `scripts/pm_dcw_event_oracles.py:701` | PROVED | 1 / 1 | 17 | matches |
+| `O193` | `scripts/pm_dcw_event_oracles.py:699` | PROVED | 1 / 1 | 18 | matches |
+| `O194` | `scripts/pm_dcw_event_oracles.py:700` | PROVED | 1 / 1 | 18 | matches |
+| `O195` | `scripts/pm_dcw_event_oracles.py:701` | PROVED | 1 / 1 | 18 | matches |
 | `O196` | `scripts/pm_dcw_event_oracles.py:783` | PROVED | 1 / 1 | 0 | matches |
-| `O197` | `scripts/pm_dcw_event_oracles.py:832` | PROVED | 3 / 3 | 15 | matches |
-| `O198` | `scripts/pm_dcw_event_oracles.py:927` | PROVED | 6 / 6 | 12 | matches |
+| `O197` | `scripts/pm_dcw_event_oracles.py:832` | PROVED | 3 / 3 | 16 | matches |
+| `O198` | `scripts/pm_dcw_event_oracles.py:927` | PROVED | 7 / 7 | 12 | matches |
 | `O199` | `scripts/pm_dcw_event_oracles.py:928` | PROVED | 1 / 1 | 0 | matches |
 | `O200` | `scripts/pm_dcw_event_oracles.py:929` | PROVED | 1 / 1 | 0 | matches |
 | `O202` | `scripts/pm_dcw_event_oracles.py:946` | PROVED | 1 / 1 | 0 | matches |
-| `O203` | `scripts/pm_dcw_event_oracles.py:947` | PROVED | 6 / 6 | 12 | matches |
+| `O203` | `scripts/pm_dcw_event_oracles.py:947` | PROVED | 6 / 6 | 13 | matches |
 | `O204` | `scripts/pm_dcw_event_oracles.py:948` | PROVED | 1 / 1 | 0 | matches |
 | `O205` | `scripts/pm_dcw_event_oracles.py:949` | PROVED | 1 / 1 | 0 | matches |
 | `O206` | `scripts/pm_dcw_event_oracles.py:950` | PROVED | 1 / 1 | 0 | matches |
-| `O207` | `scripts/pm_dcw_event_oracles.py:951` | PROVED | 1 / 1 | 0 | matches |
+| `O207` | `scripts/pm_dcw_event_oracles.py:951` | PROVED | 2 / 2 | 0 | matches |
 | `O208` | `scripts/pm_dcw_event_oracles.py:952` | PROVED | 1 / 1 | 0 | matches |
-| `O209` | `scripts/pm_dcw_event_oracles.py:955` | PROVED | 1 / 1 | 84 | matches |
+| `O209` | `scripts/pm_dcw_event_oracles.py:955` | PROVED | 2 / 2 | 84 | matches |
 | `O210` | `scripts/pm_dcw_event_oracles.py:956` | PROVED | 1 / 1 | 0 | matches |
 | `O211` | `scripts/pm_dcw_event_oracles.py:958` | PROVED | 1 / 1 | 0 | matches |
 | `O212` | `scripts/pm_dcw_event_oracles.py:959` | PROVED | 1 / 1 | 0 | matches |
-| `O213` | `scripts/pm_dcw_event_oracles.py:960` | PROVED | 6 / 6 | 79 | matches |
+| `O213` | `scripts/pm_dcw_event_oracles.py:960` | PROVED | 6 / 6 | 80 | matches |
 | `O214` | `scripts/pm_dcw_event_oracles.py:961` | PROVED | 1 / 1 | 0 | matches |
-| `O215` | `scripts/pm_dcw_event_oracles.py:962` | PROVED | 6 / 6 | 79 | matches |
+| `O215` | `scripts/pm_dcw_event_oracles.py:962` | PROVED | 6 / 6 | 80 | matches |
 | `O216` | `scripts/pm_dcw_event_oracles.py:964` | PROVED | 1 / 1 | 0 | matches |
 | `O217` | `scripts/pm_dcw_event_oracles.py:965` | PROVED | 1 / 1 | 0 | matches |
 | `O218` | `scripts/pm_dcw_event_oracles.py:966` | PROVED | 1 / 1 | 0 | matches |
 | `O219` | `scripts/pm_dcw_event_oracles.py:967` | PROVED | 1 / 1 | 0 | matches |
 | `O220` | `scripts/pm_dcw_event_oracles.py:968` | PROVED | 1 / 1 | 0 | matches |
 | `O221` | `scripts/pm_dcw_event_oracles.py:971` | PROVED | 1 / 1 | 0 | matches |
-| `O222` | `scripts/pm_dcw_event_oracles.py:972` | PROVED | 6 / 6 | 79 | matches |
+| `O222` | `scripts/pm_dcw_event_oracles.py:972` | PROVED | 6 / 6 | 80 | matches |
 | `O223` | `scripts/pm_dcw_event_oracles.py:973` | PROVED | 1 / 1 | 0 | matches |
 | `O224` | `scripts/pm_dcw_event_oracles.py:974` | PROVED | 1 / 1 | 0 | matches |
 | `O225` | `scripts/pm_dcw_event_oracles.py:975` | PROVED | 1 / 1 | 0 | matches |
 | `O226` | `scripts/pm_dcw_event_oracles.py:977` | PROVED | 1 / 1 | 0 | matches |
-| `O227` | `scripts/pm_dcw_event_oracles.py:979` | PROVED | 6 / 6 | 79 | matches |
-| `O228` | `scripts/pm_dcw_event_oracles.py:981` | PROVED | 60 / 60 | 25 | matches |
+| `O227` | `scripts/pm_dcw_event_oracles.py:979` | PROVED | 6 / 6 | 80 | matches |
+| `O228` | `scripts/pm_dcw_event_oracles.py:981` | PROVED | 60 / 60 | 26 | matches |
 | `O229` | `scripts/pm_dcw_event_oracles.py:982` | PROVED | 6 / 6 | 14 | matches |
 | `O230` | `scripts/pm_dcw_event_oracles.py:983` | PROVED | 6 / 6 | 14 | matches |
 | `O231` | `scripts/pm_dcw_event_oracles.py:989` | PROVED | 1 / 1 | 19 | matches |
 | `O232` | `scripts/pm_dcw_event_oracles.py:990` | PROVED | 1 / 1 | 19 | matches |
 | `O233` | `scripts/pm_dcw_event_oracles.py:991` | PROVED | 1 / 1 | 0 | matches |
+| `O234` | `scripts/pm_dcw_event_oracles.py:482` | PROVED | 1 / 1 | 0 | matches |
 | `B001` | `scripts/pm_dcw_blockage_events.py:29` | UNPROVED | 0 / 0 | 0 | unproved |
 | `B002` | `scripts/pm_dcw_blockage_events.py:30` | PROVED | 2 / 2 | 18 | matches |
 | `B003` | `scripts/pm_dcw_blockage_events.py:31` | PROVED | 4 / 4 | 16 | matches |
@@ -261,21 +262,21 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `B008` | `scripts/pm_dcw_blockage_events.py:39` | PROVED | 2 / 2 | 8 | matches |
 | `B009` | `scripts/pm_dcw_blockage_events.py:40` | PROVED | 1 / 1 | 9 | matches |
 | `B010` | `scripts/pm_dcw_blockage_events.py:41` | PROVED | 2 / 2 | 8 | matches |
-| `B011` | `scripts/pm_dcw_blockage_events.py:42` | PROVED | 1 / 1 | 10 | matches |
-| `B012` | `scripts/pm_dcw_blockage_events.py:44` | PROVED | 1 / 1 | 10 | matches |
-| `B013` | `scripts/pm_dcw_blockage_events.py:46` | PROVED | 1 / 1 | 10 | matches |
-| `B014` | `scripts/pm_dcw_blockage_events.py:50` | PROVED | 1 / 1 | 10 | matches |
-| `B015` | `scripts/pm_dcw_blockage_events.py:57` | PROVED | 6 / 6 | 5 | matches |
+| `B011` | `scripts/pm_dcw_blockage_events.py:42` | PROVED | 1 / 1 | 11 | matches |
+| `B012` | `scripts/pm_dcw_blockage_events.py:44` | PROVED | 1 / 1 | 11 | matches |
+| `B013` | `scripts/pm_dcw_blockage_events.py:46` | PROVED | 1 / 1 | 11 | matches |
+| `B014` | `scripts/pm_dcw_blockage_events.py:50` | PROVED | 1 / 1 | 11 | matches |
+| `B015` | `scripts/pm_dcw_blockage_events.py:57` | PROVED | 7 / 7 | 5 | matches |
 | `B016` | `scripts/pm_dcw_blockage_events.py:59` | PROVED | 1 / 1 | 0 | matches |
-| `B017` | `scripts/pm_dcw_blockage_events.py:71` | PROVED | 1 / 1 | 10 | matches |
-| `B018` | `scripts/pm_dcw_blockage_events.py:73` | PROVED | 1 / 1 | 9 | matches |
+| `B017` | `scripts/pm_dcw_blockage_events.py:71` | PROVED | 1 / 1 | 11 | matches |
+| `B018` | `scripts/pm_dcw_blockage_events.py:73` | PROVED | 1 / 1 | 10 | matches |
 | `B019` | `scripts/pm_dcw_blockage_events.py:74` | PROVED | 1 / 1 | 0 | matches |
-| `B020` | `scripts/pm_dcw_blockage_events.py:76` | PROVED | 1 / 1 | 9 | matches |
-| `B021` | `scripts/pm_dcw_blockage_events.py:98` | PROVED | 2 / 2 | 8 | matches |
-| `B022` | `scripts/pm_dcw_blockage_events.py:99` | PROVED | 2 / 2 | 8 | matches |
-| `B023` | `scripts/pm_dcw_blockage_events.py:100` | PROVED | 1 / 1 | 0 | matches |
-| `B024` | `scripts/pm_dcw_blockage_events.py:101` | PROVED | 2 / 2 | 8 | matches |
-| `B025` | `scripts/pm_dcw_blockage_events.py:102` | PROVED | 2 / 2 | 8 | matches |
+| `B020` | `scripts/pm_dcw_blockage_events.py:76` | PROVED | 1 / 1 | 10 | matches |
+| `B021` | `scripts/pm_dcw_blockage_events.py:98` | PROVED | 2 / 2 | 9 | matches |
+| `B022` | `scripts/pm_dcw_blockage_events.py:99` | PROVED | 3 / 3 | 8 | matches |
+| `B023` | `scripts/pm_dcw_blockage_events.py:100` | PROVED | 2 / 2 | 0 | matches |
+| `B024` | `scripts/pm_dcw_blockage_events.py:101` | PROVED | 2 / 2 | 9 | matches |
+| `B025` | `scripts/pm_dcw_blockage_events.py:102` | PROVED | 2 / 2 | 9 | matches |
 | `B026` | `scripts/pm_dcw_blockage_events.py:104` | PROVED | 7 / 7 | 6 | matches |
 | `B027` | `scripts/pm_dcw_blockage_events.py:105` | PROVED | 1 / 1 | 12 | matches |
 | `B028` | `scripts/pm_dcw_blockage_events.py:106` | PROVED | 1 / 1 | 12 | matches |
@@ -313,7 +314,7 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `B060` | `scripts/pm_dcw_blockage_events.py:164` | PROVED | 8 / 8 | 13 | matches |
 | `B061` | `scripts/pm_dcw_blockage_events.py:165` | PROVED | 4 / 4 | 17 | matches |
 | `B062` | `scripts/pm_dcw_blockage_events.py:167` | PROVED | 4 / 4 | 17 | matches |
-| `B063` | `scripts/pm_dcw_blockage_events.py:169` | PROVED | 1 / 1 | 0 | matches |
+| `B063` | `scripts/pm_dcw_blockage_events.py:169` | PROVED | 2 / 2 | 0 | matches |
 | `B064` | `scripts/pm_dcw_blockage_events.py:170` | PROVED | 1 / 1 | 20 | matches |
 | `B065` | `scripts/pm_dcw_blockage_events.py:171` | PROVED | 1 / 1 | 10 | matches |
 | `B066` | `scripts/pm_dcw_blockage_events.py:172` | PROVED | 1 / 1 | 10 | matches |
@@ -346,7 +347,7 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `B093` | `scripts/pm_dcw_blockage_events.py:239` | PROVED | 1 / 1 | 0 | matches |
 | `B094` | `scripts/pm_dcw_blockage_events.py:242` | PROVED | 6 / 6 | 8 | matches |
 | `B095` | `scripts/pm_dcw_blockage_events.py:245` | PROVED | 1 / 1 | 0 | matches |
-| `B096` | `scripts/pm_dcw_blockage_events.py:246` | PROVED | 1 / 1 | 0 | matches |
+| `B096` | `scripts/pm_dcw_blockage_events.py:246` | PROVED | 2 / 2 | 0 | matches |
 | `B097` | `scripts/pm_dcw_blockage_events.py:249` | PROVED | 2 / 2 | 12 | matches |
 | `B098` | `scripts/pm_dcw_blockage_events.py:251` | PROVED | 2 / 2 | 12 | matches |
 | `B099` | `scripts/pm_dcw_blockage_events.py:252` | PROVED | 2 / 2 | 12 | matches |
@@ -420,22 +421,112 @@ Each unproved row is by construction and sits alone in its own table, so no prov
 | Guard | Table | Predicate | Proof (`path:line`) | Why no single-defect witness exists |
 |---|---:|---|---|---|
 | `O014` | 47 | payload['event_type'] == row['event_type'] | Payload schema fixes `event_type` const (`Plans/event_payloads/bundle_revision/revision_requested.schema.json:61`), enforced in `event_body` (`scripts/pm_dcw_event_oracles.py:241`) before O014 (`:270`) | Schema refuses first (`OE001`) |
-| `O041` | 53 | receipt['durability_state'] == 'synced' | `durability_state` const `synced` (`Plans/event_append_receipt_contracts.schema.json:61`), custody schema (`scripts/pm_dcw_event_oracles.py:309`) before O041 (`:328`) | Schema refuses first |
+| `O041` | 53 | receipt['durability_state'] == 'synced' | `durability_state` const `synced` (`Plans/event_append_receipt_contracts.schema.json:57-58`), custody schema (`scripts/pm_dcw_event_oracles.py:309`) before O041 (`:328`) | Schema refuses first |
 | `O077` | 65 | p['predecessor_event_id'] not in settled | Same predecessor/`settled` as O057 (`scripts/pm_dcw_event_oracles.py:371`); `settled` changes only after O077 (`:408`, `settled.add` at `:409`) | Entailed second site; no duplicate-set credit |
 | `O108` | 75 | result['status'] == 'opened' | Result `status` const `opened` (`Plans/dcw/wizard_open_evidence.schema.json:337`), inline source schema (`scripts/pm_dcw_event_oracles.py:424`) before O108 (`:460`) | Schema refuses first |
 | `O109` | 76 | p['predecessor_event_id'] is None | Opened payload predecessor is `type: null` (`Plans/event_payloads/planning_wizard/wizard_opened.schema.json:117`) | Schema refuses first |
 | `O110` | 77 | result['status'] == 'seed_loaded' | Result `status` const `seed_loaded` (`Plans/dcw/wizard_seed_load_evidence.schema.json:337`), inline source schema (`scripts/pm_dcw_event_oracles.py:424`) before O110 (`:463`) | Schema refuses first |
-| `O117` | 80 | frontier['coverage']['complete_to_captured_boundary'] is True | Coverage flag is `const: true` (`Plans/event_record_index_checkpoint.schema.json:343`), checkpoint schema (`scripts/pm_dcw_event_oracles.py:479`) before O117 (`:483`) | Schema refuses first |
-| `O124` | 82 | len(reader['durable_token']) == 9 | O123 exact durable/live equality (`scripts/pm_dcw_event_oracles.py:490`) plus the closed ten-field live read token (`:480`, `Plans/event_record_index_checkpoint.schema.json:2570`) fixes the nine-field durable length before O124 (`:491`) | Entailed by O123 + schema |
-| `O125` | 83 | len(reader['live_token']) == 10 | Read token is closed with exactly 10 required fields (`Plans/event_record_index_checkpoint.schema.json:2570`), live token schema (`scripts/pm_dcw_event_oracles.py:480`) before O125 (`:492`) | Schema refuses first |
+| `O117` | 80 | frontier['coverage']['complete_to_captured_boundary'] is True | Coverage flag is `const: true` (`Plans/event_record_index_checkpoint.schema.json:343`), checkpoint schema (`scripts/pm_dcw_event_oracles.py:479`) before O117 (`:484`) | Schema refuses first |
+| `O124` | 82 | len(reader['durable_token']) == 9 | O122 and O123 exact durable/live equality (`scripts/pm_dcw_event_oracles.py:490-491`) plus the closed ten-field live read token (`:480`, `Plans/event_record_index_checkpoint.schema.json:2570`) fix the nine-field durable length before O124 (`:492`) | Entailed by O123 + schema |
+| `O125` | 83 | len(reader['live_token']) == 10 | Read token is closed with exactly 10 required fields (`Plans/event_record_index_checkpoint.schema.json:2570`), live token schema (`scripts/pm_dcw_event_oracles.py:480`) before O125 (`:493`) | Schema refuses first |
 | `B001` | 125 | event['event_type'] == p['event_type'] | Row is derived from the envelope type (`scripts/pm_dcw_blockage_events.py:27`) and the payload fixes the same const (`Plans/event_payloads/planning_wizard/wizard_blocked.schema.json:32`) before B001 (`:29`) | Schema refuses first |
 | `B054` | 131 | previous is not None | Unblocked payload predecessor is a required string (`Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json:68`); `previous` is null only when it is null (`scripts/pm_dcw_blockage_events.py:126`, B054 at `:152`) | Schema refuses first |
-| `L001` | 142 | payload['ts'].endswith('Z') | Payload `ts` requires `Z$` and the shared date_time EventRecord format check (`Plans/event_payloads/bundle_revision/revision_requested.schema.json:81-85`, `scripts/pm_dcw_event_oracles.py:854-864`) before `scripts/pm_bundle_revision_events.py:18` | Schema refuses first |
-| `OE007` | 155 | bundle_source: intrinsic parser/schema status | `check_schema` converts `ValidationError` and date_time refusals to the OE001 refusal (`scripts/pm_dcw_event_oracles.py:96-123`); that Refusal is re-raised at `:374` before the legacy `AssertionError`/`ValidationError` fallback at `:377-378`; canonical `validate` raises neither otherwise | Dead fallback with the canonical callback |
-| `LE001` | 160 | date_time(payload['ts'], profile=EVENT_RECORD) is the payload timestamp parser | The payload schema format check is the same `pm_event_datetime.date_time` EventRecord predicate (`scripts/pm_dcw_event_oracles.py:854-864`) as `scripts/pm_bundle_revision_events.py:20`; no value passes the first and fails the second | No parser-only value survives |
+| `L001` | 142 | payload['ts'].endswith('Z') | Payload `ts` requires `Z$` and the shared date_time EventRecord format check (`Plans/event_payloads/bundle_revision/revision_requested.schema.json:81-85`, `scripts/pm_dcw_event_oracles.py:855-865`) before `scripts/pm_bundle_revision_events.py:18` | Schema refuses first |
+| `OE007` | 155 | bundle_source: intrinsic parser/schema status | `check_schema` converts `ValidationError` and date_time refusals to the OE001 refusal (`scripts/pm_dcw_event_oracles.py:96-123`); that Refusal is re-raised at `:374-376` before the legacy `AssertionError`/`ValidationError` fallback at `:377-378`; canonical `validate` raises neither otherwise | Dead fallback with the canonical callback |
+| `LE001` | 160 | date_time(payload['ts'], profile=EVENT_RECORD) is the payload timestamp parser | The payload schema format check is the same `pm_event_datetime.date_time` EventRecord predicate (`scripts/pm_dcw_event_oracles.py:855-865`) as `scripts/pm_bundle_revision_events.py:20`; no value passes the first and fails the second | No parser-only value survives |
 
 ## Full-path diagnostic cuts
 
-{"AttributeError": 3, "IndexError": 3, "KeyError": 1, "RecursionError": 1, "TypeError": 15, "UnboundLocalError": 7, "accept": 936, "causation": 4, "clearing_action_before": 1, "completion_outputs": 1, "current_child_join": 1, "durable_token": 8, "family": 1, "idempotency_conflict": 2, "identifier_whitespace": 6, "index_coverage": 6, "index_currentness": 3, "index_generation_identity": 9, "index_row_membership": 5, "index_row_source": 2, "index_source_binding": 12, "index_source_bytes": 1, "index_source_coverage": 1, "index_source_gaps": 3, "latest_source_event": 3, "materialized_source": 1, "original_authority": 18, "original_binding": 5, "original_document": 1, "original_observation": 1, "original_receipt_equality": 2, "phase_order": 11, "phase_sequence": 1, "registered_schema_pointer": 1, "registered_schema_ref": 1, "restore_member": 1, "restore_source_inventory": 1, "schema": 9, "scope": 1, "scope_project_id": 1, "secret_or_path": 1, "source_phase_identity": 1, "token_shape": 6, "writer_policy": 1}
+{"AttributeError": 3, "IndexError": 3, "KeyError": 1, "RecursionError": 1, "TypeError": 15, "UnboundLocalError": 7, "accept": 956, "causation": 4, "clearing_action_before": 1, "completion_outputs": 1, "current_child_join": 1, "durable_token": 8, "family": 1, "idempotency_conflict": 2, "identifier_whitespace": 6, "index_coverage": 6, "index_currentness": 3, "index_generation_identity": 9, "index_row_membership": 5, "index_row_source": 2, "index_source_binding": 12, "index_source_bytes": 1, "index_source_coverage": 1, "index_source_gaps": 3, "latest_source_event": 3, "materialized_source": 1, "original_authority": 18, "original_binding": 5, "original_document": 1, "original_observation": 1, "original_receipt_equality": 2, "phase_order": 11, "phase_sequence": 1, "registered_schema_pointer": 1, "registered_schema_ref": 1, "restore_member": 1, "restore_source_inventory": 1, "schema": 9, "scope": 1, "scope_project_id": 1, "secret_or_path": 1, "source_phase_identity": 1, "token_shape": 6, "writer_policy": 1}
 
-These are ordinary complete-checker diagnostics using one disabled named row, outside the gated phase boundary. A later refusal or a derivation exception earns no complete-boundary credit. Accepting diagnostics do not certify the whole boundary. Full lists are preserved in `guard-results.json.gz`.
+These are ordinary complete-checker diagnostics using one disabled named row, outside the gated phase boundary. A later refusal or a derivation exception earns no isolation credit by itself. Full lists are preserved in `guard-results.json.gz`.
+
+## Complete-boundary closure (C12)
+
+A row is complete-boundary isolated when a lane witness is refused first at that row with its exact code and the unchanged complete checker ACCEPTS it with only that row disabled. Rows the collection cut-tests that way: 311. `scripts/pm_dcw_c12_boundary.py` re-classifies every other proved row over all lane witnesses, including aliases the collection de-duplicated: {"chain": 15, "complete_boundary": 18, "exception": 36}. Every remaining row carries a checked implication in `scripts/pm_dcw_c12_implications.py` ({"entailed": 25, "precondition": 26}), verified against the observed cut chains and exception frames: status pass. Implications earn no kill and no gated credit.
+
+| Row | Complete-boundary status | Evidence |
+|---|---|---|
+| `O001` | entailed | by `O002`: writer_policy: O002 requires replay_policy == dedupe_by_idempotency_key on the same value immediately after O001; projector_replay_only fails it. O001 only gives the distinct code replay_only_not_appendable. |
+| `O006` | precondition | A missing SP-337 payload is subscripted by O007. |
+| `O014` | by-construction phase row | entailment attempts in `pm_dcw_c12_entailments.py` |
+| `O017` | entailed | by `O018`: Application scope requires a null envelope project_id while every DCW payload requires a string project_id, so O018 envelope/payload equality fails. |
+| `O025` | complete_boundary | witness re-classified over all lane witnesses |
+| `O028` | complete_boundary | witness re-classified over all lane witnesses |
+| `O029` | entailed | by `O043`: A non-receipted slot is publication prepared (source schema enum, else OE001), whose then-arm fixes first_append_receipt, commitment and segment ref to null; original_receipt needs custody_v2 (OE001), whose first_append_receipt is a required AppendReceipt object, so O043 slot/custody equality fails. |
+| `O030` | entailed | by `OE001`: Missing custody is validated against custody_v2, which refuses null (OE001). |
+| `O041` | by-construction phase row | entailment attempts in `pm_dcw_c12_entailments.py` |
+| `O042` | complete_boundary | witness re-classified over all lane witnesses |
+| `O044` | precondition | A missing durable group is subscripted by O045. |
+| `O051` | entailed | by `O058`, `O078`: The event must exactly equal one phase prepared_event (O078). O058 compares that phase's payload fields with the same source fields as O051, so the same pair fails there. |
+| `O057` | entailed | by `L016`, `L018`, `L019`, `L002`: A terminal whose predecessor is already settled needs, for L016 and L019, a started previous phase whose event_id equals an earlier start. Phase sequences increase by one (L018) and event ids are their identity hash (L002), so no such phase exists. |
+| `O058` | entailed | by `L020`, `O051`: An earlier phase disagreeing with the source on a field makes the next phase's equal-field check L020 fail; the last phase is the event itself, which O051 compares. |
+| `O062` | complete_boundary | witness re-classified over all lane witnesses |
+| `O075` | complete_boundary | witness re-classified over all lane witnesses |
+| `O077` | by-construction phase row | entailment attempts in `pm_dcw_c12_entailments.py` |
+| `O078` | precondition | O078 refuses only an empty match list, which slot = matching[0] cannot index. |
+| `O108` | by-construction phase row | entailment attempts in `pm_dcw_c12_entailments.py` |
+| `O109` | by-construction phase row | entailment attempts in `pm_dcw_c12_entailments.py` |
+| `O110` | by-construction phase row | entailment attempts in `pm_dcw_c12_entailments.py` |
+| `O111` | precondition | A missing opened original is subscripted by O112. |
+| `O112` | entailed | by `OE001`, `O013`: The predecessor is validated as wizard.opened: its payload schema fixes event_type 'wizard.opened' (OE001) and O013 requires the envelope type to equal the payload type. |
+| `O115` | entailed | by `O219`: O219 requires the current-state generations to be exactly [current_generation_id]; a current generation whose state is not current is missing from that list. |
+| `O117` | by-construction phase row | entailment attempts in `pm_dcw_c12_entailments.py` |
+| `O118` | entailed | by `O227`, `O119`, `O213`, `O208`: Rows must be exactly one per frame key (O227, unique event ids O208); index_row_count must equal the coverage count (O119), which must equal index_coverage(source) (O213), i.e. the frame count. So len(rows) != index_row_count fails one of them. |
+| `O119` | entailed | by `O213`, `O118`, `O227`: Coverage must equal index_coverage(source) (O213), whose retained count is the frame count; index_row_count must equal len(rows) (O118) and rows are one per frame (O227). |
+| `O122` | entailed | by `O123`: O123 requires the durable token to exactly equal the live token without redb_snapshot_id; a durable token that carries redb_snapshot_id has an extra key. |
+| `O124` | by-construction phase row | entailment attempts in `pm_dcw_c12_entailments.py` |
+| `O125` | by-construction phase row | entailment attempts in `pm_dcw_c12_entailments.py` |
+| `O128` | complete_boundary | witness re-classified over all lane witnesses |
+| `O133` | complete_boundary | witness re-classified over all lane witnesses |
+| `O144` | precondition | A missing source payload is subscripted by O145. |
+| `O157` | entailed | by `OE001`: A missing restore admission is validated against restore_admission, which refuses null (OE001). |
+| `O166` | precondition | A missing member custody is subscripted by O167. |
+| `O184` | precondition | A missing compatibility original is subscripted next. |
+| `O196` | precondition | by `O056`, `B021`, `OE001`: Non-JSON types cannot be encoded. A float is the only JSON-encodable value O196 refuses; it reaches canonical_json only through the caller source key, which O056/B021 compare exactly with string identities, or through schema-typed fields (OE001). |
+| `O197` | entailed | by `OE001`: A non-object opened source is validated against the inline source schema, which refuses it (OE001). |
+| `O202` | complete_boundary | witness re-classified over all lane witnesses |
+| `O211` | entailed | by `O213`, `OE001`, `O212`: Coverage gaps must equal the source gaps (O213) and the checkpoint schema enum for coverage sequence_gaps reason is exactly the set O211 allows (OE001); gap evidence must also equal the gap (O212). |
+| `O214` | entailed | by `O216`, `O215`: O216 loops over every (key, generation) including (current_generation_id, current generation) and requires key == generation_id, the same comparison as O214. |
+| `O215` | entailed | by `O217`: O217 loops over every generation, including the current one, with the same anchor-derived generation-id comparison as O215. |
+| `O216` | complete_boundary | witness re-classified over all lane witnesses |
+| `O220` | complete_boundary | witness re-classified over all lane witnesses |
+| `O226` | complete_boundary | witness re-classified over all lane witnesses |
+| `O232` | precondition | by `O208`: O208 makes frame event ids unique, so O232 refuses only an empty selection, which selected[0] cannot index. |
+| `B001` | by-construction phase row | entailment attempts in `pm_dcw_c12_entailments.py` |
+| `B004` | entailed | by `B005`: Application scope requires a null envelope project_id (EventRecord allOf/0) while the blockage payload project_id is a required string, so B005 envelope/payload equality fails. |
+| `B017` | precondition | A predecessor cycle re-enters historical_original for an id already in seen; without the row the recursion never terminates. |
+| `B018` | precondition | A missing original is subscripted by B019. |
+| `B019` | complete_boundary | witness re-classified over all lane witnesses |
+| `B020` | entailed | by `OE001`: A missing predecessor source reaches source_storage, whose source-schema check refuses a non-object (OE001). |
+| `B038` | precondition | A missing repair attempt is subscripted by B039. |
+| `B046` | precondition | A missing route is subscripted by B047. |
+| `B054` | by-construction phase row | entailment attempts in `pm_dcw_c12_entailments.py` |
+| `B058` | precondition | A missing clearing action is subscripted by B059. |
+| `B069` | entailed | by `OE001`, `B001`, `B071`: A non-blockage event type selects no blockage payload schema (OE001), fails the type join (B001) and is not an admitted blockage family (B071); with all three disabled the source profile lookup for a non-blockage family raises KeyError. |
+| `B085` | precondition | A missing compatibility original is subscripted next. |
+| `B089` | entailed | by `OE001`: A missing restore admission is validated against restore_admission, which refuses null (OE001). |
+| `B093` | complete_boundary | witness re-classified over all lane witnesses |
+| `B095` | entailed | by `B096`: With no custody, an admitted member either does not exist (B096) or its fields are joined to custody[k], which raises on a missing custody record. |
+| `L001` | by-construction phase row | entailment attempts in `pm_dcw_c12_entailments.py` |
+| `L015` | precondition | A missing predecessor phase is subscripted by L016. |
+| `L017` | complete_boundary | witness re-classified over all lane witnesses |
+| `R001` | precondition | A non-string pointer has no string operations. |
+| `R002` | entailed | by `RE001`, `RE005`, `R008`: A fragment that is neither '#' nor '#/...' either fails pointer resolution (RE001) or, used verbatim in the validation target URI document $id + fragment, names no resource (RE005). |
+| `R004` | precondition | An unregistered event type has no registry owner row. |
+| `R005` | precondition | No registry edition matches this scope and payload schema id. |
+| `OE001` | complete_boundary | witness re-classified over all lane witnesses |
+| `OE002` | complete_boundary | witness re-classified over all lane witnesses |
+| `OE003` | precondition | A value the SP-1100 physical codec refuses has no bytes to return. |
+| `OE004` | precondition | A value the CV-317 producer projection refuses has no digest to return. |
+| `OE005` | precondition | An undecodable payload_ref leaves no descriptor to validate. |
+| `OE006` | precondition | Undecodable payload hex leaves no bytes to size or hash. |
+| `OE007` | by-construction phase row | entailment attempts in `pm_dcw_c12_entailments.py` |
+| `RE001` | entailed | by `RE005`, `R008`: pointer() returns the last resolved node. A failed dict/str step leaves the parent, and the same fragment in the validation target is unresolvable (RE005); a leading-zero array index leaves a list, whose identity is not the expected schema id (R008). |
+| `RE002` | precondition | An unreadable schema path leaves no document to return. |
+| `LE001` | by-construction phase row | entailment attempts in `pm_dcw_c12_entailments.py` |
+| `N002` | complete_boundary | witness re-classified over all lane witnesses |
+| `H001` | complete_boundary | witness re-classified over all lane witnesses |
+| `N003` | entailed | by `O078`, `O114`, `B025`: A sequence_id outside the exact uint64 domain has no SP-1100 physical encoding: exact_equal returns False on any encoding refusal, so the source copy join (O078, O114, B025) fails; the sealed store cannot even issue such an original (physical_integer_range). |
+| `N004` | precondition | A value outside the binding profile has no encoded bytes to hash. |
+| `F006` | precondition | Invalid base64 leaves no decoded source bytes to return. |

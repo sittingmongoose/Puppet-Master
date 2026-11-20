@@ -1,0 +1,43 @@
+{
+  "schema_id": "pm.assurance.event_authority.post_august_admission_record.v1",
+  "event_type": "settings.layer.changed",
+  "family_id": "event-family-settings-layer-changed",
+  "implementation_receipt_sha256": "5fa9bc51f4bfa9dfcc19cb1cc2c51ea40cbbd7a94b2c9fa339268e7d2c87245e",
+  "decision_ref": "Plans/Decision_Log.md#DL-300",
+  "decision_section_sha256": "ad16a9a99cb26525cd6fe57868ec2615acb6c23de25e2ac6657c5d512a328e9a",
+  "registry_before": {
+    "revision": "2026-10-09.1",
+    "sha256": "4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe",
+    "family_count": 43
+  },
+  "registry_after": {
+    "revision": "2026-10-09.1",
+    "sha256": "65c9d2df4966d24ffb4baa700ac778a25ca6620a2866873c3359f66c0cd59a95",
+    "family_count": 46
+  },
+  "registry_step_event_types": [
+    "approval.chat_tool_requested",
+    "approval.chat_tool_resolved",
+    "settings.layer.changed"
+  ],
+  "registry_row_sha256": "05040513b1cc6abfa09a8374df186dbfee496c56b089fc381837f664420be4dd",
+  "depth_assessment": {
+    "path": "reports/event-authority-20261114/s2-depth-dl300.json",
+    "sha256": "4ced5463d3f9ae083c3a7dc0ca8c211203e0ce8f76811999c9c45562f3c3c5ac"
+  },
+  "admission_landing": {
+    "commit": "102a7e99e80aa159f98e685a6730b2245056a49b",
+    "relabel_commit": "5375bfd2a7",
+    "record": "Plans/Decision_Log.md#DL-300",
+    "note": "102a7e99e8 appended the three rows (43 -> 46, label 2026-10-09.1 on both sides); 5375bfd2a7, DL-300's landing, only relabeled the registry to 2026-11-04.1 and added no family."
+  },
+  "criteria_not_passing_at_recording": [],
+  "status_at_recording": "complete_depth",
+  "recorded_by": "claude-opus-5.5:ea-pnc-s2-20261114",
+  "recorded_at_utc": "2026-11-14T20:14:04Z",
+  "notes": [
+    "Written under DL-412 (step form) for the DL-300 registration step 102a7e99e8~1 -> 102a7e99e8. The same step also changed eleven existing Goal rows (their application scope editions); the seal check does not examine that, and this record makes no claim about them.",
+    "implementation_receipt_sha256 pins the DL-412 receipt bytes this record is written under. DL-412 re-pin rule: when the CA-SEAL landing fills lander_task (or any later receipt rewrite), run python3 scripts/pm-s2-dl300-step-records.py --repin and commit the three records together.",
+    "The depth assessment is the PNC-019 S2 lane grade (twelve PASS cells per family); the two fields ending in _at_recording are informational only."
+  ]
+}

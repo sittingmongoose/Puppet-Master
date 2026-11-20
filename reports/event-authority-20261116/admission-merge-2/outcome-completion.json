@@ -1,0 +1,121 @@
+{
+ "schema_id": "pm.ea.merge2.outcome_completion.v1",
+ "recount_members": 249,
+ "registered": 249,
+ "excluded_recount_members": 0,
+ "closed": true,
+ "names_sorted_and_unique": true,
+ "cpu_exclusions": [
+  {
+   "event_type": "browser.session.navigated",
+   "decision_ref": "Plans/Decision_Log.md#DL-405",
+   "changed_fields": [
+    "citations_checked",
+    "disposition",
+    "disposition_rationale",
+    "quality_notes"
+   ],
+   "before_sha256": "5c3ec49016fef4222234e3843b7a15f52329f42635580d26cb90d6de591366d5",
+   "after_sha256": "6baffd7219fe9413a7ee84787d47fce4a2597280acbf84dfe777a693b890198f"
+  },
+  {
+   "event_type": "browser.session.resized",
+   "decision_ref": "Plans/Decision_Log.md#DL-405",
+   "changed_fields": [
+    "citations_checked",
+    "disposition",
+    "disposition_rationale",
+    "quality_notes"
+   ],
+   "before_sha256": "313fd5112789683ec3056c8ae9cde2e6a7b94016ffc241fe9ff89282fb5b1341",
+   "after_sha256": "e241ec99568996126aaeeecfc13532f12f9b22ae3d6733807a31a38ce49d9118"
+  },
+  {
+   "event_type": "memory.gist.discarded",
+   "decision_ref": "Plans/Decision_Log.md#DL-407",
+   "changed_fields": [
+    "citations_checked",
+    "disposition",
+    "disposition_rationale",
+    "quality_notes"
+   ],
+   "before_sha256": "d6d54c2f53fb5d51a89fb3f1750439ee3f3993e385f569588284b9986562dd6f",
+   "after_sha256": "ce746811f89434b4d244394722c05ccc6f4f5ea4247b3637120bd5fd6c2f0a3d"
+  },
+  {
+   "event_type": "memory.gist.pinned",
+   "decision_ref": "Plans/Decision_Log.md#DL-407",
+   "changed_fields": [
+    "citations_checked",
+    "disposition",
+    "disposition_rationale",
+    "quality_notes"
+   ],
+   "before_sha256": "59581dc58b31b5dc5841a37c4b016e1afc949ba4fc8d5ef69b298a7e3b56c10e",
+   "after_sha256": "b927dc07d3a89cfde2dba872d8804d18f6b5e1a0ce4b2c7e848f4c5844ead0da"
+  },
+  {
+   "event_type": "memory.gist.unpinned",
+   "decision_ref": "Plans/Decision_Log.md#DL-407",
+   "changed_fields": [
+    "citations_checked",
+    "disposition",
+    "disposition_rationale",
+    "quality_notes"
+   ],
+   "before_sha256": "4abc0f1709ea1203f6b445b710702116f688c7ca9f5c99d571ebfd0228697dd3",
+   "after_sha256": "722e27c40c750a63e549cf30c47bf4201c351ce0ed3e6245cf9c1a3aabffee2c"
+  },
+  {
+   "event_type": "memory.gist.updated",
+   "decision_ref": "Plans/Decision_Log.md#DL-407",
+   "changed_fields": [
+    "citations_checked",
+    "disposition",
+    "disposition_rationale",
+    "quality_notes"
+   ],
+   "before_sha256": "1a43e42b9a03ad35b566bcd57a1f39234554b3f419c1ff4e44f0294172228f07",
+   "after_sha256": "1c1e35cace0d2bb928ba69b01b7cae216ae22a94866d098e8878d76615c97366"
+  },
+  {
+   "event_type": "memory.gist.verification_failed",
+   "decision_ref": "Plans/Decision_Log.md#DL-407",
+   "changed_fields": [
+    "citations_checked",
+    "disposition",
+    "disposition_rationale",
+    "quality_notes"
+   ],
+   "before_sha256": "0420ed95fe5e63f509d281b5efc921089457efbd8b074d4b8c528a8781f55af7",
+   "after_sha256": "63dbeb5f935f0cbbe48721efbd73bc57db77727b99ca1928813be9515486391f"
+  },
+  {
+   "event_type": "memory.gist.verification_requested",
+   "decision_ref": "Plans/Decision_Log.md#DL-407",
+   "changed_fields": [
+    "citations_checked",
+    "disposition",
+    "disposition_rationale",
+    "quality_notes"
+   ],
+   "before_sha256": "ac84819fd3abbbb76cfe8fce6e797c1dc5a0bc274e6ae8b4407f2e2e1b1f3d8a",
+   "after_sha256": "4fb558c79dc33dc66f0f860ade7b4f372e8627687520ee4a18f9864adf85afed"
+  },
+  {
+   "event_type": "memory.gist.verified",
+   "decision_ref": "Plans/Decision_Log.md#DL-407",
+   "changed_fields": [
+    "citations_checked",
+    "disposition",
+    "disposition_rationale",
+    "quality_notes"
+   ],
+   "before_sha256": "c39046fd4b50900361a2740618b21c4fcac87870f290b525c975c22f040e0d4d",
+   "after_sha256": "61253680eadba6d2f6468d48e53401a47ca8faac06bb4cce6da9a5e7e41bcf76"
+  }
+ ],
+ "source": "Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PNC019-s4x/LEDGER.jsonl",
+ "source_sha256": "13c3671e550f860c4c16ae1fe64620fef103f5be0e370e9bf2903bd8446a6c40",
+ "note": "The nine s4x CPU names are outside the pinned recount set; they remain CPU exclusions and are not added as extra recount members."
+}

@@ -1,0 +1,4337 @@
+{
+  "base": "3c33510c576d87a9ad512c4519d417e4fd4441df",
+  "readiness_sha256": "58566991d8f8a012b87e49afb36f0578576ed24f73122362d84ff365901507be",
+  "counts": {
+    "BOUND": 150,
+    "CLOSED_NOT_APPLICABLE": 2
+  },
+  "cells": [
+    {
+      "event_type": "config.validation.failed",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-680",
+      "history_policy_ref": "RP-RUNTIME-365D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-086"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 32457
+    },
+    {
+      "event_type": "crew.board_message_posted",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-681",
+      "history_policy_ref": "RP-COORDINATION-180D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-085"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 32530
+    },
+    {
+      "event_type": "crew.board_message_read",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-682",
+      "history_policy_ref": "RP-COORDINATION-180D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-085"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 32609
+    },
+    {
+      "event_type": "crew.board_messages_archived",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-683",
+      "history_policy_ref": "RP-COORDINATION-180D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-085"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 32686
+    },
+    {
+      "event_type": "parser.error",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-684",
+      "history_policy_ref": "RP-RUNTIME-365D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-086"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 32763
+    },
+    {
+      "event_type": "phase.force_completed",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-685",
+      "history_policy_ref": "RP-RUNTIME-365D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-086"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 32838
+    },
+    {
+      "event_type": "subagent.budget_warning",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-686",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 32911
+    },
+    {
+      "event_type": "subagent.cancelled",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-687",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 32989
+    },
+    {
+      "event_type": "subagent.completed",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-688",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 33067
+    },
+    {
+      "event_type": "subagent.context_warning",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-689",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 33145
+    },
+    {
+      "event_type": "subagent.escalated",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-690",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 33223
+    },
+    {
+      "event_type": "subagent.failed",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-691",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 33301
+    },
+    {
+      "event_type": "subagent.message_received",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-692",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 33379
+    },
+    {
+      "event_type": "subagent.message_sent",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-693",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 33457
+    },
+    {
+      "event_type": "subagent.model_switched",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-694",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 33535
+    },
+    {
+      "event_type": "subagent.output_truncated",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-695",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 33613
+    },
+    {
+      "event_type": "subagent.paused",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-696",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 33691
+    },
+    {
+      "event_type": "subagent.progress",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-697",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 33769
+    },
+    {
+      "event_type": "subagent.resumed",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-698",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 33847
+    },
+    {
+      "event_type": "subagent.retried",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-699",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 33925
+    },
+    {
+      "event_type": "subagent.spawned",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-700",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 34003
+    },
+    {
+      "event_type": "subagent.started",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-701",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 34081
+    },
+    {
+      "event_type": "subagent.timeout",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-702",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 34159
+    },
+    {
+      "event_type": "subagent.tool_called",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-703",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 34237
+    },
+    {
+      "event_type": "subagent.tool_completed",
+      "lane": "DO",
+      "owner": "Plans/orchestrator-subagent-integration.md#OSI-704",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-084"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.",
+      "grade_source": "reports/event-authority-20261104/DO.self-grade.json",
+      "owner_line": 34315
+    },
+    {
+      "event_type": "auth.github.authenticated",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-670",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-502"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "auth_github_authenticated_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_device_code_issued_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_disconnected_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_failed_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_token_polling_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31272
+    },
+    {
+      "event_type": "auth.github.device_code.issued",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-670",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-502"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "auth_github_authenticated_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_device_code_issued_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_disconnected_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_failed_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_token_polling_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31272
+    },
+    {
+      "event_type": "auth.github.disconnected",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-670",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-502"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "auth_github_authenticated_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_device_code_issued_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_disconnected_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_failed_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_token_polling_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31272
+    },
+    {
+      "event_type": "auth.github.failed",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-670",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-502"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "auth_github_authenticated_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_device_code_issued_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_disconnected_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_failed_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_token_polling_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31272
+    },
+    {
+      "event_type": "auth.github.token.polling",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-670",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-502"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "auth_github_authenticated_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_device_code_issued_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_disconnected_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_failed_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        },
+        {
+          "family_id": "auth_github_token_polling_operation",
+          "policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+          "decision": "DL-502"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31272
+    },
+    {
+      "event_type": "plugin.hook.blocked",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-671",
+      "history_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "application_policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-419",
+        "DL-415",
+        "DL-503"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "plugin_hook_blocked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_error_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_invoked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_load_failed_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_loaded_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_permission_override_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_collision_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_registered_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31510
+    },
+    {
+      "event_type": "plugin.hook.error",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-671",
+      "history_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "application_policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-419",
+        "DL-415",
+        "DL-503"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "plugin_hook_blocked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_error_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_invoked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_load_failed_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_loaded_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_permission_override_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_collision_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_registered_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31510
+    },
+    {
+      "event_type": "plugin.hook.invoked",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-671",
+      "history_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "application_policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-419",
+        "DL-415",
+        "DL-503"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "plugin_hook_blocked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_error_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_invoked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_load_failed_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_loaded_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_permission_override_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_collision_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_registered_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31510
+    },
+    {
+      "event_type": "plugin.load_failed",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-671",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-418",
+        "DL-503"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "plugin_hook_blocked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_error_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_invoked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_load_failed_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_loaded_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_permission_override_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_collision_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_registered_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31510
+    },
+    {
+      "event_type": "plugin.loaded",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-671",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-418",
+        "DL-503"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "plugin_hook_blocked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_error_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_invoked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_load_failed_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_loaded_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_permission_override_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_collision_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_registered_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31510
+    },
+    {
+      "event_type": "plugin.permission.override",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-671",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-418",
+        "DL-503"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "plugin_hook_blocked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_error_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_invoked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_load_failed_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_loaded_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_permission_override_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_collision_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_registered_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31510
+    },
+    {
+      "event_type": "plugin.tool.collision",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-671",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-418",
+        "DL-503"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "plugin_hook_blocked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_error_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_invoked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_load_failed_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_loaded_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_permission_override_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_collision_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_registered_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31510
+    },
+    {
+      "event_type": "plugin.tool.registered",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-671",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-418",
+        "DL-503"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "plugin_hook_blocked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_error_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_hook_invoked_operation",
+          "policy_ref": "RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_load_failed_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_loaded_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_permission_override_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_collision_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        },
+        {
+          "family_id": "plugin_tool_registered_operation",
+          "policy_ref": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0",
+          "decision": "DL-503"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31510
+    },
+    {
+      "event_type": "persona.created",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-672",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-504"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "persona_created_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_deleted_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_exported_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_imported_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_selected_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_updated_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION for history and operation; RT must assign exact class and scope/cardinality. No admission or body-lifetime decision.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31910
+    },
+    {
+      "event_type": "persona.deleted",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-672",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-504"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "persona_created_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_deleted_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_exported_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_imported_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_selected_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_updated_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION for history and operation; RT must assign exact class and scope/cardinality. No admission or body-lifetime decision.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31910
+    },
+    {
+      "event_type": "persona.exported",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-672",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-504"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "persona_created_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_deleted_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_exported_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_imported_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_selected_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_updated_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION for history and operation; RT must assign exact class and scope/cardinality. No admission or body-lifetime decision.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31910
+    },
+    {
+      "event_type": "persona.imported",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-672",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-504"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "persona_created_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_deleted_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_exported_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_imported_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_selected_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_updated_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION for history and operation; RT must assign exact class and scope/cardinality. No admission or body-lifetime decision.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31910
+    },
+    {
+      "event_type": "persona.selected",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-672",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-504"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "persona_created_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_deleted_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_exported_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_imported_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_selected_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_updated_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION for history and operation; RT must assign exact class and scope/cardinality. No admission or body-lifetime decision.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31910
+    },
+    {
+      "event_type": "persona.updated",
+      "lane": "DG6B",
+      "owner": "Plans/storage-plan.md#SP-672",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-504"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "persona_created_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_deleted_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_exported_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_imported_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_selected_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        },
+        {
+          "family_id": "persona_updated_operation",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-504"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION for history and operation; RT must assign exact class and scope/cardinality. No admission or body-lifetime decision.",
+      "grade_source": "reports/event-authority-20261104/DG6B.self-grade.json",
+      "owner_line": 31910
+    },
+    {
+      "event_type": "debug.investigation.context_item_added",
+      "lane": "DDBG",
+      "owner": "Plans/storage-plan.md#SP-570",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-DEBUG-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-416",
+        "DL-506",
+        "DL-508"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "dev_session_record",
+          "policy_ref": "RP-DEBUG-30D@1.0.0",
+          "decision": "DL-506"
+        },
+        {
+          "family_id": "revision_run",
+          "policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+          "decision": "DL-508"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.",
+      "grade_source": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "owner_line": 1057
+    },
+    {
+      "event_type": "debug.investigation.context_item_state_changed",
+      "lane": "DDBG",
+      "owner": "Plans/storage-plan.md#SP-570",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-DEBUG-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-416",
+        "DL-506",
+        "DL-508"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "dev_session_record",
+          "policy_ref": "RP-DEBUG-30D@1.0.0",
+          "decision": "DL-506"
+        },
+        {
+          "family_id": "revision_run",
+          "policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+          "decision": "DL-508"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.",
+      "grade_source": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "owner_line": 1057
+    },
+    {
+      "event_type": "debug.investigation.exported",
+      "lane": "DDBG",
+      "owner": "Plans/storage-plan.md#SP-570",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-DEBUG-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-416",
+        "DL-506",
+        "DL-508"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "dev_session_record",
+          "policy_ref": "RP-DEBUG-30D@1.0.0",
+          "decision": "DL-506"
+        },
+        {
+          "family_id": "revision_run",
+          "policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+          "decision": "DL-508"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.",
+      "grade_source": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "owner_line": 1057
+    },
+    {
+      "event_type": "debug.investigation.imported",
+      "lane": "DDBG",
+      "owner": "Plans/storage-plan.md#SP-570",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-DEBUG-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-416",
+        "DL-506",
+        "DL-508"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "dev_session_record",
+          "policy_ref": "RP-DEBUG-30D@1.0.0",
+          "decision": "DL-506"
+        },
+        {
+          "family_id": "revision_run",
+          "policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+          "decision": "DL-508"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.",
+      "grade_source": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "owner_line": 1057
+    },
+    {
+      "event_type": "debug.investigation.started",
+      "lane": "DDBG",
+      "owner": "Plans/storage-plan.md#SP-570",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-DEBUG-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-416",
+        "DL-506",
+        "DL-508"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "dev_session_record",
+          "policy_ref": "RP-DEBUG-30D@1.0.0",
+          "decision": "DL-506"
+        },
+        {
+          "family_id": "revision_run",
+          "policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+          "decision": "DL-508"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.",
+      "grade_source": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "owner_line": 1057
+    },
+    {
+      "event_type": "debug.investigation.target_bound",
+      "lane": "DDBG",
+      "owner": "Plans/storage-plan.md#SP-570",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-DEBUG-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-416",
+        "DL-506",
+        "DL-508"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "dev_session_record",
+          "policy_ref": "RP-DEBUG-30D@1.0.0",
+          "decision": "DL-506"
+        },
+        {
+          "family_id": "revision_run",
+          "policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+          "decision": "DL-508"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.",
+      "grade_source": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "owner_line": 1057
+    },
+    {
+      "event_type": "debug.investigation.verification_recorded",
+      "lane": "DDBG",
+      "owner": "Plans/storage-plan.md#SP-570",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-DEBUG-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-416",
+        "DL-506",
+        "DL-508"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "dev_session_record",
+          "policy_ref": "RP-DEBUG-30D@1.0.0",
+          "decision": "DL-506"
+        },
+        {
+          "family_id": "revision_run",
+          "policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+          "decision": "DL-508"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.",
+      "grade_source": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "owner_line": 1057
+    },
+    {
+      "event_type": "requirements.clarification_requested",
+      "lane": "DT",
+      "owner": "Plans/storage-plan.md#SP-588",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-507"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "dt_requirements_clarification_requested_source",
+          "policy_ref": "RP-QUESTION-BUDGET-APPLICATION-2555D@1.0.0",
+          "decision": "DL-507"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "dt_requirements_clarification_requested_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Which class and expiry anchor govern this report request where a run-completion anchor is inapplicable? Do not assume that a ref-only report request is chat content. Runtime-linked cases should reuse existing runtime minima. Runtime-linked minima are retained; runless event deletion/admission remain fenced. Sweep part 2B (CV-1101): the retention age compares exact instants after the shared predicate (offsets, complete fractions; RT05/RT06 refuse a malformed time) instead of host datetime arithmetic.",
+      "grade_source": "reports/event-authority-20261104/DT-self-grade.json",
+      "owner_line": 34346
+    },
+    {
+      "event_type": "usage.event",
+      "lane": "DT",
+      "owner": "Plans/storage-plan.md#SP-594",
+      "history_policy_ref": null,
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-270",
+        "DL-507"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "dt_usage_event_source",
+          "policy_ref": "RP-TELEMETRY-90D@1.0.0",
+          "decision": "DL-507"
+        },
+        {
+          "family_id": "dt_usage_event_application_source",
+          "policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+          "decision": "DL-507"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "dt_usage_event_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "F6 duration is decided by SP-341/UF-108; PENDING_RETENTION_BINDING records the remaining RT structured setting/expiry-anchor adapter. No duration choice, deletion or admission is authorized. Sweep part 2B (CV-1101): the retention age compares exact instants after the shared predicate (offsets, complete fractions; RT05/RT06 refuse a malformed time) instead of host datetime arithmetic.",
+      "grade_source": "reports/event-authority-20261104/DT-self-grade.json",
+      "owner_line": 34746,
+      "signed_answer": {
+        "card_id": "E8-1",
+        "send": "f66b1af9-f851-493f-a2ee-6b666b477920",
+        "answer_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md",
+        "answer_sha256": "509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b",
+        "signed_at_utc": "2026-11-14T20:25:00Z"
+      },
+      "resolved_question": "How is ai.usage.usage-retention bound to the structured EventRecord policy and preserved expiry anchor (SP-341/UF-108)? DL-507 assigns the original source rows only; it does not supply the event adapter.",
+      "closure_reason": "Signed E8-1 option A resolves the `usage.event` history binding: select the existing `ai.usage.usage-retention` setting under SP-341/UF-108, not a fixed ordinary-telemetry policy. The setting remains 90 days by default with its existing allowed choices. For each Project or application entry, `retention_binding.setting_key = ai.usage.usage-retention`, `retention_binding.anchor = first_durable_save`: the first successful save of that exact entry that survives a restart supplies the immutable anchor. Retry, replay, reprocessing, compaction, backup restore and later settlement/correction of the entry never reset that anchor; a genuinely separate entry has its own first-save anchor. Read the configured window and apply it from that preserved anchor in both seglog and Parquet; unlimited means no age expiry. If the original anchor or setting cannot be authenticated, refuse expiry rather than substitute occurrence, observation, source-result, run-finish or recovery time. There is no count eviction. Daily account/provider/model totals remain canonical, backed up and permanent; commit their accounting before detail cleanup and never rebuild them from expired detail. Holds, required references, recovery, rollback and protected backups still block deletion. This is the existing setting-driven policy selector, not a newly minted policy ID. The separate original source rows keep their exact DL-507 assignments; no source-row lifetime is transferred from this event answer. `PENDING_RETENTION_BINDING` is resolved for this event; separate admission, storage implementation and native proof remain required.",
+      "history_policy_setting_ref": "ai.usage.usage-retention",
+      "history_anchor": "first_durable_save"
+    },
+    {
+      "event_type": "worktree.created",
+      "lane": "DT",
+      "owner": "Plans/storage-plan.md#SP-595",
+      "history_policy_ref": "RP-WORKTREE-TOMBSTONE-365D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-507"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "dt_worktree_created_source",
+          "policy_ref": "RP-RUNTIME-365D@1.0.0",
+          "decision": "DL-507"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "dt_worktree_created_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Resolve the runless event's class/anchor and required lineage dependencies; the projection policy does not automatically register this event's retention. Runtime-linked minima are retained; runless event deletion/admission remain fenced. Sweep part 2B (CV-1101): the retention age compares exact instants after the shared predicate (offsets, complete fractions; RT05/RT06 refuse a malformed time) instead of host datetime arithmetic.",
+      "grade_source": "reports/event-authority-20261104/DT-self-grade.json",
+      "owner_line": 34986
+    },
+    {
+      "event_type": "worktree.deleted",
+      "lane": "DT",
+      "owner": "Plans/storage-plan.md#SP-596",
+      "history_policy_ref": "RP-WORKTREE-TOMBSTONE-365D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-507"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "dt_worktree_deleted_source",
+          "policy_ref": "RP-WORKTREE-TOMBSTONE-365D@1.0.0",
+          "decision": "DL-507"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "dt_worktree_deleted_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Is this exact event deletion-tombstone authority, or runless lifecycle history, and what is its applicable anchor? Separate runtime history and the distinct worktree_lane_thread_families projection; its RP-WORKTREE-TOMBSTONE-365D policy does not automatically register this event. Runtime-linked minima are retained; runless event deletion/admission remain fenced. Sweep part 2B (CV-1101): the retention age compares exact instants after the shared predicate (offsets, complete fractions; RT05/RT06 refuse a malformed time) instead of host datetime arithmetic.",
+      "grade_source": "reports/event-authority-20261104/DT-self-grade.json",
+      "owner_line": 35179
+    },
+    {
+      "event_type": "bundle.selection_forward_blocked",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-610",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_bundle_selection_forward_blocked_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-610 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 35374
+    },
+    {
+      "event_type": "bundle.selection_sent_to_chat",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-611",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_bundle_selection_sent_to_chat_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-611 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 35674
+    },
+    {
+      "event_type": "chat.message",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-612",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "PD-L005-02",
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_chat_message_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-612 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 35975
+    },
+    {
+      "event_type": "chat.thread_archived",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-613",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_chat_thread_archived_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-613 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 40265
+    },
+    {
+      "event_type": "chat.thread_created",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-614",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_chat_thread_created_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-614 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 36286
+    },
+    {
+      "event_type": "chat.thread_deleted",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-615",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "PD-L015-04",
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_chat_thread_deleted_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-615 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 36591
+    },
+    {
+      "event_type": "chat.thread_worktree_bound",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-616",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_chat_thread_worktree_bound_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-616 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 36893
+    },
+    {
+      "event_type": "chat.thread_worktree_create_failed",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-617",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_chat_thread_worktree_create_failed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-617 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 37199
+    },
+    {
+      "event_type": "chat.thread_worktree_merge_failed",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-618",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_chat_thread_worktree_merge_failed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-618 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 37504
+    },
+    {
+      "event_type": "chat.thread_worktree_merged",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-619",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_chat_thread_worktree_merged_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-619 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 37810
+    },
+    {
+      "event_type": "chat.thread_worktree_pr_created",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-620",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_chat_thread_worktree_pr_created_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-620 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 38115
+    },
+    {
+      "event_type": "chat.thread_worktree_pr_failed",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-621",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_chat_thread_worktree_pr_failed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-621 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 38420
+    },
+    {
+      "event_type": "chat.thread_worktree_pre_merge_test_failed",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-622",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_chat_thread_worktree_pre_merge_test_failed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-622 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 38725
+    },
+    {
+      "event_type": "chat.thread_worktree_pre_merge_test_passed",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-623",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_chat_thread_worktree_pre_merge_test_passed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-623 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 39031
+    },
+    {
+      "event_type": "chat.thread_worktree_pre_merge_test_started",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-624",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_chat_thread_worktree_pre_merge_test_started_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-624 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 39337
+    },
+    {
+      "event_type": "chat.thread_worktree_renamed",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-625",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_chat_thread_worktree_renamed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-625 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 39654
+    },
+    {
+      "event_type": "chat.thread_worktree_unbound",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-626",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [
+        {
+          "family_id": "dch_chat_thread_worktree_unbound_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-626 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 39959
+    },
+    {
+      "event_type": "chat.response_stop_requested",
+      "lane": "DCH",
+      "owner": "Plans/storage-plan.md#SP-627",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "assistant_turn_stop_outcome",
+          "schema_ref": "Plans/dch_stop_outcome.schema.json",
+          "policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+          "decision": "E8-2",
+          "send": "f66b1af9-f851-493f-a2ee-6b666b477920"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "DL-401 G15 binds the request to RP-CHAT-THREAD-LIFETIME@1.0.0 and the generic checkpoint retains RP-PROJECTION-3GEN. The new saved record is not assigned by a group: its exact question and PENDING_RETENTION_DECISION fence remain.",
+      "grade_source": "reports/event-authority-20261104/DCH-self-grade.json",
+      "owner_line": 40572,
+      "signed_answer": {
+        "card_id": "E8-2",
+        "send": "f66b1af9-f851-493f-a2ee-6b666b477920",
+        "answer_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md",
+        "answer_sha256": "509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b",
+        "signed_at_utc": "2026-11-14T20:25:00Z"
+      },
+      "resolved_question": "Which policy governs the separately saved Stop outcome record (dch_stop_outcome)? DL-401 G15 assigns request history; DL-427 permits outcome drafting but does not assign its lifetime.",
+      "closure_reason": "Signed E8-2 option A assigns the saved `dch_stop_outcome` (the existing canonical `assistant_turn_stop_outcome` family specified in SP-627) exactly the Stop request history's `RP-CHAT-THREAD-LIFETIME@1.0.0` policy under DL-401 G15. The governing chat is the one in the original authenticated Stop request, joined through `stop_request_event_id`, actual Storage instance, scope and thread; it cannot be replaced by the current caller's chat. Keep and delete the result with that same chat in Project and application scope. Apply the same shared 250,000-entry thread count and linked-successor rule without early eviction, the immediate deletion-hide rule, unheld active-copy purge within 24 hours and backup-byte purge within 30 days. Holds delay physical purge without restoring visibility. Independent first receipts, work records and referenced bodies keep their own policies. This resolves the saved outcome's pending retention question and adds no second history event, new record family, count allowance, hold exception or writer admission. Exact-key custody, full storage materialization and original request/result barriers remain required before actual writes."
+    },
+    {
+      "event_type": "memory.dedup_sweep.completed",
+      "lane": "DMEM",
+      "owner": "Plans/storage-plan.md#SP-630",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-417",
+        "DL-509"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "memory_dedup_sweep_operation",
+          "policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+          "decision": "DL-509"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
+      "grade_source": "reports/event-authority-20261104/DMEM-self-grade.json",
+      "owner_line": 41758
+    },
+    {
+      "event_type": "memory.dedup_sweep.started",
+      "lane": "DMEM",
+      "owner": "Plans/storage-plan.md#SP-631",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-417",
+        "DL-509"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "memory_dedup_sweep_operation",
+          "policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+          "decision": "DL-509"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
+      "grade_source": "reports/event-authority-20261104/DMEM-self-grade.json",
+      "owner_line": 42011
+    },
+    {
+      "event_type": "memory.index.lexical.rebuild.completed",
+      "lane": "DMEM",
+      "owner": "Plans/storage-plan.md#SP-632",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-417",
+        "DL-500",
+        "DL-509"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "memory_index_lexical_selector",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "memory_index_lexical_rebuild_operation",
+          "policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+          "decision": "DL-509"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "memory_index_lexical_selector",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
+      "grade_source": "reports/event-authority-20261104/DMEM-self-grade.json",
+      "owner_line": 42267
+    },
+    {
+      "event_type": "memory.index.lexical.rebuild.started",
+      "lane": "DMEM",
+      "owner": "Plans/storage-plan.md#SP-633",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-417",
+        "DL-500",
+        "DL-509"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "memory_index_lexical_selector",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "memory_index_lexical_rebuild_operation",
+          "policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+          "decision": "DL-509"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
+      "grade_source": "reports/event-authority-20261104/DMEM-self-grade.json",
+      "owner_line": 42548
+    },
+    {
+      "event_type": "memory.index.semantic.rebuild.completed",
+      "lane": "DMEM",
+      "owner": "Plans/storage-plan.md#SP-634",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-417",
+        "DL-500",
+        "DL-509"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "memory_index_semantic_selector",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "memory_index_semantic_rebuild_operation",
+          "policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+          "decision": "DL-509"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "memory_index_semantic_selector",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
+      "grade_source": "reports/event-authority-20261104/DMEM-self-grade.json",
+      "owner_line": 42832
+    },
+    {
+      "event_type": "memory.index.semantic.rebuild.started",
+      "lane": "DMEM",
+      "owner": "Plans/storage-plan.md#SP-635",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-417",
+        "DL-500",
+        "DL-509"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "memory_index_semantic_selector",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "memory_index_semantic_rebuild_operation",
+          "policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+          "decision": "DL-509"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
+      "grade_source": "reports/event-authority-20261104/DMEM-self-grade.json",
+      "owner_line": 43113
+    },
+    {
+      "event_type": "memory.verification_sweep.completed",
+      "lane": "DMEM",
+      "owner": "Plans/storage-plan.md#SP-636",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-417",
+        "DL-509"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "memory_verification_sweep_operation",
+          "policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+          "decision": "DL-509"
+        },
+        {
+          "family_id": "memory_prune_archive_operation",
+          "policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+          "decision": "DL-509"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
+      "grade_source": "reports/event-authority-20261104/DMEM-self-grade.json",
+      "owner_line": 43397
+    },
+    {
+      "event_type": "memory.verification_sweep.started",
+      "lane": "DMEM",
+      "owner": "Plans/storage-plan.md#SP-637",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-417",
+        "DL-509"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "memory_verification_sweep_operation",
+          "policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+          "decision": "DL-509"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
+      "grade_source": "reports/event-authority-20261104/DMEM-self-grade.json",
+      "owner_line": 43656
+    },
+    {
+      "event_type": "memory.monthly_summary.completed",
+      "lane": "DMEM",
+      "owner": "Plans/storage-plan.md#SP-638",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-417",
+        "DL-509"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "memory_monthly_summary_operation",
+          "policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+          "decision": "DL-509"
+        },
+        {
+          "family_id": "memory_verification_sweep_operation",
+          "policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+          "decision": "DL-509"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "DL-401/G04 gives this Project event seven years on the cited unlanded retention branch. Canonical operation/result custody retention remains pending; no application count bucket is invented.",
+      "grade_source": "reports/event-authority-20261104/DMEM-self-grade.json",
+      "owner_line": 43914
+    },
+    {
+      "event_type": "memory.monthly_summary.started",
+      "lane": "DMEM",
+      "owner": "Plans/storage-plan.md#SP-639",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-417",
+        "DL-509"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "memory_monthly_summary_operation",
+          "policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+          "decision": "DL-509"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "DL-401/G04 gives this Project event seven years on the cited unlanded retention branch. Canonical operation/result custody retention remains pending; no application count bucket is invented.",
+      "grade_source": "reports/event-authority-20261104/DMEM-self-grade.json",
+      "owner_line": 44145
+    },
+    {
+      "event_type": "memory.prune_archive.completed",
+      "lane": "DMEM",
+      "owner": "Plans/storage-plan.md#SP-636",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-417",
+        "DL-509"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "memory_prune_archive_operation",
+          "policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+          "decision": "DL-509"
+        },
+        {
+          "family_id": "memory_verification_sweep_operation",
+          "policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+          "decision": "DL-509"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "DL-401/G04 gives this Project event seven years on the cited unlanded retention branch. Canonical operation/result custody retention remains pending; no application count bucket is invented.",
+      "grade_source": "reports/event-authority-20261104/DMEM-self-grade.json",
+      "owner_line": 43397
+    },
+    {
+      "event_type": "memory.prune_archive.started",
+      "lane": "DMEM",
+      "owner": "Plans/storage-plan.md#SP-637",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-417",
+        "DL-509"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "memory_verification_sweep_operation",
+          "policy_ref": "RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0",
+          "decision": "DL-509"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "DL-401/G04 gives this Project event seven years on the cited unlanded retention branch. Canonical operation/result custody retention remains pending; no application count bucket is invented.",
+      "grade_source": "reports/event-authority-20261104/DMEM-self-grade.json",
+      "owner_line": 43656
+    },
+    {
+      "event_type": "browser.context_captured",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-647",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_browser_context_captured_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_browser_context_captured_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 44795
+    },
+    {
+      "event_type": "browser.context_share_revoked",
+      "lane": "DS15",
+      "owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-458",
+        "DL-459"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "projector.checkpoint.ds15.browser_context_share_revoked:{scope_key}",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-459"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "DL-401 G10 names Chat, but the governing chat(s) for an all-grants revoke and the scope-wide checkpoint lifetime are pending.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 15894
+    },
+    {
+      "event_type": "browser.context_shared",
+      "lane": "DS15",
+      "owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-320",
+      "history_policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-459"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "projector.checkpoint.ds15.browser_context_shared:{scope_key}",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-459"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "DL-401 G10 binds shared event history to its named recipient chat, but the scope-wide checkpoint lifetime is pending.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 15736
+    },
+    {
+      "event_type": "catalog.install.completed",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-658",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_catalog_install_completed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_catalog_install_completed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 45470
+    },
+    {
+      "event_type": "catalog.install.started",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-657",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_catalog_install_started_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_catalog_install_started_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 45408
+    },
+    {
+      "event_type": "dev.session.restarting",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-651",
+      "history_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-415",
+        "DL-500",
+        "DL-506"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_dev_session_restarting_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "dev_session_record",
+          "policy_ref": "RP-DEBUG-30D@1.0.0",
+          "decision": "DL-506"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_dev_session_restarting_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 45065
+    },
+    {
+      "event_type": "dev.session.started",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-648",
+      "history_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-415",
+        "DL-500",
+        "DL-506"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_dev_session_started_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "dev_session_record",
+          "policy_ref": "RP-DEBUG-30D@1.0.0",
+          "decision": "DL-506"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_dev_session_started_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 44870
+    },
+    {
+      "event_type": "dev.session.stopped",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-650",
+      "history_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-415",
+        "DL-500",
+        "DL-506"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_dev_session_stopped_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "dev_session_record",
+          "policy_ref": "RP-DEBUG-30D@1.0.0",
+          "decision": "DL-506"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_dev_session_stopped_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 45000
+    },
+    {
+      "event_type": "dev.session.stopping",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-649",
+      "history_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-415",
+        "DL-500",
+        "DL-506"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_dev_session_stopping_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "dev_session_record",
+          "policy_ref": "RP-DEBUG-30D@1.0.0",
+          "decision": "DL-506"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_dev_session_stopping_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 44935
+    },
+    {
+      "event_type": "doctor.custom_headless.checked",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-640",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_doctor_custom_headless_checked_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_doctor_custom_headless_checked_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 44375
+    },
+    {
+      "event_type": "live.artifact.created",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-644",
+      "history_policy_ref": "RP-RUNTIME-365D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_live_artifact_created_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_live_artifact_created_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 44609
+    },
+    {
+      "event_type": "live.session.completed",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-645",
+      "history_policy_ref": "RP-RUNTIME-365D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_live_session_completed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_live_session_completed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 44671
+    },
+    {
+      "event_type": "live.session.degraded",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-646",
+      "history_policy_ref": "RP-RUNTIME-365D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_live_session_degraded_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_live_session_degraded_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 44733
+    },
+    {
+      "event_type": "live.session.started",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-642",
+      "history_policy_ref": "RP-RUNTIME-365D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_live_session_started_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_live_session_started_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 44486
+    },
+    {
+      "event_type": "live.step.updated",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-643",
+      "history_policy_ref": "RP-RUNTIME-365D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_live_step_updated_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_live_step_updated_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 44548
+    },
+    {
+      "event_type": "preview.session.refreshed",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-653",
+      "history_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-415",
+        "DL-421",
+        "DL-500"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_preview_session_refreshed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_preview_session_refreshed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 45196
+    },
+    {
+      "event_type": "preview.session.started",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-652",
+      "history_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-415",
+        "DL-421",
+        "DL-500"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_preview_session_started_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_preview_session_started_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 45130
+    },
+    {
+      "event_type": "preview.session.stopped",
+      "lane": "DS15",
+      "owner": "Plans/storage-plan.md#SP-654",
+      "history_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-415",
+        "DL-421",
+        "DL-500"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "ds15_preview_session_stopped_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "ds15_preview_session_stopped_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.",
+      "grade_source": "reports/event-authority-20261104/DS15-self-grade.json",
+      "owner_line": 45262
+    },
+    {
+      "event_type": "alert.acknowledged",
+      "lane": "DG6A",
+      "owner": "Plans/storage-plan.md#SP-660",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500",
+        "DL-501",
+        "DL-505"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "alert_acknowledged_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "alert_acknowledged_operation",
+          "policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+          "decision": "DL-501"
+        },
+        {
+          "family_id": "shared_alert_state",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-505"
+        },
+        {
+          "family_id": "shared_alert_rule_state",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-505"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "alert_acknowledged_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 45531
+    },
+    {
+      "event_type": "alert.dismissed",
+      "lane": "DG6A",
+      "owner": "Plans/storage-plan.md#SP-661",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500",
+        "DL-501",
+        "DL-505"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "alert_dismissed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "alert_dismissed_operation",
+          "policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+          "decision": "DL-501"
+        },
+        {
+          "family_id": "shared_alert_state",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-505"
+        },
+        {
+          "family_id": "shared_alert_rule_state",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-505"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "alert_dismissed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 45736
+    },
+    {
+      "event_type": "alert.rule_muted",
+      "lane": "DG6A",
+      "owner": "Plans/storage-plan.md#SP-662",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500",
+        "DL-501",
+        "DL-505"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "alert_rule_muted_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "alert_rule_muted_operation",
+          "policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+          "decision": "DL-501"
+        },
+        {
+          "family_id": "shared_alert_state",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-505"
+        },
+        {
+          "family_id": "shared_alert_rule_state",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-505"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "alert_rule_muted_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 45942
+    },
+    {
+      "event_type": "alert.snoozed",
+      "lane": "DG6A",
+      "owner": "Plans/storage-plan.md#SP-663",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500",
+        "DL-501",
+        "DL-505"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "alert_snoozed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "alert_snoozed_operation",
+          "policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+          "decision": "DL-501"
+        },
+        {
+          "family_id": "shared_alert_state",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-505"
+        },
+        {
+          "family_id": "shared_alert_rule_state",
+          "policy_ref": "RP-CONFIG-CURRENT@1.0.0",
+          "decision": "DL-505"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "alert_snoozed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 46149
+    },
+    {
+      "event_type": "bundle.annotation_state_changed",
+      "lane": "DG6A",
+      "owner": "Plans/FinalGUISpec.md#F3-708",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "bundle_annotation_state_changed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "custody": "existing annotation compatibility mapping",
+          "policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+          "decision": "E8-3",
+          "send": "f66b1af9-f851-493f-a2ee-6b666b477920"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "bundle_annotation_state_changed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Existing record groups/holds are preserved; this event, original operation/mapping custody and History checkpoint remain PENDING_RETENTION_DECISION.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 52851,
+      "signed_answer": {
+        "card_id": "E8-3",
+        "send": "f66b1af9-f851-493f-a2ee-6b666b477920",
+        "answer_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md",
+        "answer_sha256": "509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b",
+        "signed_at_utc": "2026-11-14T20:25:00Z"
+      },
+      "resolved_question": "Which policy governs the existing compatibility mapping custody for bundle.annotation_state_changed? F3-708 creates no new operation value. DL-500 assigns its checkpoint; DL-501 does not assign this mapping custody.",
+      "closure_reason": "Signed E8-3 option A assigns the existing `bundle.annotation_state_changed` compatibility mapping custody the same `RP-AUTHORITY-INDEFINITE@1.0.0` policy as the annotation history it maps, already assigned by DL-401 G16. Preserve the mapping's exact original history identity, owning scope and source relationships; no new operation value or mapping family is created. There is no age or count expiry. Ordinary deletion of a described note, object or chat does not delete this separate safe mapping custody or retain deleted content. Explicit Delete Puppet Master project data and the existing authorized application-data deletion rules remain subject to all independent holds, references, recovery and backup protections. Storage pressure refuses new writes, never evicts permanent custody. The derived History checkpoint independently retains DL-500's `RP-PROJECTION-3GEN@1.0.0`; this source-custody answer grants no longer lifetime or access to referenced bodies. The mapping retention question is resolved; admission and native conformance remain separate."
+    },
+    {
+      "event_type": "bundle.note_created",
+      "lane": "DG6A",
+      "owner": "Plans/FinalGUISpec.md#F3-706",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500",
+        "DL-501"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "bundle_note_created_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "bundle_note_created_operation",
+          "policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+          "decision": "DL-501"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "bundle_note_created_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Existing record groups/holds are preserved; this event, original operation/mapping custody and History checkpoint remain PENDING_RETENTION_DECISION.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 52452
+    },
+    {
+      "event_type": "bundle.note_status_changed",
+      "lane": "DG6A",
+      "owner": "Plans/FinalGUISpec.md#F3-707",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500",
+        "DL-501"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "bundle_note_status_changed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "bundle_note_status_changed_operation",
+          "policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+          "decision": "DL-501"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "bundle_note_status_changed_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Existing record groups/holds are preserved; this event, original operation/mapping custody and History checkpoint remain PENDING_RETENTION_DECISION.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 52650
+    },
+    {
+      "event_type": "concern.assigned",
+      "lane": "DG6A",
+      "owner": "Plans/FinalGUISpec.md#F3-709",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500",
+        "DL-501"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "concern_assigned_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "concern_assigned_operation",
+          "policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+          "decision": "DL-501"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "concern_assigned_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Existing record groups/holds are preserved; this event, original operation/mapping custody and History checkpoint remain PENDING_RETENTION_DECISION.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 53039
+    },
+    {
+      "event_type": "concern.created",
+      "lane": "DG6A",
+      "owner": "Plans/storage-plan.md#SP-666",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500",
+        "DL-501"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "concern_created_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "concern_created_operation",
+          "policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+          "decision": "DL-501"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "concern_created_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 46741
+    },
+    {
+      "event_type": "concern.evidence_linked",
+      "lane": "DG6A",
+      "owner": "Plans/FinalGUISpec.md#F3-710",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500",
+        "DL-501"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "concern_evidence_linked_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "concern_evidence_linked_operation",
+          "policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+          "decision": "DL-501"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "concern_evidence_linked_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Existing record groups/holds are preserved; this event, original operation/mapping custody and History checkpoint remain PENDING_RETENTION_DECISION.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 53249
+    },
+    {
+      "event_type": "concern.promoted",
+      "lane": "DG6A",
+      "owner": "Plans/FinalGUISpec.md#F3-711",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500",
+        "DL-501"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "concern_promoted_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "concern_promoted_operation",
+          "policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+          "decision": "DL-501"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "concern_promoted_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Existing record groups/holds are preserved; this event, original operation/mapping custody and History checkpoint remain PENDING_RETENTION_DECISION.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 53449
+    },
+    {
+      "event_type": "concern.reopened",
+      "lane": "DG6A",
+      "owner": "Plans/FinalGUISpec.md#F3-712",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500",
+        "DL-501"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "concern_reopened_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "concern_reopened_operation",
+          "policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+          "decision": "DL-501"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "concern_reopened_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Existing record groups/holds are preserved; this event, original operation/mapping custody and History checkpoint remain PENDING_RETENTION_DECISION.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 53651
+    },
+    {
+      "event_type": "concern.resolved",
+      "lane": "DG6A",
+      "owner": "Plans/FinalGUISpec.md#F3-713",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500",
+        "DL-501"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "concern_resolved_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "concern_resolved_operation",
+          "policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+          "decision": "DL-501"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "concern_resolved_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Existing record groups/holds are preserved; this event, original operation/mapping custody and History checkpoint remain PENDING_RETENTION_DECISION.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 53850
+    },
+    {
+      "event_type": "concern.updated",
+      "lane": "DG6A",
+      "owner": "Plans/FinalGUISpec.md#F3-714",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500",
+        "DL-501"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "concern_updated_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "concern_updated_operation",
+          "policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+          "decision": "DL-501"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "concern_updated_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Existing record groups/holds are preserved; this event, original operation/mapping custody and History checkpoint remain PENDING_RETENTION_DECISION.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 54061
+    },
+    {
+      "event_type": "panel.redocked",
+      "lane": "DG6A",
+      "owner": "Plans/storage-plan.md#SP-664",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500",
+        "DL-501"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "panel_redocked_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "panel_redocked_operation",
+          "policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+          "decision": "DL-501"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "panel_redocked_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 46355
+    },
+    {
+      "event_type": "panel.undocked",
+      "lane": "DG6A",
+      "owner": "Plans/storage-plan.md#SP-665",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-500",
+        "DL-501"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "panel_undocked_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0",
+          "decision": "DL-500"
+        },
+        {
+          "family_id": "panel_undocked_operation",
+          "policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+          "decision": "DL-501"
+        }
+      ],
+      "existing_checkpoints": [
+        {
+          "family_id": "panel_undocked_checkpoint",
+          "policy_ref": "RP-PROJECTION-3GEN@1.0.0"
+        }
+      ],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.",
+      "grade_source": "reports/event-authority-20261104/DG6A.self-grade.json",
+      "owner_line": 46548
+    },
+    {
+      "event_type": "file.copied",
+      "lane": "DFM",
+      "owner": "Plans/storage-plan.md#SP-560",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+      "grade_source": "reports/event-authority-20261104/DFM.self-grade.json",
+      "owner_line": 47694
+    },
+    {
+      "event_type": "file.created",
+      "lane": "DFM",
+      "owner": "Plans/storage-plan.md#SP-560",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+      "grade_source": "reports/event-authority-20261104/DFM.self-grade.json",
+      "owner_line": 47694
+    },
+    {
+      "event_type": "file.deleted",
+      "lane": "DFM",
+      "owner": "Plans/storage-plan.md#SP-560",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+      "grade_source": "reports/event-authority-20261104/DFM.self-grade.json",
+      "owner_line": 47694
+    },
+    {
+      "event_type": "file.exported",
+      "lane": "DFM",
+      "owner": "Plans/storage-plan.md#SP-560",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+      "grade_source": "reports/event-authority-20261104/DFM.self-grade.json",
+      "owner_line": 47694
+    },
+    {
+      "event_type": "file.moved",
+      "lane": "DFM",
+      "owner": "Plans/storage-plan.md#SP-560",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+      "grade_source": "reports/event-authority-20261104/DFM.self-grade.json",
+      "owner_line": 47694
+    },
+    {
+      "event_type": "file.renamed",
+      "lane": "DFM",
+      "owner": "Plans/storage-plan.md#SP-560",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+      "grade_source": "reports/event-authority-20261104/DFM.self-grade.json",
+      "owner_line": 47694
+    },
+    {
+      "event_type": "folder.copied",
+      "lane": "DFM",
+      "owner": "Plans/storage-plan.md#SP-560",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+      "grade_source": "reports/event-authority-20261104/DFM.self-grade.json",
+      "owner_line": 47694
+    },
+    {
+      "event_type": "folder.created",
+      "lane": "DFM",
+      "owner": "Plans/storage-plan.md#SP-560",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+      "grade_source": "reports/event-authority-20261104/DFM.self-grade.json",
+      "owner_line": 47694
+    },
+    {
+      "event_type": "folder.deleted",
+      "lane": "DFM",
+      "owner": "Plans/storage-plan.md#SP-560",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+      "grade_source": "reports/event-authority-20261104/DFM.self-grade.json",
+      "owner_line": 47694
+    },
+    {
+      "event_type": "folder.exported",
+      "lane": "DFM",
+      "owner": "Plans/storage-plan.md#SP-560",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+      "grade_source": "reports/event-authority-20261104/DFM.self-grade.json",
+      "owner_line": 47694
+    },
+    {
+      "event_type": "folder.moved",
+      "lane": "DFM",
+      "owner": "Plans/storage-plan.md#SP-560",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+      "grade_source": "reports/event-authority-20261104/DFM.self-grade.json",
+      "owner_line": 47694
+    },
+    {
+      "event_type": "folder.renamed",
+      "lane": "DFM",
+      "owner": "Plans/storage-plan.md#SP-560",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Explicit PENDING_RETENTION_DECISION; candidate classes cited, no lifetime/anchor selected. Generic checkpoint policy remains its existing SP-278 owner.",
+      "grade_source": "reports/event-authority-20261104/DFM.self-grade.json",
+      "owner_line": 47694
+    },
+    {
+      "event_type": "format.applied",
+      "lane": "DM",
+      "owner": "Plans/storage-plan.md#SP-600",
+      "history_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-415"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION remains for RT; this fix chooses no class. Generic index retains its existing source-coupled/three-generation policy.",
+      "grade_source": "reports/event-authority-20261104/DM-self-grade.json",
+      "owner_line": 48128
+    },
+    {
+      "event_type": "git.clone.completed",
+      "lane": "DM",
+      "owner": "Plans/storage-plan.md#SP-607",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION remains for RT; this fix chooses no class. Generic index retains its existing source-coupled/three-generation policy.",
+      "grade_source": "reports/event-authority-20261104/DM-self-grade.json",
+      "owner_line": 49203
+    },
+    {
+      "event_type": "lsp.server.lifecycle_changed",
+      "lane": "DM",
+      "owner": "Plans/storage-plan.md#SP-601",
+      "history_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-415"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION remains for RT; this fix chooses no class. Generic index retains its existing source-coupled/three-generation policy.",
+      "grade_source": "reports/event-authority-20261104/DM-self-grade.json",
+      "owner_line": 48315
+    },
+    {
+      "event_type": "model.catalog_refreshed",
+      "lane": "DM",
+      "owner": "Plans/storage-plan.md#SP-602",
+      "history_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "application_policy_ref": "RP-MODEL-CATALOG-APPLICATION-90D@1.0.0",
+      "decisions": [
+        "DL-401",
+        "DL-420",
+        "DL-415"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION remains for RT; this fix chooses no class. Generic index retains its existing source-coupled/three-generation policy.",
+      "grade_source": "reports/event-authority-20261104/DM-self-grade.json",
+      "owner_line": 48508
+    },
+    {
+      "event_type": "project.added",
+      "lane": "DM",
+      "owner": "Plans/storage-plan.md#SP-605",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION remains for RT; this fix chooses no class. Generic index retains its existing source-coupled/three-generation policy.",
+      "grade_source": "reports/event-authority-20261104/DM-self-grade.json",
+      "owner_line": 48826
+    },
+    {
+      "event_type": "project.created",
+      "lane": "DM",
+      "owner": "Plans/storage-plan.md#SP-606",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION remains for RT; this fix chooses no class. Generic index retains its existing source-coupled/three-generation policy.",
+      "grade_source": "reports/event-authority-20261104/DM-self-grade.json",
+      "owner_line": 49013
+    },
+    {
+      "event_type": "settings.theme.updated",
+      "lane": "DM",
+      "owner": "Plans/storage-plan.md#SP-348",
+      "history_policy_ref": null,
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-408"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "CLOSED_NOT_APPLICABLE",
+      "question": null,
+      "prior_finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
+      "grade_source": "reports/event-authority-20261104/DM-self-grade.json",
+      "owner_line": 30460,
+      "signed_answer": {
+        "card_id": "E8-4",
+        "send": "f66b1af9-f851-493f-a2ee-6b666b477920",
+        "answer_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md",
+        "answer_sha256": "509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b",
+        "signed_at_utc": "2026-11-14T20:25:00Z"
+      },
+      "resolved_question": "Which retention rule applies to already written historical bytes under this retired spelling? DL-408 preserves their readability but assigns no new writer retention.",
+      "closure_reason": "Signed E8-4 closes the `settings.theme.updated` historical-bytes cell as `CLOSED_NOT_APPLICABLE`: Jared wrote, verbatim, \"If they are retired already, PM isnt built yet...how would anything have records in them, they would have never been used....\" There are no saved records under this retired spelling, so no historical population, migration, retention policy, expiry anchor or keep-rule is assigned. Do not invent retained bytes or enable a writer. DL-408 still routes live theme changes solely to `settings.layer.changed`. Its older dedicated DRY-guard readability requirement remains intact and creates no saved records for these retired generic Settings names.",
+      "saved_record_count": 0,
+      "keep_rule": null
+    },
+    {
+      "event_type": "settings.updated",
+      "lane": "DM",
+      "owner": "Plans/storage-plan.md#SP-348",
+      "history_policy_ref": null,
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-408"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "CLOSED_NOT_APPLICABLE",
+      "question": null,
+      "prior_finding": "Retired name has no current writer contract or event-oracle claim. Successor contract is owned separately.",
+      "grade_source": "reports/event-authority-20261104/DM-self-grade.json",
+      "owner_line": 30460,
+      "signed_answer": {
+        "card_id": "E8-4",
+        "send": "f66b1af9-f851-493f-a2ee-6b666b477920",
+        "answer_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md",
+        "answer_sha256": "509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b",
+        "signed_at_utc": "2026-11-14T20:25:00Z"
+      },
+      "resolved_question": "Which retention rule applies to already written historical bytes under this retired spelling? DL-408 preserves their readability but assigns no new writer retention.",
+      "closure_reason": "Signed E8-4 closes the `settings.updated` historical-bytes cell as `CLOSED_NOT_APPLICABLE`: Jared wrote, verbatim, \"If they are retired already, PM isnt built yet...how would anything have records in them, they would have never been used....\" There are no saved records under this retired spelling, so no historical population, migration, retention policy, expiry anchor or keep-rule is assigned. Do not invent retained bytes or enable a writer. DL-408 still routes live Settings changes solely to `settings.layer.changed`. Its readability text concerns the older dedicated DRY-guard spelling and remains a compatibility obligation, not evidence that either retired generic Settings spelling has saved records. This clarification preserves that readability text without creating records or applying a keep-rule to an empty population.",
+      "saved_record_count": 0,
+      "keep_rule": null
+    },
+    {
+      "event_type": "bundle.revision_requested",
+      "lane": "DCW",
+      "owner": "Plans/storage-plan.md#SP-575",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-508"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "revision_run",
+          "policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+          "decision": "DL-508"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION is the allowed lane exception; event and original source lifetimes need RT assignment before admission.",
+      "grade_source": "reports/event-authority-20261104/DCW.self-grade.json",
+      "owner_line": 50225
+    },
+    {
+      "event_type": "bundle.revision_started",
+      "lane": "DCW",
+      "owner": "Plans/storage-plan.md#SP-576",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-508"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "revision_run",
+          "policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+          "decision": "DL-508"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION is the allowed lane exception; event and original source lifetimes need RT assignment before admission.",
+      "grade_source": "reports/event-authority-20261104/DCW.self-grade.json",
+      "owner_line": 50331
+    },
+    {
+      "event_type": "bundle.revision_completed",
+      "lane": "DCW",
+      "owner": "Plans/storage-plan.md#SP-577",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-508"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "revision_run",
+          "policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+          "decision": "DL-508"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION is the allowed lane exception; event and original source lifetimes need RT assignment before admission.",
+      "grade_source": "reports/event-authority-20261104/DCW.self-grade.json",
+      "owner_line": 50436
+    },
+    {
+      "event_type": "bundle.revision_interrupted",
+      "lane": "DCW",
+      "owner": "Plans/storage-plan.md#SP-578",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-508"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "revision_run",
+          "policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+          "decision": "DL-508"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION is the allowed lane exception; event and original source lifetimes need RT assignment before admission.",
+      "grade_source": "reports/event-authority-20261104/DCW.self-grade.json",
+      "owner_line": 50541
+    },
+    {
+      "event_type": "wizard.blocked",
+      "lane": "DCW",
+      "owner": "Plans/Contracts_V0.md#CV-596",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event history remains PENDING_RETENTION_DECISION with the exact question. Original source audit custody uses existing RP-AUTHORITY-INDEFINITE; receipt/index/checkpoint policies are explicitly retained.",
+      "grade_source": "reports/event-authority-20261104/DCW.self-grade.json",
+      "owner_line": 39528
+    },
+    {
+      "event_type": "wizard.deferred_payload.loaded",
+      "lane": "DCW",
+      "owner": "Plans/Planning_Wizard.md#PWIZ-098",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-508"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "wizard_seed_load_evidence",
+          "policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+          "decision": "DL-508"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION is the allowed lane exception; event and original source lifetimes need RT assignment before admission.",
+      "grade_source": "reports/event-authority-20261104/DCW.self-grade.json",
+      "owner_line": 4921
+    },
+    {
+      "event_type": "wizard.opened",
+      "lane": "DCW",
+      "owner": "Plans/Planning_Wizard.md#PWIZ-097",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401",
+        "DL-508"
+      ],
+      "original_and_checkpoint_assignments": [
+        {
+          "family_id": "wizard_open_evidence",
+          "policy_ref": "RP-CHAT-THREAD-LIFETIME@1.0.0",
+          "decision": "DL-508"
+        }
+      ],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "PENDING_RETENTION_DECISION is the allowed lane exception; event and original source lifetimes need RT assignment before admission.",
+      "grade_source": "reports/event-authority-20261104/DCW.self-grade.json",
+      "owner_line": 4852
+    },
+    {
+      "event_type": "wizard.unblocked",
+      "lane": "DCW",
+      "owner": "Plans/Contracts_V0.md#CV-597",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": null,
+      "decisions": [
+        "DL-401"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "Event history remains PENDING_RETENTION_DECISION with the exact question. Original source audit custody uses existing RP-AUTHORITY-INDEFINITE; receipt/index/checkpoint policies are explicitly retained.",
+      "grade_source": "reports/event-authority-20261104/DCW.self-grade.json",
+      "owner_line": 39752
+    },
+    {
+      "event_type": "filesafe.command_denied",
+      "lane": "DF",
+      "owner": "Plans/storage-plan.md#SP-550",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-422",
+        "DL-460"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-550 applies Card 2 2.a/DL-422: Project history uses RP-OPERATIONAL-2555D with exact expiry/protection/deletion rules. Application counting/deletion rules remain PENDING_RETENTION_DECISION, as the answer expressly requires; no Project rule is inferred for them.",
+      "grade_source": "reports/event-authority-20261104/DF.self-grade.json",
+      "owner_line": 50810
+    },
+    {
+      "event_type": "filesafe.destructive_override_denied",
+      "lane": "DF",
+      "owner": "Plans/storage-plan.md#SP-551",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "decisions": [
+        "DL-423",
+        "DL-461"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-551 applies Card 2 2.b/DL-423: Project history uses RP-AUTHORITY-INDEFINITE with exact expiry/protection/deletion rules. Application counting/deletion rules remain PENDING_RETENTION_DECISION, as the answer expressly requires; no Project rule is inferred for them.",
+      "grade_source": "reports/event-authority-20261104/DF.self-grade.json",
+      "owner_line": 50895
+    },
+    {
+      "event_type": "filesafe.destructive_override_requested",
+      "lane": "DF",
+      "owner": "Plans/storage-plan.md#SP-553",
+      "history_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "application_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "decisions": [
+        "DL-424",
+        "DL-462"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-553 applies Card 2 2.c/DL-424: Project history uses RP-AUTHORITY-INDEFINITE with exact expiry/protection/deletion rules. Application counting/deletion rules remain PENDING_RETENTION_DECISION, as the answer expressly requires; no Project rule is inferred for them.",
+      "grade_source": "reports/event-authority-20261104/DF.self-grade.json",
+      "owner_line": 51049
+    },
+    {
+      "event_type": "filesafe.guard_init_failed",
+      "lane": "DF",
+      "owner": "Plans/storage-plan.md#SP-554",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-FILESAFE-GUARD-FAILURE-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-425",
+        "DL-463"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-554 applies Card 2 2.d/DL-425: Project history uses RP-OPERATIONAL-2555D with exact expiry/protection/deletion rules. Application counting/deletion rules remain PENDING_RETENTION_DECISION, as the answer expressly requires; no Project rule is inferred for them.",
+      "grade_source": "reports/event-authority-20261104/DF.self-grade.json",
+      "owner_line": 51134
+    },
+    {
+      "event_type": "filesafe.path_denied",
+      "lane": "DF",
+      "owner": "Plans/storage-plan.md#SP-555",
+      "history_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "application_policy_ref": "RP-FILESAFE-DENIED-PATH-APPLICATION-2555D@1.0.0",
+      "decisions": [
+        "DL-426",
+        "DL-464"
+      ],
+      "original_and_checkpoint_assignments": [],
+      "existing_checkpoints": [],
+      "status": "BOUND",
+      "question": null,
+      "prior_finding": "SP-555 applies Card 2 2.e/DL-426: Project history uses RP-OPERATIONAL-2555D with exact expiry/protection/deletion rules. Application counting/deletion rules remain PENDING_RETENTION_DECISION, as the answer expressly requires; no Project rule is inferred for them.",
+      "grade_source": "reports/event-authority-20261104/DF.self-grade.json",
+      "owner_line": 51219
+    }
+  ],
+  "e8_followup_base": "4da9cf585ac8fd01f3886f1fc1049f33bf2ce93b",
+  "bound_or_closed": 152,
+  "pending": 0
+}

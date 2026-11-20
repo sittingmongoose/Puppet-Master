@@ -1,0 +1,204 @@
+[
+ {
+  "source": "reports/event-authority-20261115/PNC019-C12-GC-grades.json",
+  "event_type": "goal.blocked",
+  "evidence": {
+   "path": "Plans/Goal_Runtime_System.md",
+   "line_start": 8522,
+   "line_end": 8522,
+   "quote": "Newly authored",
+   "excerpt_sha256": "953ea3ff89cb4ad6ee7f69b8b44b899bb2b8fb75e3e764382201095457ac5c9d",
+   "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed",
+   "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+  }
+ },
+ {
+  "source": "reports/event-authority-20261115/PNC019-C12-GC-grades.json",
+  "event_type": "goal.completed",
+  "evidence": {
+   "path": "Plans/Goal_Runtime_System.md",
+   "line_start": 8522,
+   "line_end": 8522,
+   "quote": "Newly authored",
+   "excerpt_sha256": "953ea3ff89cb4ad6ee7f69b8b44b899bb2b8fb75e3e764382201095457ac5c9d",
+   "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed",
+   "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+  }
+ },
+ {
+  "source": "reports/event-authority-20261115/PNC019-C12-GC-grades.json",
+  "event_type": "goal_run.stopped",
+  "evidence": {
+   "path": "Plans/Goal_Runtime_System.md",
+   "line_start": 2911,
+   "line_end": 2911,
+   "quote": "Current v3 (prepared, DL-080): GRS-200",
+   "excerpt_sha256": "e0dd4ea235bfa5bdfed6949c89c389692ba680a7b73bde05f32df3e024bb69c5",
+   "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed",
+   "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+  }
+ },
+ {
+  "source": "reports/event-authority-20261115/PNC019-C12-GC-grades.json",
+  "event_type": "goal_run.blocked",
+  "evidence": {
+   "path": "Plans/Goal_Runtime_System.md",
+   "line_start": 2908,
+   "line_end": 2908,
+   "quote": "Current v3 (prepared, DL-080): GRS-201",
+   "excerpt_sha256": "a1c6b4f45c12ac5633e2687fc8c9fdfa646b5fc37556856f915fcad462e98ca5",
+   "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed",
+   "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+  }
+ },
+ {
+  "source": "reports/event-authority-20261115/PNC019-C12-GH1-grades.json",
+  "event_type": "goal.child_status_changed",
+  "evidence": {
+   "path": "Plans/event_family_registry.json",
+   "unit": "#/families/8",
+   "line_start": 578,
+   "line_end": 578,
+   "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\",",
+   "excerpt_sha256": "91bf44995150698a250e61e6c9537fb9c667da5d6766d837dc38ea542d2f22cb",
+   "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+   "quote_check": "exact",
+   "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+  }
+ },
+ {
+  "source": "reports/event-authority-20261115/PNC019-C12-GH1-grades.json",
+  "event_type": "goal.degraded",
+  "evidence": {
+   "path": "Plans/event_family_registry.json",
+   "unit": "#/families/11",
+   "line_start": 787,
+   "line_end": 787,
+   "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\",",
+   "excerpt_sha256": "91bf44995150698a250e61e6c9537fb9c667da5d6766d837dc38ea542d2f22cb",
+   "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+   "quote_check": "exact",
+   "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+  }
+ },
+ {
+  "source": "reports/event-authority-20261115/PNC019-C12-GH1-grades.json",
+  "event_type": "goal.progressed",
+  "evidence": {
+   "path": "Plans/event_family_registry.json",
+   "unit": "#/families/13",
+   "line_start": 912,
+   "line_end": 912,
+   "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\",",
+   "excerpt_sha256": "91bf44995150698a250e61e6c9537fb9c667da5d6766d837dc38ea542d2f22cb",
+   "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+   "quote_check": "exact",
+   "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+  }
+ },
+ {
+  "source": "reports/event-authority-20261115/PNC019-C12-GH1-grades.json",
+  "event_type": "goal.replanned",
+  "evidence": {
+   "path": "Plans/event_family_registry.json",
+   "unit": "#/families/15",
+   "line_start": 1037,
+   "line_end": 1037,
+   "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\",",
+   "excerpt_sha256": "91bf44995150698a250e61e6c9537fb9c667da5d6766d837dc38ea542d2f22cb",
+   "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+   "quote_check": "exact",
+   "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+  }
+ },
+ {
+  "source": "reports/event-authority-20261115/PNC019-C12-GH1-grades.json",
+  "event_type": "goal.scheduled",
+  "evidence": {
+   "path": "Plans/event_family_registry.json",
+   "unit": "#/families/16",
+   "line_start": 1079,
+   "line_end": 1079,
+   "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\",",
+   "excerpt_sha256": "91bf44995150698a250e61e6c9537fb9c667da5d6766d837dc38ea542d2f22cb",
+   "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+   "quote_check": "exact",
+   "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+  }
+ },
+ {
+  "source": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+  "event_type": "goal.evidence_captured",
+  "evidence": {
+   "path": "Plans/Goal_Runtime_System.md",
+   "unit": "GRS-205",
+   "line_start": 8519,
+   "line_end": 8519,
+   "quote": "Newly authored",
+   "excerpt_sha256": "953ea3ff89cb4ad6ee7f69b8b44b899bb2b8fb75e3e764382201095457ac5c9d",
+   "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+   "quote_check": "exact",
+   "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+  }
+ },
+ {
+  "source": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+  "event_type": "goal.receipt_recorded",
+  "evidence": {
+   "path": "Plans/Goal_Runtime_System.md",
+   "unit": "GRS-206",
+   "line_start": 9120,
+   "line_end": 9120,
+   "quote": "Newly authored",
+   "excerpt_sha256": "9f01283ace83984d22640d7ebe5d5d8f447ea9695a00b6661e56ad098f3b6fc1",
+   "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+   "quote_check": "exact",
+   "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+  }
+ },
+ {
+  "source": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+  "event_type": "goal.stopped",
+  "evidence": {
+   "path": "Plans/event_family_registry.json",
+   "unit": "#/families/17",
+   "line_start": 1121,
+   "line_end": 1121,
+   "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\",",
+   "excerpt_sha256": "91bf44995150698a250e61e6c9537fb9c667da5d6766d837dc38ea542d2f22cb",
+   "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+   "quote_check": "exact",
+   "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+  }
+ },
+ {
+  "source": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+  "event_type": "goal.tool_check_recorded",
+  "evidence": {
+   "path": "Plans/Goal_Runtime_System.md",
+   "unit": "GRS-207",
+   "line_start": 9120,
+   "line_end": 9120,
+   "quote": "Newly authored",
+   "excerpt_sha256": "9f01283ace83984d22640d7ebe5d5d8f447ea9695a00b6661e56ad098f3b6fc1",
+   "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+   "quote_check": "exact",
+   "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+  }
+ },
+ {
+  "source": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+  "event_type": "goal.verification_decided",
+  "evidence": {
+   "path": "Plans/event_family_registry.json",
+   "unit": "#/families/20",
+   "line_start": 1333,
+   "line_end": 1333,
+   "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\",",
+   "excerpt_sha256": "91bf44995150698a250e61e6c9537fb9c667da5d6766d837dc38ea542d2f22cb",
+   "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+   "quote_check": "exact",
+   "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+  }
+ }
+]

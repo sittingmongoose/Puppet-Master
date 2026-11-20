@@ -28,11 +28,12 @@ import pm_dch_events as dch  # noqa: E402
 import pm_dch_stop as stop  # noqa: E402
 import pm_dch_number_corpus as corpus  # noqa: E402
 
-ENTRIES = ('record_number_rule', 'input_types_valid', 'resolve_body', 'valid_scope_partition', 'joins', 'retry_outcome',
+ENTRIES = ('schema_admission', 'current_record_valid', 'worktree_event_valid', 'worktree_event_outcome', 'worktree_checkpoint_valid',
+           'thread_event_valid', 'thread_event_outcome', 'thread_checkpoint_valid', 'record_number_rule', 'input_types_valid', 'resolve_body', 'valid_scope_partition', 'joins', 'retry_outcome',
            'historical_read_valid', 'test_joins', 'checkpoint_joins', 'checkpoint_storage_valid', 'archive_joins',
            'references_valid', 'reference_closure_refusal')
 STOP_ENTRIES = ('resolve_value', 'request_valid', 'outcome_valid', 'save_outcome', 'read_outcome', 'queue_can_advance',
-                'index_read_valid', 'retirement_ready')
+                'index_read_valid', 'retirement_ready', 'request_original_outcome', 'sealed_outcome')
 # The shared number corpus reaches DCH rows through table_outcome (pm_dch_number_corpus.py).
 CORPUS_ENTRIES = ('table_outcome',)
 STOP_FAMILY = 'chat.response_stop_requested'

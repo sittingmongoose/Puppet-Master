@@ -1,0 +1,47 @@
+{
+ "schema_id": "pm.assurance.event_authority.post_august_admission_record.v1",
+ "event_type": "subagent.timeout",
+ "family_id": "event-family-subagent-timeout",
+ "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
+ "decision_ref": "Plans/Decision_Log.md#DL-2421",
+ "decision_section_sha256": "ecb1ff8a1e9d034426e81b28738bfa106f71818f6bde2f3304d867982c6de7a6",
+ "registry_before": {
+  "revision": "2026-11-16.284",
+  "sha256": "7353789a5fff19a44087476db5591dfcb1ca4790708a3a886bd9f42972a4a8c7",
+  "family_count": 503
+ },
+ "registry_after": {
+  "revision": "2026-11-16.285",
+  "sha256": "bdc8a6d22c682b727e5cfde342667e670586c0e67842fb6a2b52e64dcc18bc68",
+  "family_count": 504
+ },
+ "registry_row_sha256": "ba2378ca28556ff877339088cc8c0fe374cc7af9afcd20c5386964e695ab8907",
+ "depth_assessment": {
+  "path": "reports/event-authority-20261116/admission-merge-2/depth/subagent.timeout.json",
+  "sha256": "4b03060dc4a692d20e6b2d841b8a95638b63e093d9d4de031be9b2e10a728d2b"
+ },
+ "admission_landing": {
+  "branch": "plans/ea-merge2-apply-20261116",
+  "commit": null,
+  "record": "reports/event-authority-20261116/admission-merge-2/LANDING.md",
+  "note": "The landing commit is this family's commit on the branch once the merge lands. A record cannot name the commit that contains it, so the landing record names it."
+ },
+ "criteria_not_passing_at_recording": [],
+ "status_at_recording": "complete_depth",
+ "recorded_by": "codex-gpt-6.1-sol:ea-merge2-apply-20261116",
+ "recorded_at_utc": "2026-11-16T04:20:00Z",
+ "notes": [
+  "admission-merge-2 (EA-P2 B), written by pm-ea-admission-writer.v1 from the manifest row for this family; one commit holds the registry append, this record, its Decision Log entry, its depth assessment, its KEEP_REGISTERED ledger row and the DL-078 checkpoint pins.",
+  "The decision entry is DL-2421, which DL-096 makes Jared's decision entry for this family.",
+  "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
+  "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_record_sha256": "dd4c6094680dd9354320a68f627f679526a915c72f77c7a0b11280cc95f5af35",
+  "source_assessment_sha256": "88ab07a6888258c514163f795d595468d93026a1c115e2a41f053ed33204e413",
+  "source_decision_section_sha256": "592d369ac24e3933ed6fe0242d63270e0bc0cba0f6ef3873bcc554b1681a5cfc",
+  "original_registry_checkpoints_preserved": true
+ }
+}

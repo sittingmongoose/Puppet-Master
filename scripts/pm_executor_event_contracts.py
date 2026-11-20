@@ -152,29 +152,71 @@ def identity_replay_facts(contract, payload):
         'digest': stored[ident][0], 'metadata_changed_digest': digest(metadata)}
 
 
+UNRECORDED = 'registered_without_admission_record'
+
+
+def registry_view(event_types, root=ROOT, registry=None):
+    """{event type: None | refusal code} for each named family on the registry (absent: not registered).
+
+    Admission-aware mode (T222/T225): None means the family is registered through its exact, complete DL-077
+    admission record (scripts/pm_ea_admission_mode.py); a code means it is registered any other way. A family
+    not on the registry is still a prepared draft and is not a key.
+    """
+    import pm_ea_admission_mode as admission
+    registry = admission.load_registry(root) if registry is None else registry
+    registered = {f.get('event_type') for f in registry['families'] if isinstance(f, dict)}
+    results = admission.verdicts([name for name in event_types if name in registered], root=root, registry=registry)
+    return {name: (None if v['mode'] == 'admitted' else v['code']) for name, v in results.items()}
+
+
+def with_registered(existing, names, code=UNRECORDED):
+    """A registry view with `names` registered without their own admission (witnesses of IC03)."""
+    view = dict(existing) if isinstance(existing, dict) else {name: UNRECORDED for name in existing}
+    view.update({name: code for name in names})
+    return view
+
+
+def registration_problem(event_type, existing):
+    """None for a prepared draft or a record-bound admission; else why the registration is not an admission.
+
+    `existing` is a registry view (registry_view) or, as before admission-aware mode, a plain set of registered
+    event types, each of which then has no admission evidence.
+    """
+    if isinstance(existing, dict):
+        return existing.get(event_type)
+    return UNRECORDED if event_type in existing else None
+
+
 def contract_integrity(contract, existing, cases):
-    """Refuse a contract that is admitted, has an open schema or lacks paired shape fixtures."""
+    """Refuse a contract that is admitted, has an open schema or lacks paired shape fixtures.
+
+    'admitted' observes a registration outside the family's exact DL-077 admission: before admission the draft
+    must stay off the registry; after it, only its record-bound admission may register it (IC03 refuses either
+    way, and its message names the admission-mode code).
+    """
     from pm_executor_event_semantics import refuse
     schema = json.loads((ROOT / contract['schema_ref']).read_text())
     from pm_executor_schema_refs import check_document
     check_document(schema)
+    problem = registration_problem(contract['event_type'], existing)
     refuse('integrity_contract', {
-        'admitted': contract['event_type'] in existing,
+        'admitted': problem is not None,
         'additional_properties': copy.deepcopy(schema.get('additionalProperties')),
         'accept_cases': len([x for x in cases if x['expected'] == 'accept']),
-        'reject_cases': len([x for x in cases if x['expected'] == 'reject'])}, ' ' + contract['event_type'])
+        'reject_cases': len([x for x in cases if x['expected'] == 'reject'])},
+        ' ' + contract['event_type'] + ('' if problem is None else ': ' + problem))
 
 
 def main(family_name=None):
     from pm_executor_event_semantics import expand_fixture_literals, mutate, refuse, check_contract_set, check_shape_seed
     contracts = json.loads((ROOT / 'Plans/executor_event_contracts.json').read_text())['families']
     registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
-    existing = {f['event_type'] for f in registry['families']}
     check_contract_set([c['event_type'] for c in contracts])
     if family_name is not None:
         contracts = [contract for contract in contracts if contract['event_type'] == family_name]
         if not contracts:
             raise SystemExit('unknown Executor family ' + family_name)
+    existing = registry_view([c['event_type'] for c in contracts], ROOT, registry)
     failures = check_lane_schemas(contracts)
     if failures:
         print(json.dumps({'status': 'fail', 'schema_reference_failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
@@ -205,7 +247,8 @@ def main(family_name=None):
         refuse('identity_replay', {k: facts[k] for k in ('identity', 'sequence_changed_identity')})
         refuse('identity_replay_fixed', {k: facts[k] for k in ('identity', 'metadata_changed_identity', 'other_storage_event_id',
                                                                'recomputed_identity', 'digest', 'metadata_changed_digest')})
-    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(contracts), 'fixture_cases': len(fixtures), 'identity_replay_cases': len(contracts)*5, 'schema_reference_cases': ref_cases, 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
+    modes = {c['event_type']: ('prepared' if c['event_type'] not in existing else 'admitted') for c in contracts}
+    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(contracts), 'fixture_cases': len(fixtures), 'identity_replay_cases': len(contracts)*5, 'schema_reference_cases': ref_cases, 'admission_mode': {mode: sorted(k for k, v in modes.items() if v == mode) for mode in ('prepared', 'admitted')}, 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return bool(failures)
 
 if __name__ == '__main__':

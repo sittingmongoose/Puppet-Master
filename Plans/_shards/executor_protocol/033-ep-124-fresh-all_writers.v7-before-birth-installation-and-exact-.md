@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L8702-L8774
+Source lines: L8707-L8782
 
-Source SHA256: `abd395ea9120a1e020240c663816cd390aac571f804a4ff6b97accb2b456ddf3`
+Source SHA256: `5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732`
 
 ---
 
@@ -81,3 +81,6 @@ gui_classification_reason: Original source, native authority/custody, schema, st
 ```
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-124, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json
+
+
+**DG-OWN-A adoption.** Fresh stop/block adoption: EP-1110 supplies a separately named whole fresh source edition; EP-1111/EP-1112 are its original stop/block participants. Every v7/retained branch of this unit stays unchanged.

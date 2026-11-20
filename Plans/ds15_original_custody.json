@@ -244,6 +244,70 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "069a96e55459f872d2c56413f244d3eadee98c04dd4d10d73ad6799f225945bb",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_share_revoked",
+   "original_ref": "event:browser_context_share_revoked:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_share_revoked:1",
+    "event_type": "browser.context_share_revoked",
+    "idempotency_key": "c5d44e57561d4b056025cdcc9982a7dbf7a487c287809e4e581d2be510caf62d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "14040d8965f531eb5a2cab79a388837d43964bd8c20003dc373382392107a353",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.started",
+   "original_ref": "event:browser_context_share_revoked:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_share_revoked:1",
+    "event_type": "browser.context_share_revoked",
+    "idempotency_key": "c5d44e57561d4b056025cdcc9982a7dbf7a487c287809e4e581d2be510caf62d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "34fac1b8f4b2a7bf81d07baa54b941aba698c559f02afb2c044de1d5af80d926",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_share_revoked",
+   "original_ref": "event:browser_context_share_revoked:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_share_revoked:1",
+    "event_type": "browser.context_share_revoked",
+    "idempotency_key": "c5d44e57561d4b056025cdcc9982a7dbf7a487c287809e4e581d2be510caf62d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "34fac1b8f4b2a7bf81d07baa54b941aba698c559f02afb2c044de1d5af80d926",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_share_revoked",
+   "original_ref": "event:browser_context_share_revoked:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_share_revoked:1",
+    "event_type": "browser.context_share_revoked",
+    "idempotency_key": "c5d44e57561d4b056025cdcc9982a7dbf7a487c287809e4e581d2be510caf62d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "3e60ae251befbf1929ee67db33dbef9c2cf1480eb75e0fb3b0669bec473bd04c",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
@@ -276,7 +340,71 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "a7820f04e2f350119a77e6cb7ff396fee6af304cf33b45764b4c1b30b1b67d3d",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_share_revoked",
+   "original_ref": "event:browser_context_share_revoked:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_share_revoked:1",
+    "event_type": "browser.context_share_revoked",
+    "idempotency_key": "c5d44e57561d4b056025cdcc9982a7dbf7a487c287809e4e581d2be510caf62d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "dd357c6ea2826e655619370e325bb64d7320dc9d7643242bbfd9780d9462c6d3",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_share_revoked",
+   "original_ref": "event:browser_context_share_revoked:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_share_revoked:1",
+    "event_type": "browser.context_share_revoked",
+    "idempotency_key": "c5d44e57561d4b056025cdcc9982a7dbf7a487c287809e4e581d2be510caf62d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "fb47fdc382c1c3449b885c988d820ddb0c31d5d7c3fcf8a565a701477637fa6d",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_share_revoked",
+   "original_ref": "event:browser_context_share_revoked:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_share_revoked:1",
+    "event_type": "browser.context_share_revoked",
+    "idempotency_key": "c5d44e57561d4b056025cdcc9982a7dbf7a487c287809e4e581d2be510caf62d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "fd02f75dc5487409c1aa77b07546456c8f9a6bf46378fe4b3ad001b7f43de54a",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_share_revoked",
+   "original_ref": "event:browser_context_share_revoked:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_share_revoked:1",
+    "event_type": "browser.context_share_revoked",
+    "idempotency_key": "c5d44e57561d4b056025cdcc9982a7dbf7a487c287809e4e581d2be510caf62d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "fd02f75dc5487409c1aa77b07546456c8f9a6bf46378fe4b3ad001b7f43de54a",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "browser.context_share_revoked",
@@ -308,7 +436,87 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "4c06cb83db3cea7c1620fd399410f6e7533b21f50e2099ab03f77de50ec9e3ef",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_shared",
+   "original_ref": "event:browser_context_shared:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_shared:1",
+    "event_type": "browser.context_shared",
+    "idempotency_key": "f5ce04da1a73677e65e6592749de1a23a8b5ec2ac1b7a0812ca6d89140bd9137",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "4c06cb83db3cea7c1620fd399410f6e7533b21f50e2099ab03f77de50ec9e3ef",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_shared",
+   "original_ref": "event:browser_context_shared:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_shared:1",
+    "event_type": "browser.context_shared",
+    "idempotency_key": "f5ce04da1a73677e65e6592749de1a23a8b5ec2ac1b7a0812ca6d89140bd9137",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "4eda5fec9aaf0d15bf0b32d02a9d960c4d8b3466141bd38eda7f37ce4fcb5c53",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_shared",
+   "original_ref": "event:browser_context_shared:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_shared:1",
+    "event_type": "browser.context_shared",
+    "idempotency_key": "f5ce04da1a73677e65e6592749de1a23a8b5ec2ac1b7a0812ca6d89140bd9137",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "631f58dac37cce4ea34274ccf6213d6ecec86ebea77962aaa04ea35b81da861e",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_shared",
+   "original_ref": "event:browser_context_shared:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_shared:1",
+    "event_type": "browser.context_shared",
+    "idempotency_key": "f5ce04da1a73677e65e6592749de1a23a8b5ec2ac1b7a0812ca6d89140bd9137",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "7150f0139476415abb65853d3a8ecc377156e936b14713c1105c5e1531afc3d7",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_shared",
+   "original_ref": "event:browser_context_shared:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_shared:1",
+    "event_type": "browser.context_shared",
+    "idempotency_key": "f5ce04da1a73677e65e6592749de1a23a8b5ec2ac1b7a0812ca6d89140bd9137",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "7150f0139476415abb65853d3a8ecc377156e936b14713c1105c5e1531afc3d7",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "browser.context_shared",
@@ -328,6 +536,54 @@
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "browser.context_shared",
+   "original_ref": "event:browser_context_shared:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_shared:1",
+    "event_type": "browser.context_shared",
+    "idempotency_key": "f5ce04da1a73677e65e6592749de1a23a8b5ec2ac1b7a0812ca6d89140bd9137",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "c53c27a1f014e9b1c8fb7f3bf58dac465abf25d0d5214fb7f43109f24ca8f919",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_shared",
+   "original_ref": "event:browser_context_shared:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_shared:1",
+    "event_type": "browser.context_shared",
+    "idempotency_key": "f5ce04da1a73677e65e6592749de1a23a8b5ec2ac1b7a0812ca6d89140bd9137",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "db3a503c8e424d9b0b84d53ceff6b511bf0c8082163c50a28fe347b5e9454f14",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "browser.context_shared",
+   "original_ref": "event:browser_context_shared:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:browser_context_shared:1",
+    "event_type": "browser.context_shared",
+    "idempotency_key": "f5ce04da1a73677e65e6592749de1a23a8b5ec2ac1b7a0812ca6d89140bd9137",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "fa07056c9fcc73df780bf1276a8aeaa5e0b089c15db70854365739ce83af872b",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.started",
    "original_ref": "event:browser_context_shared:1",
    "write_recipe": "ds15-v1"
   },
@@ -660,6 +916,54 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "30f818344295aa0731e9b114b1143b96fd0f97dd0016fe16e3b21fe0940020cc",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.remove.completed",
+   "original_ref": "event:catalog_remove_completed:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_completed:1",
+    "event_type": "catalog.remove.completed",
+    "idempotency_key": "4ba67204379b6cccc040640260eb9b8e51662dbf78cfbfd28e90b0bae819b26c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "30f818344295aa0731e9b114b1143b96fd0f97dd0016fe16e3b21fe0940020cc",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.remove.completed",
+   "original_ref": "event:catalog_remove_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_completed:1",
+    "event_type": "catalog.remove.completed",
+    "idempotency_key": "4ba67204379b6cccc040640260eb9b8e51662dbf78cfbfd28e90b0bae819b26c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "4fd2a00c104e71dc5f740076131ff1cf3d30edf7f1edc039daf57f93316a6578",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.started",
+   "original_ref": "event:catalog_remove_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_completed:1",
+    "event_type": "catalog.remove.completed",
+    "idempotency_key": "4ba67204379b6cccc040640260eb9b8e51662dbf78cfbfd28e90b0bae819b26c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "7c3921527fe5b8a03f79a8b4f0fdaed05df409eb5894f7352fce8a7cd40203b2",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
@@ -676,7 +980,87 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "a16c1d393e8090b0046e9c9bcd0f0fd95670ac2661ec51230b0f5880a6020abd",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.remove.completed",
+   "original_ref": "event:catalog_remove_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_completed:1",
+    "event_type": "catalog.remove.completed",
+    "idempotency_key": "4ba67204379b6cccc040640260eb9b8e51662dbf78cfbfd28e90b0bae819b26c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "a929ec06f0f753151335417490c9875cfc500bd33fe613736cc90152ac9aacac",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.remove.completed",
+   "original_ref": "event:catalog_remove_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_completed:1",
+    "event_type": "catalog.remove.completed",
+    "idempotency_key": "4ba67204379b6cccc040640260eb9b8e51662dbf78cfbfd28e90b0bae819b26c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "b2a6b3edb98000f5787ec4887da6aac2ae7464da59ddd0487037cbfd7713ab79",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.remove.completed",
+   "original_ref": "event:catalog_remove_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_completed:1",
+    "event_type": "catalog.remove.completed",
+    "idempotency_key": "4ba67204379b6cccc040640260eb9b8e51662dbf78cfbfd28e90b0bae819b26c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "b346fd673ecbb93853b0363bc1907baa532e7a04a834ffca27d0d52775bcdb48",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.remove.completed",
+   "original_ref": "event:catalog_remove_completed:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_completed:1",
+    "event_type": "catalog.remove.completed",
+    "idempotency_key": "4ba67204379b6cccc040640260eb9b8e51662dbf78cfbfd28e90b0bae819b26c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "f04ba76db679390ea6d5dac2fbc42dba8d184ba56dc6b4f64c341b1716addfc8",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.remove.completed",
+   "original_ref": "event:catalog_remove_completed:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_completed:1",
+    "event_type": "catalog.remove.completed",
+    "idempotency_key": "4ba67204379b6cccc040640260eb9b8e51662dbf78cfbfd28e90b0bae819b26c",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "f04ba76db679390ea6d5dac2fbc42dba8d184ba56dc6b4f64c341b1716addfc8",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "catalog.remove.completed",
@@ -740,12 +1124,268 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "1225e35c66fef5617ec642bbe129e232163deacf87e5438f977c39a2c228f8ef",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.remove.started",
+   "original_ref": "event:catalog_remove_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_started:1",
+    "event_type": "catalog.remove.started",
+    "idempotency_key": "b00780996c14bd040cc103a5802c1819b30400d043be8ee9ea5acbf2e1455f1d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "18b8bb148d7a2381ad1abcc45c1f403469d932a620676ec297ae9faaa984a5c2",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "catalog.remove.started",
    "original_ref": "event:catalog_remove_started:1",
    "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_started:1",
+    "event_type": "catalog.remove.started",
+    "idempotency_key": "b00780996c14bd040cc103a5802c1819b30400d043be8ee9ea5acbf2e1455f1d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "32b3ddea41df969c81ce3c3588fbc5bfa072a1ce00b0a9a00c521083a5f395e5",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.started",
+   "original_ref": "event:catalog_remove_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_started:1",
+    "event_type": "catalog.remove.started",
+    "idempotency_key": "b00780996c14bd040cc103a5802c1819b30400d043be8ee9ea5acbf2e1455f1d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "6e4e7f01e8625d6e305ea38182a117b8f1cea6778062d427f915de1e9b761e3a",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.remove.started",
+   "original_ref": "event:catalog_remove_started:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_started:1",
+    "event_type": "catalog.remove.started",
+    "idempotency_key": "b00780996c14bd040cc103a5802c1819b30400d043be8ee9ea5acbf2e1455f1d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "91dd612efa144b00c84561c500b3d0b9bb04d175e2933d358062098ba0ad1ce4",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.remove.started",
+   "original_ref": "event:catalog_remove_started:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_started:1",
+    "event_type": "catalog.remove.started",
+    "idempotency_key": "b00780996c14bd040cc103a5802c1819b30400d043be8ee9ea5acbf2e1455f1d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "91dd612efa144b00c84561c500b3d0b9bb04d175e2933d358062098ba0ad1ce4",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.remove.started",
+   "original_ref": "event:catalog_remove_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_started:1",
+    "event_type": "catalog.remove.started",
+    "idempotency_key": "b00780996c14bd040cc103a5802c1819b30400d043be8ee9ea5acbf2e1455f1d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "abf9777a2e890f14a03a584c716a6c89027ab2e09f875722163186bd1d762b6d",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.remove.started",
+   "original_ref": "event:catalog_remove_started:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_started:1",
+    "event_type": "catalog.remove.started",
+    "idempotency_key": "b00780996c14bd040cc103a5802c1819b30400d043be8ee9ea5acbf2e1455f1d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "abf9777a2e890f14a03a584c716a6c89027ab2e09f875722163186bd1d762b6d",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.remove.started",
+   "original_ref": "event:catalog_remove_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_remove_started:1",
+    "event_type": "catalog.remove.started",
+    "idempotency_key": "b00780996c14bd040cc103a5802c1819b30400d043be8ee9ea5acbf2e1455f1d",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "d21f78e52ceb075c8c49735f403695626968dc7cb3c7308a14d2685d974891d7",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.remove.started",
+   "original_ref": "event:catalog_remove_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_completed:1",
+    "event_type": "catalog.update.completed",
+    "idempotency_key": "73062e934052e46e0f3d0976be3845bea7e5d1be13e0b1f5fb187aecae17adb6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "15c66a17d11462188f95f815a90d41425a58807522eae0792a46e4e8e7ee9c0e",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.update.completed",
+   "original_ref": "event:catalog_update_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_completed:1",
+    "event_type": "catalog.update.completed",
+    "idempotency_key": "73062e934052e46e0f3d0976be3845bea7e5d1be13e0b1f5fb187aecae17adb6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "2a75b28914692ddf4e1c9278eefe1ca4e2371fa30c47f13f403bf0ee4cb24561",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.update.completed",
+   "original_ref": "event:catalog_update_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_completed:1",
+    "event_type": "catalog.update.completed",
+    "idempotency_key": "73062e934052e46e0f3d0976be3845bea7e5d1be13e0b1f5fb187aecae17adb6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "435d822f7cec270d8489ebddf06562dbb27e963ef2567e977e157e239900076a",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.started",
+   "original_ref": "event:catalog_update_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_completed:1",
+    "event_type": "catalog.update.completed",
+    "idempotency_key": "73062e934052e46e0f3d0976be3845bea7e5d1be13e0b1f5fb187aecae17adb6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "6fb2919e1792f6b8563c246e049f097962bf2e1ab1b07a2730b1ff683237cc75",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.update.completed",
+   "original_ref": "event:catalog_update_completed:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_completed:1",
+    "event_type": "catalog.update.completed",
+    "idempotency_key": "73062e934052e46e0f3d0976be3845bea7e5d1be13e0b1f5fb187aecae17adb6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "6fb2919e1792f6b8563c246e049f097962bf2e1ab1b07a2730b1ff683237cc75",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.update.completed",
+   "original_ref": "event:catalog_update_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_completed:1",
+    "event_type": "catalog.update.completed",
+    "idempotency_key": "73062e934052e46e0f3d0976be3845bea7e5d1be13e0b1f5fb187aecae17adb6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "9b756aa7547e015e517737cc4fb95ea2d81705991b39acdc69bd2be5aff1873d",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.update.completed",
+   "original_ref": "event:catalog_update_completed:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_completed:1",
+    "event_type": "catalog.update.completed",
+    "idempotency_key": "73062e934052e46e0f3d0976be3845bea7e5d1be13e0b1f5fb187aecae17adb6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "9b756aa7547e015e517737cc4fb95ea2d81705991b39acdc69bd2be5aff1873d",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.update.completed",
+   "original_ref": "event:catalog_update_completed:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_completed:1",
+    "event_type": "catalog.update.completed",
+    "idempotency_key": "73062e934052e46e0f3d0976be3845bea7e5d1be13e0b1f5fb187aecae17adb6",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "aa0e97526598182ee918deb8d0e9df509286c1f249ad7bac8f70b07de21bc448",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.update.completed",
+   "original_ref": "event:catalog_update_completed:1",
+   "write_recipe": "ds15-v0"
   },
   {
    "binding": {
@@ -820,7 +1460,135 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "12b4616877ccebb8595f059f7f23eb15ba814c7334704cbd845b77af24f59e0d",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.update.started",
+   "original_ref": "event:catalog_update_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_started:1",
+    "event_type": "catalog.update.started",
+    "idempotency_key": "7df5b6c242ec04d0c8cfa98ccf6152a5cdf92d0315511bbdd88248b8bed4c467",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "267a0cb5608e8a078a3bf68e5cae2c7d3c215685d8d8ccfe7527ec70e827e0a8",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.update.started",
+   "original_ref": "event:catalog_update_started:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_started:1",
+    "event_type": "catalog.update.started",
+    "idempotency_key": "7df5b6c242ec04d0c8cfa98ccf6152a5cdf92d0315511bbdd88248b8bed4c467",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "267a0cb5608e8a078a3bf68e5cae2c7d3c215685d8d8ccfe7527ec70e827e0a8",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.update.started",
+   "original_ref": "event:catalog_update_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_started:1",
+    "event_type": "catalog.update.started",
+    "idempotency_key": "7df5b6c242ec04d0c8cfa98ccf6152a5cdf92d0315511bbdd88248b8bed4c467",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "84afa580faf0124b0819559252c6ad5bc009c3481b4333cf5f54cd6ff8b352ba",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.update.started",
+   "original_ref": "event:catalog_update_started:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_started:1",
+    "event_type": "catalog.update.started",
+    "idempotency_key": "7df5b6c242ec04d0c8cfa98ccf6152a5cdf92d0315511bbdd88248b8bed4c467",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "84afa580faf0124b0819559252c6ad5bc009c3481b4333cf5f54cd6ff8b352ba",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.update.started",
+   "original_ref": "event:catalog_update_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_started:1",
+    "event_type": "catalog.update.started",
+    "idempotency_key": "7df5b6c242ec04d0c8cfa98ccf6152a5cdf92d0315511bbdd88248b8bed4c467",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "8e68d7f3918bfcc06c7e485c35648a6e521127d32f5249aa41b73549ea85c807",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.started",
+   "original_ref": "event:catalog_update_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_started:1",
+    "event_type": "catalog.update.started",
+    "idempotency_key": "7df5b6c242ec04d0c8cfa98ccf6152a5cdf92d0315511bbdd88248b8bed4c467",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "a141fdc231c3c51b81ec732ed1ab9065a31bb24caa7c9e8ae66bffc2f237e672",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.update.started",
+   "original_ref": "event:catalog_update_started:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_started:1",
+    "event_type": "catalog.update.started",
+    "idempotency_key": "7df5b6c242ec04d0c8cfa98ccf6152a5cdf92d0315511bbdd88248b8bed4c467",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "a7812fc72d4d777de5d24ac43a7d21fd733946dfc8f45d62f6d97f553d190f0f",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.update.started",
+   "original_ref": "event:catalog_update_started:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:catalog_update_started:1",
+    "event_type": "catalog.update.started",
+    "idempotency_key": "7df5b6c242ec04d0c8cfa98ccf6152a5cdf92d0315511bbdd88248b8bed4c467",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "c87381c54bb028182c6d409cd3cfe4c9bda979fece721b51f2ca71cfa6017417",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "catalog.update.started",
@@ -3092,7 +3860,87 @@
     "project_id": "sample_project_id",
     "scope_kind": "project",
     "server_id": "ds15-static-oracle",
+    "source_commitment": "458f61a9249ec61908f244ff06d79d999397b2663db0c1d315ebff9445471774",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "tool.custom_headless.skipped",
+   "original_ref": "event:tool_custom_headless_skipped:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:tool_custom_headless_skipped:1",
+    "event_type": "tool.custom_headless.skipped",
+    "idempotency_key": "3984e162c4d1ee9d06bfd7a42f4e6c49422b693952e1433012c57a9e4353013f",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "9b6bac66ff38535d2154b119faeb5cdddcd7b5762f77bc075eb21468a328198a",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "tool.custom_headless.skipped",
+   "original_ref": "event:tool_custom_headless_skipped:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:tool_custom_headless_skipped:1",
+    "event_type": "tool.custom_headless.skipped",
+    "idempotency_key": "3984e162c4d1ee9d06bfd7a42f4e6c49422b693952e1433012c57a9e4353013f",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "9b6bac66ff38535d2154b119faeb5cdddcd7b5762f77bc075eb21468a328198a",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "tool.custom_headless.skipped",
+   "original_ref": "event:tool_custom_headless_skipped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:tool_custom_headless_skipped:1",
+    "event_type": "tool.custom_headless.skipped",
+    "idempotency_key": "3984e162c4d1ee9d06bfd7a42f4e6c49422b693952e1433012c57a9e4353013f",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
     "source_commitment": "9b91911e02d26ab1f8ca1e276292ce57af6915ecd57e78add0e835ec3f9e89ba",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "tool.custom_headless.skipped",
+   "original_ref": "event:tool_custom_headless_skipped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:tool_custom_headless_skipped:1",
+    "event_type": "tool.custom_headless.skipped",
+    "idempotency_key": "3984e162c4d1ee9d06bfd7a42f4e6c49422b693952e1433012c57a9e4353013f",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "ae49a96fcc3de1eed80a1e490383d317e0b2b9d4815c35b54c6e7822d46b637a",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "tool.custom_headless.skipped",
+   "original_ref": "event:tool_custom_headless_skipped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:tool_custom_headless_skipped:1",
+    "event_type": "tool.custom_headless.skipped",
+    "idempotency_key": "3984e162c4d1ee9d06bfd7a42f4e6c49422b693952e1433012c57a9e4353013f",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "ee2a3f382a80f5780b25e84d7c55b4cba1b27c707993a1d2df9aa8e03de42362",
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "tool.custom_headless.skipped",
@@ -3112,6 +3960,54 @@
     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
    },
    "event_type": "tool.custom_headless.skipped",
+   "original_ref": "event:tool_custom_headless_skipped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:tool_custom_headless_skipped:1",
+    "event_type": "tool.custom_headless.skipped",
+    "idempotency_key": "3984e162c4d1ee9d06bfd7a42f4e6c49422b693952e1433012c57a9e4353013f",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "f9dc6e32d567f1e1bca1c9bb0340206815bca6416e97d675d0c8a97923bccb5d",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "tool.custom_headless.skipped",
+   "original_ref": "event:tool_custom_headless_skipped:1",
+   "write_recipe": "ds15-v0"
+  },
+  {
+   "binding": {
+    "event_id": "event:tool_custom_headless_skipped:1",
+    "event_type": "tool.custom_headless.skipped",
+    "idempotency_key": "3984e162c4d1ee9d06bfd7a42f4e6c49422b693952e1433012c57a9e4353013f",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "f9dc6e32d567f1e1bca1c9bb0340206815bca6416e97d675d0c8a97923bccb5d",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "tool.custom_headless.skipped",
+   "original_ref": "event:tool_custom_headless_skipped:1",
+   "write_recipe": "ds15-v1"
+  },
+  {
+   "binding": {
+    "event_id": "event:tool_custom_headless_skipped:1",
+    "event_type": "tool.custom_headless.skipped",
+    "idempotency_key": "3984e162c4d1ee9d06bfd7a42f4e6c49422b693952e1433012c57a9e4353013f",
+    "owner_operation_id": "correlation-51",
+    "project_id": "sample_project_id",
+    "scope_kind": "project",
+    "server_id": "ds15-static-oracle",
+    "source_commitment": "fcf38e6e66665bc8599efa39e46031a52300218b97f842a6a66926daf56f61f7",
+    "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+   },
+   "event_type": "catalog.install.started",
    "original_ref": "event:tool_custom_headless_skipped:1",
    "write_recipe": "ds15-v1"
   },

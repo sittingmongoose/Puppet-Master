@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L5368-L7584
+Source lines: L5368-L7572
 
-Source SHA256: `ae91f8f664fe4836837cf8796e57ec967e68ce836f081ac1b68b1e3ca56a2f4f`
+Source SHA256: `ec56b026d62ec52be4fcb4e9c2a23a32b02b8edf125fff3ea22285590b2e9778`
 
 ---
 
@@ -220,10 +220,10 @@ only under their actual typed original owner. Reject raw paths, file bodies, cre
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
 event/receipt/source backup epoch before reads; skew fences, never reconstructs originals.
-retention_policy_ref: PENDING_RETENTION_DECISION.
+Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref: PENDING_RETENTION_DECISION.»
 Candidate existing classes: receipt/audit/source-lineage authority versus ordinary telemetry or
 non-authority operational history (Storage Case L-3, SP-026; table at lines 17403-17418 at base
-be4766513f). No class is selected. File bytes, OS trash and FileSafe tombstone policies remain their
+be4766513f). Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «No class is selected.» File bytes, OS trash and FileSafe tombstone policies remain their
 own owners' policies. The generic checkpoint keeps SP-278's existing policy, with no new assignment.
 
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
@@ -278,19 +278,18 @@ plan_unit_id: F-150
 unit_type: contract
 status: accepted
 owner_doc: Plans/FileManager.md
-canonical_text: >-
-  file.copied@1.0.0 has its own prepared contract in the immediately preceding section.
-  Producer handlers::file::paste_nodes uses cmd.file.paste_nodes, original operation custody, SP-286/CV-339,
-  and its exact history reader reader.filemanager.file_copied.v1@1.0.0 through SP-278.
-  No admission, stored family projection, new filesystem behavior or retention choice is granted.
+canonical_text: |-
+  file.copied@1.0.0 has its own prepared contract in the immediately preceding section. Producer handlers::file::paste_nodes uses cmd.file.paste_nodes, original operation custody, SP-286/CV-339, and its exact history reader reader.filemanager.file_copied.v1@1.0.0 through SP-278. No admission, stored family projection, new filesystem behavior or retention choice is granted.
+
+  Current selected assignment (2026-11-19): file.copied@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2295. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-560 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Binds internal event persistence for existing file actions.
 split_recommended: false
 depends_on: [DL-045, SP-278, SP-286, CV-339, SP-560, CV-560, ATS-280]
 unblocks: []
 acceptance_criteria:
-  - Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced.
-  - PENDING_RETENTION_DECISION and absent admission prohibit runtime append.
+  - "Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced."
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «PENDING_RETENTION_DECISION and absent admission prohibit runtime append.»"
 validation_surfaces:
   - python3 scripts/pm-filemanager-event-contracts.py
   - python3 scripts/pm-plan-index.py validate
@@ -396,10 +395,10 @@ only under their actual typed original owner. Reject raw paths, file bodies, cre
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
 event/receipt/source backup epoch before reads; skew fences, never reconstructs originals.
-retention_policy_ref: PENDING_RETENTION_DECISION.
+Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref: PENDING_RETENTION_DECISION.»
 Candidate existing classes: receipt/audit/source-lineage authority versus ordinary telemetry or
 non-authority operational history (Storage Case L-3, SP-026; table at lines 17403-17418 at base
-be4766513f). No class is selected. File bytes, OS trash and FileSafe tombstone policies remain their
+be4766513f). Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «No class is selected.» File bytes, OS trash and FileSafe tombstone policies remain their
 own owners' policies. The generic checkpoint keeps SP-278's existing policy, with no new assignment.
 
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
@@ -454,19 +453,18 @@ plan_unit_id: F-151
 unit_type: contract
 status: accepted
 owner_doc: Plans/FileManager.md
-canonical_text: >-
-  file.created@1.0.0 has its own prepared contract in the immediately preceding section.
-  Producer handlers::file::new_file uses cmd.file.new_file, original operation custody, SP-286/CV-339,
-  and its exact history reader reader.filemanager.file_created.v1@1.0.0 through SP-278.
-  No admission, stored family projection, new filesystem behavior or retention choice is granted.
+canonical_text: |-
+  file.created@1.0.0 has its own prepared contract in the immediately preceding section. Producer handlers::file::new_file uses cmd.file.new_file, original operation custody, SP-286/CV-339, and its exact history reader reader.filemanager.file_created.v1@1.0.0 through SP-278. No admission, stored family projection, new filesystem behavior or retention choice is granted.
+
+  Current selected assignment (2026-11-19): file.created@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2296. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-560 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Binds internal event persistence for existing file actions.
 split_recommended: false
 depends_on: [DL-045, SP-278, SP-286, CV-339, SP-560, CV-560, ATS-280]
 unblocks: []
 acceptance_criteria:
-  - Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced.
-  - PENDING_RETENTION_DECISION and absent admission prohibit runtime append.
+  - "Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced."
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «PENDING_RETENTION_DECISION and absent admission prohibit runtime append.»"
 validation_surfaces:
   - python3 scripts/pm-filemanager-event-contracts.py
   - python3 scripts/pm-plan-index.py validate
@@ -570,10 +568,10 @@ only under their actual typed original owner. Reject raw paths, file bodies, cre
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
 event/receipt/source backup epoch before reads; skew fences, never reconstructs originals.
-retention_policy_ref: PENDING_RETENTION_DECISION.
+Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref: PENDING_RETENTION_DECISION.»
 Candidate existing classes: receipt/audit/source-lineage authority versus ordinary telemetry or
 non-authority operational history (Storage Case L-3, SP-026; table at lines 17403-17418 at base
-be4766513f). No class is selected. File bytes, OS trash and FileSafe tombstone policies remain their
+be4766513f). Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «No class is selected.» File bytes, OS trash and FileSafe tombstone policies remain their
 own owners' policies. The generic checkpoint keeps SP-278's existing policy, with no new assignment.
 
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
@@ -628,19 +626,18 @@ plan_unit_id: F-152
 unit_type: contract
 status: accepted
 owner_doc: Plans/FileManager.md
-canonical_text: >-
-  file.deleted@1.0.0 has its own prepared contract in the immediately preceding section.
-  Producer handlers::file::delete uses cmd.file.delete, original operation custody, SP-286/CV-339,
-  and its exact history reader reader.filemanager.file_deleted.v1@1.0.0 through SP-278.
-  No admission, stored family projection, new filesystem behavior or retention choice is granted.
+canonical_text: |-
+  file.deleted@1.0.0 has its own prepared contract in the immediately preceding section. Producer handlers::file::delete uses cmd.file.delete, original operation custody, SP-286/CV-339, and its exact history reader reader.filemanager.file_deleted.v1@1.0.0 through SP-278. No admission, stored family projection, new filesystem behavior or retention choice is granted.
+
+  Current selected assignment (2026-11-19): file.deleted@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2297. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-560 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Binds internal event persistence for existing file actions.
 split_recommended: false
 depends_on: [DL-045, SP-278, SP-286, CV-339, SP-560, CV-560, ATS-280]
 unblocks: []
 acceptance_criteria:
-  - Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced.
-  - PENDING_RETENTION_DECISION and absent admission prohibit runtime append.
+  - "Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced."
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «PENDING_RETENTION_DECISION and absent admission prohibit runtime append.»"
 validation_surfaces:
   - python3 scripts/pm-filemanager-event-contracts.py
   - python3 scripts/pm-plan-index.py validate
@@ -744,10 +741,10 @@ only under their actual typed original owner. Reject raw paths, file bodies, cre
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
 event/receipt/source backup epoch before reads; skew fences, never reconstructs originals.
-retention_policy_ref: PENDING_RETENTION_DECISION.
+Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref: PENDING_RETENTION_DECISION.»
 Candidate existing classes: receipt/audit/source-lineage authority versus ordinary telemetry or
 non-authority operational history (Storage Case L-3, SP-026; table at lines 17403-17418 at base
-be4766513f). No class is selected. File bytes, OS trash and FileSafe tombstone policies remain their
+be4766513f). Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «No class is selected.» File bytes, OS trash and FileSafe tombstone policies remain their
 own owners' policies. The generic checkpoint keeps SP-278's existing policy, with no new assignment.
 
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
@@ -802,19 +799,18 @@ plan_unit_id: F-153
 unit_type: contract
 status: accepted
 owner_doc: Plans/FileManager.md
-canonical_text: >-
-  file.exported@1.0.0 has its own prepared contract in the immediately preceding section.
-  Producer handlers::file::save_local_copy uses cmd.file.save_local_copy, original operation custody, SP-286/CV-339,
-  and its exact history reader reader.filemanager.file_exported.v1@1.0.0 through SP-278.
-  No admission, stored family projection, new filesystem behavior or retention choice is granted.
+canonical_text: |-
+  file.exported@1.0.0 has its own prepared contract in the immediately preceding section. Producer handlers::file::save_local_copy uses cmd.file.save_local_copy, original operation custody, SP-286/CV-339, and its exact history reader reader.filemanager.file_exported.v1@1.0.0 through SP-278. No admission, stored family projection, new filesystem behavior or retention choice is granted.
+
+  Current selected assignment (2026-11-19): file.exported@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2298. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-560 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Binds internal event persistence for existing file actions.
 split_recommended: false
 depends_on: [DL-045, SP-278, SP-286, CV-339, SP-560, CV-560, ATS-280]
 unblocks: []
 acceptance_criteria:
-  - Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced.
-  - PENDING_RETENTION_DECISION and absent admission prohibit runtime append.
+  - "Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced."
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «PENDING_RETENTION_DECISION and absent admission prohibit runtime append.»"
 validation_surfaces:
   - python3 scripts/pm-filemanager-event-contracts.py
   - python3 scripts/pm-plan-index.py validate
@@ -918,10 +914,10 @@ only under their actual typed original owner. Reject raw paths, file bodies, cre
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
 event/receipt/source backup epoch before reads; skew fences, never reconstructs originals.
-retention_policy_ref: PENDING_RETENTION_DECISION.
+Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref: PENDING_RETENTION_DECISION.»
 Candidate existing classes: receipt/audit/source-lineage authority versus ordinary telemetry or
 non-authority operational history (Storage Case L-3, SP-026; table at lines 17403-17418 at base
-be4766513f). No class is selected. File bytes, OS trash and FileSafe tombstone policies remain their
+be4766513f). Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «No class is selected.» File bytes, OS trash and FileSafe tombstone policies remain their
 own owners' policies. The generic checkpoint keeps SP-278's existing policy, with no new assignment.
 
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
@@ -976,19 +972,18 @@ plan_unit_id: F-154
 unit_type: contract
 status: accepted
 owner_doc: Plans/FileManager.md
-canonical_text: >-
-  file.moved@1.0.0 has its own prepared contract in the immediately preceding section.
-  Producer handlers::file::paste_nodes uses cmd.file.paste_nodes, original operation custody, SP-286/CV-339,
-  and its exact history reader reader.filemanager.file_moved.v1@1.0.0 through SP-278.
-  No admission, stored family projection, new filesystem behavior or retention choice is granted.
+canonical_text: |-
+  file.moved@1.0.0 has its own prepared contract in the immediately preceding section. Producer handlers::file::paste_nodes uses cmd.file.paste_nodes, original operation custody, SP-286/CV-339, and its exact history reader reader.filemanager.file_moved.v1@1.0.0 through SP-278. No admission, stored family projection, new filesystem behavior or retention choice is granted.
+
+  Current selected assignment (2026-11-19): file.moved@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2299. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-560 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Binds internal event persistence for existing file actions.
 split_recommended: false
 depends_on: [DL-045, SP-278, SP-286, CV-339, SP-560, CV-560, ATS-280]
 unblocks: []
 acceptance_criteria:
-  - Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced.
-  - PENDING_RETENTION_DECISION and absent admission prohibit runtime append.
+  - "Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced."
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «PENDING_RETENTION_DECISION and absent admission prohibit runtime append.»"
 validation_surfaces:
   - python3 scripts/pm-filemanager-event-contracts.py
   - python3 scripts/pm-plan-index.py validate
@@ -1092,10 +1087,10 @@ only under their actual typed original owner. Reject raw paths, file bodies, cre
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
 event/receipt/source backup epoch before reads; skew fences, never reconstructs originals.
-retention_policy_ref: PENDING_RETENTION_DECISION.
+Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref: PENDING_RETENTION_DECISION.»
 Candidate existing classes: receipt/audit/source-lineage authority versus ordinary telemetry or
 non-authority operational history (Storage Case L-3, SP-026; table at lines 17403-17418 at base
-be4766513f). No class is selected. File bytes, OS trash and FileSafe tombstone policies remain their
+be4766513f). Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «No class is selected.» File bytes, OS trash and FileSafe tombstone policies remain their
 own owners' policies. The generic checkpoint keeps SP-278's existing policy, with no new assignment.
 
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
@@ -1150,19 +1145,18 @@ plan_unit_id: F-155
 unit_type: contract
 status: accepted
 owner_doc: Plans/FileManager.md
-canonical_text: >-
-  file.renamed@1.0.0 has its own prepared contract in the immediately preceding section.
-  Producer handlers::file::rename uses cmd.file.rename, original operation custody, SP-286/CV-339,
-  and its exact history reader reader.filemanager.file_renamed.v1@1.0.0 through SP-278.
-  No admission, stored family projection, new filesystem behavior or retention choice is granted.
+canonical_text: |-
+  file.renamed@1.0.0 has its own prepared contract in the immediately preceding section. Producer handlers::file::rename uses cmd.file.rename, original operation custody, SP-286/CV-339, and its exact history reader reader.filemanager.file_renamed.v1@1.0.0 through SP-278. No admission, stored family projection, new filesystem behavior or retention choice is granted.
+
+  Current selected assignment (2026-11-19): file.renamed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2300. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-560 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Binds internal event persistence for existing file actions.
 split_recommended: false
 depends_on: [DL-045, SP-278, SP-286, CV-339, SP-560, CV-560, ATS-280]
 unblocks: []
 acceptance_criteria:
-  - Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced.
-  - PENDING_RETENTION_DECISION and absent admission prohibit runtime append.
+  - "Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced."
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «PENDING_RETENTION_DECISION and absent admission prohibit runtime append.»"
 validation_surfaces:
   - python3 scripts/pm-filemanager-event-contracts.py
   - python3 scripts/pm-plan-index.py validate
@@ -1268,10 +1262,10 @@ only under their actual typed original owner. Reject raw paths, file bodies, cre
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
 event/receipt/source backup epoch before reads; skew fences, never reconstructs originals.
-retention_policy_ref: PENDING_RETENTION_DECISION.
+Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref: PENDING_RETENTION_DECISION.»
 Candidate existing classes: receipt/audit/source-lineage authority versus ordinary telemetry or
 non-authority operational history (Storage Case L-3, SP-026; table at lines 17403-17418 at base
-be4766513f). No class is selected. File bytes, OS trash and FileSafe tombstone policies remain their
+be4766513f). Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «No class is selected.» File bytes, OS trash and FileSafe tombstone policies remain their
 own owners' policies. The generic checkpoint keeps SP-278's existing policy, with no new assignment.
 
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
@@ -1326,19 +1320,18 @@ plan_unit_id: F-156
 unit_type: contract
 status: accepted
 owner_doc: Plans/FileManager.md
-canonical_text: >-
-  folder.copied@1.0.0 has its own prepared contract in the immediately preceding section.
-  Producer handlers::file::paste_nodes uses cmd.file.paste_nodes, original operation custody, SP-286/CV-339,
-  and its exact history reader reader.filemanager.folder_copied.v1@1.0.0 through SP-278.
-  No admission, stored family projection, new filesystem behavior or retention choice is granted.
+canonical_text: |-
+  folder.copied@1.0.0 has its own prepared contract in the immediately preceding section. Producer handlers::file::paste_nodes uses cmd.file.paste_nodes, original operation custody, SP-286/CV-339, and its exact history reader reader.filemanager.folder_copied.v1@1.0.0 through SP-278. No admission, stored family projection, new filesystem behavior or retention choice is granted.
+
+  Current selected assignment (2026-11-19): folder.copied@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2308. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-560 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Binds internal event persistence for existing file actions.
 split_recommended: false
 depends_on: [DL-045, SP-278, SP-286, CV-339, SP-560, CV-560, ATS-280]
 unblocks: []
 acceptance_criteria:
-  - Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced.
-  - PENDING_RETENTION_DECISION and absent admission prohibit runtime append.
+  - "Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced."
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «PENDING_RETENTION_DECISION and absent admission prohibit runtime append.»"
 validation_surfaces:
   - python3 scripts/pm-filemanager-event-contracts.py
   - python3 scripts/pm-plan-index.py validate
@@ -1444,10 +1437,10 @@ only under their actual typed original owner. Reject raw paths, file bodies, cre
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
 event/receipt/source backup epoch before reads; skew fences, never reconstructs originals.
-retention_policy_ref: PENDING_RETENTION_DECISION.
+Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref: PENDING_RETENTION_DECISION.»
 Candidate existing classes: receipt/audit/source-lineage authority versus ordinary telemetry or
 non-authority operational history (Storage Case L-3, SP-026; table at lines 17403-17418 at base
-be4766513f). No class is selected. File bytes, OS trash and FileSafe tombstone policies remain their
+be4766513f). Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «No class is selected.» File bytes, OS trash and FileSafe tombstone policies remain their
 own owners' policies. The generic checkpoint keeps SP-278's existing policy, with no new assignment.
 
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
@@ -1502,19 +1495,18 @@ plan_unit_id: F-157
 unit_type: contract
 status: accepted
 owner_doc: Plans/FileManager.md
-canonical_text: >-
-  folder.created@1.0.0 has its own prepared contract in the immediately preceding section.
-  Producer handlers::file::new_folder uses cmd.file.new_folder, original operation custody, SP-286/CV-339,
-  and its exact history reader reader.filemanager.folder_created.v1@1.0.0 through SP-278.
-  No admission, stored family projection, new filesystem behavior or retention choice is granted.
+canonical_text: |-
+  folder.created@1.0.0 has its own prepared contract in the immediately preceding section. Producer handlers::file::new_folder uses cmd.file.new_folder, original operation custody, SP-286/CV-339, and its exact history reader reader.filemanager.folder_created.v1@1.0.0 through SP-278. No admission, stored family projection, new filesystem behavior or retention choice is granted.
+
+  Current selected assignment (2026-11-19): folder.created@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2309. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-560 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Binds internal event persistence for existing file actions.
 split_recommended: false
 depends_on: [DL-045, SP-278, SP-286, CV-339, SP-560, CV-560, ATS-280]
 unblocks: []
 acceptance_criteria:
-  - Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced.
-  - PENDING_RETENTION_DECISION and absent admission prohibit runtime append.
+  - "Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced."
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «PENDING_RETENTION_DECISION and absent admission prohibit runtime append.»"
 validation_surfaces:
   - python3 scripts/pm-filemanager-event-contracts.py
   - python3 scripts/pm-plan-index.py validate
@@ -1618,10 +1610,10 @@ only under their actual typed original owner. Reject raw paths, file bodies, cre
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
 event/receipt/source backup epoch before reads; skew fences, never reconstructs originals.
-retention_policy_ref: PENDING_RETENTION_DECISION.
+Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref: PENDING_RETENTION_DECISION.»
 Candidate existing classes: receipt/audit/source-lineage authority versus ordinary telemetry or
 non-authority operational history (Storage Case L-3, SP-026; table at lines 17403-17418 at base
-be4766513f). No class is selected. File bytes, OS trash and FileSafe tombstone policies remain their
+be4766513f). Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «No class is selected.» File bytes, OS trash and FileSafe tombstone policies remain their
 own owners' policies. The generic checkpoint keeps SP-278's existing policy, with no new assignment.
 
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
@@ -1676,19 +1668,18 @@ plan_unit_id: F-158
 unit_type: contract
 status: accepted
 owner_doc: Plans/FileManager.md
-canonical_text: >-
-  folder.deleted@1.0.0 has its own prepared contract in the immediately preceding section.
-  Producer handlers::file::delete uses cmd.file.delete, original operation custody, SP-286/CV-339,
-  and its exact history reader reader.filemanager.folder_deleted.v1@1.0.0 through SP-278.
-  No admission, stored family projection, new filesystem behavior or retention choice is granted.
+canonical_text: |-
+  folder.deleted@1.0.0 has its own prepared contract in the immediately preceding section. Producer handlers::file::delete uses cmd.file.delete, original operation custody, SP-286/CV-339, and its exact history reader reader.filemanager.folder_deleted.v1@1.0.0 through SP-278. No admission, stored family projection, new filesystem behavior or retention choice is granted.
+
+  Current selected assignment (2026-11-19): folder.deleted@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2310. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-560 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Binds internal event persistence for existing file actions.
 split_recommended: false
 depends_on: [DL-045, SP-278, SP-286, CV-339, SP-560, CV-560, ATS-280]
 unblocks: []
 acceptance_criteria:
-  - Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced.
-  - PENDING_RETENTION_DECISION and absent admission prohibit runtime append.
+  - "Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced."
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «PENDING_RETENTION_DECISION and absent admission prohibit runtime append.»"
 validation_surfaces:
   - python3 scripts/pm-filemanager-event-contracts.py
   - python3 scripts/pm-plan-index.py validate
@@ -1792,10 +1783,10 @@ only under their actual typed original owner. Reject raw paths, file bodies, cre
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
 event/receipt/source backup epoch before reads; skew fences, never reconstructs originals.
-retention_policy_ref: PENDING_RETENTION_DECISION.
+Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref: PENDING_RETENTION_DECISION.»
 Candidate existing classes: receipt/audit/source-lineage authority versus ordinary telemetry or
 non-authority operational history (Storage Case L-3, SP-026; table at lines 17403-17418 at base
-be4766513f). No class is selected. File bytes, OS trash and FileSafe tombstone policies remain their
+be4766513f). Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «No class is selected.» File bytes, OS trash and FileSafe tombstone policies remain their
 own owners' policies. The generic checkpoint keeps SP-278's existing policy, with no new assignment.
 
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
@@ -1850,19 +1841,18 @@ plan_unit_id: F-159
 unit_type: contract
 status: accepted
 owner_doc: Plans/FileManager.md
-canonical_text: >-
-  folder.exported@1.0.0 has its own prepared contract in the immediately preceding section.
-  Producer handlers::file::save_local_copy uses cmd.file.save_local_copy, original operation custody, SP-286/CV-339,
-  and its exact history reader reader.filemanager.folder_exported.v1@1.0.0 through SP-278.
-  No admission, stored family projection, new filesystem behavior or retention choice is granted.
+canonical_text: |-
+  folder.exported@1.0.0 has its own prepared contract in the immediately preceding section. Producer handlers::file::save_local_copy uses cmd.file.save_local_copy, original operation custody, SP-286/CV-339, and its exact history reader reader.filemanager.folder_exported.v1@1.0.0 through SP-278. No admission, stored family projection, new filesystem behavior or retention choice is granted.
+
+  Current selected assignment (2026-11-19): folder.exported@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2311. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-560 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Binds internal event persistence for existing file actions.
 split_recommended: false
 depends_on: [DL-045, SP-278, SP-286, CV-339, SP-560, CV-560, ATS-280]
 unblocks: []
 acceptance_criteria:
-  - Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced.
-  - PENDING_RETENTION_DECISION and absent admission prohibit runtime append.
+  - "Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced."
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «PENDING_RETENTION_DECISION and absent admission prohibit runtime append.»"
 validation_surfaces:
   - python3 scripts/pm-filemanager-event-contracts.py
   - python3 scripts/pm-plan-index.py validate
@@ -1966,10 +1956,10 @@ only under their actual typed original owner. Reject raw paths, file bodies, cre
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
 event/receipt/source backup epoch before reads; skew fences, never reconstructs originals.
-retention_policy_ref: PENDING_RETENTION_DECISION.
+Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref: PENDING_RETENTION_DECISION.»
 Candidate existing classes: receipt/audit/source-lineage authority versus ordinary telemetry or
 non-authority operational history (Storage Case L-3, SP-026; table at lines 17403-17418 at base
-be4766513f). No class is selected. File bytes, OS trash and FileSafe tombstone policies remain their
+be4766513f). Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «No class is selected.» File bytes, OS trash and FileSafe tombstone policies remain their
 own owners' policies. The generic checkpoint keeps SP-278's existing policy, with no new assignment.
 
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
@@ -2024,19 +2014,18 @@ plan_unit_id: F-160
 unit_type: contract
 status: accepted
 owner_doc: Plans/FileManager.md
-canonical_text: >-
-  folder.moved@1.0.0 has its own prepared contract in the immediately preceding section.
-  Producer handlers::file::paste_nodes uses cmd.file.paste_nodes, original operation custody, SP-286/CV-339,
-  and its exact history reader reader.filemanager.folder_moved.v1@1.0.0 through SP-278.
-  No admission, stored family projection, new filesystem behavior or retention choice is granted.
+canonical_text: |-
+  folder.moved@1.0.0 has its own prepared contract in the immediately preceding section. Producer handlers::file::paste_nodes uses cmd.file.paste_nodes, original operation custody, SP-286/CV-339, and its exact history reader reader.filemanager.folder_moved.v1@1.0.0 through SP-278. No admission, stored family projection, new filesystem behavior or retention choice is granted.
+
+  Current selected assignment (2026-11-19): folder.moved@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2312. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-560 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Binds internal event persistence for existing file actions.
 split_recommended: false
 depends_on: [DL-045, SP-278, SP-286, CV-339, SP-560, CV-560, ATS-280]
 unblocks: []
 acceptance_criteria:
-  - Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced.
-  - PENDING_RETENTION_DECISION and absent admission prohibit runtime append.
+  - "Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced."
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «PENDING_RETENTION_DECISION and absent admission prohibit runtime append.»"
 validation_surfaces:
   - python3 scripts/pm-filemanager-event-contracts.py
   - python3 scripts/pm-plan-index.py validate
@@ -2140,10 +2129,10 @@ only under their actual typed original owner. Reject raw paths, file bodies, cre
 secrets and arbitrary evidence text. A retained event or backup does not grant access to a deleted,
 expired or unauthorized body; render its reference unavailable. Restore reconciles the original
 event/receipt/source backup epoch before reads; skew fences, never reconstructs originals.
-retention_policy_ref: PENDING_RETENTION_DECISION.
+Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref: PENDING_RETENTION_DECISION.»
 Candidate existing classes: receipt/audit/source-lineage authority versus ordinary telemetry or
 non-authority operational history (Storage Case L-3, SP-026; table at lines 17403-17418 at base
-be4766513f). No class is selected. File bytes, OS trash and FileSafe tombstone policies remain their
+be4766513f). Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «No class is selected.» File bytes, OS trash and FileSafe tombstone policies remain their
 own owners' policies. The generic checkpoint keeps SP-278's existing policy, with no new assignment.
 
 **Compatibility and withdrawal.** Dispatch only this exact schema ID and 1.0.0; unknown revisions
@@ -2198,19 +2187,18 @@ plan_unit_id: F-161
 unit_type: contract
 status: accepted
 owner_doc: Plans/FileManager.md
-canonical_text: >-
-  folder.renamed@1.0.0 has its own prepared contract in the immediately preceding section.
-  Producer handlers::file::rename uses cmd.file.rename, original operation custody, SP-286/CV-339,
-  and its exact history reader reader.filemanager.folder_renamed.v1@1.0.0 through SP-278.
-  No admission, stored family projection, new filesystem behavior or retention choice is granted.
+canonical_text: |-
+  folder.renamed@1.0.0 has its own prepared contract in the immediately preceding section. Producer handlers::file::rename uses cmd.file.rename, original operation custody, SP-286/CV-339, and its exact history reader reader.filemanager.folder_renamed.v1@1.0.0 through SP-278. No admission, stored family projection, new filesystem behavior or retention choice is granted.
+
+  Current selected assignment (2026-11-19): folder.renamed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2313. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-560 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Binds internal event persistence for existing file actions.
 split_recommended: false
 depends_on: [DL-045, SP-278, SP-286, CV-339, SP-560, CV-560, ATS-280]
 unblocks: []
 acceptance_criteria:
-  - Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced.
-  - PENDING_RETENTION_DECISION and absent admission prohibit runtime append.
+  - "Exact family schema, identity, receipt ordering, replay, custody and withdrawal are enforced."
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «PENDING_RETENTION_DECISION and absent admission prohibit runtime append.»"
 validation_surfaces:
   - python3 scripts/pm-filemanager-event-contracts.py
   - python3 scripts/pm-plan-index.py validate

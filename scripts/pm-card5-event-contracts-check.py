@@ -34,6 +34,7 @@ import pm_dg6a_table_decision_citation as _decision_table  # noqa: E402
 import pm_dg6a_table_storage_schema as _storage_table  # noqa: E402
 import pm_dg6a_table_current_header as _current_table  # noqa: E402
 import pm_dg6a_table_current_context as _context_table  # noqa: E402
+import pm_dg6a_table_current_context__2 as _context_table_2  # noqa: E402
 import pm_dg6a_tables as tables  # noqa: E402
 import pm_dg6a_p2a_witnesses as p2a_witnesses  # noqa: E402
 import pm_dg6a_p2b_witnesses as p2b_witnesses  # noqa: E402
@@ -44,7 +45,9 @@ _STORAGE_ROWS = [(name, guard.predicate) for name, guard in _storage_table.case(
 STORAGE_RECORDER = None
 _CURRENT_ROWS = [(name, guard.predicate) for name, guard in _current_table.case(None).table.guards.items()]
 CURRENT_RECORDER = None
-_CONTEXT_ROWS = [(name, guard.predicate) for name, guard in _context_table.case(None).table.guards.items()]
+# current_context is bounded (at most eight rows per gated table): CC01-CC08 then CC09-CC11, in order.
+_CONTEXT_ROWS = [(name, guard.predicate) for table in (_context_table, _context_table_2)
+                 for name, guard in table.case(None).table.guards.items()]
 CONTEXT_RECORDER = None
 
 
@@ -58,6 +61,19 @@ def identity(operation, family):
 
 def request_digest(operation):
     return digest({k: operation[k] for k in ('original_command', 'payload', 'before', 'after')})
+
+
+def encodable_request_digest(operation):
+    """request_digest, or None when the canonical MessagePack recipe cannot encode the preimage.
+
+    CV-1100 sets no schema integer cap, so a schema-valid 4,400-digit revision reaches here; SP-1100 makes
+    an integer outside the recipe's -2^63..2^64-1 domain a route refusal, never a crash (C12-DG6A finding,
+    the alert/panel/concern checkers' encoded_size rule).
+    """
+    try:
+        return request_digest(operation)
+    except (ValueError, TypeError):
+        return None
 
 
 _checked_schemas = []
@@ -247,10 +263,12 @@ def operation_observation(operation, family):
         assert name not in guards, name
         guards[name] = result is True
 
-    require('operation_bytes', len(packed(operation)) <= 16384)
+    size = shared.encoded_size(operation)  # None: the canonical recipe cannot encode it (a route refusal)
+    require('operation_bytes', size is not None and size <= 16384)
     require('operation_identity', operation['operation_digest'] == identity(operation, family))
     require('event_identity', operation['event_id'] == 'evt_' + family['slug'] + '_' + identity(operation, family))
-    require('request_digest', operation['request_digest'] == request_digest(operation))
+    expected_request = encodable_request_digest(operation)
+    require('request_digest', expected_request is not None and operation['request_digest'] == expected_request)
     require('project_join', operation['project_id'] == p['project_id'])
     require('key_join', operation['idempotency_key'] == p['idempotency_key'])
     require('partition', operation['scope_partition'] == 'project~' + base64.urlsafe_b64encode(operation['project_id'].encode()).decode().rstrip('='))
@@ -474,7 +492,7 @@ def current_errors(operation, context, family, schema):
     if errors:
         return errors
     # The context flags and exact original joins refuse only through
-    # scripts/pm_dg6a_table_current_context.py rows; every refusing row's
+    # scripts/pm_dg6a_table_current_context.py and _current_context__2.py rows; every refusing row's
     # code is collected in table order, as the pre-table loops appended them.
     observed = current_context_observation(operation, context)
     refused = []
@@ -597,6 +615,25 @@ def p2b_card5(fixture, family, schemas):
     return [dict(name='sweep_p2b_witness_' + str(i), stage='p2b', expected=[], actual=[]) for i in range(count)]
 
 
+def big_integer_cases(fixture, family, schemas):
+    """C12-DG6A: a schema-valid 4,400-digit revision (CV-1100 sets no cap) refuses through operation_bytes and
+    request_digest, the canonical MessagePack route refusal of SP-1100, and never raises."""
+    if not family['operation_schema'] or 'current' not in fixture['bases']:
+        return []
+    observations = []
+    for path in (('payload', 'prior_revision'), ('payload', 'result_revision'), ('after', 'revision')):
+        operation = copy.deepcopy(fixture['bases']['current']['operation'])
+        if not isinstance(operation.get(path[0]), dict) or path[1] not in operation[path[0]]:
+            continue
+        operation[path[0]][path[1]] = 10 ** 4399
+        assert not schema_errors(operation, schemas['operation_schema']), path
+        actual = operation_refusals(operation, family, schemas['operation_schema'])
+        assert actual[:2] == ['operation_bytes', 'request_digest'], (family['event_type'], path, actual)
+        observations.append(dict(name='c12_4400_digit_' + '_'.join(path), stage='operation',
+                                 expected=['operation_bytes', 'request_digest'], actual=actual[:2]))
+    return observations
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--family', required=True)
@@ -683,6 +720,7 @@ def main():
         observations += [dict(name='sweep_p2a_mapping_witness_' + str(i), stage='mapping', expected=['mapping_shape'],
                               actual=['mapping_shape']) for i in range(witnessed)]
     observations += p2b_card5(fixture, family, schemas)
+    observations += big_integer_cases(fixture, family, schemas)
     checkpoint = fixture['bases']['history']['request']['checkpoint']
     original = fixture['bases']['history']['expected']['event']
     boundary_count = shared.history_response_cases(checkpoint, schemas['checkpoint_schema'], family['event_type'], 'fixture', original)
@@ -698,10 +736,23 @@ def main():
     assert refs == [event['event_ref'] for event in events]
     observations.append(dict(name='complete_1000_match_traversal', expected=[], actual=[]))
     result = dict(status='pass', event_type=family['event_type'], cases=len(observations) + boundary_count, boundary_cases=boundary_count,
-                  admission='ABSENT', native='NOT_RUN', isolation='PENDING_SHARED_TOOL', observations=observations)
+                  admission=admission_label(family['event_type']), native='NOT_RUN', isolation='PENDING_SHARED_TOOL', observations=observations)
     if args.output:
         Path(args.output).write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps({k: v for k, v in result.items() if k != 'observations'}, indent=2))
+
+
+def admission_label(event_type):
+    """The result's admission label, record-guarded (PNC-019 stream E; scripts/pm_ea_admission_mode.py lane_gate).
+
+    ABSENT while the family is prepared (unregistered, no record); RECORD_BOUND when it is registered as its exact,
+    complete DL-077 admission. Any other state (registered without its record, a record that does not match, a record
+    without its registration) fails the run, naming the admission-mode code. No grade verdict changes.
+    """
+    import pm_ea_admission_mode as admission_mode
+    summary, failures = admission_mode.lane_gate([event_type], root=ROOT)
+    assert not failures, ('admission mode refused', failures)
+    return 'RECORD_BOUND' if summary['counts']['admitted'] else 'ABSENT'
 
 
 if __name__ == '__main__':

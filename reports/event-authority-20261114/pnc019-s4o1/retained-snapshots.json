@@ -1,0 +1,630 @@
+{
+  "DC.retained.json": {
+    "calls": 603,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 411,
+      "refused:original_unavailable": 72,
+      "refused:original_verification": 60,
+      "refused:recipe_unknown": 60
+    },
+    "custody_maps": [],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_collaboration_events.py:1219"
+    ],
+    "families": {
+      "collaboration.created": 147,
+      "collaboration.started": 32,
+      "collaboration.paused": 32,
+      "collaboration.resumed": 32,
+      "collaboration.cancelled": 36,
+      "collaboration.completed": 32,
+      "collaboration.failed": 32,
+      "collaboration.participant_started": 32,
+      "collaboration.participant_completed": 32,
+      "collaboration.message_added": 32,
+      "collaboration.artifact_added": 32,
+      "collaboration.configuration_changed": 32,
+      "brainstorm.proposal_added": 32,
+      "brainstorm.vote_added": 32,
+      "brainstorm.plan_synthesized": 36
+    }
+  },
+  "DCH-stop.retained.json": {
+    "calls": 0,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {},
+    "custody_maps": [],
+    "owner_sources": [],
+    "families": {}
+  },
+  "DCH.retained.json": {
+    "calls": 13881,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 6105,
+      "exception": 7742,
+      "refused:original_binding": 34
+    },
+    "custody_maps": [
+      "CUSTODY",
+      "RECIPE_RECEIPTS"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_dch_events.py:385"
+    ],
+    "families": {
+      "bundle.selection_forward_blocked": 777,
+      "bundle.selection_sent_to_chat": 777,
+      "chat.message": 777,
+      "chat.thread_archived": 777,
+      "chat.thread_created": 777,
+      "chat.thread_deleted": 777,
+      "chat.thread_worktree_bound": 777,
+      "chat.thread_worktree_create_failed": 777,
+      "chat.thread_worktree_merge_failed": 777,
+      "chat.thread_worktree_merged": 777,
+      "chat.thread_worktree_pr_created": 875,
+      "chat.thread_worktree_pr_failed": 777,
+      "chat.thread_worktree_pre_merge_test_failed": 777,
+      "chat.thread_worktree_pre_merge_test_started": 1351,
+      "chat.thread_worktree_pre_merge_test_passed": 777,
+      "chat.thread_worktree_renamed": 777,
+      "chat.thread_worktree_unbound": 777
+    }
+  },
+  "DF.retained.json": {
+    "calls": 0,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {},
+    "custody_maps": [],
+    "owner_sources": [],
+    "families": {}
+  },
+  "DFM.retained.json": {
+    "calls": 432,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 330,
+      "exception": 42,
+      "refused:original_unavailable": 36,
+      "refused:recipe_unknown": 24
+    },
+    "custody_maps": [
+      "CUSTODY_ENTRY_FIELDS"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm-filemanager-event-contracts.py:1398"
+    ],
+    "families": {
+      "file.copied": 40,
+      "file.created": 32,
+      "file.deleted": 32,
+      "file.exported": 40,
+      "file.moved": 40,
+      "file.renamed": 32,
+      "folder.copied": 40,
+      "folder.created": 32,
+      "folder.deleted": 32,
+      "folder.exported": 40,
+      "folder.moved": 40,
+      "folder.renamed": 32
+    }
+  },
+  "DF-authority.retained.json": {
+    "calls": 2563,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 2178,
+      "refused:original_missing": 210,
+      "refused:original_verification": 105,
+      "refused:original_binding": 49,
+      "refused:recipe_unknown": 14,
+      "refused:physical_integer_range": 7
+    },
+    "custody_maps": [],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_filesafe_event_authority.py:777"
+    ],
+    "families": {
+      "filesafe.command_denied": 367,
+      "filesafe.destructive_override_denied": 366,
+      "filesafe.destructive_override_granted": 366,
+      "filesafe.destructive_override_requested": 366,
+      "filesafe.guard_init_failed": 366,
+      "filesafe.path_denied": 366,
+      "filesafe.policy_degraded": 366
+    }
+  },
+  "DO.retained.json": {
+    "calls": 44264,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 44028,
+      "refused:original_query": 36,
+      "refused:original_authority": 198,
+      "refused:recipe_unknown": 1,
+      "refused:original_verification": 1
+    },
+    "custody_maps": [
+      "ORIGINAL_CUSTODY"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_orchestrator_event_oracles.py:955"
+    ],
+    "families": {
+      "crew.board_message_posted": 17846,
+      "crew.board_message_read": 10042,
+      "crew.board_messages_archived": 9834,
+      "config.validation.failed": 6542
+    }
+  },
+  "DS15.retained.json": {
+    "calls": 0,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {},
+    "custody_maps": [],
+    "owner_sources": [],
+    "families": {}
+  },
+  "DG6B.retained.json": {
+    "calls": 740,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 605,
+      "refused:original_authority": 105,
+      "refused:original_query": 20,
+      "refused:recipe_unknown": 5,
+      "refused:original_verification": 5
+    },
+    "custody_maps": [
+      "ORIGINAL_CUSTODY"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_dg6b_original_custody.py:108"
+    ],
+    "families": {
+      "auth.github.authenticated": 148,
+      "auth.github.device_code.issued": 148,
+      "auth.github.disconnected": 148,
+      "auth.github.failed": 148,
+      "auth.github.token.polling": 148
+    }
+  },
+  "DT.retained.json": {
+    "calls": 324,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 306,
+      "refused:original_authority": 6,
+      "refused:original_binding": 12
+    },
+    "custody_maps": [
+      "_CUSTODY"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm-dt-event-contracts.py:1160"
+    ],
+    "families": {
+      "approval.requested": 54,
+      "approval.granted": 54,
+      "approval.denied": 54,
+      "approval.timeout": 54,
+      "config.migrated": 56,
+      "gate.evaluation_started": 52
+    }
+  },
+  "DCW.retained.json": {
+    "calls": 2522,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 2514,
+      "refused:original_authority": 8
+    },
+    "custody_maps": [
+      "_ISSUED"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_dcw_number_custody.py:80"
+    ],
+    "families": {
+      "bundle.revision_requested": 1127,
+      "bundle.revision_started": 842,
+      "bundle.revision_interrupted": 277,
+      "bundle.revision_completed": 276
+    }
+  },
+  "DS15-deck2-browser.context_shared.retained.json": {
+    "calls": 85,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 85
+    },
+    "custody_maps": [
+      "RECEIPT_PHASES",
+      "original_custody()"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm-ds15-event-contracts.py:791"
+    ],
+    "families": {
+      "browser.context_shared": 85
+    }
+  },
+  "DS15-deck2-catalog.update.completed.retained.json": {
+    "calls": 85,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 85
+    },
+    "custody_maps": [
+      "RECEIPT_PHASES",
+      "original_custody()"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm-ds15-event-contracts.py:791"
+    ],
+    "families": {
+      "catalog.update.completed": 85
+    }
+  },
+  "DS15-deck2-browser.context_share_revoked.retained.json": {
+    "calls": 91,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 91
+    },
+    "custody_maps": [
+      "RECEIPT_PHASES",
+      "original_custody()"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm-ds15-event-contracts.py:791"
+    ],
+    "families": {
+      "browser.context_share_revoked": 91
+    }
+  },
+  "DS15-deck2-catalog.update.started.retained.json": {
+    "calls": 85,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 85
+    },
+    "custody_maps": [
+      "RECEIPT_PHASES",
+      "original_custody()"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm-ds15-event-contracts.py:791"
+    ],
+    "families": {
+      "catalog.update.started": 85
+    }
+  },
+  "DS15-deck2-catalog.remove.started.retained.json": {
+    "calls": 85,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 85
+    },
+    "custody_maps": [
+      "RECEIPT_PHASES",
+      "original_custody()"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm-ds15-event-contracts.py:791"
+    ],
+    "families": {
+      "catalog.remove.started": 85
+    }
+  },
+  "DS15-deck2-catalog.remove.completed.retained.json": {
+    "calls": 85,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 85
+    },
+    "custody_maps": [
+      "RECEIPT_PHASES",
+      "original_custody()"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm-ds15-event-contracts.py:791"
+    ],
+    "families": {
+      "catalog.remove.completed": 85
+    }
+  },
+  "DG6A-concern.retained.json": {
+    "calls": 142,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 136,
+      "refused:recipe_unknown": 2,
+      "refused:original_authority": 1,
+      "refused:original_binding": 1,
+      "refused:original_verification": 2
+    },
+    "custody_maps": [
+      "CUSTODY_FACTS",
+      "SEALED"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_dg6a_custody.py:311"
+    ],
+    "families": {
+      "concern.created": 142
+    }
+  },
+  "DG6A-alert.retained.json": {
+    "calls": 712,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 660,
+      "refused:recipe_unknown": 24,
+      "refused:original_authority": 8,
+      "refused:original_binding": 8,
+      "refused:original_verification": 12
+    },
+    "custody_maps": [
+      "CUSTODY_FACTS",
+      "SEALED"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_dg6a_custody.py:311"
+    ],
+    "families": {
+      "alert.acknowledged": 178,
+      "alert.dismissed": 178,
+      "alert.rule_muted": 178,
+      "alert.snoozed": 178
+    }
+  },
+  "DG6A-concern.resolved.retained.json": {
+    "calls": 168,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 159,
+      "refused:original_authority": 2,
+      "refused:original_binding": 2,
+      "refused:recipe_unknown": 2,
+      "refused:original_verification": 3
+    },
+    "custody_maps": [
+      "CUSTODY_FACTS",
+      "SEALED"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_dg6a_custody.py:311"
+    ],
+    "families": {
+      "concern.resolved": 168
+    }
+  },
+  "DG6A-concern.evidence_linked.retained.json": {
+    "calls": 168,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 159,
+      "refused:original_authority": 2,
+      "refused:original_binding": 2,
+      "refused:recipe_unknown": 2,
+      "refused:original_verification": 3
+    },
+    "custody_maps": [
+      "CUSTODY_FACTS",
+      "SEALED"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_dg6a_custody.py:311"
+    ],
+    "families": {
+      "concern.evidence_linked": 168
+    }
+  },
+  "DG6A-bundle.note_created.retained.json": {
+    "calls": 91,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 86,
+      "refused:original_authority": 1,
+      "refused:original_binding": 1,
+      "refused:recipe_unknown": 1,
+      "refused:original_verification": 2
+    },
+    "custody_maps": [
+      "CUSTODY_FACTS",
+      "SEALED"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_dg6a_custody.py:311"
+    ],
+    "families": {
+      "bundle.note_created": 91
+    }
+  },
+  "DG6A-concern.promoted.retained.json": {
+    "calls": 168,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 159,
+      "refused:original_authority": 2,
+      "refused:original_binding": 2,
+      "refused:recipe_unknown": 2,
+      "refused:original_verification": 3
+    },
+    "custody_maps": [
+      "CUSTODY_FACTS",
+      "SEALED"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_dg6a_custody.py:311"
+    ],
+    "families": {
+      "concern.promoted": 168
+    }
+  },
+  "DG6A-bundle.annotation_state_changed.retained.json": {
+    "calls": 32,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 28,
+      "refused:original_authority": 1,
+      "refused:original_binding": 1,
+      "refused:recipe_unknown": 1,
+      "refused:original_verification": 1
+    },
+    "custody_maps": [
+      "CUSTODY_FACTS",
+      "SEALED"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_dg6a_custody.py:311"
+    ],
+    "families": {
+      "bundle.annotation_state_changed": 32
+    }
+  },
+  "DG6A-concern.reopened.retained.json": {
+    "calls": 168,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 159,
+      "refused:original_authority": 2,
+      "refused:original_binding": 2,
+      "refused:recipe_unknown": 2,
+      "refused:original_verification": 3
+    },
+    "custody_maps": [
+      "CUSTODY_FACTS",
+      "SEALED"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_dg6a_custody.py:311"
+    ],
+    "families": {
+      "concern.reopened": 168
+    }
+  },
+  "DG6A-bundle.note_status_changed.retained.json": {
+    "calls": 91,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 86,
+      "refused:original_authority": 1,
+      "refused:original_binding": 1,
+      "refused:recipe_unknown": 1,
+      "refused:original_verification": 2
+    },
+    "custody_maps": [
+      "CUSTODY_FACTS",
+      "SEALED"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_dg6a_custody.py:311"
+    ],
+    "families": {
+      "bundle.note_status_changed": 91
+    }
+  },
+  "DG6A-concern.assigned.retained.json": {
+    "calls": 168,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 159,
+      "refused:original_authority": 2,
+      "refused:original_binding": 2,
+      "refused:recipe_unknown": 2,
+      "refused:original_verification": 3
+    },
+    "custody_maps": [
+      "CUSTODY_FACTS",
+      "SEALED"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_dg6a_custody.py:311"
+    ],
+    "families": {
+      "concern.assigned": 168
+    }
+  },
+  "DG6A-concern.updated.retained.json": {
+    "calls": 168,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 159,
+      "refused:original_authority": 2,
+      "refused:original_binding": 2,
+      "refused:recipe_unknown": 2,
+      "refused:original_verification": 3
+    },
+    "custody_maps": [
+      "CUSTODY_FACTS",
+      "SEALED"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_dg6a_custody.py:311"
+    ],
+    "families": {
+      "concern.updated": 168
+    }
+  },
+  "DS.retained.json": {
+    "calls": 0,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {},
+    "custody_maps": [],
+    "owner_sources": [],
+    "families": {}
+  },
+  "DS-p2b.retained.json": {
+    "calls": 9,
+    "mutations": 0,
+    "unavailable": 0,
+    "outcomes": {
+      "accepted": 5,
+      "refused:original_authority": 2,
+      "refused:recipe_unknown": 1,
+      "refused:original_verification": 1
+    },
+    "custody_maps": [
+      "custody()"
+    ],
+    "owner_sources": [
+      "/home/sittingmongoose/pm-worktrees/pnc-s4o1/scripts/pm_ds_retained.py:189"
+    ],
+    "families": {
+      "browser.workspace.created": 9
+    }
+  }
+}

@@ -1,0 +1,573 @@
+{
+ "method": "reach audit: Walk one root with the c0482747da key and with ctx_key: the nodes whose reach list grew, and for every",
+ "native_execution": "NOT_RUN",
+ "sources": {
+  "own_a": {
+   "grown_nodes": 0,
+   "roots": {
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ConsumerRequest": {
+     "grown_nodes": [],
+     "nodes": 10,
+     "reaches_after": 10,
+     "reaches_before": 10,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ConsumerResult": {
+     "grown_nodes": [],
+     "nodes": 107,
+     "reaches_after": 123,
+     "reaches_before": 123,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/DurableToken": {
+     "grown_nodes": [],
+     "nodes": 27,
+     "reaches_after": 27,
+     "reaches_before": 27,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/Halt": {
+     "grown_nodes": [],
+     "nodes": 6,
+     "reaches_after": 6,
+     "reaches_before": 6,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ProjectionCandidate": {
+     "grown_nodes": [],
+     "nodes": 154,
+     "reaches_after": 386,
+     "reaches_before": 386,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ProjectionState": {
+     "grown_nodes": [],
+     "nodes": 147,
+     "reaches_after": 195,
+     "reaches_before": 195,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/Request": {
+     "grown_nodes": [],
+     "nodes": 12,
+     "reaches_after": 12,
+     "reaches_before": 12,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageBlockControl": {
+     "grown_nodes": [],
+     "nodes": 31,
+     "reaches_after": 46,
+     "reaches_before": 46,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageBlockIntent": {
+     "grown_nodes": [],
+     "nodes": 47,
+     "reaches_after": 58,
+     "reaches_before": 58,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageBlockNativeResult": {
+     "grown_nodes": [],
+     "nodes": 28,
+     "reaches_after": 43,
+     "reaches_before": 43,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageBlockOrigin": {
+     "grown_nodes": [],
+     "nodes": 24,
+     "reaches_after": 29,
+     "reaches_before": 29,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageBlockResult": {
+     "grown_nodes": [],
+     "nodes": 64,
+     "reaches_after": 126,
+     "reaches_before": 126,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageCheckpoint": {
+     "grown_nodes": [],
+     "nodes": 84,
+     "reaches_after": 110,
+     "reaches_before": 110,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageProjection": {
+     "grown_nodes": [],
+     "nodes": 60,
+     "reaches_after": 76,
+     "reaches_before": 76,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageStopControl": {
+     "grown_nodes": [],
+     "nodes": 31,
+     "reaches_after": 46,
+     "reaches_before": 46,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageStopIntent": {
+     "grown_nodes": [],
+     "nodes": 47,
+     "reaches_after": 58,
+     "reaches_before": 58,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageStopNativeResult": {
+     "grown_nodes": [],
+     "nodes": 28,
+     "reaches_after": 43,
+     "reaches_before": 43,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageStopOrigin": {
+     "grown_nodes": [],
+     "nodes": 24,
+     "reaches_after": 29,
+     "reaches_before": 29,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageStopResult": {
+     "grown_nodes": [],
+     "nodes": 64,
+     "reaches_after": 126,
+     "reaches_before": 126,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StoredPart": {
+     "grown_nodes": [],
+     "nodes": 12,
+     "reaches_after": 12,
+     "reaches_before": 12,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt": {
+     "grown_nodes": [],
+     "nodes": 13,
+     "reaches_after": 13,
+     "reaches_before": 13,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result": {
+     "grown_nodes": [],
+     "nodes": 25,
+     "reaches_after": 25,
+     "reaches_before": 25,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json": {
+     "grown_nodes": [],
+     "nodes": 53,
+     "reaches_after": 113,
+     "reaches_before": 113,
+     "static_changes": []
+    },
+    "pm.goal_runtime_event.goal_run_blocked.schema.v3": {
+     "grown_nodes": [],
+     "nodes": 53,
+     "reaches_after": 83,
+     "reaches_before": 83,
+     "static_changes": []
+    },
+    "pm.goal_runtime_event.goal_run_stopped.schema.v3": {
+     "grown_nodes": [],
+     "nodes": 46,
+     "reaches_after": 70,
+     "reaches_before": 70,
+     "static_changes": []
+    }
+   },
+   "static_changes": 0,
+   "suite_exit": 0
+  },
+  "own_b": {
+   "grown_nodes": 0,
+   "roots": {
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt": {
+     "grown_nodes": [],
+     "nodes": 13,
+     "reaches_after": 13,
+     "reaches_before": 13,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result": {
+     "grown_nodes": [],
+     "nodes": 25,
+     "reaches_after": 25,
+     "reaches_before": 25,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json": {
+     "grown_nodes": [],
+     "nodes": 53,
+     "reaches_after": 113,
+     "reaches_before": 113,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin": {
+     "grown_nodes": [],
+     "nodes": 28,
+     "reaches_after": 28,
+     "reaches_before": 28,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt": {
+     "grown_nodes": [],
+     "nodes": 46,
+     "reaches_after": 46,
+     "reaches_before": 46,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/revision": {
+     "grown_nodes": [],
+     "nodes": 30,
+     "reaches_after": 30,
+     "reaches_before": 30,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/approval_request": {
+     "grown_nodes": [],
+     "nodes": 42,
+     "reaches_after": 42,
+     "reaches_before": 42,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/approval_resolution": {
+     "grown_nodes": [],
+     "nodes": 43,
+     "reaches_after": 43,
+     "reaches_before": 43,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/approval_resolve_request": {
+     "grown_nodes": [],
+     "nodes": 4,
+     "reaches_after": 4,
+     "reaches_before": 4,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_append_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_capture_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_commit_body_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_freeze_event_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_inspect_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_publish_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_reserve_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_resolve_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_result": {
+     "grown_nodes": [],
+     "nodes": 61,
+     "reaches_after": 61,
+     "reaches_before": 61,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_source": {
+     "grown_nodes": [],
+     "nodes": 226,
+     "reaches_after": 268,
+     "reaches_before": 268,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/caller_decision": {
+     "grown_nodes": [],
+     "nodes": 58,
+     "reaches_after": 58,
+     "reaches_before": 58,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_append_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_capture_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_commit_body_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_freeze_event_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_inspect_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_publish_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_reserve_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_resolve_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_result": {
+     "grown_nodes": [],
+     "nodes": 61,
+     "reaches_after": 61,
+     "reaches_before": 61,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_source": {
+     "grown_nodes": [],
+     "nodes": 263,
+     "reaches_after": 305,
+     "reaches_before": 305,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/disposition": {
+     "grown_nodes": [],
+     "nodes": 10,
+     "reaches_after": 10,
+     "reaches_before": 10,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception": {
+     "grown_nodes": [],
+     "nodes": 105,
+     "reaches_after": 107,
+     "reaches_before": 107,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_append_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_capture_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_commit_body_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_freeze_event_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_inspect_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_publish_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_reserve_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_resolve_request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_result": {
+     "grown_nodes": [],
+     "nodes": 64,
+     "reaches_after": 64,
+     "reaches_before": 64,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_source": {
+     "grown_nodes": [],
+     "nodes": 263,
+     "reaches_after": 305,
+     "reaches_before": 305,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_workflow_inputs": {
+     "grown_nodes": [],
+     "nodes": 17,
+     "reaches_after": 17,
+     "reaches_before": 17,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/request": {
+     "grown_nodes": [],
+     "nodes": 5,
+     "reaches_after": 5,
+     "reaches_before": 5,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_blocked_result": {
+     "grown_nodes": [],
+     "nodes": 72,
+     "reaches_after": 72,
+     "reaches_before": 72,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_blocked_source": {
+     "grown_nodes": [],
+     "nodes": 237,
+     "reaches_after": 279,
+     "reaches_before": 279,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_completed_result": {
+     "grown_nodes": [],
+     "nodes": 72,
+     "reaches_after": 72,
+     "reaches_before": 72,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_completed_source": {
+     "grown_nodes": [],
+     "nodes": 274,
+     "reaches_after": 316,
+     "reaches_before": 316,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_exception_result": {
+     "grown_nodes": [],
+     "nodes": 75,
+     "reaches_after": 75,
+     "reaches_before": 75,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_exception_source": {
+     "grown_nodes": [],
+     "nodes": 274,
+     "reaches_after": 316,
+     "reaches_before": 316,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/todo": {
+     "grown_nodes": [],
+     "nodes": 16,
+     "reaches_after": 16,
+     "reaches_before": 16,
+     "static_changes": []
+    },
+    "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/workflow_exception_issue_response": {
+     "grown_nodes": [],
+     "nodes": 183,
+     "reaches_after": 369,
+     "reaches_before": 369,
+     "static_changes": []
+    },
+    "pm.goal_runtime_event.goal_blocked.schema.v3": {
+     "grown_nodes": [],
+     "nodes": 22,
+     "reaches_after": 22,
+     "reaches_before": 22,
+     "static_changes": []
+    },
+    "pm.goal_runtime_event.goal_completed.schema.v3": {
+     "grown_nodes": [],
+     "nodes": 22,
+     "reaches_after": 22,
+     "reaches_before": 22,
+     "static_changes": []
+    }
+   },
+   "static_changes": 0,
+   "suite_exit": 0
+  }
+ }
+}

@@ -543,6 +543,42 @@ def profile_errors(registry, fid, kind, group):
     return [first[1]] if first else []
 
 
+def registry_mirror_observation(registry, fid, companion_path):
+    """storage_schema FIELDS for one registered Storage copy of a companion schema (C12-DG6A), derived only.
+
+    The same six facts Card 5 derives (pm-card5-event-contracts-check.py storage_schema_observation):
+    one row, the row's companion path and schema id against the independently declared companion,
+    metaschema validity, eager reference closure, and exact type-aware content equality with the
+    companion minus its top-level `$schema`. When the row count is not one, every later fact is
+    False and the chained rows stay silent under SS01.
+    """
+    rows = [row for row in registry['families'] if row.get('family_id') == fid]
+    if len(rows) != 1:
+        return dict.fromkeys(tables.fields('storage_schema'), False)
+    row, companion = rows[0], load(companion_path)
+    stored = row.get('value_schema')
+    try:
+        Draft202012Validator.check_schema(stored)
+        valid = True
+    except SchemaError:
+        valid = False
+    return {
+        'row_count_is_one': True,
+        'companion_ref_matches': row.get('value_schema_ref') == companion_path,
+        'schema_id_matches': row.get('value_schema_id') == companion.get('$id'),
+        'stored_schema_valid': valid,
+        'stored_refs_resolve': bool(valid and not schema_ref_errors(stored)),
+        'stored_equals_companion': bool(exact_value(stored, {k: v for k, v in companion.items() if k != '$schema'})),
+    }
+
+
+def registry_mirror_errors(registry, fid, companion_path):
+    """Refuses only through the storage_schema rows (scripts/pm_dg6a_table_storage_schema.py), first row,
+    as `<code>:<family_id>` exactly as Card 5 reports a stored-copy refusal."""
+    code = tables.first('storage_schema', **registry_mirror_observation(registry, fid, companion_path))
+    return [code + ':' + fid] if code else []
+
+
 def profile_cases(registry, fid, kind, group):
     """One-defect profile controls, through the complete profile_errors."""
     assert not profile_errors(registry, fid, kind, group), fid
@@ -1373,22 +1409,56 @@ def main():
             row = next(x for x in values['families'] if x['family_id'] == family[key])
             check_schema(row['value_schema'])
             count += profile_cases(values, family[key], row['storage_kind'], group)
-        assert family['event_type'] not in admitted
+        assert (refused := registration_refusal(family['event_type'], admitted)) is None, refused
         for key in ('operation', 'checkpoint'):
             row = next(x for x in load('Plans/storage_value_registry.json')['families'] if x['family_id'] == family[key])
             assert row['retention_policy_ref'] == ('RP-PROJECTION-3GEN' if key == 'checkpoint' else 'RP-OPERATIONAL-2555D')
-            external = load(row['value_schema_ref'])
-            assert row['value_schema'] == {k:v for k,v in external.items() if k != '$schema'}
+            mirror = registry_mirror_errors(values, family[key], f"Plans/alert_event_contracts/{family[key]}.schema.json")
+            assert not mirror, mirror
         text = (ROOT / 'Plans/storage-plan.md').read_text().split(f"### {family['sp']} -", 1)[1].split('\n### ', 1)[0]
         for required in ('SP-278', 'SP-286', 'CV-339', 'storage.first_append_receipt.resolve.v2', 'PENDING_RETENTION_DECISION', family['handler'], family['event_type']):
             assert required in text, (family['event_type'], required)
     for fid in ('shared_alert_state', 'shared_alert_rule_state'):
         row = next(row for row in values['families'] if row['family_id'] == fid)
         check_schema(row['value_schema'])
+        mirror = registry_mirror_errors(values, fid, f'Plans/alert_event_contracts/{fid}.schema.json')
+        assert not mirror, mirror
         count += profile_cases(values, fid, 'redb', 'settings_and_layout')
     count += writer_policy_cases()
     count += cursor_cases()
-    print(json.dumps({'status':'pass','cases':count,'families':1 if selected else 4,'admission':'ABSENT','native':'NOT_RUN','retention':'PENDING_RETENTION_DECISION'}))
+    print(json.dumps({'status':'pass','cases':count,'families':1 if selected else 4,'native':'NOT_RUN',**admission_report([selected] if selected else [f['event_type'] for f in load('Plans/alert_event_contracts/manifest.json')['families']])}))
+
+def registration_refusal(event, admitted):
+    """None while `event` is unregistered (prepared) or registered as its exact, complete DL-077 admission.
+
+    Admission-aware mode (PNC-019 stream E; scripts/pm_ea_admission_mode.py): any other registration keeps the
+    preparation refusal (this family on the live registry), with the admission-mode code as its message.
+    """
+    if event not in admitted:
+        return None
+    import pm_ea_admission_mode as admission_mode
+    mode = admission_mode.verdict(event, root=ROOT)
+    return None if mode['mode'] == 'admitted' else event + ': admission mode refused: ' + mode['code']
+
+
+def admission_report(event_types):
+    """Output metadata from the exact DL-077 verdicts; preparation keeps its pending labels."""
+    import pm_ea_admission_mode as admission_mode
+    results = admission_mode.verdicts(event_types, root=ROOT)
+    failures = admission_mode.gate_failures(results)
+    assert not failures, ('admission mode refused', failures)
+    counts = admission_mode.summary(results)['counts']
+    label = 'ABSENT' if not counts['admitted'] else 'RECORD_BOUND' if not counts['prepared'] else 'ABSENT_AND_RECORD_BOUND'
+    rows = {row['event_type']: row for row in admission_mode.load_registry(ROOT)['families']}
+    retention = {}
+    for event, mode in sorted(results.items()):
+        if mode['mode'] == 'prepared':
+            retention[event] = 'PENDING_RETENTION_DECISION'
+        else:
+            ref = rows[event]['retention_policy_ref']
+            retention[event] = 'RECORD_BOUND:' + ref['policy_id'] + '@' + ref['policy_version']
+    return dict(admission=label, retention=retention, admission_counts=counts)
+
 
 if __name__ == '__main__':
     main()

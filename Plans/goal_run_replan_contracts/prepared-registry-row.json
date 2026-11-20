@@ -1,0 +1,50 @@
+{
+ "schema_id": "pm.goal_run_replan.prepared_registry_row.v1",
+ "status": "prepared_not_admitted",
+ "rule": "The S5b admission writer applies this row; this lane does not edit Plans/event_family_registry.json. The prepared row keeps family_id, event_type, scope_policy, identity pointers, redaction and retention of the registered 2.0.0 row and changes only the revision, owner anchors, payload schema and source refs.",
+ "registered_revision": "2.0.0",
+ "prepared_row": {
+  "family_id": "event-family-goal-run-replanned",
+  "family_revision": "3.0.0",
+  "event_type": "goal_run.replanned",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/Goal_Runtime_System.md#GRS-3100",
+  "payload_owner_doc": "Plans/storage-plan.md#SP-3100",
+  "payload_schema_id": "pm.goal_runtime_event.goal_run_replanned.schema.v3",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.goal_runtime_event.goal_run_replanned.schema.v3"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json#",
+   "Plans/Goal_Runtime_System.md#GRS-3100",
+   "Plans/Contracts_V0.md#CV-3100",
+   "Plans/storage-plan.md#SP-3100"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-RUNTIME-365D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "historical": "The 2.0.0 payload Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json stays byte-identical as the historical reader (GRS-3100)."
+}

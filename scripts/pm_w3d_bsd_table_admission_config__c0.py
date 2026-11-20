@@ -37,7 +37,7 @@ def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('AD01_registration', g.Invariant('/AD01_registration', 'Current append requires the exact event/version registry membership and payload selector.'), 'membership_absent', AD01_registration),
-        g.Guard('AD01_cutoff', g.Invariant('/AD01_cutoff', 'No writer cutoff is active.'), 'writer_cutoff', AD01_cutoff),
+        g.Guard('AD01_cutoff', g.Invariant('/AD01_cutoff', 'No writer cutoff is recorded under Storage governance for this exact family.'), 'writer_cutoff', AD01_cutoff),
         g.Guard('AD02_physical_admission', g.Invariant('/AD02_physical_admission', 'Current operation cannot run before SP-318 physical registration prerequisites close.'), 'physical_registration_pending', AD02_physical_admission),
         g.Guard('AD03_replay_writer', g.Invariant('/AD03_replay_writer', 'Current writer and retry reject projector_replay_only as replay_only_not_appendable.'), 'replay_only_not_appendable', AD03_replay_writer),
         g.Guard('AD04_project_scope', g.Invariant('/AD04_project_scope', 'The payload project_id equals the actual Project scope and original owner source.'), 'project_scope_mismatch', AD04_project_scope),

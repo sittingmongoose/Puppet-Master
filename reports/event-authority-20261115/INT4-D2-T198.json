@@ -1,0 +1,40 @@
+{
+ "schema": "int4.d2.t198_refresh.v1",
+ "head_refreshed": "d67dedf8dd",
+ "tracked_tree": "git archive of d67dedf8dd (tracked files only) with e5b03d8b41's two tool files",
+ "tool_path": "INT3 tools/t198 (t198-prune.py, t198-relocate.py base 6385c1c3d3, inv_refresh.py, inv_classify.py), then scripts/pm-int4-d2-wildcard-role-mirror.py --write, then inv_refresh.py again",
+ "gate_before": {
+  "status": "fail",
+  "nodes": 0,
+  "unclassified_nodes": 0
+ },
+ "pruned_exclusions": 140,
+ "relocated": 0,
+ "classify": "234 new nodes classified (113 storage_utc_z EventRecord, 83 other_owner_observation, 38 wildcard rows mirrored to reviewed roles)",
+ "mirror": {
+  "targets": 38,
+  "mirrored": 38,
+  "stops": 0,
+  "by_role": {
+   "SafeRef": 14,
+   "safe_parameter_value": 14,
+   "resolved_permission_record": 10
+  },
+  "normalization": "$id values and $ref/$dynamicRef base URIs only"
+ },
+ "gate_after": {
+  "status": "pass",
+  "nodes": 524,
+  "storage_nodes": 288,
+  "other_owner_nodes": 215,
+  "wildcard_non_timestamp_nodes": 3,
+  "wildcard_non_timestamp_role_nodes": 18,
+  "unclassified_nodes": 0
+ },
+ "gate_after_failures": 0,
+ "gate_cost": "peak RSS 1.23 GB, 5 min 45 s, MemoryMax=2G scope",
+ "self_test": {
+  "cases": 11,
+  "pass": true
+ }
+}

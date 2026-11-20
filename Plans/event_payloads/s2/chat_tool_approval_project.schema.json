@@ -1,0 +1,167 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://puppetmaster.local/schemas/event_payloads/s2/chat_tool_approval_project/1.0.0/schema.json",
+ "title": "Project chat-tool approval source record and its Storage wrapper, 1.0.0",
+ "description": "Newly authored under deck-1 4b A (DL-411) for PNC-019 S2 (SP-2303). The Project counterpart of ChatToolApprovalApplicationV1 (CV-366, SP-353): identical fields and decisions, with scope_kind project. It is the canonical source of the Project editions of approval.chat_tool_requested and approval.chat_tool_resolved; the application record and its key are unchanged. Native execution NOT_RUN.",
+ "$defs": {
+  "ChatToolApprovalProjectV1": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "schema_version",
+    "scope",
+    "thread_id",
+    "run_id",
+    "request_id",
+    "tool_id",
+    "target_ref",
+    "target_sha256",
+    "permission_snapshot_ref",
+    "scope_stop_epoch",
+    "task_stop_epoch",
+    "request_source_ref",
+    "resolution_ref",
+    "decision"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.approval.chat_tool.project.v1"
+    },
+    "schema_version": {
+     "const": "1.0.0"
+    },
+    "scope": {
+     "allOf": [
+      {
+       "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+      },
+      {
+       "properties": {
+        "scope_kind": {
+         "const": "project"
+        }
+       }
+      }
+     ]
+    },
+    "thread_id": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 256
+    },
+    "run_id": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 256
+    },
+    "request_id": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 256
+    },
+    "tool_id": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 256
+    },
+    "target_ref": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 256
+    },
+    "target_sha256": {
+     "type": "string",
+     "pattern": "^[0-9a-f]{64}$"
+    },
+    "permission_snapshot_ref": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 256
+    },
+    "scope_stop_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "task_stop_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "request_source_ref": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 256
+    },
+    "resolution_ref": {
+     "anyOf": [
+      {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 256
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "decision": {
+     "enum": [
+      "pending",
+      "approved",
+      "declined",
+      "expired",
+      "cancelled"
+     ]
+    }
+   }
+  },
+  "ChatToolApprovalStorageProjectV1": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "schema_version",
+    "storage_instance_id",
+    "project_id",
+    "scope",
+    "record"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.storage_value.chat_tool_approval.project.v1"
+    },
+    "schema_version": {
+     "const": "1.0.0"
+    },
+    "storage_instance_id": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 256
+    },
+    "project_id": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 256
+    },
+    "scope": {
+     "allOf": [
+      {
+       "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+      },
+      {
+       "properties": {
+        "scope_kind": {
+         "const": "project"
+        }
+       }
+      }
+     ]
+    },
+    "record": {
+     "$ref": "https://puppetmaster.local/schemas/event_payloads/s2/chat_tool_approval_project/1.0.0/schema.json#/$defs/ChatToolApprovalProjectV1"
+    }
+   }
+  }
+ },
+ "$ref": "#/$defs/ChatToolApprovalStorageProjectV1"
+}

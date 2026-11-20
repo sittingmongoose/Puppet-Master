@@ -25,6 +25,12 @@ Three stages, each a pure function of the repository tree and the pinned inputs:
     ``admission_record_problems`` and the registry with readiness's checks,
     and prints the verdict per family.
 
+``refresh-dispositions``
+    Reprojects the existing merge-2 CPU ledger rows and their mirrors from
+    current accepted depth assessments. It changes no admission, verdict,
+    holding bucket or original append checkpoint. ``--check`` independently
+    verifies the current assessment digest and each registry span's family.
+
 The writer never edits the frozen validator, Spec Lock, ``Plans/.evidence``
 or ``Plans/auto_decisions.jsonl``, never regenerates shards or the plan
 index (one regeneration per merge, run by the merge), never pushes and never
@@ -41,6 +47,7 @@ import json
 import re
 import subprocess
 import sys
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -89,9 +96,32 @@ READINESS = {
 # Shared helpers live with the rules so both modules compute hashes and loads one way.
 # ---------------------------------------------------------------- inputs
 
-def readiness_families() -> list[dict]:
+def readiness_families(args=None) -> list[dict]:
     """Admission merge 1: 32 batch-2 rows at 11 PASS + membership ABSENT, then 141 batch-3 rows at 11/0/1."""
     out = []
+    if args is not None and getattr(args, "readiness_list", None):
+        source = Path(args.readiness_list)
+        if not source.is_absolute():
+            source = REPO / source
+        try:
+            relative = str(source.relative_to(REPO))
+        except ValueError:
+            raise SystemExit("readiness input must be a repository result bundle")
+        if sha256_file(source) != args.readiness_sha256:
+            raise SystemExit("readiness list bytes differ from --readiness-sha256")
+        data = json.loads(source.read_text(encoding="utf-8"))
+        if data.get("status") != "pass" or data.get("not_ready"):
+            raise SystemExit("readiness list contains blocked families")
+        names = set()
+        for row in data["ready"]:
+            event_type, lane = row["event_type"], row["lane"]
+            if event_type in names:
+                raise SystemExit("duplicate readiness family: " + event_type)
+            names.add(event_type)
+            SELF_GRADES[lane] = relative
+            out.append(dict(event_type=event_type, lane=lane, batch="batch3" if lane.startswith("W3") or lane=="S4B" else "batch2",
+                            readiness=dict(path=relative, sha256=args.readiness_sha256)))
+        return sorted(out, key=lambda row: row["event_type"])
     path2, pin2 = READINESS["batch2"]
     path3, pin3 = READINESS["batch3"]
     if sha256_file(path2) != pin2 or sha256_file(path3) != pin3:
@@ -131,8 +161,8 @@ def prepare(args) -> int:
     registry = load(REGISTRY)
     live_types = {f["event_type"] for f in registry["families"]}
     live_ids = {f["family_id"] for f in registry["families"]}
+    families = readiness_families(args)
     grades = {lane: grade_rows(lane) for lane in SELF_GRADES}
-    families = readiness_families()
     out_rows = []
     candidates = []
     for family in families:
@@ -155,7 +185,7 @@ def prepare(args) -> int:
             problems = schema_failures(row)
             if problems:
                 raise Gap("registry schema: " + "; ".join(problems[:3]))
-            carried_cells(grade, entry["grade"])  # every cited quotation must still read at this tree
+            carried_cells(grade, entry["grade"], lane=lane)  # every cited quotation must still read at this tree
             entry.update(registry_row=row, row_provenance=provenance, contract_ref=contract["contract_ref"])
             candidates.append(row)
         except Gap as gap:
@@ -205,12 +235,15 @@ def prepare(args) -> int:
 # ---------------------------------------------------------------- evidence currency
 
 _TEXT_CACHE: dict[str, str] = {}
+_TEXT_HASH_CACHE: dict[str, str] = {}
 
 
 def file_text(rel: str) -> str | None:
     if rel not in _TEXT_CACHE:
         path = REPO / rel
         _TEXT_CACHE[rel] = path.read_bytes().decode("utf-8") if path.is_file() else None
+        if _TEXT_CACHE[rel] is not None:
+            _TEXT_HASH_CACHE[rel] = sha256_bytes(_TEXT_CACHE[rel].encode("utf-8"))
     return _TEXT_CACHE[rel]
 
 
@@ -289,6 +322,42 @@ def unit_span(text: str, unit: str) -> tuple[int, int] | None:
     return _split_and_spans(text)[1].get(unit)
 
 
+def heading_span(text: str, title: str) -> tuple[int, int] | None:
+    """An exactly named Markdown section, excluding fenced YAML headings."""
+    headings = []
+    fenced = False
+    lines = text.splitlines()
+    for index, line in enumerate(lines):
+        if FENCE_LINE.match(line):
+            fenced = not fenced
+        match = HEADING_PARTS.fullmatch(line) if not fenced else None
+        if match:
+            headings.append((index, len(match[1]), match[2]))
+    def slug(value: str) -> str:
+        return re.sub(r"\s+", "-", re.sub(r"[^\w\s-]", "", value.lower())).strip("-")
+    found = [(index, level) for index, level, name in headings
+             if name == title or (title.startswith("#") and slug(name) == title[1:])]
+    if not found and title.startswith("#"):
+        anchors = [i for i, line in enumerate(lines)
+                   if re.fullmatch(r'\s*<a\s+(?:id|name)=["\']' + re.escape(title[1:])
+                                   + r'["\']\s*>\s*</a>\s*', line)]
+        if len(anchors) == 1:
+            first = anchors[0]
+            following = [(index, level) for index, level, _ in headings if first < index <= first + 3]
+            if following:
+                heading, level = following[0]
+                last = next((index for index, other, _ in headings if index > heading and other <= level), len(lines))
+                # The next family's explicit anchor precedes its heading.
+                while last > first and (not lines[last - 1].strip() or lines[last - 1].lstrip().startswith("<a ")):
+                    last -= 1
+                return first + 1, last
+    if len(found) != 1:
+        return None
+    first, level = found[0]
+    last = next((index for index, other, _ in headings if index > first and other <= level), len(lines))
+    return first + 1, last
+
+
 def relocate(text: str, quote: str, want: int, span: tuple[int, int] | None) -> tuple[int, int, str] | None:
     """(line_start, line_end, quote_check) of the quotation inside span (the whole text when span is None).
 
@@ -315,26 +384,163 @@ def relocate(text: str, quote: str, want: int, span: tuple[int, int] | None) -> 
     return None
 
 
-def refresh_evidence(item: dict) -> dict:
+@lru_cache(maxsize=8)
+def historical_text(commit: str, rel: str) -> str:
+    if (not re.fullmatch(r"[0-9a-f]{40}", commit) or Path(rel).is_absolute()
+            or ".." in Path(rel).parts):
+        raise Gap(f"invalid historical evidence identity: {commit}:{rel}")
+    result = subprocess.run(["git", "-C", str(REPO), "show", commit + ":" + rel], capture_output=True)
+    if result.returncode:
+        raise Gap(f"historical evidence is unreadable: {commit}:{rel}")
+    return result.stdout.decode("utf-8")
+
+
+def rederive_source_citation(source: dict) -> dict:
+    """Reissue a source edition from its authenticated original hash and quote.
+
+    This maintenance operation is explicit. refresh_evidence instead rejects a
+    mixed input. Callers retain the received object as separate lineage.
+    """
+    out = copy.deepcopy(source)
+    rel, commit = out.get("path"), out.get("commit")
+    if not isinstance(rel, str) or not isinstance(commit, str):
+        raise Gap("historical evidence needs its path and commit")
+    text = historical_text(commit, rel)
+    digest = sha256_bytes(text.encode("utf-8"))
+    # The original sha256 is the lane's whole-file pin. A later file_sha256
+    # must not overwrite it or become authority for historical repair.
+    if out.get("sha256", out.get("file_sha256")) != digest:
+        raise Gap(f"historical source's original whole-file pin differs: {commit}:{rel}")
+    unit, quote = out.get("unit"), out.get("quote")
+    span = (unit_span(text, unit) if isinstance(unit, str) and re.fullmatch(r"[A-Z][A-Z0-9]*-\d+", unit)
+            else heading_span(text, unit) if isinstance(unit, str) else None)
+    if not span or not isinstance(quote, str) or not quote:
+        raise Gap(f"historical source needs a quoted, declared unit: {commit}:{rel}")
+    window = "\n".join(text.splitlines()[span[0] - 1:span[1]])
+    if window.count(quote) != 1:
+        raise Gap(f"historical quotation is not unique in its own unit: {commit}:{rel}#{unit}")
+    start, end, check = relocate(text, quote, out.get("line", span[0]), span)
+    out.update(sha256=digest, file_sha256=digest, line=start, line_start=start, line_end=end,
+               quote_check=check, quote_scope=f"unit {unit}, {rel}@{commit}:{span[0]}-{span[1]}")
+    if "quote_line" in out:
+        out["quote_line"] = start
+    if "excerpt_sha256" in out:
+        convention = out.get("excerpt_digest_convention", "whole_line")
+        if convention not in ("whole_line", "literal_quote"):
+            raise Gap(f"unknown historical excerpt convention: {convention}")
+        excerpt = "\n".join(text.splitlines()[start - 1:end])
+        out["excerpt_sha256"] = sha256_bytes((quote if convention == "literal_quote" else excerpt).encode())
+    return out
+
+
+def source_citation_problems(source: dict) -> list[str]:
+    """Check every stored pin/coordinate against the citation's named Git edition."""
+    try:
+        expected = rederive_source_citation(source)
+    except (Gap, ValueError) as exc:
+        return [str(exc)]
+    fields = ("sha256", "file_sha256", "line", "line_start", "line_end", "quote_line", "excerpt_sha256", "quote_scope")
+    return [f"historical {key} differs at {source['commit']}:{source['path']}"
+            for key in fields if key in source and source[key] != expected.get(key)]
+
+
+def refresh_evidence(item: dict, *, digest_convention: str = "whole_line", source_commit: str | None = None,
+                     event_type: str | None = None, criterion: str | None = None) -> dict:
     """Re-read one cited quotation at the current tree; relocate it inside its own unit or fail closed."""
     rel = item.get("path")
-    if not isinstance(rel, str) or rel.startswith("/") or ".." in Path(rel).parts:
+    if isinstance(rel, str) and Path(rel).is_absolute():
+        path = Path(rel)
+        if not path.resolve().is_relative_to(EVIDENCE_ROOT.resolve()) or not path.is_file():
+            raise Gap(f"external evidence is outside the pinned campaign custody: {rel}")
+        out = dict(item)
+        if item.get("quote") and item["quote"] not in path.read_text(encoding="utf-8"):
+            raise Gap(f"external evidence quotation not present: {rel}")
+        out["file_sha256"] = sha256_file(path)
+        return out
+    if not isinstance(rel, str) or ".." in Path(rel).parts:
         raise Gap(f"evidence path is not a repository path: {rel}")
     text = file_text(rel)
     if text is None:
         raise Gap(f"evidence file missing: {rel}")
     out = dict(item)
+    # A current file hash must never be paired with an unexplained old line or
+    # excerpt hash. Keep the original edition as a separate auditable value.
+    source = copy.deepcopy(item.get("source_citation") or {
+        k: v for k, v in item.items() if k not in ("quote_check", "quote_scope")})
+    if source_commit:
+        source.setdefault("commit", source_commit)
     unit = item.get("unit")
+    quote = item.get("quote")
+    if not quote and ("line" in item or "line_start" in item):
+        commit = source.get("commit")
+        if not isinstance(commit, str) or not re.fullmatch(r"[0-9a-f]{40}", commit):
+            raise Gap(f"line-only evidence needs its historical source commit: {rel}")
+        result = subprocess.run(["git", "-C", str(REPO), "show", commit + ":" + rel], capture_output=True)
+        if result.returncode:
+            raise Gap(f"historical evidence is unreadable: {commit}:{rel}")
+        expected = source.get("sha256") or source.get("file_sha256")
+        if not expected or sha256_bytes(result.stdout) != expected:
+            raise Gap(f"historical evidence file hash differs: {commit}:{rel}")
+        old_lines = result.stdout.decode("utf-8").splitlines()
+        start = source.get("line_start", source.get("line"))
+        end = source.get("line_end", start)
+        if not isinstance(start, int) or not isinstance(end, int) or not 1 <= start <= end <= len(old_lines):
+            raise Gap(f"historical evidence line range is invalid: {rel}")
+        quote = "\n".join(old_lines[start - 1:end])
+        source.setdefault("quote", quote)
+        heading = re.match(r"^#+\s+([A-Z][A-Z0-9]*-[0-9]+)\b", quote)
+        if not unit and heading:
+            unit = heading[1]
+            out["unit"] = unit
+        if not unit:
+            raise Gap(f"line-only evidence has no declared unit bound: {rel}")
+    if source.get("commit"):
+        problems = source_citation_problems(source)
+        if problems:
+            raise Gap("; ".join(problems))
     span = None
+    if rel.endswith(".md") and isinstance(unit, str):
+        if unit.startswith("heading:") or unit.startswith("#"):
+            span = heading_span(text, unit.removeprefix("heading:"))
+            if span is None:
+                raise Gap(f"evidence heading has no single declared span: {rel}#{unit}")
+        elif not re.fullmatch(r"[A-Z][A-Z0-9]*-[0-9]+", unit):
+            span = heading_span(text, unit)
+    if rel.endswith(".json"):
+        from pm_ea_evidence_projection import family_span, inferred_event, pointer_span, quote_in_pointer
+        try:
+            pointer = item.get("json_pointer") or unit
+            if isinstance(pointer, str) and "#" in pointer:
+                pointer = "#" + pointer.split("#", 1)[1]
+            if pointer == "#/" and "json_pointer" not in item:
+                document = json.loads(text, parse_int=str, parse_float=str)
+                if isinstance(document, dict) and "" not in document:
+                    pointer = "#"
+                    out["unit"] = unit = "#"
+                    out["json_pointer"] = "#"
+            subject = event_type or inferred_event(text, pointer, quote)
+            bound = (family_span(text, subject, pointer,
+                                 criterion if rel.startswith("reports/") else None) if subject else None)
+            if not bound and isinstance(pointer, str) and pointer.startswith("#/"):
+                bound = pointer, pointer_span(text, pointer)
+        except ValueError as exc:
+            raise Gap(str(exc)) from exc
+        if bound:
+            unit, span = bound
+            out["unit"] = unit
+            out["json_pointer"] = unit
+            if quote and not quote_in_pointer(text, unit, quote):
+                raise Gap(f"cited quotation is outside its exact JSON unit: {rel}{unit}")
     if (rel.startswith("Plans/") and rel.endswith(".md") and isinstance(unit, str)
             and re.fullmatch(r"[A-Z][A-Z0-9]*-[0-9]+", unit)):
         if unit_ref(unit) not in (None, rel + "#" + unit):
             raise Gap(f"evidence unit {unit} is not declared by {rel}")
-        if unit_ref(unit) is not None:
-            span = unit_span(text, unit)
-            if span is None:
-                raise Gap(f"evidence unit {unit} has no single declared span in {rel}")
-    quote = item.get("quote")
+        span = unit_span(text, unit)
+        if span is None:
+            raise Gap(f"evidence unit {unit} has no single declared span in {rel}")
+    if rel.startswith("Plans/") and rel.endswith(".md") and span is None:
+        if unit or _split_and_spans(text)[1]:
+            raise Gap(f"canonical Markdown evidence needs a resolvable unit or heading bound: {rel}#{unit}")
     if isinstance(quote, str) and quote:
         want = item.get("line_start") if isinstance(item.get("line_start"), int) else 1
         found = relocate(text, quote, want, span)
@@ -342,8 +548,26 @@ def refresh_evidence(item: dict) -> dict:
             where = f"unit {unit} ({rel}:{span[0]}-{span[1]})" if span else rel
             raise Gap(f"cited quotation not present in {where}: {quote[:80]!r}")
         out["line_start"], out["line_end"], out["quote_check"] = found
+        excerpt = "\n".join(text.splitlines()[found[0] - 1:found[1]])
+        if found[2] == "whitespace_normalized":
+            matched = re.search(r"\s+".join(re.escape(w) for w in quote.split()), excerpt)
+            quote = matched[0]
+        out["quote"] = quote
+        if "line" in out:
+            out["line"] = found[0]
+        if "quote_line" in out:
+            out["quote_line"] = found[0]
+        if "excerpt_sha256" in item:
+            convention = item.get("excerpt_digest_convention", digest_convention)
+            if convention not in ("whole_line", "literal_quote"):
+                raise Gap(f"unknown excerpt digest convention: {convention}")
+            out["excerpt_digest_convention"] = convention
+            out["excerpt_sha256"] = sha256_bytes((quote if convention == "literal_quote" else excerpt).encode("utf-8"))
         out["quote_scope"] = f"unit {unit}, {rel}:{span[0]}-{span[1]}" if span else "document"
-    out["file_sha256"] = sha256_bytes(text.encode("utf-8"))
+    out["source_citation"] = source
+    out["file_sha256"] = _TEXT_HASH_CACHE[rel]
+    if "sha256" in out:
+        out["sha256"] = out["file_sha256"]
     return out
 
 
@@ -392,12 +616,23 @@ def self_test() -> list[str]:
     return problems
 
 
-def carried_cells(grade: dict, grade_ref: dict) -> dict:
+def carried_cells(grade: dict, grade_ref: dict, *, lane: str | None = None) -> dict:
     """The eleven reviewed PASS cells, each quotation re-read at the current tree."""
     cells = {}
     for field in EVIDENCE_FIELDS[1:]:
         cell = copy.deepcopy(grade["cells"][field])
-        evidence = [refresh_evidence(e) for e in cell.get("evidence") or [] if isinstance(e, dict)]
+        convention = "literal_quote" if (lane or grade.get("lane")) in ("DF", "DG6B") else "whole_line"
+        source_commit = grade_ref.get("source_commit")
+        if (lane or grade.get("lane")) == "DO" and field == "positive_negative_oracles":
+            delta = load("reports/event-authority-20261114/C12-DO.self-grade.json")
+            source_commit = delta["implementation_commit"]
+            _, original = find_by_event(delta["families"], grade["event_type"])
+            for e in cell.get("evidence") or []:
+                if e.get("path") == "Plans/orchestrator-subagent-integration.md":
+                    e.setdefault("unit", original["owner_unit"])
+        evidence = [refresh_evidence(e, digest_convention=convention,
+                                   source_commit=source_commit, event_type=grade["event_type"], criterion=field)
+                    for e in cell.get("evidence") or [] if isinstance(e, dict)]
         if not any(str(e.get("path", "")).startswith("Plans/") for e in evidence):
             raise Gap(f"{field} PASS carries no Plans evidence")
         cells[field] = {
@@ -436,7 +671,14 @@ def read_raw(rel: str) -> str:
 def write_text(rel: str, text: str, *, crlf: bool = False) -> None:
     data = text.replace("\n", "\r\n") if crlf else text
     (REPO / rel).write_bytes(data.encode("utf-8"))
-    _TEXT_CACHE.pop(rel, None)
+    previous = _TEXT_CACHE.pop(rel, None)
+    if previous is not None:
+        # Decision_Log is rewritten for each family. Retaining every prior split
+        # document makes a resumed, otherwise bounded batch exceed its 2 GiB cap.
+        _SPLIT_CACHE.pop(id(previous), None)
+        from pm_ea_evidence_projection import forget
+        forget(previous)
+    _TEXT_HASH_CACHE.pop(rel, None)
 
 
 def next_revision(previous: str, date: str) -> str:
@@ -482,6 +724,19 @@ def yaml_str(value: str) -> str:
     return json.dumps(value, ensure_ascii=False)
 
 
+def retention_label(ref: dict) -> str:
+    """Render either registry form without substituting a policy for the Usage setting."""
+    if "setting_key" in ref:
+        readiness = load_module("pm_impl_readiness_for_retention_label", "scripts/pm-implementation-readiness.py")
+        failures = readiness.event_family_setting_retention_failures(
+            "usage.event", ref, path_label="decision_entry/retention_policy_ref")
+        if failures:
+            raise Gap(failures[0]["error"])
+        return (f"setting `{ref['setting_key']}` from {ref['owner_ref']} "
+                f"(anchor `{ref['anchor']}`, immutable; no policy ID)")
+    return ref["policy_id"] + "@" + ref["policy_version"]
+
+
 def decision_entry(dl: str, fam: dict, ctx: dict) -> str:
     et, row = fam["event_type"], fam["registry_row"]
     if fam["kind"] == "cpu":
@@ -494,16 +749,19 @@ def decision_entry(dl: str, fam: dict, ctx: dict) -> str:
                      f"answer to card EA-P1, option A (\"{EA_P1}\"), admits each such name once its full definition, its "
                      "record and both reviews pass; DL-039's no bulk registration stands.")
         lineage_extra = "reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json (recount name)"
-    retention = row["retention_policy_ref"]["policy_id"] + "@" + row["retention_policy_ref"]["policy_version"]
+    retention = retention_label(row["retention_policy_ref"])
     editions = ""
     if row.get("payload_versions"):
-        parts = [f"{v['scope_kind']} `{v['payload_schema_id']}` ({v['retention_policy_ref']['policy_id']}@"
-                 f"{v['retention_policy_ref']['policy_version']}, producer {v['producer_admission']})" for v in row["payload_versions"]]
+        parts = [f"{v['scope_kind']} `{v['payload_schema_id']}` ({retention_label(v['retention_policy_ref'])}, "
+                 f"producer {v['producer_admission']})" for v in row["payload_versions"]]
         editions = " Its payload versions are " + "; ".join(parts) + "."
+    merge_number = ctx.get("merge", "admission-merge-1").rsplit("-", 1)[-1]
+    merge_reason = ("the families ready then are admitted in a first merge" if merge_number == "1"
+                    else "the remaining prepared families are admitted in this second merge after the first 173")
     text = (
-        f"Event Authority registers `{et}` as family `{row['family_id']}` revision {row['family_revision']} in admission merge 1 of "
-        f"PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B (\"{EA_P2}\"), so the families ready then are admitted "
-        f"in a first merge. {authority} Under DL-096 (\"{DL096_WORDS}\") this entry is Jared's decision entry for `{et}`, "
+        f"Event Authority registers `{et}` as family `{row['family_id']}` revision {row['family_revision']} in admission merge {merge_number} of "
+        f"PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B (\"{EA_P2}\"), so "
+        f"{merge_reason}. {authority} Under DL-096 (\"{DL096_WORDS}\") this entry is Jared's decision entry for `{et}`, "
         "and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, "
         "record and twelve-criterion assessment inside the batched landing.\n\n"
         f"The registry moves from revision {ctx['before']['revision']} ({ctx['before']['family_count']} families, SHA-256 "
@@ -536,7 +794,7 @@ def decision_entry(dl: str, fam: dict, ctx: dict) -> str:
         tokens.insert(5, EA_P1)
     depends = ["DL-039", "DL-077", "DL-078", "DL-096", "DL-400", "DL-414"]
     out = [
-        f"### {dl}: Event Authority registers {et} (admission merge 1)",
+        f"### {dl}: Event Authority registers {et} (admission merge {merge_number})",
         "",
         "```yaml",
         f"plan_unit_id: {dl}",
@@ -559,7 +817,7 @@ def decision_entry(dl: str, fam: dict, ctx: dict) -> str:
         "- python3 scripts/pm-ea-admission-writer.py verify",
         "risk_class: event_authority_admission",
         "reasoning_tier: high",
-        "context_scope: event_authority_pnc019_admission_merge_1",
+        f"context_scope: event_authority_pnc019_admission_merge_{merge_number}",
         "implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]",
         "node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}",
         "source_lineage:",
@@ -594,11 +852,17 @@ def membership_cell(fam: dict, ctx: dict) -> dict:
     }
 
 
-def ledger_cell(cell: dict) -> dict:
+def ledger_cell(cell: dict, event_type: str | None = None) -> dict:
     """One individual-disposition evidence cell from a depth cell: PASS, Plans citations first, the finding."""
     spans = []
     for item in sorted(cell["evidence"], key=lambda e: not str(e.get("path", "")).startswith("Plans/")):
         start, end = item.get("line_start"), item.get("line_end")
+        if item.get("path") == REGISTRY and event_type:
+            registry = load(REGISTRY)
+            matches = [row for row in registry["families"] if row["event_type"] == event_type]
+            if len(matches) != 1:
+                raise Gap("ledger registry subject is not unique: " + event_type)
+            start, end, _ = row_lines(file_text(REGISTRY), matches[0]["family_id"])
         span = f"{item['path']}:{start}" if start == end or end is None else f"{item['path']}:{start}-{end}"
         if start is None:
             span = item["path"]
@@ -607,6 +871,101 @@ def ledger_cell(cell: dict) -> dict:
     if not spans or not spans[0].startswith("Plans/"):
         raise SystemExit("a projected ledger cell needs a Plans citation first")
     return {"status": "PASS", "citation": "; ".join(spans), "note": cell.get("finding") or ""}
+
+
+def project_disposition(row: dict, assessment: dict, assessment_path: str, digest: str) -> dict:
+    """Refresh an existing registration's projection, preserving its append checkpoints."""
+    event_type = row["event_type"]
+    subjects = assessment.get("rows", [])
+    if len(subjects) != 1 or subjects[0].get("event_type") != event_type:
+        raise Gap("disposition assessment subject differs: " + event_type)
+    cells = subjects[0]["cells"]
+    if set(cells) != set(EVIDENCE_FIELDS) or any(cells[k].get("status") != "PASS" for k in EVIDENCE_FIELDS):
+        raise Gap("disposition assessment is not twelve PASS cells: " + event_type)
+    if row.get("disposition") != "KEEP_REGISTERED":
+        raise Gap("evidence maintenance cannot change a disposition: " + event_type)
+    result = copy.deepcopy(row)
+    result["evidence"] = {field: ledger_cell(cells[field], event_type) for field in row["evidence"]}
+    pattern = re.escape(assessment_path) + r" \(sha256 ([0-9a-f]{64})\)"
+    rationale, count = re.subn(pattern, lambda _: assessment_path + " (sha256 " + digest + ")",
+                               row["disposition_rationale"])
+    if count != 1:
+        raise Gap("disposition must have exactly one current assessment pin: " + event_type)
+    note = (" Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators "
+            "are projected by the writer; original one-family append checkpoints remain in the "
+            "DL-077 record and immutable Git history. No new admission or verdict change.")
+    if note not in rationale:
+        rationale += note
+    result["disposition_rationale"] = rationale
+    return result
+
+
+def disposition_problems(row: dict, assessment_path: str) -> list[str]:
+    """Check the live assessment digest and every projected registry span's subject."""
+    problems = []
+    digest = sha256_file(REPO / assessment_path)
+    pins = re.findall(re.escape(assessment_path) + r" \(sha256 ([0-9a-f]{64})\)",
+                      row.get("disposition_rationale", ""))
+    if pins != [digest]:
+        problems.append("assessment_digest_mismatch")
+    text = file_text(REGISTRY)
+    lines = text.splitlines()
+    subject = '"event_type": "' + row["event_type"] + '"'
+    membership_count = 0
+    for field, cell in row.get("evidence", {}).items():
+        for first, last in re.findall(re.escape(REGISTRY) + r":([0-9]+)(?:-([0-9]+))?", cell.get("citation", "")):
+            start, end = int(first), int(last or first)
+            if field == "membership_version":
+                membership_count += 1
+            if not 1 <= start <= end <= len(lines) or subject not in "\n".join(lines[start - 1:end]):
+                problems.append(field + ":registry_span_omits_family")
+    if not membership_count:
+        problems.append("membership_registry_span_missing")
+    return problems
+
+
+def refresh_dispositions(args) -> int:
+    """Reproject existing CPU rows and mirrors; --check makes no changes."""
+    folder = args.report_dir.rstrip("/")
+    names = {item["event_type"] for item in load(folder + "/readiness-list.json")["ready"]}
+    lines = read_raw(LEDGER).splitlines(keepends=True)
+    updates = []
+    errors = []
+    for index, line in enumerate(lines):
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        event_type = row.get("event_type")
+        if event_type not in names:
+            continue
+        path = folder + "/depth/" + event_type + ".json"
+        mirror = f"{LEDGER_ROWS}/ROW_{event_type}.json"
+        before_mirror = load(mirror)
+        if before_mirror != row:
+            raise Gap("disposition mirror disagrees before maintenance: " + event_type)
+        assessment = load(path)
+        projected = project_disposition(row, assessment, path, sha256_file(REPO / path))
+        problems = disposition_problems(row if args.check else projected, path)
+        if args.check and projected != row:
+            problems.append("projection_differs_from_current_assessment")
+        if problems:
+            errors.append({"event_type": event_type, "problems": problems})
+        updates.append((index, mirror, projected))
+    if len(updates) != 191:
+        raise Gap(f"expected the 191 merge-2 CPU dispositions, found {len(updates)}")
+    result = {"status": "fail" if errors else "pass", "checked": len(updates), "errors": errors,
+              "check_only": args.check, "original_registry_checkpoints_preserved": True}
+    if not args.check and not errors:
+        for index, mirror, row in updates:
+            # Canonicalize only the refreshed rows/mirrors to LF. Untouched
+            # ledger lines retain their original bytes and historical editions.
+            lines[index] = json.dumps(row, ensure_ascii=False) + "\n"
+            write_text(mirror, json.dumps(row, indent=2, ensure_ascii=False) + "\n")
+        write_text(LEDGER, "".join(lines))
+    if args.out:
+        Path(args.out).write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps(result))
+    return int(bool(errors))
 
 
 def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
@@ -629,12 +988,12 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
     after = {"revision": registry["registry_revision"], "sha256": sha256_bytes(rendered.encode("utf-8")),
              "family_count": len(registry["families"])}
     ctx = {"before": before, "after": after, "row_sha256": canonical_sha256(row), "row_index": before["family_count"],
-           "row_lines": row_lines(rendered, row["family_id"]), "bucket": state["recount"].get(et, {}).get("bucket")}
+           "row_lines": row_lines(rendered, row["family_id"]), "bucket": state["recount"].get(et, {}).get("bucket"), "merge": args.merge}
     # 2. Depth assessment: membership from the row, eleven carried cells re-read now.
     grade = state["grades"][fam["lane"]][et]
     if sha256_file(REPO / fam["grade"]["path"]) != fam["grade"]["sha256"]:
         raise SystemExit("reviewed grade bytes changed since prepare: " + fam["grade"]["path"])
-    cells = {"membership_version": membership_cell(fam, ctx), **carried_cells(grade, fam["grade"])}
+    cells = {"membership_version": membership_cell(fam, ctx), **carried_cells(grade, fam["grade"], lane=fam["lane"])}
     depth_rel = f"{args.report_dir}/depth/{et}.json"
     depth = {
         "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
@@ -689,7 +1048,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
         "recorded_by": args.recorded_by,
         "recorded_at_utc": args.recorded_at,
         "notes": [
-            f"Admission merge 1 (EA-P2 B), written by {WRITER_ID} from the manifest row for this family; one commit holds the registry append, this record, its Decision Log entry, its depth assessment, its {'KEEP_REGISTERED ledger row' if fam['kind'] == 'cpu' else 'recount OUTCOMES row'} and the DL-078 checkpoint pins.",
+            f"{args.merge} (EA-P2 B), written by {WRITER_ID} from the manifest row for this family; one commit holds the registry append, this record, its Decision Log entry, its depth assessment, its {'KEEP_REGISTERED ledger row' if fam['kind'] == 'cpu' else 'recount OUTCOMES row'} and the DL-078 checkpoint pins.",
             "The decision entry is " + dl + ", which DL-096 makes Jared's decision entry for this family.",
             "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
             "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only.",
@@ -709,7 +1068,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
         # needs no CPU row left KEEP_QUARANTINED): KEEP_REGISTERED, provisional false and twelve PASS cells
         # projected from this commit's depth assessment, the receipted row update lane S2 used; bucket,
         # cohort pins, July classification and every other field stay as written.
-        sentence = (f" Registered at registry revision {after['revision']} in admission merge 1 under DL-078, DL-096 and DL-400 "
+        sentence = (f" Registered at registry revision {after['revision']} in admission merge {args.merge.rsplit('-', 1)[-1]} under DL-078, DL-096 and DL-400 "
                     f"(decision Plans/Decision_Log.md#{dl}); DL-077 admission record {ctx['record_path']}. Disposition "
                     "KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells " + ", ".join(EVIDENCE_FIELDS) + " projected with "
                     f"twelve PASS cells from the family's admission depth assessment {depth_rel} (sha256 "
@@ -733,7 +1092,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
         ledger_row["disposition"] = "KEEP_REGISTERED"
         if "provisional" in ledger_row:
             ledger_row["provisional"] = False
-        ledger_row["evidence"] = {field: ledger_cell(cells[field]) for field in evidence}  # the row's own key order
+        ledger_row["evidence"] = {field: ledger_cell(cells[field], et) for field in evidence}  # the row's own key order
         ledger_row["disposition_rationale"] = ledger_row["disposition_rationale"] + sentence
         lines[hits[0]] = json.dumps(ledger_row, ensure_ascii=False) + ending
         before_lines = read_raw(LEDGER).split("\n")
@@ -785,6 +1144,27 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
         cdoc["rows"][i] = reordered
         write_text(COORDINATION_LEDGER, json.dumps(cdoc, indent=2, ensure_ascii=False) + "\n")
         touched.append(COORDINATION_LEDGER)
+    if fam["lane"] == "S4B":
+        rel = "Plans/browser_event_admission.json"
+        doc = load(rel)
+        index, admission = find_by_event(doc["rows"], et)
+        if admission["admission_status"] != "prepared_not_admitted":
+            raise SystemExit("Browser row is not prepared: " + et)
+        contract = lane_contract("S4B", et)
+        admission["admission_status"] = "admitted_static_contract"
+        admission["authority_contract_ref"] = contract["owners"]["storage"]
+        write_text(rel, json.dumps(doc, indent=2, ensure_ascii=False) + "\n")
+        touched.append(rel)
+    if fam["lane"] == "DC":
+        rel = "Plans/collaboration_event_admission.json"
+        doc = load(rel)
+        index, admission = find_by_event(doc["rows"], et)
+        if admission["admission_status"] != "prepared_not_admitted" or canonical_sha256(admission["registry_row"]) != ctx["row_sha256"]:
+            raise SystemExit("Collaboration row is not the exact prepared registry row: " + et)
+        admission["admission_status"] = "admitted_static_contract"
+        admission["authority_contract_ref"] = admission["storage_owner_unit"]
+        write_text(rel, json.dumps(doc, indent=2, ensure_ascii=False) + "\n")
+        touched.append(rel)
     # 7. DL-078 checkpoint pins.
     cur = read_raw(CURRENTNESS)
     cur, n1 = re.subn(r'(?m)^EVENT_FAMILY_REGISTRY_REVISION = "[^"]+"$', f'EVENT_FAMILY_REGISTRY_REVISION = "{after["revision"]}"', cur)
@@ -792,7 +1172,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
     if (n1, n2) != (1, 1):
         raise SystemExit("checkpoint pins not found exactly once in " + CURRENTNESS)
     paragraph = (
-        f"{PIN_MARKER} 1 (Jared, EA-P2 B, 2026-11-14), one family per commit, each with its own\n"
+        f"{PIN_MARKER} {args.merge.rsplit('-', 1)[-1]} (Jared, EA-P2 B, 2026-11-14), one family per commit, each with its own\n"
         f"# Decision Log entry and DL-077 admission record; latest {et} (Plans/Decision_Log.md#{dl}):\n"
         f"# registry {after['revision']}, {after['family_count']} families, SHA-256\n"
         f"# {after['sha256']} (predecessor\n"
@@ -825,7 +1205,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
     touched.append(LEGACY_GOLDEN)
     state["results"].append({"event_type": et, "dl": dl, "registry_after": after, "record": ctx["record_path"],
                              "depth": depth_rel, "row_sha256": ctx["row_sha256"],
-                             "record_problems": state.pop("record_problems")})
+                             "record_problems": state.pop("record_problems"), "merge": args.merge})
     return touched
 
 
@@ -833,7 +1213,7 @@ def commit_message(fam: dict, dl: str, result: dict) -> str:
     et = fam["event_type"]
     what = "ledger row moved to KEEP_REGISTERED" if fam["kind"] == "cpu" else "recount OUTCOMES row"
     return (
-        f"plans: {dl} registers {et} (admission merge 1, EA-P2 B)\n\n"
+        f"plans: {dl} registers {et} ({result.get('merge', 'admission-merge-1')}, EA-P2 B)\n\n"
         f"One commit per family ({WRITER_ID}): registry {result['registry_after']['revision']} with "
         f"{result['registry_after']['family_count']} families (SHA-256 {result['registry_after']['sha256'][:12]}...), "
         f"the row appended with canonical SHA-256 {result['row_sha256'][:12]}...; its Decision Log entry {dl} "
@@ -846,6 +1226,9 @@ def commit_message(fam: dict, dl: str, result: dict) -> str:
 
 def apply(args) -> int:
     manifest = json.loads(Path(args.manifest).read_text(encoding="utf-8"))
+    for family in manifest["families"]:
+        if family.get("grade"):
+            SELF_GRADES[family["lane"]] = family["grade"]["path"]
     ready = [f for f in manifest["families"] if f["status"] == "ready"]
     if args.only:
         wanted = set(args.only.split(","))
@@ -865,7 +1248,7 @@ def apply(args) -> int:
     if manifest["base"] != head and not args.allow_new_base:
         raise SystemExit(f"manifest was prepared at {manifest['base']}, HEAD is {head}; prepare again")
     state = {
-        "base": head,
+        "base": manifest["base"],
         "grades": {lane: grade_rows(lane) for lane in SELF_GRADES},
         "recount": {row["name"]: row for row in load(RECOUNT_LIST)},
         "frozen": load_module("pm_ea_frozen_check_for_writer", FROZEN),
@@ -894,9 +1277,11 @@ def apply(args) -> int:
                 # Plans/.audits/* is ignored for new files; these ledger and outcome files are tracked canon.
                 git("add", "-f", "--", *audit)
             msg = commit_message(fam, dl, state["results"][-1])
-            git("commit", "-q", "-m", msg + "\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n")
+            git("commit", "-q", "-m", msg)
             state["results"][-1]["commit"] = git("rev-parse", "HEAD").strip()
         print(json.dumps(state["results"][-1]))
+        if args.results:
+            Path(args.results).write_text(json.dumps(state["results"], indent=1) + "\n", encoding="utf-8")
     if args.results:
         Path(args.results).write_text(json.dumps(state["results"], indent=1) + "\n", encoding="utf-8")
     return 0
@@ -953,6 +1338,8 @@ def main(argv=None) -> int:
     p = sub.add_parser("prepare")
     p.add_argument("--merge", default="admission-merge-1")
     p.add_argument("--out", required=True)
+    p.add_argument("--readiness-list")
+    p.add_argument("--readiness-sha256")
     p.set_defaults(func=prepare)
     a = sub.add_parser("apply")
     a.add_argument("--manifest", required=True)
@@ -979,6 +1366,11 @@ def main(argv=None) -> int:
     v.add_argument("--manifest", required=True)
     v.add_argument("--out", default="")
     v.set_defaults(func=verify)
+    d = sub.add_parser("refresh-dispositions", help="refresh existing CPU evidence projections without admission")
+    d.add_argument("--report-dir", default="reports/event-authority-20261116/admission-merge-2")
+    d.add_argument("--check", action="store_true")
+    d.add_argument("--out", default="")
+    d.set_defaults(func=refresh_dispositions)
     args = parser.parse_args(argv)
     return args.func(args)
 

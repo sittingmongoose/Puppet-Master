@@ -314,17 +314,23 @@ def wildcard_battery_checks(root, inventory):
     import pm_event_datetime_inventory as inv
     from pm_event_datetime_value_probe import BATTERY, ROLES
     checks = {}
-    # The 21 name maps: 3 automatic, 8 non-timestamp roles whose cited
-    # definitions decide the string, and 10 explicit timestamp reviews whose
-    # cited definitions do not (FIX14 N1).
+    # Every committed reviewed map plus the three automatic maps. Review
+    # records must match the inventory exactly; new maps cannot disappear
+    # behind a historical count (FIX14 N1).
     maps = [r for r in inventory["nodes"] if r["classification"] in (
         "wildcard_non_timestamp", "wildcard_non_timestamp_role") or (
         r["classification"] == "other_owner_observation" and
         (r.get("value_evidence") or {}).get("reviewed_role") is not None)]
-    checks["datetime_battery_21_name_maps"] = (len(maps) == 21 and
-        sum(r["classification"] == "wildcard_non_timestamp" for r in maps) == 3 and
-        sum(r["classification"] == "wildcard_non_timestamp_role" for r in maps) == 8 and
-        sum(r["classification"] == "other_owner_observation" for r in maps) == 10 and
+    roles = json.loads((root / ROLES).read_text())
+    records = {tuple(r["node"]): r for r in roles}
+    reviewed = {inv.node_key(r): r for r in maps if r["classification"] != "wildcard_non_timestamp"}
+    automatic = [r for r in maps if r["classification"] == "wildcard_non_timestamp"]
+    checks["datetime_battery_21_name_maps"] = (len(records) == len(roles) == len(reviewed) and
+        bool(records) and set(records) == set(reviewed) and
+        len(maps) == len(roles) + len(automatic) and len(automatic) == 3 and
+        all(records[key] == row["value_evidence"]["reviewed_role"] and
+            records[key].get("classification", "wildcard_non_timestamp_role") == row["classification"]
+            for key, row in reviewed.items()) and
         all(r["value_evidence"]["automatic_credit"]
             if r["classification"] == "wildcard_non_timestamp" else
             r["value_evidence"]["reviewed_role"] is not None for r in maps) and

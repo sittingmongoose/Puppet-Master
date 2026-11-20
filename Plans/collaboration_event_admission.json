@@ -16,7 +16,7 @@
     {
       "event_type": "collaboration.created",
       "family_id": "event-family-collaboration-created",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -197,12 +197,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-461"
     },
     {
       "event_type": "collaboration.started",
       "family_id": "event-family-collaboration-started",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -400,12 +401,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-462"
     },
     {
       "event_type": "collaboration.paused",
       "family_id": "event-family-collaboration-paused",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -575,12 +577,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-463"
     },
     {
       "event_type": "collaboration.resumed",
       "family_id": "event-family-collaboration-resumed",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -747,12 +750,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-464"
     },
     {
       "event_type": "collaboration.cancelled",
       "family_id": "event-family-collaboration-cancelled",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -923,12 +927,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-465"
     },
     {
       "event_type": "collaboration.completed",
       "family_id": "event-family-collaboration-completed",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -1102,12 +1107,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-466"
     },
     {
       "event_type": "collaboration.failed",
       "family_id": "event-family-collaboration-failed",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-091",
         "Plans/Decision_Log.md#DL-090",
@@ -1278,12 +1284,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-467"
     },
     {
       "event_type": "collaboration.participant_started",
       "family_id": "event-family-collaboration-participant-started",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -1460,12 +1467,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-468"
     },
     {
       "event_type": "collaboration.participant_completed",
       "family_id": "event-family-collaboration-participant-completed",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -1646,12 +1654,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-469"
     },
     {
       "event_type": "collaboration.message_added",
       "family_id": "event-family-collaboration-message-added",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -1827,12 +1836,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-470"
     },
     {
       "event_type": "collaboration.artifact_added",
       "family_id": "event-family-collaboration-artifact-added",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -2001,12 +2011,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-471"
     },
     {
       "event_type": "collaboration.configuration_changed",
       "family_id": "event-family-collaboration-configuration-changed",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -2181,12 +2192,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-472"
     },
     {
       "event_type": "brainstorm.proposal_added",
       "family_id": "event-family-brainstorm-proposal-added",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -2354,12 +2366,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-473"
     },
     {
       "event_type": "brainstorm.vote_added",
       "family_id": "event-family-brainstorm-vote-added",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -2526,12 +2539,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-474"
     },
     {
       "event_type": "brainstorm.plan_synthesized",
       "family_id": "event-family-brainstorm-plan-synthesized",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -2699,12 +2713,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-475"
     },
     {
       "event_type": "review.finding_added",
       "family_id": "event-family-review-finding-added",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -2874,12 +2889,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-476"
     },
     {
       "event_type": "review.finding_dispositioned",
       "family_id": "event-family-review-finding-dispositioned",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -3046,12 +3062,13 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-477"
     },
     {
       "event_type": "review.artifact_finalized",
       "family_id": "event-family-review-artifact-finalized",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "decision_refs": [
         "Plans/Decision_Log.md#DL-090",
         "Plans/Decision_Log.md#DL-092",
@@ -3221,7 +3238,8 @@
         "record_family_registered: the owner record the producer commits is a registered Storage family in the event's scope (DL-090; CW section 12)",
         "kind_family_set_admitted: every family the run kind's transition table needs is admitted (SP-460 activation)",
         "application_edition: producer_admission requires_owner_adoption until the owner adopts the CV-366 application source graph"
-      ]
+      ],
+      "authority_contract_ref": "Plans/storage-plan.md#SP-478"
     }
   ]
 }

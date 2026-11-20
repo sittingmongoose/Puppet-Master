@@ -1,0 +1,3070 @@
+{
+ "assessment_id": "PNC019-C12-DR-20261115",
+ "assessment_kind": "worker_self_grade_delta",
+ "base": "80a2a22e1efbe7dfd0e73a1a2794f225dec39c89",
+ "branch": "plans/ea-pnc-c12-dr-20261114",
+ "counts": {
+  "after_PASS": 19,
+  "before_PARTIAL": 19
+ },
+ "gated": {
+  "pins": [
+   [
+    "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "fb6b914b207bf6e0999eb6f117dd8f7f472a0df3a2a4c4ab0c360970803f2f61"
+   ]
+  ],
+  "proved": 3042,
+  "row_cells": 3042,
+  "suites": 785,
+  "unproved": 0
+ },
+ "implementation_commit": "98a662574ba1f61ee593db3e977dd4dd39b4409c",
+ "independent_review": "NOT_RUN",
+ "membership": "ABSENT",
+ "native_execution": "NOT_RUN",
+ "other_cells": "Not regraded (unchanged from reports/event-authority-20261104/DR.self-grade.json)",
+ "rows": [
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.api_web_call",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.api_web_call",
+   "evidence": [
+    {
+     "line_end": 7,
+     "line_start": 7,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.api_web_call\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 3633,
+     "line_start": 3633,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-100 \u2014 runtime_artifact.api_web_call",
+     "unit": "RAP-100"
+    },
+    {
+     "line_end": 43333,
+     "line_start": 43333,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-520 \u2014 runtime_artifact.api_web_call",
+     "unit": "SP-520"
+    },
+    {
+     "line_end": 38382,
+     "line_start": 38382,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-520 \u2014 runtime_artifact.api_web_call",
+     "unit": "CV-520"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_api_web_call.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.api_web_call.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 156/156 row cells in 40 suites (max 7 rows); complete-boundary pair ledger 374 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1791 validation sites over 193 rule bodies (77 with isolated whole-occurrence witnesses), 1219 clause witnesses, 355 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 994, 'KILLED': 295}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-100",
+    "SP-520",
+    "CV-520",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.artifact_version",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.artifact_version",
+   "evidence": [
+    {
+     "line_end": 28,
+     "line_start": 28,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.artifact_version\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 3673,
+     "line_start": 3673,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-101 \u2014 runtime_artifact.artifact_version",
+     "unit": "RAP-101"
+    },
+    {
+     "line_end": 43371,
+     "line_start": 43371,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-521 \u2014 runtime_artifact.artifact_version",
+     "unit": "SP-521"
+    },
+    {
+     "line_end": 38418,
+     "line_start": 38418,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-521 \u2014 runtime_artifact.artifact_version",
+     "unit": "CV-521"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_artifact_version.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.artifact_version.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 156/156 row cells in 40 suites (max 7 rows); complete-boundary pair ledger 374 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1085 validation sites over 102 rule bodies (71 with isolated whole-occurrence witnesses), 1161 clause witnesses, 243 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 965, 'KILLED': 237}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-101",
+    "SP-521",
+    "CV-521",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.before_after_snapshot",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.before_after_snapshot",
+   "evidence": [
+    {
+     "line_end": 49,
+     "line_start": 49,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.before_after_snapshot\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 3713,
+     "line_start": 3713,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-102 \u2014 runtime_artifact.before_after_snapshot",
+     "unit": "RAP-102"
+    },
+    {
+     "line_end": 43409,
+     "line_start": 43409,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-522 \u2014 runtime_artifact.before_after_snapshot",
+     "unit": "SP-522"
+    },
+    {
+     "line_end": 38454,
+     "line_start": 38454,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-522 \u2014 runtime_artifact.before_after_snapshot",
+     "unit": "CV-522"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_before_after_snapshot.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.before_after_snapshot.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 156/156 row cells in 40 suites (max 7 rows); complete-boundary pair ledger 374 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1081 validation sites over 101 rule bodies (71 with isolated whole-occurrence witnesses), 1161 clause witnesses, 243 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 965, 'KILLED': 237}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-102",
+    "SP-522",
+    "CV-522",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.browser_recording",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.browser_recording",
+   "evidence": [
+    {
+     "line_end": 70,
+     "line_start": 70,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.browser_recording\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 3753,
+     "line_start": 3753,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-103 \u2014 runtime_artifact.browser_recording",
+     "unit": "RAP-103"
+    },
+    {
+     "line_end": 43447,
+     "line_start": 43447,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-523 \u2014 runtime_artifact.browser_recording",
+     "unit": "SP-523"
+    },
+    {
+     "line_end": 38490,
+     "line_start": 38490,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-523 \u2014 runtime_artifact.browser_recording",
+     "unit": "CV-523"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_browser_recording.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.browser_recording.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 163/163 row cells in 41 suites (max 7 rows); complete-boundary pair ledger 436 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1423 validation sites over 136 rule bodies (93 with isolated whole-occurrence witnesses), 1446 clause witnesses, 281 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 1128, 'KILLED': 500, 'NOT_A_BOUNDARY_INPUT': 3}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-103",
+    "SP-523",
+    "CV-523",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.code_diff",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.code_diff",
+   "evidence": [
+    {
+     "line_end": 91,
+     "line_start": 91,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.code_diff\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 3795,
+     "line_start": 3795,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-104 \u2014 runtime_artifact.code_diff",
+     "unit": "RAP-104"
+    },
+    {
+     "line_end": 43485,
+     "line_start": 43485,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-524 \u2014 runtime_artifact.code_diff",
+     "unit": "SP-524"
+    },
+    {
+     "line_end": 38527,
+     "line_start": 38527,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-524 \u2014 runtime_artifact.code_diff",
+     "unit": "CV-524"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_code_diff.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.code_diff.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 156/156 row cells in 40 suites (max 7 rows); complete-boundary pair ledger 374 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1121 validation sites over 104 rule bodies (72 with isolated whole-occurrence witnesses), 1175 clause witnesses, 243 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 978, 'KILLED': 243}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-104",
+    "SP-524",
+    "CV-524",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.context_snapshot",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.context_snapshot",
+   "evidence": [
+    {
+     "line_end": 112,
+     "line_start": 112,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.context_snapshot\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 3835,
+     "line_start": 3835,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-105 \u2014 runtime_artifact.context_snapshot",
+     "unit": "RAP-105"
+    },
+    {
+     "line_end": 43523,
+     "line_start": 43523,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-525 \u2014 runtime_artifact.context_snapshot",
+     "unit": "SP-525"
+    },
+    {
+     "line_end": 38563,
+     "line_start": 38563,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-525 \u2014 runtime_artifact.context_snapshot",
+     "unit": "CV-525"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_context_snapshot.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.context_snapshot.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 156/156 row cells in 40 suites (max 7 rows); complete-boundary pair ledger 374 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1091 validation sites over 104 rule bodies (71 with isolated whole-occurrence witnesses), 1155 clause witnesses, 243 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 962, 'KILLED': 231}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-105",
+    "SP-525",
+    "CV-525",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.cost_usage",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.cost_usage",
+   "evidence": [
+    {
+     "line_end": 133,
+     "line_start": 133,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.cost_usage\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 3875,
+     "line_start": 3875,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-106 \u2014 runtime_artifact.cost_usage",
+     "unit": "RAP-106"
+    },
+    {
+     "line_end": 43561,
+     "line_start": 43561,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-526 \u2014 runtime_artifact.cost_usage",
+     "unit": "SP-526"
+    },
+    {
+     "line_end": 38599,
+     "line_start": 38599,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-526 \u2014 runtime_artifact.cost_usage",
+     "unit": "CV-526"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_cost_usage.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.cost_usage.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 181/181 row cells in 47 suites (max 7 rows); complete-boundary pair ledger 486 KILLED, 43 COVERED_LATER, 14 excluded with reasons, 0 INVALID; schema 1544 validation sites over 140 rule bodies (102 with isolated whole-occurrence witnesses), 2162 clause witnesses, 333 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 1846, 'KILLED': 561, 'NOT_A_BOUNDARY_INPUT': 20}; retained 114/114 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-106",
+    "SP-526",
+    "CV-526",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.document",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.document",
+   "evidence": [
+    {
+     "line_end": 154,
+     "line_start": 154,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.document\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 3918,
+     "line_start": 3918,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-107 \u2014 runtime_artifact.document",
+     "unit": "RAP-107"
+    },
+    {
+     "line_end": 43599,
+     "line_start": 43599,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-527 \u2014 runtime_artifact.document",
+     "unit": "SP-527"
+    },
+    {
+     "line_end": 38637,
+     "line_start": 38637,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-527 \u2014 runtime_artifact.document",
+     "unit": "CV-527"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_document.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.document.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 156/156 row cells in 40 suites (max 7 rows); complete-boundary pair ledger 374 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1091 validation sites over 103 rule bodies (71 with isolated whole-occurrence witnesses), 1159 clause witnesses, 243 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 964, 'KILLED': 235}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-107",
+    "SP-527",
+    "CV-527",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.evidence",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.evidence",
+   "evidence": [
+    {
+     "line_end": 175,
+     "line_start": 175,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.evidence\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 3958,
+     "line_start": 3958,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-108 \u2014 runtime_artifact.evidence",
+     "unit": "RAP-108"
+    },
+    {
+     "line_end": 43637,
+     "line_start": 43637,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-528 \u2014 runtime_artifact.evidence",
+     "unit": "SP-528"
+    },
+    {
+     "line_end": 38673,
+     "line_start": 38673,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-528 \u2014 runtime_artifact.evidence",
+     "unit": "CV-528"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_evidence.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.evidence.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 156/156 row cells in 40 suites (max 7 rows); complete-boundary pair ledger 374 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1095 validation sites over 103 rule bodies (72 with isolated whole-occurrence witnesses), 1157 clause witnesses, 245 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 963, 'KILLED': 233}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-108",
+    "SP-528",
+    "CV-528",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.failed_attempts",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.failed_attempts",
+   "evidence": [
+    {
+     "line_end": 196,
+     "line_start": 196,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.failed_attempts\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 3998,
+     "line_start": 3998,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-109 \u2014 runtime_artifact.failed_attempts",
+     "unit": "RAP-109"
+    },
+    {
+     "line_end": 43675,
+     "line_start": 43675,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-529 \u2014 runtime_artifact.failed_attempts",
+     "unit": "SP-529"
+    },
+    {
+     "line_end": 38709,
+     "line_start": 38709,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-529 \u2014 runtime_artifact.failed_attempts",
+     "unit": "CV-529"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.failed_attempts.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 156/156 row cells in 40 suites (max 7 rows); complete-boundary pair ledger 374 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1119 validation sites over 105 rule bodies (73 with isolated whole-occurrence witnesses), 1171 clause witnesses, 243 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 970, 'KILLED': 247}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-109",
+    "SP-529",
+    "CV-529",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.hitl_approval",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.hitl_approval",
+   "evidence": [
+    {
+     "line_end": 217,
+     "line_start": 217,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.hitl_approval\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 4038,
+     "line_start": 4038,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-110 \u2014 runtime_artifact.hitl_approval",
+     "unit": "RAP-110"
+    },
+    {
+     "line_end": 43713,
+     "line_start": 43713,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-530 \u2014 runtime_artifact.hitl_approval",
+     "unit": "SP-530"
+    },
+    {
+     "line_end": 38745,
+     "line_start": 38745,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-530 \u2014 runtime_artifact.hitl_approval",
+     "unit": "CV-530"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_hitl_approval.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.hitl_approval.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 156/156 row cells in 40 suites (max 7 rows); complete-boundary pair ledger 374 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1109 validation sites over 103 rule bodies (73 with isolated whole-occurrence witnesses), 1165 clause witnesses, 245 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 967, 'KILLED': 241}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-110",
+    "SP-530",
+    "CV-530",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.implementation_plan",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.implementation_plan",
+   "evidence": [
+    {
+     "line_end": 238,
+     "line_start": 238,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.implementation_plan\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 4079,
+     "line_start": 4079,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-111 \u2014 runtime_artifact.implementation_plan",
+     "unit": "RAP-111"
+    },
+    {
+     "line_end": 43751,
+     "line_start": 43751,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-531 \u2014 runtime_artifact.implementation_plan",
+     "unit": "SP-531"
+    },
+    {
+     "line_end": 38781,
+     "line_start": 38781,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-531 \u2014 runtime_artifact.implementation_plan",
+     "unit": "CV-531"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_implementation_plan.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.implementation_plan.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 156/156 row cells in 40 suites (max 7 rows); complete-boundary pair ledger 374 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1155 validation sites over 104 rule bodies (71 with isolated whole-occurrence witnesses), 1155 clause witnesses, 243 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 962, 'KILLED': 231}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-111",
+    "SP-531",
+    "CV-531",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.reasoning_summary",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.reasoning_summary",
+   "evidence": [
+    {
+     "line_end": 259,
+     "line_start": 259,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.reasoning_summary\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 4119,
+     "line_start": 4119,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-112 \u2014 runtime_artifact.reasoning_summary",
+     "unit": "RAP-112"
+    },
+    {
+     "line_end": 43789,
+     "line_start": 43789,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-532 \u2014 runtime_artifact.reasoning_summary",
+     "unit": "SP-532"
+    },
+    {
+     "line_end": 38817,
+     "line_start": 38817,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-532 \u2014 runtime_artifact.reasoning_summary",
+     "unit": "CV-532"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_reasoning_summary.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.reasoning_summary.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 156/156 row cells in 40 suites (max 7 rows); complete-boundary pair ledger 374 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1097 validation sites over 104 rule bodies (72 with isolated whole-occurrence witnesses), 1155 clause witnesses, 243 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 962, 'KILLED': 231}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-112",
+    "SP-532",
+    "CV-532",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.restore_point",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.restore_point",
+   "evidence": [
+    {
+     "line_end": 280,
+     "line_start": 280,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.restore_point\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 4160,
+     "line_start": 4160,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-113 \u2014 runtime_artifact.restore_point",
+     "unit": "RAP-113"
+    },
+    {
+     "line_end": 43827,
+     "line_start": 43827,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-533 \u2014 runtime_artifact.restore_point",
+     "unit": "SP-533"
+    },
+    {
+     "line_end": 38853,
+     "line_start": 38853,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-533 \u2014 runtime_artifact.restore_point",
+     "unit": "CV-533"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_restore_point.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.restore_point.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 181/181 row cells in 49 suites (max 7 rows); complete-boundary pair ledger 444 KILLED, 882 COVERED_LATER, 8 excluded with reasons, 0 INVALID; schema 1975 validation sites over 200 rule bodies (94 with isolated whole-occurrence witnesses), 2168 clause witnesses, 1511 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 1251, 'KILLED': 1829}; retained 77/77 reads, 0 store changes, 0 receipts created; date-time 8152 cases {'CONTROL': 4996, 'KILLED': 3156}.",
+   "owner_units": [
+    "RAP-113",
+    "SP-533",
+    "CV-533",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.screenshot",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.screenshot",
+   "evidence": [
+    {
+     "line_end": 302,
+     "line_start": 302,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.screenshot\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 4203,
+     "line_start": 4203,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-114 \u2014 runtime_artifact.screenshot",
+     "unit": "RAP-114"
+    },
+    {
+     "line_end": 43866,
+     "line_start": 43866,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-534 \u2014 runtime_artifact.screenshot",
+     "unit": "SP-534"
+    },
+    {
+     "line_end": 38890,
+     "line_start": 38890,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-534 \u2014 runtime_artifact.screenshot",
+     "unit": "CV-534"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_screenshot.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.screenshot.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 156/156 row cells in 40 suites (max 7 rows); complete-boundary pair ledger 376 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1099 validation sites over 102 rule bodies (71 with isolated whole-occurrence witnesses), 1165 clause witnesses, 243 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 966, 'KILLED': 241, 'NOT_A_BOUNDARY_INPUT': 2}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-114",
+    "SP-534",
+    "CV-534",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.subagent_lineage",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.subagent_lineage",
+   "evidence": [
+    {
+     "line_end": 323,
+     "line_start": 323,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.subagent_lineage\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 4243,
+     "line_start": 4243,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-115 \u2014 runtime_artifact.subagent_lineage",
+     "unit": "RAP-115"
+    },
+    {
+     "line_end": 43904,
+     "line_start": 43904,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-535 \u2014 runtime_artifact.subagent_lineage",
+     "unit": "SP-535"
+    },
+    {
+     "line_end": 38926,
+     "line_start": 38926,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-535 \u2014 runtime_artifact.subagent_lineage",
+     "unit": "CV-535"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_subagent_lineage.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.subagent_lineage.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 156/156 row cells in 40 suites (max 7 rows); complete-boundary pair ledger 374 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1111 validation sites over 103 rule bodies (72 with isolated whole-occurrence witnesses), 1167 clause witnesses, 243 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 968, 'KILLED': 243}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-115",
+    "SP-535",
+    "CV-535",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.suggested_next_steps",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.suggested_next_steps",
+   "evidence": [
+    {
+     "line_end": 344,
+     "line_start": 344,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.suggested_next_steps\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 4283,
+     "line_start": 4283,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-116 \u2014 runtime_artifact.suggested_next_steps",
+     "unit": "RAP-116"
+    },
+    {
+     "line_end": 43942,
+     "line_start": 43942,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-536 \u2014 runtime_artifact.suggested_next_steps",
+     "unit": "SP-536"
+    },
+    {
+     "line_end": 38962,
+     "line_start": 38962,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-536 \u2014 runtime_artifact.suggested_next_steps",
+     "unit": "CV-536"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_suggested_next_steps.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.suggested_next_steps.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 156/156 row cells in 40 suites (max 7 rows); complete-boundary pair ledger 374 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1119 validation sites over 104 rule bodies (71 with isolated whole-occurrence witnesses), 1159 clause witnesses, 243 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 964, 'KILLED': 235}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-116",
+    "SP-536",
+    "CV-536",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.tool_llm_trace",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.tool_llm_trace",
+   "evidence": [
+    {
+     "line_end": 365,
+     "line_start": 365,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.tool_llm_trace\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 4323,
+     "line_start": 4323,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-117 \u2014 runtime_artifact.tool_llm_trace",
+     "unit": "RAP-117"
+    },
+    {
+     "line_end": 43980,
+     "line_start": 43980,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-537 \u2014 runtime_artifact.tool_llm_trace",
+     "unit": "SP-537"
+    },
+    {
+     "line_end": 38998,
+     "line_start": 38998,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-537 \u2014 runtime_artifact.tool_llm_trace",
+     "unit": "CV-537"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_tool_llm_trace.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.tool_llm_trace.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 175/175 row cells in 46 suites (max 7 rows); complete-boundary pair ledger 474 KILLED, 43 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1262 validation sites over 119 rule bodies (87 with isolated whole-occurrence witnesses), 1770 clause witnesses, 321 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 1538, 'KILLED': 353}; retained 114/114 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-117",
+    "SP-537",
+    "CV-537",
+    "ATS-260"
+   ]
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json#/runtime_artifact.validation_test",
+   "criteria": {
+    "datetime_no_mismatch": true,
+    "every_row_has_complete_boundary_pair": true,
+    "gated_all_rows_proved": true,
+    "max_rows_le_8": true,
+    "pair_ledger_no_invalid": true,
+    "retained_all_pass": true,
+    "schema_boundary_no_invalid": true,
+    "schema_rules_controlled": true
+   },
+   "criterion": 12,
+   "event_type": "runtime_artifact.validation_test",
+   "evidence": [
+    {
+     "line_end": 386,
+     "line_start": 386,
+     "path": "Plans/runtime_artifact_event_drafts.json",
+     "quote": "\"event_type\": \"runtime_artifact.validation_test\"",
+     "unit": "draft row"
+    },
+    {
+     "line_end": 4365,
+     "line_start": 4365,
+     "path": "Plans/Runtime_Artifacts_Panel.md",
+     "quote": "### RAP-118 \u2014 runtime_artifact.validation_test",
+     "unit": "RAP-118"
+    },
+    {
+     "line_end": 44018,
+     "line_start": 44018,
+     "path": "Plans/storage-plan.md",
+     "quote": "### SP-538 \u2014 runtime_artifact.validation_test",
+     "unit": "SP-538"
+    },
+    {
+     "line_end": 39036,
+     "line_start": 39036,
+     "path": "Plans/Contracts_V0.md",
+     "quote": "### CV-538 \u2014 runtime_artifact.validation_test",
+     "unit": "CV-538"
+    },
+    {
+     "line_end": 3,
+     "line_start": 3,
+     "path": "Plans/runtime_artifact_validation_test.schema.json",
+     "quote": "\"$id\": \"pm.runtime_artifact.validation_test.schema.v1\"",
+     "unit": "payload schema"
+    },
+    {
+     "line_end": 11251,
+     "line_start": 11251,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 11252,
+     "line_start": 11252,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+     "unit": "ATS-260"
+    },
+    {
+     "line_end": 464,
+     "line_start": 464,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "class TableValidator:",
+     "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)"
+    },
+    {
+     "line_end": 953,
+     "line_start": 953,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+     "unit": "resolve_history (SP-1101 sealed recipe)"
+    },
+    {
+     "line_end": 935,
+     "line_start": 935,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+     "unit": "dispatch_original"
+    },
+    {
+     "line_end": 1076,
+     "line_start": 1076,
+     "path": "scripts/pm-runtime-artifact-event-drafts.py",
+     "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+     "unit": "checkpoint_matches schema occurrences"
+    },
+    {
+     "line_end": 21,
+     "line_start": 21,
+     "path": "scripts/pm_runtime_artifact_table_history.py",
+     "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+     "unit": "H05b_original_binding"
+    },
+    {
+     "line_end": 331,
+     "line_start": 331,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+     "unit": "clause isolation rule"
+    },
+    {
+     "line_end": 418,
+     "line_start": 418,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def cut_and_restore(route, phase, row, expected):",
+     "unit": "complete-boundary cut and restoration"
+    },
+    {
+     "line_end": 432,
+     "line_start": 432,
+     "path": "scripts/pm_runtime_artifact_c12.py",
+     "quote": "def store_digest(store):",
+     "unit": "sealed-store snapshot"
+    },
+    {
+     "line_end": 176,
+     "line_start": 176,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def schema_part(ctx, references, out):",
+     "unit": "schema inventory and witnesses"
+    },
+    {
+     "line_end": 378,
+     "line_start": 378,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def pairs_part(families, out):",
+     "unit": "complete-boundary pair ledger"
+    },
+    {
+     "line_end": 430,
+     "line_start": 430,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def retained_part(ctx, out):",
+     "unit": "retained reads and store snapshots"
+    },
+    {
+     "line_end": 564,
+     "line_start": 564,
+     "path": "scripts/pm-runtime-artifact-c12-closure.py",
+     "quote": "def datetime_part(ctx, out):",
+     "unit": "shared date-time battery at the complete boundary"
+    }
+   ],
+   "finding": "Fresh gated proof 156/156 row cells in 40 suites (max 7 rows); complete-boundary pair ledger 374 KILLED, 41 COVERED_LATER, 4 excluded with reasons, 0 INVALID; schema 1129 validation sites over 106 rule bodies (72 with isolated whole-occurrence witnesses), 1165 clause witnesses, 243 INVALID proposals listed apart; schema boundary {'COVERED_LATER': 967, 'KILLED': 241}; retained 68/68 reads, 0 store changes, 0 receipts created; date-time 7133 cases {'CONTROL': 4334, 'KILLED': 2799}.",
+   "owner_units": [
+    "RAP-118",
+    "SP-538",
+    "CV-538",
+    "ATS-260"
+   ]
+  }
+ ],
+ "shared_datetime_inventory": "FAIL on this base: reported, no broad shared-suite PASS claimed"
+}

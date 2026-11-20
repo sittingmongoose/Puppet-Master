@@ -1,0 +1,64 @@
+{
+  "profile": "pm.executor.workflow_source.all_writers.stop_block.v1",
+  "predecessor": "pm.executor.workflow_source.all_writers.v7",
+  "predecessor_descriptor_sha256": "0f71cf4a5fa992489ca217c110417f126d63b46e26e92eb95e2ab48a233517f5",
+  "status": "PREPARED_WITHOUT_ADMISSION_NATIVE_NOT_RUN",
+  "members": [
+    {
+      "path": "Plans/goal_run_stop_block_contracts/additional-imports.json",
+      "sha256": "6adc809f30668bd93d6521b9cd6cf3f461aea509b9477b615b1586273febff31"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "sha256": "c6dfef019df987f84e4f0f08780c3f878ac20973e8bfa84e2c1e55bf00e4609c"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/contracts.schema.json",
+      "sha256": "f4ba0c57ae6289cb6ca00569c2ca02c84935cb316b136f94e37301f865a798a4"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/inherited-method-banks.json",
+      "sha256": "ee3bb7df016b16bcf6edeab419708260fad56fddc47ffcddf45b037d9d85dc31"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/methods.json",
+      "sha256": "4c60ce56a12b3c9f87135b3bf0689c137f77112669c907a941f54f51ee12a331"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/native-wrapper-bindings.json",
+      "sha256": "de75f6fdb11dadd210f88d1c66dd968c2f943b37bc76677b12354384776d94bf"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/oracle-fixtures.json",
+      "sha256": "9e923ab64cafdf4e9efc4456bebfd1b9f6a6d203151ae3efb3a14de2a9049b4f"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/physical-families.json",
+      "sha256": "27db77eb16aee65240168ac45ed2542d8f4de6132c51cf58bb116ca29a068222"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
+      "sha256": "3dce5a4704701fd9d67453899f34798ea94cd18de974a5e804d5d243e3f0c1c5"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/protocol.md",
+      "sha256": "8b2f2d425b242110fc84d977a971ab76bfe9873c849cb818b0b48e5e0a94721a"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "sha256": "1c534446316d3b42929fda28e378fcdd3d0b990f185e887b01d22e0ee1fb404e"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/resource-map.json",
+      "sha256": "a996ccf9317438f41d90281b9f38379182e9fb7575e4c6b6e3191a947d849e1c"
+    }
+  ],
+  "writers": [
+    "owner.executor.workflow_run.stop.v1",
+    "owner.executor.workflow_run.block.v1"
+  ],
+  "birth": "Install complete inherited native/producer/coordinator participants with fresh resource-map tuples and both original new writers before actual native birth; coissue original birth and own initialized control under absent-key CAS. No retrospective enrollment.",
+  "old_realms": "Every retained original realm and old birth remains exact; new resource namespace cannot be selected by a caller.",
+  "selector_gate": "The prepared v3 rows in prepared-registry-rows.json switch the registry only at the S5b step under EA-P3 A, with their own commit, DL entry, DL-078 bookkeeping and 12/12 assessment; a descriptor or self-consistent hash never grants Event admission.",
+  "revision_relation": "GRS-202 as amended 2026-11-14: a stop/block row's expected revision is its own native before-revision and may exceed the projected revision only across D01-authenticated original_execution_progress or original_provisional_success steps (protocol.md, Revision relation)."
+}

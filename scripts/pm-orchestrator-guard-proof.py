@@ -137,6 +137,18 @@ def checkpoint_inputs(fixtures):
                             else token[field] + '-foreign')
             negatives.append((base['case_id'] + ':token:' + field, bad, None, base['case_id'], TOKEN_LOOP))
     view = lambda case: oracles.checkpoint_full_view(case, root, formats)
+    for base in bases:
+        bad = copy.deepcopy(base)
+        bad['read']['row'] = None
+        negatives.append((base['case_id'] + ':C12:index_row_root_null', bad,
+                          ['index_row_schema'], base['case_id'], None))
+        bad = copy.deepcopy(base)
+        bad['event'] = None
+        negatives.append((base['case_id'] + ':C12:retained_event_root_null', bad,
+                          ['historical_original_recipe'], base['case_id'],
+                          'A non-object original cannot match sealed custody or its disclosed source ref; '
+                          'recipe_supported and recipe_evidence_source_ref both refuse. This full-boundary '
+                          'root diagnostic earns no isolated-row mutation credit.'))
     return controls, negatives, view
 
 
@@ -222,6 +234,7 @@ def append_inputs(fixtures):
         neg('type:' + str(test.get('name', test['field'])), by_id[test['case_id']],
             lambda c, f=test['field'], v=test['value']: c['logical_payload'].update({f: copy.deepcopy(v)}), ['logical_payload_schema'])
     for base in family_cases(fixtures):
+        neg('C12:event_root_null', base, lambda c: c.update(event=None), ['event_schema'])
         sibling = next(c['definition'] for c in fixtures['contracts'] if c['definition'] != base['definition'])
         neg('P2A:event_id', base, lambda c: c['event'].update(event_id='evt_do_' + oracles.foreign_hex(c['event']['event_id'])))
         neg('P2A:thread_id', base, lambda c: c['event'].update(thread_id=c['event']['thread_id'] + '-foreign'))
@@ -616,6 +629,16 @@ def board_inputs(fixtures):
             change('project_source_edition', lambda c: c['source'].update(edition='foreign'))
             change('project_source_interface', lambda c: c['source'].update(interface='foreign'))
             change('project_message_source', lambda c: c['source'].update(message_ids=c['source']['message_ids'] + ['foreign']))
+    from pm_orchestrator_c12_cases import additional_board_inputs
+    extra_controls, extra_negatives = additional_board_inputs(fixtures)
+    controls += extra_controls
+    negatives += extra_negatives
+    for i, base in enumerate(boards):
+        if base['payload']['scope'] == 'application':
+            bad = copy.deepcopy(base)
+            bad['source'] = None
+            negatives.append(('board:' + str(i) + ':C12:source_root_null', bad,
+                ['application_source_schema'], 'board:' + str(i), None))
     view = lambda case: board_full_view(case, root, formats)
     return controls, negatives, view
 
@@ -853,6 +876,43 @@ UNPROVED = dict({
     'wrapper_scope_join': "the wrapper's scope is bound the same way",
 }, **{record + '_scope_' + code: SCOPE_HELPER for record in ('source', 'wrapper') for code in SCOPE_CODES})
 
+# C12-DO: two redundant cycle edges were retired with a checked equality-tree
+# proof; seven previously unwitnessed rows now have complete original-output or
+# independent-copy witnesses. No reachable row is waived by this list.
+for _closed_row in ('source_scope_join', 'wrapper_scope_wrapper_record_scope_mismatch',
+                    'source_scope_application_thread_mismatch',
+                    'source_scope_server_scope_mismatch', 'wrapper_scope_server_scope_mismatch',
+                    'application_source_server_id', 'application_wrapper_server_id', 'wrapper_scope_join'):
+    UNPROVED.pop(_closed_row)
+
+# These are schema implications, not missing witness claims. Non-null outputs
+# now enter the matrix; the two actually reachable recursive-helper rows above
+# were removed from this list.
+for _row in tuple(UNPROVED):
+    if _row.startswith('source_scope_') or _row.startswith('wrapper_scope_'):
+        _code = _row.split('_scope_', 1)[1]
+        if _code == 'application_scope_identity':
+            _proof = ('Every WorkflowScopeV2 occurrence in the selected source/wrapper graph enforces its application '
+                      'app/null pairing in allOf/0/then. A malformed pairing is rejected by the earlier complete schema row.')
+        elif _code == 'project_partition_mismatch':
+            _proof = ('The source, AgentMessage, wrapper and CoordinationProjectionApplicationV1 application_context '
+                      'each fix their selected scope_kind=application in their scope allOf. No Project scope occurs '
+                      'anywhere in the complete selected graph, so this helper branch is excluded by the earlier schema.')
+        elif _code in ('outer_project_mismatch', 'application_outer_project'):
+            _proof = ('A closed source/wrapper/input has no outer project_id field. The only projection output that '
+                      'has application_context has project_id const null. Earlier source/wrapper schema validation '
+                      'therefore excludes every non-null outer Project value this helper could reject.')
+        elif _code == 'application_thread_mismatch':
+            _proof = ('The closed wrapper and AgentMessage graph has no application_context property. The helper '
+                      'requires such a dictionary before testing its thread_id; earlier wrapper schema validation '
+                      'excludes the only way to introduce one. Non-null source-output contexts have separate witnesses.')
+        else:
+            _proof = ('For a source, the complete selected source/input/projection/context graph has no record property; '
+                      'the helper can never enter its wrapper-record branch. For a wrapper, its record is an '
+                      'AgentMessage with no server_id, storage_instance_id or application_context; the helper reads '
+                      'None and abstains on both optional custody comparisons. Earlier complete schemas enforce this graph.')
+        UNPROVED[_row] = _proof
+
 
 def matrix_errors(fixtures=None):
     """The complete checker's view of the guard tables: adapters current, every control accepted by every row, every
@@ -1038,20 +1098,55 @@ def suite_boundary(table):
 
 
 def cached_matrix(boundary, fixtures, out_dir):
-    """The boundary's matrix, computed once per run and head: every suite of the boundary picks its negatives from it."""
-    import subprocess
-    head = subprocess.run(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], capture_output=True, text=True).stdout.strip()
-    dirty = subprocess.run(['git', '-C', str(ROOT), 'status', '--porcelain', '--', 'scripts', 'Plans'], capture_output=True,
-                           text=True).stdout.strip()
+    """Reuse only a matrix bound to exact checker, table, input and resource bytes.
+
+    A dirty checkout is normal during a proof run. HEAD/cleanliness cannot bind
+    its inputs; content hashes do. The complete fixtures are included separately
+    because callers can supply an in-memory mutation of the committed bank.
+    """
+    names = {
+        'scripts/pm-orchestrator-guard-proof.py', 'scripts/pm-orchestrator-event-contracts.py',
+        'scripts/pm_orchestrator_event_oracles.py', 'scripts/pm_orchestrator_event_guards.py',
+        'scripts/pm_event_numbers.py', 'scripts/pm_event_datetime.py', 'scripts/pm_event_index_binding.py',
+        'scripts/pm_projects_refresh_contracts.py', 'scripts/pm_guard_isolation.py',
+        'scripts/pm_orchestrator_c12.py', 'scripts/pm_orchestrator_c12_cases.py',
+        'Plans/orchestrator_event_contract_fixtures.json', 'Plans/orchestrator_event_payloads.schema.json',
+        'Plans/storage_value_registry.json', 'Plans/application_board_message_v2_graph.json',
+    }
+    names.update('Plans/' + name + '.schema.json' for name in oracles.selected_documents(ROOT))
+    names.update(str(suite_path(suite).relative_to(ROOT)) for _table, suite, _module in guards.SUITES)
+    graph = json.loads((ROOT / 'Plans/application_board_message_v2_graph.json').read_text())
+    names.update(item['path'] for item in graph['resources'])
+    sources = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in sorted(names)}
+    hasher = hashlib.sha256()
+    def typed_digest(value):
+        # Stream the 52 MiB fixture bank; constructing its entire typed tree at
+        # once needlessly doubles the proof worker's peak memory.
+        if type(value) is dict:
+            hasher.update(b'dict[')
+            for key in sorted(value):
+                typed_digest(key)
+                typed_digest(value[key])
+            hasher.update(b']')
+        elif type(value) in (list, tuple):
+            hasher.update(type(value).__name__.encode() + b'[')
+            for item in value:
+                typed_digest(item)
+            hasher.update(b']')
+        else:
+            data = oracles.typed_text(value).encode()
+            hasher.update(str(len(data)).encode() + b':' + data)
+    typed_digest([sources, fixtures])
+    fingerprint = hasher.hexdigest()
     path = Path(out_dir) / ('matrix-' + boundary + '.json') if out_dir else None
     if path and path.exists():
         cached = json.loads(path.read_text())
-        if cached['head'] == head and not dirty and not cached['dirty']:
+        if cached.get('fingerprint') == fingerprint and cached.get('sources') == sources:
             return cached['matrix']
     matrix = boundary_matrix(boundary, fixtures)
     if path:
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps({'head': head, 'dirty': bool(dirty), 'matrix': matrix}, default=str) + '\n')
+        path.write_text(json.dumps({'fingerprint': fingerprint, 'sources': sources, 'matrix': matrix}, default=str) + '\n')
     return matrix
 
 
@@ -1104,7 +1199,7 @@ def run_suite(suite_name, out_dir):
                              'Plumbing: returns the fresh case object the engine runs; it decides no acceptance.')]
     suite = g.Suite('do:' + suite_name, module.factory, controls, negatives, (path,), ROOT, non_guards=non_guards)
     start = time.monotonic()
-    report = g.run(suite, memory=g.MemoryGate(max_rss=4096, pause_when_low=10, resume_at=11, poll=30))
+    report = g.run(suite, memory=g.MemoryGate(max_rss=1792, pause_when_low=12, resume_at=12, poll=10))
     seconds = time.monotonic() - start
     rows = [{'id': r['id'], 'proved': r.get('proved'), 'own': r.get('own'), 'flips': r.get('flips'),
              'stays': len(r.get('stays') or []), 'masked': r.get('masked'), 'unrelated_changes': r.get('unrelated_changes')}

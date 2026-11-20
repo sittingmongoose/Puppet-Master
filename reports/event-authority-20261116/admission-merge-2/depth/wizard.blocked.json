@@ -1,0 +1,802 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
+  "row_pointer": "#/families/511"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "wizard.blocked",
+   "family_id": "event-family-wizard-blocked",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/511 (canonical row SHA-256 18060fa2cdaf043c295673847413073a5843eba70cab782900ba9c22816223aa). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/511",
+       "line_start": 33283,
+       "line_end": 33324,
+       "quote": "\"event_type\": \"wizard.blocked\"",
+       "quote_line": 33286,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/511",
+        "line_start": 33233,
+        "line_end": 33274,
+        "quote": "\"event_type\": \"wizard.blocked\"",
+        "quote_line": 33236,
+        "file_sha256": "73f62c4fdddca145f2e7881c30541cf32d2f4dc1cbb1c8fb8e9428bb5aca6173",
+        "quote_check": "exact"
+       },
+       "unit": "#/families/511",
+       "quote_scope": "unit #/families/511, Plans/event_family_registry.json:33283-33324"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-596 applies DL-431 to the current PlanningRun owner PWIZ-002 and preserves CV-233; the retired Chain Wizard is not restored.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-596",
+       "line_start": 45088,
+       "line_end": 45088,
+       "quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42858,
+        "line_end": 42859,
+        "quote": "Semantic owner is current\\\n  \\ Plans/Planning_Wizard.md#PWIZ-002,",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "Semantic owner is current\\\n  \\ Plans/Planning_Wizard.md#PWIZ-002,",
+        "new_quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-596 names the responsible planning observer and exact SP-286/CV-339 full-value v2 source/append/receipt/publication order.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-596",
+       "line_start": 45094,
+       "line_end": 45094,
+       "quote": "Producer emitter.wizard_blocked@1.0.0 is the responsible Planning Wizard component's observer of its original",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42881,
+        "line_end": 42882,
+        "quote": "Producer emitter.wizard_blocked@1.0.0\\\n  \\ is the responsible Planning Wizard component's observer of its original",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "Producer emitter.wizard_blocked@1.0.0\\\n  \\ is the responsible Planning Wizard component's observer of its original",
+        "new_quote": "Producer emitter.wizard_blocked@1.0.0 is the responsible Planning Wizard component's observer of its original",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-596 names this family's own required-present closed schema and exact version; originals, physical source wrappers and payload references are separate.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-596",
+       "line_start": 45092,
+       "line_end": 45092,
+       "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42874,
+        "line_end": 42875,
+        "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
+        "new_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      },
+      {
+       "path": "Plans/event_payloads/planning_wizard/wizard_blocked.schema.json",
+       "unit": "root",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"additionalProperties\": false,",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "b5fc3631469ef4ccd3e265f0431d95982e2a319af9ff2888585eb45d7e4d30b3",
+       "source_citation": {
+        "path": "Plans/event_payloads/planning_wizard/wizard_blocked.schema.json",
+        "unit": "root",
+        "line_start": 5,
+        "line_end": 5,
+        "quote": "\"additionalProperties\": false,",
+        "file_sha256": "b5fc3631469ef4ccd3e265f0431d95982e2a319af9ff2888585eb45d7e4d30b3"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-596 binds the real Project, whole PlanningRun/episode/observation and exact string-only identity; nullable thread context does not select the subject.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-596",
+       "line_start": 45096,
+       "line_end": 45096,
+       "quote": "NEW identity recipe",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42898,
+        "line_end": 42898,
+        "quote": "NEW identity recipe",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-596 freezes producer semantic inputs, excludes assigned Storage metadata, resolves original receipts on retry and refuses replay-only current append/retry.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-596",
+       "line_start": 45098,
+       "line_end": 45098,
+       "quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42904,
+        "line_end": 42905,
+        "quote": "Retry compares exactly the producer-owned semantic fields enumerated\\\n  \\ by CV-339: event_type, scope_kind, project_id,",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "Retry compares exactly the producer-owned semantic fields enumerated\\\n  \\ by CV-339: event_type, scope_kind, project_id,",
+        "new_quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\"], \"event_type\": \"wizard.blocked\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DCW.self-grade.json\", \"history_policy_ref\": \"RP-AUTHORITY-INDEFINITE@1.0.0\", \"lane\": \"DCW\", \"original_and_checkpoint_assignments\": [], \"owner\": \"Plans/Contracts_V0.md#CV-596\", \"owner_line\": 39528, \"prior_finding\": \"Event history remains PENDING_RETENTION_DECISION with the exact question. Original source audit custody uses existing RP-AUTHORITY-INDEFINITE; receipt/index/checkpoint policies are explicitly retained.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-596",
+       "line_start": 45124,
+       "line_end": 45124,
+       "quote": "Current selected assignment (2026-11-19): wizard.blocked@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2429. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/Contracts_V0.md#CV-596 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 43024,
+        "line_end": 43024,
+        "quote": "\\ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.\\n\\nUse the existing\\",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-596 closes original observation/attempt/action/route/receipt joins, ref-only disclosure, current access/deletion, coherent backup and admitted restore inventories.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-596",
+       "line_start": 45102,
+       "line_end": 45102,
+       "quote": "NEW original custody source wizard_blocked_evidence is materialized in Plans/storage_value_registry.json under",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42935,
+        "line_end": 42936,
+        "quote": "NEW original custody source wizard_blocked_evidence\\\n  \\ is materialized in Plans/storage_value_registry.json under",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "NEW original custody source wizard_blocked_evidence\\\n  \\ is materialized in Plans/storage_value_registry.json under",
+        "new_quote": "NEW original custody source wizard_blocked_evidence is materialized in Plans/storage_value_registry.json under",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-596 enforces the approved whole-run blockage/clearance predicate, authenticated same-episode predecessor chain and current writer CAS without reviving a three-round trigger.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-596",
+       "line_start": 45100,
+       "line_end": 45100,
+       "quote": "The planning component's immutable observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42919,
+        "line_end": 42920,
+        "quote": "The planning component's immutable\\\n  \\ observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "The planning component's immutable\\\n  \\ observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.",
+        "new_quote": "The planning component's immutable observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-596 names its passive reader and adopts the existing exact SP-278 projector/reader/checkpoint with complete mixed-source coverage, CAS and DL-076 token shape.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-596",
+       "line_start": 45106,
+       "line_end": 45106,
+       "quote": "NEW passive operating consumer reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42969,
+        "line_end": 42970,
+        "quote": "NEW passive operating consumer\\\n  \\ reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "NEW passive operating consumer\\\n  \\ reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported",
+        "new_quote": "NEW passive operating consumer reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS: current caller admission stays separate from authenticated original dispatch and passive replay policy. occurred_at_utc and family ts use pm_event_datetime.date_time with the EventRecord profile; Storage observed_at_utc and persisted_at_utc use storage_utc_z. SP-1101 selects those profiles for a retained original. Native original authentication remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-596",
+       "line_start": 45110,
+       "line_end": 45110,
+       "quote": "Compatibility/withdrawal for wizard.blocked alone: dispatch only explicitly supported exact family/schema/version;",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42994,
+        "line_end": 42994,
+        "quote": "Compatibility/withdrawal for wizard.blocked alone: dispatch only explicitly supported exact family/schema/version;",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-596",
+       "line_start": 45104,
+       "line_end": 45104,
+       "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253,",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42966,
+        "line_end": 42967,
+        "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord\\\n  \\ profile; under CV-253,",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord\\\n  \\ profile; under CV-253,",
+        "new_quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253,",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_blockage_events.py",
+       "unit": "envelope",
+       "line_start": 24,
+       "line_end": 24,
+       "quote": "m.check_schema('Plans/event_record.schema.json', event)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "f962787652ab61e70e38d658ea93f054f2494d832e30c33cc3b8ee43e43142b1",
+       "source_citation": {
+        "path": "scripts/pm_dcw_blockage_events.py",
+        "unit": "envelope",
+        "line_start": 24,
+        "line_end": 24,
+        "quote": "m.check_schema('Plans/event_record.schema.json', event)",
+        "file_sha256": "73eb3f227285478168f9bee9265ecc1ebba9c09f7876d317498d09a3cf064771"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "require_storage_timestamps",
+       "line_start": 853,
+       "line_end": 853,
+       "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "8f8c464ec7cd48766c92983a762703b474a13401f2212dad5f66eacb3a36c796",
+       "source_citation": {
+        "path": "scripts/pm_dcw_event_oracles.py",
+        "unit": "require_storage_timestamps",
+        "line_start": 853,
+        "line_end": 853,
+        "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)",
+        "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS (C12-DCW): all 219 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 5, complete_boundary_reclassified 11, cut_accepts 167, entailed 17, precondition 19). The whole-definition OE001 schema ledger has 20160 exact kills and 8428 INVALID proposals over 15 real check_schema sites, plus 3756 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (witnessed 1353, witnessed_by_shared_site 13, witnessed_supplement 43); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-596",
+       "line_start": 45092,
+       "line_end": 45092,
+       "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts.",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:45080-45165",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42874,
+        "line_end": 42875,
+        "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+        "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
+        "new_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "index_read",
+       "line_start": 482,
+       "line_end": 482,
+       "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "8f8c464ec7cd48766c92983a762703b474a13401f2212dad5f66eacb3a36c796",
+       "source_citation": {
+        "path": "scripts/pm_dcw_event_oracles.py",
+        "unit": "index_read",
+        "line_start": 482,
+        "line_end": 482,
+        "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})",
+        "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12.py",
+       "unit": "schema ledger",
+       "line_start": 395,
+       "line_end": 395,
+       "quote": "EXPECTED = ['refused', 'OE001', 'schema']",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12.py",
+        "unit": "schema ledger",
+        "line_start": 395,
+        "line_end": 395,
+        "quote": "EXPECTED = ['refused', 'OE001', 'schema']",
+        "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12.py",
+       "unit": "schema ledger",
+       "line_start": 439,
+       "line_end": 439,
+       "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12.py",
+        "unit": "schema ledger",
+        "line_start": 439,
+        "line_end": 439,
+        "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)",
+        "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_boundary.py",
+       "unit": "classify",
+       "line_start": 72,
+       "line_end": 72,
+       "quote": "return dict(status='complete_boundary', first=first, cut=single)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "3b42dc9b8ac59d77a40ce6e37290dc6cff7fec003a37f35c30fe9b580937b6a8",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_boundary.py",
+        "unit": "classify",
+        "line_start": 72,
+        "line_end": 72,
+        "quote": "return dict(status='complete_boundary', first=first, cut=single)",
+        "file_sha256": "3b42dc9b8ac59d77a40ce6e37290dc6cff7fec003a37f35c30fe9b580937b6a8"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_implications.py",
+       "unit": "check",
+       "line_start": 147,
+       "line_end": 147,
+       "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "101ef9b2ba3f4cdafa35e7880ae4834b42429d9cf397154f6fedfb1d684af120",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_implications.py",
+        "unit": "check",
+        "line_start": 147,
+        "line_end": 147,
+        "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'",
+        "file_sha256": "101ef9b2ba3f4cdafa35e7880ae4834b42429d9cf397154f6fedfb1d684af120"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_retained.py",
+       "unit": "observe",
+       "line_start": 222,
+       "line_end": 222,
+       "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "30f97e20d1e1bcaa57281c10f9b0933b9481727af2d346eaa413765b32623262",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_retained.py",
+        "unit": "observe",
+        "line_start": 222,
+        "line_end": 222,
+        "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row",
+        "file_sha256": "30f97e20d1e1bcaa57281c10f9b0933b9481727af2d346eaa413765b32623262"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_datetime.py",
+       "unit": "field_profile",
+       "line_start": 50,
+       "line_end": 50,
+       "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2b54ba8612ef5b3b6340b6ccd8faf674f372e204cc77c5eddd95e25f03520501",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_datetime.py",
+        "unit": "field_profile",
+        "line_start": 50,
+        "line_end": 50,
+        "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD",
+        "file_sha256": "2b54ba8612ef5b3b6340b6ccd8faf674f372e204cc77c5eddd95e25f03520501"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_entailments.py",
+       "unit": "run_spec",
+       "line_start": 185,
+       "line_end": 185,
+       "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "f96d834622f3920fcb5b15aba3cb43539b20d8f6f59e0bac260c6b3979ded6e2",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_entailments.py",
+        "unit": "run_spec",
+        "line_start": 185,
+        "line_end": 185,
+        "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)",
+        "file_sha256": "f96d834622f3920fcb5b15aba3cb43539b20d8f6f59e0bac260c6b3979ded6e2"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_cases.py",
+       "unit": "wizard.blocked",
+       "line_start": 110,
+       "line_end": 110,
+       "quote": "yield witness('B015', 'wizard.blocked', None, base('wizard.blocked'), trailing_space, 'identifier_whitespace', 'append')",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_cases.py",
+        "unit": "wizard.blocked",
+        "line_start": 110,
+        "line_end": 110,
+        "quote": "yield witness('B015', 'wizard.blocked', None, base('wizard.blocked'), trailing_space, 'identifier_whitespace', 'append')",
+        "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_cases.py",
+       "unit": "wizard.blocked",
+       "line_start": 120,
+       "line_end": 120,
+       "quote": "yield witness('B022', 'wizard.blocked', None, base('wizard.blocked'), foreign_source_ref, 'source_ref', 'append')",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_cases.py",
+        "unit": "wizard.blocked",
+        "line_start": 120,
+        "line_end": 120,
+        "quote": "yield witness('B022', 'wizard.blocked', None, base('wizard.blocked'), foreign_source_ref, 'source_ref', 'append')",
+        "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_cases.py",
+       "unit": "wizard.blocked",
+       "line_start": 129,
+       "line_end": 129,
+       "quote": "yield witness('B023', 'wizard.blocked', None, base('wizard.blocked'), rekeyed_source_ref, 'source_ref', 'append')",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_cases.py",
+        "unit": "wizard.blocked",
+        "line_start": 129,
+        "line_end": 129,
+        "quote": "yield witness('B023', 'wizard.blocked', None, base('wizard.blocked'), rekeyed_source_ref, 'source_ref', 'append')",
+        "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.293",
+  "sha256": "73f62c4fdddca145f2e7881c30541cf32d2f4dc1cbb1c8fb8e9428bb5aca6173",
+  "family_count": 512,
+  "row_pointer": "#/families/511"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "538484f77bca24a1f5afb198479ccca4ed9b544280cebbd20dec55340c7319e9",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
+}

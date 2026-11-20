@@ -1,0 +1,389 @@
+{
+ "schema_id": "pm.pnc019.c12_gh1.core.v1",
+ "status": "C12_GH1_RESULT",
+ "native_execution": "NOT_RUN",
+ "gated_tool": {
+  "commit": "004bdedd632d9463f3535190a6ed5772338cdce1",
+  "file": "scripts/pm_guard_isolation.py",
+  "sha256": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8"
+ },
+ "run": {
+  "calls": 89101,
+  "rows": 1855,
+  "failures": 0,
+  "signatures": 968,
+  "replay_unknown_rows": [],
+  "source_drift": []
+ },
+ "gated_proof": {
+  "tables": 868,
+  "max_rows_per_table": 8,
+  "statuses": {
+   "PASS": 762,
+   "NOT_RUN": 106
+  },
+  "rows_proved": 1749,
+  "rows_unproved": 106,
+  "rows_unproved_with_proof": 105,
+  "boundary": "real complete-call observation vectors (no synthetic pairs)"
+ },
+ "fabricated_row_self_test": {
+  "status": "pass",
+  "pipeline": {
+   "status": "REFUSED",
+   "reason": "row_never_observed_by_complete_checker",
+   "unobserved": [
+    "reviewer/fabricated_guard_no_checker_has_this"
+   ]
+  },
+  "gated_tool_on_real_vectors": {
+   "status": "FAIL",
+   "fabricated_proved": false,
+   "failure_kinds": [
+    "control_refused",
+    "runtime_untracked_site",
+    "table_protocol_error",
+    "untracked_refusal"
+   ],
+   "proved": []
+  },
+  "legacy_synthetic_contrast": {
+   "status": "PASS",
+   "proved": 1
+  }
+ },
+ "judge_self_test": {
+  "status": "pass",
+  "cases": 12,
+  "ecma_patterns": "pass",
+  "removal_audit_and_union_attribution": "pass"
+ },
+ "ledger": {
+  "entries": 89101,
+  "outcomes": {
+   "undeclared_accepted": 115,
+   "control": 4880,
+   "undeclared": 7845,
+   "exact_expected": 55964,
+   "other_refusal": 19104,
+   "multiple_refusals": 1119,
+   "accepted": 74
+  },
+  "replay_results": {
+   "KILLED": 5551,
+   "NOT_REPLAYED_CAP": 49589,
+   "COVERED_LATER": 297,
+   "DUPLICATE_SET_KILLED": 425,
+   "DUPLICATE_SET_SITE_FAILED": 102
+  },
+  "rule": "KILLED: declared target, exact single refusal, complete checker accepts with only that row cut, uncached restoration repeats the refusal; DUPLICATE_SET_KILLED: declared set, joint cut accepts, each site refuses alone; COVERED_LATER / CUT_EXCEPTION / RESTORATION_FAILED earn nothing."
+ },
+ "standalone_original_suites": {
+  "after": {
+   "pm_goal_own_d_oracles": {
+    "status": "pass",
+    "cases": 54190,
+    "failures": 0,
+    "failure_sample": []
+   },
+   "pm_goal_history_reader_fixtures": {
+    "status": "fail",
+    "cases": 6188,
+    "failures": 8,
+    "failure_sample": [
+     "guards without isolated negatives: schema/4b9f9e20581832ca/type",
+     "schema/39dff68df796fada/enum: surviving guard mutant; masked=['receipt_recorded/schema/type_validator_outputs_0_outcome_string_false', 'receipt_recorded/schema/",
+     "schema/588f6fefacf9ace4/oneOf: surviving guard mutant; masked=['evidence_captured/schema/type_source_spans_0_locator_kind_string_false', 'evidence_captured/sche"
+    ]
+   },
+   "pm_goal_current_writer_oracles": {
+    "status": "fail",
+    "cases": 931,
+    "failures": 2,
+    "failure_sample": [
+     "schema/1a96b5023ccea052/oneOf: surviving guard mutant; masked=['goal_run.certified/payload/type_registered_validator_outputs_0_outcome_string_false', 'goal_run.",
+     "schema/2dca229817013f75/enum: surviving guard mutant; masked=['goal_run.certified/payload/type_registered_validator_outputs_0_outcome_string_false', 'goal_run.c"
+    ]
+   },
+   "pm_goal_run_stop_block_oracles": {
+    "status": "pass",
+    "cases": 494,
+    "failures": 0,
+    "failure_sample": []
+   },
+   "pm_goal_lifecycle_successor_oracles": {
+    "status": "pass",
+    "cases": 539,
+    "failures": 0,
+    "failure_sample": []
+   }
+  },
+  "before_29169ee19e": {
+   "pm_goal_history_reader_fixtures": {
+    "status": "fail",
+    "cases": 6188,
+    "failures": 387,
+    "failure_sample": [
+     "guards without isolated negatives: schema/23e31dc0b8fb6a33/type, schema/4b9f9e20581832ca/type, schema/514ea0705639075d/type, schema/e718b5042c897bbe/type",
+     "schema/0646f37c88b98efc/type: unrelated negative stopped/types/5781_null passed",
+     "schema/0646f37c88b98efc/type: unrelated negative stopped/types/5782_false passed"
+    ]
+   },
+   "pm_goal_current_writer_oracles": {
+    "status": "fail",
+    "cases": 931,
+    "failures": 106,
+    "failure_sample": [
+     "guards without isolated negatives: schema/0d1e1c0808bc14e8/type, schema/50931d4c1a617c44/type, schema/9b51c0a8e7a2fa12/type, schema/ea848a206d6f83aa/type",
+     "schema/0d1e1c0808bc14e8/type: unrelated negative goal.updated/payload/conditional_type_0_source_message_id_string_false passed",
+     "schema/0d1e1c0808bc14e8/type: unrelated negative goal.updated/payload/conditional_type_0_source_message_id_string_zero passed"
+    ]
+   },
+   "pm_goal_run_stop_block_oracles": {
+    "status": "fail",
+    "cases": 494,
+    "failures": 23,
+    "failure_sample": [
+     "schema/1a322b6d6f0ae5ed/type: unrelated negative goal_run.blocked/types/185_string_false passed",
+     "schema/1a322b6d6f0ae5ed/type: unrelated negative goal_run.blocked/types/186_string_zero passed",
+     "schema/34d5e14586b9b577/type: unrelated negative goal_run.blocked/types/291_string_false passed"
+    ]
+   },
+   "pm_goal_lifecycle_successor_oracles": {
+    "status": "pass",
+    "cases": 539,
+    "failures": 0,
+    "failure_sample": []
+   }
+  }
+ },
+ "datetime_inventory": "NOT_RUN (repository-wide gate fails closed on main: TOOL-ISSUES C12-DC1-DTGATE-ROTATION)",
+ "generator": {
+  "validators": 60,
+  "seeds": 11252,
+  "derived_seeds": 10504,
+  "applications": 686640,
+  "attempts": 23040,
+  "exact": 3674,
+  "rows_targeted": 988,
+  "set_targets": 1979,
+  "union_targets": 144,
+  "row_families_attempted": 2455,
+  "row_families_exact": 1828,
+  "accepted_edits": {
+   "INVALID_ENCLOSING_BRANCH_ACCEPTS": 73,
+   "INVALID_EDIT_SATISFIES_NODE": 1
+  }
+ },
+ "result_line": "Criterion 12 is PASS for all five GH1 families: every checker and owner-schema row their complete calls evaluate is CLOSED (gated PASS on real vectors plus a killed witness of that family) or CLOSED_BY_PROOF.",
+ "standalone_other": "the private audit finds no isolated negative for `goal.progressed` `$defs/goal_status/type` (every non-string status also fails the status-pair oneOf), and the EventRecord nullable `project_id` anyOf is masked by the application-scope then-type: the same two-clause class. In the gated sweep these pairs are declared duplicate sets, with their joint and per-site cuts recorded in the ledger.",
+ "evidence_text": "Bundle `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-gh1/`; `SHA256SUMS` pins every file.\n- `run/`: pass 1 (generation) collection and ledger.\n- `run/proof/`: pass 2 and the gated proof: collection, uncapped ledger, invalid mutations, mutations, signatures, family rows, schema inventory, source bindings (no drift), fabricated-row self-test, table summary and rows, and `gated-reports.tar.gz` with every tool report.\n- `supplement/`: the declared progressed supplement (same code and tables).\n- `coverage-matrix.json`: the full matrix.\n- `selftests/`: judge, numbers and contrast runs.\n- `standalone/`: before and after replays.\n- `tools/`: drivers, builders and the bundle script.\n\nRepository files: `reports/event-authority-20261115/PNC019-C12-GH1-core.json` (compact result, quoted by the cells), `PNC019-C12-GH1-coverage.json` (compact matrix), `PNC019-C12-GH1-grades.json` (five rows), `PNC019-C12-GH1.md` (this report).\n\nReplay (12 GB free first, then the 2 GB no-swap scope, as a long-job):\n```sh\ntools/run-full.sh OUT        # pm_goal_guard_sweep.py --generate --replace-generated --prove-generated --no-fuzz, ten sources\npython3 scripts/pm_goal_guard_sweep.py --no-fuzz --no-keyword-witnesses --source pm_goal_c12_supplement --out SUP\npython3 scripts/pm_goal_c12_matrix.py OUT/proof --family goal.child_status_changed --family goal.degraded \\\n  --family goal.progressed --family goal.replanned --family goal.scheduled --extra-ledger SUP/ledger.json.gz --out matrix.json\npython3 scripts/pm_goal_guard_sweep.py --judge-self-test --out DIR\npython3 scripts/pm_event_numbers.py --self-test --scope numbers\ntools/standalone-final.sh    # ATS-1119, ATS-210/212/213, ATS-211 (PM_GOAL_AUDIT_WORKERS=4)\npython3 scripts/pm-pnc019-s3a-grade-check.py reports/event-authority-20261115/PNC019-C12-GH1-grades.json\n```\nEvery heavy command ran with at least 12 GB available, under `systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0`, as a long-job. Code commit `c3d89a7d57`.",
+ "for_jared": "Nothing to decide. No product choice came up, and no new test files were added (card E10-2 is unaffected).\n- The repository-wide date-time inventory stays NOT_RUN (C12-DC1-DTGATE-ROTATION, merge-2 integration).\n- s3ao's C12 cells for the other eight Goal families do not stand until GH2 and GO re-grade them.\n- Lane GC's two common-module defects are fixed on this branch (pushed for GC at `82df91325e`).\n- ATS-210's two remaining private-audit rows (`goal_run.certified`) belong to that suite's owner. They need a oneOf-only negative and an entailment note for the enum, not a common-module change.",
+ "families": [
+  {
+   "family": "goal.child_status_changed",
+   "goal.child_status_changed_matrix": "CLOSED 341 / CLOSED_BY_PROOF 57",
+   "matrix_rows": 398,
+   "schema_rows": 248,
+   "checker_rows": 150,
+   "open_rows": [],
+   "complete_calls": 8434,
+   "declared_negative_attempts": 7346,
+   "attempt_outcomes": {
+    "exact_expected": 5377,
+    "other_refusal": 1839,
+    "multiple_refusals": 106,
+    "accepted": 24
+   },
+   "replay_results": {
+    "KILLED": 549,
+    "NOT_REPLAYED_CAP": 4733,
+    "COVERED_LATER": 24,
+    "DUPLICATE_SET_KILLED": 52,
+    "DUPLICATE_SET_SITE_FAILED": 19
+   },
+   "invalid_attempts_listed": 1969,
+   "number_corpus": {
+    "slots": [
+     "payload/expected_goal_revision",
+     "payload/goal_revision",
+     "event/sequence_id"
+    ],
+    "cases": 258,
+    "accepted": 104,
+    "refused": 154,
+    "agree": 258,
+    "disagree": 0,
+    "crashes": 0
+   },
+   "retained_store_snapshots": {
+    "count": 11,
+    "unchanged": 11
+   }
+  },
+  {
+   "family": "goal.degraded",
+   "goal.degraded_matrix": "CLOSED 341 / CLOSED_BY_PROOF 55",
+   "matrix_rows": 396,
+   "schema_rows": 243,
+   "checker_rows": 153,
+   "open_rows": [],
+   "complete_calls": 8857,
+   "declared_negative_attempts": 7717,
+   "attempt_outcomes": {
+    "exact_expected": 5764,
+    "multiple_refusals": 106,
+    "other_refusal": 1847
+   },
+   "replay_results": {
+    "KILLED": 555,
+    "NOT_REPLAYED_CAP": 5135,
+    "COVERED_LATER": 30,
+    "DUPLICATE_SET_KILLED": 37,
+    "DUPLICATE_SET_SITE_FAILED": 7
+   },
+   "invalid_attempts_listed": 1953,
+   "number_corpus": {
+    "slots": [
+     "payload/expected_goal_revision",
+     "payload/goal_revision",
+     "event/sequence_id"
+    ],
+    "cases": 258,
+    "accepted": 104,
+    "refused": 154,
+    "agree": 258,
+    "disagree": 0,
+    "crashes": 0
+   },
+   "retained_store_snapshots": {
+    "count": 11,
+    "unchanged": 11
+   }
+  },
+  {
+   "family": "goal.progressed",
+   "goal.progressed_matrix": "CLOSED 350 / CLOSED_BY_PROOF 67",
+   "matrix_rows": 417,
+   "schema_rows": 265,
+   "checker_rows": 152,
+   "open_rows": [],
+   "complete_calls": 9569,
+   "declared_negative_attempts": 8281,
+   "attempt_outcomes": {
+    "exact_expected": 5938,
+    "multiple_refusals": 107,
+    "other_refusal": 2224,
+    "accepted": 12
+   },
+   "replay_results": {
+    "KILLED": 564,
+    "NOT_REPLAYED_CAP": 5291,
+    "COVERED_LATER": 30,
+    "DUPLICATE_SET_KILLED": 42,
+    "DUPLICATE_SET_SITE_FAILED": 11
+   },
+   "invalid_attempts_listed": 2343,
+   "number_corpus": {
+    "slots": [
+     "payload/expected_goal_revision",
+     "payload/goal_revision",
+     "event/sequence_id",
+     "payload/payload/repeat_count",
+     "payload/payload/no_progress_marker/continuation_count"
+    ],
+    "cases": 430,
+    "accepted": 150,
+    "refused": 280,
+    "agree": 430,
+    "disagree": 0,
+    "crashes": 0
+   },
+   "retained_store_snapshots": {
+    "count": 11,
+    "unchanged": 11
+   }
+  },
+  {
+   "family": "goal.replanned",
+   "goal.replanned_matrix": "CLOSED 340 / CLOSED_BY_PROOF 60",
+   "matrix_rows": 400,
+   "schema_rows": 253,
+   "checker_rows": 147,
+   "open_rows": [],
+   "complete_calls": 8758,
+   "declared_negative_attempts": 7564,
+   "attempt_outcomes": {
+    "exact_expected": 5545,
+    "multiple_refusals": 106,
+    "other_refusal": 1913
+   },
+   "replay_results": {
+    "KILLED": 550,
+    "NOT_REPLAYED_CAP": 4917,
+    "COVERED_LATER": 30,
+    "DUPLICATE_SET_KILLED": 41,
+    "DUPLICATE_SET_SITE_FAILED": 7
+   },
+   "invalid_attempts_listed": 2019,
+   "number_corpus": {
+    "slots": [
+     "payload/expected_goal_revision",
+     "payload/goal_revision",
+     "payload/payload/new_revision",
+     "event/sequence_id"
+    ],
+    "cases": 344,
+    "accepted": 127,
+    "refused": 217,
+    "agree": 344,
+    "disagree": 0,
+    "crashes": 0
+   },
+   "retained_store_snapshots": {
+    "count": 11,
+    "unchanged": 11
+   }
+  },
+  {
+   "family": "goal.scheduled",
+   "goal.scheduled_matrix": "CLOSED 331 / CLOSED_BY_PROOF 55",
+   "matrix_rows": 386,
+   "schema_rows": 235,
+   "checker_rows": 151,
+   "open_rows": [],
+   "complete_calls": 8678,
+   "declared_negative_attempts": 7489,
+   "attempt_outcomes": {
+    "exact_expected": 5536,
+    "multiple_refusals": 106,
+    "other_refusal": 1847
+   },
+   "replay_results": {
+    "KILLED": 540,
+    "NOT_REPLAYED_CAP": 4926,
+    "COVERED_LATER": 30,
+    "DUPLICATE_SET_KILLED": 33,
+    "DUPLICATE_SET_SITE_FAILED": 7
+   },
+   "invalid_attempts_listed": 1953,
+   "number_corpus": {
+    "slots": [
+     "payload/expected_goal_revision",
+     "payload/goal_revision",
+     "event/sequence_id"
+    ],
+    "cases": 258,
+    "accepted": 104,
+    "refused": 154,
+    "agree": 258,
+    "disagree": 0,
+    "crashes": 0
+   },
+   "retained_store_snapshots": {
+    "count": 11,
+    "unchanged": 11
+   }
+  }
+ ]
+}

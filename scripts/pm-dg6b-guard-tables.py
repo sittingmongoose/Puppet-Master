@@ -46,6 +46,12 @@ def main():
                    tool_sha256=hashlib.sha256((suites.ROOT / 'scripts/pm_guard_isolation.py').read_bytes()).hexdigest(),
                    checker_sha256=hashlib.sha256((suites.ROOT / 'scripts/pm-dg6b-event-contracts.py').read_bytes()).hexdigest(),
                    collect_seconds=round(time.monotonic() - started, 1), findings=findings, suites=[])
+    dependencies = sorted(set(dg.custody_store.FROZEN_RESOURCES) | {
+        'Plans/dg6b_event_contract_fixtures.json', 'scripts/pm_event_numbers.py', 'scripts/pm_event_datetime.py',
+        'scripts/pm_dg6b_original_custody.py', 'scripts/pm_dg6b_full_oracles.py',
+        'scripts/pm_dg6b_round9_cases.py', 'scripts/pm_dg6b_p2b_cases.py',
+        'scripts/pm_dg6b_c12_custody.py', 'scripts/pm_dg6b_c12_receipts.py'})
+    summary['dependency_hashes'] = {p: hashlib.sha256((suites.ROOT / p).read_bytes()).hexdigest() for p in dependencies}
     pool = {}
     if args.pool:
         for path in sorted(args.pool.glob('*/negatives.json')):

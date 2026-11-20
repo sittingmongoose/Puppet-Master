@@ -212,7 +212,7 @@ def retention_binding_failures(family, policy):
 
 def real_admission(family, registry=None):
     registry = load('Plans/event_family_registry.json') if registry is None else registry
-    matches = len([r for r in registry['families'] if r['event_type']==family])
+    matches = unadmitted_matches(family, registry)
     return 'registered_requires_independent_depth' if tables.refused('membership', {'registered_matches': matches}) else 'missing_event_registration'
 
 def instant(value):
@@ -1085,6 +1085,20 @@ def check(families=FAMILIES, pack=None):
         failures.extend(p2a.case_failures(set(families) | {'shared'}, boundary=(
             'materialization', 'materialization_raw', 'issued', 'protocol', 'graph', 'retention_binding', 'retention_check', 'membership', 'census')))
     return {'status':'fail' if failures else 'pass','families':counts,'failures':failures,'native_execution':'NOT_RUN','membership':'ABSENT','authority':'synthetic contract cases only'}
+
+
+def unadmitted_matches(family, registry):
+    """MM01's observation: registry rows naming `family`, other than its exact, complete DL-077 admission.
+
+    Admission-aware mode (PNC-019 stream E; scripts/pm_ea_admission_mode.py): before admission any row naming the
+    family is counted; after it, the family's own record-bound admission row is not. Every other registration (no
+    record, a record that does not match, a second row) is still counted, and MM01 refuses it.
+    """
+    matches = len([r for r in registry['families'] if r['event_type']==family])
+    if matches == 0:
+        return 0
+    import pm_ea_admission_mode as admission_mode
+    return 0 if admission_mode.verdict(family, root=ROOT, registry=registry)['mode'] == 'admitted' else matches
 
 
 if __name__=='__main__':

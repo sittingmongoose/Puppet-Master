@@ -1,0 +1,722 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
+  "row_pointer": "#/families/415"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "memory.prune_archive.completed",
+   "family_id": "event-family-memory-prune-archive-completed",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/415 (canonical row SHA-256 b802b23ae9970fa44e87c5c473b62bf0f6cd5cb181ef3b6831dbf01607f44716). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/415",
+       "line_start": 27025,
+       "line_end": 27067,
+       "quote": "\"event_type\": \"memory.prune_archive.completed\"",
+       "quote_line": 27028,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/415",
+        "line_start": 26979,
+        "line_end": 27019,
+        "quote": "\"event_type\": \"memory.prune_archive.completed\"",
+        "quote_line": 26982,
+        "file_sha256": "a518084eb4de997795b8a1df403d9f86cd6d422e2d7c377f2367fa81181ca84d",
+        "quote_check": "exact"
+       },
+       "unit": "#/families/415",
+       "quote_scope": "unit #/families/415, Plans/event_family_registry.json:27025-27067"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact family has its own adoption unit; semantic owner section 7.2 applies DL-402/DL-403.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-658",
+       "line_start": 40879,
+       "line_end": 40879,
+       "quote": "Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended by DL-402, DL-403 and DL-447. This",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-658",
+        "line_start": 39015,
+        "line_end": 39015,
+        "quote": "Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended by DL-402, DL-403 and DL-447. This",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-658",
+       "line_start": 40889,
+       "line_end": 40889,
+       "quote": "DL-447 answers DL-403 for this exact job",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-658",
+        "line_start": 39069,
+        "line_end": 39069,
+        "quote": "DL-447 answers DL-403 for this exact job",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; current-writer retained EventRecords now carry the CV-339 full_value_commitment itself.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-658",
+       "line_start": 40879,
+       "line_end": 40879,
+       "quote": "unit owns this family's payload and storage contract. Its producer is MemoryMaintenance.prune_archive.completed.v1@1.0.0",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-658",
+        "line_start": 39016,
+        "line_end": 39016,
+        "quote": "unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.prune_archive.completed.v1@1.0.0",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-658",
+        "old_quote": "unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.prune_archive.completed.v1@1.0.0",
+        "new_quote": "unit owns this family's payload and storage contract. Its producer is MemoryMaintenance.prune_archive.completed.v1@1.0.0",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-636",
+       "line_start": 48668,
+       "line_end": 48668,
+       "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-636, Plans/storage-plan.md:48644-48735",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-636",
+        "line_start": 47955,
+        "line_end": 47956,
+        "quote": "A current-writer retained EventRecord\\\n  \\ carries the unchanged CV-339 full-value commitment",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-636",
+        "old_quote": "A current-writer retained EventRecord\\\n  \\ carries the unchanged CV-339 full-value commitment",
+        "new_quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Separate closed payload and phase-valid operation definitions include frozen cutoff identity; monthly payloads also freeze month.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-658",
+       "line_start": 40883,
+       "line_end": 40883,
+       "quote": "all declared fields required, additionalProperties=false, version=1.0.0, payload_ref=null. Completed status/result",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-658",
+        "line_start": 39037,
+        "line_end": 39037,
+        "quote": "all declared fields required, additionalProperties=false, version=1.0.0, payload_ref=null. Completed status/result",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact Project-only identity, correlation, causation and encoded partition recipes are explicit; no app edition.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-658",
+       "line_start": 40885,
+       "line_end": 40885,
+       "quote": "idempotency_key=\"memory-maintenance:\"+the same lower-hex digest. The caller-supplied semantic EventRecord fields",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-658",
+        "line_start": 39046,
+        "line_end": 39046,
+        "quote": "idempotency_key=\"memory-maintenance:\"+the same lower-hex digest. The caller-supplied semantic EventRecord fields",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current append/retry refuses replay-only. Original-value retry excludes Storage-assigned metadata and repeats no effect.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-658",
+       "line_start": 40885,
+       "line_end": 40885,
+       "quote": "Current append and retry refuse projector_replay_only as replay_only_not_appendable, before any original return",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-658",
+        "line_start": 39050,
+        "line_end": 39050,
+        "quote": "Current append and retry refuse projector_replay_only as replay_only_not_appendable, before any original return",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": \"RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0\", \"decisions\": [\"DL-401\", \"DL-417\", \"DL-509\"], \"event_type\": \"memory.prune_archive.completed\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DMEM-self-grade.json\", \"history_policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\", \"lane\": \"DMEM\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-509\", \"family_id\": \"memory_prune_archive_operation\", \"policy_ref\": \"RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-509\", \"family_id\": \"memory_verification_sweep_operation\", \"policy_ref\": \"RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-636\", \"owner_line\": 43397, \"prior_finding\": \"DL-401/G04 gives this Project event seven years on the cited unlanded retention branch. Canonical operation/result custody retention remains pending; no application count bucket is invented.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-636",
+       "line_start": 48705,
+       "line_end": 48705,
+       "quote": "Current selected assignment (2026-11-19): memory.prune_archive.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2333. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-636 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_prune_archive_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Separate stored-value assignment: memory_verification_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-636, Plans/storage-plan.md:48644-48735",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-636",
+        "line_start": 48014,
+        "line_end": 48014,
+        "quote": "\\ (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401,\\",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-636",
+       "line_start": 48705,
+       "line_end": 48705,
+       "quote": "Current selected assignment (2026-11-19): memory.prune_archive.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2333. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-636 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_prune_archive_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Separate stored-value assignment: memory_verification_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-636, Plans/storage-plan.md:48644-48735",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-636",
+        "line_start": 48028,
+        "line_end": 48028,
+        "quote": "\\ the already named exact stored value `memory_prune_archive_operation` uses `RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0`\\",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Coherent original/operation/memory/receipt backup, current access and ref-only no-secret disclosure are explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-658",
+       "line_start": 40892,
+       "line_end": 40892,
+       "quote": "and root; mismatches fail. Preserve BRS-031 coherent canonical memory/operation/receipt/EventRecord boundaries;",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-658",
+        "line_start": 39082,
+        "line_end": 39082,
+        "quote": "and root; mismatches fail. Preserve BRS-031 coherent canonical memory/operation/receipt/EventRecord boundaries;",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "DL-447 supplies both idle-age and strict usefulness-score thresholds per Project. Archive-only, frozen selection inputs, custody and all remaining activation gates stand; no-project writers are not admitted.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-658",
+       "line_start": 40883,
+       "line_end": 40883,
+       "quote": "transaction accepted -> started -> effect_committed -> completed. The payload is its own closed definition Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-658",
+        "line_start": 39036,
+        "line_end": 39036,
+        "quote": "transaction accepted -> started -> effect_committed -> completed. The payload is its own closed definition Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_a",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-658",
+       "line_start": 40889,
+       "line_end": 40889,
+       "quote": "DL-447 answers DL-403 for this exact job",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-658",
+        "line_start": 39069,
+        "line_end": 39069,
+        "quote": "DL-447 answers DL-403 for this exact job",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact qualified history reader adopts SP-278 generic projector, storage-qualified checkpoint and durable-token/CAS rules.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-658",
+       "line_start": 40892,
+       "line_end": 40892,
+       "quote": "This family's exact reader reader.memory.prune_archive.completed.history.v1@1.0.0 explicitly adopts SP-278: reader.storage.event_record_index@1.0.0,",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-658",
+        "line_start": 39077,
+        "line_end": 39077,
+        "quote": "This family''s exact reader reader.memory.prune_archive.completed.history.v1@1.0.0 explicitly adopts SP-278: reader.storage.event_record_index@1.0.0,",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-658",
+        "old_quote": "This family''s exact reader reader.memory.prune_archive.completed.history.v1@1.0.0 explicitly adopts SP-278: reader.storage.event_record_index@1.0.0,",
+        "new_quote": "This family's exact reader reader.memory.prune_archive.completed.history.v1@1.0.0 explicitly adopts SP-278: reader.storage.event_record_index@1.0.0,",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Both retained envelope editions verify unchanged originals through SP-1101: one RetainedDispatcher resolution from sealed custody of the exact retained record selects the write-time recipe (frozen integer-json-v1 for older originals, CV-339 for current-writer ones), never the record; unsealed, ambiguous, foreign-binding and uninstalled-recipe originals refuse at the custody guard. New Storage metadata uses owner uint64 and CV-253 storage_utc_z independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-658",
+       "line_start": 40896,
+       "line_end": 40896,
+       "quote": "authorized historical reads. Withdrawal first fences this family's command/writer, retains unresolved original",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-658",
+        "line_start": 39099,
+        "line_end": 39099,
+        "quote": "authorized historical reads. Withdrawal first fences this family''s command/writer, retains unresolved original",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-658",
+        "old_quote": "authorized historical reads. Withdrawal first fences this family''s command/writer, retains unresolved original",
+        "new_quote": "authorized historical reads. Withdrawal first fences this family's command/writer, retains unresolved original",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-636",
+       "line_start": 48668,
+       "line_end": 48668,
+       "quote": "Reader dispatch follows SP-1101: each retained canonical original",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-636, Plans/storage-plan.md:48644-48735",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-636",
+        "line_start": 47963,
+        "line_end": 47964,
+        "quote": "Reader dispatch follows\\\n  \\ SP-1101: each retained canonical original",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-636",
+        "old_quote": "Reader dispatch follows\\\n  \\ SP-1101: each retained canonical original",
+        "new_quote": "Reader dispatch follows SP-1101: each retained canonical original",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "C12 static executable oracles complete under the W3H whole-definition Method B route. Complete owner definitions and reference branches retain every keyword; 96 exact-family schema sites have authored controls, exact schema-row/code mutations, cuts and restoration, with pin-bound shared reuse. Gated tool 004bdedd63 proves 290/316 real predicates in 191 tables; 26 checked implications each occupy a singleton table. CK08 has an independent sealed Application-scope witness on every family. Full original exact-family routes, 111 applicable number-corpus cases per family, all local date-time declarations/profiles and exact policy instants pass. Retained reads have actual custody-store snapshots and no writes. Global shared date-time gate remains NOT_RUN_ADMISSION_REFUSED on the absent mainline migration citation; no global PASS or native/admission proof is claimed.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-658",
+       "line_start": 40878,
+       "line_end": 40879,
+       "quote": "canonical_text: |-\n  Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-658",
+        "line_start": 39013,
+        "line_end": 39013,
+        "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "re_cited",
+        "reason": "The committed correction dates the old preparation outcome and states the already assigned policy/current membership. The source/identity/custody/native constraints and cell verdict stay unchanged.",
+        "unit": "CV-658",
+        "old_quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared",
+        "new_quote": "canonical_text: |-\n  Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared",
+        "normalizations": [],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-658",
+       "line_start": 40878,
+       "line_end": 40879,
+       "quote": "canonical_text: |-\n  Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-658",
+        "line_start": 39013,
+        "line_end": 39013,
+        "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "re_cited",
+        "reason": "The committed correction dates the old preparation outcome and states the already assigned policy/current membership. The source/identity/custody/native constraints and cell verdict stay unchanged.",
+        "unit": "CV-658",
+        "old_quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared",
+        "new_quote": "canonical_text: |-\n  Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared",
+        "normalizations": [],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      },
+      {
+       "path": "scripts/pm_memory_c12.py",
+       "line_start": 111,
+       "line_end": 111,
+       "quote": "def schema_closure(m, path, definition):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ffccef4f1723ad73c757aaf4d720b8698c8d46522be94afa8ce03984db525431",
+       "source_citation": {
+        "path": "scripts/pm_memory_c12.py",
+        "line_start": 111,
+        "line_end": 111,
+        "quote": "def schema_closure(m, path, definition):",
+        "file_sha256": "ffccef4f1723ad73c757aaf4d720b8698c8d46522be94afa8ce03984db525431"
+       }
+      },
+      {
+       "path": "scripts/pm_memory_c12.py",
+       "line_start": 338,
+       "line_end": 338,
+       "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ffccef4f1723ad73c757aaf4d720b8698c8d46522be94afa8ce03984db525431",
+       "source_citation": {
+        "path": "scripts/pm_memory_c12.py",
+        "line_start": 338,
+        "line_end": 338,
+        "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,",
+        "file_sha256": "ffccef4f1723ad73c757aaf4d720b8698c8d46522be94afa8ce03984db525431"
+       }
+      },
+      {
+       "path": "scripts/pm_memory_c12.py",
+       "line_start": 402,
+       "line_end": 402,
+       "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ffccef4f1723ad73c757aaf4d720b8698c8d46522be94afa8ce03984db525431",
+       "source_citation": {
+        "path": "scripts/pm_memory_c12.py",
+        "line_start": 402,
+        "line_end": 402,
+        "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')",
+        "file_sha256": "ffccef4f1723ad73c757aaf4d720b8698c8d46522be94afa8ce03984db525431"
+       }
+      },
+      {
+       "path": "scripts/pm_memory_c12_selftest.py",
+       "line_start": 103,
+       "line_end": 103,
+       "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "5b4d06685862dbc57bd6f8107901d8211d78f2674719017b0bacbfe884a1d355",
+       "source_citation": {
+        "path": "scripts/pm_memory_c12_selftest.py",
+        "line_start": 103,
+        "line_end": 103,
+        "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})",
+        "file_sha256": "5b4d06685862dbc57bd6f8107901d8211d78f2674719017b0bacbfe884a1d355"
+       }
+      },
+      {
+       "path": "scripts/pm_memory_c12_entailments.py",
+       "line_start": 104,
+       "line_end": 104,
+       "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "55e5b64ff3f515c17e2e54930600581ae6eaa27838ceeca55734404e35d77fdc",
+       "source_citation": {
+        "path": "scripts/pm_memory_c12_entailments.py",
+        "line_start": 104,
+        "line_end": 104,
+        "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26",
+        "file_sha256": "55e5b64ff3f515c17e2e54930600581ae6eaa27838ceeca55734404e35d77fdc"
+       }
+      },
+      {
+       "path": "scripts/pm_memory_guard_witnesses.py",
+       "line_start": 420,
+       "line_end": 420,
+       "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "df116144fc0488a65c65f0d610d3e3b4c7b68051da451cbe8fc617d9676d65fd",
+       "source_citation": {
+        "path": "scripts/pm_memory_guard_witnesses.py",
+        "line_start": 420,
+        "line_end": 420,
+        "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,",
+        "file_sha256": "df116144fc0488a65c65f0d610d3e3b4c7b68051da451cbe8fc617d9676d65fd"
+       }
+      },
+      {
+       "path": "Plans/assistant-memory-subsystem.md",
+       "line_start": 1726,
+       "line_end": 1726,
+       "quote": "workbench or button is planned.",
+       "unit": "AMS-023",
+       "quote_check": "exact",
+       "quote_scope": "unit AMS-023, Plans/assistant-memory-subsystem.md:1710-1761",
+       "file_sha256": "bef912af3f908a962527eb2a58e3d50af7eb741092d247beebc773e1314587d8",
+       "source_citation": {
+        "path": "Plans/assistant-memory-subsystem.md",
+        "line_start": 1726,
+        "line_end": 1726,
+        "quote": "workbench or button is planned.",
+        "unit": "AMS-023",
+        "file_sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.197",
+  "sha256": "a518084eb4de997795b8a1df403d9f86cd6d422e2d7c377f2367fa81181ca84d",
+  "family_count": 416,
+  "row_pointer": "#/families/415"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "9af4568d6f677985224c75a293799e0477df382105749c6d141195b403f41631",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
+}

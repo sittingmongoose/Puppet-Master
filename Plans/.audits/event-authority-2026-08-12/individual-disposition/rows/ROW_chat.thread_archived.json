@@ -6,68 +6,68 @@
     "july248"
   ],
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to chat.thread_archived. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to chat.thread_archived. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.105 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2241); DL-077 admission record reports/event-authority-20260911/admission-records/chat.thread_archived.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/chat.thread_archived.json (sha256 7574791a1e4aaa922377500068bca43e93e435fd01b02705f2891c1de48fddd0); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked plan citation explicitly names the authority owner for `chat.thread_archived`; namespace and adjacent-family ownership are not evidence."
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:32964",
+      "note": "ACD-613/CV-633/SP-613 explicitly govern this exact family at 1.0.0; admission is still required."
     },
     "producer": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked plan citation explicitly designates the authoritative producer for `chat.thread_archived`; command handlers or storage mentions cannot be promoted by inference."
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:32964",
+      "note": "ACD-613 names the exact producer and original intent/commit/append/first-receipt ordering, adopting SP-286/CV-339."
     },
     "membership_version": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The exact token is mentioned, but no individually versioned registry membership for `chat.thread_archived` is cited."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:21326-21412",
+      "note": "Currently registered at 2026-11-18.2 as #/families/323 (canonical row SHA-256 fc9b24cc562a314e5b9a364d8ead1055a761791233a49b6ad8cf53d143408bb6). Original one-family admission checkpoints remain in the family record and immutable Git source."
     },
     "closed_payload_schema": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No closed durable payload schema is cited for `chat.thread_archived`; command inputs/results and neighboring event schemas are insufficient."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:39283; Plans/Contracts_V0.md:39287",
+      "note": "CV-633 selects closed Project/application logical bodies with unchanged attachment/provenance bounds, SP-337 actual encoded-byte cap and exact authorized body-reference path; full checker covers both editions."
     },
     "scope_identity": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No event-local tenant/project/thread/session scope and identity invariants are cited for `chat.thread_archived`."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:39283; Plans/storage-plan.md:46590; Plans/storage-plan.md:46592",
+      "note": "SP-613 verifies the actual Storage instance in every event identity and original-record commitment. Both payload editions, two independent Stores, and coherent foreign identities exercise history and checkpoint paths; Server/Computer/thread and Project/application key joins remain explicit."
     },
     "replay_idempotency": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No event-local replay ordering, duplicate handling, and idempotency contract is cited for `chat.thread_archived`."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:39283; Plans/storage-plan.md:46576; Plans/Contracts_V0.md:39289; Plans/Contracts_V0.md:39291",
+      "note": "CV-633 selects dedupe_by_idempotency_key, refuses compatibility-only replay before append/retry, compares the exact 21 owner semantic fields while excluding Storage metadata, and retains independent global event-ID integrity."
     },
     "retention": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No retention, compaction, tombstone, or deletion policy is cited for `chat.thread_archived`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:46855",
+      "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\"], \"event_type\": \"chat.thread_archived\", \"existing_checkpoints\": [{\"family_id\": \"dch_chat_thread_archived_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"grade_source\": \"reports/event-authority-20261104/DCH-self-grade.json\", \"history_policy_ref\": \"RP-CHAT-THREAD-LIFETIME@1.0.0\", \"lane\": \"DCH\", \"original_and_checkpoint_assignments\": [], \"owner\": \"Plans/storage-plan.md#SP-613\", \"owner_line\": 40265, \"prior_finding\": \"SP-613 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No sensitive-field redaction and custody boundary is cited for `chat.thread_archived`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:46576",
+      "note": "SP-613 binds original producer custody, coherent backup/restore, no secrets/ref-only source and current permission/deletion checks."
     },
     "transitions": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No legal predecessor/successor or invalid-transition contract is cited for `chat.thread_archived`."
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:32964",
+      "note": "ACD-613 applies DL-280/287 manual-only archive to active/suspended threads with the existing selected-thread/no-active-run guard and revision/readback joins; no folder cleanup or deletion."
     },
     "consumers_checkpoints": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No authoritative consumers, checkpoint keys, or fail-closed advancement rule is cited for `chat.thread_archived`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:46580; Plans/storage-plan.md:46576; Plans/storage-plan.md:46588; Plans/Automated_Testing_System.md:9391; Plans/storage-plan.md:46590; scripts/pm_dch_events.py:46",
+      "note": "SP-613 retains its exact reader/projector/key/schema and SP-278 CAS/source obligations. The complete current/history value and physical pointer obey SP-340; verified SP-337 references handle large values. Original edition, custody and actual-instance joins precede publication. Native execution remains NOT_RUN."
     },
     "compatibility_withdrawal": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No version compatibility, alias normalization, replacement, or withdrawal rule is cited for `chat.thread_archived`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:46576; Plans/Contracts_V0.md:39283; Plans/storage-plan.md:46590; Plans/storage-plan.md:46596; Plans/Contracts_V0.md:39293; scripts/pm_dch_events.py:410",
+      "note": "Every retained source, saved retry original, checkpoint/history value and terminal start is resolved through the shared SP-1101 RetainedDispatcher: one selection from the sealed write custody (RN01-RN06; a Store outside the custody is unavailable and an uninstalled recipe unsupported, with no fallback), then the frozen verifier of that recipe tuple with its original schema/type/domain/bytes, the CV-1101 date-time predicate on the pinned original resources and current custody. Caller recipe flags, forged bytes and withdrawal cannot bypass it."
     },
     "positive_negative_oracles": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No event-specific positive and negative persistence/replay oracle is cited for `chat.thread_archived`; token occurrence alone is not an oracle."
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:32964; Plans/Contracts_V0.md:39283; Plans/storage-plan.md:46576; scripts/pm_dch_events.py:1126; scripts/pm_dch_thread.py:234; scripts/pm_dch_schema_coverage.py:356",
+      "note": "Exact-family C12 PASS from reports/event-authority-20261114/c12-ch2/C12-GRADES.json"
     }
   },
   "citations_checked": [

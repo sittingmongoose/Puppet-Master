@@ -61860,7 +61860,7 @@
       "ui_command_id": "cmd.runtime.replan",
       "handler_location": "handlers::runtime::replan",
       "expected_event_types": [
-        "goal.replanned"
+        "goal_run.replanned"
       ],
       "acceptance_checks": [
         "cmd.runtime.replan must be registered in the UICommand dispatcher with typed args and result contract",
@@ -61874,9 +61874,9 @@
       "disabled_reason_projection": "state.commands.runtime_replan.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "cmd.runtime.replan emits canonical domain event(s) and records dispatch correlation evidence; placeholder command_applied events are invalid.",
+        "description": "cmd.runtime.replan emits the canonical goal_run.replanned v3 Event through owner.executor.workflow_run.replan.v1 on an all_writers.v8 birth (EP-3101, GRS-3100) and records dispatch correlation evidence; on any other birth it refuses handler_unavailable and emits nothing; goal.replanned is historical-only (GRS-070) and is never its effect or an alias; placeholder command_applied events are invalid.",
         "receipt_or_event_refs": [
-          "goal.replanned"
+          "goal_run.replanned"
         ]
       },
       "accessibility_contract": {
@@ -61909,11 +61909,11 @@
         {
           "test_id": "wiring.catalog.runtime_replan.events",
           "evidence_kind": "event_test",
-          "requirement": "Assert cmd.runtime.replan emits canonical event type goal.replanned with command_id, origin, correlation_id, and handler target."
+          "requirement": "Assert cmd.runtime.replan emits canonical event type goal_run.replanned with command_id, origin, correlation_id, and handler target."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.runtime.replan emits canonical event type goal.replanned with command_id, origin, correlation_id, and handler target."
+        "Assert cmd.runtime.replan emits canonical event type goal_run.replanned with command_id, origin, correlation_id, and handler target."
       ]
     },
     "catalog.runtime_restore_safe_point_then_retry": {

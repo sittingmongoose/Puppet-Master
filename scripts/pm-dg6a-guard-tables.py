@@ -42,6 +42,7 @@ import pm_dg6a_table_decision_citation as decision_table  # noqa: E402
 import pm_dg6a_table_storage_schema as storage_table  # noqa: E402
 import pm_dg6a_table_current_header as current_table  # noqa: E402
 import pm_dg6a_table_current_context as context_table  # noqa: E402
+import pm_dg6a_table_current_context__2 as context_table_2  # noqa: E402
 import pm_dg6a_table_profile as profile_table  # noqa: E402
 import pm_dg6a_table_writer_policy as writer_table  # noqa: E402
 import pm_dg6a_table_cursor as cursor_table  # noqa: E402
@@ -468,11 +469,31 @@ def collect_concern_scope():
     return controls, negatives, len(records)
 
 
+def collect_context_part(module):
+    """current_context is bounded into two modules (C12-DG6A): each part's suite gets the collected
+    observations projected to its own FIELDS; a negative of the other part is a control of this one."""
+    controls, negatives, collected = collect_current_context()
+    names = set(module.case(None).table.guards)
+    project = lambda value: {k: value[k] for k in module.FIELDS}
+    own = [dict(n, value=project(n['value'])) for n in negatives if n['target'] in names]
+    seen, parts = set(), []
+    for item in controls + [n for n in negatives if n['target'] not in names]:
+        value = project(item['value'])
+        key = json.dumps(value, sort_keys=True)
+        if key not in seen:
+            seen.add(key)
+            parts.append(dict(item, id='control/' + module.__name__ + '/' + str(len(parts)), value=value))
+    return parts, own, collected
+
+
 PHASES = {
     'decision_citation': (decision_table, 'scripts/pm_dg6a_table_decision_citation.py', collect_decision_citation),
     'storage_schema': (storage_table, 'scripts/pm_dg6a_table_storage_schema.py', collect_storage_schema),
     'current_header': (current_table, 'scripts/pm_dg6a_table_current_header.py', collect_current_header),
-    'current_context': (context_table, 'scripts/pm_dg6a_table_current_context.py', collect_current_context),
+    'current_context': (context_table, 'scripts/pm_dg6a_table_current_context.py',
+                        lambda: collect_context_part(context_table)),
+    'current_context__2': (context_table_2, 'scripts/pm_dg6a_table_current_context__2.py',
+                           lambda: collect_context_part(context_table_2)),
     'profile': (profile_table, 'scripts/pm_dg6a_table_profile.py', collect_profile),
     'writer_policy': (writer_table, 'scripts/pm_dg6a_table_writer_policy.py', collect_writer_policy),
     'cursor': (cursor_table, 'scripts/pm_dg6a_table_cursor.py', collect_cursor),

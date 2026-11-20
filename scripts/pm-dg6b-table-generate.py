@@ -83,6 +83,15 @@ phase('payload_schema', 'Schema occurrence: the exact family payload.', [
     schema_row('PS01_payload', '/errors', 'the exact family payload schema reports no error', 'payload_schema')])
 phase('envelope_payload_schema', 'Schema occurrence: the inline EventRecord payload body.', [
     schema_row('EP01_envelope_payload', '/errors', 'the inline envelope payload passes the family payload schema', 'payload_schema')])
+phase('receipt_schema', 'Schema occurrence: the sealed CV-339 full-value original receipt result.', [
+    schema_row('RC01_full_receipt', '/errors', 'the complete original full_value_result owner schema reports no error', 'receipt_schema')])
+phase('receipt_numbers', 'SP-1100 exact uint64 slots of the independently issued original AppendReceipt.', [
+    ('RN0' + str(i) + '_' + field, '/' + field, 'the original receipt ' + field + ' passes storage_uint64',
+     'receipt_number_domain', "value['valid_" + field + "'] is not True")
+    for i, field in enumerate(('sequence_id', 'segment_generation', 'byte_offset', 'durable_end_offset', 'manifest_generation'), 1)])
+phase('receipt_join', 'Typed original receipt event/sequence/full-value binding against the independently sealed EventRecord.', [
+    join('RJ01_original_receipt', '/first_append_receipt', 'the receipt event/sequence/full-value tuple equals the original EventRecord tuple',
+         'receipt_binding_digest', 'original_binding_digest', 'receipt_original_join')])
 phase('number_qualification', 'CV-1100 / SP-1100 route qualification, before any join or effect (sweep part 2B).', [
     ('PQ01_producer_jcs', '/event_record', 'the CV-317 producer projection has exact RFC 8785 JCS bytes (CV-1100)',
      'producer_number_domain', "value['producer_qualified'] is not True"),

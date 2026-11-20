@@ -1,0 +1,761 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/restore_point_application_corruption_contracts/1.0.0/schema.json",
+  "title": "Restore-point application and corruption custody (SP-2202, SP-2203)",
+  "description": "Closed values of restore_point_application_commit and restore_point_corruption_commit. Newly authored technical custody under DL-045 for PNC-019 S3; timestamps are validated by CV-1101 date_time with the Storage profile and integers by CV-1100, not by the format keyword alone.",
+  "$defs": {
+    "application_commit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "scope_partition",
+        "application_id",
+        "restore_point_id",
+        "source_thread_id",
+        "command_request",
+        "command_request_sha256",
+        "actor_ref",
+        "preflight",
+        "reserved_new_thread_id",
+        "reserved_new_branch_id",
+        "state",
+        "result",
+        "reason_code",
+        "materialized_at_utc",
+        "frozen_append_input_sha256",
+        "event_id",
+        "append_receipt_ref",
+        "admitted_at_utc",
+        "terminal_at_utc",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.restore_point_application_commit.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_partition": {
+          "type": "string",
+          "pattern": "^project~[A-Za-z0-9_-]+$"
+        },
+        "application_id": {
+          "type": "string",
+          "pattern": "^rpa_[0-9a-f]{64}$"
+        },
+        "restore_point_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command_request": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "command_id",
+            "project_id",
+            "restore_point_id",
+            "source_thread_id",
+            "expected_restore_point_sha256",
+            "new_thread_title",
+            "idempotency_key",
+            "actor_ref"
+          ],
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.branch_from_restore"
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "restore_point_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_thread_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expected_restore_point_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "new_thread_title": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "idempotency_key": {
+              "type": "string",
+              "minLength": 1
+            },
+            "actor_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "command_request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "preflight": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "record_sha256",
+            "status",
+            "permission",
+            "writer_posture",
+            "protecting_refs_sha256"
+          ],
+          "properties": {
+            "record_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "status": {
+              "const": "available"
+            },
+            "permission": {
+              "const": "allowed"
+            },
+            "writer_posture": {
+              "const": "writer"
+            },
+            "protecting_refs_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "reserved_new_thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "reserved_new_branch_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "state": {
+          "enum": [
+            "pending",
+            "settled"
+          ]
+        },
+        "result": {
+          "enum": [
+            "branched",
+            "refused",
+            "failed",
+            null
+          ]
+        },
+        "reason_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "materialized_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "frozen_append_input_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "event_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^er_rpa_[0-9a-f]{64}$"
+        },
+        "append_receipt_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^event_append_receipt_custody\\.v1:[^:]+:[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "admitted_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "terminal_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "ids_hashes_refs_only"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "result": {
+                "const": "branched"
+              }
+            },
+            "required": [
+              "result"
+            ]
+          },
+          "then": {
+            "properties": {
+              "state": {
+                "const": "settled"
+              },
+              "reserved_new_thread_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reserved_new_branch_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "materialized_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "frozen_append_input_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "event_id": {
+                "type": "string"
+              },
+              "append_receipt_ref": {
+                "type": "string",
+                "pattern": "^event_append_receipt_custody\\.v1:[^:]+:[0-9a-f]{64}$"
+              },
+              "terminal_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "reason_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "result": {
+                "enum": [
+                  "refused",
+                  "failed"
+                ]
+              }
+            },
+            "required": [
+              "result"
+            ]
+          },
+          "then": {
+            "properties": {
+              "state": {
+                "const": "settled"
+              },
+              "reserved_new_thread_id": {
+                "type": "null"
+              },
+              "reserved_new_branch_id": {
+                "type": "null"
+              },
+              "materialized_at_utc": {
+                "type": "null"
+              },
+              "frozen_append_input_sha256": {
+                "type": "null"
+              },
+              "event_id": {
+                "type": "null"
+              },
+              "append_receipt_ref": {
+                "type": "null"
+              },
+              "terminal_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "reason_code": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "result": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "result"
+            ]
+          },
+          "then": {
+            "properties": {
+              "state": {
+                "const": "pending"
+              },
+              "reserved_new_thread_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reserved_new_branch_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "append_receipt_ref": {
+                "type": "null"
+              },
+              "terminal_at_utc": {
+                "type": "null"
+              },
+              "reason_code": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "corruption_commit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "scope_partition",
+        "corruption_id",
+        "restore_point_id",
+        "source_thread_id",
+        "before_status",
+        "after_status",
+        "evidence",
+        "filesafe_attestation_ref",
+        "state",
+        "frozen_append_input_sha256",
+        "event_id",
+        "append_receipt_ref",
+        "committed_at_utc",
+        "settled_at_utc",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.restore_point_corruption_commit.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_partition": {
+          "type": "string",
+          "pattern": "^project~[A-Za-z0-9_-]+$"
+        },
+        "corruption_id": {
+          "type": "string",
+          "pattern": "^rpx_[0-9a-f]{64}$"
+        },
+        "restore_point_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "before_status": {
+          "const": "available"
+        },
+        "after_status": {
+          "const": "corrupt"
+        },
+        "evidence": {
+          "$ref": "#/$defs/corruption_evidence"
+        },
+        "filesafe_attestation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "enum": [
+            "pending",
+            "settled"
+          ]
+        },
+        "frozen_append_input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^er_rpx_[0-9a-f]{64}$"
+        },
+        "append_receipt_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^event_append_receipt_custody\\.v1:[^:]+:[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "committed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "settled_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "ids_hashes_refs_only"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "settled"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "append_receipt_ref": {
+                "type": "string",
+                "pattern": "^event_append_receipt_custody\\.v1:[^:]+:[0-9a-f]{64}$"
+              },
+              "settled_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "pending"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "append_receipt_ref": {
+                "type": "null"
+              },
+              "settled_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "corruption_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reason_code",
+        "evidence_kind",
+        "evidence_ref",
+        "expected_hash",
+        "observed_hash",
+        "referenced_material_field",
+        "referenced_material_ref",
+        "expected_material_hash",
+        "observed_material_hash",
+        "expected_material_length",
+        "observed_material_length"
+      ],
+      "properties": {
+        "reason_code": {
+          "enum": [
+            "record_hash_mismatch",
+            "unreadable_record",
+            "corrupt_referenced_material",
+            "unsupported_content_scope"
+          ]
+        },
+        "evidence_kind": {
+          "enum": [
+            "record_hash_comparison",
+            "record_decode_failure",
+            "referenced_material_integrity_check",
+            "content_scope_validation"
+          ]
+        },
+        "evidence_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_hash": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "observed_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "referenced_material_field": {
+          "enum": [
+            "context_provenance_refs",
+            "attachment_refs",
+            "citation_refs",
+            null
+          ]
+        },
+        "referenced_material_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "expected_material_hash": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "observed_material_hash": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_material_length": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "observed_material_length": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "reason_code": {
+              "const": "record_hash_mismatch"
+            },
+            "evidence_kind": {
+              "const": "record_hash_comparison"
+            },
+            "expected_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "referenced_material_field": {
+              "type": "null"
+            },
+            "referenced_material_ref": {
+              "type": "null"
+            },
+            "expected_material_hash": {
+              "type": "null"
+            },
+            "observed_material_hash": {
+              "type": "null"
+            },
+            "expected_material_length": {
+              "type": "null"
+            },
+            "observed_material_length": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "reason_code": {
+              "const": "unreadable_record"
+            },
+            "evidence_kind": {
+              "const": "record_decode_failure"
+            },
+            "expected_hash": {
+              "type": "null"
+            },
+            "referenced_material_field": {
+              "type": "null"
+            },
+            "referenced_material_ref": {
+              "type": "null"
+            },
+            "expected_material_hash": {
+              "type": "null"
+            },
+            "observed_material_hash": {
+              "type": "null"
+            },
+            "expected_material_length": {
+              "type": "null"
+            },
+            "observed_material_length": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "reason_code": {
+              "const": "corrupt_referenced_material"
+            },
+            "evidence_kind": {
+              "const": "referenced_material_integrity_check"
+            },
+            "expected_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "referenced_material_field": {
+              "type": "string"
+            },
+            "referenced_material_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expected_material_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "observed_material_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "expected_material_length": {
+              "type": "integer"
+            },
+            "observed_material_length": {
+              "type": "integer"
+            }
+          }
+        },
+        {
+          "properties": {
+            "reason_code": {
+              "const": "unsupported_content_scope"
+            },
+            "evidence_kind": {
+              "const": "content_scope_validation"
+            },
+            "expected_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "referenced_material_field": {
+              "type": "string"
+            },
+            "referenced_material_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expected_material_hash": {
+              "type": "null"
+            },
+            "observed_material_hash": {
+              "type": "null"
+            },
+            "expected_material_length": {
+              "type": "null"
+            },
+            "observed_material_length": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

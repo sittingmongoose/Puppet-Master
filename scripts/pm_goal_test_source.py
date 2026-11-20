@@ -595,14 +595,30 @@ class LifecycleReducer:
     def step(self, state, event, custody):
         kind = event['event_type']
         if kind not in self.supported:
-            raise Halt('reducer/unsupported_same_run:' + kind)
+            shared_refuse(Halt('reducer/unsupported_same_run:' + kind))
         if kind == self.supported[0]:
-            if state['status'] is not None:
-                raise Halt('reducer/duplicate_start')
+
+            shared_require(Halt('reducer/duplicate_start'), not (state['status'] is not None))
             state['status'] = 'started'
         else:
-            if state['status'] != 'started':
-                raise Halt('reducer/terminal_without_start')
+
+            shared_require(Halt('reducer/terminal_without_start'), not (state['status'] != 'started'))
             state['status'] = kind.split('.')[-1]
         state['events'].append([event['event_id'], event['sequence_id'], custody['group_digest']])
         return state
+
+
+# Routing helpers preserve the exception instance and Python chaining semantics.
+# They follow the adapters so existing predicate source locations remain stable.
+_KEEP = object()
+
+def shared_require(exc, condition, *, cause=_KEEP):
+    if not condition:
+        if cause is _KEEP:
+            raise exc
+        raise exc from cause
+
+def shared_refuse(exc, *, cause=_KEEP):
+    if cause is _KEEP:
+        raise exc
+    raise exc from cause

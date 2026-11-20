@@ -1,0 +1,14 @@
+{
+  "authoritative_source": "Frozen whole authored JSON/Markdown bytes, not replay of historical incremental authoring scripts.",
+  "scripts": "Incremental authoring scripts are retained as authoring lineage; they are not an idempotent generator and must not be bulk replayed over this freeze.",
+  "deterministic_checks": [
+    "compose_whole_banks.py",
+    "check_composition.py",
+    "check_method_roots.py",
+    "check_original_banks.py",
+    "check_final_sources.py"
+  ],
+  "manual_changes": "All final whole changes including SlotRevision journal and producer component v3 are explicitly recorded in whole-resource-inverses.json, original full bytes and final whole bytes. No undisclosed generated source or regeneration promise.",
+  "stop_correction": "Final full Stop schema/protocol/participants/methods are authoritative. Incremental authoring scripts may contain superseded draft shapes and are not replayable generators. Complete inverse and predecessor map explain actual final bytes.",
+  "v3_phase_successor": "Full new Stop root v2 and exact full v2\u2192v3 schema/method inverses are authoritative. Independent review obligations and source-only checks are explicit. All authoring scripts remain incremental lineage, not replayable generators."
+}

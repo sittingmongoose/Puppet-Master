@@ -1143,9 +1143,9 @@ def run_exact_family(row):
         actual = publication(row, state)
         check(actual == case['expected'], case['case_id'])
         check(state == before, case['case_id'] + ': no source rewriting')
-    # Actual branch admission remains absent. Fixture positives are hypothetical.
+    # Branch admission stays absent until the family's own record-bound DL-077 admission (membership_refusal).
     registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
-    check(not any(f['event_type'] == row['event_type'] for f in registry['families']), 'prepared without membership')
+    check((membership_note := membership_refusal(row['event_type'], registry)) is None, 'prepared without membership' + (membership_note or ''))
 
     authority = row['receipt_authority']
     before = copy.deepcopy(authority)
@@ -1440,6 +1440,19 @@ def main(guard_first=None):
         count += run_numeric_family(row)
         print(event + ': payload/full-envelope/original-joins/admission/receipt/withdrawal/rebuild vectors PASS; native NOT_RUN')
     print(json.dumps({'status': 'PASS', 'assertions': count, 'native_execution': 'NOT_RUN'}))
+
+
+def membership_refusal(event_type, registry):
+    """None while the family is unregistered (prepared) or registered as its exact, complete DL-077 admission.
+
+    Admission-aware mode (T222/T225, scripts/pm_ea_admission_mode.py): any other registration keeps the
+    preparation refusal 'prepared without membership', with the admission-mode code appended.
+    """
+    if not any(f['event_type'] == event_type for f in registry['families']):
+        return None
+    import pm_ea_admission_mode as admission_mode
+    mode = admission_mode.verdict(event_type, root=ROOT, registry=registry)
+    return None if mode['mode'] == 'admitted' else ' (admission mode refused: ' + mode['code'] + ')'
 
 
 if __name__ == '__main__':

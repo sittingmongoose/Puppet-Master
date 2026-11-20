@@ -1,0 +1,578 @@
+{
+  "base_commit": "a21edf30d8a37a858cfada6f118fdcca552e823c",
+  "blind_reviews": "NOT_RUN",
+  "covering_arguments": [
+    {
+      "basis": {
+        "line": 37756,
+        "path": "Plans/storage-plan.md",
+        "quote": "returns original outcome evidence only: no git, API, test, send, chip creation, archive transition",
+        "unit": "SP-613"
+      },
+      "cover": "The passive reader returns original evidence only and applies no lifecycle transition, so replay cannot override a later unarchive or a deletion tombstone. Every retained read in retained-observations.json leaves the store and its input bytes unchanged.",
+      "event_type": "chat.thread_archived",
+      "owner": {
+        "line": 32906,
+        "path": "Plans/assistant-chat-design.md",
+        "quote": "replay cannot override it or a deletion tombstone",
+        "unit": "ACD-613"
+      }
+    },
+    {
+      "basis": {
+        "line": 35059,
+        "path": "Plans/storage-plan.md",
+        "quote": "No expiry/count deletion is authorized by this draft.",
+        "unit": "SP-615"
+      },
+      "cover": "Purge and backup windows are Storage deletion-lifecycle effects after this event, under a pending retention decision. The static oracle witnesses the content-free storage-owned tombstone, immediate hiding, no undo and no resurrection (TD05-TD07, OG13). Purge timing is native runtime: NOT_RUN.",
+      "event_type": "chat.thread_deleted",
+      "owner": {
+        "line": 32051,
+        "path": "Plans/assistant-chat-design.md",
+        "quote": "Unheld content purges within 24 hours",
+        "unit": "ACD-615"
+      }
+    },
+    {
+      "basis": {
+        "line": 33080,
+        "path": "Plans/assistant-chat-design.md",
+        "quote": "static models are contract evidence only and native execution remains NOT_RUN",
+        "unit": "ACD-628"
+      },
+      "cover": "Restart and coherent-backup survival are native obligations: NOT_RUN. The static oracle enforces the sealed original custody they depend on (st_custody, st_custody_binding, og_receipt).",
+      "event_type": "chat.response_stop_requested",
+      "owner": {
+        "line": 33078,
+        "path": "Plans/assistant-chat-design.md",
+        "quote": "survive restart and coherent backup recovery",
+        "unit": "ACD-628"
+      }
+    },
+    {
+      "basis": {
+        "line": 1293,
+        "path": "scripts/pm_dch_events.py",
+        "quote": "+': absent registry')",
+        "unit": null
+      },
+      "cover": "Membership stays absent and each contract stays prepared: the complete suite refuses a registry row for the family. Admission is the separate S5 step.",
+      "event_type": "bundle.selection_forward_blocked",
+      "owner": {
+        "line": 31782,
+        "path": "Plans/assistant-chat-design.md",
+        "quote": "Admission refusal is checked before starting a new operation.",
+        "unit": "ACD-610"
+      }
+    },
+    {
+      "basis": {
+        "line": 1293,
+        "path": "scripts/pm_dch_events.py",
+        "quote": "+': absent registry')",
+        "unit": null
+      },
+      "cover": "Membership stays absent and each contract stays prepared: the complete suite refuses a registry row for the family. Admission is the separate S5 step.",
+      "event_type": "bundle.selection_sent_to_chat",
+      "owner": {
+        "line": 31849,
+        "path": "Plans/assistant-chat-design.md",
+        "quote": "Admission refusal is checked before starting a new operation.",
+        "unit": "ACD-611"
+      }
+    },
+    {
+      "basis": {
+        "line": 1293,
+        "path": "scripts/pm_dch_events.py",
+        "quote": "+': absent registry')",
+        "unit": null
+      },
+      "cover": "Membership stays absent and each contract stays prepared: the complete suite refuses a registry row for the family. Admission is the separate S5 step.",
+      "event_type": "chat.message",
+      "owner": {
+        "line": 31917,
+        "path": "Plans/assistant-chat-design.md",
+        "quote": "Admission refusal is checked before starting a new operation.",
+        "unit": "ACD-612"
+      }
+    },
+    {
+      "basis": {
+        "line": 1293,
+        "path": "scripts/pm_dch_events.py",
+        "quote": "+': absent registry')",
+        "unit": null
+      },
+      "cover": "Membership stays absent and each contract stays prepared: the complete suite refuses a registry row for the family. Admission is the separate S5 step.",
+      "event_type": "chat.thread_archived",
+      "owner": {
+        "line": 32906,
+        "path": "Plans/assistant-chat-design.md",
+        "quote": "Admission refusal is checked before starting a new operation.",
+        "unit": "ACD-613"
+      }
+    },
+    {
+      "basis": {
+        "line": 1293,
+        "path": "scripts/pm_dch_events.py",
+        "quote": "+': absent registry')",
+        "unit": null
+      },
+      "cover": "Membership stays absent and each contract stays prepared: the complete suite refuses a registry row for the family. Admission is the separate S5 step.",
+      "event_type": "chat.thread_created",
+      "owner": {
+        "line": 31984,
+        "path": "Plans/assistant-chat-design.md",
+        "quote": "Admission refusal is checked before starting a new operation.",
+        "unit": "ACD-614"
+      }
+    },
+    {
+      "basis": {
+        "line": 1293,
+        "path": "scripts/pm_dch_events.py",
+        "quote": "+': absent registry')",
+        "unit": null
+      },
+      "cover": "Membership stays absent and each contract stays prepared: the complete suite refuses a registry row for the family. Admission is the separate S5 step.",
+      "event_type": "chat.thread_deleted",
+      "owner": {
+        "line": 32051,
+        "path": "Plans/assistant-chat-design.md",
+        "quote": "Admission refusal is checked before starting a new operation.",
+        "unit": "ACD-615"
+      }
+    }
+  ],
+  "criterion_12_counts": {
+    "after": {
+      "PASS": 7
+    },
+    "before": {
+      "PARTIAL": 7
+    }
+  },
+  "date_time": {
+    "corpus_checks": 54960,
+    "global_inventory": "NOT_RUN",
+    "global_inventory_reason": "known shared-tool infrastructure result TOOL-ISSUES C12-DC1-DTGATE-ROTATION; NUMRULE files not edited",
+    "independent_receipt_copy_checks": 18284,
+    "node_bindings": "PASS"
+  },
+  "families": [
+    {
+      "applicable_owner_phases": [
+        "bs_blocked",
+        "og_presence",
+        "og_original",
+        "og_receipt",
+        "og_transaction",
+        "nw_producer",
+        "sd_complete",
+        "og_state"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "bundle.selection_forward_blocked",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch2/schemas/bundle.selection_forward_blocked/schema-coverage.json",
+      "retained_reads": 38,
+      "schema": {
+        "boundaries": 19,
+        "controls": 310,
+        "expected_refusal_kills": 7431,
+        "invalid_mutations": 219
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 34,
+        "unreachable": 348,
+        "whole_definition_applicator": 569,
+        "witnessed": 2751
+      },
+      "source_controls": 6,
+      "source_expected_refusal_kills": 156
+    },
+    {
+      "applicable_owner_phases": [
+        "bs_sent_a",
+        "bs_sent_b",
+        "og_presence",
+        "og_original",
+        "og_receipt",
+        "og_transaction",
+        "nw_producer",
+        "sd_complete",
+        "og_state"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "bundle.selection_sent_to_chat",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch2/schemas/bundle.selection_sent_to_chat/schema-coverage.json",
+      "retained_reads": 38,
+      "schema": {
+        "boundaries": 19,
+        "controls": 812,
+        "expected_refusal_kills": 7963,
+        "invalid_mutations": 273
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 34,
+        "unreachable": 348,
+        "whole_definition_applicator": 585,
+        "witnessed": 2919
+      },
+      "source_controls": 6,
+      "source_expected_refusal_kills": 172
+    },
+    {
+      "applicable_owner_phases": [
+        "th_message_a",
+        "th_message_b",
+        "og_presence",
+        "og_original",
+        "og_receipt",
+        "og_transaction",
+        "nw_producer",
+        "sd_complete",
+        "og_state"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.message",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch2/schemas/chat.message/schema-coverage.json",
+      "retained_reads": 38,
+      "schema": {
+        "boundaries": 19,
+        "controls": 1407,
+        "expected_refusal_kills": 7441,
+        "invalid_mutations": 243
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 34,
+        "unreachable": 348,
+        "whole_definition_applicator": 571,
+        "witnessed": 2713
+      },
+      "source_controls": 10,
+      "source_expected_refusal_kills": 240
+    },
+    {
+      "applicable_owner_phases": [
+        "th_archived",
+        "ar_request",
+        "ar_state",
+        "ar_commit",
+        "og_presence",
+        "og_original",
+        "og_receipt",
+        "og_transaction",
+        "nw_producer",
+        "sd_complete",
+        "og_state"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.thread_archived",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch2/schemas/chat.thread_archived/schema-coverage.json",
+      "retained_reads": 38,
+      "schema": {
+        "boundaries": 19,
+        "controls": 561,
+        "expected_refusal_kills": 8217,
+        "invalid_mutations": 241
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 40,
+        "unreachable": 417,
+        "whole_definition_applicator": 653,
+        "witnessed": 3126
+      },
+      "source_controls": 6,
+      "source_expected_refusal_kills": 284
+    },
+    {
+      "applicable_owner_phases": [
+        "th_created",
+        "og_presence",
+        "og_original",
+        "og_receipt",
+        "og_transaction",
+        "nw_producer",
+        "sd_complete",
+        "og_state"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.thread_created",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch2/schemas/chat.thread_created/schema-coverage.json",
+      "retained_reads": 38,
+      "schema": {
+        "boundaries": 19,
+        "controls": 306,
+        "expected_refusal_kills": 6985,
+        "invalid_mutations": 217
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 34,
+        "unreachable": 348,
+        "whole_definition_applicator": 555,
+        "witnessed": 2559
+      },
+      "source_controls": 2,
+      "source_expected_refusal_kills": 106
+    },
+    {
+      "applicable_owner_phases": [
+        "th_deleted",
+        "og_presence",
+        "og_original",
+        "og_receipt",
+        "og_transaction",
+        "nw_producer",
+        "sd_complete",
+        "og_state"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.thread_deleted",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch2/schemas/chat.thread_deleted/schema-coverage.json",
+      "retained_reads": 38,
+      "schema": {
+        "boundaries": 19,
+        "controls": 814,
+        "expected_refusal_kills": 6871,
+        "invalid_mutations": 217
+      },
+      "schema_classifications": {
+        "annotation": 50,
+        "permissive": 10,
+        "selector": 34,
+        "unreachable": 348,
+        "whole_definition_applicator": 551,
+        "witnessed": 2515
+      },
+      "source_controls": 8,
+      "source_expected_refusal_kills": 204
+    },
+    {
+      "applicable_owner_phases": [
+        "so_protocol",
+        "st_request_writer",
+        "st_request_access",
+        "st_request_accepted",
+        "st_outcome_schema",
+        "st_outcome_decision",
+        "st_outcome_join",
+        "st_save",
+        "st_read",
+        "st_queue_send",
+        "st_index_event",
+        "og_presence",
+        "og_original",
+        "og_receipt",
+        "og_transaction",
+        "nw_producer",
+        "sd_complete",
+        "st_custody",
+        "st_custody_binding"
+      ],
+      "criterion_12_after": "PASS",
+      "criterion_12_before": "PARTIAL",
+      "event_type": "chat.response_stop_requested",
+      "raw_schema_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ch2/schemas/chat.response_stop_requested/schema-coverage.json",
+      "retained_reads": 572,
+      "schema": {
+        "boundaries": 8,
+        "controls": 141,
+        "expected_refusal_kills": 3261,
+        "invalid_mutations": 165
+      },
+      "schema_classifications": {
+        "annotation": 11,
+        "permissive": 2,
+        "selector": 12,
+        "unreachable": 134,
+        "whole_definition_applicator": 215,
+        "witnessed": 1054
+      },
+      "source_controls": 70,
+      "source_expected_refusal_kills": 634
+    }
+  ],
+  "guard_proof": {
+    "applicable_tables": 100,
+    "findings": 0,
+    "masked": 0,
+    "max_rows_per_table": 7,
+    "proved": 327,
+    "refused_calls": 11914,
+    "rows": 338,
+    "unproved_singletons": [
+      {
+        "phase": "sc_project_bytes",
+        "proof": {
+          "phase": "sc_project_bytes",
+          "proof": "SC12 has already strictly decoded the bytes as UTF-8 equal to project_id, whose own strict UTF-8 encoding is exact. Strict valid UTF-8 is injective and encode(decode(bytes))=bytes. (CH1 premise; const premises re-checked for the CH2 families in runtime/entailed-singletons.json.)",
+          "scope": "ordinary",
+          "table": "scripts/pm_dch_table_sc_project_bytes.py"
+        },
+        "row": "SC13_decoded_bytes"
+      },
+      {
+        "phase": "cp_family_entailed",
+        "proof": {
+          "phase": "cp_family_entailed",
+          "proof": "CP01 validates the selected complete checkpoint edition before any source family comparisons; every installed edition pins event_type to this exact family. (CH1 premise; const premises re-checked for the CH2 families in runtime/entailed-singletons.json.)",
+          "scope": "ordinary",
+          "table": "scripts/pm_dch_table_cp_family_entailed.py"
+        },
+        "row": "CP29_value_event_type"
+      },
+      {
+        "phase": "cp_event_family_entailed",
+        "proof": {
+          "phase": "cp_event_family_entailed",
+          "proof": "The same unchanged event object passed the complete retained reader before this row. That reader calls JN02 with this exact expected family before returning; no intervening write changes the object. (CH1 premise; const premises re-checked for the CH2 families in runtime/entailed-singletons.json.)",
+          "scope": "ordinary",
+          "table": "scripts/pm_dch_table_cp_event_family_entailed.py"
+        },
+        "row": "CP30_event_event_type"
+      },
+      {
+        "phase": "cp_consumer_entailed",
+        "proof": {
+          "phase": "cp_consumer_entailed",
+          "proof": "CP01 validates the selected complete checkpoint edition, whose consumer_id const equals this exact row reader in every installed edition. (CH1 premise; const premises re-checked for the CH2 families in runtime/entailed-singletons.json.)",
+          "scope": "ordinary",
+          "table": "scripts/pm_dch_table_cp_consumer_entailed.py"
+        },
+        "row": "CP32_consumer"
+      },
+      {
+        "phase": "cp_projector_entailed",
+        "proof": {
+          "phase": "cp_projector_entailed",
+          "proof": "CP01 validates the selected complete checkpoint edition, whose projector_id const equals this exact row domain_projector in every installed edition. (CH1 premise; const premises re-checked for the CH2 families in runtime/entailed-singletons.json.)",
+          "scope": "ordinary",
+          "table": "scripts/pm_dch_table_cp_projector_entailed.py"
+        },
+        "row": "CP33_projector"
+      },
+      {
+        "phase": "cs_pointer_bounds",
+        "proof": {
+          "phase": "cs_pointer_bounds",
+          "proof": "CS06 already requires the exact one-key pointer containing an ASCII reference recomputed from real encoded bytes and their BLAKE3. Such a built-in map and string are always encodable by the current codec. (CH1 premise; const premises re-checked for the CH2 families in runtime/entailed-singletons.json.)",
+          "scope": "ordinary",
+          "table": "scripts/pm_dch_table_cs_pointer_bounds.py"
+        },
+        "row": "CS04_pointer_encodable"
+      },
+      {
+        "phase": "cs_pointer_size_entailed",
+        "proof": {
+          "phase": "cs_pointer_size_entailed",
+          "proof": "The exact CS06 pointer has a fixed ASCII prefix, 64 hex digits, a bounded decimal byte length and fixed media suffix. Even a 20-digit uint64 length gives at most 131 physical bytes, below 16384. (CH1 premise; const premises re-checked for the CH2 families in runtime/entailed-singletons.json.)",
+          "scope": "ordinary",
+          "table": "scripts/pm_dch_table_cs_pointer_size_entailed.py"
+        },
+        "row": "CS05_pointer_size"
+      },
+      {
+        "phase": "st_pointer_bounds",
+        "proof": {
+          "phase": "st_pointer_bounds",
+          "proof": "SV15 already requires payload_ref to equal payload:v1:<64 lowercase hex>:<decimal len>:application/msgpack, recomputed from the real encoded body and its BLAKE3. The pointer {\"payload_ref\": that ASCII string} is a built-in map of one str, always encodable by the current codec.",
+          "scope": "stop",
+          "table": "scripts/pm_dch_table_st_pointer_bounds.py"
+        },
+        "row": "SV11_pointer_encodable"
+      },
+      {
+        "phase": "st_pointer_size_entailed",
+        "proof": {
+          "phase": "st_pointer_size_entailed",
+          "proof": "The exact SV15 reference has a fixed ASCII prefix, 64 hex digits, a decimal byte length and a fixed media suffix; even a 20-digit uint64 length gives at most 131 physical bytes, below 16384.",
+          "scope": "stop",
+          "table": "scripts/pm_dch_table_st_pointer_size_entailed.py"
+        },
+        "row": "SV12_pointer_size"
+      },
+      {
+        "phase": "st_index_family_entailed",
+        "proof": {
+          "phase": "st_index_family_entailed",
+          "proof": "_index_read_valid first calls _request_valid on the same unchanged record, which runs JN02 through shared._joins with EVENT=chat.response_stop_requested and refuses any other event_type before st_index_family_entailed.",
+          "scope": "stop",
+          "table": "scripts/pm_dch_table_st_index_family_entailed.py"
+        },
+        "row": "IX22_record_event_type"
+      },
+      {
+        "phase": "st_index_sequence_entailed",
+        "proof": {
+          "phase": "st_index_sequence_entailed",
+          "proof": "_index_read_valid runs shared._input_types(source) over the unchanged source whose index_row.sequence_id is a Storage uint64 slot: TY03/TY04 refuse every non-uint64 value before st_index_sequence_entailed.",
+          "scope": "stop",
+          "table": "scripts/pm_dch_table_st_index_sequence_entailed.py"
+        },
+        "row": "IX24_row_sequence_type"
+      }
+    ],
+    "unrelated": 0,
+    "witness_calls": 15624
+  },
+  "implementation_head": "f88a753d59b0b5dc3a5ac7e4f1beb4002af44593",
+  "jared_questions": [],
+  "lane": "C12-CH2",
+  "membership": "UNCHANGED",
+  "native_execution": "NOT_RUN",
+  "numbers": {
+    "adapter_checks": 186,
+    "receipt_uint64_checks": 938,
+    "shared_self_test": "PASS"
+  },
+  "original_suite": {
+    "checks": 49362,
+    "status": "pass",
+    "stop_checks": 5316,
+    "stop_status": "pass"
+  },
+  "other_cells": "UNCHANGED",
+  "retained": {
+    "reads": 800,
+    "snapshots": 136,
+    "status": "pass"
+  },
+  "schema_totals": {
+    "boundaries": 122,
+    "controls": 4351,
+    "expected_refusal_kills": 48169,
+    "invalid_mutations": 1575
+  },
+  "source_invalid_mutations": 0,
+  "source_kinds": {
+    "ordinary_original": 1200,
+    "stop_sealed_read": 572,
+    "stop_writer_original": 132
+  },
+  "source_mutation_controls": 108,
+  "source_mutation_expected_refusal_kills": 1796,
+  "source_route_cuts": {
+    "accepted": 1504,
+    "exception_uncredited": 140,
+    "later_refusal_uncredited": 152
+  }
+}

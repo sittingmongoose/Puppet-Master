@@ -2023,10 +2023,28 @@ def main(families=None):
     for guard, family, name, positive, negative in guard_cases(boundary, excluded=omitted):
         check(family, 'S11_' + guard + '_' + name + '_positive', guard_accepted(lambda: positive(boundary)))
         check(family, 'S11_' + guard + '_' + name + '_negative', not guard_accepted(lambda: negative(boundary)))
+    # Admission-aware mode (PNC-019 stream E; scripts/pm_ea_admission_mode.py lane_gate): a family is reported
+    # admitted only through its exact, complete DL-077 record; any other registration state fails the run.
+    admission = admission_report([r['event_type'] for r in document['rows'] if families is None or r['event_type'] in families], failures)
     print(json.dumps(dict(status='fail' if failures else 'pass', cases=sum(counts.values()), per_family=counts,
-                          failures=failures, native_execution='NOT_RUN', admission='NONE',
+                          failures=failures, native_execution='NOT_RUN', admission=admission,
                           scope='static full-envelope/schema/receipt/hash and bounded source/append/observation models'),indent=2))
     return bool(failures)
+
+
+def admission_report(event_types, failures):
+    """The result's admission label, record-guarded: NONE while every family is prepared (unregistered, no record),
+    RECORD_BOUND when every family is registered as its exact, complete DL-077 admission (NONE_AND_RECORD_BOUND for
+    a mix). Any other state (a registration without its record, a record that does not match, a record without its
+    registration) is REFUSED and adds one failure per family: '<family>: admission mode refused: <code>'.
+    """
+    import pm_ea_admission_mode as admission_mode
+    summary, refused = admission_mode.lane_gate(event_types, root=ROOT)
+    failures.extend(refused)
+    counts = summary['counts']
+    if counts['refused']:
+        return 'REFUSED'
+    return 'NONE' if not counts['admitted'] else 'RECORD_BOUND' if not counts['prepared'] else 'NONE_AND_RECORD_BOUND'
 
 
 if __name__ == '__main__':

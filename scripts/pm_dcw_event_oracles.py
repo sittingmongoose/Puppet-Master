@@ -479,6 +479,7 @@ def index_read(index, reader, authority=None, event_validator=None):
     check_schema('Plans/event_record_index_checkpoint.schema.json', checkpoint, 'checkpoint')
     check_schema('Plans/event_record_index_checkpoint.schema.json', reader['live_token'], 'read_token')
     guard_rows.enforce('O115', {'site': 'O115', 'code': 'index_currentness', 'v0': generation['state']})
+    guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})
     guard_rows.enforce('O116', {'site': 'O116', 'code': 'index_currentness', 'v0': frontier['source_selection'], 'v1': index['current_source']['source_selection']})
     guard_rows.enforce('O117', {'site': 'O117', 'code': 'index_coverage', 'v0': frontier['coverage']['complete_to_captured_boundary']})
     rows = index['datasets'][generation['index_dataset_name']]
@@ -771,7 +772,7 @@ def run(legacy_validate, family=None):
             checks += 1
         print(row['event_type'] + ': PASS (full static envelope/source/receipt/transition/withdrawal composition)')
     assert all((x['execution_status'] == 'NOT_RUN' for x in fixtures['native_oracles']))
-    print(json.dumps({'status': 'PASS', 'full_contract_cases': checks, 'native': 'NOT_RUN', 'admission': 'ABSENT'}))
+    print(json.dumps({'status': 'PASS', 'full_contract_cases': checks, 'native': 'NOT_RUN', 'admission': admission_report([r['event_type'] for r in fixtures['families'] if family is None or r['event_type'] == family])}))
     return checks
 
 def integer_format(value):
@@ -1100,3 +1101,34 @@ def source_frame_bytes(value):
     else:
         guard_rows.enforce('F006', {'site':'F006','code':'index_source_bytes','v0':None})
     return result
+
+
+def admission_report(event_types):
+    """The run's admission label, record-guarded (PNC-019 stream E; scripts/pm_ea_admission_mode.py lane_gate).
+
+    ABSENT while every family is prepared (unregistered, no record); RECORD_BOUND when every family is registered
+    as its exact, complete DL-077 admission (ABSENT_AND_RECORD_BOUND for a mix). Any other state of any family
+    (registered without its record, a record that does not match, a record without its registration) fails the run.
+    """
+    import pm_ea_admission_mode as admission_mode
+    summary, failures = admission_mode.lane_gate(event_types, root=ROOT)
+    assert not failures, ('admission mode refused', failures)
+    counts = summary['counts']
+    return 'ABSENT' if not counts['admitted'] else 'RECORD_BOUND' if not counts['prepared'] else 'ABSENT_AND_RECORD_BOUND'
+
+
+def retention_report(event_type, prepared_label):
+    """The run's retention label, record-guarded like admission_report.
+
+    While the family is prepared the label stays the preparation one. Once it is registered as its exact, complete
+    DL-077 admission, the record pins the live row (its canonical SHA-256) and its 12/12 assessment with retention
+    PASS, so the label is that row's own bound policy (RECORD_BOUND:<policy_id>@<version>). Any other state fails.
+    """
+    import pm_ea_admission_mode as admission_mode
+    mode = admission_mode.verdict(event_type, root=ROOT)
+    assert mode['mode'] != 'refused', ('admission mode refused', event_type, mode.get('code'))
+    if mode['mode'] == 'prepared':
+        return prepared_label
+    row = admission_mode.load_registry(ROOT)['families'][mode['row_index']]
+    ref = row['retention_policy_ref']
+    return 'RECORD_BOUND:' + ref['policy_id'] + '@' + ref['policy_version']

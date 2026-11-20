@@ -54,6 +54,8 @@ REQUIRED_PNC019_SOURCE_HASH_PATHS = _pnc019_currentness.REQUIRED_PNC019_SOURCE_H
 pnc019_event_authority_clearance_failures = _pnc019_currentness.pnc019_event_authority_clearance_failures
 pnc019_event_authority_failures_for_registry = _pnc019_currentness.pnc019_event_authority_failures_for_registry
 pnc019_source_hash_failures = _pnc019_currentness.pnc019_source_hash_failures
+event_authority_checkpoint = _pnc019_currentness.event_authority_checkpoint
+event_authority_evidence_refs = _pnc019_currentness.event_authority_evidence_refs
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -475,10 +477,10 @@ EVENT_FAMILY_GOAL_PAYLOAD_SCHEMA_REFS = {
     "goal.evidence_captured": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
     "goal.verification_decided": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
     "goal.receipt_recorded": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
-    "goal.completed": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+    "goal.completed": "Plans/event_payloads/goal_runtime/goal_completed.v3.schema.json",
     "goal.degraded": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
     "goal.stopped": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
-    "goal.blocked": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+    "goal.blocked": "Plans/event_payloads/goal_runtime/goal_blocked.v3.schema.json",
     "goal.cancelled": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
     # The three goal_run v3 rows select whole v3 payload schemas outside event_payloads/goal_runtime,
     # as their landed adoptions registered them: started by e686963ad5 (GRS-079, SP-311), cancelled by
@@ -486,11 +488,11 @@ EVENT_FAMILY_GOAL_PAYLOAD_SCHEMA_REFS = {
     # historical v2 schema file unchanged. The identity check above still binds payload_schema_id,
     # payload_schema_ref.schema_id and the resolved schema identity for every row.
     "goal_run.started": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
-    "goal_run.replanned": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
-    "goal_run.blocked": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+    "goal_run.replanned": "Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json",
+    "goal_run.blocked": "Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json",
     "goal_run.certified": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
     "goal_run.cancelled": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
-    "goal_run.stopped": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json",
+    "goal_run.stopped": "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json",
 }
 EVENT_FAMILY_LEGACY_FIXTURE_PATH = (
     ROOT
@@ -807,20 +809,33 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # unique families, every added row materialized later_gui_or_feature_projection: 465 + 182 = 647 materialized,
 # 30 deferred, 1 alias; 79 tier-0, 407 + 182 = 589 later, 10 migration-only. All 41 retention policies are
 # unchanged. No event admission follows from this census re-pin.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 678
+# PNC-019 S2 (plans/ea-pnc-s2-20261114, SP-2300..2303): four added rows, every one materialized
+# later_gui_or_feature_projection: the three DL-300 publication journals (ea_s2_*_publication) and the
+# Project chat-tool approval record (chat_tool_approval_project): 678 + 4 = 682 families, 651 materialized,
+# 593 later. No event admission or registry change follows.
+# Re-pinned on plans/ea-pnc-s3b-20261114 (PNC-019 S3, SP-2202 and SP-2203): restore_point_application_commit
+# and restore_point_corruption_commit add two materialized later_gui_or_feature_projection families: 680 families,
+# 649 materialized, 591 later. Retention policies unchanged. No event admission follows. Integration re-pins once
+# from the merged registry if other PNC-019 lanes add rows too.
+# Re-pinned once for the admission-merge-2 merged registry (plans/ea-merge2-int-20261115, INT4 item D5):
+# batch 3's 678 + S2's 4 + S3b's 2 + s4b's 51 Browser Program checkpoint rows (SP-2500..2550, prepared only)
+# = 735 unique families, every added row materialized later_gui_or_feature_projection: 647 + 57 = 704
+# materialized, 30 deferred, 1 alias; 79 tier-0, 589 + 57 = 646 later, 10 migration-only. All 41 retention
+# policies are unchanged. No event admission follows from this census re-pin.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 735
 # Re-pinned 2026-11-05 (DL-401, DL-415..DL-421): telemetry plus six independent no-project
 # policies are materialized; existing policies and every family/status/tier count remain unchanged.
 # Re-pinned 2026-11-05 (DL-454, DL-455, DL-457, DL-460, DL-463, DL-464): six further independent
 # application policies are materialized; existing policies and every family/status/tier count remain unchanged.
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 41
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 647,
+    "materialized": 704,
     "deferred_not_build_blocking": 30,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 79,
-    "later_gui_or_feature_projection": 589,
+    "later_gui_or_feature_projection": 646,
     "migration_only": 10,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [
@@ -3022,6 +3037,7 @@ def event_family_payload_schema(
         return None, None
     try:
         schema: Any = read_json(path)
+        document_id = schema.get("$id") if isinstance(schema, dict) else None
         pointer = ref.get("json_pointer", "#")
         if pointer not in {"#", ""}:
             if not isinstance(pointer, str) or not pointer.startswith("#/"):
@@ -3043,6 +3059,10 @@ def event_family_payload_schema(
             if editions is not None:
                 edition = scope_kind or ("application" if family.get("scope_policy") == "application_only" else "project")
                 resolved = editions.get(edition)
+        if resolved is None and isinstance(document_id, str) and pointer.startswith("#/"):
+            # A JSON Pointer fragment identifies this exact anonymous subschema in its own resource.
+            # The row's claimed schema_id is never used to manufacture the resolved identity.
+            resolved = document_id.split("#", 1)[0] + pointer
         return schema, resolved
     except Exception:  # noqa: BLE001 - converted to a deterministic structural failure.
         return None, None
@@ -3105,6 +3125,99 @@ def event_family_legacy_payload_schema(
     if len(matches) > 1:
         return None, None, "legacy_payload_schema_ambiguous"
     return None, None, "legacy_payload_schema_invalid"
+
+
+def event_family_usage_retention_ref() -> dict[str, Any]:
+    """SP-594 / E8-1 A: a selector for the existing setting, never a policy ID."""
+    return {
+        "setting_key": "ai.usage.usage-retention",
+        "anchor": "first_durable_save",
+        "anchor_immutable": True,
+        "owner_ref": "Plans/storage-plan.md#SP-594",
+    }
+
+
+def event_family_usage_retention_owner_matches() -> bool:
+    """Read the declaring unit's canonical text, without borrowing sibling prose."""
+    import yaml
+
+    try:
+        text = (PLANS / "storage-plan.md").read_text(encoding="utf-8")
+    except OSError:
+        return False
+    blocks = re.findall(r"(?ms)^```yaml\n(plan_unit_id: SP-594\n.*?)^```", text)
+    if len(blocks) != 1:
+        return False
+    try:
+        owner = yaml.safe_load(blocks[0])
+        prose = " ".join(owner["canonical_text"].split())
+    except (yaml.YAMLError, KeyError, TypeError):
+        return False
+    return all(clause in prose for clause in (
+        "Signed E8-1 option A resolves the `usage.event` history binding",
+        "`retention_binding.setting_key = ai.usage.usage-retention`, `retention_binding.anchor = first_durable_save`",
+        "save of that exact entry that survives a restart supplies the immutable anchor",
+        "This is the existing setting-driven policy selector, not a newly minted policy ID",
+        "The registry retention_policy_ref setting-selected form carries setting_key=ai.usage.usage-retention, "
+        "anchor=first_durable_save, anchor_immutable=true and owner_ref=Plans/storage-plan.md#SP-594, "
+        "with no policy_id or policy_version",
+    ))
+
+
+def event_family_setting_retention_failures(
+    event_type: Any, ref: Any, *, path_label: str,
+) -> list[dict[str, Any]]:
+    """Only usage.event may select a setting; every field must agree with SP-594."""
+    expected = event_family_usage_retention_ref()
+    is_setting = isinstance(ref, dict) and bool(set(ref) & set(expected))
+    if event_type != "usage.event" and not is_setting:
+        return []  # The unchanged fixed-policy branch is checked by JSON Schema.
+    error = None
+    if event_type != "usage.event":
+        error = "family_not_usage"
+    elif not isinstance(ref, dict):
+        error = "not_object"
+    elif "policy_id" in ref or "policy_version" in ref or "registry_schema_id" in ref:
+        error = "policy_id_forbidden"
+    elif ref.get("setting_key") != expected["setting_key"]:
+        error = "setting_key_mismatch"
+    elif "anchor" not in ref:
+        error = "anchor_missing"
+    elif ref["anchor"] != expected["anchor"]:
+        error = "anchor_mismatch"
+    elif ref.get("anchor_immutable") is not True:
+        error = "anchor_not_immutable"
+    elif ref.get("owner_ref") != expected["owner_ref"]:
+        error = "owner_ref_mismatch"
+    elif set(ref) != set(expected):
+        error = "shape_mismatch"
+    elif not event_family_usage_retention_owner_matches():
+        error = "owner_text_mismatch"
+    return ([{"path": path_label, "error": "event_family_registry_setting_retention_" + error}]
+            if error else [])
+
+
+def event_family_setting_retention_self_test_checks() -> dict[str, bool]:
+    good = event_family_usage_retention_ref()
+    checks = {"usage_setting_ref_matches_owner": not event_family_setting_retention_failures(
+        "usage.event", good, path_label="self-test:usage_setting_ref")}
+    mutations = {
+        "wrong_setting_key": (dict(good, setting_key="ai.usage.other"), "setting_key_mismatch"),
+        "missing_anchor": ({k: v for k, v in good.items() if k != "anchor"}, "anchor_missing"),
+        "mutable_anchor": (dict(good, anchor_immutable=False), "anchor_not_immutable"),
+        "new_policy_id": (dict(good, policy_id="RP-USAGE-NEW"), "policy_id_forbidden"),
+        "wrong_owner": (dict(good, owner_ref="Plans/storage-plan.md#SP-341"), "owner_ref_mismatch"),
+        "extra_field": (dict(good, ttl_days=90), "shape_mismatch"),
+        "integer_immutable": (dict(good, anchor_immutable=1), "anchor_not_immutable"),
+    }
+    for name, (ref, error) in mutations.items():
+        checks[name + "_rejected"] = event_family_setting_retention_failures(
+            "usage.event", ref, path_label="self-test:" + name
+        ) == [{"path": "self-test:" + name,
+               "error": "event_family_registry_setting_retention_" + error}]
+    checks["other_family_rejected"] = bool(event_family_setting_retention_failures(
+        "other.event", good, path_label="self-test:other_family"))
+    return checks
 
 
 def event_family_registry_data_failures(
@@ -3233,6 +3346,15 @@ def event_family_registry_data_failures(
             owner_path = ROOT / str(owner_ref).split("#", 1)[0]
             if not isinstance(owner_ref, str) or not owner_ref or not owner_path.exists():
                 failures.append({"path": row_path, "error": "event_family_registry_owner_ref_missing", "field": owner_field, "actual": owner_ref})
+
+        failures.extend(event_family_setting_retention_failures(
+            event_type, family.get("retention_policy_ref"), path_label=row_path + "/retention_policy_ref"))
+        versions = family.get("payload_versions", [])
+        for edition_index, edition in enumerate(versions if isinstance(versions, list) else []):
+            if isinstance(edition, dict):
+                failures.extend(event_family_setting_retention_failures(
+                    event_type, edition.get("retention_policy_ref"),
+                    path_label=f"{row_path}/payload_versions/{edition_index}/retention_policy_ref"))
 
         payload_schema, resolved_schema_id = event_family_payload_schema(family)
         if payload_schema is None:
@@ -5213,6 +5335,62 @@ def pnc019_case_l_preflight_source_failures() -> list[dict[str, Any]]:
     return failures
 
 
+def event_authority_edition_triad_checks() -> dict[str, bool]:
+    """Open, closed and tampered fixture editions through the governed helper.
+
+    The fixture mirrors the real paths in a temporary tree; the helper's real
+    clearance code runs on it unchanged. Only the expected refusal counts.
+    """
+    import shutil
+    import tempfile
+
+    scripts_dir = str(Path(__file__).resolve().parent)
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+    import pm_event_authority_closure_fixture as fixture
+
+    residual_errors = {"event_denominator_unresolved", "event_family_contract_depth_unresolved"}
+
+    def clearance_errors(root: Path) -> set[str]:
+        return {
+            failure.get("error")
+            for failure in pnc019_event_authority_clearance_failures(root)
+        }
+
+    checks: dict[str, bool] = {}
+    with tempfile.TemporaryDirectory(prefix="pm-readiness-ea-triad-") as td:
+        base = Path(td)
+        open_root = base / "open"
+        closed_root = base / "closed"
+        fixture.build(open_root, _pnc019_currentness, closed=False)
+        fixture.build(closed_root, _pnc019_currentness, closed=True)
+        checks["event_authority_open_edition_keeps_both_residuals"] = clearance_errors(open_root) == residual_errors
+        checks["event_authority_closed_edition_clears_both_residuals"] = (
+            clearance_errors(closed_root) == set()
+            and event_authority_checkpoint(closed_root).denominator_status == "CLOSED"
+        )
+        for name in (
+            "cpu_row_reopened",
+            "depth_cell_partial",
+            "token_uncovered",
+            "continuity_cohort_mismatch",
+            "runtime_boundary_claimed",
+            "bound_input_drift",
+            "inventory_omits_machine_input",
+            "census_token_omitted",
+            "historical_selector_row_dropped",
+        ):
+            mutate, expected, _group = fixture.TAMPERS[name]
+            root = base / f"tamper-{name}"
+            shutil.copytree(closed_root, root)
+            mutate(root, _pnc019_currentness)
+            found = clearance_errors(root)
+            checks[f"event_authority_tampered_{name}_edition_fails_closed"] = (
+                expected in found and residual_errors <= found
+            )
+    return checks
+
+
 def case_l_non_event_materialization_failures() -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     required_json = [
@@ -5750,7 +5928,11 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
         path_label="self-test:event-family-registry-residual",
         include_residuals=True,
     )
-    checks["event_denominator_residual_remains_fail_closed"] = any(
+    # The live residuals follow the installed edition: present while it is open,
+    # absent only once a CLOSED edition re-verifies (PNC-019 S7). The open /
+    # closed / tampered triads below prove each direction on fixture editions.
+    live_checkpoint = event_authority_checkpoint(ROOT)
+    live_denominator_residual = any(
         failure.get("error") == "event_denominator_unresolved"
         and failure.get("registered_kernel_rows") == EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT
         and failure.get("quarantined_row_count") == 252
@@ -5764,12 +5946,19 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
         == "unknown_or_unregistered_event_types_quarantine_without_checkpoint_advance"
         for failure in residual_failures
     )
-    checks["event_contract_depth_residual_remains_fail_closed"] = any(
+    live_depth_residual = any(
         failure.get("error") == "event_family_contract_depth_unresolved"
         and failure.get("registered_kernel_rows") == EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT
         and failure.get("contract_depth_complete") is False
         for failure in residual_failures
     )
+    checks["event_denominator_residual_tracks_live_edition"] = (
+        live_denominator_residual is not live_checkpoint.complete_denominator_known
+    )
+    checks["event_contract_depth_residual_tracks_live_edition"] = (
+        live_depth_residual is not live_checkpoint.contract_depth_complete
+    )
+    checks.update(event_authority_edition_triad_checks())
     missing_event_row = clone(event_registry)
     missing_event_row["families"] = [
         row for row in missing_event_row["families"] if row.get("event_type") != "run.started"
@@ -6037,11 +6226,33 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
             "storage_instance_id": "storage-1", "quarantine_id": "quarantine-1",
             "source_family_id": "event_record_index", "source_locator_ref": "event:event-42",
             "expected_schema_id": "pm.storage_value.event_record_index.v2", "expected_schema_version": "2.0.0",
-            "observed_schema_id": None, "observed_schema_version": None, "error_code": "schema_invalid",
+            "observed_schema_id": "pm.storage_value.event_record_index.v1", "observed_schema_version": "1.0.0", "error_code": "schema_invalid",
             "raw_sha256": hash_value, "raw_custody_ref": "custody:raw", "custody_manifest_ref": "custody:manifest",
             "custody_manifest_sha256": hash_value, "byte_length": 128, "detected_at_utc": "2026-07-18T03:00:00Z",
             "risk_class": risk, "state": state, "retention_policy_ref": risk,
             "transition_receipts": receipts, "related_event_refs": ["event:q1"], "redaction_profile": "no_secrets",
+            "event_obligation": {
+                "schema_id": "pm.event.v0", "schema_version": "2.0.0", "scope_kind": "application",
+                "event_id": "event:q1", "event_type": "storage.value_quarantine_changed",
+                "project_id": None, "thread_id": None, "run_id": None, "node_id": None, "attempt_id": None,
+                "actor_ref": "actor:storage", "requested_account_ref": None, "effective_account_ref": None,
+                "occurred_at_utc": "2026-07-18T03:00:00Z", "producer_sequence_id": None,
+                "correlation_id": "quarantine-1", "causation_event_id": None, "parent_event_id": None,
+                "idempotency_key": "storage-quarantine:self-test:q1",
+                "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_value_quarantine_changed/1.0.0",
+                "payload": {
+                    "schema_version": "1.0.0", "quarantine_id": "quarantine-1",
+                    "source_ref": "event:event-42", "expected_schema_id": "pm.storage_value.event_record_index.v2",
+                    "observed_schema_id": "pm.storage_value.event_record_index.v1", "raw_bytes_hash": hash_value, "raw_bytes_ref": "custody:raw",
+                    "risk_class": risk, "state": state, "actor_ref": "actor:storage",
+                    "reason": "transition-self-test", "receipt_ref": receipts[-1]["receipt_ref"] if receipts else "receipt:detect",
+                }, "payload_ref": None,
+                "redaction_profile": "no_secrets", "replay_policy": "dedupe_by_idempotency_key",
+                "migration": {
+                    "migrated_from_schema_id": None, "migrated_from_schema_version": None,
+                    "migration_id": None, "compatibility_event_type": None,
+                },
+            },
         }
     resolved = quarantine(
         "Q-CRITICAL", "migrated",
@@ -6050,6 +6261,8 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
     purged = clone(resolved)
     purged["state"] = "purged"
     purged["transition_receipts"].append(transition("migrated", "purged", "3"))
+    purged["event_obligation"]["payload"]["state"] = "purged"
+    purged["event_obligation"]["payload"]["receipt_ref"] = "receipt:3"
     checks["l033_receipt_continuity_and_current_state_valid"] = not draft202012_schema_failures(
         resolved,
         quarantine_schema,
@@ -6058,6 +6271,15 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
         resolved,
         policy_elapsed=False,
         active_hold_count=1,
+    )
+    wrong_obligation_const = clone(resolved)
+    wrong_obligation_const["event_obligation"]["event_type"] = "storage.deletion_lifecycle_changed"
+    checks["l033_wrong_event_obligation_const_rejected"] = bool(
+        draft202012_schema_failures(
+            wrong_obligation_const,
+            quarantine_schema,
+            path_label="self-test:l033-wrong-obligation-const",
+        )
     )
     discontinuous = clone(resolved)
     discontinuous["transition_receipts"][1]["from_state"] = "detected"
@@ -9840,6 +10062,9 @@ def run_self_tests() -> dict[str, Any]:
                 "checks": storage_registry_checks,
             }
         )
+    setting_retention_checks = event_family_setting_retention_self_test_checks()
+    if not all(setting_retention_checks.values()):
+        failures.append({"scenario": "event_family_setting_retention", "checks": setting_retention_checks})
     case_l_verification_checks = case_l_verification_self_test_checks()
     if not all(case_l_verification_checks.values()):
         failures.append(
@@ -9856,6 +10081,7 @@ def run_self_tests() -> dict[str, Any]:
         "field_claim_checks": field_claim_checks,
         "event_record_checks": event_record_checks,
         "storage_registry_checks": storage_registry_checks,
+        "setting_retention_checks": setting_retention_checks,
         "case_l_verification_checks": case_l_verification_checks,
         "failures": failures,
     }
@@ -10040,6 +10266,9 @@ def cmd_validate_case_l(args: argparse.Namespace) -> int:
         )
     except Exception:
         pass
+    # The boundary reports the installed edition's re-verified state, never a literal.
+    event_checkpoint = event_authority_checkpoint(ROOT)
+    event_closed = event_checkpoint.complete_denominator_known and event_checkpoint.contract_depth_complete
     report = {
         "schema_id": "pm.implementation_readiness.case_l_non_event_validation_report.v1",
         "generated_at_utc": utc_now(),
@@ -10049,13 +10278,17 @@ def cmd_validate_case_l(args: argparse.Namespace) -> int:
         "event_authority_boundary": {
             "registered_kernel_rows": EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT,
             "quarantined_row_count": EVENT_FAMILY_QUARANTINED_ROW_COUNT,
-            "denominator_status": EVENT_FAMILY_DENOMINATOR_STATUS,
+            "denominator_status": event_checkpoint.denominator_status,
             "bulk_registration_allowed": EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
-            "evidence_currentness": EVENT_FAMILY_EVIDENCE_CURRENTNESS,
-            "evidence_refs": EVENT_FAMILY_EVIDENCE_REFS,
-            "complete_denominator_known": False,
-            "contract_depth_complete": False,
-            "disposition": "excluded_from_this_non_event_pass_and_still_fail_closed",
+            "evidence_currentness": event_checkpoint.evidence_currentness,
+            "evidence_refs": event_authority_evidence_refs(event_checkpoint),
+            "complete_denominator_known": event_checkpoint.complete_denominator_known,
+            "contract_depth_complete": event_checkpoint.contract_depth_complete,
+            "disposition": (
+                "excluded_from_this_non_event_pass_event_authority_closed_by_reverified_edition"
+                if event_closed
+                else "excluded_from_this_non_event_pass_and_still_fail_closed"
+            ),
         },
         "claim_boundary": "Static non-event materialization validation only; not runtime, certification, buildability, governance, or Case L closure.",
     }

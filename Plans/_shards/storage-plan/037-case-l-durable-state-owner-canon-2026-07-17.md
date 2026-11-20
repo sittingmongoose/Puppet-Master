@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L17267-L18446
+Source lines: L17563-L18959
 
-Source SHA256: `955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a`
+Source SHA256: `8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537`
 
 ---
 
@@ -548,7 +548,7 @@ Thread deletion immediately persists a content-free tombstone/deletion record an
 
 The ordinary graph is `requested -> logically_hidden`; `logically_hidden -> held` when current hold evaluation yields blockers; `logically_hidden -> purge_pending` when holds are absent and scope, tombstone, writer, and purge/compaction authority are current; `held -> purge_pending` only after every blocking hold is owner-cleared and the complete eligibility set is revalidated; and `purge_pending -> purged` only with verified committed successor-generation and content-free tombstone authority. Direct `requested -> purge_pending|purged`, `logically_hidden -> purged`, `held -> purged`, purge while a blocker remains, and every transition out of terminal `purged` are forbidden.
 
-Failure ingress is closed to `requested | logically_hidden | purge_pending -> failed`. `held -> failed` is forbidden because hold disclosure remains `held`; `purged -> failed` is forbidden because purge is terminal. `failed` is fenced, retryable non-success. Retry reuses the same `deletion_id` and existing deletion-operation idempotency identity, does not mint a new lifecycle or retry identity, and revalidates holds, tombstone, scope, storage-writer posture, and purge/compaction authority before a graph-valid successor. It creates no fixed bypass from `failed` to `purge_pending` or `purged`.
+Failure ingress is closed to `requested | logically_hidden | purge_pending -> failed`. `held -> failed` is forbidden because hold disclosure remains `held`; `purged -> failed` is forbidden because purge is terminal. `failed` is fenced, retryable non-success. Retry reuses the same `deletion_id` and existing deletion-operation idempotency identity, does not mint a new lifecycle or retry identity, and revalidates holds, tombstone, scope, storage-writer posture, and purge/compaction authority before a graph-valid successor. It creates no fixed bypass from `failed` to `purge_pending` or `purged`. The graph-valid successor of a revalidated retry is exactly `failed -> logically_hidden` (DL-695): the content stays hidden, the retry proves the content-free tombstone and logical hide again as part of that revalidation before it records `logically_hidden`, and `held`, `purge_pending` and `purged` then follow only through the ordinary graph above. A retry whose revalidation is missing or fails is refused under the admission order below, and the record stays `failed`. There is no `failed -> requested` edge.
 
 Admission order is fail closed: validate the EventRecord/payload discriminator, schema/version, current-state conditional, and dual-scope equality; resolve the same durable deletion record/current state and replay identity; revalidate deletion scope and cross-project reachability; revalidate all holds; prove the content-free tombstone and logical hide; prove writer and owner maintenance/compaction authority; for `purged`, prove the verified committed successor generation; then append at most one semantic event and advance owned projections/checkpoints only after those proofs. UI/command acceptance is not purge authority. Same EventRecord identity/digest returns the original durable result with one append and no duplicate purge/projection effect; a different digest returns `idempotency_conflict`; unavailable dedupe proof returns `dedupe_unavailable`. Every refusal or rejection has zero new append, zero owner-state mutation, zero projection effect, zero checkpoint advance, zero purge/compaction dispatch, and zero hold clear.
 
@@ -567,6 +567,222 @@ Risk classes are `Q-CRITICAL | Q-RESETTABLE | Q-DERIVED | Q-MIRROR`. Unresolved 
 Disposal boundary after eligible cleanup (DL-068): once an item is resolved, its selected Q policy permits cleanup and every actual hold and dependency allows it, its quarantined raw content is removed. The closed custody manifest, operation journal and operational quarantine index keep their custody and recovery requirement until the actual authorized purge, its `purged` lifecycle event and that event's first AppendReceipt have settled and every real backup, recovery, live-reference and maintenance dependency is released; then those operational quarantine records retire. This narrows only the operational quarantine record: the existing indefinite audit event, the original shared receipt and their identity/dedupe custody keep their own policies under the approval, receipt, audit and source-lineage class. A later audit shows the recorded purge event and its first receipt and reports "Source evidence unavailable" for the removed source; it cannot open the old bytes, re-resolve the old quarantine source receipt or recreate the entry, and missing evidence alone never proves a lawful purge. No new quarantine audit record is created. This grants no purge authority and changes no TTL, anchor, cap, overflow behavior, hold kind, eligibility rule or lifecycle edge; `purged` still has no outgoing transition.
 
 SourceRef: `PD-L033-01` through `PD-L033-03`, `Case-L:L-033`
+
+#### SP-2200 - Registered deletion lifecycle event: producer, identity, replay, consumer and withdrawal
+
+Newly authored owner contract under DL-045 for the registered `storage.deletion_lifecycle_changed@2.0.0` family (PNC-019 S3, 2026-11-14). It completes the parts that Thread/project deletion above, CV-319 and UCC-124 leave open: the exact emitter, the append order, the identity recipe, lost-acknowledgement replay, the event consumer and withdrawal. It changes no lifecycle edge, deletion window, hold rule, payload field or retention value, and admits nothing new.
+
+**Producer.** The sole emitter is the Storage component `storage.deletion_lifecycle.coordinator.v1`, the "storage deletion lifecycle coordinator" that the `storage_deletion_record` row of `Plans/storage_value_registry.json` names as its producer. Two existing commands open a deletion and nothing else does: `cmd.chat.delete` through `handlers::chat::delete` (a thread) and `cmd.project.delete_data` through `handlers::project::delete_data` (Project data), as `Plans/Wiring_Matrix.production.json` already binds them. Each handler only submits the request; it never appends the event or purges. Every later transition (`logically_hidden`, `held`, `purge_pending`, `purged`, `failed`) is the coordinator's own step after the admission order above. For one transition the order is exact: (1) the fail-closed admission order of Thread/project deletion; (2) one redb transaction that compares-and-swaps `storage_deletion_record` from its expected state to the new state, appends the transition to `event_refs` and stores the frozen EventRecord as the durable pending event obligation in the same row's `event_obligation` member; (3) the ordinary Case L-2 append of that frozen EventRecord as `durability_class=barrier` through the SP-286/CV-339 shared append owner; (4) SP-286 first-AppendReceipt custody, read only through `storage.first_append_receipt.resolve.v2` and, where a full value is needed, `storage.first_append_receipt.resolve_full_value.v1`; (5) only then the dependent effect: projection hide for `logically_hidden`, purge dispatch for `purge_pending`, and the command result. A crash before (3) resumes the same obligation; after the commit frame is durable it resolves the original receipt and never appends again or repeats a purge, hide or hold evaluation. A pending obligation never authorizes a second transition. `event_obligation` holds the latest transition's frozen EventRecord, without the Storage-assigned `sequence_id`, `observed_at_utc` and `persisted_at_utc` that the append adds: it stays pending until SP-286 resolves that event's first AppendReceipt, a resumed append sends exactly that value, and only the next admitted transition's compare-and-swap replaces it.
+
+**Identity.** `deletion_id` is `del_` plus lowercase SHA-256 of the concatenation of each UTF-8 value preceded by its unsigned 64-bit big-endian byte length: `storage.deletion/request/v1`, the scope partition, and the initiating command's original UICommand envelope `idempotency_key`. The same key with a different normalized request digest (command ID, exact domain arguments, key, authenticated actor) fails closed before any write. The transition ordinal is the 1-based position of the transition in `event_refs`, reserved in step (2); a retry of one transition reuses its ordinal, and `failed` followed by a revalidated retry takes the next ordinal, so a repeated state never reuses an identity. The owner operation component is the UTF-8 string `storage.deletion_lifecycle_changed:` + `deletion_id` + `:` + the decimal ordinal. Application scope uses CV-366 exactly: `idempotency_key = application@1:{hex(server_id)}:{hex(component)}`. Project scope uses `storage-deletion@1:{hex(server_id)}:{hex(component)}` within the unchanged `(scope_partition, event_type, idempotency_key)` lifetime; the Project partition is `project~` plus unpadded base64url of the exact UTF-8 `project_id`, and application is `app`. `event_id` is `er_del_` plus lowercase SHA-256 of the length-prefixed UTF-8 values `storage.deletion_lifecycle_changed/event/v1`, lowercase hex of `storage_instance_id`, the scope partition and the component. Envelope `project_id` is null exactly when payload `project_id` is absent (CV-319's dual-scope rule); a thread deletion's envelope `thread_id` is the deleted thread and a Project-data deletion's is null. Run and attempt are null. Identities are reserved once in step (2) and never regenerated from retry or observation time.
+
+**Replay.** `replay_policy=dedupe_by_idempotency_key`. Before admission, dedupe lookup or any effect, reject `projector_replay_only` as `replay_only_not_appendable`; compatibility replay stays on the read and rebuild path. The producer-semantic comparison covers only the caller-supplied payload and envelope semantics and excludes Storage-assigned `sequence_id`, `observed_at_utc` and `persisted_at_utc`. Same identity and semantic digest returns the original first receipt and result with zero new effects; a different digest is `idempotency_conflict`; unavailable dedupe proof is `dedupe_unavailable` with zero append. A lost acknowledgement is resolved from the pending obligation and the SP-286 receipt, never by re-running admission against a newer state.
+
+**Consumer and checkpoint.** The only consumer of these EventRecords is `reader.storage.deletion_lifecycle_history@1.0.0`, a passive on-demand history and status view behind the deletion status that SP-237 requires on a protected surface. It adopts SP-278 by name and reads through `reader.storage.event_record_index@1.0.0` over the existing generic checkpoint (`projector.storage.event_record_index@1.0.0`, checkpoint key `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`); it has no checkpoint, cursor or stored value of its own. It adopts DL-076's nine-field durable read token (`storage_instance_id`, `checkpoint_key`, `checkpoint_ref`, `generation_id`, `generation_anchor_sha256`, `frontier_revision`, `frontier_sha256`, `index_dataset_name`, `source_selection`), never a persisted `redb_snapshot_id`, verifies complete CURRENT-selected source coverage before filtering this family, and returns unavailable rather than an empty history when the source or token does not verify. Navigation hide, compaction and backup tombstone replay are not event consumers: they read the canonical `storage_deletion_record` and its `logical_hide_receipt_ref`, as the Case L authority order makes the lifecycle EventRecord an observation. Rebuild and replay never append, purge, hide, clear a hold or dispatch.
+
+**Compatibility and withdrawal.** Dispatch is exact family, version and schema ID; an unknown successor quarantines. Withdrawal of this writer version sets a writer admission cutoff in the coordinator before new deletions are accepted under a successor, drains or fences every pending event obligation through SP-286 (resolving the original receipt where the commit frame is durable), keeps every `storage_deletion_record`, tombstone and receipt under their own policies, then fences `reader.storage.deletion_lifecycle_history@1.0.0` and invalidates its tokens. A withdrawn reader is fenced for historical events too; an authorized retained reader reads an original by the recipe recorded at its write and never compares it with today's deletion state. A successor needs owner-installed schema and version, source-backed rebuild of the generic index and fresh coverage validation before its reader activates. Withdrawal never deletes, restores or un-hides content. Restore keeps the cutoff and the original results.
+
+**Numbers and timestamps.** Integer slots (`compaction_generation`, the ordinal) use CV-1100's shared current-input admission; `purge_deadline_utc` and every Storage-assigned time use CV-1101 `date_time` with its owner profile; retained originals are read by SP-1101's authenticated dispatch from their sealed write-time receipt.
+
+Oracle plan: ATS-2200. Native execution remains NOT_RUN.
+
+```yaml
+plan_unit_id: SP-2200
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: storage.deletion_lifecycle_changed@2.0.0 has an exact emitter (storage.deletion_lifecycle.coordinator.v1),
+  record-then-append-then-effect order under SP-286, a deletion_id and per-transition identity recipe, lost-acknowledgement
+  replay, one passive SP-278 history reader and a writer-cutoff withdrawal protocol, without changing any lifecycle edge,
+  window, hold or retention value.
+gui_related: false
+split_recommended: false
+depends_on:
+- SP-237
+- SP-278
+- SP-286
+- CV-319
+- CV-339
+- CV-366
+- DL-045
+- DL-076
+unblocks: []
+acceptance_criteria:
+- Only storage.deletion_lifecycle.coordinator.v1 appends the family; handlers::chat::delete and handlers::project::delete_data only submit.
+- One redb compare-and-swap commits the transition and its pending event obligation, held in the record's event_obligation member, before the barrier append; hide, purge and results wait for the first AppendReceipt.
+- deletion_id, the per-transition component, the CV-366 application key, the Project key and event_id follow the exact recipes; a failed-then-retried transition takes a new ordinal.
+- projector_replay_only is refused as replay_only_not_appendable; same identity and digest returns the original receipt; a different digest is idempotency_conflict.
+- reader.storage.deletion_lifecycle_history@1.0.0 adopts SP-278 and the DL-076 nine-field token and stores no checkpoint.
+- Withdrawal sets a writer cutoff, drains obligations through SP-286 and fences the reader without deleting or restoring content.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-2200
+risk_class: deletion_event_identity_or_order_drift
+reasoning_tier: high
+context_scope: event_authority_pnc019_s3b
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/storage-plan.md#SP-237
+preserved_exact_tokens:
+- storage.deletion_lifecycle_changed
+- storage.deletion_lifecycle.coordinator.v1
+- reader.storage.deletion_lifecycle_history@1.0.0
+- storage-deletion@1
+negative_constraints:
+- No new lifecycle edge, deletion window, hold kind, retention value, admission or native proof.
+- No purge, hide or hold evaluation is repeated on replay or recovery.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-237, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-366
+
+#### SP-2201 - Registered value-quarantine event: producer, identity, replay, custody, consumer and withdrawal
+
+Newly authored owner contract under DL-045 for the registered `storage.value_quarantine_changed@2.0.0` family (PNC-019 S3, 2026-11-14). It completes what Invalid-value quarantine above and CV-319 leave open. It changes no state, edge, risk class, Q policy or DL-068 disposal rule.
+
+The closed states that Invalid-value quarantine lists by its transition edges are exactly `detected | secured | migrated | rebuilt | reset_to_default | restored | recovery_blocked | purged`, as the registered payload schema enumerates them.
+
+**Producer.** The sole emitter is the Storage component `storage.value_quarantine.coordinator.v1`, the "storage invalid-value quarantine coordinator" that the `storage_quarantine_record` row of `Plans/storage_value_registry.json` names. A Storage reader or migration step that finds canonical bytes failing their registered schema or version reports the finding to the coordinator and stops using the value; it never appends this family itself. For each transition the order is exact: (1) for `detected` and `secured`, write the exact `raw.bin` and closed custody manifest under same-filesystem quarantine and synchronize file and parent, before any live-key mutation (the existing rule); (2) one redb transaction that compares-and-swaps `storage_quarantine_record` to the new state, appends the transition to `transition_receipts` and stores the frozen EventRecord as the durable pending event obligation in the same row's `event_obligation` member; (3) the Case L-2 append of that EventRecord as `durability_class=barrier` through the SP-286/CV-339 shared append owner; (4) SP-286 first-AppendReceipt custody through `storage.first_append_receipt.resolve.v2` (and `storage.first_append_receipt.resolve_full_value.v1` where DL-068's purge settlement needs the full value); (5) only then the live-key effect of `migrated`, `rebuilt`, `reset_to_default` or `restored`, or the DL-068 disposal after `purged`. A crash resumes the pending obligation or resolves the original receipt; it never re-copies raw bytes over a different capture, repeats a live-key mutation or purges twice. `event_obligation` holds the latest transition's frozen EventRecord, without the Storage-assigned `sequence_id`, `observed_at_utc` and `persisted_at_utc` that the append adds: it stays pending until SP-286 resolves that event's first AppendReceipt, a resumed append sends exactly that value, and only the next admitted transition's compare-and-swap replaces it.
+
+**Identity.** `quarantine_id` is `qtn_` plus lowercase SHA-256 of the length-prefixed UTF-8 values `storage.value_quarantine/detect/v1`, lowercase hex of `storage_instance_id`, `source_family_id`, `source_locator_ref`, `raw_sha256` and the decimal occurrence, where the occurrence is 1 plus the number of `purged` records with the same source family, locator and raw hash, counted under the coordinator's exclusion. While a non-terminal record for those values exists, a re-detection resolves to it and mints nothing. Because the edge set is acyclic, one state occurs at most once per `quarantine_id`; the owner operation component is `storage.value_quarantine_changed:` + `quarantine_id` + `:` + state. Application scope uses CV-366's `application@1:{hex(server_id)}:{hex(component)}`; Project scope uses `storage-quarantine@1:{hex(server_id)}:{hex(component)}` with the `project~` base64url partition. `event_id` is `er_qtn_` plus lowercase SHA-256 of the length-prefixed values `storage.value_quarantine_changed/event/v1`, hex `storage_instance_id`, the scope partition and the component. Envelope scope follows CV-319's dual-scope rule; thread, run and attempt are null unless the quarantined source value belongs to that exact thread, when the envelope `thread_id` is that thread.
+
+**Replay.** `replay_policy=dedupe_by_idempotency_key`; `projector_replay_only` is refused as `replay_only_not_appendable` before any effect. The semantic comparison excludes Storage-assigned `sequence_id`, `observed_at_utc` and `persisted_at_utc`. Same identity and digest returns the original receipt and result with zero effects; a different digest is `idempotency_conflict`; unavailable dedupe proof is `dedupe_unavailable`.
+
+**Custody and redaction.** Payload and record carry hashes, redacted locators, bounded error metadata and refs only; raw bytes stay in quarantine custody, inherit their source's permissions, stay out of routine export and leave only through the protected explicit export. Every disclosure of the event or record rechecks viewer access, scope and the source's permission at read time; a viewer who cannot read the source value sees only that a value was quarantined. Backup and restore keep `storage_quarantine_record` under its mandatory-backup recovery anchor and restore the raw custody with it or report it unavailable; a restored record never re-runs a live-key effect. SP-2211 applies Jared's E8-5 B answer to S3B-Q1: thread or Project deletion keeps quarantined raw bytes until resolution, then deletes them through existing disposal authority; active holds continue protecting the bytes after resolution.
+
+**Consumer and checkpoint.** The only consumer of these EventRecords is `reader.storage.value_quarantine_history@1.0.0`, the passive history behind the read-only quarantine state that Settings shows. It adopts SP-278 and DL-076's nine-field durable token exactly as SP-2200's reader does and stores no checkpoint. Startup recovery, protected diagnostics and export and the janitor read the canonical `storage_quarantine_record`, not the event, and need no event checkpoint.
+
+**Compatibility and withdrawal.** Exact family, version and schema dispatch; unknown successors quarantine. Withdrawal sets a writer cutoff in the coordinator, drains or fences pending obligations through SP-286, keeps every record, raw custody and receipt under its own policy, and fences the history reader and its tokens. Withdrawal never releases, resets or purges a quarantined value.
+
+**Numbers and timestamps.** The occurrence and every integer slot use CV-1100; `detected_at_utc` and Storage-assigned times use CV-1101 `date_time`; retained originals are read through SP-1101.
+
+Oracle plan: ATS-2201. Native execution remains NOT_RUN.
+
+```yaml
+plan_unit_id: SP-2201
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: storage.value_quarantine_changed@2.0.0 has an exact emitter (storage.value_quarantine.coordinator.v1),
+  custody-then-record-then-append-then-effect order under SP-286, a quarantine_id and per-state identity recipe,
+  replay rules, read-time access checks, one passive SP-278 history reader and a writer-cutoff withdrawal protocol;
+  thread or Project deletion follows the resolved-quarantine and hold rule in SP-2211 (E8-5 B).
+gui_related: false
+split_recommended: false
+depends_on:
+- SP-237
+- SP-278
+- SP-286
+- CV-319
+- CV-339
+- CV-366
+- DL-045
+- DL-068
+- DL-076
+unblocks: []
+acceptance_criteria:
+- Only storage.value_quarantine.coordinator.v1 appends the family, after raw custody is synchronized and the record transition commits with its pending event obligation in the record's event_obligation member.
+- quarantine_id converges on re-detection and a re-occurrence after purge takes the next occurrence; each state has one identity.
+- projector_replay_only is refused; same identity and digest returns the original receipt; a different digest is idempotency_conflict.
+- Every read of the event or record rechecks viewer access and source permission; raw bytes leave only by protected export.
+- Thread or Project deletion follows SP-2211: keep raw bytes until quarantine resolution, then delete subject to holds.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-2201
+risk_class: quarantine_event_identity_or_custody_drift
+reasoning_tier: high
+context_scope: event_authority_pnc019_s3b
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-068
+- Plans/storage-plan.md#SP-237
+preserved_exact_tokens:
+- storage.value_quarantine_changed
+- storage.value_quarantine.coordinator.v1
+- reader.storage.value_quarantine_history@1.0.0
+- storage-quarantine@1
+negative_constraints:
+- No new state, edge, risk class, Q policy, admission or native proof; SP-2211 owns the signed deletion-custody rule.
+- Do not infer premature purge or hold bypass; deleted-scope raw custody follows SP-2211.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-237, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-366
+
+#### SP-2211 - Deleted-scope quarantine custody after resolution (E8-5 B)
+
+Jared answered S3B-Q1 with **B** in card E8-5, signed 2026-11-14 at 20:25 UTC: keep quarantined values until their quarantine is resolved, then delete; holds still apply. The signed-answer record and its SHA-256 are preserved by `reports/event-authority-20261114/decision-E8-5-application.json`. This rule supersedes SP-2201's previously unanswered deletion/custody question.
+
+When a thread or Project is deleted, its quarantined raw bytes stay in their existing quarantine custody until the quarantine resolves. Scope deletion, its ordinary 24-hour content window, count/byte eviction, withdrawal and a restart cannot purge an unresolved quarantine. `detected`, `secured` and `recovery_blocked` are unresolved. Resolution follows the existing owner graph and its durable successful `migrated`, `rebuilt`, `reset_to_default` or `restored` outcome, including the original SP-286 first receipt and the required dependent effect; a request, a planned outcome, a caller flag or a `purged` label alone is not resolution proof.
+
+Once resolution is established, the pending scope-deletion obligation deletes the quarantined raw bytes through the existing DL-068 disposal and `purged` settlement protocol, subject to the complete current hold union and the existing writer, custody, receipt and deletion gates. An active hold keeps those bytes even after resolution. Clearing a hold does not itself purge: the original owner revalidates the complete deletion and resolution custody before the admitted disposal step. There is no new retention clock or fresh grace period, and resolution does not restore the deleted thread's or Project's live content. A missing or ambiguous resolution receipt preserves the raw bytes and reports disposal unavailable.
+
+The existing `storage_quarantine_record`, content-free tombstone and original receipts retain their own custody and policies; this rule neither deletes required audit authority with the raw bytes nor keeps resolved raw bytes indefinitely as an authority record. Backup and supported restore preserve unresolved or held raw custody and the pending deleted-scope obligation. Existing deletion/tombstone replay prevents an older restored image from disclosing a deleted resolved value or treating it as fresh live content. Read-time source permissions, scope and deletion checks remain SP-2201's; retaining raw custody grants no new disclosure or export permission.
+
+Executable examples in ATS-2206 cover both thread and Project deletion: resolved and unheld raw bytes are deleted; unresolved raw bytes are kept; resolved held raw bytes are kept. Single-defect proposed-afterimage negatives refuse premature purge, purge despite a hold, and keeping unheld resolved raw bytes instead of completing the deletion. Missing original resolution-receipt custody has a separate negative while held bytes remain unchanged. These are deterministic contract examples, not native file-deletion or hold-exclusion proof.
+
+```yaml
+plan_unit_id: SP-2211
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  E8-5 B resolves S3B-Q1: deleting a thread or Project keeps its quarantined raw
+  bytes until the quarantine resolves, then deletes them through the existing
+  disposal protocol; active holds continue to keep the bytes after resolution.
+gui_related: false
+gui_classification_reason: Quarantine custody and deletion semantics without presentation changes.
+depends_on:
+- SP-2201
+- SP-237
+- SP-286
+- DL-068
+unblocks: []
+acceptance_criteria:
+- A deleted thread's or Project's unresolved quarantined bytes are preserved until durable owner resolution.
+- Resolved unheld quarantined bytes are deleted under the existing scope-deletion and DL-068 disposal gates.
+- Active holds preserve raw bytes after resolution; clearing a hold requires original-owner revalidation before disposal.
+- Missing resolution custody preserves bytes and cannot authorize purge or disclosure.
+- The executable examples have resolution, premature-purge and held-after-resolution witnesses for both scope kinds.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-2206
+- scripts/pm_s3bo_cases.py
+- scripts/pm_s3bo_oracles.py
+- reports/event-authority-20261114/decision-E8-5-application.json
+risk_class: premature_quarantine_purge_or_hold_bypass
+reasoning_tier: high
+context_scope: event_authority_pnc019_s3bo_quarantine_deletion
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/event-authority-20261114/decision-E8-5-application.json
+- Plans/storage-plan.md#SP-2201
+preserved_exact_tokens:
+- storage.value_quarantine_changed
+- S3B-Q1
+- E8-5
+- recovery_blocked
+negative_constraints:
+- Do not purge unresolved or held quarantined raw bytes because their thread or Project was deleted.
+- Do not change the existing lifecycle graph, add a retention clock or erase required audit authority.
+- Do not infer a new disclosure permission, event admission or native execution result.
+```
 
 ### Case L-4. Storage I/O, aggregate lock/viewer, root continuity, and fallback
 
@@ -923,7 +1139,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Retention settings, legal holds, deletion status, and quarantine recovery require user-visible protected surfaces.
 split_recommended: false
-depends_on: [SP-028, SP-135, SP-137, SP-138, SP-139, SP-180, SP-182, SP-200, SP-231, DL-401, DL-415, DL-416, DL-417, DL-418, DL-419, DL-420, DL-421, DL-453, DL-454, DL-455, DL-456, DL-457, DL-458, DL-459, DL-460, DL-461, DL-462, DL-463, DL-464]
+depends_on: [SP-028, SP-135, SP-137, SP-138, SP-139, SP-180, SP-182, SP-200, SP-231, DL-401, DL-415, DL-416, DL-417, DL-418, DL-419, DL-420, DL-421, DL-453, DL-454, DL-455, DL-456, DL-457, DL-458, DL-459, DL-460, DL-461, DL-462, DL-463, DL-464, DL-695]
 unblocks: []
 acceptance_criteria:
   - DL-453 keeps 47 further histories permanently under RP-AUTHORITY-INDEFINITE with no new allowance; DL-456 keeps four session-prompt histories with their target chat and DL-458 keeps a cross-chat revoke until its last affected chat under RP-CHAT-THREAD-LIFETIME; DL-459 keeps two Browser reader checkpoints under RP-PROJECTION-3GEN; DL-461 and DL-462 keep two FileSafe application proofs permanently under RP-AUTHORITY-INDEFINITE with the scoped deletion rule.
@@ -937,6 +1153,7 @@ acceptance_criteria:
   - An unresolved restore-required block older than 90 days retains its safe point, blobs, worktree refs, and recovery receipts.
   - Compaction crash cuts yield exactly one CURRENT-selected generation, complete target indexes/checkpoints, and unchanged semantic identities.
   - Thread/project deletion fixtures meet logical-hide and physical-purge rules without affecting unrelated app/project records.
+  - A retried failed deletion is admitted only as failed -> logically_hidden after revalidating holds, tombstone, scope, storage-writer posture and purge/compaction authority (DL-695); a retry to requested, purge_pending or purged, or with that revalidation missing or failed, is refused and the record stays failed.
   - Invalid critical values never reset or cap-evict before exact-byte custody; resettable/derived fixtures follow their closed outcomes.
   - Storage and Retention settings accept longer windows, reject values below owner minima, expose holds read-only, and route hold mutation through the protected command.
 validation_surfaces:
@@ -950,7 +1167,7 @@ node_compile_hint:
   mode: retention_compaction_quarantine_contract
   create_worknodes: false
   create_nodeseeds: false
-source_lineage: [Case-L:L-005, Case-L:L-010, Case-L:L-015, Case-L:L-033, Case-L:PD-L005-01..PD-L033-03, Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-415, Plans/Decision_Log.md#DL-416, Plans/Decision_Log.md#DL-417, Plans/Decision_Log.md#DL-418, Plans/Decision_Log.md#DL-419, Plans/Decision_Log.md#DL-420, Plans/Decision_Log.md#DL-421, Plans/Decision_Log.md#DL-453, Plans/Decision_Log.md#DL-454, Plans/Decision_Log.md#DL-455, Plans/Decision_Log.md#DL-456, Plans/Decision_Log.md#DL-457, Plans/Decision_Log.md#DL-458, Plans/Decision_Log.md#DL-459, Plans/Decision_Log.md#DL-460, Plans/Decision_Log.md#DL-461, Plans/Decision_Log.md#DL-462, Plans/Decision_Log.md#DL-463, Plans/Decision_Log.md#DL-464]
+source_lineage: [Case-L:L-005, Case-L:L-010, Case-L:L-015, Case-L:L-033, Case-L:PD-L005-01..PD-L033-03, Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-415, Plans/Decision_Log.md#DL-416, Plans/Decision_Log.md#DL-417, Plans/Decision_Log.md#DL-418, Plans/Decision_Log.md#DL-419, Plans/Decision_Log.md#DL-420, Plans/Decision_Log.md#DL-421, Plans/Decision_Log.md#DL-453, Plans/Decision_Log.md#DL-454, Plans/Decision_Log.md#DL-455, Plans/Decision_Log.md#DL-456, Plans/Decision_Log.md#DL-457, Plans/Decision_Log.md#DL-458, Plans/Decision_Log.md#DL-459, Plans/Decision_Log.md#DL-460, Plans/Decision_Log.md#DL-461, Plans/Decision_Log.md#DL-462, Plans/Decision_Log.md#DL-463, Plans/Decision_Log.md#DL-464, Plans/Decision_Log.md#DL-695]
 preserved_exact_tokens: [retention_policy_ref, storage.legal_hold.manage, CURRENT, recovery_unavailable, Q-CRITICAL]
 negative_constraints:
   - Do not infer destructive retention from prefix, path, filename, or mtime.

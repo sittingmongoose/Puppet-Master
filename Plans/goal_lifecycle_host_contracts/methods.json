@@ -1,0 +1,573 @@
+{
+  "goal.blocked": {
+    "family": "goal.blocked",
+    "source_id": "pm.goal.host.blocked_source.v1",
+    "status": "PREPARED_WITHOUT_ADMISSION",
+    "source_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_source",
+    "physical_roles": {
+      "source": {
+        "family": "goal_lifecycle_blocked_source",
+        "key": "goal.lifecycle.blocked.source.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(operation_id)}",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_blocked_source"
+      },
+      "reservation": {
+        "family": "goal_lifecycle_blocked_reservation",
+        "key": "goal.lifecycle.blocked.reservation.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(operation_id)}",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_blocked_reservation"
+      },
+      "pending": {
+        "family": "goal_lifecycle_blocked_pending",
+        "key": "goal.lifecycle.blocked.pending.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(operation_id)}",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_blocked_pending"
+      },
+      "result": {
+        "family": "goal_lifecycle_blocked_result",
+        "key": "goal.lifecycle.blocked.result.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(operation_id)}",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_blocked_result"
+      }
+    },
+    "methods": {
+      "capture": {
+        "method_id": "owner.goal.lifecycle.blocked.capture.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_capture_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_capture_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "reserve": {
+        "method_id": "owner.goal.lifecycle.blocked.reserve.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_reserve_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_reserve_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "commit_body": {
+        "method_id": "owner.goal.lifecycle.blocked.commit_body.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_commit_body_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_commit_body_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "freeze_event": {
+        "method_id": "owner.goal.lifecycle.blocked.freeze_event.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_freeze_event_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_freeze_event_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "append": {
+        "method_id": "owner.goal.lifecycle.blocked.append.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_append_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_append_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "resolve": {
+        "method_id": "owner.goal.lifecycle.blocked.resolve.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_resolve_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_resolve_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "publish": {
+        "method_id": "owner.goal.lifecycle.blocked.publish.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_publish_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_publish_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "inspect": {
+        "method_id": "owner.goal.lifecycle.blocked.inspect.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_inspect_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/blocked_inspect_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      }
+    },
+    "writer_id": "owner.goal.lifecycle.blocked.v1@1.0.0",
+    "physical_codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+    "max_physical_value_bytes": 16384,
+    "reference_codec": {
+      "physical_wire": "blake3:<64 lowercase hex>:<positive decimal encoded byte size, no leading zero>:application/msgpack",
+      "payload_wire": "blake3:<64 lowercase hex>:<positive decimal UTF-8 byte size, no leading zero>:application/json",
+      "physical_codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+      "semantic_hash_codec": "pm.goal.canonical_json.v1",
+      "native_adoption": "REQUIRES_REVIEWED_STORAGE_EDITION_AND_MIGRATION_INSTALLATION"
+    },
+    "shared_storage_editions": {
+      "body": {
+        "family": "goal_body_record",
+        "schema_id": "pm.storage_value.goal_body_record.v1",
+        "schema_version": "2.0.0",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_shared_body_msgpack",
+        "logical_root": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/body",
+        "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+        "migration": "PREPARED_EXACT_SEMANTIC_IDENTITY_NOT_INSTALLED"
+      },
+      "revision": {
+        "family": "goal_objective_revision",
+        "schema_id": "pm.storage_value.goal_objective_revision.v1",
+        "schema_version": "2.0.0",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_shared_revision_msgpack",
+        "logical_root": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/revision",
+        "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+        "migration": "PREPARED_EXACT_SEMANTIC_IDENTITY_NOT_INSTALLED"
+      },
+      "origin": {
+        "family": "goal_objective_origin",
+        "schema_id": "pm.storage_value.goal_objective_origin.v1",
+        "schema_version": "2.0.0",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_shared_origin_msgpack",
+        "logical_root": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin",
+        "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+        "migration": "PREPARED_EXACT_SEMANTIC_IDENTITY_NOT_INSTALLED"
+      },
+      "control": {
+        "family": "goal_body_control",
+        "schema_id": "pm.storage_value.goal_body_control.v2",
+        "schema_version": "3.0.0",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_shared_control_msgpack",
+        "logical_root": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/BodyControlV2",
+        "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+        "migration": "PREPARED_EXACT_SEMANTIC_IDENTITY_NOT_INSTALLED"
+      },
+      "receipt": {
+        "family": "goal_body_mutation_receipt",
+        "schema_id": "pm.storage_value.goal_body_mutation_receipt.v1",
+        "schema_version": "2.0.0",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_shared_receipt_msgpack",
+        "logical_root": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt",
+        "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+        "migration": "PREPARED_EXACT_SEMANTIC_IDENTITY_NOT_INSTALLED"
+      }
+    }
+  },
+  "goal.completed": {
+    "family": "goal.completed",
+    "source_id": "pm.goal.host.completed_source.v1",
+    "status": "PREPARED_WITHOUT_ADMISSION",
+    "source_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_source",
+    "physical_roles": {
+      "source": {
+        "family": "goal_lifecycle_completed_source",
+        "key": "goal.lifecycle.completed.source.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(operation_id)}",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_completed_source"
+      },
+      "reservation": {
+        "family": "goal_lifecycle_completed_reservation",
+        "key": "goal.lifecycle.completed.reservation.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(operation_id)}",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_completed_reservation"
+      },
+      "pending": {
+        "family": "goal_lifecycle_completed_pending",
+        "key": "goal.lifecycle.completed.pending.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(operation_id)}",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_completed_pending"
+      },
+      "result": {
+        "family": "goal_lifecycle_completed_result",
+        "key": "goal.lifecycle.completed.result.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(operation_id)}",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_completed_result"
+      }
+    },
+    "methods": {
+      "capture": {
+        "method_id": "owner.goal.lifecycle.completed.capture.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_capture_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_capture_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "reserve": {
+        "method_id": "owner.goal.lifecycle.completed.reserve.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_reserve_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_reserve_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "commit_body": {
+        "method_id": "owner.goal.lifecycle.completed.commit_body.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_commit_body_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_commit_body_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "freeze_event": {
+        "method_id": "owner.goal.lifecycle.completed.freeze_event.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_freeze_event_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_freeze_event_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "append": {
+        "method_id": "owner.goal.lifecycle.completed.append.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_append_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_append_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "resolve": {
+        "method_id": "owner.goal.lifecycle.completed.resolve.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_resolve_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_resolve_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "publish": {
+        "method_id": "owner.goal.lifecycle.completed.publish.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_publish_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_publish_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "inspect": {
+        "method_id": "owner.goal.lifecycle.completed.inspect.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_inspect_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/completed_inspect_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      }
+    },
+    "writer_id": "owner.goal.lifecycle.completed.v1@1.0.0",
+    "physical_codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+    "max_physical_value_bytes": 16384,
+    "reference_codec": {
+      "physical_wire": "blake3:<64 lowercase hex>:<positive decimal encoded byte size, no leading zero>:application/msgpack",
+      "payload_wire": "blake3:<64 lowercase hex>:<positive decimal UTF-8 byte size, no leading zero>:application/json",
+      "physical_codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+      "semantic_hash_codec": "pm.goal.canonical_json.v1",
+      "native_adoption": "REQUIRES_REVIEWED_STORAGE_EDITION_AND_MIGRATION_INSTALLATION"
+    },
+    "shared_storage_editions": {
+      "body": {
+        "family": "goal_body_record",
+        "schema_id": "pm.storage_value.goal_body_record.v1",
+        "schema_version": "2.0.0",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_shared_body_msgpack",
+        "logical_root": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/body",
+        "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+        "migration": "PREPARED_EXACT_SEMANTIC_IDENTITY_NOT_INSTALLED"
+      },
+      "revision": {
+        "family": "goal_objective_revision",
+        "schema_id": "pm.storage_value.goal_objective_revision.v1",
+        "schema_version": "2.0.0",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_shared_revision_msgpack",
+        "logical_root": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/revision",
+        "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+        "migration": "PREPARED_EXACT_SEMANTIC_IDENTITY_NOT_INSTALLED"
+      },
+      "origin": {
+        "family": "goal_objective_origin",
+        "schema_id": "pm.storage_value.goal_objective_origin.v1",
+        "schema_version": "2.0.0",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_shared_origin_msgpack",
+        "logical_root": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin",
+        "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+        "migration": "PREPARED_EXACT_SEMANTIC_IDENTITY_NOT_INSTALLED"
+      },
+      "control": {
+        "family": "goal_body_control",
+        "schema_id": "pm.storage_value.goal_body_control.v2",
+        "schema_version": "3.0.0",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_shared_control_msgpack",
+        "logical_root": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/BodyControlV2",
+        "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+        "migration": "PREPARED_EXACT_SEMANTIC_IDENTITY_NOT_INSTALLED"
+      },
+      "receipt": {
+        "family": "goal_body_mutation_receipt",
+        "schema_id": "pm.storage_value.goal_body_mutation_receipt.v1",
+        "schema_version": "2.0.0",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_shared_receipt_msgpack",
+        "logical_root": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt",
+        "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+        "migration": "PREPARED_EXACT_SEMANTIC_IDENTITY_NOT_INSTALLED"
+      }
+    }
+  },
+  "goal.completed.approved_exception": {
+    "family": "goal.completed",
+    "source_id": "pm.goal.host.exception_source.v1",
+    "status": "PREPARED_WITHOUT_ADMISSION",
+    "source_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_source",
+    "physical_roles": {
+      "source": {
+        "family": "goal_lifecycle_exception_source",
+        "key": "goal.lifecycle.exception.source.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(operation_id)}",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_exception_source"
+      },
+      "reservation": {
+        "family": "goal_lifecycle_exception_reservation",
+        "key": "goal.lifecycle.exception.reservation.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(operation_id)}",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_exception_reservation"
+      },
+      "pending": {
+        "family": "goal_lifecycle_exception_pending",
+        "key": "goal.lifecycle.exception.pending.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(operation_id)}",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_exception_pending"
+      },
+      "result": {
+        "family": "goal_lifecycle_exception_result",
+        "key": "goal.lifecycle.exception.result.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(operation_id)}",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_exception_result"
+      }
+    },
+    "methods": {
+      "capture": {
+        "method_id": "owner.goal.lifecycle.approved_exception.capture.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_capture_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_capture_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "reserve": {
+        "method_id": "owner.goal.lifecycle.approved_exception.reserve.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_reserve_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_reserve_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "commit_body": {
+        "method_id": "owner.goal.lifecycle.approved_exception.commit_body.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_commit_body_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_commit_body_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "freeze_event": {
+        "method_id": "owner.goal.lifecycle.approved_exception.freeze_event.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_freeze_event_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_freeze_event_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "append": {
+        "method_id": "owner.goal.lifecycle.approved_exception.append.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_append_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_append_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "resolve": {
+        "method_id": "owner.goal.lifecycle.approved_exception.resolve.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_resolve_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_resolve_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "publish": {
+        "method_id": "owner.goal.lifecycle.approved_exception.publish.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_publish_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_publish_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      },
+      "inspect": {
+        "method_id": "owner.goal.lifecycle.approved_exception.inspect.v1@1.0.0",
+        "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_inspect_request",
+        "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/exception_inspect_response",
+        "boundaries": [
+          "entry",
+          "before_helper",
+          "after_helper",
+          "final",
+          "after_last_helper"
+        ]
+      }
+    },
+    "writer_id": "owner.goal.lifecycle.approved_exception.v1@1.0.0",
+    "physical_codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+    "max_physical_value_bytes": 16384,
+    "reference_codec": {
+      "physical_wire": "blake3:<64 lowercase hex>:<positive decimal encoded byte size, no leading zero>:application/msgpack",
+      "payload_wire": "blake3:<64 lowercase hex>:<positive decimal UTF-8 byte size, no leading zero>:application/json",
+      "physical_codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+      "semantic_hash_codec": "pm.goal.canonical_json.v1",
+      "native_adoption": "REQUIRES_REVIEWED_STORAGE_EDITION_AND_MIGRATION_INSTALLATION"
+    },
+    "shared_storage_editions": {
+      "body": {
+        "family": "goal_body_record",
+        "schema_id": "pm.storage_value.goal_body_record.v1",
+        "schema_version": "2.0.0",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_shared_body_msgpack",
+        "logical_root": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/body",
+        "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+        "migration": "PREPARED_EXACT_SEMANTIC_IDENTITY_NOT_INSTALLED"
+      },
+      "revision": {
+        "family": "goal_objective_revision",
+        "schema_id": "pm.storage_value.goal_objective_revision.v1",
+        "schema_version": "2.0.0",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_shared_revision_msgpack",
+        "logical_root": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/revision",
+        "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+        "migration": "PREPARED_EXACT_SEMANTIC_IDENTITY_NOT_INSTALLED"
+      },
+      "origin": {
+        "family": "goal_objective_origin",
+        "schema_id": "pm.storage_value.goal_objective_origin.v1",
+        "schema_version": "2.0.0",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_shared_origin_msgpack",
+        "logical_root": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin",
+        "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+        "migration": "PREPARED_EXACT_SEMANTIC_IDENTITY_NOT_INSTALLED"
+      },
+      "control": {
+        "family": "goal_body_control",
+        "schema_id": "pm.storage_value.goal_body_control.v2",
+        "schema_version": "3.0.0",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_shared_control_msgpack",
+        "logical_root": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/BodyControlV2",
+        "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+        "migration": "PREPARED_EXACT_SEMANTIC_IDENTITY_NOT_INSTALLED"
+      },
+      "receipt": {
+        "family": "goal_body_mutation_receipt",
+        "schema_id": "pm.storage_value.goal_body_mutation_receipt.v1",
+        "schema_version": "2.0.0",
+        "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_shared_receipt_msgpack",
+        "logical_root": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt",
+        "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+        "migration": "PREPARED_EXACT_SEMANTIC_IDENTITY_NOT_INSTALLED"
+      }
+    }
+  },
+  "_providers": {
+    "workflow_exception_issue": {
+      "method_id": "owner.workflow.approved_verification_exception.issue.v1@1.0.0",
+      "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/workflow_exception_issue_request",
+      "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/workflow_exception_issue_response",
+      "physical_family": "goal_verification_exception_receipt",
+      "physical_key": "goal.verification_exception.receipt.v1:{partition}:{hex_utf8(goal_id)}:{hex_utf8(owning_run_id)}:{hex_utf8(receipt_id)}",
+      "value_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/storage_workflow_exception_receipt"
+    },
+    "approval_capture": {
+      "method_id": "owner.hitl.goal_verification_exception.capture.v1@1.0.0",
+      "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/approval_request",
+      "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/approval_capture_response",
+      "custody": "existing HITL typed request provider; original request_ref and actual native owner custody; no new approval engine"
+    },
+    "approval_resolve": {
+      "method_id": "owner.hitl.goal_verification_exception.resolve.v1@1.0.0",
+      "request_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/approval_resolve_request",
+      "result_root": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json#/$defs/approval_resolution",
+      "custody": "existing HITL immutable original resolution by request_ref with current PS-1120 checks"
+    }
+  }
+}

@@ -34,7 +34,7 @@ FAMILIES = sem.expand_fixture_literals(FIXTURES['families'])
 RAW_FAMILIES = FIXTURES['families']
 SHAPES = sem.expand_fixture_literals(json.loads((ROOT / 'Plans/executor_event_contract_fixtures.json').read_text()))['cases']
 RAW_SHAPES = json.loads((ROOT / 'Plans/executor_event_contract_fixtures.json').read_text())['cases']
-EXISTING = {f['event_type'] for f in json.loads((ROOT / 'Plans/event_family_registry.json').read_text())['families']}
+EXISTING = None  # the admission-aware registry view, read when verify() runs (pm_executor_event_contracts.registry_view)
 CUSTODY_DOC = json.loads(CUSTODY.read_text())
 BASE_CUSTODY = {k: v for k, v in CUSTODY_DOC['records'].items() if v.get('write_time_edition') != EDITION}
 ADDED = {}
@@ -627,7 +627,9 @@ def emit():
 
 def verify(doc):
     import pm_executor_p2a_cases as p2a
-    failures, count = p2a.run(doc, CONTRACTS, FAMILIES, SHAPES, EXISTING, ROOT)
+    from pm_executor_event_contracts import registry_view
+    existing = registry_view(CONTRACTS, ROOT) if EXISTING is None else EXISTING
+    failures, count = p2a.run(doc, CONTRACTS, FAMILIES, SHAPES, existing, ROOT)
     return failures, count
 
 

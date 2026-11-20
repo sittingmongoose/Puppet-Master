@@ -527,6 +527,21 @@ def _pointer_child(pointer, key):
     return pointer + "/" + key.replace("~", "~0").replace("/", "~1")
 
 
+def embedded_resources(document):
+    """$id -> JSON pointer of each resource embedded in one scanned document under an $id that no other resource
+    of the same document also claims (JSON Schema 2020-12 Core 8.2.1, 8.2.3.1). Nothing outside the document is
+    consulted. An $id two resources claim is left out, so a reference to it resolves to nothing and stays refused
+    (fail closed; TOOL-ISSUES T228)."""
+    unique, duplicated = {}, set()
+    for pointer, node in walk(document):
+        uri = node.get("$id")
+        if isinstance(uri, str):
+            if uri in unique:
+                duplicated.add(uri)
+            unique.setdefault(uri, pointer)
+    return {uri: pointer for uri, pointer in unique.items() if uri not in duplicated}
+
+
 def _constraint_sources(root, row, document, pointer, cache, seen=None):
     """Exact value constraints, following only offline schema refs/combinators.
 
@@ -534,7 +549,7 @@ def _constraint_sources(root, row, document, pointer, cache, seen=None):
     value itself. Do not mistake a tab record's timestamp member for a map
     whose values are timestamp strings. Cyclic setting-value refs terminate.
     """
-    from urllib.parse import urldefrag, unquote, urlsplit
+    from urllib.parse import urldefrag, unquote, urljoin, urlsplit
     seen = set() if seen is None else seen
     key = (row["path"], row["origin"], pointer)
     if key in seen:
@@ -549,11 +564,15 @@ def _constraint_sources(root, row, document, pointer, cache, seen=None):
             continue
         uri, fragment = urldefrag(value[keyword])
         if uri and uri != at(document, row["resource_pointer"]).get("$id"):
-            path = unquote(urlsplit(uri).path).lstrip("/")
+            # A reference may name a resource embedded in this same scanned file by its $id, resolved
+            # against the current resource's base URI (JSON Schema 2020-12 Core 8.2.1, 8.2.3.1).
+            embedded = embedded_resources(document).get(urljoin(at(document, row["resource_pointer"]).get("$id") or "", uri))
+            path = row["path"] if embedded is not None else unquote(urlsplit(uri).path).lstrip("/")
             if not path.startswith("Plans/") or ".." in path.split("/"):
                 raise ValueError("owner evidence reference is not an offline Plans resource")
-            target = {"path": path, "origin": "json", "resource_pointer": ""}
-            target_document = _source_document(root, target, cache)
+            target = (dict(row, resource_pointer=embedded) if embedded is not None else
+                      {"path": path, "origin": "json", "resource_pointer": ""})
+            target_document = document if embedded is not None else _source_document(root, target, cache)
         else:
             target, target_document = row, document
         if fragment and not fragment.startswith("/"):
@@ -921,10 +940,84 @@ class StorageSelection:
         return storage, SOURCE_FIELDS.get(self.nodes[id(schema)][1].get("classification"), ())
 
 
+def embedded_reference_self_test():
+    """Standing cases for same-file $id references in owner evidence (_constraint_sources, embedded_resources).
+
+    Admitted: a $ref to the one resource of the same scanned file that claims that $id, absolute or relative
+    to the current resource's base. Refused exactly as before: an $id nothing in the file claims, a network or
+    other non-Plans URI, an $id two resources of the file claim (T228), a path that leaves the file for a
+    non-Plans location. A reference to another offline Plans file still resolves as before.
+    """
+    base = "https://pm-selftest.invalid/"
+    refused = "owner evidence reference is not an offline Plans resource"
+
+    def bank(ids):
+        return {"bank" + str(index): {"$id": uri, "$defs": {"t": {"type": "string", "format": "date-time"}}}
+                for index, uri in enumerate(ids)}
+
+    def run(name, ref, ids, expected, node_id=None):
+        node = {"type": "object", "properties": {"at": {"$ref": ref}}}
+        if node_id:
+            node["$id"] = node_id
+        document = dict(bank(ids), node=node)
+        row = {"path": "Plans/self-test.json", "origin": "json", "resource_pointer": "/node" if node_id else ""}
+        try:
+            pointers = [c["pointer"] for c in _constraint_sources(ROOT, row, document, "/node/properties/at", {})]
+            observed = "resolved:" + pointers[1]  # the reference's first target
+        except ValueError as refusal:
+            observed = "refused:" + str(refusal)
+        return {"case": name, "expected": expected, "observed": observed, "ok": observed == expected}
+
+    def run_wildcard(name, ids, expected, ref=base + "a.json#/$defs/t", inside=None):
+        # The wildcard value probe resolves the map's value $ref through the same same-file rule; a node
+        # inside an embedded resource takes that resource's $id as its base.
+        from pm_event_datetime_value_probe import wildcard_probe
+        node = {"type": "object", "propertyNames": {"pattern": "^[a-z]+$"}, "additionalProperties": {"$ref": ref}}
+        document = dict(bank(ids), node=node)
+        pointer = "/node"
+        if inside:
+            document[inside]["$defs"]["map"] = node
+            pointer = "/" + inside + "/$defs/map"
+        row = {"path": "Plans/self-test.json", "origin": "json", "pointer": pointer, "resource_pointer": "",
+               "fields": list(declarations(node))}
+        try:
+            _, citations = wildcard_probe(row, document, ROOT, {})
+            cited = {c["pointer"] for c in citations}
+            observed = ("resolved:/bank0/$defs/t" if "/bank0/$defs/t" in cited else
+                        "unresolved:" + ",".join(sorted(cited)))
+        except Exception as refusal:  # referencing raises Unresolvable for a reference it cannot resolve
+            observed = "refused:" + type(refusal).__name__
+        return {"case": name, "expected": expected, "observed": observed, "ok": observed == expected}
+
+    return [
+        run_wildcard("wildcard_embedded_id", [base + "a.json"], "resolved:/bank0/$defs/t"),
+        run_wildcard("wildcard_duplicate_id_refused", [base + "a.json", base + "a.json"], "refused:Unresolvable"),
+        run_wildcard("wildcard_unmatched_id_refused", [base + "b.json"], "refused:Unresolvable"),
+        run_wildcard("wildcard_relative_ref_inside_embedded_resource", [base + "a.json"], "resolved:/bank0/$defs/t",
+                     ref="#/$defs/t", inside="bank0"),
+        run("embedded_absolute_id", base + "a.json#/$defs/t", [base + "a.json"], "resolved:/bank0/$defs/t"),
+        run("embedded_relative_to_base", "a.json#/$defs/t", [base + "a.json"], "resolved:/bank0/$defs/t",
+            node_id=base + "node.json"),
+        run("unmatched_id_refused", base + "missing.json#/$defs/t", [base + "a.json"], "refused:" + refused),
+        run("network_uri_refused", "https://elsewhere.invalid/a.json#/$defs/t", [base + "a.json"], "refused:" + refused),
+        run("duplicate_id_refused", base + "a.json#/$defs/t", [base + "a.json", base + "a.json"], "refused:" + refused),
+        run("leaves_file_refused", "../outside.json#/$defs/t", [base + "a.json"], "refused:" + refused),
+        run("offline_plans_file_unchanged", "Plans/event_record.schema.json#/properties/occurred_at_utc", [],
+            "resolved:/properties/occurred_at_utc"),
+    ]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=ROOT)
+    parser.add_argument("--self-test", action="store_true",
+                        help="run the standing same-file $id reference cases instead of the gate")
     args = parser.parse_args()
+    if args.self_test:
+        cases = embedded_reference_self_test()
+        print(json.dumps({"self_test": "embedded_references", "cases": cases,
+                          "pass": all(case["ok"] for case in cases)}, indent=2))
+        return int(not all(case["ok"] for case in cases))
     result = check_inventory(args.root)
     print(json.dumps(result, indent=2))
     return int(result["status"] != "pass")

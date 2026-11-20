@@ -1,0 +1,50 @@
+[
+  {
+    "label": "certified-v2",
+    "manifest_path": "/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/manifest.json",
+    "manifest_sha256": "91e18f5cf3a5e1f14b99c3b52d77156be44ae0a6b61911efe752794399e75ff3",
+    "whole_members_authenticated": 77
+  },
+  {
+    "label": "replan-v3",
+    "manifest_path": "/home/sittingmongoose/PM-Experiments/goal-run-replanned-source-contract-20260920/v3/manifest.json",
+    "manifest_sha256": "eb4441c1c0a904f946a54436185dac919a3cbba6efe069c94aa664e184e5374d",
+    "whole_members_authenticated": 487
+  },
+  {
+    "label": "scope",
+    "manifest_path": "/mnt/Cursor/PM-Experiments/goal-replan-combined-scope-adjudication-20260921/v1/manifest.json",
+    "manifest_sha256": "dbb39600e2d0c620b0de063bf9579e2a451f1acd3126c707250e4c4f980ae2e1",
+    "whole_members_authenticated": 2
+  },
+  {
+    "label": "scope-addendum",
+    "manifest_path": "/mnt/Cursor/PM-Experiments/goal-replan-combined-scope-adjudication-20260921/addendum-001/manifest.json",
+    "manifest_sha256": "4e1d3da2c7a03b30fd97050a59a6c14f6ef41f6a43090b1f16e7910b742e3960",
+    "whole_members_authenticated": 1
+  },
+  {
+    "label": "plan",
+    "manifest_path": "/home/sittingmongoose/PM-Experiments/goal-replan-prebirth-composition-plan-20260921/v1/manifest.json",
+    "manifest_sha256": "21e672cadbb9bf45bc49ed8146398fa316a4f59f563417fb65155c528cedfba2",
+    "whole_members_authenticated": 142
+  },
+  {
+    "label": "upstream-correction-v3",
+    "manifest_path": "/mnt/Cursor/PM-Experiments/goal-native-selector-header-correction-20260921/v3/manifest.json",
+    "manifest_sha256": "dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe",
+    "whole_members_authenticated": 177
+  },
+  {
+    "label": "upstream-correction-review-v3",
+    "manifest_path": "/mnt/Cursor/PM-Experiments/goal-native-selector-header-correction-independent-review-20260921/v3/manifest.json",
+    "manifest_sha256": "214aea65be73b362d49cd3a7e75adadc875de032db37fd19b2bd795ab76c4ec4",
+    "whole_members_authenticated": 4
+  },
+  {
+    "label": "corrected-coordinator",
+    "manifest_path": "/mnt/Cursor/PM-Experiments/goal-native-selector-header-correction-20260921/v3/coordinator-corrected/manifest.json",
+    "manifest_sha256": "19822a42be34079b5b0816613d646e54bf04cff72e5b22e661a5847fc7b716cf",
+    "whole_members_authenticated": 82
+  }
+]

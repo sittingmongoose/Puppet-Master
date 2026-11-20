@@ -1,0 +1,620 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
+  "row_pointer": "#/families/232"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "backup.destination_changed",
+   "family_id": "event-family-backup-destination-changed",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/232 (canonical row SHA-256 a5a7944e8403c1f025ae12052f47d2f8ba91d02062f4ee758bda28b5f094ee98). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/232",
+       "line_start": 16074,
+       "line_end": 16115,
+       "quote": "\"event_type\": \"backup.destination_changed\"",
+       "quote_line": 16077,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/232",
+        "line_start": 16030,
+        "line_end": 16071,
+        "quote": "\"event_type\": \"backup.destination_changed\"",
+        "quote_line": 16033,
+        "file_sha256": "6e5f154581e14fb10b2af7e417767bc979df542c80f799ef30b2f2df04b4c7ef",
+        "quote_check": "exact"
+       },
+       "unit": "#/families/232",
+       "quote_scope": "unit #/families/232, Plans/event_family_registry.json:16074-16115"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored BRS-1400 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1400",
+       "line_start": 817,
+       "line_end": 817,
+       "quote": "canonical_text: 'Newly authored owner contract for backup.destination_changed@1.0.0, prepared without admission before the 2026-11-18 registration,",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1400, Plans/Backup_Restore_System.md:810-990",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1400",
+        "line_start": 817,
+        "line_end": 817,
+        "quote": "canonical_text: 'Newly authored owner contract for backup.destination_changed@1.0.0, prepared without admission,",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+        "quote_check": "exact",
+        "quote_scope": "unit BRS-1400, Plans/Backup_Restore_System.md:810-991"
+       },
+       "reanchor": {
+        "method": "recited_authorized_owner_change",
+        "unit": "BRS-1400",
+        "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+        "owner_change_commit": "55aecc69b0ed447088ffd3c364fe60c06739018a",
+        "before_unit_sha256": "b4beb8db67be78752d44b7e918f4c8fdc9c16353518b78351d9102fdc0ff6de6",
+        "after_unit_sha256": "591938b6d66436447bdede27a58c5f12409d82d3df70838b53fffa03a5c44c1d",
+        "history": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-fix1/evidence/reanchor-history/Plans_Backup_Restore_System.md-BRS-1400.log",
+        "why": "The approved owner edit makes preparation-time nonmembership dated history and conditions present refusal on actual membership; the cited contract role and all other source, identity, retention and native fences remain. This carries the reviewed cell without changing its verdict.",
+        "old_quote": "canonical_text: 'Newly authored owner contract for backup.destination_changed@1.0.0, prepared without admission,",
+        "new_quote": "canonical_text: 'Newly authored owner contract for backup.destination_changed@1.0.0, prepared without admission before the 2026-11-18 registration,"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored BRS-1400 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1400",
+       "line_start": 846,
+       "line_end": 846,
+       "quote": "Producer: the sole newly authored BackupCoordinator.destination_commit@1.0.0 method of the existing domain owner.",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1400, Plans/Backup_Restore_System.md:810-990",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1400",
+        "line_start": 846,
+        "line_end": 846,
+        "quote": "Producer: the sole newly authored BackupCoordinator.destination_commit@1.0.0 method of the existing domain owner.",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored BRS-1400 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1400",
+       "line_start": 833,
+       "line_end": 833,
+       "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/backup_destination_changed.schema.json,",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1400, Plans/Backup_Restore_System.md:810-990",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1400",
+        "line_start": 833,
+        "line_end": 833,
+        "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/backup_destination_changed.schema.json,",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
+      },
+      {
+       "path": "Plans/event_payloads/w3e/backup_destination_changed.schema.json",
+       "unit": "#",
+       "line_start": 3,
+       "line_end": 3,
+       "quote": "\"additionalProperties\": false,",
+       "file_sha256": "9d2952914cc7e51ae175f50165b5441f78ab009d7912053a7f143b506f18ba27",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "Plans/event_payloads/w3e/backup_destination_changed.schema.json",
+        "unit": "#/",
+        "line_start": 3,
+        "line_end": 3,
+        "quote": "\"additionalProperties\": false,",
+        "file_sha256": "9d2952914cc7e51ae175f50165b5441f78ab009d7912053a7f143b506f18ba27"
+       },
+       "json_pointer": "#",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2",
+        "reason": "The source uses #/ as a root label; current RFC 6901 root is #, matching the declared root schema, without changing its subject."
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored BRS-1400 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1400",
+       "line_start": 861,
+       "line_end": 861,
+       "quote": "Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes \"pm.w3e.owner_fact.v1\\0\"",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1400, Plans/Backup_Restore_System.md:810-990",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1400",
+        "line_start": 862,
+        "line_end": 862,
+        "quote": "Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes \"pm.w3e.owner_fact.v1\\0\"",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored BRS-1400 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1400",
+       "line_start": 877,
+       "line_end": 877,
+       "quote": "Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1400, Plans/Backup_Restore_System.md:810-990",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1400",
+        "line_start": 878,
+        "line_end": 878,
+        "quote": "Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Bound to DL-453 (E-CARDS-3, option A; landed on main): RP-AUTHORITY-INDEFINITE@1.0.0. The decision names this exact family in E-CARDS-3 Appendix A and the Storage third-sitting assignment on main lists it; the owner unit, CV and SP units carry the binding.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1400",
+       "line_start": 885,
+       "line_end": 885,
+       "quote": "Retention: retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or kee",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1400, Plans/Backup_Restore_System.md:810-990",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1400",
+        "line_start": 886,
+        "line_end": 886,
+        "quote": "Retention: retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or kee",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1400",
+       "line_start": 50273,
+       "line_end": 50273,
+       "quote": "Current selected assignment (2026-11-19): backup.destination_changed@1.0.0 is registered for application_only",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1400, Plans/Contracts_V0.md:50235-50321",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-1400",
+        "line_start": 48289,
+        "line_end": 48289,
+        "quote": "retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the delet",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX4",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1400",
+       "line_start": 70497,
+       "line_end": 70497,
+       "quote": "Current selected assignment (2026-11-19): backup.destination_changed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2150. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1400, Plans/storage-plan.md:70401-70497",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-1400",
+        "line_start": 70035,
+        "line_end": 70035,
+        "quote": "retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the delet",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX4",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored BRS-1400 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1400",
+       "line_start": 889,
+       "line_end": 889,
+       "quote": "Redaction/custody: BackupCoordinator on the actual Server holds the original accepted intent, complete before/after",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1400, Plans/Backup_Restore_System.md:810-990",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1400",
+        "line_start": 890,
+        "line_end": 890,
+        "quote": "Redaction/custody: BackupCoordinator on the actual Server holds the original accepted intent, complete before/after",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored BRS-1400 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1400",
+       "line_start": 833,
+       "line_end": 833,
+       "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/backup_destination_changed.schema.json,",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1400, Plans/Backup_Restore_System.md:810-990",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1400",
+        "line_start": 833,
+        "line_end": 833,
+        "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/backup_destination_changed.schema.json,",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored BRS-1400 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1400",
+       "line_start": 901,
+       "line_end": 901,
+       "quote": "Consumer/checkpoint: newly authored projector.w3e.backup_destination_changed.history@1.0.0 and reader.w3e.backup_destination_changed.history@1.0.0",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1400, Plans/Backup_Restore_System.md:810-990",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1400",
+        "line_start": 902,
+        "line_end": 902,
+        "quote": "Consumer/checkpoint: newly authored projector.w3e.backup_destination_changed.history@1.0.0 and reader.w3e.backup_destination_changed.history@1.0.0",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1400",
+       "line_start": 70430,
+       "line_end": 70430,
+       "quote": "The exact checkpoint in derived redb checkpoints is w3e_backup_destination_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1400, Plans/storage-plan.md:70401-70497",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-1400",
+        "line_start": 70049,
+        "line_end": 70049,
+        "quote": "The exact checkpoint in derived redb checkpoints is w3e_backup_destination_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored BRS-1400 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1400",
+       "line_start": 914,
+       "line_end": 914,
+       "quote": "Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1400, Plans/Backup_Restore_System.md:810-990",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1400",
+        "line_start": 915,
+        "line_end": 915,
+        "quote": "Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executed_clean_room_reference_oracles",
+     "finding": "Provisional worker PASS for deterministic planning oracles, pending Sol high, Sol max and Astra max. All nine previously unsourced payload fields are mandatory immutable owner_fact members; their copy joins, 34 additional owner-domain obligations, complete successful RestoreRun journal and ten receipt resolutions are exercised. The full W3E checker passes 307 controls and 19,483 negatives; the ten changed append_join tables freshly prove 78 rows. The remaining inherited table predicates are unchanged; no new full-lane guard proof is claimed. The stateful supplement executes admission, dedupe recovery, competing publication CAS, withdrawal/successor rebuild, source relocation, held prune/capture/restore, immutable receipt joins and retained reads against actual reference-store state. Across the 39-family supplement: 41 scenarios, 311 positives, 2,489 exact-code refusals and 287 crash cuts; 109 guard rows proved. Mutation scope is 107 unsafe-acceptance kills plus two explicitly INVALID exception diagnostics (not kills), with one declared representative family per mutant and all families in the baseline. This is synthetic clean-room execution. Native execution NOT_RUN; membership ABSENT.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1400",
+       "line_start": 50256,
+       "line_end": 50259,
+       "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py;\n  every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py)\n  proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input\n  can refuse first stay alone in their own table with a written pr",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit CV-1400, Plans/Contracts_V0.md:50235-50321",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-1400",
+        "line_start": 48289,
+        "line_end": 48289,
+        "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written pr",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_store.py",
+       "line_start": 144,
+       "line_end": 144,
+       "quote": "class Store:",
+       "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_store.py",
+        "line_start": 144,
+        "line_end": 144,
+        "quote": "class Store:",
+        "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663"
+       }
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_store.py",
+       "line_start": 249,
+       "line_end": 249,
+       "quote": "def read(self, generation, original_ref):",
+       "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_store.py",
+        "line_start": 249,
+        "line_end": 249,
+        "quote": "def read(self, generation, original_ref):",
+        "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663"
+       }
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_oracles.py",
+       "line_start": 142,
+       "line_end": 142,
+       "quote": "def run_family(adapter, family, trace=None, cut=None):",
+       "file_sha256": "1fea5e492c2d45f94c41d59184da26081b7b2f30833fccd5142167bcf4cb66f6",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_oracles.py",
+        "line_start": 142,
+        "line_end": 142,
+        "quote": "def run_family(adapter, family, trace=None, cut=None):",
+        "file_sha256": "1fea5e492c2d45f94c41d59184da26081b7b2f30833fccd5142167bcf4cb66f6"
+       }
+      },
+      {
+       "path": "scripts/pm-pnc019-s4o3-proof.py",
+       "line_start": 103,
+       "line_end": 103,
+       "quote": "def mutations(out):",
+       "file_sha256": "c3d51d67e679729c0bd7775e06e823726e79741566e4b4036aec04e0d6736487",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-pnc019-s4o3-proof.py",
+        "line_start": 103,
+        "line_end": 103,
+        "quote": "def mutations(out):",
+        "file_sha256": "c3d51d67e679729c0bd7775e06e823726e79741566e4b4036aec04e0d6736487"
+       }
+      },
+      {
+       "path": "scripts/pm_w3e_event_oracles.py",
+       "line_start": 631,
+       "line_end": 631,
+       "quote": "RESULT_FIELDS = {",
+       "file_sha256": "f461bff17b1f3d6e46535a9761a6993f1c3db9a8d1d597e162c940d1343cde5c",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_w3e_event_oracles.py",
+        "line_start": 631,
+        "line_end": 631,
+        "quote": "RESULT_FIELDS = {",
+        "file_sha256": "cfdd3aa717c4e810169a3bd74da0cf77a43327a344daf0c02b8a019c55988f9a"
+       }
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_domain_cases.py",
+       "line_start": 14,
+       "line_end": 14,
+       "quote": "RULES = (",
+       "file_sha256": "277b6d33314f4364caa287d2d6aec6f51affc193af04f9d163deedff71c05d9d",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_domain_cases.py",
+        "line_start": 14,
+        "line_end": 14,
+        "quote": "RULES = (",
+        "file_sha256": "277b6d33314f4364caa287d2d6aec6f51affc193af04f9d163deedff71c05d9d"
+       }
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_owner.py",
+       "line_start": 20,
+       "line_end": 20,
+       "quote": "RESTORE_REFS = (",
+       "file_sha256": "c6dcfbc63623ce82f521c89723164ba1370e01fb03a439d2cb1c392f3aed68e2",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_owner.py",
+        "line_start": 20,
+        "line_end": 20,
+        "quote": "RESTORE_REFS = (",
+        "file_sha256": "c6dcfbc63623ce82f521c89723164ba1370e01fb03a439d2cb1c392f3aed68e2"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.14",
+  "sha256": "6e5f154581e14fb10b2af7e417767bc979df542c80f799ef30b2f2df04b4c7ef",
+  "family_count": 233,
+  "row_pointer": "#/families/232"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "f63e11694748181580e55ddce7583c6e773b3e5044937809a8dd8fed3020e06f",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
+}
