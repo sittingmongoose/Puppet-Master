@@ -9,6 +9,11 @@
 // id reference, so fill="#211F1B" became fill="#id1" and a colour change between two builds vanished from the DOM
 // comparison. Only fragment references are renamed now (href / xlink:href "#id", url(#id) anywhere); its DOM() is run
 // here on a stub stage.
+// PM7PERF-STAGEFRAMES-PIXEL-MIX: a changed picture whose every pixel equals the base's at that place in one of its
+// pictures passed like one equal to a base picture, though it may be a mixture of two and equal to neither. It is now
+// its own weaker class (PIXELWISE) in the rows, the summary and the verdict line, and --strict fails it; and since the
+// frozen pictures say nothing about a running animation, the diagnostic adds one unfrozen capture per look, which the
+// compare requires in both runs and reports without judging.
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -111,7 +116,7 @@ try {
 	{
 		const r = compare(run({ matrix }), run({ matrix }));
 		ok('EMPTY-INDEX: the whole matrix in both runs, the same, passes (exit 0)', r.code === 0, `exit ${r.code}: ${r.out.trim()}`);
-		ok('EMPTY-INDEX: the summary names the matrix it checked', /4 captures/.test(r.out) && /matrix/i.test(r.out), r.out.trim());
+		ok('EMPTY-INDEX: the summary names the matrix it checked', /4 frozen captures/.test(r.out) && /matrix/i.test(r.out), r.out.trim());
 	}
 
 	// -- two runs asked for different things are not compared
@@ -136,6 +141,44 @@ try {
 		const live = { ...matrix, live: true };
 		const r = compare(run({ matrix: live }), run({ matrix: live }));
 		ok('EMPTY-INDEX: a live run is refused for a pixel comparison (exit 2)', r.code === 2, `exit ${r.code}: ${r.out.trim().split('\n')[0]}`);
+	}
+
+	// -- the picture classes: equal to one base picture, only pixelwise within the base's pictures, different
+	{
+		const G = [40, 40, 40], RED = [200, 0, 0], BLUE = [0, 0, 200];
+		const pic = (spots) => png(8, 6, (x, y) => spots[`${x},${y}`] || G);
+		const A = pic({ '1,1': RED }), B = pic({ '5,4': BLUE }), MIX = pic({ '1,1': RED, '5,4': BLUE }), PLAIN = pic({}), OFF = pic({ '2,2': [41, 40, 40] });
+		const one = { ...matrix, variants: ['base'], screens: ['ready'], expected: [E('basic-dark', '01-ready-base', 'ready', 'base')] };
+		// the base's two pictures differ at two places; the changed one has both places changed: a mixture, equal to neither
+		const base = run({ matrix: one, pics: () => ({ a: A, b: B }) });
+		const mixed = compare(base, run({ matrix: one, pics: () => ({ a: MIX, b: MIX }) }));
+		ok('PIXEL-MIX: a mixture of two base pictures is reported as its own weaker class', /^PIXELWISE basic-dark\/01-ready-base/m.test(mixed.out), mixed.out.trim());
+		ok('PIXEL-MIX: the verdict names the weaker class (exit 0 without --strict)', mixed.code === 0 && /^VERDICT: PASS \(weaker\): 1 of 1/m.test(mixed.out), `exit ${mixed.code}: ${mixed.out.trim()}`);
+		const strict = compare(base, run({ matrix: one, pics: () => ({ a: MIX, b: MIX }) }), '--strict');
+		ok('PIXEL-MIX: --strict fails a capture that is only pixelwise within (exit 1)', strict.code === 1 && /^VERDICT: FAIL/m.test(strict.out), `exit ${strict.code}: ${strict.out.trim()}`);
+		// the changed picture equals the base's second one: the stronger class, no weaker note
+		const equal = compare(base, run({ matrix: one, pics: () => ({ a: B, b: B }) }));
+		ok('PIXEL-MIX: a capture equal to one base picture passes in the stronger class', equal.code === 0 && /^VERDICT: PASS: every capture equal to one base picture/m.test(equal.out) && !/^PIXELWISE/m.test(equal.out), `exit ${equal.code}: ${equal.out.trim()}`);
+		const strict2 = compare(base, run({ matrix: one, pics: () => ({ a: B, b: B }) }), '--strict');
+		ok('PIXEL-MIX: --strict passes a capture equal to one base picture', strict2.code === 0, `exit ${strict2.code}: ${strict2.out.trim()}`);
+		const json = path.join(root, 'rows.json'); compare(base, run({ matrix: one, pics: () => ({ a: MIX, b: MIX }) }), '--json', json);
+		const rows = fs.existsSync(json) ? JSON.parse(fs.readFileSync(json, 'utf8')) : [];
+		ok('PIXEL-MIX: the JSON rows carry the class', rows.length === 1 && rows[0].class === 'pixelwise', JSON.stringify(rows.map((r) => r.class)));
+		const differ = compare(run({ matrix: one, pics: () => ({ a: PLAIN, b: PLAIN }) }), run({ matrix: one, pics: () => ({ a: OFF, b: OFF }) }));
+		ok('PIXEL-MIX: a capture outside the base\'s pictures fails (exit 1)', differ.code === 1 && /^PIXELS basic-dark\/01-ready-base/m.test(differ.out) && /^VERDICT: FAIL/m.test(differ.out), `exit ${differ.code}: ${differ.out.trim()}`);
+	}
+
+	// -- one unfrozen capture per look: asked for, required in both runs, not judged
+	{
+		const m = typeof check.captureMatrix === 'function' ? check.captureMatrix({ looks: ['basic-dark', 'nier-light'], screens: ['welcome', 'ready', 'welcome'], variants: ['base', 'quiet'], unfrozen: true }) : [];
+		const un = m.filter((e) => e.unfrozen);
+		ok('PIXEL-MIX: the matrix asks for one unfrozen capture per look, after the walk', un.length === 2 && un[0].file === '07-welcome-awake-unfrozen' && un[1].look === 'nier-light' && m[6] === un[0], JSON.stringify(un));
+		const req = { ...matrix, screens: ['ready'], variants: ['base'], unfrozen: true, expected: [E('basic-dark', '01-ready-base', 'ready', 'base'), { ...E('basic-dark', '02-ready-unfrozen', 'ready', 'unfrozen'), unfrozen: true }] };
+		const swayed = (e) => (e.unfrozen ? { a: png(8, 6, () => [runs * 7 % 255, 0, 0]), b: png(8, 6, () => [0, runs * 7 % 255, 0]) } : { a: GREY, b: GREY });
+		const r = compare(run({ matrix: req, pics: swayed, dom: (e) => (e.unfrozen ? `<g transform="${runs}">` : '<g>') }), run({ matrix: req, pics: swayed, dom: (e) => (e.unfrozen ? `<g transform="${runs}">` : '<g>') }));
+		ok('PIXEL-MIX: unfrozen captures that differ are not judged (exit 0) and are reported', r.code === 0 && /unfrozen 1/.test(r.out) && /not judged/.test(r.out), `exit ${r.code}: ${r.out.trim()}`);
+		const r2 = compare(run({ matrix: req }), run({ matrix: req, index: req.expected.slice(0, 1) }));
+		ok('PIXEL-MIX: an unfrozen capture missing from the changed run fails (exit 1)', r2.code === 1 && /MISSING basic-dark\/02-ready-unfrozen \(changed/.test(r2.out), `exit ${r2.code}: ${r2.out.trim()}`);
 	}
 
 	// -- the DOM normalisation: ids renamed in order of appearance, colours left as they are
