@@ -16,6 +16,7 @@
 //
 // Run: node "tests/stop-chip-beat-verify.mjs"            (this tree's send-stop.js and send-stop.css)
 //      node "tests/stop-chip-beat-verify.mjs" --ref origin/main   (both files as they are at a git revision)
+// Legacy references receive their real iteration callbacks. The at-once and continuity cases still report differences.
 // Exits 1 when any case fails, listing each.
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
@@ -181,13 +182,21 @@ function world({ clockApi = true } = {}) {
 		observe(node, opts) { this.on = true; this.node = node; this.opts = opts; }
 		disconnect() { this.on = false; }
 	}
+	const iterationListeners = new Set();
+	const iterations = new WeakMap();
 	const document = {
 		head: { nodeName: 'HEAD' },
 		body: { classList: { contains: () => false } },
 		documentElement: { getAttribute: (n) => (n === 'data-motion' && st.reduced ? 'reduced' : null) },
 		timeline: { get currentTime() { return W.ft; } },
 		querySelector: () => (st.shown ? chip : null),
-		addEventListener: (type) => W.listeners.push(type),
+		addEventListener: (type, fn) => {
+			W.listeners.push(type);
+			if (ref && type === 'animationiteration') iterationListeners.add(fn);
+		},
+		removeEventListener: (type, fn) => {
+			if (type === 'animationiteration') iterationListeners.delete(fn);
+		},
 		// Element.animate as 17-look.js patches it: a script's duration times Animation speed (the module's speed probe)
 		createElement: () => ({ animate: (kf, o) => ({ effect: { getTiming: () => ({ duration: o.duration * W.kAnim }) }, cancel() {} }) })
 	};
@@ -242,6 +251,20 @@ function world({ clockApi = true } = {}) {
 		const cbs = rafs; rafs = []; for (const x of cbs) x.cb(W.ft);
 		flush();
 		markStarted();
+		if (iterationListeners.size) {
+			for (const a of anims) {
+				const iteration = a.effect.getComputedTiming().currentIteration;
+				const previous = iterations.get(a) ?? 0;
+				iterations.set(a, iteration);
+				if (iteration > previous) {
+					for (const fn of iterationListeners) fn({
+						type: 'animationiteration', animationName: a.animationName, target: chip,
+						elapsedTime: iteration * a.t.duration / 1000,
+					});
+				}
+			}
+			flush();
+		}
 		// the commit: what the square showed just before and shows just after, at this moment
 		for (const a of anims) {
 			const now = { start: a._start, hold: a.hold, d: a.t.duration, l: a.t.delay }, was = W.shown.get(a);
@@ -343,10 +366,24 @@ const pace = (W) => W.glyph() && W.glyph().t.duration;
 const apart = (W) => { const g = W.glyph(), b = W.glow(); if (!g || !b || g.place() == null || b.place() == null) return NaN; const d = (((b.place() - g.place()) % 1) + 1) % 1; return Math.min(d, 1 - d); };
 
 const CASES = {
-	'no listener for any animation or transition event': () => {
+	'animation listener policy (legacy boundary changes in --ref)': () => {
 		const W = start();
 		feed(W, 3000); W.run(4000); W.render({ busy: false }); W.run(500);
 		const bad = W.listeners.filter((t) => /^(webkit)?(animation|transition)/i.test(t));
+		if (ref && bad.includes('animationiteration')) {
+			const V = start({}, false);
+			V.until(() => V.glyph()?.place() >= 0.95, 6000);
+			const waiting = V.glyph();
+			V.api.token('one');
+			V.frame();
+			assert.equal(V.attrs.get('data-flow'), 'waiting', 'still waiting before the first loop boundary');
+			V.until(() => waiting.place() >= 1, 900);
+			assert.equal(V.attrs.get('data-flow'), 'flowing', 'a recent word is taken at the loop boundary');
+			const flowing = V.glyph();
+			V.until(() => flowing.place() >= 1, 6000);
+			assert.equal(V.attrs.get('data-flow'), 'waiting', 'the next loop boundary takes the quiet cadence');
+			return 'reference listener applied both boundary changes';
+		}
 		assert.deepEqual(bad, [], `listeners: ${bad.join(', ')}`);
 		return `listeners added: ${W.listeners.join(', ') || 'none'}`;
 	},
