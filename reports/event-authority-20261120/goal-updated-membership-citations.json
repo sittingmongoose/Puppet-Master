@@ -1,0 +1,63 @@
+{
+  "event_type": "goal.updated",
+  "family_id": "event-family-goal-updated",
+  "family_revision": "3.0.0",
+  "criterion": "membership_version",
+  "source_commit": "b50add899ed9c7f8e81f389f2f2dbd571cff3824",
+  "replaces": {
+    "path": "Plans/Goal_Runtime_System.md",
+    "unit": "Goal V2 events",
+    "line_start": 272,
+    "line_end": 272,
+    "quote": "`goal.updated` only through CV-342/SP-299"
+  },
+  "registry": {
+    "path": "Plans/event_family_registry.json",
+    "pointer": "#/families/19",
+    "scope_policy": "application_or_project",
+    "payload_selection_policy": "exact_scope_and_schema_id_no_fallback",
+    "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602"
+  },
+  "citation_candidates": [
+    {
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-342",
+      "line_start": 31305,
+      "line_end": 31305,
+      "quote": "only its existing event family selects active-v3 content-free accepted-change facts while preserving the entire historical-v2 resource",
+      "excerpt_sha256": "2fd152a6aa321b1fd84f08d58f102319363a5bc2d77621775cffef189aea4bf6",
+      "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+      "quote_check": "exact"
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-068",
+      "line_start": 6733,
+      "line_end": 6734,
+      "quote": "Active-v3 interpretation replaces only this family's retired delta/child/budget write assumptions while\n  preserving the entire historical v2 resource.",
+      "excerpt_sha256": "bbacfb02045ddb2936c9b4f1df16a08fcb1589cdb6b0925e6bec056f2c8b8553",
+      "file_sha256": "459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47",
+      "quote_check": "exact"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-366",
+      "line_start": 33014,
+      "line_end": 33014,
+      "quote": "application_or_project via exact sibling `pm.goal_runtime_event.goal_updated.application.v1` 1.0.0",
+      "excerpt_sha256": "e4356ef73a827e1ade33194dc673fe306e33f6aaa86f0066da6e090d5883c904",
+      "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+      "quote_check": "exact"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-366",
+      "line_start": 33014,
+      "line_end": 33014,
+      "quote": "`goal.updated` | `pm.goal_runtime_event.goal_updated.schema.v3` / `Plans/event_payloads/goal_runtime/goal_updated.schema.json`",
+      "excerpt_sha256": "cfcddf743e528e9897ada2dad622ef402b89a8d1042341781740edc2f6231ef0",
+      "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+      "quote_check": "exact"
+    }
+  ]
+}
