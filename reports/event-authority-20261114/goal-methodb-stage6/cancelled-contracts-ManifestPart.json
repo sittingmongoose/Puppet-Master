@@ -1,0 +1,478 @@
+{
+  "accepted_branches": {
+    "0": {
+      "members": [
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "goal_body_record|goal_record.v2:544f2d70726f6a2d3661636332346331343836383465303038343731:544f2d676f616c2d6533303032383965346533313435353338313132",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_body",
+          "sha256": "880f37dc7f632d519501cdce8e173266ba36914ed7340e50eef8cde22a21b2ed"
+        },
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "TEST_ONLY:original_issuance_origin|issuance_origin:676f616c5f626f64795f7265636f7264:676f616c5f7265636f72642e76323a35343466326437303732366636613264333636313633363333323334363333313334333833363338333436353330333033383334333733313a3534346632643637366636313663326436353333333033303332333833393635333436353333333133343335333533333338333133313332:880f37dc7f632d519501cdce8e173266ba36914ed7340e50eef8cde22a21b2ed",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/IssuanceOrigin",
+          "sha256": "b453f550e3188f9c6232143c479c4cef71e6a5e92b44ce1646b8c7f3c914a2cc"
+        },
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "goal_body_control|goal_body_control.v1:544f2d70726f6a2d3661636332346331343836383465303038343731:544f2d676f616c2d6533303032383965346533313435353338313132",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_control",
+          "sha256": "0d1309ce811a60054aec77b72b9868bd2f55892241bae37476bc828f12cb2963"
+        },
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "TEST_ONLY:original_issuance_origin|issuance_origin:676f616c5f626f64795f636f6e74726f6c:676f616c5f626f64795f636f6e74726f6c2e76313a35343466326437303732366636613264333636313633363333323334363333313334333833363338333436353330333033383334333733313a3534346632643637366636313663326436353333333033303332333833393635333436353333333133343335333533333338333133313332:0d1309ce811a60054aec77b72b9868bd2f55892241bae37476bc828f12cb2963",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/IssuanceOrigin",
+          "sha256": "0a05b7e552e9b3f7bceb709e7708dfd81b9cccf0ab5e510e0c5d14aaacd3a49f"
+        },
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "goal_objective_revision|goal_revision.v2:544f2d70726f6a2d3661636332346331343836383465303038343731:544f2d676f616c2d6533303032383965346533313435353338313132:1",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_revision",
+          "sha256": "947914180999f86503de65989a870bff3dde08ec441f801ee4a6255589f8040c"
+        },
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "TEST_ONLY:original_issuance_origin|issuance_origin:676f616c5f6f626a6563746976655f7265766973696f6e:676f616c5f7265766973696f6e2e76323a35343466326437303732366636613264333636313633363333323334363333313334333833363338333436353330333033383334333733313a35343466326436373666363136633264363533333330333033323338333936353334363533333331333433353335333333383331333133323a31:947914180999f86503de65989a870bff3dde08ec441f801ee4a6255589f8040c",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/IssuanceOrigin",
+          "sha256": "3dba368ae4b3dd94486744fe3a9d386894420740fb8ccaf22372c7c3d134372d"
+        },
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "goal_objective_revision|goal_revision.v2:544f2d70726f6a2d3661636332346331343836383465303038343731:544f2d676f616c2d6533303032383965346533313435353338313132:2",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_revision",
+          "sha256": "43e871771cd83a055c8989d101e1b7c42b94d67afb0c2df5402139a505baa904"
+        },
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "TEST_ONLY:original_issuance_origin|issuance_origin:676f616c5f6f626a6563746976655f7265766973696f6e:676f616c5f7265766973696f6e2e76323a35343466326437303732366636613264333636313633363333323334363333313334333833363338333436353330333033383334333733313a35343466326436373666363136633264363533333330333033323338333936353334363533333331333433353335333333383331333133323a32:43e871771cd83a055c8989d101e1b7c42b94d67afb0c2df5402139a505baa904",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/IssuanceOrigin",
+          "sha256": "c4e0ca1aac32ef2b4edcb882d33b3f8cb2e63999faa23d4ad8941e2ffd00e88d"
+        },
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "goal_objective_origin|goal_origin.v1:544f2d70726f6a2d3661636332346331343836383465303038343731:544f2d676f616c2d6533303032383965346533313435353338313132:1",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_origin",
+          "sha256": "c6c45006d98726f2deb09624cbc0d2b9ae4e5375b51fd95575058f5f644dbbe3"
+        },
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "TEST_ONLY:original_issuance_origin|issuance_origin:676f616c5f6f626a6563746976655f6f726967696e:676f616c5f6f726967696e2e76313a35343466326437303732366636613264333636313633363333323334363333313334333833363338333436353330333033383334333733313a35343466326436373666363136633264363533333330333033323338333936353334363533333331333433353335333333383331333133323a31:c6c45006d98726f2deb09624cbc0d2b9ae4e5375b51fd95575058f5f644dbbe3",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/IssuanceOrigin",
+          "sha256": "7e46e92e307a0f4e01bc84adae42dafffa01c0da775c38d0b5a9f911a14d91c1"
+        },
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "goal_objective_origin|goal_origin.v1:544f2d70726f6a2d3661636332346331343836383465303038343731:544f2d676f616c2d6533303032383965346533313435353338313132:2",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_origin",
+          "sha256": "3c774dad89236fd802e116aa40a5be5eca4f245d4750c442e42a5630eefb5f7e"
+        },
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "TEST_ONLY:original_issuance_origin|issuance_origin:676f616c5f6f626a6563746976655f6f726967696e:676f616c5f6f726967696e2e76313a35343466326437303732366636613264333636313633363333323334363333313334333833363338333436353330333033383334333733313a35343466326436373666363136633264363533333330333033323338333936353334363533333331333433353335333333383331333133323a32:3c774dad89236fd802e116aa40a5be5eca4f245d4750c442e42a5630eefb5f7e",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/IssuanceOrigin",
+          "sha256": "b4cccf902e3a94077329aeb3c94ac9d865e3542a24736d96627fc645d5afde38"
+        },
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "goal_body_mutation_receipt|goal_body_mutation_receipt.v1:544f2d70726f6a2d3661636332346331343836383465303038343731:544f2d676f616c2d6533303032383965346533313435353338313132:544553545f4f4e4c593a676f616c2d62697274683a39376566633163312d316330382d346261362d383563342d356430643763373837353439",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_receipt",
+          "sha256": "2277c2053edb5b29d41c98328096a0227fe3ab3d57653fe9452338dadb0859ec"
+        },
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "TEST_ONLY:original_issuance_origin|issuance_origin:676f616c5f626f64795f6d75746174696f6e5f72656365697074:676f616c5f626f64795f6d75746174696f6e5f726563656970742e76313a35343466326437303732366636613264333636313633363333323334363333313334333833363338333436353330333033383334333733313a35343466326436373666363136633264363533333330333033323338333936353334363533333331333433353335333333383331333133323a353434353533353435663466346534633539336136373666363136633264363236393732373436383361333933373635363636333331363333313264333136333330333832643334363236313336326433383335363333343264333536343330363433373633333733383337333533343339:2277c2053edb5b29d41c98328096a0227fe3ab3d57653fe9452338dadb0859ec",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/IssuanceOrigin",
+          "sha256": "0e159c2514b537b04314caf09c97283c51b840d18f95f96ac1ceee25e114e06f"
+        },
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "goal_body_mutation_receipt|goal_body_mutation_receipt.v1:544f2d70726f6a2d3661636332346331343836383465303038343731:544f2d676f616c2d6533303032383965346533313435353338313132:544553545f4f4e4c593a676f616c2d6d75746174696f6e3a65336232386264642d656166302d343864342d613531372d316365333231303037633466",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_receipt",
+          "sha256": "2a7b2c1beb4eb33304cf3a1a17b468a9d45ac4fdaedce063b461479cf13fd64b"
+        },
+        {
+          "owner": "TEST_ONLY:owner:goal_body:d58cd71b-c252-4873-b7c4-a64fc278b26b",
+          "physical_key": "TEST_ONLY:original_issuance_origin|issuance_origin:676f616c5f626f64795f6d75746174696f6e5f72656365697074:676f616c5f626f64795f6d75746174696f6e5f726563656970742e76313a35343466326437303732366636613264333636313633363333323334363333313334333833363338333436353330333033383334333733313a35343466326436373666363136633264363533333330333033323338333936353334363533333331333433353335333333383331333133323a353434353533353435663466346534633539336136373666363136633264366437353734363137343639366636653361363533333632333233383632363436343264363536313636333032643334333836343334326436313335333133373264333136333635333333323331333033303337363333343636:2a7b2c1beb4eb33304cf3a1a17b468a9d45ac4fdaedce063b461479cf13fd64b",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/IssuanceOrigin",
+          "sha256": "a6147bd941b666dde79e7d1b7007bbf2cfa461dd8045aa27bd2282fa2981a5f1"
+        },
+        {
+          "owner": "TEST_ONLY:owner:host_stop:2f6d673e-bf7e-4e3c-b3e5-bf912fb9c3a1",
+          "physical_key": "goal_host_stop_control|goal_host_stop_control:32356533353966372d626663662d343162322d623437642d333664633665393264373831:544f2d70726f6a2d3661636332346331343836383465303038343731:544f2d7468722d3938646233666631373737333437343739643866:544f2d676f616c2d6533303032383965346533313435353338313132",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl",
+          "sha256": "9d403aa034edb401f15c062405529a7f15b6e212fda6921236929de62b2f501c"
+        },
+        {
+          "owner": "TEST_ONLY:owner:host_stop:2f6d673e-bf7e-4e3c-b3e5-bf912fb9c3a1",
+          "physical_key": "TEST_ONLY:original_issuance_origin|issuance_origin:676f616c5f686f73745f73746f705f636f6e74726f6c:676f616c5f686f73745f73746f705f636f6e74726f6c3a3332333536353333333533393636333732643632363636333636326433343331363233323264363233343337363432643333333636343633333636353339333236343337333833313a35343466326437303732366636613264333636313633363333323334363333313334333833363338333436353330333033383334333733313a3534346632643734363837323264333933383634363233333636363633313337333733373333333433373334333733393634333836363a3534346632643637366636313663326436353333333033303332333833393635333436353333333133343335333533333338333133313332:9d403aa034edb401f15c062405529a7f15b6e212fda6921236929de62b2f501c",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/IssuanceOrigin",
+          "sha256": "8382eadb462fca615b3a6157a4411364f09839bcb157d5ca6778d99893cfa0be"
+        },
+        {
+          "owner": "TEST_ONLY:owner:host_stop:2f6d673e-bf7e-4e3c-b3e5-bf912fb9c3a1",
+          "physical_key": "TEST_ONLY:host_stop_receipt|TEST_ONLY:host-stop-receipt:a99c3cf3-2657-4a01-9371-f8527a49e3c4",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/HostStopReceipt",
+          "sha256": "e0916e0e9aecf63911f0cace213d7875ed7921ac344657be3b9908b6597455ad"
+        },
+        {
+          "owner": "TEST_ONLY:owner:host_stop:2f6d673e-bf7e-4e3c-b3e5-bf912fb9c3a1",
+          "physical_key": "TEST_ONLY:original_issuance_origin|issuance_origin:544553545f4f4e4c593a686f73745f73746f705f72656365697074:544553545f4f4e4c593a686f73742d73746f702d726563656970743a61393963336366332d323635372d346130312d393337312d663835323761343965336334:e0916e0e9aecf63911f0cace213d7875ed7921ac344657be3b9908b6597455ad",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/IssuanceOrigin",
+          "sha256": "f7edef95d0cd044d767e5d9e81f2ef7907b090552defadb63ca19fc8d8dd6bed"
+        },
+        {
+          "owner": "TEST_ONLY:owner:host_stop:2f6d673e-bf7e-4e3c-b3e5-bf912fb9c3a1",
+          "physical_key": "TEST_ONLY:host_stop_receipt|TEST_ONLY:host-stop-receipt:f810448a-02e8-4b5f-be78-c6d3326caf64",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/HostStopReceipt",
+          "sha256": "8ce06e48ed9534790874edf05aef71119ec2783edb7779c9b105a21f02421dd3"
+        },
+        {
+          "owner": "TEST_ONLY:owner:host_stop:2f6d673e-bf7e-4e3c-b3e5-bf912fb9c3a1",
+          "physical_key": "TEST_ONLY:original_issuance_origin|issuance_origin:544553545f4f4e4c593a686f73745f73746f705f72656365697074:544553545f4f4e4c593a686f73742d73746f702d726563656970743a66383130343438612d303265382d346235662d626537382d633664333332366361663634:8ce06e48ed9534790874edf05aef71119ec2783edb7779c9b105a21f02421dd3",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/IssuanceOrigin",
+          "sha256": "2e74d2e96f53a116d02149d05d681e7039839c1ee28643bfdf78cd7f1861cdb1"
+        }
+      ],
+      "migration_id": "TEST_ONLY:migration:a187c8ab-2e89-4167-8f65-c3df7bbb6d93",
+      "ordinal": 0,
+      "part_count": 1,
+      "scope": {
+        "goal_id": "TO-goal-e300289e4e3145538112",
+        "project_id": "TO-proj-6acc24c148684e008471",
+        "storage_instance_id": "25e359f7-bfcf-41b2-b47d-36dc6e92d781",
+        "thread_id": "TO-thr-98db3ff1777347479d8f"
+      },
+      "whole_manifest_sha256": "8463e46c32769ffaf833e8f70b6cf2d7a58252ef860e6f7a282c6695d012069c"
+    }
+  },
+  "census_sha256": "89de308f5aaaa64cd0f14bc0a0be93363ee9156ef586d70197dca3f3ec620677",
+  "examples": {
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ManifestPart/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ManifestPart/properties/members/type": {
+      "control_name": "0",
+      "path": [
+        "members"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ManifestPart/properties/migration_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "migration_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ManifestPart/properties/migration_id/type": {
+      "control_name": "0",
+      "path": [
+        "migration_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ManifestPart/properties/ordinal/minimum": {
+      "control_name": "0",
+      "path": [
+        "ordinal"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ManifestPart/properties/ordinal/type": {
+      "control_name": "0",
+      "path": [
+        "ordinal"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ManifestPart/properties/part_count/minimum": {
+      "control_name": "0",
+      "path": [
+        "part_count"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ManifestPart/properties/part_count/type": {
+      "control_name": "0",
+      "path": [
+        "part_count"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ManifestPart/properties/whole_manifest_sha256/maxLength": {
+      "control_name": "0",
+      "length_pattern": true,
+      "path": [
+        "whole_manifest_sha256"
+      ],
+      "value": "8463e46c32769ffaf833e8f70b6cf2d7a58252ef860e6f7a282c6695d012069c8"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ManifestPart/properties/whole_manifest_sha256/minLength": {
+      "control_name": "0",
+      "length_pattern": true,
+      "path": [
+        "whole_manifest_sha256"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ManifestPart/properties/whole_manifest_sha256/pattern": {
+      "control_name": "0",
+      "path": [
+        "whole_manifest_sha256"
+      ],
+      "value": "8463e46c32769ffaf833e8f70b6cf2d7a58252ef860e6f7a282c6695d012069!"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ManifestPart/properties/whole_manifest_sha256/type": {
+      "control_name": "0",
+      "path": [
+        "whole_manifest_sha256"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ManifestPart/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "scope"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ManifestPart/type": {
+      "control_name": "0",
+      "path": [],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/goal_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/goal_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/project_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/project_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/storage_instance_id/format": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": "not-a-uuid"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/storage_instance_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/thread_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/thread_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "thread_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "storage_instance_id"
+      ],
+      "path": [
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/type": {
+      "control_name": "0",
+      "path": [
+        "scope"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "members",
+        0
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/owner/minLength": {
+      "control_name": "0",
+      "path": [
+        "members",
+        0,
+        "owner"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/owner/type": {
+      "control_name": "0",
+      "path": [
+        "members",
+        0,
+        "owner"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/physical_key/minLength": {
+      "control_name": "0",
+      "path": [
+        "members",
+        0,
+        "physical_key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/physical_key/type": {
+      "control_name": "0",
+      "path": [
+        "members",
+        0,
+        "physical_key"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/schema_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "members",
+        0,
+        "schema_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/schema_ref/type": {
+      "control_name": "0",
+      "path": [
+        "members",
+        0,
+        "schema_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/sha256/maxLength": {
+      "control_name": "0",
+      "length_pattern": true,
+      "path": [
+        "members",
+        2,
+        "sha256"
+      ],
+      "value": "0d1309ce811a60054aec77b72b9868bd2f55892241bae37476bc828f12cb29630"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/sha256/minLength": {
+      "control_name": "0",
+      "length_pattern": true,
+      "path": [
+        "members",
+        2,
+        "sha256"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/sha256/pattern": {
+      "control_name": "0",
+      "path": [
+        "members",
+        0,
+        "sha256"
+      ],
+      "value": "880f37dc7f632d519501cdce8e173266ba36914ed7340e50eef8cde22a21b2e!"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/sha256/type": {
+      "control_name": "0",
+      "path": [
+        "members",
+        0,
+        "sha256"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "owner"
+      ],
+      "path": [
+        "members",
+        0
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/type": {
+      "control_name": "0",
+      "path": [
+        "members",
+        0
+      ],
+      "value": null
+    }
+  },
+  "family": "goal.cancelled",
+  "reference": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ManifestPart",
+  "repeat_equal": true,
+  "root": "dg5:2bf6c9429d25aa6d",
+  "route": "contracts/ManifestPart",
+  "row": "dg5/contracts/ManifestPart/schema",
+  "site": [
+    "scripts/pm_goal_dg_cb_owners.py",
+    1792
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "transaction": true
+}
