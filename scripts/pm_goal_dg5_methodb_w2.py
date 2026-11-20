@@ -267,7 +267,7 @@ def finite_implication(validator, nodes, info, keyword, cut, path):
         schema = candidate['node']
         for finite in ('const', 'enum'):
             other = location + '/' + finite
-            if finite not in schema or other not in other_at_path:
+            if finite not in schema or (schema is node and finite == keyword):
                 continue
             if validator.VALIDATORS[finite] is not Draft202012Validator.VALIDATORS[finite]:
                 continue
@@ -300,11 +300,18 @@ def finite_implication(validator, nodes, info, keyword, cut, path):
                             for value in values)
             if holds:
                 options[other].extend(candidate['reach'])
-    for other, reaches in options.items():
-        if all(any(candidate['ipath'] == reach['ipath'] and
-                   rules.applies(candidate, rules.scope_of(reach, nodes)) for candidate in reaches)
-               for reach in info['reach']):
-            return dict(covering_rule=other, premise='Every JSON value allowed by the co-required rule satisfies this rule.')
+    covering = set()
+    for reach in info['reach']:
+        scope = rules.scope_of(reach, nodes)
+        applicable = [other for other, reaches in options.items()
+                      if any(peer['ipath'] == reach['ipath'] and rules.applies(peer, scope) for peer in reaches)]
+        if not applicable:
+            return None
+        covering.update(applicable)
+    observed = sorted(covering & other_at_path)
+    if observed:
+        return dict(covering_rule=observed[0], covering_rules=sorted(covering),
+                    premise='Every occurrence has a co-required finite rule whose allowed JSON values satisfy this rule.')
     return None
 
 
@@ -520,7 +527,7 @@ def accepted_branch_controls(plain, validator, controls, seeds, info, cache):
                     yield cache[key]
 
 
-def per_rule_candidates(plain, validator, controls, seeds, info, keyword, old, cache):
+def per_rule_candidates(plain, validator, controls, seeds, info, keyword, old, cache, siblings):
     def edits(control, path):
         return rules.defects(keyword, info['node'], rules.get(control, path))
 
@@ -540,21 +547,28 @@ def per_rule_candidates(plain, validator, controls, seeds, info, keyword, old, c
                         alternate = rules.get(candidate, path)
                         if alternate is not None:
                             yield index, path, alternate, 'value from another accepted branch'
+    if keyword in ('const', 'enum', 'type', 'minLength', 'minimum'):
+        for reach in info['reach']:
+            candidates = rules.siblings(info['node']['x-pm-oracle-id'], reach['ipath'], siblings)
+            for index, control in enumerate(controls):
+                for path in rules.concrete(control, reach['ipath']):
+                    for edit in candidates:
+                        yield index, path, edit, 'co-required schema value'
     for index, path in accepted_branch_controls(plain, validator, controls, seeds, info, cache):
         for edit in edits(controls[index], path):
             yield index, path, edit, 'accepted branch document'
 
 
-def replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword, old, disable, cache):
+def replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword, old, disable, cache, siblings):
     node = info['node']
     if all(any(c[0] in ('if', 'not') for c in reach['ctx']) for reach in info['reach']):
         return dict(cls='SELECTOR_OR_NEGATED', reason='all occurrences are inside an if condition or negation'), None
     if keyword in ('minItems', 'minLength', 'minProperties') and node[keyword] == 0:
         return dict(cls='VACUOUS', reason=f'{keyword}: 0 holds for every applicable value'), None
     _, guard = closure._clause_identity(node, keyword)
-    result = None
+    result = mismatch = None
     tried = set()
-    for index, path, edit, source in per_rule_candidates(plain, validator, controls, seeds, info, keyword, old, cache):
+    for index, path, edit, source in per_rule_candidates(plain, validator, controls, seeds, info, keyword, old, cache, siblings):
         candidate_key = (index, tuple(path), repr(edit))
         if candidate_key in tried:
             continue
@@ -568,7 +582,12 @@ def replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword
         if located not in pilot.located_errors(before):
             continue
         actual = error_records(plain.iter_errors(changed))
-        require(error_records(before) == actual, f'{rule_id}: validator instrumentation changed the original messages')
+        if error_records(before) != actual:
+            if mismatch is None:
+                mismatch = dict(reason='validator instrumentation changed the original messages',
+                                path=list(path), edit=repr(edit), control=index, original=actual,
+                                instrumented=error_records(before))
+            continue
         cut = rules.errors_of(validator, changed, set() if disable == 'clause' else {guard})
         restored = rules.errors_of(validator, changed)
         require(rule_id not in rules.locations(cut) and error_records(restored) == actual,
@@ -592,14 +611,14 @@ def replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword
             record['implication'] = implication
         record['cls'] = 'COVERED_LATER' if cut else 'KILLED'
         return record, None
-    if result is None:
+    if result is None and mismatch is None:
         proof = (rules.contradicted_branch(info, nodes) or rules.forbidden_member(info, nodes) or
                  rules.excluded_by_cases(info, nodes))
         if all(reach['empty_domain'] for reach in info['reach']):
             proof = 'Every occurrence requires an item of an array whose installed schema has maxItems: 0.'
         if proof:
             return dict(cls='UNREACHABLE', premise=proof), None
-    return None, (result or {'reason': 'no example exercised the exact rule on the accepted documents'})
+    return None, (result or mismatch or {'reason': 'no example exercised the exact rule on the accepted documents'})
 
 
 def replay_root(fixture, captured, reference, examples, disable):
@@ -628,6 +647,10 @@ def replay_root(fixture, captured, reference, examples, disable):
             f'only reference={sorted(set(expected) - set(ids))[:3]}')
     controls = list(fixture.variants(captured))
     seeds = tuple(controls)
+    siblings = defaultdict(list)
+    for location, info in nodes.items():
+        for reach in info['reach']:
+            siblings[reach['ipath']].append((location, info['node'], info['resolver']))
     require(all(not error_records(plain.iter_errors(value)) and not rules.errors_of(validator, value)
                 for value in controls), f'{root}: accepted schema control refused')
     results, gaps, branch_cache = {}, {}, {}
@@ -636,7 +659,7 @@ def replay_root(fixture, captured, reference, examples, disable):
         for keyword in rules.clauses_of(node):
             rule_id = location + '/' + closure.clause_name(node, keyword)
             record, problem = replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword,
-                                          examples.get(rule_id, ()), disable, branch_cache)
+                                          examples.get(rule_id, ()), disable, branch_cache, siblings)
             (gaps if problem else results)[rule_id] = problem or record
     require(set(results) | set(gaps) == set(ids), f'{root}: incomplete rule accounting')
     return dict(clauses=results, gaps=gaps, controls=controls, clause_inventory=reference['clause_inventory'],
