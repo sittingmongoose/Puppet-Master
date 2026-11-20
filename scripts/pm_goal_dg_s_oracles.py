@@ -629,16 +629,18 @@ def s2(suite):
 
 def extra_event(world, tag, *, run=None, project=None, event_type='run.started', append_receipt=True):
     c = world.ctx
+    registered, _ = G.event_family_registration()
+    schemas = {schema for kind, scope, schema in registered if (kind, scope) == (event_type, 'project')}
+    if len(schemas) != 1:
+        raise ValueError(f'{event_type} fixture needs one registered Project payload schema')
+    schema, = schemas
     event = dict(schema_id='pm.event.v0', schema_version='2.0.0', scope_kind='project',
                  event_id='TEST_ONLY:%s:%s' % (event_type, tag), event_type=event_type,
                  project_id=project or c.project_id, thread_id=None, run_id=run or 'TEST_ONLY:goal_run:other',
                  node_id=None, attempt_id=None, actor_ref='TEST_ONLY:actor:other', requested_account_ref=None,
                  effective_account_ref=None, occurred_at_utc='2026-11-11T12:00:00Z', producer_sequence_id=None,
                  correlation_id='TEST_ONLY:correlation:' + tag, causation_event_id=None, parent_event_id=None,
-                 idempotency_key='TEST_ONLY:key:' + tag, payload_schema_id={
-                     'run.started': 'https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0',
-                     'goal_run.blocked': 'pm.goal_runtime_event.goal_run_blocked.schema.v2',
-                 }[event_type],
+                 idempotency_key='TEST_ONLY:key:' + tag, payload_schema_id=schema,
                  payload=dict(qualification=QUALIFICATION, tag=tag), payload_ref=None, redaction_profile='no_secrets',
                  replay_policy='dedupe_by_idempotency_key',
                  migration=dict(migrated_from_schema_id=None, migrated_from_schema_version=None, migration_id=None,
