@@ -3,6 +3,7 @@ import argparse
 import copy
 import json
 from pathlib import Path
+from unittest.mock import patch
 
 import pm_goal_dg_u_owners as update
 import pm_goal_depth_provider as provider
@@ -113,7 +114,18 @@ def capture_cases(root):
         control=dict(proposal=good, remove_approval_surface=False),
         negative=dict(proposal=good, remove_approval_surface=True),
         call=capture_with_surface, verify=lambda label, w, args, value: verify(label, w, args['proposal'], value))
-    return dict(instruction=attestation, withdrawal=withdrawal, surface=surface)
+    def capture_with_expiry(opened, arguments):
+        opened.selected_expiry = arguments['expiry']
+        return opened.approvals.capture(arguments['proposal']['command_instance_id'])
+
+    expiry = replay(
+        root / 'approval-expiry-grammar', seed=seed, open_world=open_update, module=provider,
+        function=provider.ApprovalOwner.capture, marker="require(where + '/expiry_time'",
+        code='dgu/hitl/capture/expiry_time',
+        control=dict(proposal=good, expiry='2050-01-02T12:00:00.1000Z'),
+        negative=dict(proposal=good, expiry='2050-01-02t12:00:00.1000Z'),
+        call=capture_with_expiry, verify=lambda label, w, args, value: verify(label, w, args['proposal'], value))
+    return dict(instruction=attestation, withdrawal=withdrawal, surface=surface, expiry_grammar=expiry)
 
 
 def decision_cases(root):
@@ -248,9 +260,14 @@ def retry_case(root, world_type=provider.World):
     expect_refusal('dgu/sir/proposal_conflict', lambda: reopened.sir.admit_proposal(altered))
     check(reopened.observe_effects() == before, 'Conflicting retry wrote a durable value')
     call_count = len(reopened.recorder.calls)
-    reopened.command.run(update.direct_request(reopened, goal, 'Later objective'))
+    direct = update.direct_request(reopened, goal, 'Later objective')
+    with patch.object(reopened.approvals, 'read_resolution', side_effect=AssertionError('Direct Save reached HITL')):
+        reopened.command.run(direct)
     check(not any(call['method'].startswith('hitl.') for call in reopened.recorder.calls[call_count:]),
           'Direct Save reached HITL')
+    check(reopened.sir.replay(direct['command_instance_id'])['terminal']['result']['status'] == 'succeeded' and
+          reopened.body.read_private(goal['scope'], 'goal-depth')['body']['objective_text'] == 'Later objective',
+          'Direct Save did not advance the original Goal target')
     check(reopened.approvals.capture(short['command_instance_id']) == first,
           'Retry after the Goal advanced replaced or lost the original approval')
     return dict(dispatch_id=original['dispatch_id'], original_approval=first, replayed_approval=repeated,
