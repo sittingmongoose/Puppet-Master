@@ -35,9 +35,9 @@ proves the (byte-identical) predicate, and conflicting site lists stay OPEN with
 recorded. ``--shared-proof`` directories supply cited witnesses for shared
 ``pm_goal_test_*`` rows only when their collection sites and source-bindings for every cited
 site file exactly match this family's proof; the citation is recorded separately and never
-counts as a family attempt. Duplicate closure roots across reports merge by clause identity:
-a clause is uncovered for the merged root only when every report of that root leaves it
-uncovered, while any root error still blocks closure.
+counts as a family attempt. Merge closure reports for the same root only when their exact
+clause inventories agree and no report has a root or verification error. Otherwise keep
+the reported uncovered clauses and block closure.
 
 Usage: python3 scripts/pm_goal_dg5_matrix.py PROOF_DIR... --family F [--closure REPORT ...]
        [--shared-proof SHARED_PROOF_DIR ...] --out matrix.json
@@ -63,23 +63,34 @@ def line_text(path, line):
 def load_closure(paths):
     """row name -> list of merged (root id, family list, counts, uncovered clause count).
 
-    The same root may be closed in several suite reports. Its merged uncovered set is the
-    intersection of the reports' uncovered clause ids (a clause killed from any suite's seeds
-    is covered); any root error is retained and blocks closure in the caller.
+    Reports with matching clause inventories can contribute coverage for the same root.
+    Missing or renamed clause keys and failed verification block closure.
     """
     grouped = collections.defaultdict(list)
     for path in paths:
         report = json.loads(Path(path).read_text())
         for ident, entry in report['roots'].items():
-            uncovered = {c for c, e in entry.get('clauses', {}).items() if e['cls'] == 'UNCOVERED'}
+            clauses = entry.get('clauses', {})
+            uncovered = {c for c, e in clauses.items() if e['cls'] == 'UNCOVERED'}
+            errors = [entry['error']] if entry.get('error') else []
+            verify = entry.get('verify', {})
+            failed = verify.get('failed', 0)
+            unverifiable = verify.get('unverifiable', 0)
+            mismatch = verify.get('sampled', {}).get('mismatch', 0)
+            if not errors and (failed or unverifiable or mismatch):
+                errors.append(f'{Path(path).name}: clause verification has {failed} failures, '
+                              f'{unverifiable} unverifiable, {mismatch} sampled mismatches')
             for name in entry.get('rows', []):
                 grouped[(name, ident)].append(dict(report=str(path), families=entry.get('families', []),
-                                                   counts=entry.get('counts', {}), uncovered_ids=uncovered,
-                                                   error=entry.get('error')))
+                                                   counts=entry.get('counts', {}), clause_ids=set(clauses),
+                                                   uncovered_ids=uncovered, errors=errors))
     by_row = collections.defaultdict(list)
     for (name, ident), entries in grouped.items():
-        uncovered = set.intersection(*(e['uncovered_ids'] for e in entries)) if entries else set()
-        errors = [e['error'] for e in entries if e['error']]
+        errors = [error for e in entries for error in e['errors']]
+        if any(e['clause_ids'] != entries[0]['clause_ids'] for e in entries[1:]):
+            errors.append('clause inventories differ across reports for this root')
+        uncovered_sets = [e['uncovered_ids'] for e in entries]
+        uncovered = set.union(*uncovered_sets) if errors else set.intersection(*uncovered_sets)
         by_row[name].append(dict(root=ident, report=entries[0]['report'],
                                  reports=[e['report'] for e in entries],
                                  families=sorted({f for e in entries for f in e['families']}),
@@ -443,9 +454,13 @@ def main():
                 roots = [r for r in closure.get(name, []) if family in r['families']]
                 schema = dict(roots=roots, uncovered=sum(r['uncovered'] for r in roots),
                               errors=[r['root'] for r in roots if r['error']])
-                if status != 'OPEN' and (not roots or schema['uncovered'] or schema['errors']):
-                    status, reason = 'OPEN', ('no clause-closure report for its roots' if not roots else
-                                              'clause closure leaves %d uncovered' % schema['uncovered'])
+                if status != 'OPEN':
+                    if not roots:
+                        status, reason = 'OPEN', 'no clause-closure report for its roots'
+                    elif schema['errors']:
+                        status, reason = 'OPEN', 'clause closure reports have root errors'
+                    elif schema['uncovered']:
+                        status, reason = 'OPEN', 'clause closure leaves %d uncovered' % schema['uncovered']
             predicate = dict(table=row.get('table'), gated=gated, effective_gated=effective_gated,
                              proof_dir=row.get('proof_dir'), table_status=table.get('status'),
                              table_reason=row.get('table_reason'),

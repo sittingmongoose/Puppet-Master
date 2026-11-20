@@ -74,6 +74,43 @@ def check_classifier():
     assert matrix._classify(tree, 10) == 'reduce_handler'
 
 
+def check_closure_reports():
+    import pm_goal_dg5_matrix as matrix
+
+    row = 'dg5/test/schema'
+    first_id = 'file:///frozen/inputs/Plans/contract.schema.json#/required'
+    alias_id = 'https://puppetmaster.local/inputs/Plans/contract.schema.json#/required'
+    with tempfile.TemporaryDirectory(prefix='dg5-closure-matrix-') as td:
+        first = Path(td) / 'first.json'
+        second = Path(td) / 'second.json'
+
+        def write_report(path, clauses, **details):
+            root = dict(rows=[row], families=[FAM], clauses=clauses, **details)
+            path.write_text(json.dumps(dict(roots={'dg5:test': root})))
+
+        def merged(*paths):
+            return matrix.load_closure(paths)[row][0]
+
+        write_report(first, {first_id: dict(cls='UNCOVERED')})
+        write_report(second, {alias_id: dict(cls='UNCOVERED')})
+        root = merged(first, second)
+        assert root['error'] and set(root['uncovered_clauses']) == {first_id, alias_id}, root
+
+        write_report(second, {})
+        root = merged(first, second)
+        assert root['error'] and root['uncovered_clauses'] == [first_id], root
+
+        write_report(second, {first_id: dict(cls='KILLED')})
+        root = merged(first, second)
+        assert root['error'] is None and root['uncovered'] == 0, root
+
+        for verify in (dict(failed=1), dict(unverifiable=1), dict(sampled=dict(mismatch=1))):
+            write_report(second, {first_id: dict(cls='KILLED')}, verify=verify)
+            root = merged(first, second)
+            assert root['error'] and root['uncovered_clauses'] == [first_id], root
+            assert merged(second)['error'], verify
+
+
 def check_matrix():
     ok = 'dg5/site/pm_goal_test_owner_adapters.py:75'
     nowit = 'dg5/test/not_run_without_witness'
@@ -127,6 +164,7 @@ def check_matrix():
 
 def main():
     check_classifier()
+    check_closure_reports()
     check_matrix()
     print('pm_goal_dg5_matrix_selftest: PASS')
     return 0
