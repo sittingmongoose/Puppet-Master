@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.101",
+  "sha256": "37a1dddc8125cc9a7fa41f115b55636231eab45ae1587de2badab46ed9c47595",
   "family_count": 518,
   "row_pointer": "#/families/445"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/445 (canonical row SHA-256 aa27848fab631cebb702feb587e6ddc2d23aaf492c9f62ee0739a055a59bd392). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.101 as #/families/445, canonical row SHA-256 c93ed85722edad386e1a2cdf405ff74da33107331c8e71f2d04f50ffdb9182fe. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -252,23 +252,45 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1404",
-       "line_start": 50605,
-       "line_end": 50605,
-       "quote": "Current selected assignment (2026-11-19): remote_access.public_security_violation_detected@1.0.0 is registered",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "line_start": 50608,
+       "line_end": 50615,
+       "quote": "  Current selected assignment (2026-11-19): remote_access.public_security_violation_detected@1.0.0 is registered\n  for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2363. Its event\n  history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; Plans/storage-plan.md#SP-1404 owns the event\n  policy''s existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their\n  independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires\n  the exact selected schema/scope, original custody, current permission, receipt and required producer adoption.\n  Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native\n  adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1404, Plans/Contracts_V0.md:50572-50654",
+       "quote_scope": "unit CV-1404, Plans/Contracts_V0.md:50575-50657",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1404",
-        "line_start": 48544,
-        "line_end": 48544,
-        "quote": "retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotec",
-        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+        "line_start": 50605,
+        "line_end": 50605,
+        "quote": "Current selected assignment (2026-11-19): remote_access.public_security_violation_detected@1.0.0 is registered",
+        "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+        "quote_check": "exact",
+        "quote_scope": "unit CV-1404, Plans/Contracts_V0.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:50572-50654",
+        "source_citation": {
+         "path": "Plans/Contracts_V0.md",
+         "unit": "CV-1404",
+         "line_start": 48544,
+         "line_end": 48544,
+         "quote": "retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotec",
+         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+        "line": 50605
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "0025bb8059fef1872fffd79d96e5f0a7c5b9d7e4",
+        "old_quote": "Current selected assignment (2026-11-19): remote_access.public_security_violation_detected@1.0.0 is registered",
+        "old_path": "Plans/Contracts_V0.md",
+        "old_unit": "CV-1404",
+        "old_line_start": 50605,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       },
       {
@@ -597,10 +619,9 @@
   "row_pointer": "#/families/445"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "3bf52c24256fa36c1a3cf401d0cc88a469f9ccc16f6ec785a1901db9014fd453",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "0025bb8059fef1872fffd79d96e5f0a7c5b9d7e4",
+  "source_assessment_sha256": "e4b188bc307f01d2e68072a261a8b36f750e45e3aea3ba6bd134d0344a0b96dc",
+  "native_execution": "NOT_RUN"
  }
 }

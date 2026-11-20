@@ -5524,6 +5524,7 @@
     "DL-2548",
     "DL-2549",
     "DL-2550",
+    "DL-2551",
     "DL-451",
     "DL-694",
     "F3-585",
@@ -52973,6 +52974,21 @@
     {
       "edge_type": "depends_on",
       "from": "DL-2550",
+      "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2551",
+      "to": "DL-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2551",
+      "to": "DL-2363"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2551",
       "to": "DL-400"
     },
     {
@@ -163831,7 +163847,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-20T01:11:53Z",
+  "generated_at_utc": "2026-11-20T01:13:34Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -216409,6 +216425,23 @@
         "heading_level": 3,
         "heading_line": 60165,
         "line": 60167,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge3_postfix",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2551",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_admission",
+      "source_location": {
+        "heading": "DL-2551: Event Authority corrects remote_access.public_security_violation_detected (merge 3 post-landing)",
+        "heading_level": 3,
+        "heading_line": 60227,
+        "line": 60229,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -326513,10 +326546,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27626,
+    "depends_on_edge_count": 27629,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30851,
-    "node_count": 9569,
+    "edge_count": 30854,
+    "node_count": 9570,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
