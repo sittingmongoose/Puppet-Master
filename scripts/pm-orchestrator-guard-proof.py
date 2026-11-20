@@ -877,7 +877,7 @@ UNPROVED = dict({
 }, **{record + '_scope_' + code: SCOPE_HELPER for record in ('source', 'wrapper') for code in SCOPE_CODES})
 
 # C12-DO: two redundant cycle edges were retired with a checked equality-tree
-# proof; seven previously unwitnessed rows now have complete original-output or
+# proof; six previously unwitnessed rows now have complete original-output or
 # independent-copy witnesses. No reachable row is waived by this list.
 for _closed_row in ('source_scope_join', 'wrapper_scope_wrapper_record_scope_mismatch',
                     'source_scope_application_thread_mismatch',
@@ -886,8 +886,8 @@ for _closed_row in ('source_scope_join', 'wrapper_scope_wrapper_record_scope_mis
     UNPROVED.pop(_closed_row)
 
 # These are schema implications, not missing witness claims. Non-null outputs
-# now enter the matrix; the two actually reachable recursive-helper rows above
-# were removed from this list.
+# now enter the matrix, and the reachable recursive-helper rows with witnesses
+# are accounted for above.
 for _row in tuple(UNPROVED):
     if _row.startswith('source_scope_') or _row.startswith('wrapper_scope_'):
         _code = _row.split('_scope_', 1)[1]
