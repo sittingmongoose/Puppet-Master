@@ -43,6 +43,15 @@ REQUIRED_CHILDREN = ('source', 'record', 'required_children')
 
 class Fixture(stage.Fixture):
     def prepare(self):
+        if self.route.startswith('project_original/'):
+            where, _ = self.route.removeprefix('project_original/').rsplit('/', 1)
+            projector = stage.original.R.StartedProjector(self.world.registry, world=self.world)
+            projector.install()
+            generation = projector.stage()
+            if where == 'cutover/original':
+                projector.replay(generation)
+                return projector.cutover, (generation,)
+            return projector.replay, (generation,)
         if self.route.startswith('read_original/'):
             _, reader, _ = stage.original.projected(self.world)
             return reader.read_historical, (stage.original.sreq(self.world),)
@@ -142,7 +151,7 @@ class Fixture(stage.Fixture):
                     yield origin_control
         elif self.route in ('read_historical/root', 'read_current/root'):
             yield from self.transition_controls(value, ('original', 'native_start', 'original_d01_update', 'record'))
-        elif self.route.startswith('read_original/'):
+        elif self.route.startswith(('read_original/', 'project_original/')):
             path = ('original_d01_update', 'record')
             if self.route.endswith('/enclosing'):
                 path = ('native_start', *path)
@@ -196,8 +205,8 @@ class Fixture(stage.Fixture):
             yield variant
 
     def call(self, edit):
-        if self.route.startswith('read_original/') and edit:
-            where, definition = self.route.removeprefix('read_original/').rsplit('/', 1)
+        if self.route.startswith(('read_original/', 'project_original/')) and edit:
+            where, definition = self.route.split('/', 1)[1].rsplit('/', 1)
             _, path, change = edit
             if definition == 'retained':
                 return self.call_output('retained_native', 94, 'retained', path, change, where)
@@ -357,7 +366,8 @@ class Fixture(stage.Fixture):
 
 class CompleteCall(stage.Example):
     def run(self, edit=None, cut=False):
-        if self.fixture.route not in ('publish_result', 'publish_original_append', 'projector/result'):
+        if (self.fixture.route not in ('publish_result', 'publish_original_append', 'projector/result') and
+                not self.fixture.route.startswith('project_original/')):
             return super().run(edit, cut)
         # These result checks run after the original call has written changes.
         # Every execution starts from an independent copy.

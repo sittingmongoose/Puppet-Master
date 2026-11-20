@@ -24,6 +24,11 @@ HISTORICAL_ORIGINAL = {
     f'dg5/read_historical/{phase}/root/schema': f'read_historical/{phase}/root'
     for phase in ('original', 'final')
 }
+PROJECTOR_ORIGINAL = {
+    f'dg5/{where}/root/schema': where + '/root'
+    for where in ('project/original', 'project/lower_original', 'cutover/original')
+}
+ORIGINAL_SCHEMAS = HISTORICAL_ORIGINAL | PROJECTOR_ORIGINAL
 DEPENDENCIES = {
     'dg5/start/commit/schema': ('start/retained_native', 'commit', 'StorageCommit', 1272, 'commit'),
     'dg5/start/origin/schema': ('start/retained_native', 'origin', 'StorageOrigin', 1272, 'origin'),
@@ -106,7 +111,7 @@ class ForwardedCall(worker.CompleteCall):
 class HistoricalOriginalCall(worker.CompleteCall):
     def in_child(self, sender, edit, cut, replay):
         retained = self.declaration['validation_site'] == [READERS, 94]
-        code = HISTORICAL_ORIGINAL[self.row]
+        code = ORIGINAL_SCHEMAS[self.row]
         reader = worker.stage.original.R
         validate, same = worker.world.Bank.validate, reader.same
         forwarded, historical = [], []
@@ -201,6 +206,12 @@ def check_calls(example, collector, ident, later_code, *, alter_copy=False):
     return control
 
 
+def original_later_code(name, specification):
+    if specification['validation_site'] == [READERS, 94]:
+        return ORIGINAL_SCHEMAS[name] + '/schema/native_start:additionalProperties'
+    return None if name in PROJECTOR_ORIGINAL else 'read_historical/final_fence'
+
+
 def check_root(out, name, specification, sites, reference, previous, alter_copy, reference_digest):
     started = time.monotonic()
     ident = specification['root']
@@ -211,17 +222,21 @@ def check_root(out, name, specification, sites, reference, previous, alter_copy,
     out.mkdir(parents=True)
     suite = worker.stage.original.Suite(out / 'stores')
     fixture = worker.Fixture(suite, specification['route'], specification['edition'])
-    original = name in HISTORICAL_ORIGINAL
+    original = name in ORIGINAL_SCHEMAS
     experiment_type = HistoricalOriginalCall if original else ForwardedCall
     experiment = experiment_type(fixture, name, sites, specification)
     collector = worker.stage.sweep.Collector()
+    directly_accepted = name in PROJECTOR_ORIGINAL and specification['validation_site'] == [READERS, 256]
     if original:
-        later_code = (HISTORICAL_ORIGINAL[name] + '/schema/native_start:additionalProperties'
-                      if specification['validation_site'] == [READERS, 94] else 'read_historical/final_fence')
+        later_code = original_later_code(name, specification)
     else:
         late, _, _, _, defect = DEPENDENCIES[name]
         later_code = f'{late}/schema/{defect}:additionalProperties' if defect else late
-    captured = check_calls(experiment, collector, ident, later_code, alter_copy=alter_copy)
+    if directly_accepted:
+        captured, = experiment.prove(collector, 'row' if alter_copy else None)
+        worker.require(captured['root'] == ident, 'projector checked a different original root')
+    else:
+        captured = check_calls(experiment, collector, ident, later_code, alter_copy=alter_copy)
     examples = worker.PreviousExamples()
     replayed = worker.replay_root(fixture, captured, reference, examples.entries(previous), None)
     proof = worker.pilot.run_gates(collector, out, [name])
@@ -266,7 +281,7 @@ def main():
     banks = {'v3': v3.bank.original, 'v7': v7.bank.original}
     for path, case in cases:
         row = case['row']
-        worker.require(row in DEPENDENCIES or row in HISTORICAL_ORIGINAL, f'no checked forwarding premise for {row}')
+        worker.require(row in DEPENDENCIES or row in ORIGINAL_SCHEMAS, f'no checked forwarding premise for {row}')
         mapped = reference['rows'][row]
         worker.require(sorted(mapped['roots']) == sorted(item['root'] for item in case['fixtures']),
                        f'{row}: declaration omits or repeats an exact root')
