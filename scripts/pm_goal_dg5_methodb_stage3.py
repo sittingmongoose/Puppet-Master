@@ -465,16 +465,18 @@ def approval_implication(nodes, name, path, errors, locations, validator):
 def request_implication(nodes, name, path, errors, locations):
     """The request's complete two-way conditional enforces both nullable members."""
     parent = name.split('/allOf/', 1)[0].split('/properties/', 1)[0]
-    require(parent.endswith('#/$defs/GoalUpdateRequestV2'), 'request implication applied outside its definition')
+    request = parent.endswith('#/$defs/GoalUpdateRequestV2')
+    require(request or parent.endswith('#/$defs/revision'), 'unexpected update request or revision definition')
     node = nodes[parent]['node']
     member = path[-1]
-    require(member in ('approval_id', 'source_message_id') and member in node['required'] and
+    members = ('approval_id', 'source_message_id') if request else ('approval_id',)
+    require(member in members and member in node['required'] and
             'change_source' in node['required'], 'request implication member changed')
     direct, agent = node['allOf'][0]['then']['properties'][member], node['allOf'][0]['else']['properties'][member]
     choices = node['properties'][member]['anyOf']
-    members = lambda item: {key: value for key, value in item.items() if key != 'x-pm-oracle-id'}
+    fields = lambda item: {key: value for key, value in item.items() if key != 'x-pm-oracle-id'}
     require(node['allOf'][0]['if']['properties']['change_source']['const'] == 'user_direct' and
-            [members(choice) for choice in choices] == [members(agent), members(direct)] ==
+            [fields(choice) for choice in choices] == [fields(agent), fields(direct)] ==
             [{'type': 'string', 'minLength': 1}, {'type': 'null'}], 'request conditional branches changed')
     if '/else/' in name:
         peer = parent + '/properties/' + member + '/anyOf/0/minLength'
@@ -484,6 +486,31 @@ def request_implication(nodes, name, path, errors, locations):
         require(locations(errors) == {('type', tuple(path), peer)}, 'exact direct null rule did not remain')
     return dict(source=parent + '/allOf/0', independent_rule=peer,
                 reason='Direct requests require null. Every other request requires a nonempty string.')
+
+
+def origin_implication(nodes, name, path, errors, locations):
+    """Each origin kind requires the string or null member from the main rule."""
+    parent = name.split('/allOf/', 1)[0].split('/properties/', 1)[0]
+    member = path[-1]
+    index, kind = {'bound_plan_ref': (0, 'plan_build'), 'owning_workflow_ref': (1, 'internal_workflow')}[member]
+    require(parent.endswith('#/$defs/origin') and path == ['record', member], 'unexpected origin location')
+    node = nodes[parent]['node']
+    conditional = node['allOf'][index]
+    require({'origin_kind', member} <= set(node['required']) and
+            conditional['if']['properties']['origin_kind']['const'] == kind, 'origin selector changed')
+    choices = node['properties'][member]['anyOf']
+    string = conditional['then']['properties'][member]
+    null = conditional['else']['properties'][member]
+    fields = lambda item: {key: value for key, value in item.items() if key != 'x-pm-oracle-id'}
+    require([fields(choice) for choice in choices] == [fields(string), fields(null)] ==
+            [{'type': 'string', 'minLength': 1}, {'type': 'null'}], 'origin nullable branches changed')
+    if '/then/' in name:
+        peer = parent + '/properties/' + member + '/anyOf/0/minLength'
+        require(('minLength', tuple(path), peer) in locations(errors), 'origin string length check did not remain')
+    else:
+        peer = parent + f'/allOf/{index}/else/properties/{member}/type'
+        require(locations(errors) == {('type', tuple(path), peer)}, 'origin null check did not remain')
+    return dict(source=parent + f'/allOf/{index}', independent_rule=peer, nonnull_kind=kind)
 
 
 def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check):
@@ -584,6 +611,8 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
             }, 'the identical length rule did not remain')
             record.update(cls='COVERED_LATER', implication=dict(source=other, same_document_path=path,
                           premise='The blocked state requires a string, so the nonempty string branch applies.'))
+        elif cut and example.get('origin_implication'):
+            record.update(cls='COVERED_LATER', implication=origin_implication(nodes, name, path, cut, locations))
         elif cut and example.get('request_implication'):
             record.update(cls='COVERED_LATER', implication=request_implication(nodes, name, path, cut, locations))
         elif cut and example.get('approval_implication'):

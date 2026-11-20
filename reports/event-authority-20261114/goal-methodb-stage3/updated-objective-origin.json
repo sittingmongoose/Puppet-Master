@@ -1,0 +1,341 @@
+{
+  "census_sha256": "647eb062f2b9f8438e26716e3e058e1ac61193a2c266bbf12f4664495598fab7",
+  "examples": {
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/0/else/properties/bound_plan_ref/type": {
+      "path": [
+        "record",
+        "bound_plan_ref"
+      ],
+      "value": "gc"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/0/if/properties/origin_kind/const": {
+      "path": [
+        "record",
+        "origin_kind"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/0/then/properties/bound_plan_ref/type"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/0/then/properties/bound_plan_ref/minLength": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "origin_kind"
+          ],
+          "value": "plan_build"
+        },
+        {
+          "path": [
+            "record",
+            "bound_plan_ref"
+          ],
+          "value": "TEST_ONLY:origin-ref"
+        }
+      ],
+      "origin_implication": true,
+      "path": [
+        "record",
+        "bound_plan_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/0/then/properties/bound_plan_ref/type": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "origin_kind"
+          ],
+          "value": "plan_build"
+        },
+        {
+          "path": [
+            "record",
+            "bound_plan_ref"
+          ],
+          "value": "TEST_ONLY:origin-ref"
+        }
+      ],
+      "path": [
+        "record",
+        "bound_plan_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/1/else/properties/owning_workflow_ref/type": {
+      "path": [
+        "record",
+        "owning_workflow_ref"
+      ],
+      "value": "gc"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/1/if/properties/origin_kind/const": {
+      "path": [
+        "record",
+        "origin_kind"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/1/then/properties/owning_workflow_ref/type"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/1/then/properties/owning_workflow_ref/minLength": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "origin_kind"
+          ],
+          "value": "internal_workflow"
+        },
+        {
+          "path": [
+            "record",
+            "owning_workflow_ref"
+          ],
+          "value": "TEST_ONLY:origin-ref"
+        }
+      ],
+      "origin_implication": true,
+      "path": [
+        "record",
+        "owning_workflow_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/1/then/properties/owning_workflow_ref/type": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "origin_kind"
+          ],
+          "value": "internal_workflow"
+        },
+        {
+          "path": [
+            "record",
+            "owning_workflow_ref"
+          ],
+          "value": "TEST_ONLY:origin-ref"
+        }
+      ],
+      "path": [
+        "record",
+        "owning_workflow_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "record"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/bound_plan_ref/anyOf": {
+      "origin_implication": true,
+      "path": [
+        "record",
+        "bound_plan_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/bound_plan_ref/anyOf/0/minLength": {
+      "origin_implication": true,
+      "path": [
+        "record",
+        "bound_plan_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/bound_plan_ref/anyOf/0/type": {
+      "origin_implication": true,
+      "path": [
+        "record",
+        "bound_plan_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/bound_plan_ref/anyOf/1/type": {
+      "origin_implication": true,
+      "path": [
+        "record",
+        "bound_plan_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/goal_id/minLength": {
+      "path": [
+        "record",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/goal_id/type": {
+      "path": [
+        "record",
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/goal_revision/minimum": {
+      "path": [
+        "record",
+        "goal_revision"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/goal_revision/type": {
+      "path": [
+        "record",
+        "goal_revision"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/origin_kind/enum": {
+      "path": [
+        "record",
+        "origin_kind"
+      ],
+      "value": "user_requestx"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/owning_workflow_ref/anyOf": {
+      "origin_implication": true,
+      "path": [
+        "record",
+        "owning_workflow_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/owning_workflow_ref/anyOf/0/minLength": {
+      "origin_implication": true,
+      "path": [
+        "record",
+        "owning_workflow_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/owning_workflow_ref/anyOf/0/type": {
+      "origin_implication": true,
+      "path": [
+        "record",
+        "owning_workflow_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/owning_workflow_ref/anyOf/1/type": {
+      "origin_implication": true,
+      "path": [
+        "record",
+        "owning_workflow_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/source_context_manifest_ref/minLength": {
+      "path": [
+        "record",
+        "source_context_manifest_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/source_context_manifest_ref/type": {
+      "path": [
+        "record",
+        "source_context_manifest_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/source_message_refs/items/minLength": {
+      "path": [
+        "record",
+        "source_message_refs",
+        0
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/source_message_refs/items/type": {
+      "path": [
+        "record",
+        "source_message_refs",
+        0
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/source_message_refs/type": {
+      "path": [
+        "record",
+        "source_message_refs"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/source_message_refs/uniqueItems": {
+      "path": [
+        "record",
+        "source_message_refs"
+      ],
+      "value": [
+        "TEST_ONLY:source",
+        "TEST_ONLY:source"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/required": {
+      "member": [
+        "remove",
+        "goal_id"
+      ],
+      "path": [
+        "record"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/type": {
+      "path": [
+        "record"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_origin/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_origin/properties/schema_id/const": {
+      "path": [
+        "schema_id"
+      ],
+      "value": "pm.storage_value.goal_objective_origin.v1x"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_origin/properties/schema_version/const": {
+      "path": [
+        "schema_version"
+      ],
+      "value": "1.0.0x"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_origin/required": {
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_origin/type": {
+      "path": [],
+      "value": true
+    }
+  },
+  "family": "goal.updated",
+  "root": "dg5:8dcda5653d68d66f",
+  "route": "body_start",
+  "row": "dg5/dgu/body/goal_objective_origin/schema",
+  "site": [
+    "scripts/pm_goal_dg_u_owners.py",
+    1081
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "transaction": true
+}
