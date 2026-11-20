@@ -155,7 +155,21 @@ def progress_custody(directory, negative):
     return world, route.latch_and_reserve, (), {}
 
 
+def source_custody(directory, negative):
+    world, route = cancelled.c1_until(cancelled.Suite(directory), "latch_and_reserve")
+    world.root = world.storage.root
+    if negative:
+        table = "goal_cancel_source_audit"
+        key = route.key(table)
+        cell = world.cell(table, key)
+        source = dict(cell["value"]["record"], captured_at="2000-01-01T00:00:00.000Z")
+        value = route.wrap("StorageSourceAudit", source)
+        world.write([world.put(table, key, value, expected=cell["version"])])
+    return world, route.latch_and_reserve, (), {}
+
+
 CASES = {
+    "source-custody": (C1, 436, "C1/latch_and_reserve/source_custody", source_custody),
     "progress-custody": (C1, 433, "C1/latch_and_reserve/progress_custody", progress_custody),
     "progress-phase": (C1, 431, "C1/resolve_original/phase", progress_phase),
     "binding-pending": (C1, 315, "C1/capture_source/binding_pending", binding_pending),
