@@ -34,8 +34,8 @@ landing, meaning governance staleness on files the branch edited, pre-existing o
 against a current baseline" and "Pre-existing and improved failures" below), failures
 that are new but name none of the branch's files, or a subcheck that timed out, so that the run was
 not fully verified; 2 something it reports does stop the landing, meaning a failure on the branch's
-files that is neither staleness nor pre-existing, a bucket that grew whose error kind is not
-staleness, or a rise in a subcheck whose failures are truncated, other than the readiness growth
+files that is neither staleness nor pre-existing, non-stale bucket growth, or a rise in a subcheck
+whose failures are truncated, other than the readiness growth
 counter; 3 the check could not run, readiness audit input identity could not be established or matched,
 or a subcheck timed out while recording a baseline. A subcheck
 that timed out in a landing run lifts an exit 0 to 1 and changes no other exit code. A subcheck keyed
@@ -347,6 +347,13 @@ them by error kind.
 
 A bucket of one of these kinds that grew is staleness too, so it does not stop the landing either.
 
+Audit closure reports stale hashes and other findings under `audit_closure_validator_error`.
+When both sides of the subcheck are complete and the bucket's baseline fingerprints are available,
+its growth is staleness if each current non-stale row matches a distinct recorded fingerprint.
+Each recorded fingerprint proves one occurrence. A new non-stale fingerprint, an unaccounted repeat
+of one, or a count-only baseline bucket leaves the growth blocking. The bucket key and fingerprints
+stay as recorded. Sampled audit-closure subchecks still use total-only growth.
+
 **A renamed line-range shard (T32).** A `missing_ref` is a stale artifact evidence hash in another form,
 and counts as staleness, when all of these hold, read from the checkout: the reference comes from sealed
 evidence (its `path` is under `Plans/.evidence/`); its target is a line-range shard directly under
@@ -430,9 +437,9 @@ self-test checks on `main` and three on the branch: one row in one bucket both t
 fingerprint moved. In a subcheck that prints only a sample, both counts are the rows inside the
 sample, since the baseline was recorded from the printed rows too.
 
-A bucket whose count rose is not pre-existing: its rows on a touched file stop the landing, and a
-grown bucket whose kind is not staleness stops it, as before. In `--json`, `pre_existing` lists every
-reported pre-existing failure, and those rows and the matching `on_branch` rows carry `standing`,
+A bucket whose count rose is not pre-existing. Its non-stale rows on a touched file stop the landing,
+and its growth is judged by the rules in "What counts as governance staleness" above. In `--json`,
+`pre_existing` lists every reported pre-existing failure, and those rows and the matching `on_branch` rows carry `standing`,
 `baseline_count` and `count`.
 
 What this cannot prove: a failure that sat above its subcheck's print cap when the baseline was
