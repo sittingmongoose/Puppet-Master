@@ -60,8 +60,8 @@ def update_fixture(route, path):
 
     if route in ('approval_request', 'approval_resolution'):
         return approval_fixture(oracle, route, path)
-    if route == 'metadata_intent':
-        return metadata_fixture(oracle, path)
+    if route in ('metadata_intent', 'reserve_pending'):
+        return body_change_fixture(oracle, route, path)
     w = oracle.world(path)
     if route == 'body_start':
         captured = []
@@ -174,23 +174,32 @@ def approval_fixture(oracle, route, path):
     return world, complete
 
 
-def metadata_fixture(oracle, path):
+def body_change_fixture(oracle, route, path):
     captured = []
-    original = oracle.O.GoalBodyOwner.metadata_update
+    method = 'metadata_update' if route == 'metadata_intent' else 'reserve'
+    original = getattr(oracle.O.GoalBodyOwner, method)
 
     def before_update(owner, *args, **kwargs):
         captured.extend((owner, args, kwargs))
         raise RootCapture
 
-    with patch.object(oracle.O.GoalBodyOwner, 'metadata_update', before_update):
+    with patch.object(oracle.O.GoalBodyOwner, method, before_update):
         try:
-            oracle.u2_paused(path)
+            if method == 'metadata_update':
+                oracle.u2_paused(path)
+            else:
+                world = oracle.world(path)
+                goal = oracle.O.birth_goal(world)
+                request = oracle.O.direct_request(world, goal, 'Reserve one Goal Body change')
+                world.command.run(request, stop_after='reserve')
         except RootCapture:
             pass
     owner, args, kwargs = captured
     world = owner.world
     timestamp = world.now()
     marker = UUID('acbe756a-f544-4025-8be1-87dd45fb89b6')
+    if method == 'reserve':
+        check_reservation_reused(oracle.O, owner)
 
     def update():
         with patch.object(world, 'now', return_value=timestamp), patch.object(oracle.O.uuid, 'uuid4',
@@ -298,6 +307,25 @@ def check_receipt_request_reused(body):
             reader.index(forwards[0]) < reader.index(forwards[1]), 'receipt reader no longer validates the same request twice')
     require("self.bank.validate(BODY_URI + '#/$defs/receipt_read_request', request, where + '/receipt_request')"
             in private, 'receipt request definition changed')
+
+
+def check_reservation_reused(module, owner):
+    reserve = inspect.getsource(owner.reserve)
+    require("'#/$defs/pending', pending, where + '/pending')" in reserve and
+            'pending=copy.deepcopy(pending)' in reserve and
+            "A.same(ctx['control']['pending'], pending)" in reserve and
+            'self.row(T_CONTROL, control_key(p, g), new)' in reserve,
+            'reservation no longer passes the same pending document to body control')
+    uri = owner.ROOTS[module.T_CONTROL].removesuffix('#/$defs/StorageBodyControlV2')
+    definitions = owner.bank.documents[uri]['$defs']
+    wrapper = definitions['StorageBodyControlV2']
+    control = definitions['BodyControlV2']
+    require(owner.ROOTS[module.T_CONTROL] == uri + '#/$defs/StorageBodyControlV2' and
+            'record' in wrapper['required'] and wrapper['properties']['record'] ==
+            {'$ref': uri + '#/$defs/BodyControlV2'} and
+            'pending' in control['required'] and control['properties']['pending']['anyOf'] ==
+            [{'$ref': module.BODY_URI + '#/$defs/pending'}, {'type': 'null'}],
+            'body control no longer checks the exact pending schema when present')
 
 
 def check_input_request_reused(world, uri):
@@ -1211,6 +1239,7 @@ def main():
         ('dg5/dgu/producer/freeze/producer_input/schema', 'freeze_input'): 'dgu/progress/schema/',
         ('dg5/dgu/producer/publish/producer_input/schema', 'publish_input'): 'dgu/producer/publish/final_candidate',
         ('dg5/dgu/reader/input/request/schema', 'input_recheck'): 'dgu/reader/input/result/schema/request',
+        ('dg5/dgu/body/reserve/pending/schema', 'reserve_pending'): 'dgu/body/goal_body_control/schema/record/pending',
     }.get((row, declare['route']))
     require(declare.get('later_refusal') == later_refusal,
             'later validation requires a checked source implication and its exact message')
