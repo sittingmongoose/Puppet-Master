@@ -1028,6 +1028,33 @@ def nonempty_timestamp_implication(nodes, name, path, errors, locations, validat
                 premise='The only string with length less than one is empty. The pinned date-time format refuses it.')
 
 
+def native_afterimages_implication(nodes, name, path, control, errors, locations):
+    parent, prop = name.split('/properties/', 1)
+    require(parent.endswith('#/$defs/WorkflowMutationOrigin') and prop == 'afterimages/oneOf' and
+            path == ['record', 'afterimages'], 'unexpected Workflow afterimages rule')
+    node = nodes[parent]['node']
+    require({'method', 'afterimages'} <= set(node['required']), 'Workflow mutation fields are optional')
+    alternatives = [item['$ref'] for item in node['properties']['afterimages']['oneOf']]
+    branches = {item['if']['properties']['method']['const']: item['then']['properties']['afterimages']['$ref']
+                for item in node['allOf']}
+    require(set(branches) == set(node['properties']['method']['enum']) and
+            len(alternatives) == len(branches) == len(node['allOf']) == 3 and
+            set(alternatives) == set(branches.values()), 'methods no longer select each afterimages definition')
+    schemas = [nodes[parent.split('#', 1)[0] + ref]['node'] for ref in alternatives]
+    members = set()
+    for schema in schemas:
+        required = frozenset(schema['required'])
+        require(schema['type'] == 'object' and schema['additionalProperties'] is False and
+                set(schema['properties']) == required and required not in members,
+                'the afterimages alternatives could accept the same document')
+        members.add(required)
+    selected = parent.split('#', 1)[0] + branches[control['record']['method']] + '/required'
+    require(locations(errors) == {('required', tuple(path), selected)},
+            'the selected method did not retain its exact required-member message')
+    return dict(source=selected, same_document_path=path, method_definitions=branches,
+                premise='Every method requires one afterimages definition. Their closed member sets are disjoint.')
+
+
 EVENT_RECORD = 'https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#'
 
 
@@ -1326,6 +1353,9 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         elif cut and (example.get('receipt_timestamp_implication') or example.get('evidence_timestamp_implication')):
             record.update(cls='COVERED_LATER', implication=nonempty_timestamp_implication(
                 nodes, name, path, cut, locations, validator))
+        elif cut and example.get('native_afterimages_implication'):
+            record.update(cls='COVERED_LATER', implication=native_afterimages_implication(
+                nodes, name, path, control, cut, locations))
         elif cut and example.get('evidence_type_implication'):
             record.update(cls='COVERED_LATER', implication=event_string_implication(
                 nodes, name, path, cut, locations))
