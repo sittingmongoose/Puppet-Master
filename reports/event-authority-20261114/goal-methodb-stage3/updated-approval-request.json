@@ -1,0 +1,341 @@
+{
+  "census_sha256": "647eb062f2b9f8438e26716e3e058e1ac61193a2c266bbf12f4664495598fab7",
+  "examples": {
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/approval_id/minLength": {
+      "path": [
+        "approval_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/approval_id/type": {
+      "path": [
+        "approval_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/created_at_utc/format": {
+      "approval_implication": true,
+      "path": [
+        "created_at_utc"
+      ],
+      "value": "not-a-date-time"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/created_at_utc/type": {
+      "approval_implication": true,
+      "path": [
+        "created_at_utc"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/expires_at_utc/oneOf": {
+      "approval_implication": true,
+      "path": [
+        "expires_at_utc"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/expires_at_utc/oneOf/0/format": {
+      "approval_implication": true,
+      "path": [
+        "expires_at_utc"
+      ],
+      "value": "not-a-date-time"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/expires_at_utc/oneOf/0/type": {
+      "approval_implication": true,
+      "path": [
+        "expires_at_utc"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/expires_at_utc/oneOf/1/type": {
+      "approval_implication": true,
+      "path": [
+        "expires_at_utc"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/instruction_message_id/minLength": {
+      "path": [
+        "instruction_message_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/instruction_message_id/type": {
+      "path": [
+        "instruction_message_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/proposal_request_ref/minLength": {
+      "path": [
+        "proposal_request_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/proposal_request_ref/type": {
+      "path": [
+        "proposal_request_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/proposal_request_sha256/maxLength": {
+      "approval_implication": true,
+      "path": [
+        "proposal_request_sha256"
+      ],
+      "value": "367a7dd567bf7311e7980c629058ebd36179eea0cc7c8f6a94d05aae825688db3"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/proposal_request_sha256/minLength": {
+      "approval_implication": true,
+      "path": [
+        "proposal_request_sha256"
+      ],
+      "value": "367a7dd567bf7311e7980c629058ebd36179eea0cc7c8f6a94d05aae825688d"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/proposal_request_sha256/pattern": {
+      "path": [
+        "proposal_request_sha256"
+      ],
+      "value": "367a7dd567bf7311e7980c629058ebd36179eea0cc7c8f6a94d05aae825688d!"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/proposal_request_sha256/type": {
+      "path": [
+        "proposal_request_sha256"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/schema_id/const": {
+      "path": [
+        "schema_id"
+      ],
+      "value": "pm.goal.update.approval_request.v1x"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/schema_version/const": {
+      "path": [
+        "schema_version"
+      ],
+      "value": "1.0.0x"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/source_message_id/minLength": {
+      "path": [
+        "source_message_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/properties/source_message_id/type": {
+      "path": [
+        "source_message_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/required": {
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest/type": {
+      "path": [],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "target",
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/goal_id/minLength": {
+      "path": [
+        "target",
+        "scope",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/goal_id/type": {
+      "path": [
+        "target",
+        "scope",
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/project_id/minLength": {
+      "path": [
+        "target",
+        "scope",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/project_id/type": {
+      "path": [
+        "target",
+        "scope",
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/storage_instance_id/format": {
+      "path": [
+        "target",
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": "not-a-uuid"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/storage_instance_id/type": {
+      "path": [
+        "target",
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/thread_id/minLength": {
+      "path": [
+        "target",
+        "scope",
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/thread_id/type": {
+      "path": [
+        "target",
+        "scope",
+        "thread_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/required": {
+      "member": [
+        "remove",
+        "storage_instance_id"
+      ],
+      "path": [
+        "target",
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/type": {
+      "path": [
+        "target",
+        "scope"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Target/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "target"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Target/properties/expected_currentness_hash/maxLength": {
+      "approval_implication": true,
+      "path": [
+        "target",
+        "expected_currentness_hash"
+      ],
+      "value": "8c44678768977c609d283e5f7176803960cf486d6eaa748af28b895738d7174b8"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Target/properties/expected_currentness_hash/minLength": {
+      "approval_implication": true,
+      "path": [
+        "target",
+        "expected_currentness_hash"
+      ],
+      "value": "8c44678768977c609d283e5f7176803960cf486d6eaa748af28b895738d7174"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Target/properties/expected_currentness_hash/pattern": {
+      "path": [
+        "target",
+        "expected_currentness_hash"
+      ],
+      "value": "8c44678768977c609d283e5f7176803960cf486d6eaa748af28b895738d7174!"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Target/properties/expected_currentness_hash/type": {
+      "path": [
+        "target",
+        "expected_currentness_hash"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Target/properties/expected_revision/minimum": {
+      "path": [
+        "target",
+        "expected_revision"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Target/properties/expected_revision/type": {
+      "path": [
+        "target",
+        "expected_revision"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Target/properties/objective_text/maxLength": {
+      "path": [
+        "target",
+        "objective_text"
+      ],
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Target/properties/objective_text/pattern": {
+      "path": [
+        "target",
+        "objective_text"
+      ],
+      "value": "fifth via approved agent\ud800"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Target/properties/objective_text/type": {
+      "path": [
+        "target",
+        "objective_text"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Target/required": {
+      "member": [
+        "remove",
+        "scope"
+      ],
+      "path": [
+        "target"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Target/type": {
+      "path": [
+        "target"
+      ],
+      "value": null
+    }
+  },
+  "family": "goal.updated",
+  "root": "dg5:80302e09232f1e7e",
+  "route": "approval_request",
+  "row": "dg5/dgu/hitl/request/schema",
+  "site": [
+    "scripts/pm_goal_dg_u_owners.py",
+    987
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "transaction": true
+}
