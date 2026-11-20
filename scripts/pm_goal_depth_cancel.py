@@ -5,6 +5,7 @@ from hashlib import sha256
 import json
 import os
 from pathlib import Path
+import subprocess
 from unittest.mock import patch
 
 import pm_goal_dg_cb_c5_cases as c5
@@ -13,7 +14,91 @@ import pm_goal_dg_cb_crash as crash
 import pm_goal_dg_cb_migration as migration
 import pm_goal_dg_cb_oracles as cb
 import pm_goal_dg_cb_owners as owners
-from pm_goal_depth_replay import check, replay, store_image, write_evidence
+from pm_goal_own_c_roots import OriginalBank
+import pm_goal_test_storage as storage
+from pm_goal_depth_replay import check, replay, retain_manifests, store_image, write_evidence
+
+
+PRE_V3 = '6d4c970af0ad65d6873c74408f5c55fea3e988cd'
+V2_FIXTURE = 'Plans/.audits/event-authority-2026-08-12/oracle-harness/fixtures/goal_cancelled/positive.json'
+FIXTURE_SHA256 = '61fa1f518fbd527375c06a932804e0f287b2d5f36258f97c32593da26bc2a2bb'
+RESOURCE_MAP = 'Plans/goal_cancel_schema_resources.json'
+
+
+def historical_cases(root, ruling):
+    """GRS-073/SP-304 schema-only interpretation with no fabricated source."""
+    repo = Path(__file__).resolve().parents[1]
+    command = ['git', 'show', f'{PRE_V3}:{V2_FIXTURE}']
+    raw = subprocess.check_output(command, cwd=repo)
+    check(sha256(raw).hexdigest() == FIXTURE_SHA256, 'Pre-v3 oracle fixture bytes changed')
+    fixture = json.loads(raw)
+    resources = json.loads((repo / RESOURCE_MAP).read_bytes())
+    historical, = (item for item in resources['embedded_resources'] if item['path'].endswith('goal_cancelled.schema.json'))
+    current, = (item for item in resources['resources'] if item['path'] == historical['path'])
+    check(current['sha256'] == historical['complete_document_sha256'], 'Whole schema resource pins disagree')
+    bank = OriginalBank(dict(resources=[current], embedded_resources=[historical]), {})
+    historical_root = historical['retrieval_uri']
+    pre_v3_schema = subprocess.check_output(['git', 'show', f'{PRE_V3}:{historical["path"]}'], cwd=repo)
+    check(bank.documents[historical_root] == json.loads(pre_v3_schema),
+          'Selected whole historical resource differs from the complete pre-v3 schema')
+    bank.validate(historical_root, fixture)
+    current_errors = list(bank.errors(current['retrieval_uri'], fixture))
+    check(current_errors, 'Current Goal cancellation root accepted the historical schema fixture')
+
+    # A real current C1 value and receipt in the same Storage do not supply
+    # the independently required originals for a different historical read.
+    world = migration.migration_world(root / 'original')
+    scope = owners.legacy_goal(world, revisions=2)
+    c5.run(world, scope)
+    route = c6.c1_route(world, scope)
+    route.run()
+    current_event = world.storage.read_event(route.event_id)
+    first = world.storage.full_value_result(route.event_id)
+    check(current_event['event_type'] == 'goal.cancelled' and
+          current_event['payload_schema_id'] == 'pm.goal_runtime_event.goal_cancelled.schema.v3',
+          'Expected the enrolled route to produce its own current v3 Event')
+    absent = 'TEST_ONLY:unissued-historical-goal-cancellation'
+    before = store_image(world.storage.root)
+    try:
+        world.storage.full_value_result(absent)
+    except storage.StorageRefusal as error:
+        check(error.code == 'custody/unavailable', f'Wrong missing historical custody refusal: {error}')
+    else:
+        raise AssertionError('A schema example reached an original historical custody disclosure')
+    check(world.storage.first_custody(absent) is None and absent not in world.storage.events and
+          store_image(world.storage.root) == before, 'Historical refusal created authority or changed the store')
+    return dict(ruling=dict(path=str(ruling), sha256=sha256(ruling.read_bytes()).hexdigest()),
+                historical_fixture=dict(commit=PRE_V3, path=V2_FIXTURE, command=command, sha256=FIXTURE_SHA256),
+                historical_resource=historical, schema_only_interpretation='pass',
+                pre_v3_schema_sha256=sha256(pre_v3_schema).hexdigest(),
+                current_root_refusals=sorted({error.validator for error in current_errors}),
+                enrolled_v3_control=dict(event_id=route.event_id, custody_sha256=owners.row_sha(first)),
+                missing_original=dict(selector=absent, exact_refusal='custody/unavailable',
+                                      disposition='unavailable', original_disclosure=None,
+                                      store_sha256_before_and_after=sha256(
+                                          json.dumps(before, sort_keys=True).encode()).hexdigest()))
+
+
+def pending_without_receipt(root):
+    """SP-1131/M6: retain actual old pending cancellation and Stop while blocked."""
+    world = migration.migration_world(root)
+    scope = owners.legacy_goal(world, codec=owners.MSGPACK, control_edition='v2', revisions=2)
+    world.host_stop.manual(scope, 'stop')
+    original_stop = world.host_stop.record(scope)
+    pending = world.goal.set_cancellation_pending(scope, original_stop)
+    before = c5.goal_physical(world, scope)
+    selector, _, result = c5.run(world, scope)
+    reasons = world.coordinator.last_capture.blocked
+    check(result['disposition'] == 'blocked_unresolved' and not result['published_members'] and
+          pending['operation_id'] in result['pending_operation_ids'] and
+          any(reason['kind'] == 'old_cancellation_pending_receipt_unavailable' and
+              reason['operation'] == pending['operation_id'] for reason in reasons),
+          'M6 did not preserve the original missing-receipt disposition and operation')
+    check(c5.goal_physical(world, scope) == before and world.host_stop.record(scope) == original_stop and
+          world.coordinator.read_result(selector) == result and not world.storage.events,
+          'M6 blocking changed old authority, issued a receipt, or appended an Event')
+    return dict(original_pending=pending, original_stop=original_stop, disposition=result['disposition'],
+                reasons=reasons, prior_receipts=result['prior_receipts'], result_sha256=owners.row_sha(result))
 
 
 def capture_cases(root, *, codec, edition, defect, marker, code, name):
@@ -147,25 +232,33 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--original-corpus', action='store_true')
+    parser.add_argument('--ruling', type=Path)
     args = parser.parse_args()
-    args.out.mkdir(parents=True)
-    cases = dict(
-        json_codec=capture_cases(args.out, codec=owners.GOAL_JSON, edition='v1', defect='codec',
-                                 marker="'M/%s/source_codec/%s'", code='M/capture/source_codec/goal_body_record',
-                                 name='original-json-codec'),
-        msgpack_schema=capture_cases(args.out, codec=owners.MSGPACK, edition='v2', defect='schema',
-                                      marker="'M/%s/schema_ref/%s'", code='M/capture/schema_ref/goal_body_record',
-                                      name='original-msgpack-schema'),
-        original_bytes=capture_cases(args.out, codec=owners.GOAL_JSON, edition='v1', defect='bytes',
-                                      marker="'M/%s/source_bytes/%s'", code='M/capture/source_bytes/goal_body_record',
-                                      name='original-physical-bytes'),
-        withdrawal=withdrawal_case(args.out),
-    )
-    write_evidence(args.out / 'cancel.json', dict(cases=cases))
-    corpus = original_corpus(args.out / 'original-corpus') if args.original_corpus else None
+    root = args.out.resolve()
+    root.mkdir(parents=True)
+    with retain_manifests(root):
+        cases = dict(
+            json_codec=capture_cases(root, codec=owners.GOAL_JSON, edition='v1', defect='codec',
+                                     marker="'M/%s/source_codec/%s'", code='M/capture/source_codec/goal_body_record',
+                                     name='original-json-codec'),
+            msgpack_schema=capture_cases(root, codec=owners.MSGPACK, edition='v2', defect='schema',
+                                         marker="'M/%s/schema_ref/%s'", code='M/capture/schema_ref/goal_body_record',
+                                         name='original-msgpack-schema'),
+            original_bytes=capture_cases(root, codec=owners.GOAL_JSON, edition='v1', defect='bytes',
+                                         marker="'M/%s/source_bytes/%s'", code='M/capture/source_bytes/goal_body_record',
+                                         name='original-physical-bytes'),
+            withdrawal=withdrawal_case(root),
+        )
+        if args.ruling:
+            evidence = dict(historical=historical_cases(root / 'historical', args.ruling.resolve()),
+                            pending_missing_receipt=pending_without_receipt(root / 'pending-missing-receipt'))
+            write_evidence(root / 'cancel-originals.json', evidence)
+    write_evidence(root / 'cancel.json', dict(cases=cases))
+    corpus = original_corpus(root / 'original-corpus') if args.original_corpus else None
     if corpus is not None:
-        write_evidence(args.out / 'cancel-corpus.json', corpus)
+        write_evidence(root / 'cancel-corpus.json', corpus)
     print(json.dumps(dict(exact_cut_and_restore=len(cases),
+                          historical_absence_cases=2 if args.ruling else 0,
                           original_cases=len(corpus['cases']) if corpus else None,
                           crash_cuts=len(corpus['crash_rows']) if corpus else None)))
 
