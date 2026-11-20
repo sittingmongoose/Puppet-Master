@@ -390,6 +390,17 @@ PROOFS = {
             'const reader_binding and string bounds). The identical value cannot newly fail '
             'the identical constraints, so no complete inspect call can make this row refuse '
             'alone. It closes by this proof once the inspect event schema row is closed.')),
+    'dg5/dgu/reader/input/request/schema': dict(
+        kind='entailed-by-input-result-request',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/reader/input/result/schema'],
+        sites=[(U, 1689), (U, 1702), (U, 1704), ('Plans/goal_updated_consumer_contracts.schema.json', 474),
+               ('Plans/goal_updated_consumer_contracts.schema.json', 484)],
+        argument=(
+            'The input reader forwards the original request into the result. InputReadResult '
+            'requires that field and validates it against the identical InputReadRequest '
+            'definition in the same schema bank. The complete call reaches that result '
+            'validation with the same invalid request when only the first check is disabled.')),
     'dg5/dgu/reader/receipt/receipt_request/schema': dict(
         kind='entailed-by-final-receipt-request',
         families=['goal.updated'],
