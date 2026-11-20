@@ -2009,6 +2009,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     changed_on_branch = 0
     seen_buckets: dict[str, int] = {}
     renamed_buckets: dict[str, int] = {}
+    nonstale_closure_fingerprints: dict[str, Counter[str]] = {}
     for item in items:
         name = bucket_of(item)
         fresh = False
@@ -2017,7 +2018,10 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             if item["error"] == "missing_ref" and item["stale"]:
                 renamed_buckets[name] = renamed_buckets.get(name, 0) + 1
             fingerprints = known.get(name, set())
-            fresh = fingerprints is not None and item["key"].rsplit("|", 1)[1] not in fingerprints
+            fingerprint = item["key"].rsplit("|", 1)[1]
+            fresh = fingerprints is not None and fingerprint not in fingerprints
+            if item["error"] == "audit_closure_validator_error" and not item["stale"]:
+                nonstale_closure_fingerprints.setdefault(name, Counter())[fingerprint] += 1
         # Rule 2: a failure that is not staleness, in a bucket the baseline holds whose count has not
         # risen, is pre-existing, content changed or not. It never blocks and is reported with both
         # counts whenever it would have been reported at all: on a branch file, or with new content.
@@ -2049,6 +2053,16 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             row["classes"] = dict(sorted(tally.items(), key=lambda pair: (-pair[1], pair[0])))
 
     grown = grown_buckets(seen_buckets, baseline_counts, renamed_buckets)
+    for row in grown:
+        name = row["bucket"]
+        fingerprints = known.get(name)
+        # Closure uses one error kind for stale hashes and other failures. A recorded fingerprint
+        # proves one baseline occurrence. Excuse growth only if that accounts for every current
+        # non-stale row. Sampled subchecks do not enter seen_buckets in the first place.
+        if (name.split("|", 3)[2] == "audit_closure_validator_error" and fingerprints is not None
+                and all(count == 1 and fingerprint in fingerprints
+                        for fingerprint, count in nonstale_closure_fingerprints.get(name, {}).items())):
+            row["stale"] = True
     subcheck_growth = grown_subchecks(compared, baseline.get("checks") or {})
     for row in subcheck_growth:
         row["stale"] = readiness_counter_is_staleness(row, items, run_counts, baseline_counts,

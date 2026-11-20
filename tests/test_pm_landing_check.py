@@ -1489,6 +1489,74 @@ class LandingRun(unittest.TestCase):
         return self.run_main("--base", self.base, "--baseline", "baseline.json", *argv)
 
 
+class ClosureRegistryGrowth(LandingRun):
+    PATH = "Plans/.audits/_semantic_closure_registry.jsonl"
+    REGISTRY = "Plans/event_family_registry.json"
+    ERROR = "audit_closure_validator_error"
+
+    def setUp(self):
+        super().setUp()
+        self.old = [self.closure_row(f"{self.PATH}:{n}: missing required closure proof") for n in range(1, 68)]
+        self.stale = self.closure_row(
+            f"{self.PATH}:1539: closure_evidence_hashes for {self.REGISTRY}#json=/families is stale "
+            f"(stored {'a' * 64}, current {'b' * 64})"
+        )
+        self.nonstale = self.closure_row(f"{self.PATH}:1540: missing required closure proof")
+        self.stub(audit={"audit_closure": self.old})
+        self.record()
+        self.touch(self.REGISTRY)
+
+    def closure_row(self, detail):
+        return {"path": self.PATH, "error": self.ERROR, "detail": detail}
+
+    def compare_closure(self, rows, expected_exit):
+        self.stub(audit={"audit_closure": rows})
+        code, out = self.compare("--json")
+        report = json.loads(out)
+        self.assertEqual(code, expected_exit, (report["grown_buckets"], report["grown_subchecks"]))
+        return report
+
+    def assert_stale_only_growth(self):
+        report = self.compare_closure(self.old + [self.stale], 1)
+        self.assertEqual(report["blocking"], 0)
+        self.assertEqual(report["grown_buckets"], [{
+            "bucket": f"audit-governance|audit_closure|{self.ERROR}|{self.PATH}",
+            "baseline_count": 67, "count": 68, "stale": True,
+        }])
+        self.assertEqual([(row["error"], row["stale"]) for row in report["new"]], [(self.ERROR, True)])
+
+    def test_complete_closure_growth_by_the_merge_3a_stale_row_exits_one(self):
+        self.assert_stale_only_growth()
+
+    def test_complete_closure_growth_by_a_nonstale_row_exits_two(self):
+        for added in (self.nonstale, self.old[0]):
+            with self.subTest(added=added):
+                report = self.compare_closure(self.old + [added], 2)
+                self.assertEqual(report["blocking"], 1)
+                self.assertFalse(report["grown_buckets"][0]["stale"])
+        self.assert_stale_only_growth()
+
+    def test_complete_mixed_closure_growth_exits_two(self):
+        # Replacing an old non-stale finding keeps their count level but adds a new fingerprint.
+        for old in (self.old, self.old[1:]):
+            with self.subTest(removed=len(self.old) - len(old)):
+                report = self.compare_closure(old + [self.stale, self.nonstale], 2)
+                self.assertEqual(report["blocking"], 1)
+                self.assertFalse(report["grown_buckets"][0]["stale"])
+        self.assert_stale_only_growth()
+
+    def test_truncated_closure_growth_keeps_the_total_only_rule(self):
+        report = self.compare_closure(self.old + [self.stale] * 34, 2)
+        self.assertEqual(report["blocking"], 1)
+        self.assertEqual(report["grown_buckets"], [])
+        self.assertEqual(report["subchecks_compared_by_total_only"], ["audit-governance/audit_closure"])
+        (growth,) = report["grown_subchecks"]
+        self.assertEqual((growth["baseline_reported"], growth["reported"], growth["sampled"]), (67, 101, 100))
+        self.assertTrue(growth["truncated"])
+        self.assertFalse(growth["stale"])
+        self.assert_stale_only_growth()
+
+
 def drift(source_path):
     """The Event Authority currentness row for one inventoried source whose stored hash no longer
     matches. It names the source only in `source_path`; its `path` is empty."""
