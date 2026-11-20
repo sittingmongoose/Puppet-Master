@@ -106,7 +106,13 @@ def activation_state(directory, negative):
     return world, owner.transition, ('subject', state, 0, 'active'), {'cause_ref': 'TEST_ONLY:cause'}
 
 
+def activation_revision(directory, negative):
+    world, owner = activation(directory)
+    return world, owner.transition, ('subject', 'ready', int(negative), 'active'), {'cause_ref': 'TEST_ONLY:cause'}
+
+
 CASES = {
+    'activation-revision': (ADAPTERS, 575, 'activation/cas_revision', activation_revision),
     'activation-state': (ADAPTERS, 574, 'activation/cas_state', activation_state),
     'original-bytes': (ADAPTERS, 503, 'original/bytes', original_bytes),
     'withdrawn-reference': (ADAPTERS, 500, 'original/withdrawn', withdrawn_reference),
