@@ -1,0 +1,545 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:050f8dad0deef3db": {
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/attempt_id/minLength": {
+        "path": [
+          "attempt_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/attempt_id/type": {
+        "path": [
+          "attempt_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/canonical_safe_point_key/minLength": {
+        "path": [
+          "canonical_safe_point_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/canonical_safe_point_key/type": {
+        "path": [
+          "canonical_safe_point_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/conflict_reason_code/enum": {
+        "path": [
+          "conflict_reason_code"
+        ],
+        "value": "gc:not-a-member"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/conflict_reason_code/type": {
+        "nullable_enum": true,
+        "path": [
+          "conflict_reason_code"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/hold_refs/items/minLength": {
+        "path": [
+          "hold_refs",
+          0
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/hold_refs/items/type": {
+        "path": [
+          "hold_refs",
+          0
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/hold_refs/minItems": {
+        "path": [
+          "hold_refs"
+        ],
+        "value": []
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/hold_refs/type": {
+        "path": [
+          "hold_refs"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/hold_refs/uniqueItems": {
+        "path": [
+          "hold_refs"
+        ],
+        "value": [
+          "x",
+          "x"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/mutation_lease_ref/minLength": {
+        "path": [
+          "mutation_lease_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/mutation_lease_ref/type": {
+        "path": [
+          "mutation_lease_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/node_id/minLength": {
+        "path": [
+          "node_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/node_id/type": {
+        "path": [
+          "node_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operation_cursor/minimum": {
+        "path": [
+          "operation_cursor"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operation_cursor/type": {
+        "path": [
+          "operation_cursor"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "operations",
+          0
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/canonical_path_ref/minLength": {
+        "path": [
+          "operations",
+          0,
+          "canonical_path_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/canonical_path_ref/type": {
+        "path": [
+          "operations",
+          0,
+          "canonical_path_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/expected_before_sha256/type": {
+        "path": [
+          "operations",
+          0,
+          "expected_before_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/operation_id/minLength": {
+        "path": [
+          "operations",
+          0,
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/operation_id/type": {
+        "path": [
+          "operations",
+          0,
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/operation_kind/minLength": {
+        "path": [
+          "operations",
+          0,
+          "operation_kind"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/operation_kind/type": {
+        "path": [
+          "operations",
+          0,
+          "operation_kind"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/stage_ref/type": {
+        "path": [
+          "operations",
+          0,
+          "stage_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/state/minLength": {
+        "path": [
+          "operations",
+          0,
+          "state"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/state/type": {
+        "path": [
+          "operations",
+          0,
+          "state"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/target_sha256/type": {
+        "path": [
+          "operations",
+          0,
+          "target_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/required": {
+        "member": [
+          "remove",
+          "operation_id"
+        ],
+        "path": [
+          "operations",
+          0
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/type": {
+        "path": [
+          "operations",
+          0
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/type": {
+        "path": [
+          "operations"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/phase/enum": {
+        "path": [
+          "phase"
+        ],
+        "value": "preparedx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/post_restore_state_sha256/type": {
+        "path": [
+          "post_restore_state_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/pre_restore_manifest_ref/minLength": {
+        "path": [
+          "pre_restore_manifest_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/pre_restore_manifest_ref/type": {
+        "path": [
+          "pre_restore_manifest_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/pre_restore_manifest_sha256/pattern": {
+        "path": [
+          "pre_restore_manifest_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/pre_restore_manifest_sha256/type": {
+        "path": [
+          "pre_restore_manifest_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/pre_restore_state_sha256/pattern": {
+        "path": [
+          "pre_restore_state_sha256"
+        ],
+        "value": "f40861a2fa34172c310b813cec548f79825dd7c66a29f557292b8e4d27dad119\n"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/pre_restore_state_sha256/type": {
+        "path": [
+          "pre_restore_state_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/project_id/minLength": {
+        "path": [
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/project_id/type": {
+        "path": [
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/recovered_after_restart/type": {
+        "path": [
+          "recovered_after_restart"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/redaction_profile/enum": {
+        "path": [
+          "redaction_profile"
+        ],
+        "value": "no_secretsx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/restart_count/minimum": {
+        "path": [
+          "restart_count"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/restart_count/type": {
+        "path": [
+          "restart_count"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/restore_outcome/enum": {
+        "path": [
+          "restore_outcome"
+        ],
+        "value": "gc:not-a-member"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/restore_outcome/type": {
+        "nullable_enum": true,
+        "path": [
+          "restore_outcome"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/restore_transaction_id/minLength": {
+        "path": [
+          "restore_transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/restore_transaction_id/type": {
+        "path": [
+          "restore_transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/result_event_ref/type": {
+        "path": [
+          "result_event_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/run_id/minLength": {
+        "path": [
+          "run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/run_id/type": {
+        "path": [
+          "run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/safe_point_id/minLength": {
+        "path": [
+          "safe_point_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/safe_point_id/type": {
+        "path": [
+          "safe_point_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.safe_point_restore_transaction.v1x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/started_at_utc/format": {
+        "path": [
+          "started_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/started_at_utc/type": {
+        "path": [
+          "started_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/target_manifest_ref/minLength": {
+        "path": [
+          "target_manifest_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/target_manifest_ref/type": {
+        "path": [
+          "target_manifest_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/target_manifest_sha256/pattern": {
+        "path": [
+          "target_manifest_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/target_manifest_sha256/type": {
+        "path": [
+          "target_manifest_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/target_state_sha256/pattern": {
+        "path": [
+          "target_state_sha256"
+        ],
+        "value": "af075d0a090af417e6485e4c5620bce8a7451bd31d78ce60fed6cb49848b70c9\n"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/target_state_sha256/type": {
+        "path": [
+          "target_state_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/updated_at_utc/format": {
+        "path": [
+          "updated_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/updated_at_utc/type": {
+        "path": [
+          "updated_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/type": {
+        "path": [],
+        "value": true
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "routes": [
+    {
+      "call": "filesafe_invocation",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "original_profile",
+      "mutation": true,
+      "refusal": "issue/safe_point_restore_transaction/schema/",
+      "restore": "commit",
+      "root": "dg5:050f8dad0deef3db",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ]
+    }
+  ],
+  "row": "dg5/issue/safe_point_restore_transaction/schema",
+  "rule_controls": {
+    "dg5:050f8dad0deef3db": {
+      "attempt_id": "TEST_ONLY:attempt_id:58d706f974d44d27",
+      "canonical_safe_point_key": "x",
+      "conflict_reason_code": null,
+      "hold_refs": [
+        "x"
+      ],
+      "mutation_lease_ref": "TEST_ONLY:mutation_lease_ref:c09982f1712f411a",
+      "node_id": "TEST_ONLY:node_id:562d7cb3d4744095",
+      "operation_cursor": 0,
+      "operations": [
+        {
+          "canonical_path_ref": "TEST_ONLY:path:src/app.py",
+          "expected_before_sha256": "2c268a274911bcbc41bea23e0745c8e9532a403bb5f52c3916f9d31d0c04220f",
+          "operation_id": "TEST_ONLY:op:filesafe:764dbe39a4b6:restore:0",
+          "operation_kind": "x",
+          "stage_ref": "TEST_ONLY:stage:TEST_ONLY:op:filesafe:764dbe39a4b6:0",
+          "state": "x",
+          "target_sha256": "8a0ab3c31b83babf1314ae989bac667a34b9bf9f68c2852973ad9e4807bc3c3f"
+        },
+        {
+          "canonical_path_ref": "TEST_ONLY:path:src/new.py",
+          "expected_before_sha256": "0ccde10549e541db898a2e3f2238ac399a12caca93d6e292c518dac8a7c58c6d",
+          "operation_id": "TEST_ONLY:op:filesafe:764dbe39a4b6:restore:1",
+          "operation_kind": "x",
+          "stage_ref": "TEST_ONLY:stage:TEST_ONLY:op:filesafe:764dbe39a4b6:1",
+          "state": "x",
+          "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "phase": "committed",
+      "post_restore_state_sha256": "af075d0a090af417e6485e4c5620bce8a7451bd31d78ce60fed6cb49848b70c9",
+      "pre_restore_manifest_ref": "test_only_filesafe_workspace:OTU3NzBhODktM2Y5NS00ZWJhLTlkOWEtOTcyMGE2ZDNhZDk5:9e6823ed47a146024eb6aa25fbac6eac61306bef8010653c3b4ad19595a570a6",
+      "pre_restore_manifest_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "pre_restore_state_sha256": "f40861a2fa34172c310b813cec548f79825dd7c66a29f557292b8e4d27dad119",
+      "project_id": "TEST_ONLY-project-c3e5c109f2ee",
+      "recovered_after_restart": false,
+      "redaction_profile": "no_secrets",
+      "restart_count": 0,
+      "restore_outcome": "restored_clean",
+      "restore_transaction_id": "TEST_ONLY:op:filesafe:764dbe39a4b6",
+      "result_event_ref": null,
+      "run_id": "TEST_ONLY:run_id:b35513354f14484b",
+      "safe_point_id": "TEST_ONLY:safe_point_id:ec3fd8ef41884601",
+      "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+      "schema_version": "1.0.0",
+      "started_at_utc": "2026-11-20T13:43:30.148Z",
+      "target_manifest_ref": "test_only_filesafe_workspace:OTU3NzBhODktM2Y5NS00ZWJhLTlkOWEtOTcyMGE2ZDNhZDk5:9e6823ed47a146024eb6aa25fbac6eac61306bef8010653c3b4ad19595a570a6",
+      "target_manifest_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "target_state_sha256": "af075d0a090af417e6485e4c5620bce8a7451bd31d78ce60fed6cb49848b70c9",
+      "updated_at_utc": "2026-11-20T13:43:30.149Z"
+    }
+  },
+  "sites": [
+    [
+      "scripts/pm_goal_dg_r_world.py",
+      446
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}
