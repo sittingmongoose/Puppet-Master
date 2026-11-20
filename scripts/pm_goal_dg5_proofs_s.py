@@ -494,3 +494,19 @@ PROOFS['dg5/read_historical/final/append/root/schema'] = dict(
         'disabled. Restoring the early check restores its original refusal.'
     ),
 )
+
+PROOFS['dg5/read_historical/original/root/schema'] = dict(
+    kind='entailment',
+    families=['goal_run.started'],
+    depends_on=['dg5/read_historical/root/schema'],
+    sites=[('scripts/pm_goal_dg_s_readers.py', 94), ('scripts/pm_goal_dg_s_readers.py', 253), ('scripts/pm_goal_dg_s_readers.py', 255), ('scripts/pm_goal_dg_s_readers.py', 256), ('scripts/pm_goal_dg_s_readers.py', 895), ('scripts/pm_goal_dg_s_readers.py', 901), ('scripts/pm_goal_dg_s_readers.py', 902), ('scripts/pm_goal_dg_s_readers.py', 905), ('scripts/pm_goal_dg_s_readers.py', 906)],
+    argument=(
+        'The retained document checked at 94 is inserted unchanged at 255. The enclosing schema '
+        'at 256 requires the same retained definition. The historical output at 905–906 '
+        'requires the same enclosing definition, and the comparison at 902 requires both '
+        'original copies to be type-exact equal. With only the retained site disabled the same '
+        'invalid document reaches the enclosing schema. With only the enclosing site disabled '
+        'the comparison refuses the changed copy. Both original validation messages return when '
+        'their site is restored.'
+    ),
+)

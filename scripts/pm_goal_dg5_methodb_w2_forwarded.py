@@ -20,6 +20,10 @@ HISTORICAL_APPEND = {
     f'dg5/read_historical/{phase}/append/root/schema': f'read_historical/{phase}/root'
     for phase in ('original', 'final')
 }
+HISTORICAL_ORIGINAL = {
+    f'dg5/read_historical/{phase}/root/schema': f'read_historical/{phase}/root'
+    for phase in ('original', 'final')
+}
 DEPENDENCIES = {
     'dg5/start/commit/schema': ('start/retained_native', 'commit', 'StorageCommit', 1272, 'commit'),
     'dg5/start/origin/schema': ('start/retained_native', 'origin', 'StorageOrigin', 1272, 'origin'),
@@ -99,6 +103,71 @@ class ForwardedCall(worker.CompleteCall):
             super().in_child(Receipt(), edit, cut, replay)
 
 
+class HistoricalOriginalCall(worker.CompleteCall):
+    def in_child(self, sender, edit, cut, replay):
+        retained = self.declaration['validation_site'] == [READERS, 94]
+        code = HISTORICAL_ORIGINAL[self.row]
+        reader = worker.stage.original.R
+        validate, same = worker.world.Bank.validate, reader.same
+        forwarded, historical = [], []
+
+        def observe(bank, reference, value, prefix='root'):
+            edition = self.fixture.world.edition
+            original_ref = edition.consumer + '#/$defs/OriginalStarted'
+            retained_ref = edition.consumer + '#/$defs/RetainedNativeStart'
+            if retained and prefix == code and reference == original_ref:
+                frame = sys._getframe(2)
+                worker.require(frame.f_code.co_filename == reader.__file__ and frame.f_lineno == 256,
+                               'the enclosing retained check moved')
+                target = bank.lookup(reference)
+                child = target.contents['properties']['native_start']
+                worker.require('native_start' in target.contents['required'] and
+                               target.resolver.lookup(child['$ref']).contents is bank.lookup(retained_ref).contents,
+                               'the enclosing schema must require the original retained definition')
+                forwarded.append(dict(site=(READERS, 256), value=copy.deepcopy(value['native_start']),
+                                      errors=worker.error_records(bank.errors(reference, value))))
+            if prefix == 'read_historical/root':
+                target = bank.lookup(reference)
+                child = target.contents['properties']['original']
+                original = target.resolver.lookup(child['$ref'])
+                worker.require('original' in target.contents['required'] and
+                               original.contents is bank.lookup(original_ref).contents,
+                               'the result must require the same original definition')
+                if retained:
+                    native = original.contents['properties']['native_start']
+                    worker.require('native_start' in original.contents['required'] and
+                                   original.resolver.lookup(native['$ref']).contents is bank.lookup(retained_ref).contents,
+                                   'the result must require the same retained definition')
+                original_value = value['original']
+                historical.append(copy.deepcopy(original_value['native_start'] if retained else original_value))
+            return validate(bank, reference, value, prefix)
+
+        def compare(final, original):
+            result = same(final, original)
+            frame = sys._getframe(1)
+            if frame.f_code.co_filename == reader.__file__ and frame.f_lineno == 902:
+                value, other = (final, original) if '/final/' in self.row else (original, final)
+                ref = self.fixture.world.edition.consumer + '#/$defs/OriginalStarted'
+                worker.require(not self.fixture.bank.errors(ref, other), 'the other original copy must validate')
+                forwarded.append(dict(site=(READERS, 902), value=copy.deepcopy(value), same=result,
+                                      expected=copy.deepcopy(other),
+                                      errors=worker.error_records(self.fixture.bank.errors(ref, value))))
+            return result
+
+        class Receipt:
+            def send(self, result):
+                sender.send(dict(result, forwarded=forwarded, historical=historical))
+
+            def close(self):
+                sender.close()
+
+        with ExitStack() as changes:
+            changes.enter_context(patch.object(worker.world.Bank, 'validate', observe))
+            if not retained:
+                changes.enter_context(patch.object(reader, 'same', compare))
+            super().in_child(Receipt(), edit, cut, replay)
+
+
 def check_calls(example, collector, ident, later_code, *, alter_copy=False):
     try:
         example.prove(collector)
@@ -122,11 +191,11 @@ def check_calls(example, collector, ident, later_code, *, alter_copy=False):
                    forward['errors'][0]['message'] == invalid['observations'][0]['first_message'] and
                    positive_forward['value'] == control['input'] and not positive_forward['errors'],
                    'the later check did not receive the same document and validation message')
-    if example.row == REPRESENTATION:
+    if 'same' in forward:
         worker.require(positive_forward['same'] and not forward['same'] and
                        positive_forward['expected'] == forward['expected'] == control['input'],
                        'the comparison did not use the same schema-valid document')
-    if example.row in HISTORICAL_APPEND:
+    if example.row in HISTORICAL_APPEND or example.row in HISTORICAL_ORIGINAL:
         worker.require(accepted['historical'] == [control['input']] and not disabled['historical'],
                        'the final historical document did not use the same validated append value')
     return control
@@ -142,17 +211,23 @@ def check_root(out, name, specification, sites, reference, previous, alter_copy,
     out.mkdir(parents=True)
     suite = worker.stage.original.Suite(out / 'stores')
     fixture = worker.Fixture(suite, specification['route'], specification['edition'])
-    experiment = ForwardedCall(fixture, name, sites, specification)
+    original = name in HISTORICAL_ORIGINAL
+    experiment_type = HistoricalOriginalCall if original else ForwardedCall
+    experiment = experiment_type(fixture, name, sites, specification)
     collector = worker.stage.sweep.Collector()
-    late, _, _, _, defect = DEPENDENCIES[name]
-    later_code = f'{late}/schema/{defect}:additionalProperties' if defect else late
+    if original:
+        later_code = (HISTORICAL_ORIGINAL[name] + '/schema/native_start:additionalProperties'
+                      if specification['validation_site'] == [READERS, 94] else 'read_historical/final_fence')
+    else:
+        late, _, _, _, defect = DEPENDENCIES[name]
+        later_code = f'{late}/schema/{defect}:additionalProperties' if defect else late
     captured = check_calls(experiment, collector, ident, later_code, alter_copy=alter_copy)
     examples = worker.PreviousExamples()
     replayed = worker.replay_root(fixture, captured, reference, examples.entries(previous), None)
     proof = worker.pilot.run_gates(collector, out, [name])
     binding = proof / 'source-bindings.json'
     source_bindings = json.loads(binding.read_bytes())
-    checker = READERS if name == REPRESENTATION or name in HISTORICAL_APPEND else START
+    checker = READERS if name == REPRESENTATION or name in HISTORICAL_APPEND or original else START
     for source in (Path(worker.__file__), Path(worker.stage.__file__), Path(__file__), worker.ROOT / checker):
         source_bindings['files'][str(source.relative_to(worker.ROOT))] = worker.sha(source)
     worker.write(binding, source_bindings)
@@ -191,7 +266,7 @@ def main():
     banks = {'v3': v3.bank.original, 'v7': v7.bank.original}
     for path, case in cases:
         row = case['row']
-        worker.require(row in DEPENDENCIES, f'no checked forwarding premise for {row}')
+        worker.require(row in DEPENDENCIES or row in HISTORICAL_ORIGINAL, f'no checked forwarding premise for {row}')
         mapped = reference['rows'][row]
         worker.require(sorted(mapped['roots']) == sorted(item['root'] for item in case['fixtures']),
                        f'{row}: declaration omits or repeats an exact root')

@@ -43,6 +43,9 @@ REQUIRED_CHILDREN = ('source', 'record', 'required_children')
 
 class Fixture(stage.Fixture):
     def prepare(self):
+        if self.route.startswith('read_original/'):
+            _, reader, _ = stage.original.projected(self.world)
+            return reader.read_historical, (stage.original.sreq(self.world),)
         if self.route == 'projection/record':
             readers = stage.original.R
             return readers.projection_record, (self.world, readers.original_started(self.world))
@@ -139,6 +142,11 @@ class Fixture(stage.Fixture):
                     yield origin_control
         elif self.route in ('read_historical/root', 'read_current/root'):
             yield from self.transition_controls(value, ('original', 'native_start', 'original_d01_update', 'record'))
+        elif self.route.startswith('read_original/'):
+            path = ('original_d01_update', 'record')
+            if self.route.endswith('/enclosing'):
+                path = ('native_start', *path)
+            yield from self.transition_controls(value, path)
 
     def publish_origin_control(self, value):
         """Select the installed D06 published-origin alternative in the result schema."""
@@ -188,6 +196,12 @@ class Fixture(stage.Fixture):
             yield variant
 
     def call(self, edit):
+        if self.route.startswith('read_original/') and edit:
+            where, definition = self.route.removeprefix('read_original/').rsplit('/', 1)
+            _, path, change = edit
+            if definition == 'retained':
+                return self.call_output('retained_native', 94, 'retained', path, change, where)
+            return self.call_output('original_started', 256, 'value', path, change, where)
         if self.route == 'projection/record' and edit:
             skeleton = world.skeleton
             selector = self.world.edition.consumer + '#/$defs/Projection'
@@ -238,13 +252,13 @@ class Fixture(stage.Fixture):
             value = rules.apply(value, path, tuple(change) if isinstance(change, list) else change)
         return self.action(root, value, kind=self.issue_kind)
 
-    def call_output(self, function, line, local_name, path, change):
+    def call_output(self, function, line, local_name, path, change, where=None):
         """Edit an assembled reader document immediately before validation."""
         reader_source = stage.original.R.__file__
         seen = []
 
         def at_result(frame, event, _):
-            if event == 'line' and frame.f_lineno == line:
+            if event == 'line' and frame.f_lineno == line and (where is None or frame.f_locals['where'] == where):
                 value = frame.f_locals[local_name]
                 changed = rules.apply(value, path, tuple(change))
                 value.clear()
