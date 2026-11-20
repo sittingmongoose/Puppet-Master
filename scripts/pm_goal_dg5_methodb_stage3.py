@@ -2549,7 +2549,7 @@ def main():
                 source_declaration = args.declaration.parent / 'updated-source-audit.json'
             source_audit = source_audit_checks(plain, actual_bank, accepted, census, source_declaration, args.disable_check)
         reader_sources = None
-        if audit_case:
+        if audit_case or row == 'dg5/dgu/inspect/witness/schema':
             from pm_goal_dg5_methodb_reader_results import READER_ROOTS, run_reader_children
 
             fields = {example['field'] for example in declare['examples'].values() if example['reader_case'] == 'projected'}
