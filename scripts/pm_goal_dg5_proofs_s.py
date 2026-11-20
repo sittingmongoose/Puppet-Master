@@ -850,3 +850,17 @@ PROOFS['dg5/inspect_original/original/append/root/schema'] = dict(
         'check, and restoring the first check restores its original refusal.'
     ),
 )
+
+PROOFS['dg5/inspect_original/final/append/root/schema'] = dict(
+    kind='entailment',
+    families=['goal_run.started'],
+    depends_on=['dg5/inspect_original/final/root/schema'],
+    sites=[('scripts/pm_goal_dg_s_readers.py', 105), ('scripts/pm_goal_dg_s_readers.py', 253), ('scripts/pm_goal_dg_s_readers.py', 254), ('scripts/pm_goal_dg_s_readers.py', 256), ('scripts/pm_goal_dg_s_readers.py', 883)],
+    argument=(
+        'The inspection forwards the exact append document validated at line 105 unchanged in '
+        'the required original_append member checked at line 256. That member uses the same '
+        'installed definition. The accepted example supplies identical JSON to both checks. '
+        'Disabling only the first check moves the same validation message to the enclosing '
+        'check, and restoring the first check restores its original refusal.'
+    ),
+)
