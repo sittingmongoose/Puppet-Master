@@ -257,7 +257,7 @@ def certified_fixture(route, path):
     if route in ('arm', 'arm_intent_check'):
         run.until('prepare')
         return w, lambda: w.coordinator.arm(ctx, run.obs['prepared'])
-    if route in ('f5d', 'f5d_after_event_phase'):
+    if route in ('f5d', 'f5d_after_event_phase', 'f5d_repeated_evidence'):
         # The original held append prepares real Event custody and barrier inputs.
         # Stop at the EventPhase owner's entry so each trial starts before its write.
         captured = []
@@ -272,7 +272,7 @@ def certified_fixture(route, path):
             except RootCapture:
                 pass
         require(len(captured) == 5, 'held append did not supply the EventPhase arguments')
-        if route == 'f5d_after_event_phase':
+        if route != 'f5d':
             check_certified_evidence_reused(oracle.W, w, route)
         stamp = w.storage.now()
 
@@ -499,6 +499,12 @@ def check_certified_evidence_reused(module, world, route):
         require('evidence' in schema['required'] and
                 schema['properties']['evidence'] == {'$ref': module.APPEND + 'AppendEvidence'},
                 'the result no longer requires the same evidence definition')
+        if route == 'f5d_repeated_evidence':
+            final = 'final(evidence)'
+            write = "w.storage.transact_stamped(build, writer=self.owner_ref(ctx['op']))"
+            require(body.count(final) == 2 and "self.check_evidence(ctx, evidence_now, stage=stage)" in body and
+                    body.rindex(final) < body.index(write) < body.index(check),
+                    'F5d no longer checks the same evidence twice before the EventPhase write')
 
 
 class OwnerCheck:
@@ -529,20 +535,24 @@ class OwnerCheck:
         expected = self.code + '/schema/'  # extra member is rejected at the enclosing object
         request_validation = []
         evidence_validation = []
+        repeated_evidence = self.declare['route'] == 'f5d_repeated_evidence'
         next_evidence_check = {
             'commit_evidence_recheck': 'commit_final/evidence',
             'retry_evidence_recheck': 'retry/result',
         }.get(self.declare['route'])
         if self.row == 'dg5/append_outer/evidence/schema':
             next_evidence_check = 'append/result'
+        if repeated_evidence:
+            next_evidence_check = 'append_outer/evidence'
 
         def observe(bank, *args):
             if args[-1] != self.code:
                 if args[-1] == next_evidence_check:
-                    first_bank, first_realm, first_ref, first_document = evidence_validation[0]
-                    ref, document = (first_ref, args[-2]) if args[-1] == 'commit_final/evidence' else (
-                        first_ref.removesuffix('AppendEvidence') + 'AppendedHeld', args[-2]['evidence'])
-                    require(first_bank is bank and (first_realm, ref, first_document) == (args[0], args[1], document),
+                    ref, document = args[1], args[-2]
+                    if args[-1] in ('append/result', 'retry/result'):
+                        ref, document = ref.removesuffix('AppendedHeld') + 'AppendEvidence', document['evidence']
+                    require(evidence_validation and all(item[0] is bank and item[1:] == (args[0], ref, document)
+                                                        for item in evidence_validation),
                             'later evidence rule received a different document or schema')
                     record['same_later_evidence'] = True
                 if self.declare['route'] == 'receipt_recheck' and args[-1] == 'dgu/reader/receipt/final/receipt_request':
@@ -559,16 +569,20 @@ class OwnerCheck:
             frame = sys._getframe(1)
             site = [str(Path(frame.f_code.co_filename).relative_to(self.source)), frame.f_lineno]
             require(site == self.site, f'owner call source changed: {site}')
-            if prefix_store is not None:
+            if prefix_store is not None and not record['observations']:
                 record['store_at_validator'] = self.result_digest(bridge.manifest(bridge.file_state(prefix_store)))
                 record['realm_ref'] = list(args[:-2])
             document = args[-2]
             if edit is not None:
                 require(isinstance(document, dict), 'complete-call extra-member example needs an object')
                 member = edit['member'][1]
-                require(member not in document, 'test document already has the extra member')
-                changed.append((document, member))
-                document[member] = 'gc'
+                if repeated_evidence and changed:
+                    require(changed[0][0] is document and document[member] == 'gc',
+                            'the repeated F5d check received a different document')
+                else:
+                    require(member not in document, 'test document already has the extra member')
+                    changed.append((document, member))
+                    document[member] = 'gc'
             if self.declare['route'] in ('receipt_recheck', 'input_recheck'):
                 request_validation.append((bank, args[0], copy.deepcopy(document)))
             if next_evidence_check:
@@ -630,7 +644,12 @@ class OwnerCheck:
             for document, member in changed:
                 document.pop(member)
         self.runs.append(record)
-        require(len(record['observations']) == 1, 'target must run exactly once in the complete call')
+        repetitions = 1
+        if repeated_evidence and (edit is None or (record['cut'] and self.disabled_check != 'row')):
+            repetitions = 2
+        require(len(record['observations']) == repetitions and
+                all(observation == record['observations'][0] for observation in record['observations']),
+                'the complete call did not repeat the expected validation on the same document')
         if require_exact:
             require(record.get('refusal') == (expected if edit else None),
                     f"expected original validation message {expected if edit else None!r}, "
@@ -655,6 +674,7 @@ class OwnerCheck:
                     'unexpected auxiliary backing store')
         manifest = bridge.manifest(bridge.file_state(copied))
         allow_prefix = self.declare['route'] == 'f5d_after_event_phase'
+        repeat_before_prefix = self.declare['route'] == 'f5d_repeated_evidence'
         if allow_prefix:
             require(self.row in ('dg5/append/result/schema', 'dg5/append_outer/evidence/schema'),
                     'only the F5d checks after EventPhase may have a written prefix')
@@ -668,13 +688,19 @@ class OwnerCheck:
                     for store in {id(store): store for store in stores if store is not None}.values():
                         changes.enter_context(patch.object(store, 'root', copied / store.root.relative_to(self.scratch)))
                     record = self.call(action, edit, require_exact=require_exact,
-                                       prefix_store=copied if allow_prefix else None)
+                                       prefix_store=copied if (allow_prefix or repeat_before_prefix) else None)
                     final_manifest = bridge.manifest(bridge.file_state(copied))
                     record['store_wrote'] = final_manifest != manifest
                     if allow_prefix:
                         require(record['store_wrote'] and
                                 record['store_at_validator'] == self.result_digest(final_manifest),
                                 'F5d must write only its EventPhase prefix before this validation')
+                    elif repeat_before_prefix:
+                        require(record['store_at_validator'] == self.result_digest(manifest),
+                                'the first F5d evidence check must precede the EventPhase write')
+                        require(record['store_wrote'] == (edit is None or record.get('same_later_evidence', False)),
+                                'the EventPhase write must happen only after the two evidence checks')
+                        record['final_store'] = self.result_digest(final_manifest)
                     elif record['errors']:
                         require(not record['store_wrote'], 'refused owner call changed its copied store')
                     sender.send(record)
@@ -739,11 +765,14 @@ class OwnerCheck:
                 if self.declare['route'] in ('commit_evidence_recheck', 'retry_evidence_recheck') or (
                         self.row == 'dg5/append_outer/evidence/schema'):
                     require(cut.get('same_later_evidence'), 'later evidence check did not use the original document')
-                require(before == restored and before['observations'] == cut['observations'] and
+                if self.declare['route'] == 'f5d_repeated_evidence':
+                    require(cut.get('same_later_evidence') and cut['final_store'] == self.runs[0]['final_store'],
+                            'repeated F5d checks did not validate the same evidence and leave the same EventPhase write')
+                require(before == restored and before['observations'][0] == cut['observations'][0] and
                         bool(cut['errors']) == bool(later),
                         'the complete call did not restore the same document and validation message')
         require(self.runs[0] == self.runs[-1], 'the restored accepted control changed')
-        if self.declare['route'] == 'f5d_after_event_phase':
+        if self.declare['route'] in ('f5d_after_event_phase', 'f5d_repeated_evidence'):
             require(len({record['store_at_validator'] for record in self.runs}) == 1,
                     'the trials changed the EventPhase prefix')
             control = self.runs[0]
@@ -1383,6 +1412,7 @@ def main():
         ('dg5/commit/evidence/schema', 'commit_evidence_recheck'): 'commit_final/evidence/schema/',
         ('dg5/retry/evidence/schema', 'retry_evidence_recheck'): 'retry/result/schema/evidence',
         ('dg5/append_outer/evidence/schema', 'f5d_after_event_phase'): 'append/result/schema/evidence',
+        ('dg5/f5d/evidence/schema', 'f5d_repeated_evidence'): 'append_outer/evidence/schema/',
         ('dg5/dgu/reader/receipt/receipt_request/schema', 'receipt_recheck'):
             'dgu/reader/receipt/final/receipt_request/schema/',
         ('dg5/dgu/producer/publish/publication/schema', 'publish_receipted'): 'dgu/progress/schema/',
