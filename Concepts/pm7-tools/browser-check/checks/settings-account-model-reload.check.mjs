@@ -187,6 +187,12 @@ export const tests = {
 			const after = await f.evaluate(ACCOUNT_STATE);
 			await t.check(`FO-228 ${look}: the reload kept both choices before the shot`, !!after && after.defaultModel === 'claude-opus' && after.pick === 'claude-code/claude-opus', JSON.stringify(after));
 			fs.writeFileSync(path.join(dir, `fo228-${look}-after-reload.png`), await t.page.screenshot());
+			/* second framing: the shared picker's own row centred, so the model and its depth are in the picture too */
+			await f.evaluate(() => { const el = document.querySelector('.pm51-acc-item[data-acc="acc-claude-code-work-claude"] .o55-msel[data-o55-msel="ai.accounts.default-model"]'); if (el) el.scrollIntoView({ block: 'center' }); });
+			await t.page.waitForTimeout(500);
+			const pface = await f.evaluate(PICKER_FACE);
+			await t.check(`FO-228 ${look}: the picker row names the kept model and depth before its shot`, /Claude Opus/.test(pface.name) && pface.small.includes('Max depth'), JSON.stringify(pface));
+			fs.writeFileSync(path.join(dir, `fo228-${look}-picker-after-reload.png`), await t.page.screenshot());
 		}
 	}
 };
