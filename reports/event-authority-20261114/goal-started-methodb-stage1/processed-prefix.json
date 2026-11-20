@@ -1,0 +1,22 @@
+{
+  "row": "dg5/prefix/root/schema",
+  "fixtures": [
+    {
+      "route": "prefix",
+      "edition": "v3",
+      "edit": [
+        1,
+        [
+          "coverage_sha256"
+        ],
+        "not-a-sha256"
+      ],
+      "error": [
+        [
+          "coverage_sha256"
+        ],
+        "pattern"
+      ]
+    }
+  ]
+}
