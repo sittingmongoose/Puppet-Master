@@ -1536,6 +1536,9 @@ class GuardTable:
         self._issued.clear()
         self._errors.clear()
         _GUARD_TRACES[self] = {'calls': [], 'refused_at': None}
+        if self._schema:
+            self._schema.view = None
+            self._schema.consumed.clear()
 
 
 @dataclass
@@ -1543,6 +1546,34 @@ class Case:
     table: GuardTable
     check: Callable[[Any], bool]
     context: Any = None
+
+
+def run_case(case: Case, value: Any) -> tuple[str, str] | None:
+    """Run one original case and return its issued refusal, or None for acceptance."""
+    if type(case) is not Case or type(case.table) is not GuardTable or not callable(case.check):
+        raise IsolationError('expected Case with a GuardTable and callable check')
+    table = case.table
+    if table._bound:
+        raise IsolationError('table is already bound to a case')
+    try:
+        table._bind(value, case.context, frozenset())
+        try:
+            result = case.check(value)
+        except GuardRefusal as exc:
+            if table._errors:
+                raise IsolationError(table._errors[0]) from exc
+            if len(table._issued) != 1 or table._issued[0] is not exc:
+                raise IsolationError('table did not issue the propagated refusal') from exc
+            return exc.guard, exc.code
+        if table._errors:
+            raise IsolationError(table._errors[0])
+        if table._issued:
+            raise IsolationError('check swallowed a table refusal')
+        if result is not True:
+            raise IsolationError('case check must return True on acceptance')
+        return None
+    finally:
+        table._restore()
 
 
 @dataclass(frozen=True)

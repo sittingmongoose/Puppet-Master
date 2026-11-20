@@ -33,6 +33,25 @@ def reference_keys(fragment):
 
 
 class GuardEngineTests(unittest.TestCase):
+    def test_run_case_verdict_and_restoration(self):
+        suite = ddbg.retry_request_suite()
+        negative = next(n for n in suite.negatives if n.target == 'retry.authorization')
+        control = next(c for c in suite.controls if c.id == negative.control)
+        case = suite.factory(control.value)
+        self.assertEqual(guard.run_case(case, negative.value), (negative.target, negative.code))
+        self.assertIsNone(guard.run_case(case, control.value))
+
+        def forged_refusal(value):
+            raise guard.GuardRefusal(negative.target, negative.code)
+
+        invalid_case = guard.Case(case.table, forged_refusal, case.context)
+        with self.assertRaisesRegex(guard.IsolationError, 'did not issue'):
+            guard.run_case(invalid_case, control.value)
+        self.assertIsNone(guard.run_case(case, control.value))
+        with self.assertRaisesRegex(guard.IsolationError, 'return True'):
+            guard.run_case(guard.Case(case.table, lambda value: False, case.context), control.value)
+        self.assertIsNone(guard.run_case(case, control.value))
+
     def test_ddbg_retry_from_repository_root(self):
         with chdir(ROOT):
             report = guard.run(ddbg.retry_request_suite())
