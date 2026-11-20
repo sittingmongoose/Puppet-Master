@@ -16,6 +16,12 @@ import pm_goal_dg5_methodb_w2 as worker
 START = 'scripts/pm_goal_dg_s_start.py'
 READERS = 'scripts/pm_goal_dg_s_readers.py'
 REPRESENTATION = 'dg5/representation/record/schema'
+ADAPTERS = 'scripts/pm_goal_test_owner_adapters.py'
+ISSUER_FORWARDING = {
+    'dg5/goal/current_argument/schema': 'issue/CurrentGoalArgument',
+    'dg5/d01/current_source/schema': 'issue/current_source',
+}
+CURRENT_GOAL_CHECKS = {'dg5/read_current/current_goal/schema', 'dg5/read_current/final/current_goal/schema'}
 HISTORICAL_APPEND = {
     f'dg5/read_historical/{phase}/append/root/schema': f'read_historical/{phase}/root'
     for phase in ('original', 'final')
@@ -64,7 +70,13 @@ DEPENDENCIES = {
 
 class ForwardedCall(worker.CompleteCall):
     def in_child(self, sender, edit, cut, replay):
-        code, member, definition, line, _ = DEPENDENCIES[self.row]
+        issuer = self.row in ISSUER_FORWARDING
+        goal_comparison = self.row in CURRENT_GOAL_CHECKS
+        if issuer or goal_comparison:
+            code, member, definition, line = (ISSUER_FORWARDING[self.row], None, None, 462) if issuer else (
+                'read_current/final_current_goal', None, 'CurrentGoalArgument', 934)
+        else:
+            code, member, definition, line, _ = DEPENDENCIES[self.row]
         forwarded = []
         original_validate = worker.world.Bank.validate
         reader = worker.stage.original.R
@@ -72,6 +84,14 @@ class ForwardedCall(worker.CompleteCall):
         historical = []
 
         def observe(bank, reference, value, prefix='root'):
+            if issuer and prefix == code:
+                frame = sys._getframe(2)
+                site = str(Path(frame.f_code.co_filename).relative_to(worker.ROOT)), frame.f_lineno
+                worker.require(site == (ADAPTERS, line) and reference == self.declaration['schema_reference'],
+                               'the issuer uses a different original validator')
+                forwarded.append(dict(site=site, reference=reference, value=copy.deepcopy(value),
+                                      errors=worker.error_records(bank.errors(reference, value))))
+                return original_validate(bank, reference, value, prefix)
             reader_append = self.row in READ_APPEND
             if self.row in READER_APPEND and prefix == self.code.split('/')[0] + '/root':
                 target = bank.lookup(reference)
@@ -106,7 +126,10 @@ class ForwardedCall(worker.CompleteCall):
             frame = sys._getframe(1)
             if frame.f_code.co_filename == reader.__file__ and frame.f_lineno == line:
                 bank = self.fixture.bank
-                reference = self.fixture.world.edition.consumer + '#/$defs/' + definition
+                reference = self.declaration.get('schema_reference',
+                    self.fixture.world.edition.consumer + '#/$defs/' + definition)
+                if goal_comparison and '/final/' not in self.row:
+                    value, expected = expected, value
                 worker.require(not bank.errors(reference, expected), 'the reconstructed comparison document failed validation')
                 forwarded.append(dict(site=(READERS, line), schema_reference=reference,
                                       value=copy.deepcopy(value), expected=copy.deepcopy(expected), same=result,
@@ -121,7 +144,7 @@ class ForwardedCall(worker.CompleteCall):
                 sender.close()
 
         with ExitStack() as changes:
-            if self.row == REPRESENTATION:
+            if self.row == REPRESENTATION or goal_comparison:
                 changes.enter_context(patch.object(reader, 'same', observe_equality))
             else:
                 changes.enter_context(patch.object(worker.world.Bank, 'validate', observe))
@@ -234,7 +257,8 @@ def original_later_code(name, specification):
     return None if name in PROJECTOR_ORIGINAL else READER_COMPARISONS[ORIGINAL_SCHEMAS[name].split('/')[0]][1]
 
 
-def check_root(out, name, specification, sites, reference, previous, alter_copy, reference_digest):
+def check_root(out, name, specification, sites, reference, previous, alter_copy, reference_digest,
+               shared_rule_tests=None):
     started = time.monotonic()
     ident = specification['root']
     worker.pilot.PREFIX = worker.TABLE_PREFIX
@@ -251,6 +275,10 @@ def check_root(out, name, specification, sites, reference, previous, alter_copy,
     directly_accepted = name in PROJECTOR_ORIGINAL and specification['validation_site'] == [READERS, 256]
     if original:
         later_code = original_later_code(name, specification)
+    elif name in ISSUER_FORWARDING:
+        later_code = ISSUER_FORWARDING[name] + '/schema/:additionalProperties'
+    elif name in CURRENT_GOAL_CHECKS:
+        later_code = 'read_current/final_current_goal'
     else:
         late, _, _, _, defect = DEPENDENCIES[name]
         later_code = f'{late}/schema/{defect}:additionalProperties' if defect else late
@@ -260,11 +288,24 @@ def check_root(out, name, specification, sites, reference, previous, alter_copy,
     else:
         captured = check_calls(experiment, collector, ident, later_code, alter_copy=alter_copy)
     examples = worker.PreviousExamples()
-    replayed = worker.replay_root(fixture, captured, reference, examples.entries(previous), None)
+    if shared_rule_tests:
+        record = json.loads(shared_rule_tests.read_bytes())
+        worker.require(record['status'] == 'READY_FOR_MATRIX' and record['reference_sha256'] == reference_digest and
+                       record['row'] == specification['rule_test_row'], 'the reused rule tests are missing their original call')
+        replayed = record['roots'][ident]
+        worker.require(not replayed['gaps'] and replayed['schema'] == captured['schema'] and
+                       replayed['registry_sha256'] == captured['registry_sha256'] == reference['registry_sha256'] and
+                       replayed['clause_ids'] == reference['clause_ids'] and
+                       set(replayed['clauses']) == set(reference['clause_ids']),
+                       'the two calls do not reach the same fully tested installed validator')
+    else:
+        replayed = worker.replay_root(fixture, captured, reference, examples.entries(previous), None)
     proof = worker.pilot.run_gates(collector, out, [name])
     binding = proof / 'source-bindings.json'
     source_bindings = json.loads(binding.read_bytes())
-    checker = READERS if name == REPRESENTATION or name in READ_APPEND or original else START
+    checker = READERS if name == REPRESENTATION or name in READ_APPEND or original or name in CURRENT_GOAL_CHECKS else START
+    if name in ISSUER_FORWARDING:
+        source_bindings['files'][ADAPTERS] = worker.sha(worker.ROOT / ADAPTERS)
     for source in (Path(worker.__file__), Path(worker.stage.__file__), Path(__file__), worker.ROOT / checker):
         source_bindings['files'][str(source.relative_to(worker.ROOT))] = worker.sha(source)
     worker.write(binding, source_bindings)
@@ -284,7 +325,8 @@ def check_root(out, name, specification, sites, reference, previous, alter_copy,
                  seconds=round(time.monotonic() - started, 3), calls=experiment.runs,
                  controls=replayed['controls'], gaps=replayed['gaps'], counts=dict(counts),
                  historical_example_inputs=examples.pins,
-                 schema_reference=specification.get('schema_reference')))
+                 schema_reference=specification.get('schema_reference'),
+                 shared_rule_tests_sha256=worker.sha(shared_rule_tests) if shared_rule_tests else None))
     print(name, ident, len(replayed['clauses']), len(remaining), later_code, flush=True)
 
 
@@ -295,17 +337,24 @@ def main():
     parser.add_argument('--case', type=Path, action='append', required=True)
     parser.add_argument('--native-bindings', type=Path)
     parser.add_argument('--root')
+    parser.add_argument('--show-differences', action='store_true')
+    parser.add_argument('--shared-rule-tests', type=Path)
     parser.add_argument('--alter-forwarded-copy', action='store_true')
     args = parser.parse_args()
     cases = [(path, json.loads(path.read_bytes())) for path in args.case]
     reference = worker.load_reference(args.reference, [case for _, case in cases], args.native_bindings)
     reference_digest = worker.sha(args.reference)
     _, rows, _ = worker.stage.matrix_inputs(args.matrix)
-    v3, v7 = worker.world.v3_edition(), worker.world.v7_edition()
-    banks = {'v3': v3.bank.original, 'v7': v7.bank.original}
+    v3 = worker.world.v3_edition()
+    banks = {'v3': v3.bank.original, 'goal-v3': v3.goal_bank.original}
+    if any(spec['edition'] == 'v7' for _, case in cases for spec in case['fixtures']):
+        banks['v7'] = worker.world.v7_edition().bank.original
     for path, case in cases:
         row = case['row']
-        worker.require(row in DEPENDENCIES or row in ORIGINAL_SCHEMAS, f'no checked forwarding premise for {row}')
+        worker.require(row in DEPENDENCIES or row in ORIGINAL_SCHEMAS or row in ISSUER_FORWARDING or row in CURRENT_GOAL_CHECKS,
+                       f'no checked forwarding premise for {row}')
+        worker.require(not args.shared_rule_tests or row in ISSUER_FORWARDING or row in CURRENT_GOAL_CHECKS,
+                       'reused rules require the same captured validator and a declared dependency')
         mapped = reference['rows'][row]
         worker.require(sorted(mapped['roots']) == sorted(item['root'] for item in case['fixtures']),
                        f'{row}: declaration omits or repeats an exact root')
@@ -319,16 +368,22 @@ def main():
             if (args.root and args.root != ident) or (output / 'result.json').is_file():
                 continue
             exact = reference['roots'][ident]
-            bank = banks[spec['edition']]
+            bank = banks[spec.get('bank', spec['edition'])]
             plain = bank.validator(json.loads(exact['schema'])['$ref'])
             if worker.closure._registry_digest(plain) != exact['registry_sha256']:
+                if args.show_differences:
+                    print(row, ident, 'registry digest differs', flush=True)
                 continue
             worker.closure.PREPARED.clear()
             walk = {}
             worker.closure._describe_inventory(walk, plain, ident, bank)
             if walk.get('clause_ids') != exact['clause_ids']:
+                if args.show_differences:
+                    print(row, ident, 'literal rule names differ',
+                          len(set(walk.get('clause_ids', ())) - set(exact['clause_ids'])), flush=True)
                 continue
-            check_root(output, row, spec, sites, exact, previous[ident], args.alter_forwarded_copy, reference_digest)
+            check_root(output, row, spec, sites, exact, previous[ident], args.alter_forwarded_copy, reference_digest,
+                       args.shared_rule_tests)
 
 
 if __name__ == '__main__':
