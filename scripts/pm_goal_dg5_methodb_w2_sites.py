@@ -1,4 +1,4 @@
-"""Check both historical read schema sites in the same coverage-table run."""
+"""Check both original document schema sites in the same coverage-table run."""
 import argparse
 import json
 import os
@@ -7,7 +7,7 @@ import shutil
 import time
 
 import pm_goal_dg5_methodb_w2 as worker
-from pm_goal_dg5_methodb_w2_forwarded import HISTORICAL_ORIGINAL, HistoricalOriginalCall, READERS, check_calls
+from pm_goal_dg5_methodb_w2_forwarded import HistoricalOriginalCall, READERS, check_calls, original_later_code
 
 
 def main():
@@ -52,9 +52,11 @@ def main():
                        'a site is missing its complete literal rule tests')
         fixture = worker.Fixture(suite, spec['route'], spec['edition'])
         example = HistoricalOriginalCall(fixture, name, sites, spec)
-        later = (HISTORICAL_ORIGINAL[name] + '/schema/native_start:additionalProperties'
-                 if spec['validation_site'] == [READERS, 94] else 'read_historical/final_fence')
-        control = check_calls(example, collector, root, later)
+        later = original_later_code(name, spec)
+        if later is None:
+            control, = example.prove(collector)
+        else:
+            control = check_calls(example, collector, root, later)
         worker.require(control['registry_sha256'] == exact['registry_sha256'] and
                        control['schema'] == json.loads(exact['schema']) and
                        tuple(control['site']) == tuple(spec['validation_site']),
@@ -80,7 +82,9 @@ def main():
         shutil.copyfile(original_result, dest / 'rule-tests.json')
         worker.write(dest / 'result.json', dict(prior, calls=example.runs,
                      rule_tests_sha256=worker.sha(original_result), site_test_seed=int(os.environ['PYTHONHASHSEED']),
-                     seconds=round(prior['seconds'] + seconds, 3), gate=(dest / 'proof').as_posix()))
+                     seconds=round(prior['seconds'] + seconds, 3), gate=(dest / 'proof').as_posix(),
+                     status='DIRECT_OR_ENCLOSING' if any(original_later_code(name, spec) is None
+                                                        for spec in case['fixtures']) else 'LATER_REFUSAL'))
     print(name, 'checked both original sites together', flush=True)
 
 
