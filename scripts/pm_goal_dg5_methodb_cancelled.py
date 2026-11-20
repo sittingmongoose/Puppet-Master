@@ -40,6 +40,8 @@ def fixture(declare, route, directory):
     config = {'start': route.get('start', 'started')}
     if route.get('mutation'):
         config.update(effects='mutation', filesafe=['rollback', 'commit'])
+    if route.get('pre_attempt_effect'):
+        config['knobs'] = {'pre_attempt_effect': True}
     if edition == 'integrated_original':
         from pm_goal_dg_int_old import World
     elif edition == 'integrated_native':
@@ -49,7 +51,7 @@ def fixture(declare, route, directory):
         World = legacy.CancelWorld
         config['edition'] = edition
     world = World(config, base=directory)
-    if route['call'] in ('issue_physical', 'publish_pointer', 'prepare_body', 'prepare_control'):
+    if route['call'] in ('issue_physical', 'publish_pointer', 'prepare_body', 'prepare_control', 'filesafe_invocation'):
         if route['call'] == 'publish_pointer':
             from pm_goal_dg_int_world import S1D01Owner
             cls, method = S1D01Owner, 'publish_head'
@@ -57,6 +59,8 @@ def fixture(declare, route, directory):
             from pm_goal_dg_int_world import S1NativeOwner
             cls = S1NativeOwner if edition == 'integrated_original' else legacy.NativeOwner
             method = route['call']
+        elif route['call'] == 'filesafe_invocation':
+            cls, method = legacy.CancelWorld, '_filesafe_invocation'
         else:
             cls, method = legacy.PhysOwner, 'issue_physical'
         family = declare['row'].removeprefix('dg5/issue/').removesuffix('/schema')
@@ -64,7 +68,13 @@ def fixture(declare, route, directory):
         captured = []
 
         def before_issue(owner, *args, **kwargs):
-            if method != 'issue_physical' or (args[0] == family and args[2] is not None):
+            if method == 'issue_physical':
+                selected = args[0] == family and args[2] is not None
+            elif method == '_filesafe_invocation':
+                selected = args[2] == route['restore']
+            else:
+                selected = True
+            if selected:
                 captured.append((owner, args, kwargs))
                 raise BeforeIssue
             return original_issue(owner, *args, **kwargs)
@@ -82,6 +92,10 @@ def fixture(declare, route, directory):
         if method == 'publish_head':
             import pm_goal_dg_s_start as start
             target = start.d01_families(owner.edition)['pointer'], owner.s1.pointer_key()
+        elif method == '_filesafe_invocation':
+            realm, operation, _ = args
+            journal = world.seeder.seed('filesafe_consumer', realm + 'JournalSelector')['family_id']
+            target = journal, world.filesafe.key(journal, operation)
         else:
             target = args[0], args[3]
         return world, action, (target, args, kwargs)
@@ -303,6 +317,17 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
         elif example.get('checkpoint_uuid'):
             record.update(cls='COVERED_LATER',
                           implication=checkpoint_uuid_implication(plain, nodes, name, path, cut))
+        elif example.get('nullable_enum'):
+            location, word = name.rsplit('/', 1)
+            node = nodes[location]['node']
+            covering = location + '/enum'
+            require(word == 'type' and path in (['restore_outcome'], ['conflict_reason_code'])
+                    and set(node[word]) == {'string', 'null'}
+                    and all(item is None or type(item) is str for item in node['enum'])
+                    and go.locations(cut) == {covering}, 'the FileSafe nullable enumeration changed')
+            record.update(cls='COVERED_LATER', implication=dict(
+                source=location, covering_rule=covering,
+                premise='Every declared enumeration member is a string or null.'))
         else:
             require(not cut, f'{name}: another validation message remains')
         results[name] = record
@@ -323,7 +348,7 @@ class OwnerExample:
         self.observed = None
         self.trials = []
         self.pointer = route['call'] == 'publish_pointer'
-        self.writes = self.pointer or route['call'] == 'issue_physical'
+        self.writes = self.pointer or route['call'] in ('issue_physical', 'filesafe_invocation')
 
     def call(self, world, action, inputs, edit):
         import pm_goal_dg5_boundaries as bridge
@@ -573,8 +598,9 @@ def run(args):
                     f'owner validator binding changed for {ident}')
             ids = root['clause_ids']
             examples = declare['examples'][ident]
+            accepted = declare.get('rule_controls', {}).get(ident, accepted)
             scoped = ':sha256:' in ids[0].split('#', 1)[0]
-            if scoped or any(set(example) & {'vacuous', 'intent_selector', 'intent_implication'}
+            if scoped or any(set(example) & {'vacuous', 'intent_selector', 'intent_implication', 'nullable_enum'}
                              for example in examples.values()):
                 clauses = literal_rules(plain, bank, accepted, ident, ids, examples, args.disable_check, scoped)
             else:
