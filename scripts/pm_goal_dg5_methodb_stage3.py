@@ -1111,6 +1111,7 @@ def request_implication(nodes, name, path, errors, locations):
     """The request's complete two-way conditional enforces both nullable members."""
     parent = name.split('/allOf/', 1)[0].split('/properties/', 1)[0]
     request = (parent.endswith('#/$defs/GoalUpdateRequestV2') or
+               parent.endswith('#/$defs/Acceptance') or
                parent.endswith('/pm.goal_runtime_event.goal_updated.schema.v3#'))
     require(request or parent.endswith('#/$defs/revision'), 'unexpected update request or revision definition')
     node = nodes[parent]['node']
@@ -1141,7 +1142,8 @@ def origin_implication(nodes, name, path, errors, locations):
     member = path[-1]
     index, kind = {'bound_plan_ref': (0, 'plan_build'), 'owning_workflow_ref': (1, 'internal_workflow')}[member]
     require(parent.endswith('#/$defs/origin') and path in (
-        ['record', member], ['origin', member], ['record', 'pending', 'origin', member]),
+        ['record', member], ['origin', member], ['record', 'pending', 'origin', member],
+        ['record', 'acceptance', 'origin', member]),
             'unexpected origin location')
     node = nodes[parent]['node']
     conditional = node['allOf'][index]
@@ -1785,7 +1787,88 @@ def normalized_selector_trial(nodes, validator, go, control, name, disabled):
                 source=branch, premise='The outer definition requires a project scope and the identity requires scope_kind.')
 
 
-def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check, branches=None):
+SOURCE_AUDIT_ROOT = 'dg5:438078939e66d4ec'
+SOURCE_AUDIT_FIELDS = {
+    'normalized_identity': ('NormalizedIdentity', 'updated-normalized.json'),
+    'nonterminal_outcome': ('NonterminalOutcome', 'updated-nonterminal-outcome.json'),
+}
+
+
+def source_audit_checks(plain, bank, document, census, declaration, disabled):
+    """Replay the same directly referenced rules before testing them in SourceAudit."""
+    import pm_goal_dg5_closure as closure
+
+    base = NORMALIZED.removesuffix('NormalizedIdentity')
+    wrapper = plain._resolver.lookup(base + 'StorageSourceAudit').contents
+    ref = wrapper['properties']['record']['$ref']
+    source = plain._resolver.lookup(ref).contents
+    require(ref == base + 'SourceAudit' and 'record' in wrapper['required'] and 'allOf' not in source,
+            'SourceAudit no longer includes its original direct record definition')
+    source_record = document['record']
+    revision = json.loads(declaration.read_text())['source']
+    checked = {}
+    for field, (definition, filename) in SOURCE_AUDIT_FIELDS.items():
+        reference = base + definition
+        require(field in source['required'] and source['properties'][field] == {'$ref': reference},
+                'SourceAudit no longer directly references the tested definition')
+        same = json.loads((declaration.parent / filename).read_text())
+        require(same['source'] == revision,
+                'the original SourceAudit and the nested rules need the same pinned source')
+        entry = census['roots'][same['root']]
+        local = bank.validator(reference)
+        require(closure._registry_digest(local) == entry['registry_sha256'], 'the nested schema bank changed')
+        clauses, gaps = test_rules(local, bank, source_record[field], same['root'], entry['clause_ids'], same['examples'],
+                                   disabled, same.get('accepted_branches'))
+        require(not gaps, f'SourceAudit nested check {field} still has gaps')
+        checked[field] = clauses
+    return checked
+
+
+def source_audit_trial(plain, nodes, validator, go, document, name, field, trial, disabled, locations):
+    prefix = ('record', field)
+
+    def projected(value):
+        wrapper = copy.deepcopy(document)
+        wrapper['record'][field] = value
+        return wrapper
+
+    control = projected(trial.get('control', document['record'][field]))
+    require(not go.errors_of(validator, control) and not list(plain.iter_errors(control)),
+            'the original audit did not accept the nested control')
+    if trial['cls'] == 'UNREACHABLE':
+        node = nodes[name.rsplit('/', 1)[0]]
+        pin = go.pinned_proof(node, nodes, validator, name.rsplit('/', 1)[-1])
+        require(pin and pin['cls'] == 'UNREACHABLE' and not go.errors_of(validator, control, disabled),
+                f'{name}: the projected rule can now be reached')
+        return pin
+    value = projected(trial.get('invalid', trial.get('input')))
+    before = go.errors_of(validator, value)
+    original = list(plain.iter_errors(value))
+    cut = go.errors_of(validator, value, disabled)
+    restored = go.errors_of(validator, value)
+    require(errors_list(before) == errors_list(original) == errors_list(restored) and
+            errors_list(before) != errors_list(cut), f'{name}: nested rule messages did not match and restore')
+    result = dict(cls='KILLED', control=control, invalid=value, before=errors_list(original),
+                  cut=errors_list(cut), restored=errors_list(restored),
+                  source=dict(member=field, rule=name, root=trial['cls']))
+    if trial['cls'] == 'SELECTOR_OR_NEGATED':
+        return {**result, 'cls': 'SELECTOR_OR_NEGATED'}
+    observed = {item for item in locations(before) if item[1][:2] == prefix and item[2] == name}
+    require(observed and not (observed & locations(cut)), f'{name}: nested validation message did not disappear')
+    if cut and trial['cls'] == 'KILLED':
+        # A single rule may also select a nullable field in the other nested definition.
+        alone = go.errors_of(validator, control, disabled)
+        require(alone and go.locations(alone) == go.locations(cut),
+                f'{name}: the nested rule did not produce an independently tested selector change')
+        return {**result, 'cls': 'SELECTOR_OR_NEGATED', 'selector_cut_on_control': errors_list(alone)}
+    if cut:
+        require(trial['cls'] == 'COVERED_LATER' and 'implication' in trial,
+                f'{name}: another nested rule remains without a checked premise')
+        return {**result, 'cls': 'COVERED_LATER', 'implication': trial['implication']}
+    return result
+
+
+def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check, branches=None, source_audit=None):
     import pm_goal_dg5_closure as closure
     import pm_goal_go_schema_closure as go
 
@@ -1820,6 +1903,12 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         require(not list(plain.iter_errors(control)), f'{name}: branch control refused')
         guard = closure._guard_for_location(name)
         disable = () if disabled_check == 'rule' else {guard}
+        if 'source_audit_field' in example:
+            require(ident == SOURCE_AUDIT_ROOT and source_audit, 'unexpected SourceAudit assigned test')
+            field = example['source_audit_field']
+            result[name] = source_audit_trial(plain, nodes, validator, go, control, name, field,
+                                              source_audit[field][name], disable, locations)
+            continue
         if example.get('event_scope_selector'):
             result[name] = event_scope_trial(nodes, validator, go, control, path, name, disable)
             continue
@@ -1844,7 +1933,7 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
                                 cut=errors_list(cut), restored=errors_list(restored), condition=name)
             continue
         if example.get('outcome_unreachable'):
-            require(ident == 'dg5:e38a415fe4943e1c', 'unexpected nonterminal outcome rule')
+            require(ident in ('dg5:e38a415fe4943e1c', SOURCE_AUDIT_ROOT), 'unexpected nonterminal outcome rule')
             node = nodes[name.rsplit('/', 1)[0]]
             premise = go.pinned_proof(node, nodes, validator, inventory[name])
             require(premise and premise['cls'] == 'UNREACHABLE' and not go.errors_of(validator, control, disable),
@@ -1959,7 +2048,7 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         elif cut and example.get('receipt_implication'):
             record.update(cls='COVERED_LATER', implication=body_receipt_implication(
                 nodes, name, path, cut, locations))
-        elif cut and example.get('origin_implication'):
+        elif cut and (example.get('origin_implication') or example.get('source_origin_length')):
             record.update(cls='COVERED_LATER', implication=origin_implication(nodes, name, path, cut, locations))
         elif cut and example.get('request_implication'):
             record.update(cls='COVERED_LATER', implication=request_implication(nodes, name, path, cut, locations))
@@ -2170,8 +2259,11 @@ def main():
         plain, actual_bank, accepted = check.prove(world, action)
         require({(obs['root'], obs['registry_sha256']) for run in check.runs for obs in run['observations']}
                 == {(ident, root['registry_sha256'])}, 'root or registry differs from the census')
+        source_audit = None
+        if row == 'dg5/dgu/source/capture/source/schema':
+            source_audit = source_audit_checks(plain, actual_bank, accepted, census, args.declaration, args.disable_check)
         clauses, gaps = test_rules(plain, actual_bank, accepted, ident, root['clause_ids'],
-                                   declare['examples'], args.disable_check, declare.get('accepted_branches'))
+                                   declare['examples'], args.disable_check, declare.get('accepted_branches'), source_audit)
         report.update(clauses=clauses, gaps=gaps)
         if 'later_refusal' in declare:
             report['checked_later_refusal'] = declare['later_refusal']
