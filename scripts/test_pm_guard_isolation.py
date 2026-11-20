@@ -79,6 +79,19 @@ class GuardEngineTests(unittest.TestCase):
         self.assertFalse(report['runtime'], report['runtime'][:1])
         self.assertEqual(report['status'], 'PASS', report['failures'])
 
+    def test_checker_namespace_access_is_refused(self):
+        source = ROOT / 'scripts/guard-isolation/namespace_census_fixture.py'
+        # The function is never executed during the import-time scope check.
+        self.assertEqual(guard.prescan_sources(source), [])
+        suite = ddbg.retry_request_suite()
+        suite.checker_modules = (source,)
+        scan = guard.static_scan(suite, guard.GuardTable([]))
+        errors = {e['source'] for e in scan['errors'] if e['kind'] == 'dynamic_code_or_import'}
+        self.assertEqual(errors, {
+            "'{0.label}'.format", "'{item[0]}'.format_map", "'{0:{1.width}}'.format", 'template.format',
+            'frame.f_locals', 'function.__closure__', 'object.__getattribute__',
+        })
+
     def test_prescan_dotted_relative_and_reflective_reads(self):
         source = ROOT / 'scripts/guard-isolation/prescan_fixture.py'
         errors = guard.prescan_sources(source)

@@ -25,6 +25,7 @@ from pathlib import Path
 import resource
 import re
 import struct
+import string
 import symtable
 import sys
 import sysconfig
@@ -199,6 +200,42 @@ _PRESCAN_SENSITIVE = frozenset({'eval', 'exec', '__import__', 'getattr', 'global
 _REFLECTIVE_ATTRIBUTES = frozenset({'import_module', 'spec_from_file_location', 'settrace', 'setprofile',
                                     'run_module', 'run_path', 'gettrace', 'getprofile', '__import__',
                                     '__builtins__', 'attrgetter', 'methodcaller'})
+_NAMESPACE_ATTRIBUTES = frozenset({
+    '__globals__', '__closure__', '__dict__', '__getattribute__', '__getattr__', '__traceback__',
+    '__func__', '__self__', '__wrapped__', '__defaults__', '__kwdefaults__', '__annotations__',
+    'gi_frame', 'cr_frame', 'ag_frame', 'tb_frame', 'tb_next', 'f_globals', 'f_locals',
+    'f_back', 'f_builtins', 'f_code', 'gi_code', 'cr_code', 'ag_code', 'f_trace',
+})
+_FORMATTER = string.Formatter()
+
+
+def _reflective_attribute(node, parent, *, namespaces):
+    if not isinstance(node.ctx, ast.Load):
+        return False
+    if node.attr in _REFLECTIVE_ATTRIBUTES:
+        return True
+    if not namespaces:
+        return False
+    if node.attr in _NAMESPACE_ATTRIBUTES:
+        return True
+    if node.attr not in ('format', 'format_map'):
+        return False
+    if not (isinstance(parent, ast.Call) and parent.func is node and
+            isinstance(node.value, ast.Constant) and type(node.value.value) is str):
+        return True
+    # A field can contain attribute/item lookups, including in nested format specs.
+    templates = [node.value.value]
+    try:
+        while templates:
+            for _, field, spec, _ in _FORMATTER.parse(templates.pop()):
+                if field is not None:
+                    if any(token in field for token in '.[]'):
+                        return True
+                    if spec:
+                        templates.append(spec)
+    except ValueError:
+        return True
+    return False
 
 
 def prescan_sources(start, *, search=None, reset_seams=(), trusted_setup_sources=()):
@@ -266,9 +303,10 @@ def prescan_sources(start, *, search=None, reset_seams=(), trusted_setup_sources
         def function_local(node):
             scope = parents.get(node)
             while scope is not None:
-                if isinstance(scope, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                # Defaults and decorators run in the enclosing scope.
+                if isinstance(scope, (ast.FunctionDef, ast.AsyncFunctionDef)) and node in scope.body:
                     return True
-                scope = parents.get(scope)
+                node, scope = scope, parents.get(scope)
             return False
 
         def follow_import(dotted, locations, node):
@@ -317,7 +355,7 @@ def prescan_sources(start, *, search=None, reset_seams=(), trusted_setup_sources
             if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and node.id in _PRESCAN_SENSITIVE:
                 errors.append({'kind': 'dynamic_code_or_import', 'path': str(path), 'line': node.lineno, 'source': node.id})
             if isinstance(node, ast.Attribute):
-                if isinstance(node.ctx, ast.Load) and node.attr in _REFLECTIVE_ATTRIBUTES:
+                if _reflective_attribute(node, parents.get(node), namespaces=not function_local(node)):
                     errors.append({'kind': 'dynamic_code_or_import', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(node)})
                 if (isinstance(node.value, ast.Name) and node.value.id in engine_bindings and
                         node.attr.startswith('_') and not function_local(node)):
@@ -2195,7 +2233,7 @@ def static_scan(suite, table):
             # C8-G2: harness detection names join the dynamic set: gettrace and getprofile tell the tool's own run
             # (a trace hook is always set) from production (none is), so a gate on them is non-causal by construction.
             sensitive = _PRESCAN_SENSITIVE | {'compile'}
-            if isinstance(node, ast.Attribute) and isinstance(node.ctx, ast.Load) and node.attr in _REFLECTIVE_ATTRIBUTES:
+            if isinstance(node, ast.Attribute) and _reflective_attribute(node, parents.get(node), namespaces=True):
                 errors.append({'kind': 'dynamic_code_or_import', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(node)})
             # Any read of a sensitive name, or of __builtins__, can carry the function to a call the scan cannot see.
             if (isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and (node.id in sensitive or node.id == '__builtins__') and
