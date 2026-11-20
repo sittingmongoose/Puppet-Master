@@ -1,0 +1,21 @@
+{
+  "row": "dg5/representation/logical_checkpoint/schema",
+  "fixtures": [
+    {
+      "route": "logical_checkpoint",
+      "edition": "v3",
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
