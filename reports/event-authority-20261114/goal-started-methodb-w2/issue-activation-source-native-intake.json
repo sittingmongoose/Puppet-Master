@@ -1,0 +1,41 @@
+{
+  "row": "dg5/issue/activation_source:native_intake/schema",
+  "fixtures": [
+    {
+      "route": "issue/activation_source:native_intake",
+      "edition": "v3",
+      "root": "dg5:3200f33490d5a9f8",
+      "hash_seed": 0,
+      "edit": [
+        1,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "issue/activation_source:native_intake",
+      "edition": "v7",
+      "root": "dg5:ad6c99836ea24dcb",
+      "hash_seed": 5,
+      "edit": [
+        1,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
