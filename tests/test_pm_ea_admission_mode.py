@@ -825,6 +825,25 @@ class Merge2Fix1EvidenceTests(unittest.TestCase):
                 with self.assertRaises((w.Gap,ValueError)):
                     w.rederive_source_citation(dict(source,**defect))
 
+    def test_real_correction_decision_editions_survive_yaml_wrapping(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('owner_sweep_decision_test',REPO/'scripts/pm-ea-owner-sweep.py')
+        sweep = importlib.util.module_from_spec(spec);spec.loader.exec_module(sweep)
+        checked = 0
+        for row in _read(REPO,REGISTRY)['families']:
+            path = REPO/RECORDS/(row['event_type']+'.json')
+            if not path.exists():continue
+            record = json.loads(path.read_text())
+            if not record.get('postfix_correction') or len(sweep.scope_policies(row))<2:continue
+            text = sweep.decision_binding_text(record['decision_ref'])
+            for scope,policy in sweep.scope_policies(row).items():
+                with self.subTest(row['event_type'],scope=scope):
+                    self.assertTrue(sweep.decision_binding_matches(text,scope,policy))
+                    self.assertFalse(sweep.decision_binding_matches(text,'wrong_'+scope,policy))
+                    self.assertFalse(sweep.decision_binding_matches(text,scope,dict(policy,policy_version='999.0.0')))
+                checked += 1
+        self.assertGreater(checked,0)
+
     def test_real_collaboration_span_digest_and_historical_location(self):
         w = self.writer
         doc = _read(REPO, "reports/event-authority-20261116/admission-merge-2/depth/collaboration.failed.json")

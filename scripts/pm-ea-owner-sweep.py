@@ -70,6 +70,35 @@ def section(ref):
     return start, end, "\n".join(body.splitlines()[start - 1:end])
 
 
+def decision_binding_text(ref):
+    """Read the decision's own scalar before matching its edition bindings.
+
+    YAML wrapping can split a quoted schema ID or the following parenthesis.
+    Decode only the uniquely declared unit; never join unrelated paragraphs
+    or substitute another decision's policy.
+    """
+    _, _, body = section(ref)
+    unit = ref.split('#', 1)[1]
+    selected = []
+    for block in re.finditer(r'(?ms)^```ya?ml\s*\n(.*?)^```', body):
+        data = yaml.safe_load(block[1])
+        if isinstance(data, dict) and data.get('plan_unit_id') == unit:
+            value = data.get('canonical_text')
+            if not isinstance(value, str):
+                raise ValueError('decision has no canonical scalar: '+ref)
+            selected.append(value)
+    if len(selected) == 1:
+        return selected[0]
+    if selected or re.search(r'(?m)^plan_unit_id:', body):
+        raise ValueError('decision canonical scalar is missing or ambiguous: '+ref)
+    return body
+
+
+def decision_binding_matches(body, scope, policy):
+    binding = re.search(r'\b'+re.escape(scope)+r' `[^`]+` \((.*?)(?:, producer )', body, re.S)
+    return bool(binding and policy_name(policy) in binding[1])
+
+
 @lru_cache(maxsize=2048)
 def clauses(ref):
     """Decode YAML wrapping, while retaining physical line bounds and exact bytes."""
@@ -422,12 +451,11 @@ def main():
             raise ValueError('multi-scope family lacks an exact edition selection: ' + event)
         if len(selections) > 1:
             record = load('reports/event-authority-20260911/admission-records/' + event + '.json')
-            _, _, decision_body = section(record['decision_ref'])
+            decision_body = decision_binding_text(record['decision_ref'])
             checked = []
             for scope, policy in selections.items():
                 token = policy_name(policy)
-                binding = re.search(r'\b' + re.escape(scope) + r' `[^`]+` \((.*?)(?:, producer )', decision_body, re.S)
-                valid = bool(binding and token in binding[1])
+                valid = decision_binding_matches(decision_body, scope, policy)
                 if policy.get('policy_id'):
                     valid = valid and policies[policy['policy_id']]['policy_version'] == policy['policy_version']
                 checked.append(dict(scope=scope, policy=policy, decision_binding_matches=valid))
@@ -489,11 +517,10 @@ def main():
                         findings.append(dict(base, kind="dual_scope_retention_assignment", sentence=value,
                                              expected=expected))
                     record = load("reports/event-authority-20260911/admission-records/" + event + ".json")
-                    _, _, decision_text = section(record["decision_ref"])
+                    decision_text = decision_binding_text(record["decision_ref"])
                     for scope, selection in selections.items():
                         token = policy_name(selection)
-                        selected_scope = re.search(r"\b" + re.escape(scope) + r" `[^`]+` \((.*?)(?:, producer )", decision_text, re.S)
-                        if not selected_scope or token not in selected_scope[1]:
+                        if not decision_binding_matches(decision_text, scope, selection):
                             findings.append(dict(base, kind="scope_policy_not_in_governing_decision", sentence=value,
                                                  scope=scope, expected=token, decision=record["decision_ref"]))
                 if SIGNAL.search(value):
