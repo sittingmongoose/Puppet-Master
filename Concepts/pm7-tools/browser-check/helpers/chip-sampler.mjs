@@ -44,12 +44,17 @@ export const CHIP_SAMPLER = withPaintedChip((opts) => {
 		for (const s of W.strips) {
 			const el = stripOf(s); if (!el) continue;
 			const sr = el.getBoundingClientRect();
-			let chip = null, src = null, rec = null, st = null, ct = null, lenses = 0, faint = null, edge = null;
+			let chip = null, src = null, rec = null, st = null, ct = null, heldPose = false, lenses = 0, faint = null, edge = null;
 			const blocks = [...el.querySelectorAll(':scope > lg-over > .lg-hop')].filter(shown);
 			const b = blocks.pop();
 			if (b) {
 				chip = rr(b); src = b.classList.contains('lg-carry') ? 'carry' : 'hop'; rec = b.__carryRec != null ? b.__carryRec : null;
-				const a = leadOf(b); if (a) { st = a.startTime; ct = a.currentTime; }
+				const a = leadOf(b);
+				if (a) {
+					st = a.startTime;
+					ct = a.currentTime;
+					heldPose = a.__pmHeld === true && a.playState === 'paused' && ct != null;
+				}
 				edge = edgeOf(b, b.parentElement);
 			} else {
 				const ul = el.querySelector(':scope > lg-under > .lg-lens');
@@ -74,7 +79,7 @@ export const CHIP_SAMPLER = withPaintedChip((opts) => {
 			const on = el.querySelector(s.active);
 			const items = s.items ? [...el.querySelectorAll(s.items)].filter((e) => e.getClientRects().length).map(rr) : [];
 			if (edge) chip = edge.box;
-			row.s[s.sel] = { chip, src, rec, st, ct, on: on ? rr(on) : null, items, so: [sr.left, sr.top], lenses, faint, edge };
+			row.s[s.sel] = { chip, src, rec, st, ct, heldPose, on: on ? rr(on) : null, items, so: [sr.left, sr.top], lenses, faint, edge };
 		}
 		W.rows.push(row);
 	};

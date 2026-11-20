@@ -136,9 +136,10 @@ export const tests = {
 						await t.check(`${tag}: no drawn frame moves the chip further than its own motion (worst excess ${st.worst.excess || 0} px)`, st.bad.length === 0, st.bad.slice(0, 3).map((b) => `t${b.t} ${b.from}->${b.to} moved ${b.moved} allow ${b.allow}`).join('; '));
 						if (g.key === 'home') {
 							// Check the actual post-paint samples before filling gaps from keyframes. A gap
-							// at rest is a witness too, with zero displacement and no failure.
+							// at rest is a witness too. A paused, intentionally held carry paints a real
+							// pose even before it has a start time. Count it as a sample at that pose.
 							const records = new Map(anims.map((a) => [a.id, a]));
-							const samples = rows.filter((r) => r.now <= ends[0] && !r.stale && trusted(r)).map((r) => ({
+							const samples = rows.filter((r) => r.now <= ends[0] && !r.stale && (r.heldPose || trusted(r))).map((r) => ({
 								t: r.now, poseTime: r.t, src: r.src, rec: records.get(r.rec),
 								box: [r.box[0] - r.so[0], r.box[1] - r.so[1], r.box[2], r.box[3]]
 							}));
