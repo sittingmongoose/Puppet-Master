@@ -369,12 +369,16 @@ def check_named_context_sentinel():
     descriptor = bridge.context_value(cf1.DELETE, None)
     assert descriptor[:3] == ('source_sentinel', cf1.__name__, 'DELETE')
     assert len(descriptor[3]) == 64
-    try:
-        bridge.context_value(object(), None)
-    except TypeError:
-        pass
-    else:
-        raise AssertionError('arbitrary identity-only object was accepted')
+    digest = bridge.descriptor_sha256(cf1.cand('payload_ref', cf1.DELETE), None)
+    assert len(digest) == 64
+    assert digest != bridge.descriptor_sha256(cf1.cand('node_id', cf1.DELETE), None)
+    for describe in (bridge.context_value, bridge.descriptor_sha256):
+        try:
+            describe(object(), None)
+        except TypeError:
+            pass
+        else:
+            raise AssertionError('arbitrary identity-only object was accepted')
 
 
 def main():
