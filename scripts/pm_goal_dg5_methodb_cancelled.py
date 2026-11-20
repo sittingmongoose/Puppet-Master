@@ -463,6 +463,44 @@ def origin_afterimages_implication(nodes, name, path, cut):
                 premise='The required issuer method selects exactly one of the two disjoint afterimage forms.')
 
 
+def binding_revision_implication(nodes, name, path, cut):
+    from pm_goal_go_schema_closure import locations
+
+    owner = name.split('#', 1)[0] + '#/$defs/BindingRevision'
+    schema = nodes[owner]['node']
+    branch, = schema['allOf']
+    require(path == ['record', 'active_run_ref']
+            and {'associations', 'active_run_ref'} <= set(schema['required'])
+            and schema['properties']['associations']['type'] == 'array'
+            and branch['if']['properties']['associations']['maxItems'] == 0,
+            'the checked binding revision branch must be selected by the required association array')
+
+    def keywords(node):
+        return {key: value for key, value in node.items() if key != 'x-pm-oracle-id'}
+
+    path_schema = schema['properties']['active_run_ref']
+    string, null = path_schema['oneOf']
+    require(keywords(path_schema).keys() == {'oneOf'}
+            and keywords(string) == keywords(branch['else']['properties']['active_run_ref'])
+            == {'type': 'string', 'minLength': 1}
+            and keywords(null) == keywords(branch['then']['properties']['active_run_ref']) == {'type': 'null'},
+            'the conditional and the field must enforce the same disjoint run-reference alternatives')
+    union = owner + '/properties/active_run_ref/oneOf'
+    selected = owner + '/allOf/0/else/properties/active_run_ref'
+    if name == union:
+        covering = selected + '/type'
+        require(locations(cut) == {covering}, 'the bound run reference type must still refuse')
+        return dict(source=owner + '/allOf/0', covering_rule=covering,
+                    premise='The required association array chooses exactly one of the same disjoint reference types.')
+    checks = {
+        selected + '/minLength': {union, union + '/0/minLength', union + '/1/type'},
+        union + '/0/minLength': {selected + '/minLength'},
+    }
+    require(name in checks and locations(cut) == checks[name], 'only the duplicate run reference constraint may refuse')
+    return dict(source=owner + '/allOf/0', covering_rules=sorted(checks[name]),
+                premise='Both checks apply the same nonempty string constraint when an association is present.')
+
+
 def binding_selection_implication(nodes, name, path, cut):
     from pm_goal_go_schema_closure import locations
 
@@ -831,6 +869,8 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
             record.update(cls='COVERED_LATER', implication=origin_afterimages_implication(nodes, name, path, cut))
         elif example.get('binding_implication'):
             record.update(cls='COVERED_LATER', implication=binding_selection_implication(nodes, name, path, cut))
+        elif example.get('binding_revision_implication'):
+            record.update(cls='COVERED_LATER', implication=binding_revision_implication(nodes, name, path, cut))
         elif example.get('filesafe_selector_implication'):
             record.update(cls='COVERED_LATER', implication=filesafe_selector_implication(nodes, name, path, cut))
         elif example.get('mutation_afterimage_implication'):
@@ -1141,8 +1181,10 @@ def run(args):
                 'a conflicting rule list requires the pinned fresh reference')
         with gzip.open(args.fresh_reference, 'rt') as stream:
             reference = json.load(stream)
-        require(reference['tools'] == revision and reference['sizing']['sha256'] == declare['census_sha256'],
-                'fresh references use a different closure tool or sizing census')
+        require(reference['tools'] == revision, 'fresh references use a different closure tool')
+        if 'sizing' in reference:
+            require(reference['sizing']['sha256'] == declare['census_sha256'],
+                    'fresh references use a different sizing census')
         require(fresh_roots <= set(reference['roots']),
                 'fresh references omit a conflicting root')
     else:
