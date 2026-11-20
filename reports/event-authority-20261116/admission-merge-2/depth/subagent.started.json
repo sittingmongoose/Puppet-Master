@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.133",
+  "sha256": "f746edeb430827fc5ca8df64978b17d371b5dc5f2906ee5b0ce54a33d1853145",
   "family_count": 518,
   "row_pointer": "#/families/502"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/502 (canonical row SHA-256 b719a10ab0e15556b56b4990f286cf3bdbd84db1d0973751b2e7f3c7c49d91a2). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.133 as #/families/502, canonical row SHA-256 aebfd6ce36dbc517d4acbb0e79b75e1c12e84243609e89519b26128ef120f1f3. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -517,10 +517,9 @@
   "row_pointer": "#/families/502"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "3febd93edec50a1f74c767d45108e7e111473e458a7f328d1afb5f679c8899e9",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "1f4bf97de914c927ffe2016450c5fdf9173c3e64",
+  "source_assessment_sha256": "9a01eb10cf6dd5c9daa0812ed2e8d5b7ffdff07359519df09f7d2bb953e8ad2a",
+  "native_execution": "NOT_RUN"
  }
 }
