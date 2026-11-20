@@ -79,7 +79,19 @@ def replay_operation(directory, negative):
     return world, route.replay, (deepcopy(route.request),), {}
 
 
+def capture_retry(directory, negative):
+    world, route = cancelled.c1_route(cancelled.Suite(directory))
+    route.capture_source()
+    world.root = world.storage.root
+    if negative:
+        table = "goal_cancel_source_audit"
+        stored = world.storage.cells[table][route.key(table)]["value"]["record"]
+        stored["request"]["return_route_ref"] = "TEST_ONLY:other-return-route"
+    return world, route.capture_source, (), {}
+
+
 CASES = {
+    "capture-retry": (C1, 292, "C1/capture_source/retry_conflict", capture_retry),
     "replay-operation": (C1, 819, "C1/replay/operation", replay_operation),
     "template-value": (ASSIGNMENT, 716, "C4A/append_reserved/template_producer", append_template_value),
     "audit-permission": (C1, 833, "C1/audit_read/audit_permission", audit_permission),
