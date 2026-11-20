@@ -37,6 +37,8 @@ def fixture(declare, route, directory):
     import pm_goal_dg_r_world as legacy
 
     edition = route['edition']
+    if edition == 'w12b':
+        return stop_fixture(route)
     config = {'start': route.get('start', 'started')}
     if route.get('mutation'):
         config.update(effects='mutation', filesafe=['rollback', 'commit'])
@@ -124,6 +126,41 @@ def fixture(declare, route, directory):
     require(route['call'] == 'missing_original', f'unknown owner call {route}')
     presentation.cancellation = None
     return world, lambda: consumer.read_retained_native(request, presentation), (request, None)
+
+
+def stop_fixture(route):
+    from pm_goal_own_c3_w12b_migration import MigrationBoundary
+    from pm_goal_own_c3_w12b_roots import CANCEL, Roots
+    from pm_goal_own_c_source_oracles import load_originals
+
+    inputs, codec = load_originals()
+    world = MigrationBoundary(Roots(), codec, inputs)
+    original = copy.deepcopy(world.stop)
+    if route['call'] == 'wrap_stop_control':
+        key = 'goal_host_stop_control:TEST_ONLY'
+        return world, lambda: world.wrap('StorageStopControl', original, key)[0], (key, original)
+
+    require(route['call'] == 'issue_stop_control', 'unknown original host stop call')
+    owner = world.owners['host_stop']
+    key = 'TEST_ONLY:original-host-stop:methodb'
+    reference = CANCEL + '#/$defs/StopControl'
+
+    def issue():
+        with patch.object(owner, 'rows', copy.deepcopy(owner.rows)), patch.object(
+                owner, 'origins', copy.deepcopy(owner.origins)):
+            old_rows, old_origins = set(owner.rows), set(owner.origins)
+            try:
+                retained = owner.issue(key, 'producer', reference, copy.deepcopy(original))
+            except Exception:
+                require(set(owner.rows) == old_rows and set(owner.origins) == old_origins,
+                        'the refused stop control changed the original owner store')
+                raise
+            require(set(owner.rows) == old_rows | {key}
+                    and set(owner.origins) == old_origins | {retained['origin']['physical_key']},
+                    'the stop owner did not retain exactly one record and its origin')
+            return codec.storage_unpack(bytes.fromhex(retained['bytes_hex']))
+
+    return world, issue, (key, original)
 
 
 def root_binding(closure, bank, plain):
@@ -406,6 +443,7 @@ class OwnerExample:
         self.observed = None
         self.trials = []
         self.pointer = route['call'] == 'publish_pointer'
+        self.stop = route['edition'] == 'w12b'
         self.writes = self.pointer or route['call'] in (
             'issue_physical', 'filesafe_invocation', 'publish_workflow_head')
 
@@ -416,6 +454,7 @@ class OwnerExample:
         import pm_goal_guard_tables as tables
         from pm_goal_dg_r_world import Roots
         from pm_goal_dg_s_world import Bank
+        from pm_goal_own_c_roots import OriginalBank
         from pm_goal_go2_closure import value_sha
 
         code = self.row.removeprefix('dg5/').removesuffix('/schema')
@@ -445,6 +484,7 @@ class OwnerExample:
             return enforce()
 
         roots_validate, adapter_validate = Roots.validate, Bank.validate
+        original_validate = OriginalBank.validate
 
         def validate(bank, realm, ref, value, label):
             enforce = lambda: roots_validate(bank, realm, ref, value, label)
@@ -454,10 +494,16 @@ class OwnerExample:
             enforce = lambda: adapter_validate(bank, ref, value, label)
             return decide(bank.original, None, ref, value, sys._getframe(1), enforce) if label == code else enforce()
 
+        def validate_stop(bank, ref, value):
+            enforce = lambda: original_validate(bank, ref, value)
+            return decide(bank, None, ref, value, sys._getframe(1), enforce) if ref == self.route['ref'] else enforce()
+
         try:
             with ExitStack() as stack:
                 if self.pointer:
                     stack.enter_context(patch.object(Bank, 'validate', validate_pointer))
+                elif self.stop:
+                    stack.enter_context(patch.object(OriginalBank, 'validate', validate_stop))
                 else:
                     stack.enter_context(patch.object(Roots, 'validate', validate))
                 if isinstance(world.roots, cache.Roots):
@@ -535,11 +581,20 @@ class OwnerExample:
             self.observed = validator, bank, observed['document'], observed['binding']
         return result
 
+    def store_state(self, world):
+        import pm_goal_dg5_boundaries as bridge
+        from pm_goal_go2_closure import value_sha
+
+        if self.stop:
+            return value_sha(dict(cells=world.cells, owners={
+                role: dict(rows=owner.rows, origins=owner.origins) for role, owner in world.owners.items()}))
+        return bridge.manifest(bridge.file_state(world.storage.root))
+
     def prove(self, world, action, inputs):
         import pm_goal_dg5_boundaries as bridge
         import pm_goal_guard_tables as tables
 
-        initial = bridge.manifest(bridge.file_state(world.storage.root))
+        initial = self.store_state(world)
         bound_inputs = bridge.context_value(inputs, world)
         extra = 'methodb_extra'
         for edit in (None, extra, None):
@@ -551,7 +606,7 @@ class OwnerExample:
                 require(bridge.context_value(inputs, world) == bound_inputs, 'original owner arguments changed')
                 result = (self.issue_on_copy(world, action, inputs, edit, initial) if self.writes
                           else self.call(world, action, inputs, edit))
-                require(bridge.manifest(bridge.file_state(world.storage.root)) == initial,
+                require(self.store_state(world) == initial,
                         'passive call changed the original store')
                 return result
 
