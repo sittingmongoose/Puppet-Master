@@ -76,17 +76,29 @@
   /* a persona's value: the record's own fields for name, what it's for and instructions, else its props */
   const MIRROR = { [S.name]: 'name', [S.desc]: 'description', [S.prompt]: 'prompt' };
   const pval = (p, id) => MIRROR[id] ? (p[MIRROR[id]] || '') : id === S.pid ? p.id : id === S.prefer ? ((p.props && p.props[id]) || p.tools || []) : PM51.scopedValue(p, id);
-  /* free tags: the stored strings as typed; the row's choices are only suggested kinds, and a kind reads as its
-     label wherever a tag is shown in words (the Details list, the Saved toast) */
-  const tagList = p => { const v = pval(p, S.tags); return Array.isArray(v) ? v.map(String).filter(Boolean) : []; };
+  /* Suggested kinds use one token for their label and spelling, including tags saved before that rule. */
+  const tagKinds = () => o55Options(PM51.setting(S.tags)).map(String);
   const tagWord = t => {
     const options = O55R[S.tags]?.options;
     return options && Object.hasOwn(options, t) ? options[t] : t;
   };
+  const tagToken = t => {
+    const key = t.trim().toLowerCase();
+    return tagKinds().find(k => k.toLowerCase() === key || tagWord(k).toLowerCase() === key) ?? t;
+  };
+  const uniqueTags = tags => {
+    const byKey = new Map();
+    for (const value of tags) {
+      const tag = tagToken(String(value));
+      const key = tag.toLowerCase();
+      if (tag && !byKey.has(key)) byKey.set(key, tag);
+    }
+    return [...byKey.values()];
+  };
+  const tagList = p => { const v = pval(p, S.tags); return Array.isArray(v) ? uniqueTags(v) : []; };
   const tagText = list => list.length ? list.map(tagWord).join(', ') : 'None';
-  const tagKinds = () => o55Options(PM51.setting(S.tags));
   const o55PersonaValueText = PM51.valueText;
-  PM51.valueText = (setting, v) => setting && setting.id === S.tags && Array.isArray(v) ? tagText(v.map(String)) : o55PersonaValueText(setting, v);
+  PM51.valueText = (setting, v) => setting && setting.id === S.tags && Array.isArray(v) ? tagText(uniqueTags(v)) : o55PersonaValueText(setting, v);
   const personaMeta = x => [x.locked ? 'Core · locked' : x.group === 'Bundled' ? 'Bundled' : 'Yours', x.chat === false ? 'helper only' : '', isHidden(x) ? 'hidden' : '', tagList(x).map(tagWord).join(', ')].filter(Boolean).join(' · ');
   /* a persona's own number, or "the project's": sliders with a word for where they sit, and a cap that is off at 0 */
   const TUNE = {
@@ -116,7 +128,7 @@
   const tagChip = (p, t) => `<span class="o55-tag-chip"><span>${h(tagWord(t))}</span><button type="button" class="o55-tag-x" data-action="pm51-personas-tag-remove" data-id="${a(p.id)}" data-tag="${a(t)}" aria-label="${a('Remove tag ' + tagWord(t))}">${icon('close')}</button></span>`;
   const tagSuggest = (p, typed) => {
     const q = String(typed || '').trim().toLowerCase(), have = tagList(p).map(x => x.toLowerCase());
-    return tagKinds().filter(k => !have.includes(String(k).toLowerCase()) && (!q || String(k).toLowerCase().includes(q) || tagWord(k).toLowerCase().includes(q)))
+    return tagKinds().filter(k => !have.includes(k.toLowerCase()) && (!q || k.toLowerCase().includes(q) || tagWord(k).toLowerCase().includes(q)))
       .map(k => `<button type="button" class="o55-tag-sug" data-action="pm51-personas-tag-suggest" data-id="${a(p.id)}" data-value="${a(k)}">${h(tagWord(k))}</button>`).join('');
   };
   function tagsCtl(p) {
@@ -464,8 +476,8 @@
   const tagAdd = (el, raw) => {
     const p = personas().find(x => x.id === ds(el, 'id')); if (!p || p.locked) return;
     const box = el.closest('.o55-tags'); if (!box) return;
-    const input = box.querySelector('.o55-tags-in'), cur = tagList(p), next = cur.slice();
-    String(raw || '').split(',').map(x => x.trim()).filter(Boolean).forEach(t => { if (!next.some(x => x.toLowerCase() === t.toLowerCase())) next.push(t); });
+    const input = box.querySelector('.o55-tags-in'), cur = tagList(p);
+    const next = uniqueTags(cur.concat(String(raw || '').split(',').map(t => t.trim())));
     input.value = '';
     if (next.length !== cur.length) tagsCommit(p, next, box);
     else box.querySelector('.o55-tags-suggest').innerHTML = tagSuggest(p, '');
