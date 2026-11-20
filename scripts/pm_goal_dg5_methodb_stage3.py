@@ -248,12 +248,31 @@ def certified_fixture(route, path):
                 pass
         require(len(captured) == 3, 'append did not supply the original F5c readback documents')
         return w, lambda: w.coordinator.f5c_readback(*captured)
-    if route == 'current':
+    if route in ('current', 'current_guard_recheck'):
         run.until('release')
+        if route == 'current_guard_recheck':
+            reader = inspect.getsource(w.coordinator.read_current)
+            acquisition = "guard = self.check_guard(ctx, self.acquire_guard(ctx, 'current_source', stage='current'),"
+            recheck = "self.check_guard(ctx, guard, ('authentic_released',), stage=stage + '_final')"
+            check = inspect.getsource(w.coordinator.check_guard)
+            require(acquisition in reader and recheck in reader and reader.index(acquisition) < reader.index(recheck) and
+                    "w.realm.validate('coordinator', COORD + 'GuardReadResult', guard, stage + '/guard')" in check and
+                    'return guard' in check, 'the current reader no longer validates the same guard twice')
         return w, lambda: w.coordinator.read_current(ctx)
     if route == 'consumer_current':
         run.until('release')
-        return w, lambda: run.consumer().read_current(ctx)
+        consumer = run.consumer()
+        consumer.publish_projection(ctx['scope'], ctx['op'])
+        return w, lambda: consumer.read_current(ctx)
+    if route == 'append_guard':
+        run.until('arm')
+        now = time.time_ns()
+
+        def append():
+            with patch.object(time, 'time_ns', return_value=now):
+                return w.coordinator.append_held(ctx, run.obs['intent'], run.obs['control_armed'])
+
+        return w, append
     if route in ('arm', 'arm_intent_check'):
         run.until('prepare')
         return w, lambda: w.coordinator.arm(ctx, run.obs['prepared'])
@@ -539,6 +558,7 @@ class OwnerCheck:
         next_evidence_check = {
             'commit_evidence_recheck': 'commit_final/evidence',
             'retry_evidence_recheck': 'retry/result',
+            'current_guard_recheck': 'current_final/guard',
         }.get(self.declare['route'])
         if self.row == 'dg5/append_outer/evidence/schema':
             next_evidence_check = 'append/result'
@@ -553,8 +573,8 @@ class OwnerCheck:
                         ref, document = ref.removesuffix('AppendedHeld') + 'AppendEvidence', document['evidence']
                     require(evidence_validation and all(item[0] is bank and item[1:] == (args[0], ref, document)
                                                         for item in evidence_validation),
-                            'later evidence rule received a different document or schema')
-                    record['same_later_evidence'] = True
+                            'later validation received a different document or schema')
+                    record['same_later_document'] = True
                 if self.declare['route'] == 'receipt_recheck' and args[-1] == 'dgu/reader/receipt/final/receipt_request':
                     require(request_validation == [(bank, args[0], args[-2])],
                             'final receipt validation received a different reference or request')
@@ -698,7 +718,7 @@ class OwnerCheck:
                     elif repeat_before_prefix:
                         require(record['store_at_validator'] == self.result_digest(manifest),
                                 'the first F5d evidence check must precede the EventPhase write')
-                        require(record['store_wrote'] == (edit is None or record.get('same_later_evidence', False)),
+                        require(record['store_wrote'] == (edit is None or record.get('same_later_document', False)),
                                 'the EventPhase write must happen only after the two evidence checks')
                         record['final_store'] = self.result_digest(final_manifest)
                     elif record['errors']:
@@ -762,11 +782,12 @@ class OwnerCheck:
                     require(cut.get('same_final_receipt_request'), 'final validator did not check the original request')
                 if self.declare['route'] == 'input_recheck':
                     require(cut.get('same_input_result_request'), 'input result validator did not check the original request')
-                if self.declare['route'] in ('commit_evidence_recheck', 'retry_evidence_recheck') or (
+                if self.declare['route'] in ('current_guard_recheck', 'commit_evidence_recheck',
+                                             'retry_evidence_recheck') or (
                         self.row == 'dg5/append_outer/evidence/schema'):
-                    require(cut.get('same_later_evidence'), 'later evidence check did not use the original document')
+                    require(cut.get('same_later_document'), 'later check did not use the original document')
                 if self.declare['route'] == 'f5d_repeated_evidence':
-                    require(cut.get('same_later_evidence') and cut['final_store'] == self.runs[0]['final_store'],
+                    require(cut.get('same_later_document') and cut['final_store'] == self.runs[0]['final_store'],
                             'repeated F5d checks did not validate the same evidence and leave the same EventPhase write')
                 require(before == restored and before['observations'][0] == cut['observations'][0] and
                         bool(cut['errors']) == bool(later),
@@ -819,10 +840,12 @@ def control_phase(document, phase, field):
 def control_implication(nodes, name, path, errors, locations):
     """Each allowed phase independently requires one branch of the nullable selector."""
     location = name.split('/properties/', 1)[0]
-    require(location.endswith('#/$defs/Control') and path[0] in ('record', 'control') and len(path) == 2,
+    within_guard = path[:-1] == ['control', 'record']
+    require(location.endswith('#/$defs/Control') and
+            (path[:-1] in (['record'], ['control']) or within_guard),
             'the phase implication applies only to a Control member')
     node = nodes[location]['node']
-    member = path[1]
+    member = path[-1]
     require(member in node['required'] and 'phase' in node['required'], 'missing Control member or phase')
     require(node['properties']['phase']['enum'] == list(CONTROL_PHASE_FIELDS), 'Control phase enum changed')
     selectors = node['properties'][member]['anyOf']
@@ -840,6 +863,11 @@ def control_implication(nodes, name, path, errors, locations):
                 'Control phase fails to require one branch of the member rule')
         bindings[phase] = location + f'/allOf/{index}/then/properties/{member}'
     remaining = locations(errors)
+    if within_guard:
+        require(location.removesuffix('Control') + 'GuardReadResult' in nodes,
+                'nested Control premise needs the original GuardReadResult definition')
+        remaining = {error for error in remaining if error[1] == tuple(path) and
+                     isinstance(error[2], str) and error[2].startswith(location + '/')}
     require(remaining == {('type', tuple(path), bindings['empty'] + '/type')},
             'the exact empty-phase null rule did not remain')
     return dict(source=location, premise=bindings, source_rule=name)
@@ -1486,6 +1514,14 @@ def main():
     started = time.monotonic()
     source = args.source.resolve()
     declare = json.loads(args.declaration.read_text())
+    if declare.get('use_guard_result_examples'):
+        shared = json.loads((args.declaration.parent / 'certified-guard-result.json').read_text())
+        require(shared['row'] == 'dg5/guard/result/schema' and
+                all(declare[key] == shared[key] for key in ('family', 'source', 'census_sha256', 'root')) and
+                declare['row'].endswith('/guard/schema') and
+                not ({'examples', 'accepted_branches'} & declare.keys()),
+                'shared GuardReadResult examples require the same root, source and family')
+        declare.update(examples=shared['examples'], accepted_branches=shared['accepted_branches'])
     revision = subprocess.check_output(['git', '-C', str(source), 'rev-parse', 'HEAD'], text=True).strip()
     require(revision == declare['source'], f'wrong original source revision: {revision}')
     require(sha(args.census) == declare['census_sha256'], 'census bytes changed')
@@ -1501,6 +1537,7 @@ def main():
         ('dg5/retry/evidence/schema', 'retry_evidence_recheck'): 'retry/result/schema/evidence',
         ('dg5/append_outer/evidence/schema', 'f5d_after_event_phase'): 'append/result/schema/evidence',
         ('dg5/f5d/evidence/schema', 'f5d_repeated_evidence'): 'append_outer/evidence/schema/',
+        ('dg5/current/guard/schema', 'current_guard_recheck'): 'current_final/guard/schema/',
         ('dg5/dgu/reader/receipt/receipt_request/schema', 'receipt_recheck'):
             'dgu/reader/receipt/final/receipt_request/schema/',
         ('dg5/dgu/producer/publish/publication/schema', 'publish_receipted'): 'dgu/progress/schema/',
