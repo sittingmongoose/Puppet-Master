@@ -427,6 +427,7 @@ class RenamedShardStaleness(unittest.TestCase):
         context = M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA])
         self.assertFalse(self.stale(self.ref(self.OLD, source=fresh), context))
         self.assertIn(fresh, context.why)
+        self.assertRegex(context.why[fresh], r"^evidence has working-tree changes: !! ")
 
     def test_an_excluded_untracked_evidence_file_keeps_its_class(self):
         (self.root / ".git/info").mkdir(parents=True, exist_ok=True)

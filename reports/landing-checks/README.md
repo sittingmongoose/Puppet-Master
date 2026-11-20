@@ -372,7 +372,9 @@ and the negatives, P6 and P8 among them.
 The working-tree check includes ignored files and rejects skip-worktree or assume-unchanged index
 flags. It also compares the on-disk file's blob ID after Git applies the path's clean filters with the
 blob ID at HEAD (T137). A clean CRLF checkout can keep the rename classification, and a content edit
-that changes the filtered blob still loses it.
+that changes the filtered blob still loses it. The ignored-file regression (T195) checks that the
+refusal names the `!!` status entry. With ignored-file reporting disabled, the HEAD-blob check
+still refuses the same file because it has no blob at HEAD.
 
 Deliberately not on the list: the shard and index kinds such as `shard_hash_stale` and
 `stale_generated_index_artifact`, because a branch that edits canon regenerates those and a stale one
