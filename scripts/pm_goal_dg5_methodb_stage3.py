@@ -45,7 +45,10 @@ def errors_list(errors):
 
 def edit_example(go, document, path, change):
     go.get(document, path)
-    edit = tuple(change['member']) if 'member' in change else change['value']
+    if change.get('birth_selector'):
+        edit = copy.deepcopy(document['record']['birth'])
+    else:
+        edit = tuple(change['member']) if 'member' in change else change['value']
     return go.apply(document, path, edit)
 
 
@@ -54,16 +57,6 @@ def update_fixture(route, path):
 
     w = oracle.world(path)
     goal = oracle.O.birth_goal(w)
-    if route == 'terminal':
-        request = oracle.O.direct_request(w, goal, 'Stage 3 terminal evidence')
-        w.command.run(request, stop_after='publish')
-        stamp = w.now()
-
-        def terminalize():
-            with patch.object(w, 'now', return_value=stamp):
-                return w.sir.terminalize(request['command_instance_id'], 'succeeded')
-
-        return w, terminalize
     _, admission = oracle.run_direct(w, goal)
     progress = oracle.progress(w, goal, oracle.op_of(admission))
     request = progress['body_commit']['receipt_request']
@@ -73,10 +66,6 @@ def update_fixture(route, path):
     if route == 'inspect':
         event_request = inspect.request_for(goal['scope'], progress['publication']['event_id'])
         return w, lambda: inspect.inspect(event_request, actor, permission)
-    if route == 'input':
-        return w, oracle._input_call(w, goal, oracle.op_of(admission))
-    if route == 'audit':
-        return w, oracle._audit_call(w, goal, admission)
     if route == 'receipt':
         return w, lambda: w.body.read_receipt(request, actor, permission)
     if route == 'oracle_receipt':
@@ -96,11 +85,37 @@ def certified_fixture(route, path):
     if route == 'arm':
         run.until('prepare')
         return w, lambda: w.coordinator.arm(ctx, run.obs['prepared'])
-    if route == 'prepare':
-        return w, lambda: w.coordinator.prepare(ctx)
-    if route == 'retained':
-        run.until('release')
-        return w, lambda: w.coordinator.retained_authority(ctx['scope'], ctx['op'])
+    if route == 'f5d':
+        # The original held append prepares real Event custody and barrier inputs.
+        # Stop at the EventPhase owner's entry so each trial starts before its write.
+        captured = []
+
+        def save_entry(*args):
+            captured.extend(args)
+            raise RootCapture
+
+        with patch.object(w.coordinator, 'f5d', save_entry):
+            try:
+                run.until('append')
+            except RootCapture:
+                pass
+        require(len(captured) == 5, 'held append did not supply the EventPhase arguments')
+        stamp = w.storage.now()
+
+        def event_phase():
+            with patch.object(w.storage, 'now', return_value=stamp):
+                return w.coordinator.f5d(*captured)
+
+        return w, event_phase
+    if route == 'native':
+        run.until('append')
+        stamp = w.storage.now()
+
+        def commit():
+            with patch.object(w.storage, 'now', return_value=stamp):
+                return w.coordinator.commit_native(ctx, run.obs['appended'])
+
+        return w, commit
     if route == 'f5a':
         run.until('arm')
         intent, control = run.obs['intent'], run.obs['control_armed']
@@ -298,6 +313,53 @@ class OwnerCheck:
         return self.capture
 
 
+CONTROL_PHASE_FIELDS = {
+    'empty': (),
+    'armed': ('intent',),
+    'event_durable': ('intent', 'event_phase'),
+    'native_committed': ('intent', 'event_phase', 'commit', 'origin'),
+    'released': ('intent', 'event_phase', 'commit', 'origin', 'release'),
+}
+
+
+def control_phase(document, phase):
+    doc = copy.deepcopy(document)
+    record = doc['record']
+    for member in CONTROL_PHASE_FIELDS['released']:
+        record[member] = copy.deepcopy(record['birth']) if member in CONTROL_PHASE_FIELDS[phase] else None
+    record['phase'] = phase
+    return doc
+
+
+def control_implication(nodes, name, path, errors, locations):
+    """Each allowed phase independently requires one branch of the nullable selector."""
+    location = name.split('/properties/', 1)[0]
+    require(location.endswith('#/$defs/Control') and path[0] == 'record' and len(path) == 2,
+            'the phase implication applies only to a Control member')
+    node = nodes[location]['node']
+    member = path[1]
+    require(member in node['required'] and 'phase' in node['required'], 'missing Control member or phase')
+    require(node['properties']['phase']['enum'] == list(CONTROL_PHASE_FIELDS), 'Control phase enum changed')
+    selectors = node['properties'][member]['anyOf']
+    require(len(selectors) == 2 and selectors[1]['type'] == 'null' and '$ref' in selectors[0],
+            'nullable Selector changed')
+    require(len(node['allOf']) == len(CONTROL_PHASE_FIELDS), 'Control phase list changed')
+    bindings = {}
+    for index, (phase, available) in enumerate(CONTROL_PHASE_FIELDS.items()):
+        conditional = node['allOf'][index]
+        require(conditional['if']['properties']['phase']['const'] == phase, 'Control selector changed')
+        selected = conditional['then']['properties'][member]
+        alternative = selectors[0] if member in available else selectors[1]
+        require({k: v for k, v in selected.items() if k != 'x-pm-oracle-id'} ==
+                {k: v for k, v in alternative.items() if k != 'x-pm-oracle-id'},
+                'Control phase fails to require one branch of the member rule')
+        bindings[phase] = location + f'/allOf/{index}/then/properties/{member}'
+    remaining = locations(errors)
+    require(remaining == {('type', tuple(path), bindings['empty'] + '/type')},
+            'the exact empty-phase null rule did not remain')
+    return dict(source=location, premise=bindings, source_rule=name)
+
+
 def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check):
     import pm_goal_dg5_closure as closure
     import pm_goal_go_schema_closure as go
@@ -312,39 +374,58 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
     require(set(installed) == set(examples), 'declared test examples differ from exact inventory')
     require(not list(plain.iter_errors(document)) and not go.errors_of(validator, document),
             'original or instrumented validator refused the accepted document')
+    from pm_goal_oracle_common import _SCHEMA_LOCATIONS
+
+    def locations(errors):
+        return {(error.validator, tuple(error.absolute_path),
+                 _SCHEMA_LOCATIONS.get(getattr(error, 'oracle_guard', None)))
+                for error in each_error(errors)}
+
     result, gaps = {}, {}
     for name in installed:
         example = examples[name]
         path = example['path']
-        control = document
+        control = control_phase(document, example['phase']) if 'phase' in example else document
         if 'control' in example:
             control = edit_example(go, document, example['control']['path'], example['control'])
         require(not list(plain.iter_errors(control)), f'{name}: branch control refused')
+        guard = closure._guard_for_location(name)
+        disable = () if disabled_check == 'rule' else {guard}
+        if 'selector' in example:
+            require(not go.errors_of(validator, control), 'Control selector control refused')
+            cut = go.errors_of(validator, control, disable)
+            restored = go.errors_of(validator, control)
+            expected = name.split('/if/', 1)[0] + '/then/'
+            if name.endswith('/allOf/4/if/properties/phase/const'):
+                selector_type = name.split('#', 1)[0] + '#/$defs/Selector/type'
+                activated = locations(cut) == {('type', ('record', member), selector_type)
+                                               for member in CONTROL_PHASE_FIELDS['released']}
+            else:
+                activated = bool(cut) and all(rule.startswith(expected) for rule in go.locations(cut))
+            require(activated and not restored,
+                    f'{name}: disabling this selector produced {sorted(go.locations(cut))}')
+            result[name] = dict(cls='SELECTOR_OR_NEGATED', control=control, cut=errors_list(cut),
+                                restored=errors_list(restored), condition=name)
+            continue
         invalid = edit_example(go, control, path, example)
         before = go.errors_of(validator, invalid)
         actual = list(plain.iter_errors(invalid))
         require(errors_list(before) == errors_list(actual), f'{name}: original and instrumented errors differ')
-        guard = closure._guard_for_location(name)
-        cut = go.errors_of(validator, invalid, () if disabled_check == 'rule' else {guard})
+        cut = go.errors_of(validator, invalid, disable)
         restore = go.errors_of(validator, invalid)
         keyword = inventory[name]
         failure = (keyword, tuple(path), name)
-        from pm_goal_oracle_common import _SCHEMA_LOCATIONS
-
-        def locations(errors):
-            return {(error.validator, tuple(error.absolute_path),
-                     _SCHEMA_LOCATIONS.get(getattr(error, 'oracle_guard', None)))
-                    for error in each_error(errors)}
-
         require(failure in locations(before), f'{name}: example did not produce expected validation message')
         require(failure not in locations(cut) and errors_list(before) == errors_list(restore),
                 f'{name}: disabling and restoring that one rule failed')
         record = dict(cls='KILLED', control=control, invalid=invalid, before=errors_list(actual),
                       cut=errors_list(cut), restored=errors_list(restore))
-        if cut:
+        if cut and example.get('control_phase_implication'):
+            record.update(cls='COVERED_LATER', implication=control_implication(nodes, name, path, cut, locations))
+        elif cut:
             gaps[name] = record
-        else:
-            result[name] = record
+            continue
+        result[name] = record
     return result, gaps
 
 
@@ -384,7 +465,8 @@ def proof_output(source, output, declare, collector, clauses, root, table_path):
             json.dump(value, stream, sort_keys=True)
     entry = dict(rows=[row], families=[family], counts=dict(Counter(x['cls'] for x in clauses.values())),
                  clauses=clauses, clause_inventory=closure._clause_inventory_pin(sorted(clauses)),
-                 verify=dict(passed=len(clauses), failed=0, unverifiable=0))
+                 verify=dict(passed=sum(x['cls'] in ('KILLED', 'COVERED_LATER') for x in clauses.values()),
+                             failed=0, unverifiable=0))
     write(output / 'closure.json', {'roots': {root: entry}})
     inventory = dict(mode='assertion-inventory', family=family, collection_failures=[],
                      roots={root: dict(rows=[row], families=[family], clause_ids=sorted(clauses),
