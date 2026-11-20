@@ -8,10 +8,72 @@ import json
 from pathlib import Path
 import subprocess
 import re
+from unittest.mock import patch
 
-from pm_ea_retention_citations import ROOT, missing_facets, range_text, complete_range
+import pm_ea_retention_citations as retention
+from pm_ea_retention_citations import (
+    ROOT, DT_APPLICATION_COUNT_PENDING, GITHUB_SIGN_IN, complete_range,
+    missing_facets, range_text, selections, union_missing, without_scope_claims,
+)
 
 FOLDER = 'reports/event-authority-20261116/admission-merge-2'
+
+
+def check_received_effective_counts(ready, rows, policies, read):
+    source = '5a5392ecf8ca34c79db7cd3ddd303d751e4c8601'
+
+    @lru_cache(maxsize=16)
+    def received(path):
+        return subprocess.check_output(['git', '-C', str(ROOT), 'show', source+':'+path]).decode()
+
+    def cited_union(event, read_edition):
+        assessment = json.loads(read_edition(f'{FOLDER}/depth/{event}.json'))
+        return [range_text(item, read_edition) for item in assessment['rows'][0]['cells']['retention']['evidence']]
+
+    gap = 'application:effective_count'
+    required_families = GITHUB_SIGN_IN | DT_APPLICATION_COUNT_PENDING
+    original = {event: cited_union(event, received) for event in sorted(required_families)}
+    regressions, findings, mutations = [], [], []
+    for event, union in original.items():
+        missing, _ = union_missing(union, rows[event], policies)
+        regressions.append(dict(event_type=event, source_commit=source, missing=missing, killed=missing == [gap]))
+        if missing != [gap]:
+            findings.append(dict(event_type=event, lane=ready[event]['lane'],
+                missing=['received union did not isolate the Application count gap'], actual=missing))
+
+    # Removing the new requirement must make the standing negatives fail.
+    with patch.object(retention, 'effective_count_missing', return_value=False):
+        falsely_credited = [
+            event for event, union in original.items() if not union_missing(union, rows[event], policies)[0]
+        ]
+    killed = set(falsely_credited) == required_families and all(case['killed'] for case in regressions)
+    mutations.append(dict(event_type='shared', mutation='drop the effective count evidence requirement',
+        falsely_credited=falsely_credited, killed=killed))
+    if not killed:
+        findings.append(dict(event_type='shared', lane='shared', missing=['effective count requirement mutation survived']))
+
+    backup_event = 'backup.state_changed'
+    backup_union = cited_union(backup_event, read)
+    backup_allowance = [body for body in backup_union if 'app:operational_security' in body]
+    for event in sorted(GITHUB_SIGN_IN):
+        current = cited_union(event, read)
+        controls = [
+            ('remove the assignment to the GitHub allowance', [
+                body.replace('counts in `app:github_sign_in`', 'REMOVED_GITHUB_ASSIGNMENT') for body in current
+            ]),
+            ('remove the shared cap', [body.replace(
+                'Each application-wide bucket retains at most 2,000,000 records', 'REMOVED_SHARED_CAP',
+            ) for body in current]),
+            ('substitute the backup operational security allowance', original[event] + backup_allowance),
+        ]
+        for name, candidate in controls:
+            missing, _ = union_missing(candidate, rows[event], policies)
+            killed = missing == [gap] and bool(backup_allowance)
+            mutations.append(dict(event_type=event, mutation=name, killed=killed))
+            if not killed:
+                findings.append(dict(event_type=event, lane=ready[event]['lane'],
+                    missing=['effective count mutation survived: '+name], actual=missing))
+    return regressions, findings, mutations
 
 
 def main():
@@ -31,7 +93,7 @@ def main():
     rows = {x['event_type']:x for x in load('Plans/event_family_registry.json')['families']}
     policies = {x['policy_id']:x for x in load('Plans/storage_value_registry.json')['retention_policies']}
     findings, checks, mutations, families = [], [], [], []
-    reviewed,scope_regressions = [],[]
+    reviewed, scope_regressions, count_regressions = [], [], []
     for event, prepared in sorted(ready.items()):
         cell = load(FOLDER+'/depth/'+event+'.json')['rows'][0]['cells']['retention']
         union = []
@@ -54,7 +116,7 @@ def main():
                 for facet in ('policy', 'anchor', 'count'):
                     # Real current proof minus one required binding value.
                     changed = body
-                    for binding in __import__('pm_ea_retention_citations').selections(rows[event]).values():
+                    for binding in selections(rows[event]).values():
                         policy = policies.get(binding.get('policy_id'), {})
                         tokens = {'policy':[binding.get('policy_id', binding.get('setting_key'))],
                             'anchor':[policy.get('anchor_kind', binding.get('anchor'))],
@@ -68,13 +130,12 @@ def main():
                         findings.append(dict(event_type=event, lane=prepared['lane'], ordinal=ordinal, missing=['mutation survived: '+facet]))
         if not args.strict_citations:
             row = rows[event]
-            from pm_ea_retention_citations import union_missing,without_scope_claims
             gaps, bindings = union_missing(union, row, policies)
             families.append(dict(event_type=event, lane=prepared['lane'], bindings=bindings, missing=gaps))
             if gaps:
                 findings.append(dict(event_type=event, lane=prepared['lane'], missing=gaps))
             elif args.self_test:
-                for scope, binding in __import__('pm_ea_retention_citations').selections(row).items():
+                for scope, binding in selections(row).items():
                     token = binding.get('policy_id', binding.get('setting_key'))
                     mutated = [body.replace(token, 'REMOVED_POLICY_BINDING') for body in union]
                     killed = bool(union_missing(mutated, row, policies)[0])
@@ -89,7 +150,9 @@ def main():
                         mutation='remove EventRecord scope evidence while preserving selected policy',killed=killed))
                     if not killed:findings.append(dict(event_type=event,lane=prepared['lane'],missing=['scope-removal mutation survived']))
     if args.self_test and not args.strict_citations:
-        from pm_ea_retention_citations import union_missing, selections
+        count_regressions, count_findings, count_mutations = check_received_effective_counts(ready, rows, policies, read)
+        findings.extend(count_findings)
+        mutations.extend(count_mutations)
         baseline='10ba97e699d51287673d6f1db4d994f54c59b4ed'
         @lru_cache(maxsize=64)
         def original(path):
@@ -153,7 +216,7 @@ def main():
     result = dict(schema_id='pm.ea.retention_citation_check.v1', input_revision=args.revision or 'working_tree',
         script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         families=len(ready), citations=len(checks), strict_diagnostic=args.strict_citations, findings=findings, checks=checks, family_checks=families, mutations=mutations, reviewed_range_regressions=reviewed,scope_regressions=scope_regressions,
-        by_lane=dict(Counter(x['lane'] for x in findings)))
+        effective_count_regressions=count_regressions, by_lane=dict(Counter(x['lane'] for x in findings)))
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, indent=2)+'\n')

@@ -14,6 +14,21 @@ spec = importlib.util.spec_from_file_location('ea_retention_writer', ROOT / 'scr
 w = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(w)
 CREW = {'crew.board_message_posted', 'crew.board_message_read', 'crew.board_messages_archived'}
+GITHUB_SIGN_IN = {
+    'auth.github.authenticated',
+    'auth.github.device_code.issued',
+    'auth.github.disconnected',
+    'auth.github.failed',
+    'auth.github.token.polling',
+}
+# These EventRecords have valid Application inputs with no Project. Case L-3
+# supplies the per-Run cap, but the additional Application count needs an
+# owner decision. A reference to SP-349's physical table cannot supply it.
+DT_APPLICATION_COUNT_PENDING = {
+    'run.background_enqueued',
+    'tool.execution_completed',
+    'tool.execution_started',
+}
 
 
 def scope_claims(body, scope):
@@ -221,6 +236,35 @@ def union_range(item, row, policies, read):
         quote_scope=f'unit {unit}, {path}:{span[0]}-{span[1]}')
 
 
+def github_count_evidenced(bodies):
+    assignment = shared_limit = False
+    for body in bodies:
+        clause = re.sub(r'\s+', ' ', body).lower()
+        assignment |= (
+            'scope_kind=application' in clause
+            and 'counts in `app:github_sign_in`' in clause
+            and 'dl-401 gives these five' in clause
+            and all(f'`{event}`' in clause for event in GITHUB_SIGN_IN)
+        )
+        shared_limit |= (
+            'each application-wide bucket retains at most 2,000,000 records' in clause
+            and 'counting every record in the bucket whichever of its families wrote it' in clause
+        )
+    return assignment and shared_limit
+
+
+def effective_count_missing(bodies, event, scope, lower):
+    if event in CREW:
+        return ('server counterpart' if scope == 'application' else 'project partition') not in lower
+    if scope != 'application':
+        return False
+    if event in GITHUB_SIGN_IN:
+        return not github_count_evidenced(bodies)
+    if event == 'filesafe.policy_degraded':
+        return not all(token in lower for token in ('app:filesafe_policy_degraded', 'server', 'dl-2450'))
+    return event in DT_APPLICATION_COUNT_PENDING
+
+
 def union_missing(bodies, row, policies):
     """Per-family credit; naming an exact policy establishes its object fields.
 
@@ -257,13 +301,14 @@ def union_missing(bodies, row, policies):
             gaps.append(scope+':setting_anchor')
         if selected.get('setting_key') and not re.search(r'no count eviction|no cardinality|count[^.]{0,60}(?:none|unlimited|not applied)', lower):
             gaps.append(scope+':setting_count')
-        if row['event_type'] in CREW:
-            expected = 'server counterpart' if scope == 'application' else 'project partition'
-            if expected not in lower:
-                gaps.append(scope+':effective_count')
-        if row['event_type'] == 'filesafe.policy_degraded' and scope == 'application':
-            if 'app:filesafe_policy_degraded' not in lower or 'server' not in lower or 'dl-2450' not in lower:
-                gaps.append(scope+':effective_count')
+        event = row['event_type']
+        if effective_count_missing(bodies, event, scope, lower):
+            gaps.append(scope+':effective_count')
+        count_owner = 'SP-351' if event in CREW else None
+        if scope == 'application' and event in GITHUB_SIGN_IN:
+            count_owner = 'DL-401'
+        elif scope == 'application' and event == 'filesafe.policy_degraded':
+            count_owner = 'DL-2450'
         bindings.append(dict(scope=scope, selected=selected, named_in_current_union=named,
-            policy_object_fields=policy, effective_count_owner='SP-351' if row['event_type'] in CREW else None))
+            policy_object_fields=policy, effective_count_owner=count_owner))
     return sorted(set(gaps)), bindings

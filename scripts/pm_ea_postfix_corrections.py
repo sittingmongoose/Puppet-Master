@@ -179,7 +179,7 @@ def witness(record, root, *, require_committed=True):
     if not doc['findings'] or set(doc['findings']) - {1, 2, 3, 4, 5, 6, 7}:
         raise ValueError('unreviewed correction finding')
     if event == 'filesafe.policy_degraded' and 'plan_unit_id: DL-2450' not in (root/'Plans/Decision_Log.md').read_text():
-        raise ValueError('FileSafe correction requires the signed count decision')
+        raise ValueError('FileSafe correction requires the recorded DL-2450 count decision')
     if require_committed:
         applied = application_commit(str(root), path, sha(raw))
         parents = subprocess.check_output(['git', '-C', str(root), 'rev-list', '--parents', '-n', '1', applied]).decode().split()

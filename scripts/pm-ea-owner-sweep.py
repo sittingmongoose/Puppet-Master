@@ -364,7 +364,7 @@ def decision_scope(decision):
                 objects=objects, title=body.splitlines()[0])
 
 
-def postfix_owner_findings(registry, policies, bodies=None):
+def postfix_owner_findings(registry, policies, ready, bodies=None):
     """Inspect every Crew binding copy and the shared GitHub count heading."""
     bodies = bodies or {}
     findings, checked = [], []
@@ -410,19 +410,19 @@ def postfix_owner_findings(registry, policies, bodies=None):
     for event in sorted(GITHUB):
         checked.append(dict(event_type=event, ref=GITHUB_COUNT, required=required))
         if defects:
-            findings.append(dict(event_type=event, lane='W3E', ref=GITHUB_COUNT,
+            findings.append(dict(event_type=event, lane=ready[event]['lane'], ref=GITHUB_COUNT,
                 kind='github_cross_family_registration_boundary', missing=defects))
     return findings, checked
 
 
-def postfix_owner_mutations(registry, policies):
+def postfix_owner_mutations(registry, policies, ready):
     mutations = []
     for event in sorted(CREW):
         ref = registry[event]['payload_owner_doc']
         for clause in clauses(ref):
             if event in clause['text'] and 'Current selected assignment' in clause['text']:
                 old = clause['text'].replace('count in the SP-351 Server counterpart bucket', 'cardinality_scope=project')
-                findings, _ = postfix_owner_findings(registry, policies, {(ref, clause['line_start']):old})
+                findings, _ = postfix_owner_findings(registry, policies, ready, {(ref, clause['line_start']):old})
                 mutations.append(dict(event_type=event, mutation='Application Project count restored',
                     killed=any(x['event_type']==event and x['kind']=='crew_effective_count_partition' for x in findings)))
                 break
@@ -433,8 +433,8 @@ def postfix_owner_mutations(registry, policies):
     ]
     for old in old_lines:
         mutated = body + '\n' + old if not old.startswith('**Boundary') else body.split('**Boundary.**')[0] + old
-        findings, _ = postfix_owner_findings(registry, policies, {GITHUB_COUNT:mutated})
-        mutations.append(dict(mutation=old, killed=all(any(x['event_type']==event and x['kind']=='github_cross_family_registration_boundary' for x in findings) for event in GITHUB)))
+        findings, _ = postfix_owner_findings(registry, policies, ready, {GITHUB_COUNT:mutated})
+        mutations.append(dict(mutation=old, killed=all(any(x['event_type']==event and x['lane']==ready[event]['lane'] and x['kind']=='github_cross_family_registration_boundary' for x in findings) for event in GITHUB)))
     panels=load('Plans/panel_event_contracts/manifest.json')['families']
     for event in ('panel.redocked','panel.undocked'):
         row=registry[event]
@@ -625,9 +625,9 @@ def main():
                               decision=doc["decision_ref"], errors=errors))
         findings.extend(dict(event_type=event, lane="S5b", ref=ref, **error) for error in errors)
     assert len(revisions) == 8
-    extra, postfix_checks = postfix_owner_findings(registry, policies)
+    extra, postfix_checks = postfix_owner_findings(registry, policies, ready)
     findings.extend(extra)
-    mutations = postfix_owner_mutations(registry, policies) if args.self_test else []
+    mutations = postfix_owner_mutations(registry, policies, ready) if args.self_test else []
     findings.extend(dict(event_type="shared", lane="shared", kind="postfix_mutation_survived", mutation=x) for x in mutations if not x["killed"])
     result = dict(schema_id="pm.ea.owner_sweep.v1", admitted_families=len(ready),
                   input_revision=REVISION or "working_tree", script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
