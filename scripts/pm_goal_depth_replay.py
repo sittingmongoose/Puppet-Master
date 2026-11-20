@@ -7,6 +7,7 @@ refusal and checks the observed ownership and effects on acceptance.
 import hashlib
 import inspect
 import json
+from contextlib import contextmanager
 from pathlib import Path
 import shutil
 from types import SimpleNamespace
@@ -21,6 +22,19 @@ from pm_goal_test_owner_adapters import AdapterRefusal
 def check(condition, message):
     if not condition:
         raise AssertionError(message)
+
+
+@contextmanager
+def retain_manifests(root):
+    """Keep rotated TEST_ONLY manifests in an evidence run's own scratch."""
+    def retain(path, *args, **kwargs):
+        check(path.is_relative_to(root) and path.match('manifest.*.msgpack'), f'Unexpected removal: {path}')
+        retained = path.with_name('retained-' + path.name)
+        check(not retained.exists(), f'Retired manifest already retained: {retained}')
+        path.rename(retained)
+
+    with patch.object(Path, 'unlink', retain):
+        yield
 
 
 def store_image(root):
