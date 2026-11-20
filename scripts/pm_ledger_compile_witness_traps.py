@@ -19,7 +19,7 @@ def exercise(g, *, scratch=None):
         row = {"id": name, "expected_status": status, "expected_exit": exit_code, "caught": False}
         try:
             with tempfile.TemporaryDirectory(prefix="ledger-witness-", dir=scratch) as directory:
-                root = Path(directory)
+                root = Path(directory) / "repo"
                 ledger = root / "ledger"
                 (ledger / "state").mkdir(parents=True)
                 (ledger / "records").mkdir()
@@ -629,6 +629,55 @@ def exercise(g, *, scratch=None):
              lambda f: f.update(owner=owner("AA-001", body, ["live token"])),
              verify=lambda r: r["witness_exact_tokens"][0]["units_with_both"] == ["AA-001"]
              and not r["witness_registry_hygiene"][0]["fires"])
+
+    # SOLMAX-GW-03: distinguish the input diagnostics and the token witness
+    # independently from later refusals and registry hygiene.
+    def unknown_atom_with_empty_mapping(f):
+        f["queue"]["items"][0].update(source_atom_ids=["atom-1", "unknown"],
+                                     atom_target_plan_unit_ids={"atom-1": ["AA-001"], "unknown": []})
+
+    case("unknown-atom-in-partial-mapping", unknown_atom_with_empty_mapping, status="error", exit_code=1,
+         verify=lambda r: r["error"] == "queue item names an unknown atom: q-1")
+
+    # The same independently reported mapping guard covers SOLMAX W13 and Astra W11.
+    def out_of_item_target(f):
+        f["owner"] += owner("BB-001", "Required live token.", ["live token"])
+        f["queue"]["items"][0]["atom_target_plan_unit_ids"] = {"atom-1": ["BB-001"]}
+
+    case("mapped-owner-outside-item-targets", out_of_item_target, status="error", exit_code=1,
+         verify=lambda r: r["error"] == "atom targets must be a subset of the queue item's targets: atom-1")
+
+    def external_owner(f):
+        write(f["root"].parent / "outside-owner.md", f["owner"])
+        f["queue"]["canonical_plan_targets"] = ["../outside-owner.md"]
+
+    def external_companion(f):
+        write(f["root"].parent / "outside-output.json", {"value": "live token"})
+        f["queue"]["compiled_plan_outputs"] = ["../outside-output.json"]
+
+    for filename, setup in (("outside-owner.md", external_owner), ("outside-output.json", external_companion)):
+        case("existing-traversal-" + filename, setup, status="error", exit_code=1,
+             verify=lambda r: r["error"] == "path escapes its declared root: ../" + filename)
+
+    def companion_only(f):
+        f["owner"] = owner("AA-001", "Ordinary body.", ["live token"])
+        write(f["root"] / "companion.json", {"value": "live token"})
+        f["queue"]["compiled_plan_outputs"] = ["companion.json"]
+
+    def companion_only_fires(r):
+        token, = r["witness_exact_tokens"]
+        hygiene, = r["witness_registry_hygiene"]
+        return (token["fires"] and token["in_companion_outputs_only"] and not token["units_with_token_in_prose"]
+                and token["units_with_token_in_registry"] == ["AA-001"]
+                and hygiene["entries_absent_from_unit_text"] == ["live token"])
+
+    case("companion-only-token-fires", companion_only, status="findings", exit_code=2, verify=companion_only_fires)
+
+    # An active exemption is rejected at declaration. If that guard regresses,
+    # a cited active disposition or a disposition mismatch still rejects it.
+    case("active-exemption-declaration-rejected-early", lambda f: exempt(f, disposition="active"),
+         status="error", exit_code=1,
+         verify=lambda r: r["error"] == "token exemption needs v1 schema and held/ledger_retired disposition")
 
     return {"schema_id": "pm.ledger_compile_witness.self_test.v1", "status": "pass" if all(row["caught"] for row in rows) else "findings",
             "caught": sum(row["caught"] for row in rows), "tests": rows}
