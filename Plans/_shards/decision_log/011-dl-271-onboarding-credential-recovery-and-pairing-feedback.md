@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L60287
+Source lines: L28747-L60349
 
-Source SHA256: `8cac12453456d5db63c0a829e8ceeae47f43767675f558601ba99d18ccc21673`
+Source SHA256: `8e6b909fdf3df2b0d21429e6082390da5416a9aa3dc124073a26d94cc062ef64`
 
 ---
 
@@ -31546,6 +31546,68 @@ preserved_exact_tokens:
 - c93ed85722edad386e1a2cdf405ff74da33107331c8e71f2d04f50ffdb9182fe
 - 2026-11-19.100
 - 2026-11-19.101
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2552: Event Authority corrects remote_access.remote_link_state_changed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2552
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for remote_access.remote_link_state_changed only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2364; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 d7362fd743be8a58da560a25bc76fd884e40ae3966277497138dc537a14e1543.
+  Its scope is application_only. Payload editions: application `pm.event_payload.remote_access.remote_link_state_changed.v1`
+  (RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.101, 518 families, SHA-256 37a1dddc8125cc9a7fa41f115b55636231eab45ae1587de2badab46ed9c47595,
+  to 2026-11-19.102, 518 families, SHA-256 3b572b8ca597fff898ff6069803bca5c49a2af77bcc4ca2fb137e273b3df64ad, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/remote_access.remote_link_state_changed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/remote_access.remote_link_state_changed.json,
+  SHA-256 53d3d5a233fec9de4f0b66cbf35f2650c2b9440df5f20398f9c7442818828d2c.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.227 SHA-256 50c7b8546d5423ca1b79b38593834980678c4392e70f45a2ac02581cb1fb42ca;
+  after 2026-11-16.228 SHA-256 dd249beb82582c580dddf7ca1fd7b179d82bb6926b727ae9ff74ef78415386be. Existing semantic owner Plans/Remote_Access_System.md#RAS-1405,
+  payload owner Plans/Contracts_V0.md#CV-1405, resource Plans/event_payloads/w3e/remote_access_remote_link_state_changed.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2364
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2364
+preserved_exact_tokens:
+- remote_access.remote_link_state_changed
+- d7362fd743be8a58da560a25bc76fd884e40ae3966277497138dc537a14e1543
+- 2026-11-19.101
+- 2026-11-19.102
 negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
