@@ -789,11 +789,19 @@ async function wheelProxies(t, f, label, park) {
 	return records;
 }
 
+// R125 #4: 400 ms is the hard ceiling on the return from the last input; --set back= may only lower it, so a runner
+// cannot widen the rule it is running. (Non-numbers and non-positive values fall back to the ceiling.)
+export const RETURN_CAP_MS = 400;
+export const outerCap = (back) => {
+	const n = Number(back);
+	return Number.isFinite(n) && n > 0 ? Math.min(RETURN_CAP_MS, n) : RETURN_CAP_MS;
+};
+
 export default async function (t) {
 	const looks = String(t.args.looks || 'basic-dark').split(',').filter(Boolean);
-	// BACK: the hard outer cap on the return from the last input (TB6 item 2: 400 ms); the judged return is the pause's
-	// own end (150 ms rest plus the host's measured timer lateness) and two frames after it.
-	const TRIES = Number(t.args.tries || 3), TICKS = Number(t.args.ticks || 12), GAP = Number(t.args.gap || 30), BACK = Number(t.args.back || 400);
+	// BACK: the hard outer cap on the return from the last input (TB6 item 2: 400 ms, R125 #4: clamped, never raised);
+	// the judged return is the pause's own end (150 ms rest plus the host's measured timer lateness) and two frames after.
+	const TRIES = Number(t.args.tries || 3), TICKS = Number(t.args.ticks || 12), GAP = Number(t.args.gap || 30), BACK = outerCap(t.args.back ?? 400);
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
 	await muteSound(t.page);

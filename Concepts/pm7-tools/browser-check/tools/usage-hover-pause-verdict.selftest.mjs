@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 // node tools/usage-hover-pause-verdict.selftest.mjs [check file]: the argument runs the same assertions against another
 // revision of the check, which is how each item's RED run shows the old verdict misjudging a constructed record.
-const { judge } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/usage-hover-pause.check.mjs');
+const { judge, outerCap } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/usage-hover-pause.check.mjs');
 const make = () => ({
  wheels:[100,200,300,400,500],scrolls:[120,220,320,420,520],ops:[{t:101,op:'wheel'},{t:670,op:null}],
  probe:{due:650,fired:670},
@@ -151,6 +151,22 @@ test('R125 #3 control: the same late end passes when the return follows the mark
  assert.equal(v.r2.back,10);
  assert.equal(v.r2.early,0);
  assert.equal(v.r2.ok,true);
+});
+// R125 #4: the outer cap is a ceiling; --set back= may only lower it, never widen it.
+test('R125 #4: --set back can only lower the 400 ms ceiling',()=>{
+ assert.equal(outerCap(500),400);
+ assert.equal(outerCap(400),400);
+ assert.equal(outerCap(250),250);
+ for(const v of [undefined,null,'',0,-50,NaN,'nonsense']) assert.equal(outerCap(v),400,String(v));
+});
+test('R125 #4 RED: a 480 ms return passes an unbounded cap and fails the 400 ms ceiling',()=>{
+ const r=make();
+ r.ops=[{t:101,op:'wheel'},{t:970,op:null}];
+ r.probe={due:670,fired:970};
+ r.cls=[{t:980,card:'new',on:true}];
+ for(const f of r.frames)Object.assign(f,{op:f.t<970?'wheel':null,lit:f.t>=980?['new']:[],tools:f.t>=980?.9:0});
+ assert.equal(judge(r,{rest:'old',back:500}).r2.ok,true,'480 ms after the last input inside an unbounded cap');
+ assert.equal(judge(r,{rest:'old',back:outerCap(500)}).r2.ok,false,'the same record at the clamped ceiling');
 });
 // TB6 item 1: a 258 ms driver gap is reported as a broken burst; a 30 ms cadence is not.
 test('TB6 item 1: a 258 ms driver gap is reported as a broken burst; a 30 ms cadence is not',()=>{
