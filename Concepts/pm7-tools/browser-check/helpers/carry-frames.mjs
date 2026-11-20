@@ -199,18 +199,21 @@ export function modelError(fr) {
 // tol: 3 px. A block that takes over from another starts on the compositor's clock, which runs a millisecond or a few
 // off the page's under a recording's load: head's worst swap moved 1.4-1.75 px past its motion (Alexis, both surfaces);
 // main's jumps are 8-28 px past it.
-export function steps(fr, { tol = 3, from = -Infinity, to = Infinity } = {}) {
-	const bad = []; let worst = { excess: 0 };
+export function steps(fr, { tol = 3, from = -Infinity, to = Infinity, presentationGaps = false } = {}) {
+	const bad = [], gaps = []; let worst = { excess: 0 };
 	for (let i = 1; i < fr.length; i++) {
 		const a = fr[i - 1], b = fr[i]; if (b.t < from || a.t > to) continue;
-		const dt = b.t - a.t; if (dt <= 0 || dt > 80) continue;
+		const dt = b.t - a.t; if (dt <= 0 || (dt > 80) !== presentationGaps) continue;
 		const ea = edges(a.box), eb = edges(b.box);
-		const v = Math.max(a.rec ? speedAt(a.rec, a.t) : 0, a.rec ? speedAt(a.rec, b.t) : 0, b.rec ? speedAt(b.rec, b.t) : 0, b.rec ? speedAt(b.rec, a.t) : 0);
-		const allow = v * dt * 1.25 + tol;
+		const ta = a.poseTime ?? a.t, tb = b.poseTime ?? b.t;
+		const v = Math.max(a.rec ? speedAt(a.rec, ta) : 0, a.rec ? speedAt(a.rec, tb) : 0, b.rec ? speedAt(b.rec, tb) : 0, b.rec ? speedAt(b.rec, ta) : 0);
+		// A sampled presentation gap gets one frame of travel, even if it spans many refresh intervals.
+		const allow = v * (presentationGaps ? FRAME : dt) * 1.25 + tol;
 		const moved = Math.max(...ea.map((x, k) => Math.abs(eb[k] - x)));
 		const step = { t: +b.t.toFixed(1), dt: +dt.toFixed(1), moved: +moved.toFixed(2), allow: +allow.toFixed(2), excess: +(moved - allow).toFixed(2), from: a.src, to: b.src, a: ea.map((x) => +x.toFixed(1)), b: eb.map((x) => +x.toFixed(1)) };
+		if (presentationGaps) gaps.push(step);
 		if (step.excess > worst.excess) worst = step;
 		if (moved > allow) bad.push(step);
 	}
-	return { bad, worst };
+	return { bad, worst, gaps };
 }

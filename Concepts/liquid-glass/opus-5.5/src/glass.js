@@ -2503,6 +2503,7 @@
      waits to start at the age it is to be drawn at (its hold: its current time while it waits) */
   function carryAge(K) {
     var a = K.anim, f = K.from || 0;
+    if (a && a.__pmHeld) return f + (a.currentTime || 0);
     if (a && a.startTime != null) return Math.max(0, performance.now() - a.startTime + f);
     /* drawn, but its start not reported yet (the compositor reports it to a main thread that may still be busy): from
        when its first frame was drawn, at the age it was held at. A block made again from a reported age of 0 began its
@@ -2511,7 +2512,7 @@
     return !a ? f : f + (a.currentTime || 0);
   }
   /* when the trip's age was 0, on the wall clock; null until a frame has drawn it */
-  function carryZero(K) { var a = K.anim; return a && a.startTime != null ? a.startTime - (K.from || 0) : K.drawn != null ? K.drawn - K.at : null; }
+  function carryZero(K) { var a = K.anim; if (a && a.__pmHeld) return null; return a && a.startTime != null ? a.startTime - (K.from || 0) : K.drawn != null ? K.drawn - K.at : null; }
   /* a carried block whose start the compositor has not reported yet (one made late in a long frame: the report comes with
      the next frame) has no clock the main thread can read, and a block made to go on from it now has only a guess at its
      age: held at the age the main thread last knew while the compositor had carried the trip on for 150 ms, it was drawn
@@ -2685,6 +2686,11 @@
       L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, Math.max(0, start + P.end - performance.now()) + 1);
     }
     take(T);
+    // The first Home-to-Agents press can straddle the cold body layout and raster. Start the chip's
+    // trip from its own first painted position when frames resume. The tab selection still paints on activation.
+    var coldAgents = !go && cfg.sel === '.pmw-strip' && target.getAttribute('data-tab-id') === 'dashboard:agents' &&
+      window.PMW && !window.PMW.instances['dashboard:agents'] && typeof window.PM_START_ON_SHOWN === 'function';
+    if (coldAgents) window.PM_START_ON_SHOWN(anims, { startHeld: true, frames: 10 });
     requestAnimationFrame(function () {
       /* the first frame callback after the block was made: when it was first drawn (K.drawn), so its age is known before
          the compositor reports its start (its probe, an empty animation, starts in the lifecycle of the frame that first
@@ -2694,7 +2700,7 @@
          drawn in that frame whatever its probe says). A block that goes on with a drawn trip has the trip's start time
          from the moment it is made, so its age never needs this */
       var drawn = inFrame || probe.startTime != null || lead.startTime != null; probe.cancel();
-      if (L.carry !== K) return;
+      if (L.carry !== K || coldAgents) return;
       if (drawn) { K.drawn = made; return; }
       setTimeout(function () { if (K.drawn == null) K.drawn = performance.now(); }, 0);
     });

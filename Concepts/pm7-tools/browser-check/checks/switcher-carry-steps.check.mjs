@@ -18,6 +18,8 @@
 //   the 12e page started it a frame and a half on from then). The drawn frames use when each block and each change were
 //   first drawn (a composited probe in the same commit, carry-frames RECORD), so a change drawn late, already begun, is
 //   a step;
+// - FO-240: during Home's first press, adjacent chip reads more than 80 ms apart also get the single-frame
+//   edge bound. A stalled first activation can skip intermediate positions that the keyframes alone would predict.
 // - Reduce Motion (the OS's and the page's own): nothing is carried, every read shows the chip on an item (never between
 //   two), and after each press it rests on the chosen item;
 // - FO-232, Reduce Motion: no travel, and no late jump. In every read whose frame paints an item chosen the chip is on that
@@ -38,7 +40,7 @@
 //   --set sandbox=0|1 (both surfaces: run twice)   --set dump=<file.json>   --set raf=1 (also read inside the frame
 //   callback, for comparison, in the dump)   --set film=1 (marks)
 import { RECORD, TAKE, RESET, steps } from '../helpers/carry-frames.mjs';
-import { CHIP_SAMPLER, CHIP_TAKE, CHIP_RESET, chipRows, drawnFrames, modelWitness, spikes, takeovers, changeStarts, offItems, stripShifts, rmOnChosen, edgeHolds, FRAME } from '../helpers/chip-sampler.mjs';
+import { CHIP_SAMPLER, CHIP_TAKE, CHIP_RESET, chipRows, drawnFrames, modelWitness, trusted, spikes, takeovers, changeStarts, offItems, stripShifts, rmOnChosen, edgeHolds, FRAME } from '../helpers/chip-sampler.mjs';
 import { setLookBySetting, setMotionApp } from '../helpers/settings-look.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
 
@@ -132,6 +134,19 @@ export const tests = {
 						const fr = drawnFrames(smp, sel, data.anims);
 						const st = steps(fr);
 						await t.check(`${tag}: no drawn frame moves the chip further than its own motion (worst excess ${st.worst.excess || 0} px)`, st.bad.length === 0, st.bad.slice(0, 3).map((b) => `t${b.t} ${b.from}->${b.to} moved ${b.moved} allow ${b.allow}`).join('; '));
+						if (g.key === 'home') {
+							// Check the actual post-paint samples before filling gaps from keyframes. A gap
+							// at rest is a witness too, with zero displacement and no failure.
+							const records = new Map(anims.map((a) => [a.id, a]));
+							const samples = rows.filter((r) => r.now <= ends[0] && !r.stale && trusted(r)).map((r) => ({
+								t: r.now, poseTime: r.t, src: r.src, rec: records.get(r.rec),
+								box: [r.box[0] - r.so[0], r.box[1] - r.so[1], r.box[2], r.box[3]]
+							}));
+							const gap = steps(samples, { presentationGaps: true });
+							await t.check(`${tag}: first press stays within one frame of travel across presentation gaps`, gap.bad.length === 0,
+								gap.gaps.map((x) => `${x.dt} ms at t${x.t}: moved ${x.moved} px, allow ${x.allow} px`).join('; '));
+							cell.presentationGaps = gap.gaps;
+						}
 						const tk = takeovers(data.anims, sel), tkw = tk.reduce((m, x) => Math.max(m, x.worst), 0);
 						await t.check(`${tag}: a block that takes over draws the trip where the block it replaced would (${tk.length} takeovers, worst ${tkw} px)`, tkw <= 1, tk.filter((x) => x.worst > 1).slice(0, 4).map((x) => `rec${x.from}->rec${x.id} ${x.worst} px at t${x.at}${x.lagMs ? `, first drawn ${x.lagMs} ms after it was made` : ''}`).join('; '));
 						const cs = changeStarts(data.anims, sel), late = cs.filter((x) => x.late > FRAME + 0.5);
