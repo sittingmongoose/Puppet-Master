@@ -53,7 +53,17 @@ def issue_immutable(directory, negative):
     return world, owner.issue, (None, {'value': 'second'}), {'ref': ref}
 
 
+def withdrawn_handle(directory, negative):
+    world = start_world(directory)
+    owner = world.owners['native']
+    handle = owner.issue(None, {'value': 'first'})
+    if negative:
+        owner.withdraw(handle)
+    return world, owner.resolve, (handle,), {}
+
+
 CASES = {
+    'withdrawn-handle': (ADAPTERS, 484, 'original/withdrawn', withdrawn_handle),
     'issue-immutable': (ADAPTERS, 466, 'issue/immutable_ref', issue_immutable),
     'codec-key': (ADAPTERS, 421, 'custody/exact_json/key', codec_key),
     'registry-role-match': (ADAPTERS, 330, 'registry/role', registry_role_match),
