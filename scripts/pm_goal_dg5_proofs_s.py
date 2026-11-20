@@ -478,3 +478,19 @@ PROOFS['dg5/read_historical/original/append/root/schema'] = dict(
         'disabled. Restoring the early check restores its original refusal.'
     ),
 )
+
+PROOFS['dg5/read_historical/final/append/root/schema'] = dict(
+    kind='entailment',
+    families=['goal_run.started'],
+    depends_on=['dg5/read_historical/root/schema'],
+    sites=[('scripts/pm_goal_dg_s_readers.py', 105), ('scripts/pm_goal_dg_s_readers.py', 253), ('scripts/pm_goal_dg_s_readers.py', 254), ('scripts/pm_goal_dg_s_readers.py', 256), ('scripts/pm_goal_dg_s_readers.py', 895), ('scripts/pm_goal_dg_s_readers.py', 900), ('scripts/pm_goal_dg_s_readers.py', 901), ('scripts/pm_goal_dg_s_readers.py', 905), ('scripts/pm_goal_dg_s_readers.py', 906)],
+    argument=(
+        'The append document checked at 105 is inserted as required original_append at 254 and '
+        'rechecked against the same definition at 256. The historical result at 905–906 '
+        'requires that same nested append document. The final read must be type-exact equal to '
+        'the original read at 901, so the result schema covers both append copies on a '
+        'successful call. The complete call records the unchanged valid append at the result '
+        'check and reproduces the exact first validation message at 256 with the early check '
+        'disabled. Restoring the early check restores its original refusal.'
+    ),
+)
