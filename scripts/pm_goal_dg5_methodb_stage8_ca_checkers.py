@@ -20,8 +20,26 @@ def audit_permission(directory, negative):
     return world, route.audit_read, ("terminal",), {"audit_permission": not negative}
 
 
+def occurrence(directory, negative):
+    world, route = cancelled.c1_until(cancelled.Suite(directory), "freeze_event")
+    if negative:
+        receipt = dict(route.progress["cancellation_receipt"], accepted_at="2000-01-01T00:00:00.000Z")
+        route.progress = dict(route.progress, cancellation_receipt=receipt)
+        head_key = route.key("goal_cancel_progress") + ":head"
+        epoch = route.progress["progress_epoch"]
+        progress = route.wrap("StorageProgress", route.progress)
+        head = route.wrap("StorageProgress", route._head(epoch, route.progress))
+        world.storage.cells["goal_cancel_progress"][route.progress_key(epoch)]["value"] = progress
+        world.storage.cells["goal_cancel_progress"][head_key]["value"] = head
+        stored = route.wrap("StorageCancellationReceipt", receipt)
+        world.storage.cells["goal_cancel_receipt"][route.key("goal_cancel_receipt")]["value"] = stored
+    world.root = world.storage.root
+    return world, route.freeze_event, (), {}
+
+
 CASES = {
     "audit-permission": (C1, 833, "C1/audit_read/audit_permission", audit_permission),
+    "occurrence": (C1, 562, "C1/freeze_event/accepted_occurrence", occurrence),
 }
 
 
