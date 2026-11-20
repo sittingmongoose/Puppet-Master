@@ -134,6 +134,23 @@ def fixture(declare, route, directory):
         custody = world.storage.authenticate_receipt(commit['event_id'], commit['first_append_receipt'])
         owner.check_start_event(start, event, custody)
         return world, lambda: owner.started_record(start, event, custody), (start, event, custody)
+    if route['call'] == 'represent_native_projection':
+        owner = world.projector_class(world)
+        original_represent = owner.represent
+        captured = []
+
+        def collect(record, generation_id, force=None):
+            captured.append((copy.deepcopy(record), generation_id, force))
+            raise BeforeIssue
+
+        with patch.object(owner, 'represent', collect):
+            try:
+                owner.project()
+            except BeforeIssue:
+                pass
+        require(len(captured) == 1, 'cancellation projector must construct one original native row')
+        inputs, = captured
+        return world, lambda: original_represent(*copy.deepcopy(inputs)), inputs
     if route['call'] == 'project_checkpoint':
         owner = world.projector_class(world)
         scope = owner.request()['scope']
@@ -215,7 +232,7 @@ def root_binding(closure, bank, plain):
                        schema=schema, registry_sha256=registry, validator_class=validator)
 
 
-def scoped_validator(plain, nodes):
+def scoped_validator(plain, nodes, bank=None):
     """Keep the original node identities when testing a location-scoped bank.
 
     A copied reference node cannot use this bank's original identity map.
@@ -229,6 +246,13 @@ def scoped_validator(plain, nodes):
     import pm_goal_oracle_common as common
 
     locations = {id(info['node']): location for location, info in nodes.items()}
+    if bank is not None:
+        # A realm can load identical schema bytes through more than one
+        # route. Every load retains the same literal realm, digest and pointer.
+        for node_id, (realm, digest, pointer) in bank.node_origin.items():
+            location = f'{realm}:sha256:{digest}#{pointer}'
+            if location in nodes:
+                locations[node_id] = location
     classes = {}
 
     def keyword_wrapper(word, function):
@@ -995,13 +1019,14 @@ def rule_path(document, path):
     return path
 
 
-def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, scoped):
+def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, scoped, branch_controls=None):
     import pm_goal_dg5_closure as closure
     import pm_goal_go_schema_closure as go
 
     if scoped:
         nodes, walked = closure._scoped_census(plain, ident, bank, closure._realm_location)
-        validator = scoped_validator(plain, nodes)
+        selected = plain.schema.get('$ref', '').endswith('#/$defs/CombinedStorageProjection')
+        validator = scoped_validator(plain, nodes, bank if selected else None)
     else:
         validator = closure.closure_validator(plain, ident, bank)
         nodes, walked = closure._clause_inventory(validator)
@@ -1025,6 +1050,12 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
     results = {}
     for name in ids:
         example = examples[name]
+        if 'projection_example' in example:
+            from pm_goal_dg5_projection_examples import verify_projection_example
+
+            results[name] = verify_projection_example(
+                plain, validator, nodes, name, example, branch_controls, disabled_check, require, errors_list)
+            continue
         path = rule_path(accepted, example['path'])
         control = accepted
         if 'control' in example:
@@ -1684,7 +1715,8 @@ def run(args):
                                                           'mutation_afterimage_implication',
                                                           'workflow_transition_implication'}
                              for example in examples.values()):
-                clauses = literal_rules(plain, bank, accepted, ident, ids, examples, args.disable_check, scoped)
+                controls = declare.get('projection_controls', {}).get(ident)
+                clauses = literal_rules(plain, bank, accepted, ident, ids, examples, args.disable_check, scoped, controls)
             else:
                 clauses, gaps = test_rules(plain, bank, accepted, ident, ids, examples, args.disable_check)
                 require(not gaps, f'{ident} needs checked implications for {sorted(gaps)}')
