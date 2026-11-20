@@ -79,7 +79,10 @@
   /* free tags: the stored strings as typed; the row's choices are only suggested kinds, and a kind reads as its
      label wherever a tag is shown in words (the Details list, the Saved toast) */
   const tagList = p => { const v = pval(p, S.tags); return Array.isArray(v) ? v.map(String).filter(Boolean) : []; };
-  const tagWord = t => ((O55R[S.tags] || {}).options || {})[t] || t;
+  const tagWord = t => {
+    const options = O55R[S.tags]?.options;
+    return options && Object.hasOwn(options, t) ? options[t] : t;
+  };
   const tagText = list => list.length ? list.map(tagWord).join(', ') : 'None';
   const tagKinds = () => o55Options(PM51.setting(S.tags));
   const o55PersonaValueText = PM51.valueText;
@@ -118,7 +121,7 @@
   };
   function tagsCtl(p) {
     const row = O55R[S.tags] || {};
-    return `<div class="o55-tags"><div class="o55-tags-box">${tagList(p).map(t => tagChip(p, t)).join('')}<input class="text-control o55-tags-in" value="" placeholder="${a(row.placeholder || 'Type a tag and press Enter')}" data-action="pm51-personas-tag-type" data-id="${a(p.id)}" autocomplete="off" aria-label="${a('Add a tag for ' + p.name)}"></div><div class="o55-tags-suggest">${tagSuggest(p, '')}</div></div>`;
+    return `<div class="o55-tags"><div class="o55-tags-box">${tagList(p).map(t => tagChip(p, t)).join('')}<input class="text-control o55-tags-in" value="" placeholder="${a(row.placeholder || 'Add a tag')}" data-action="pm51-personas-tag-type" data-id="${a(p.id)}" autocomplete="off" aria-label="${a('Add a tag for ' + p.name)}"></div><div class="o55-tags-suggest">${tagSuggest(p, '')}</div></div>`;
   }
   /* chips: the usual list plus anything this persona already has, so "Standard tools" shows as chosen */
   const PICKS = { [S.prefer]: () => TOOLS, [S.avoid]: () => TOOLS, [S.skills]: () => ((PM51.s().skills) || []).map(k => k.name), [S.plugins]: () => ((PM51.s().plugins) || []).map(k => k.name) };
@@ -449,8 +452,12 @@
     box.querySelectorAll('.o55-tag-chip').forEach(n => n.remove());
     input.insertAdjacentHTML('beforebegin', next.map(t => tagChip(p, t)).join(''));
     box.querySelector('.o55-tags-suggest').innerHTML = tagSuggest(p, input.value);
-    const meta = root.querySelector(`.resource-row[data-manager="personas"][data-id="${cssEscape(p.id)}"] .resource-row-meta`);
-    if (meta) meta.textContent = personaMeta(p);
+    const split = box.closest('.pm51-split');
+    const meta = split?.querySelector(`.resource-row[data-manager="personas"][data-id="${cssEscape(p.id)}"] .resource-row-meta`);
+    if (meta) {
+      meta.textContent = personaMeta(p);
+      PM51.applyFilters(split);
+    }
     showToast('Saved', `Tags for ${p.name}: ${tagText(next)}.`, 'success', 2200);
   }
   const tagAdd = (el, raw) => {

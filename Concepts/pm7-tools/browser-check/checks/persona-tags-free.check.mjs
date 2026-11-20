@@ -2,7 +2,8 @@
 // free tag input, not a fixed multiselect. Real typing adds any tag (Enter or comma), each tag is a removable chip,
 // the eight suggested kinds are offered under the box and typing filters them; an added kind leaves the suggestions.
 // The tags left after removing one chip survive a Settings close/reopen, show in the persona's library row, and the
-// roster filter finds the persona by a free tag. Both surfaces, Basic
+// roster filter finds the persona by a free tag and updates when that tag is removed. Literal tag text is preserved.
+// Both surfaces, Basic
 // Dark / Glass Light / NieR Dark / Retro Light, 1280x900 and 740x900. Visible behaviour only.
 // Bite: on the 12e head the row is a fixed chip-select with the old kinds and no input, so the first assertion fails
 // there and passes on the fix. --set shots=1 crops the row at 1280x900 (on a pre-FO-161 page it crops the fixed list
@@ -152,11 +153,28 @@ for (const surface of ['normal', 'sandbox']) {
 				const filter = f.locator(`${BODY} input[data-action="pm51-filter"]`).first();
 				await filter.fill(FREE);
 				await t.page.waitForTimeout(350);
-				const visIds = await f.locator(`${BODY} .resource-row:not([hidden])`).evaluateAll(rs => rs.map(r => r.dataset.id));
+				const visibleRows = f.locator(`${BODY} .resource-row:not([hidden])`);
+				const visIds = await visibleRows.evaluateAll(rs => rs.map(r => r.dataset.id));
 				await t.check('search by the free tag finds exactly this persona', visIds.length === 1 && visIds[0] === PID, visIds.join(', '));
+				await row2.locator(`.o55-tag-x[data-tag="${FREE}"]`).click();
+				const remainingIds = await visibleRows.evaluateAll(rs => rs.map(r => r.dataset.id));
+				const empty = f.locator(`${BODY} .pm51-filter-empty:not([hidden])`);
+				const emptyText = (await empty.allTextContents()).join(' ');
+				const activeFilter = await filter.inputValue();
+				await t.check('removing the only matching tag immediately empties the filtered roster',
+					activeFilter === FREE && remainingIds.length === 0 && emptyText === 'No matches. Clear the filter to see everything.',
+					shown({ activeFilter, remainingIds, emptyText }));
 				await filter.fill('');
 				await t.page.waitForTimeout(350);
-				await t.check('clearing the search brings the roster back', (await f.locator(`${BODY} .resource-row:not([hidden])`).count()) > 1, `${await f.locator(`${BODY} .resource-row:not([hidden])`).count()} rows`);
+				const restoredIds = await visibleRows.evaluateAll(rs => rs.map(r => r.dataset.id));
+				await t.check('clearing the search brings the roster back', restoredIds.length > 1 && restoredIds.includes(PID), `${restoredIds.length} rows`);
+				const literal = 'constructor';
+				const input2 = row2.locator('.o55-tags-in');
+				await input2.fill(literal);
+				await input2.press('Enter');
+				const literalChip = row2.locator(`.o55-tag-chip:has(.o55-tag-x[data-tag="${literal}"]) > span:first-child`);
+				const literalText = await literalChip.allTextContents();
+				await t.check('constructor renders verbatim as a free tag chip', shown(literalText) === shown([literal]), shown(literalText));
 				// Persona records are the concept's session state, like every persona field (aliases, tools): the
 				// project projection the tome saves holds settings, not the roster, so a page reload re-seeds it.
 				// The close/reopen above is the persistence this row shares with the other persona fields.
