@@ -1,0 +1,2335 @@
+{
+  "accepted_branches": {
+    "0": {
+      "record": {
+        "acceptance": {
+          "approval_id": null,
+          "change_source": "user_direct",
+          "origin": {
+            "bound_plan_ref": null,
+            "goal_id": "goal:TEST_ONLY:\u03b1-fc36e42d",
+            "goal_revision": 2,
+            "origin_kind": "user_request",
+            "owning_workflow_ref": null,
+            "source_context_manifest_ref": "context:TEST_ONLY:64697370617463683a544553545f4f4e4c593a6336343439666462326566623465323539306435356132393264353566613234",
+            "source_message_refs": []
+          },
+          "original_change_authority_ref": "user-direct-save:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+          "source_context_manifest_ref": "context:TEST_ONLY:64697370617463683a544553545f4f4e4c593a6336343439666462326566623465323539306435356132393264353566613234",
+          "source_message_id": null
+        },
+        "accepted_text_sha256": "72b34af10bdab51cc4b8fc3f673f30307526a208726861063c6c71bbe6dd9ae7",
+        "actor_ref": "actor:TEST_ONLY:user-fc36e42d",
+        "captured_at": "2026-11-20T14:58:33.011Z",
+        "command_outcome_ref": "outcome:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+        "dispatch_id": "dispatch:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+        "expected_currentness_hash": "15c17145ef42958148dbfa2771a6bf49e5eb50efecfeb25d0bc95b2e5c7e1c0f",
+        "expected_revision": 1,
+        "goal_id": "goal:TEST_ONLY:\u03b1-fc36e42d",
+        "nonterminal_outcome": {
+          "acknowledgement_frame_id": null,
+          "acknowledgement_frame_offset": null,
+          "acknowledgement_receipt_ref": null,
+          "command_id": "cmd.chat.goal.update",
+          "dispatch_frame_id": "frame:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+          "error_ref": null,
+          "idempotency_key": "sir-idempotency:TEST_ONLY:042a29ab44",
+          "identity": {
+            "command_instance_id": "command:TEST_ONLY:042a29ab44",
+            "execution_environment_id": "TEST_ONLY:environment:9a97b0d20d70",
+            "execution_host_id": "TEST_ONLY:host:9a97b0d20d70",
+            "named_plan_id": null,
+            "operation_generation": 0,
+            "operation_id": "goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+            "project_home_server_id": "TEST_ONLY:server:9a97b0d20d70",
+            "project_id": "TEST_ONLY-project-\u03b1-fc36e42d",
+            "scope_kind": "project",
+            "server_id": "TEST_ONLY:server:9a97b0d20d70",
+            "thread_id": "thr_TEST_ONLY_fc36e42d",
+            "topology_generation": 0
+          },
+          "observed_at": "2026-11-20T14:58:32.978Z",
+          "outcome": "accepted",
+          "owner_result_ref": null,
+          "owner_result_schema_ref": null,
+          "owner_result_sha256": null,
+          "payload_sha256": "0b50d3295a567874a452be8a0357eb87cb000f6d09152ed3b3ea617c2184d750",
+          "record_kind": "command_outcome",
+          "result_receipt_ref": null,
+          "same_frame_acknowledged": false,
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "target_generation": 0
+        },
+        "normalized_identity": {
+          "command_id": "cmd.chat.goal.update",
+          "command_instance_id": "command:TEST_ONLY:042a29ab44",
+          "dispatch_frame_id": "frame:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+          "idempotency_key": "sir-idempotency:TEST_ONLY:042a29ab44",
+          "operation_id": "goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+          "owner_identity": {
+            "command_instance_id": "command:TEST_ONLY:042a29ab44",
+            "execution_environment_id": "TEST_ONLY:environment:9a97b0d20d70",
+            "execution_host_id": "TEST_ONLY:host:9a97b0d20d70",
+            "named_plan_id": null,
+            "operation_generation": 0,
+            "operation_id": "goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+            "project_home_server_id": "TEST_ONLY:server:9a97b0d20d70",
+            "project_id": "TEST_ONLY-project-\u03b1-fc36e42d",
+            "scope_kind": "project",
+            "server_id": "TEST_ONLY:server:9a97b0d20d70",
+            "thread_id": "thr_TEST_ONLY_fc36e42d",
+            "topology_generation": 0
+          },
+          "payload_sha256": "0b50d3295a567874a452be8a0357eb87cb000f6d09152ed3b3ea617c2184d750",
+          "request_ref": "request:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+          "target_generation": 0
+        },
+        "owner_epoch": 1,
+        "permission_snapshot_ref": "TEST_ONLY:permission:e7ade9e9a0a84df08c52a37f59fa4cf1",
+        "prior_objective_revision": 1,
+        "prior_revision_hash": "c579a8f1bdd5b05f462f7573c14f225fdd8d50f1ca4dd96b50e0b252a71587e1",
+        "project_id": "TEST_ONLY-project-\u03b1-fc36e42d",
+        "return_route_ref": "route:TEST_ONLY:042a29ab44",
+        "schema_id": "pm.goal.update.source_audit.v1",
+        "schema_version": "1.0.0",
+        "source_authority_ref": "source:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+        "source_surface": "chat_goal_direct_save",
+        "stop_epoch": 0,
+        "storage_instance_id": "d54c61ba-8be5-4314-bb2b-f8a78e8773de",
+        "thread_id": "thr_TEST_ONLY_fc36e42d"
+      },
+      "schema_id": "pm.storage_value.goal_update_source_audit.v1",
+      "schema_version": "1.0.0"
+    },
+    "1": {
+      "record": {
+        "acceptance": {
+          "approval_id": "approval:TEST_ONLY:910c94ec3ddc453486cc64d6425ce85a",
+          "change_source": "agent_proposed_user_approved",
+          "origin": {
+            "bound_plan_ref": null,
+            "goal_id": "goal:TEST_ONLY:\u03b1-648727b4",
+            "goal_revision": 2,
+            "origin_kind": "user_request",
+            "owning_workflow_ref": null,
+            "source_context_manifest_ref": "context:TEST_ONLY:64697370617463683a544553545f4f4e4c593a6361366435633931616233333466386461613834363266366161663337626365",
+            "source_message_refs": [
+              "TEST_ONLY:message:3704ea3269cf4cb4ae23c1053499e472"
+            ]
+          },
+          "original_change_authority_ref": "protected-person:TEST_ONLY:7b99d888b92b46d394fae2f461219dae",
+          "source_context_manifest_ref": "context:TEST_ONLY:64697370617463683a544553545f4f4e4c593a6361366435633931616233333466386461613834363266366161663337626365",
+          "source_message_id": "TEST_ONLY:message:3704ea3269cf4cb4ae23c1053499e472"
+        },
+        "accepted_text_sha256": "ba625e75428e2e6ffff21fd93863fa8ac52cdd3f0699e88c6d21b97b55bb40f9",
+        "actor_ref": "actor:TEST_ONLY:user-648727b4",
+        "captured_at": "2026-11-20T14:58:34.955Z",
+        "command_outcome_ref": "outcome:TEST_ONLY:ca6d5c91ab334f8daa8462f6aaf37bce",
+        "dispatch_id": "dispatch:TEST_ONLY:ca6d5c91ab334f8daa8462f6aaf37bce",
+        "expected_currentness_hash": "f808ade205b97660715947020ddf7d98d1c5e438c33f46488f6f60cd27dc49f2",
+        "expected_revision": 1,
+        "goal_id": "goal:TEST_ONLY:\u03b1-648727b4",
+        "nonterminal_outcome": {
+          "acknowledgement_frame_id": null,
+          "acknowledgement_frame_offset": null,
+          "acknowledgement_receipt_ref": null,
+          "command_id": "cmd.chat.goal.update",
+          "dispatch_frame_id": "frame:TEST_ONLY:ca6d5c91ab334f8daa8462f6aaf37bce",
+          "error_ref": null,
+          "idempotency_key": "sir-idempotency:TEST_ONLY:a6343b4dfb",
+          "identity": {
+            "command_instance_id": "command:TEST_ONLY:a6343b4dfb",
+            "execution_environment_id": "TEST_ONLY:environment:05c2a762b5d5",
+            "execution_host_id": "TEST_ONLY:host:05c2a762b5d5",
+            "named_plan_id": null,
+            "operation_generation": 0,
+            "operation_id": "goal-operation:TEST_ONLY:ca6d5c91ab334f8daa8462f6aaf37bce",
+            "project_home_server_id": "TEST_ONLY:server:05c2a762b5d5",
+            "project_id": "TEST_ONLY-project-\u03b1-648727b4",
+            "scope_kind": "project",
+            "server_id": "TEST_ONLY:server:05c2a762b5d5",
+            "thread_id": "thr_TEST_ONLY_648727b4",
+            "topology_generation": 0
+          },
+          "observed_at": "2026-11-20T14:58:34.899Z",
+          "outcome": "accepted",
+          "owner_result_ref": null,
+          "owner_result_schema_ref": null,
+          "owner_result_sha256": null,
+          "payload_sha256": "e56671b4cd079c7295c03890933cc5cad33981780186233d37d9760bcbd8d59b",
+          "record_kind": "command_outcome",
+          "result_receipt_ref": null,
+          "same_frame_acknowledged": false,
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "target_generation": 0
+        },
+        "normalized_identity": {
+          "command_id": "cmd.chat.goal.update",
+          "command_instance_id": "command:TEST_ONLY:a6343b4dfb",
+          "dispatch_frame_id": "frame:TEST_ONLY:ca6d5c91ab334f8daa8462f6aaf37bce",
+          "idempotency_key": "sir-idempotency:TEST_ONLY:a6343b4dfb",
+          "operation_id": "goal-operation:TEST_ONLY:ca6d5c91ab334f8daa8462f6aaf37bce",
+          "owner_identity": {
+            "command_instance_id": "command:TEST_ONLY:a6343b4dfb",
+            "execution_environment_id": "TEST_ONLY:environment:05c2a762b5d5",
+            "execution_host_id": "TEST_ONLY:host:05c2a762b5d5",
+            "named_plan_id": null,
+            "operation_generation": 0,
+            "operation_id": "goal-operation:TEST_ONLY:ca6d5c91ab334f8daa8462f6aaf37bce",
+            "project_home_server_id": "TEST_ONLY:server:05c2a762b5d5",
+            "project_id": "TEST_ONLY-project-\u03b1-648727b4",
+            "scope_kind": "project",
+            "server_id": "TEST_ONLY:server:05c2a762b5d5",
+            "thread_id": "thr_TEST_ONLY_648727b4",
+            "topology_generation": 0
+          },
+          "payload_sha256": "e56671b4cd079c7295c03890933cc5cad33981780186233d37d9760bcbd8d59b",
+          "request_ref": "request:TEST_ONLY:ca6d5c91ab334f8daa8462f6aaf37bce",
+          "target_generation": 0
+        },
+        "owner_epoch": 1,
+        "permission_snapshot_ref": "TEST_ONLY:permission:5993212573cd441f9704e91b283cd175",
+        "prior_objective_revision": 1,
+        "prior_revision_hash": "179f982e23148b1592e1dfa05535d36f58a1476c361fb98c3885b15b67b2d228",
+        "project_id": "TEST_ONLY-project-\u03b1-648727b4",
+        "return_route_ref": "route:TEST_ONLY:a6343b4dfb",
+        "schema_id": "pm.goal.update.source_audit.v1",
+        "schema_version": "1.0.0",
+        "source_authority_ref": "source:TEST_ONLY:ca6d5c91ab334f8daa8462f6aaf37bce",
+        "source_surface": "chat_goal_approved_agent",
+        "stop_epoch": 0,
+        "storage_instance_id": "c97ef85a-6b44-4119-be87-172d610564f0",
+        "thread_id": "thr_TEST_ONLY_648727b4"
+      },
+      "schema_id": "pm.storage_value.goal_update_source_audit.v1",
+      "schema_version": "1.0.0"
+    },
+    "internal_workflow": {
+      "record": {
+        "acceptance": {
+          "approval_id": null,
+          "change_source": "user_direct",
+          "origin": {
+            "bound_plan_ref": null,
+            "goal_id": "goal:TEST_ONLY:\u03b1-fc36e42d",
+            "goal_revision": 2,
+            "origin_kind": "internal_workflow",
+            "owning_workflow_ref": "TEST_ONLY:declared-origin:internal_workflow",
+            "source_context_manifest_ref": "context:TEST_ONLY:64697370617463683a544553545f4f4e4c593a6336343439666462326566623465323539306435356132393264353566613234",
+            "source_message_refs": []
+          },
+          "original_change_authority_ref": "user-direct-save:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+          "source_context_manifest_ref": "context:TEST_ONLY:64697370617463683a544553545f4f4e4c593a6336343439666462326566623465323539306435356132393264353566613234",
+          "source_message_id": null
+        },
+        "accepted_text_sha256": "72b34af10bdab51cc4b8fc3f673f30307526a208726861063c6c71bbe6dd9ae7",
+        "actor_ref": "actor:TEST_ONLY:user-fc36e42d",
+        "captured_at": "2026-11-20T14:58:33.011Z",
+        "command_outcome_ref": "outcome:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+        "dispatch_id": "dispatch:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+        "expected_currentness_hash": "15c17145ef42958148dbfa2771a6bf49e5eb50efecfeb25d0bc95b2e5c7e1c0f",
+        "expected_revision": 1,
+        "goal_id": "goal:TEST_ONLY:\u03b1-fc36e42d",
+        "nonterminal_outcome": {
+          "acknowledgement_frame_id": null,
+          "acknowledgement_frame_offset": null,
+          "acknowledgement_receipt_ref": null,
+          "command_id": "cmd.chat.goal.update",
+          "dispatch_frame_id": "frame:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+          "error_ref": null,
+          "idempotency_key": "sir-idempotency:TEST_ONLY:042a29ab44",
+          "identity": {
+            "command_instance_id": "command:TEST_ONLY:042a29ab44",
+            "execution_environment_id": "TEST_ONLY:environment:9a97b0d20d70",
+            "execution_host_id": "TEST_ONLY:host:9a97b0d20d70",
+            "named_plan_id": null,
+            "operation_generation": 0,
+            "operation_id": "goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+            "project_home_server_id": "TEST_ONLY:server:9a97b0d20d70",
+            "project_id": "TEST_ONLY-project-\u03b1-fc36e42d",
+            "scope_kind": "project",
+            "server_id": "TEST_ONLY:server:9a97b0d20d70",
+            "thread_id": "thr_TEST_ONLY_fc36e42d",
+            "topology_generation": 0
+          },
+          "observed_at": "2026-11-20T14:58:32.978Z",
+          "outcome": "accepted",
+          "owner_result_ref": null,
+          "owner_result_schema_ref": null,
+          "owner_result_sha256": null,
+          "payload_sha256": "0b50d3295a567874a452be8a0357eb87cb000f6d09152ed3b3ea617c2184d750",
+          "record_kind": "command_outcome",
+          "result_receipt_ref": null,
+          "same_frame_acknowledged": false,
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "target_generation": 0
+        },
+        "normalized_identity": {
+          "command_id": "cmd.chat.goal.update",
+          "command_instance_id": "command:TEST_ONLY:042a29ab44",
+          "dispatch_frame_id": "frame:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+          "idempotency_key": "sir-idempotency:TEST_ONLY:042a29ab44",
+          "operation_id": "goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+          "owner_identity": {
+            "command_instance_id": "command:TEST_ONLY:042a29ab44",
+            "execution_environment_id": "TEST_ONLY:environment:9a97b0d20d70",
+            "execution_host_id": "TEST_ONLY:host:9a97b0d20d70",
+            "named_plan_id": null,
+            "operation_generation": 0,
+            "operation_id": "goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+            "project_home_server_id": "TEST_ONLY:server:9a97b0d20d70",
+            "project_id": "TEST_ONLY-project-\u03b1-fc36e42d",
+            "scope_kind": "project",
+            "server_id": "TEST_ONLY:server:9a97b0d20d70",
+            "thread_id": "thr_TEST_ONLY_fc36e42d",
+            "topology_generation": 0
+          },
+          "payload_sha256": "0b50d3295a567874a452be8a0357eb87cb000f6d09152ed3b3ea617c2184d750",
+          "request_ref": "request:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+          "target_generation": 0
+        },
+        "owner_epoch": 1,
+        "permission_snapshot_ref": "TEST_ONLY:permission:e7ade9e9a0a84df08c52a37f59fa4cf1",
+        "prior_objective_revision": 1,
+        "prior_revision_hash": "c579a8f1bdd5b05f462f7573c14f225fdd8d50f1ca4dd96b50e0b252a71587e1",
+        "project_id": "TEST_ONLY-project-\u03b1-fc36e42d",
+        "return_route_ref": "route:TEST_ONLY:042a29ab44",
+        "schema_id": "pm.goal.update.source_audit.v1",
+        "schema_version": "1.0.0",
+        "source_authority_ref": "source:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+        "source_surface": "chat_goal_direct_save",
+        "stop_epoch": 0,
+        "storage_instance_id": "d54c61ba-8be5-4314-bb2b-f8a78e8773de",
+        "thread_id": "thr_TEST_ONLY_fc36e42d"
+      },
+      "schema_id": "pm.storage_value.goal_update_source_audit.v1",
+      "schema_version": "1.0.0"
+    },
+    "plan_build": {
+      "record": {
+        "acceptance": {
+          "approval_id": null,
+          "change_source": "user_direct",
+          "origin": {
+            "bound_plan_ref": "TEST_ONLY:declared-origin:plan_build",
+            "goal_id": "goal:TEST_ONLY:\u03b1-fc36e42d",
+            "goal_revision": 2,
+            "origin_kind": "plan_build",
+            "owning_workflow_ref": null,
+            "source_context_manifest_ref": "context:TEST_ONLY:64697370617463683a544553545f4f4e4c593a6336343439666462326566623465323539306435356132393264353566613234",
+            "source_message_refs": []
+          },
+          "original_change_authority_ref": "user-direct-save:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+          "source_context_manifest_ref": "context:TEST_ONLY:64697370617463683a544553545f4f4e4c593a6336343439666462326566623465323539306435356132393264353566613234",
+          "source_message_id": null
+        },
+        "accepted_text_sha256": "72b34af10bdab51cc4b8fc3f673f30307526a208726861063c6c71bbe6dd9ae7",
+        "actor_ref": "actor:TEST_ONLY:user-fc36e42d",
+        "captured_at": "2026-11-20T14:58:33.011Z",
+        "command_outcome_ref": "outcome:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+        "dispatch_id": "dispatch:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+        "expected_currentness_hash": "15c17145ef42958148dbfa2771a6bf49e5eb50efecfeb25d0bc95b2e5c7e1c0f",
+        "expected_revision": 1,
+        "goal_id": "goal:TEST_ONLY:\u03b1-fc36e42d",
+        "nonterminal_outcome": {
+          "acknowledgement_frame_id": null,
+          "acknowledgement_frame_offset": null,
+          "acknowledgement_receipt_ref": null,
+          "command_id": "cmd.chat.goal.update",
+          "dispatch_frame_id": "frame:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+          "error_ref": null,
+          "idempotency_key": "sir-idempotency:TEST_ONLY:042a29ab44",
+          "identity": {
+            "command_instance_id": "command:TEST_ONLY:042a29ab44",
+            "execution_environment_id": "TEST_ONLY:environment:9a97b0d20d70",
+            "execution_host_id": "TEST_ONLY:host:9a97b0d20d70",
+            "named_plan_id": null,
+            "operation_generation": 0,
+            "operation_id": "goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+            "project_home_server_id": "TEST_ONLY:server:9a97b0d20d70",
+            "project_id": "TEST_ONLY-project-\u03b1-fc36e42d",
+            "scope_kind": "project",
+            "server_id": "TEST_ONLY:server:9a97b0d20d70",
+            "thread_id": "thr_TEST_ONLY_fc36e42d",
+            "topology_generation": 0
+          },
+          "observed_at": "2026-11-20T14:58:32.978Z",
+          "outcome": "accepted",
+          "owner_result_ref": null,
+          "owner_result_schema_ref": null,
+          "owner_result_sha256": null,
+          "payload_sha256": "0b50d3295a567874a452be8a0357eb87cb000f6d09152ed3b3ea617c2184d750",
+          "record_kind": "command_outcome",
+          "result_receipt_ref": null,
+          "same_frame_acknowledged": false,
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "target_generation": 0
+        },
+        "normalized_identity": {
+          "command_id": "cmd.chat.goal.update",
+          "command_instance_id": "command:TEST_ONLY:042a29ab44",
+          "dispatch_frame_id": "frame:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+          "idempotency_key": "sir-idempotency:TEST_ONLY:042a29ab44",
+          "operation_id": "goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+          "owner_identity": {
+            "command_instance_id": "command:TEST_ONLY:042a29ab44",
+            "execution_environment_id": "TEST_ONLY:environment:9a97b0d20d70",
+            "execution_host_id": "TEST_ONLY:host:9a97b0d20d70",
+            "named_plan_id": null,
+            "operation_generation": 0,
+            "operation_id": "goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+            "project_home_server_id": "TEST_ONLY:server:9a97b0d20d70",
+            "project_id": "TEST_ONLY-project-\u03b1-fc36e42d",
+            "scope_kind": "project",
+            "server_id": "TEST_ONLY:server:9a97b0d20d70",
+            "thread_id": "thr_TEST_ONLY_fc36e42d",
+            "topology_generation": 0
+          },
+          "payload_sha256": "0b50d3295a567874a452be8a0357eb87cb000f6d09152ed3b3ea617c2184d750",
+          "request_ref": "request:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+          "target_generation": 0
+        },
+        "owner_epoch": 1,
+        "permission_snapshot_ref": "TEST_ONLY:permission:e7ade9e9a0a84df08c52a37f59fa4cf1",
+        "prior_objective_revision": 1,
+        "prior_revision_hash": "c579a8f1bdd5b05f462f7573c14f225fdd8d50f1ca4dd96b50e0b252a71587e1",
+        "project_id": "TEST_ONLY-project-\u03b1-fc36e42d",
+        "return_route_ref": "route:TEST_ONLY:042a29ab44",
+        "schema_id": "pm.goal.update.source_audit.v1",
+        "schema_version": "1.0.0",
+        "source_authority_ref": "source:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24",
+        "source_surface": "chat_goal_direct_save",
+        "stop_epoch": 0,
+        "storage_instance_id": "d54c61ba-8be5-4314-bb2b-f8a78e8773de",
+        "thread_id": "thr_TEST_ONLY_fc36e42d"
+      },
+      "schema_id": "pm.storage_value.goal_update_source_audit.v1",
+      "schema_version": "1.0.0"
+    }
+  },
+  "census_sha256": "647eb062f2b9f8438e26716e3e058e1ac61193a2c266bbf12f4664495598fab7",
+  "examples": {
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/0/properties/identity/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "command_instance_id"
+      ],
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/1/if/properties/outcome/enum": {
+      "control_name": "0",
+      "path": [],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256/type"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/2/else/properties/owner_result_schema_ref/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/2/else/properties/owner_result_sha256/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/2/if/properties/owner_result_ref/type": {
+      "control_name": "0",
+      "path": [],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256/type"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/3/if/properties/outcome/enum": {
+      "control_name": "0",
+      "path": [],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/3/if/required": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/else/properties/acknowledgement_frame_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "acknowledgement_frame_id"
+      ],
+      "value": "gc"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/else/properties/acknowledgement_frame_offset/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "acknowledgement_frame_offset"
+      ],
+      "value": 7
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/else/properties/same_frame_acknowledged/const": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/if/properties/acknowledgement_receipt_ref/type": {
+      "control_name": "0",
+      "path": [],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/then/properties/acknowledgement_frame_offset/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/if/required": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/then/properties/acknowledgement_frame_offset/minimum": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/4/then/properties/acknowledgement_frame_offset/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/5/if/properties/outcome/enum": {
+      "control_name": "0",
+      "path": [],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/5/if/required": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/6/if/properties/outcome/enum": {
+      "control_name": "0",
+      "path": [],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/6/if/required": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/if/properties/same_frame_acknowledged/const": {
+      "control_name": "0",
+      "path": [],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_offset/const",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_receipt_ref/type"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/if/required": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_id/maxLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_id/minLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_id/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_frame_offset/const": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_receipt_ref/maxLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_receipt_ref/minLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/properties/acknowledgement_receipt_ref/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/allOf/7/then/required": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "record",
+        "nonterminal_outcome"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_frame_id/maxLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_frame_id/minLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_frame_id/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_frame_offset/minimum": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_frame_offset/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_receipt_ref/maxLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_receipt_ref/minLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/acknowledgement_receipt_ref/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "acknowledgement_receipt_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/command_id/maxLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/command_id/pattern": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/command_id/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/error_ref/maxLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/error_ref/minLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/error_ref/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/outcome/enum": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_ref/oneOf": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_ref/oneOf/1/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_schema_ref/oneOf": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_schema_ref/oneOf/1/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_sha256/oneOf": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/owner_result_sha256/oneOf/1/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/record_kind/const": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "record_kind"
+      ],
+      "value": "command_outcomex"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/result_receipt_ref/maxLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/result_receipt_ref/minLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/result_receipt_ref/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/same_frame_acknowledged/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/schema_id/const": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "schema_id"
+      ],
+      "value": "pm.full_thread_runtime.contracts.v1x"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/target_generation/minimum": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "target_generation"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/properties/target_generation/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "target_generation"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": [
+        "record",
+        "nonterminal_outcome"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/maxLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity",
+        "operation_id"
+      ],
+      "value": "goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24goal-operation:TEST_ONLY:c644"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity",
+        "operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id/type": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/if/properties/scope_kind/const": {
+      "control_name": "0",
+      "path": [],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/then/properties/project_home_server_id/type",
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/then/properties/project_id/type"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/if/required": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/then/properties/named_plan_id/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/then/properties/project_home_server_id/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/0/then/properties/project_id/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/if/properties/scope_kind/const": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/if/required": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/maxLength": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/minLength": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_home_server_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity",
+        "project_home_server_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/maxLength": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/minLength": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/allOf/1/then/properties/project_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity",
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/attempt_id/maxLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/attempt_id/minLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/attempt_id/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/command_instance_id/maxLength": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/command_instance_id/minLength": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/command_instance_id/type": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/goal_id/maxLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/goal_id/minLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/goal_id/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/named_plan_id/maxLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity",
+        "named_plan_id"
+      ],
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/named_plan_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity",
+        "named_plan_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/named_plan_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity",
+        "named_plan_id"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/operation_generation/minimum": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity",
+        "operation_generation"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/operation_generation/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity",
+        "operation_generation"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_home_server_id/maxLength": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_home_server_id/minLength": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_home_server_id/type": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_id/maxLength": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_id/minLength": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/project_id/type": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/scope_kind/enum": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "identity",
+        "scope_kind"
+      ],
+      "value": "applicationx"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/source_location_id/maxLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/source_location_id/minLength": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/source_location_id/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/thread_id/maxLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "identity",
+        "thread_id"
+      ],
+      "value": "thr_TEST_ONLY_fc36e42dthr_TEST_ONLY_fc36e42dthr_TEST_ONLY_fc36e42dthr_TEST_ONLY_fc36e42dthr_TEST_ONLY_fc36e42dthr_TEST_ONLY_fc36e42dthr_TEST_ONLY_fc36e42dthr_TEST_ONLY_fc36e42dthr_TEST_ONLY_fc36e42dthr_TEST_ONLY_fc36e42dthr_TEST_ONLY_fc36e42dthr_TEST_ONLY_f"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/thread_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "identity",
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/thread_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "identity",
+        "thread_id"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/topology_generation/minimum": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity",
+        "topology_generation"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/properties/topology_generation/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity",
+        "topology_generation"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "scope_kind"
+      ],
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/closed_members": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/properties/json_pointer/pattern": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/properties/json_pointer/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/properties/path/pattern": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/properties/path/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/required": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256/pattern": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "payload_sha256"
+      ],
+      "value": "1566e4874e033e9d33d5b66dca6c8ad384652744725b0754cb715edc7b5c23e1\n"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/UtcTimestamp/format": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "observed_at"
+      ],
+      "value": "not-a-date-time"
+    },
+    "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/UtcTimestamp/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "observed_at"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/0/else/properties/bound_plan_ref/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "bound_plan_ref"
+      ],
+      "value": "gc"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/0/if/properties/origin_kind/const": {
+      "control_name": "0",
+      "path": [],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/0/then/properties/bound_plan_ref/type"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/0/then/properties/bound_plan_ref/minLength": {
+      "control_name": "plan_build",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "bound_plan_ref"
+      ],
+      "source_origin_length": true,
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/0/then/properties/bound_plan_ref/type": {
+      "control_name": "plan_build",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "bound_plan_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/1/else/properties/owning_workflow_ref/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "owning_workflow_ref"
+      ],
+      "value": "gc"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/1/if/properties/origin_kind/const": {
+      "control_name": "0",
+      "path": [],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/1/then/properties/owning_workflow_ref/type"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/1/then/properties/owning_workflow_ref/minLength": {
+      "control_name": "internal_workflow",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "owning_workflow_ref"
+      ],
+      "source_origin_length": true,
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/allOf/1/then/properties/owning_workflow_ref/type": {
+      "control_name": "internal_workflow",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "owning_workflow_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "record",
+        "acceptance",
+        "origin"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/bound_plan_ref/anyOf": {
+      "control_name": "0",
+      "origin_implication": true,
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "bound_plan_ref"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/bound_plan_ref/anyOf/0/minLength": {
+      "control_name": "0",
+      "origin_implication": true,
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "bound_plan_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/bound_plan_ref/anyOf/0/type": {
+      "control_name": "0",
+      "origin_implication": true,
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "bound_plan_ref"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/bound_plan_ref/anyOf/1/type": {
+      "control_name": "0",
+      "origin_implication": true,
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "bound_plan_ref"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/goal_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/goal_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/goal_revision/minimum": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "goal_revision"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/goal_revision/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "goal_revision"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/origin_kind/enum": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "origin_kind"
+      ],
+      "value": "user_requestx"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/owning_workflow_ref/anyOf": {
+      "control_name": "0",
+      "origin_implication": true,
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "owning_workflow_ref"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/owning_workflow_ref/anyOf/0/minLength": {
+      "control_name": "0",
+      "origin_implication": true,
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "owning_workflow_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/owning_workflow_ref/anyOf/0/type": {
+      "control_name": "0",
+      "origin_implication": true,
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "owning_workflow_ref"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/owning_workflow_ref/anyOf/1/type": {
+      "control_name": "0",
+      "origin_implication": true,
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "owning_workflow_ref"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/source_context_manifest_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "source_context_manifest_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/source_context_manifest_ref/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "source_context_manifest_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/source_message_refs/items/minLength": {
+      "control_name": "1",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "source_message_refs",
+        0
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/source_message_refs/items/type": {
+      "control_name": "1",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "source_message_refs",
+        0
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/source_message_refs/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "source_message_refs"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/properties/source_message_refs/uniqueItems": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "origin",
+        "source_message_refs"
+      ],
+      "value": [
+        "gc",
+        "gc"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "goal_id"
+      ],
+      "path": [
+        "record",
+        "acceptance",
+        "origin"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/origin/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "origin"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/allOf/0/else/properties/approval_id/minLength": {
+      "control_name": "1",
+      "path": [
+        "record",
+        "acceptance",
+        "approval_id"
+      ],
+      "request_implication": true,
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/allOf/0/else/properties/approval_id/type": {
+      "control_name": "1",
+      "path": [
+        "record",
+        "acceptance",
+        "approval_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/allOf/0/else/properties/source_message_id/minLength": {
+      "control_name": "1",
+      "path": [
+        "record",
+        "acceptance",
+        "source_message_id"
+      ],
+      "request_implication": true,
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/allOf/0/else/properties/source_message_id/type": {
+      "control_name": "1",
+      "path": [
+        "record",
+        "acceptance",
+        "source_message_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/allOf/0/if/properties/change_source/const": {
+      "control_name": "1",
+      "path": [],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/allOf/0/then/properties/approval_id/type",
+        "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/allOf/0/then/properties/source_message_id/type"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/allOf/0/then/properties/approval_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "approval_id"
+      ],
+      "value": "gc"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/allOf/0/then/properties/source_message_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "source_message_id"
+      ],
+      "value": "gc"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "record",
+        "acceptance"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/properties/approval_id/anyOf": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "approval_id"
+      ],
+      "request_implication": true,
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/properties/approval_id/anyOf/0/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "approval_id"
+      ],
+      "request_implication": true,
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/properties/approval_id/anyOf/0/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "approval_id"
+      ],
+      "request_implication": true,
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/properties/approval_id/anyOf/1/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "approval_id"
+      ],
+      "request_implication": true,
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/properties/change_source/enum": {
+      "control_name": "1",
+      "path": [
+        "record",
+        "acceptance",
+        "change_source"
+      ],
+      "value": "user_directx"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/properties/original_change_authority_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "original_change_authority_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/properties/original_change_authority_ref/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "original_change_authority_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/properties/source_context_manifest_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "source_context_manifest_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/properties/source_context_manifest_ref/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "source_context_manifest_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/properties/source_message_id/anyOf": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "source_message_id"
+      ],
+      "request_implication": true,
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/properties/source_message_id/anyOf/0/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "source_message_id"
+      ],
+      "request_implication": true,
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/properties/source_message_id/anyOf/0/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "source_message_id"
+      ],
+      "request_implication": true,
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/properties/source_message_id/anyOf/1/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance",
+        "source_message_id"
+      ],
+      "request_implication": true,
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "change_source"
+      ],
+      "path": [
+        "record",
+        "acceptance"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Acceptance/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "acceptance"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NonterminalOutcome/allOf/1/properties/command_id/const": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "command_id"
+      ],
+      "value": "cmd.chat.goal.updatex"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NonterminalOutcome/allOf/1/properties/error_ref/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "error_ref"
+      ],
+      "value": "gc"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NonterminalOutcome/allOf/1/properties/outcome/enum": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NonterminalOutcome/allOf/1/properties/owner_result_ref/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NonterminalOutcome/allOf/1/properties/owner_result_schema_ref/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NonterminalOutcome/allOf/1/properties/owner_result_sha256/type": {
+      "path": [],
+      "source_audit_field": "nonterminal_outcome"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NonterminalOutcome/allOf/1/properties/result_receipt_ref/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "nonterminal_outcome",
+        "result_receipt_ref"
+      ],
+      "value": "gc"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "record",
+        "normalized_identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/command_id/const": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "command_id"
+      ],
+      "value": "cmd.chat.goal.updatex"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/command_instance_id/maxLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "command_instance_id"
+      ],
+      "value": "command:TEST_ONLY:042a29ab44command:TEST_ONLY:042a29ab44command:TEST_ONLY:042a29ab44command:TEST_ONLY:042a29ab44command:TEST_ONLY:042a29ab44command:TEST_ONLY:042a29ab44command:TEST_ONLY:042a29ab44command:TEST_ONLY:042a29ab44command:TEST_ONLY:042a29ab44comma"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/command_instance_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "command_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/command_instance_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "command_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/dispatch_frame_id/maxLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "dispatch_frame_id"
+      ],
+      "value": "frame:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24frame:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24frame:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24frame:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24frame:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24frame:TEST_ONLY:c"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/dispatch_frame_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "dispatch_frame_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/dispatch_frame_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "dispatch_frame_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/idempotency_key/maxLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "idempotency_key"
+      ],
+      "value": "sir-idempotency:TEST_ONLY:042a29ab44sir-idempotency:TEST_ONLY:042a29ab44sir-idempotency:TEST_ONLY:042a29ab44sir-idempotency:TEST_ONLY:042a29ab44sir-idempotency:TEST_ONLY:042a29ab44sir-idempotency:TEST_ONLY:042a29ab44sir-idempotency:TEST_ONLY:042a29ab44sir-i"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/idempotency_key/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "idempotency_key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/idempotency_key/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "idempotency_key"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/operation_id/maxLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "operation_id"
+      ],
+      "value": "goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24goal-operation:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24goal-operation:TEST_ONLY:c644"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/operation_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/operation_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "operation_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/command_instance_id/maxLength": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/command_instance_id/minLength": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/command_instance_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity",
+        "command_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/scope_kind/const": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/thread_id/maxLength": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/thread_id/minLength": {
+      "path": [],
+      "source_audit_field": "normalized_identity"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/properties/thread_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity",
+        "thread_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/owner_identity/allOf/1/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "thread_id"
+      ],
+      "path": [
+        "record",
+        "normalized_identity",
+        "owner_identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/payload_sha256/pattern": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "payload_sha256"
+      ],
+      "value": "1566e4874e033e9d33d5b66dca6c8ad384652744725b0754cb715edc7b5c23e1\n"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/payload_sha256/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "payload_sha256"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/request_ref/maxLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "request_ref"
+      ],
+      "value": "request:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24request:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24request:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24request:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24request:TEST_ONLY:c6449fdb2efb4e2590d55a292d55fa24request"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/request_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "request_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/request_ref/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "request_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/target_generation/minimum": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "target_generation"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/properties/target_generation/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity",
+        "target_generation"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "request_ref"
+      ],
+      "path": [
+        "record",
+        "normalized_identity"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/NormalizedIdentity/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "normalized_identity"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "record"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/accepted_text_sha256/pattern": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "accepted_text_sha256"
+      ],
+      "value": "72b34af10bdab51cc4b8fc3f673f30307526a208726861063c6c71bbe6dd9ae7\n"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/accepted_text_sha256/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "accepted_text_sha256"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/actor_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "actor_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/actor_ref/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "actor_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/captured_at/format": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "captured_at"
+      ],
+      "value": "not-a-date-time"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/captured_at/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "captured_at"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/command_outcome_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "command_outcome_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/command_outcome_ref/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "command_outcome_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/dispatch_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "dispatch_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/dispatch_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "dispatch_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/expected_currentness_hash/pattern": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "expected_currentness_hash"
+      ],
+      "value": "d90f90aa172cea7ca06cf81961905ab7d9d268ad62c9e5c31de8a7f723b4d0d1\n"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/expected_currentness_hash/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "expected_currentness_hash"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/expected_revision/minimum": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "expected_revision"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/expected_revision/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "expected_revision"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/goal_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/goal_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/owner_epoch/minimum": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "owner_epoch"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/owner_epoch/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "owner_epoch"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/permission_snapshot_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "permission_snapshot_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/permission_snapshot_ref/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "permission_snapshot_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/prior_objective_revision/minimum": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "prior_objective_revision"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/prior_objective_revision/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "prior_objective_revision"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/prior_revision_hash/pattern": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "prior_revision_hash"
+      ],
+      "value": "3abaab22541f629549075f31ca05098b26004bf52577a4b32e2d326ad97d947d\n"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/prior_revision_hash/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "prior_revision_hash"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/project_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/project_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/return_route_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "return_route_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/return_route_ref/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "return_route_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/schema_id/const": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "schema_id"
+      ],
+      "value": "pm.goal.update.source_audit.v1x"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/schema_version/const": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "schema_version"
+      ],
+      "value": "1.0.0x"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/source_authority_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "source_authority_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/source_authority_ref/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "source_authority_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/source_surface/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "source_surface"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/source_surface/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "source_surface"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/stop_epoch/minimum": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "stop_epoch"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/stop_epoch/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "stop_epoch"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/storage_instance_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/storage_instance_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "storage_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/thread_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/properties/thread_id/type": {
+      "control_name": "0",
+      "path": [
+        "record",
+        "thread_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": [
+        "record"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/SourceAudit/type": {
+      "control_name": "0",
+      "path": [
+        "record"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/StorageSourceAudit/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/StorageSourceAudit/properties/schema_id/const": {
+      "control_name": "0",
+      "path": [
+        "schema_id"
+      ],
+      "value": "pm.storage_value.goal_update_source_audit.v1x"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/StorageSourceAudit/properties/schema_version/const": {
+      "control_name": "0",
+      "path": [
+        "schema_version"
+      ],
+      "value": "1.0.0x"
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/StorageSourceAudit/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/StorageSourceAudit/type": {
+      "control_name": "0",
+      "path": [],
+      "value": true
+    }
+  },
+  "family": "goal.updated",
+  "root": "dg5:438078939e66d4ec",
+  "route": "capture_input",
+  "row": "dg5/dgu/source/capture/source/schema",
+  "site": [
+    "scripts/pm_goal_dg_u_owners.py",
+    1541
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "transaction": true
+}
