@@ -1,0 +1,98 @@
+{
+  "census_sha256": "647eb062f2b9f8438e26716e3e058e1ac61193a2c266bbf12f4664495598fab7",
+  "examples": {
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request/closed_members": {
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request/properties/goal_id/minLength": {
+      "path": [
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request/properties/goal_id/type": {
+      "path": [
+        "goal_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request/properties/intent_sha256/pattern": {
+      "path": [
+        "intent_sha256"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request/properties/intent_sha256/type": {
+      "path": [
+        "intent_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request/properties/operation_id/minLength": {
+      "path": [
+        "operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request/properties/operation_id/type": {
+      "path": [
+        "operation_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request/properties/project_id/minLength": {
+      "path": [
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request/properties/project_id/type": {
+      "path": [
+        "project_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request/properties/reader_binding/const": {
+      "path": [
+        "reader_binding"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request/properties/storage_instance_id/minLength": {
+      "path": [
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request/properties/storage_instance_id/type": {
+      "path": [
+        "storage_instance_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request/required": {
+      "member": [
+        "remove",
+        "reader_binding"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request/type": {
+      "path": [],
+      "value": null
+    }
+  },
+  "family": "goal.updated",
+  "root": "dg5:5fca934fdbf005e4",
+  "route": "receipt",
+  "row": "dg5/dgu/reader/receipt/final/receipt_request/schema",
+  "site": [
+    "scripts/pm_goal_dg_u_owners.py",
+    1371
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0"
+}
