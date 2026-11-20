@@ -356,8 +356,41 @@ def retained_rule_tests(directory, ident, captured, reference):
     return replay, {path.name: worker.sha(path) for path in (result_path, rules_path)}
 
 
+def inspection_append_tests(directory, specification, fixture, reference, captured):
+    """Check the exact append rules already tested in the enclosing inspection."""
+    parent_id = specification['enclosing_test_root']
+    root = directory / parent_id.removeprefix('dg5:')
+    result_path = root / 'result.json'
+    rules_path = root / 'clause-replay.json'
+    result = json.loads(result_path.read_bytes())
+    parent = json.loads(rules_path.read_bytes())['roots'][parent_id]
+    (prior,) = result['calls'][0]['observations']
+    bank = fixture.bank
+    target = bank.lookup(prior['schema']['$ref'])
+    child = target.contents['properties']['original_append']
+    selected = bank.lookup(captured['schema']['$ref'])
+    worker.require(result['row'] == specification['enclosing_test_row'] and
+                   result['status'] == 'LATER_REFUSAL' and result['reference_sha256'] == worker.FULL_REFERENCE_SHA and
+                   result['calls'][0]['code'] is None and prior['site'] == [READERS, 256] and
+                   prior['root'] == parent_id and not result['gaps'] and
+                   parent['counts']['UNCOVERED'] == parent['verify']['failed'] == parent['verify']['unverifiable'] == 0 and
+                   set(parent['clauses']) == set(parent['clause_ids']) and
+                   parent['validator_class'] == reference['validator_class'] and parent['bank'] == reference['bank'] and
+                   parent['schema_sources'] == json.loads(json.dumps(bank.original.resource_origins)) and
+                   'original_append' in target.contents['required'] and set(child) == {'$ref'} and
+                   target.resolver.lookup(child['$ref']).contents is selected.contents,
+                   'the accepted inspection test must use the exact required append definition')
+    clauses = {rule: parent['clauses'][rule] for rule in reference['clause_ids']}
+    worker.require(all('path' not in check or check['path'][:1] == ['original_append'] for check in clauses.values()),
+                   'an append rule was tested outside the required member')
+    replay = {key: reference[key] for key in ('clause_ids', 'clause_inventory', 'bank', 'registry_sha256', 'validator_class')}
+    replay.update(schema=captured['schema'], schema_sources=bank.original.resource_origins,
+                  clauses=clauses, gaps={}, controls=result['controls'])
+    return replay, {path.name: worker.sha(path) for path in (result_path, rules_path)}
+
+
 def check_root(out, name, specification, sites, reference, previous, alter_copy, reference_digest,
-               shared_rule_tests=None, accepted_controls=None, current_source_tests=None, retained_tests=None):
+               shared_rule_tests=None, accepted_controls=None, current_source_tests=None, retained_tests=None, inspection_tests=None):
     started = time.monotonic()
     ident = specification['root']
     worker.pilot.PREFIX = worker.TABLE_PREFIX
@@ -399,10 +432,13 @@ def check_root(out, name, specification, sites, reference, previous, alter_copy,
         worker.require(name in CURRENT_START_CHECKS, 'current source tests apply only to the workflow wrapper')
         checked_rules = checked_current_workflow_rules(
             fixture, captured, reference, current_source_tests, reference_digest)
-    retained_pins = None
+    retained_pins = inspection_pins = None
     if retained_tests:
         worker.require(name in RETAINED_READ, 'the retained examples require a retained reader call')
         replayed, retained_pins = retained_rule_tests(retained_tests, ident, captured, reference)
+    elif inspection_tests:
+        worker.require(name in INSPECTION_APPEND, 'the enclosing examples require an inspection append call')
+        replayed, inspection_pins = inspection_append_tests(inspection_tests, specification, fixture, reference, captured)
     elif shared_rule_tests:
         record = json.loads(shared_rule_tests.read_bytes())
         worker.require(record['status'] == 'READY_FOR_MATRIX' and record['reference_sha256'] == reference_digest and
@@ -444,7 +480,7 @@ def check_root(out, name, specification, sites, reference, previous, alter_copy,
                  controls=replayed['controls'], gaps=replayed['gaps'], counts=dict(counts),
                  historical_example_inputs=examples.pins,
                  schema_reference=specification.get('schema_reference'),
-                 retained_rule_tests_sha256=retained_pins,
+                 retained_rule_tests_sha256=retained_pins, inspection_append_tests_sha256=inspection_pins,
                  shared_rule_tests_sha256=worker.sha(shared_rule_tests) if shared_rule_tests else None,
                  additional_controls_sha256=worker.sha(accepted_controls) if accepted_controls else None,
                  current_source_tests_sha256=worker.sha(current_source_tests) if current_source_tests else None))
@@ -462,6 +498,7 @@ def main():
     parser.add_argument('--shared-rule-tests', type=Path)
     parser.add_argument('--accepted-controls', type=Path)
     parser.add_argument('--retained-tests', type=Path)
+    parser.add_argument('--inspection-tests', type=Path)
     parser.add_argument('--current-source-tests', type=Path)
     parser.add_argument('--alter-forwarded-copy', action='store_true')
     args = parser.parse_args()
@@ -477,6 +514,8 @@ def main():
         row = case['row']
         worker.require(row in DEPENDENCIES or row in ORIGINAL_SCHEMAS or row in ISSUER_FORWARDING or row in CURRENT_GOAL_CHECKS | CURRENT_START_CHECKS | RETAINED_READ,
                        f'no checked forwarding premise for {row}')
+        worker.require(not args.inspection_tests or row in INSPECTION_APPEND,
+                       'enclosing inspection tests apply only to the inspection append rows')
         worker.require(not args.retained_tests or row in RETAINED_READ,
                        'retained rule tests apply only to the retained reader rows')
         worker.require(not args.shared_rule_tests or row in ISSUER_FORWARDING or row in CURRENT_GOAL_CHECKS,
@@ -500,7 +539,7 @@ def main():
                 if args.show_differences:
                     print(row, ident, 'registry digest differs', flush=True)
                 continue
-            if not args.retained_tests:
+            if not (args.retained_tests or args.inspection_tests):
                 worker.closure.PREPARED.clear()
                 walk = {}
                 worker.closure._describe_inventory(walk, plain, ident, bank)
@@ -510,7 +549,8 @@ def main():
                               len(set(walk.get('clause_ids', ())) - set(exact['clause_ids'])), flush=True)
                     continue
             check_root(output, row, spec, sites, exact, previous[ident], args.alter_forwarded_copy, reference_digest,
-                       args.shared_rule_tests, args.accepted_controls, args.current_source_tests, args.retained_tests)
+                       args.shared_rule_tests, args.accepted_controls, args.current_source_tests, args.retained_tests,
+                       args.inspection_tests)
 
 
 if __name__ == '__main__':

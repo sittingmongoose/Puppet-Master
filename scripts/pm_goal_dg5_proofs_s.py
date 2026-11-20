@@ -821,3 +821,18 @@ PROOFS['dg5/read_retained_native/retained/root/schema'] = dict(
         'validation message.'
     ),
 )
+
+PROOFS['dg5/read_retained_native/final/root/schema'] = dict(
+    kind='entailment',
+    families=['goal_run.started'],
+    depends_on=[],
+    sites=[('scripts/pm_goal_dg_s_readers.py', 94), ('scripts/pm_goal_dg_s_readers.py', 800), ('scripts/pm_goal_dg_s_readers.py', 867), ('scripts/pm_goal_dg_s_readers.py', 869), ('scripts/pm_goal_dg_s_readers.py', 870), ('scripts/pm_goal_test_owner_adapters.py', 83)],
+    argument=(
+        'Both retained copies pass the same installed validation at line 94. The caller '
+        'compares the two at line 870 using type-exact equality. A schema-invalid copy cannot '
+        'equal the other schema-valid copy. The tests confirm the other copy passed the '
+        'original validator and reached the comparison unchanged. Disabling just the selected '
+        'validation makes the comparison refuse, and restoration repeats the exact original '
+        'validation message.'
+    ),
+)
