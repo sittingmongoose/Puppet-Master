@@ -166,7 +166,17 @@ def _census_traps(traps):
         data_operation=['g.time.monotonic() == 2', 'g.time.monotonic', 'g.time'])
     constructor = dict(id='guard-table-invalid-rows', kind='guard-table-invalid-rows',
                        expected='GuardTable refuses both duplicate names and a non-Guard row.')
-    return [source, metadata, repeated, wrong_root, duplicate, graph, constructor]
+    restoration = _single_guard_trap('restoration-outcome-change', 'The restored negative must refuse again.',
+                                     'restoration_failed', clock=True, static_pass=True)
+    # Calls 1–4 are the baselines and cuts. Calls 5 and 6 restore the control
+    # and negative respectively. Skipping here changes the outcome as well as the trace.
+    restoration['source'] = restoration['source'].replace('    def check(value):', '''    def check(value):
+        if g.time.monotonic() == 6:
+            return True''')
+    restoration['non_guards'] = _review_sites('factory.check', 'Skip the guard only on the restored negative.',
+        call_review=['g.time.monotonic()'],
+        data_operation=['if g.time.monotonic() == 6:\n    return True', 'g.time.monotonic() == 6', 'g.time.monotonic', 'g.time'])
+    return [source, metadata, repeated, wrong_root, duplicate, graph, constructor, restoration]
 
 
 def _schema_suite(g, trap, root):
