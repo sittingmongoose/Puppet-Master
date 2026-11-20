@@ -165,6 +165,25 @@ class Witnesses(unittest.TestCase):
                 c._carried_from([path])
         c._CARRIED_EVIDENCE.clear()
 
+    def test_distinct_member_closure_keywords_and_cuts(self):
+        schema = {'properties': {'n': {}}, 'additionalProperties': False, 'unevaluatedProperties': False}
+        bad = {'extra': 1}
+        for kind in (jsonschema.Draft202012Validator, c.common.StrictValidator):
+            v = c.closure_validator(kind(schema), 'two-keywords')
+            _, ids = c._clause_inventory(v)
+            by_name = {clause.rsplit('/', 1)[1]: clause for clause in ids}
+            self.assertEqual(set(by_name), {'additionalProperties', 'unevaluatedProperties'})
+            self.assertEqual(c.go.locations(c.go.errors_of(v, bad)), set(ids))
+            for cause, other in (('additionalProperties', 'unevaluatedProperties'),
+                                 ('unevaluatedProperties', 'additionalProperties')):
+                cut = {c._guard_for_location(by_name[cause])}
+                self.assertEqual(c.go.locations(c.go.errors_of(v, bad, cut)), {by_name[other]})
+            self.assertEqual(c.go.locations(c.go.errors_of(v, bad)), set(ids))
+        singleton = c.closure_validator(jsonschema.Draft202012Validator({'additionalProperties': False}),
+                                        'one-keyword')
+        _, ids = c._clause_inventory(singleton)
+        self.assertEqual([clause.rsplit('/', 1)[1] for clause in ids], ['closed_members'])
+
     def test_legacy_reconstruction_keeps_verdict_and_records_provenance(self):
         import pm_goal_dg5_reverify as replay
         v = c.closure_validator(jsonschema.Draft202012Validator({'type': 'object',
@@ -207,8 +226,10 @@ class Witnesses(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             dump, prior, out = [Path(temp) / x for x in ('dump.pkl', 'prior.json', 'out.json')]
             dump.write_bytes(pickle.dumps({'meta': {}, 'roots': {'selftest-output': dumped}}))
-            prior.write_text(json.dumps({'roots': {'selftest-output': {'clauses': {clause:
-                {'cls': 'KILLED', 'path': ['n'], 'edit': 'True', 'input_sha256': 'missing'}}}}}))
+            _, ids = c._clause_inventory(v)
+            clauses = {key: {'cls': 'UNCOVERED'} for key in ids}
+            clauses[clause] = {'cls': 'KILLED', 'path': ['n'], 'edit': 'True', 'input_sha256': 'missing'}
+            prior.write_text(json.dumps({'roots': {'selftest-output': {'clauses': clauses}}}))
             self.assertEqual(replay.reverify(dump, [prior], out), 0)
             result = json.loads(out.read_text())
             root = result['roots']['selftest-output']
