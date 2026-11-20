@@ -90,13 +90,31 @@ function measure() {
 	const matches = rail ? (p) => fill.reduce((sum, v, c) => sum + (v - raw[p + c]) ** 2, 0) <= 20 ** 2
 		: (p) => fill.every((v, c) => Math.abs(v - raw[p + c]) <= 24);
 	const frames = [];
+	const mask = new Uint8Array(w * h), stack = new Int32Array(w * h);
 	for (let i = lo; i <= hi; i++) {
-		const columns = new Uint16Array(w);
-		for (let j = 0; j < h * w; j++) {
-			const p = (i - lo) * n + j * 3;
-			if (matches(p)) columns[j % w]++;
+		const base = (i - lo) * n;
+		mask.fill(0);
+		for (let j = 0; j < w * h; j++) if (matches(base + j * 3)) mask[j] = 1;
+		// The chip is the largest connected region of its own colour, and only its solid columns
+		// count: stray pixels, a motion fringe or the rail's 1-2 px focus outline are separate
+		// islands and rings that never carry a column of the solid fill's height.
+		let columns = null, largest = 0;
+		for (let s = 0; s < w * h; s++) {
+			if (!mask[s]) continue;
+			let top = 0, size = 0;
+			stack[top++] = s, mask[s] = 0;
+			const cols = new Uint16Array(w);
+			while (top) {
+				const q = stack[--top], qx = q % w, qy = (q - qx) / w;
+				size++, cols[qx]++;
+				if (qx > 0 && mask[q - 1]) stack[top++] = q - 1, mask[q - 1] = 0;
+				if (qx < w - 1 && mask[q + 1]) stack[top++] = q + 1, mask[q + 1] = 0;
+				if (qy > 0 && mask[q - w]) stack[top++] = q - w, mask[q - w] = 0;
+				if (qy < h - 1 && mask[q + w]) stack[top++] = q + w, mask[q + w] = 0;
+			}
+			if (size > largest) { largest = size; columns = cols; }
 		}
-		const left = columns.findIndex((c) => c >= 3), right = columns.findLastIndex((c) => c >= 3);
+		const solid = 5, left = columns?.findIndex((c) => c >= solid) ?? -1, right = columns?.findLastIndex((c) => c >= solid) ?? -1;
 		frames.push({ frame: i, pts: pts[i], left: left < 0 ? null : x + left, right: right < 0 ? null : x + right });
 	}
 	const allow = nativeStepLimit(rec);
