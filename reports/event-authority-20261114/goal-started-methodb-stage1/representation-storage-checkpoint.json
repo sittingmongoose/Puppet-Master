@@ -1,0 +1,21 @@
+{
+  "row": "dg5/representation/checkpoint/schema",
+  "fixtures": [
+    {
+      "route": "storage_checkpoint",
+      "edition": "v3",
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
