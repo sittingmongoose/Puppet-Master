@@ -1,0 +1,1148 @@
+[
+  {
+    "accepted_branches": {
+      "0": {
+        "generation": 1,
+        "implementations": [
+          {
+            "descriptor": {
+              "disposition": "participating",
+              "native_binding_generation": 1,
+              "native_handler_id": "TEST_ONLY:native-handler:goal_birth:00000000-0000-0000-0000-000000000003",
+              "operation": "goal_birth",
+              "original_owner_epoch": 1,
+              "original_owner_ref": "TEST_ONLY:owner:native_registration:c84ecd22-1f1b-4c58-820d-9b058dfdf5d9",
+              "original_registration_ref": "TEST_ONLY:registration:goal_birth:00000000-0000-0000-0000-000000000002",
+              "route_schema_ids": [
+                "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json"
+              ],
+              "storage_family_ids": [
+                "goal_execution_binding_control"
+              ],
+              "storage_instance_id": "bf714f2b-ad87-4a04-8730-ac32ff157d0d"
+            },
+            "enrollment": "enrolled",
+            "implementation_kind": "primary"
+          },
+          {
+            "descriptor": {
+              "disposition": "participating",
+              "native_binding_generation": 1,
+              "native_handler_id": "TEST_ONLY:native-handler:plan_goal_birth_or_attach:00000000-0000-0000-0000-000000000005",
+              "operation": "plan_goal_birth_or_attach",
+              "original_owner_epoch": 1,
+              "original_owner_ref": "TEST_ONLY:owner:native_registration:c84ecd22-1f1b-4c58-820d-9b058dfdf5d9",
+              "original_registration_ref": "TEST_ONLY:registration:plan_goal_birth_or_attach:00000000-0000-0000-0000-000000000004",
+              "route_schema_ids": [
+                "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json"
+              ],
+              "storage_family_ids": [
+                "goal_execution_binding_control"
+              ],
+              "storage_instance_id": "bf714f2b-ad87-4a04-8730-ac32ff157d0d"
+            },
+            "enrollment": "enrolled",
+            "implementation_kind": "primary"
+          },
+          {
+            "descriptor": {
+              "disposition": "participating",
+              "native_binding_generation": 1,
+              "native_handler_id": "TEST_ONLY:native-handler:workflow_attach:00000000-0000-0000-0000-000000000007",
+              "operation": "workflow_attach",
+              "original_owner_epoch": 1,
+              "original_owner_ref": "TEST_ONLY:owner:native_registration:c84ecd22-1f1b-4c58-820d-9b058dfdf5d9",
+              "original_registration_ref": "TEST_ONLY:registration:workflow_attach:00000000-0000-0000-0000-000000000006",
+              "route_schema_ids": [
+                "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json"
+              ],
+              "storage_family_ids": [
+                "goal_execution_binding_control"
+              ],
+              "storage_instance_id": "bf714f2b-ad87-4a04-8730-ac32ff157d0d"
+            },
+            "enrollment": "enrolled",
+            "implementation_kind": "primary"
+          },
+          {
+            "descriptor": {
+              "disposition": "participating",
+              "native_binding_generation": 1,
+              "native_handler_id": "TEST_ONLY:native-handler:binding_owner_transfer:00000000-0000-0000-0000-000000000009",
+              "operation": "binding_owner_transfer",
+              "original_owner_epoch": 1,
+              "original_owner_ref": "TEST_ONLY:owner:native_registration:c84ecd22-1f1b-4c58-820d-9b058dfdf5d9",
+              "original_registration_ref": "TEST_ONLY:registration:binding_owner_transfer:00000000-0000-0000-0000-000000000008",
+              "route_schema_ids": [
+                "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json"
+              ],
+              "storage_family_ids": [
+                "goal_execution_binding_control"
+              ],
+              "storage_instance_id": "bf714f2b-ad87-4a04-8730-ac32ff157d0d"
+            },
+            "enrollment": "enrolled",
+            "implementation_kind": "primary"
+          },
+          {
+            "descriptor": {
+              "disposition": "participating",
+              "native_binding_generation": 1,
+              "native_handler_id": "TEST_ONLY:native-handler:binding_migration:00000000-0000-0000-0000-00000000000b",
+              "operation": "binding_migration",
+              "original_owner_epoch": 1,
+              "original_owner_ref": "TEST_ONLY:owner:native_registration:c84ecd22-1f1b-4c58-820d-9b058dfdf5d9",
+              "original_registration_ref": "TEST_ONLY:registration:binding_migration:00000000-0000-0000-0000-00000000000a",
+              "route_schema_ids": [
+                "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json"
+              ],
+              "storage_family_ids": [
+                "goal_execution_binding_control"
+              ],
+              "storage_instance_id": "bf714f2b-ad87-4a04-8730-ac32ff157d0d"
+            },
+            "enrollment": "enrolled",
+            "implementation_kind": "primary"
+          },
+          {
+            "descriptor": {
+              "disposition": "participating",
+              "native_binding_generation": 1,
+              "native_handler_id": "TEST_ONLY:native-handler:binding_restore:00000000-0000-0000-0000-00000000000d",
+              "operation": "binding_restore",
+              "original_owner_epoch": 1,
+              "original_owner_ref": "TEST_ONLY:owner:native_registration:c84ecd22-1f1b-4c58-820d-9b058dfdf5d9",
+              "original_registration_ref": "TEST_ONLY:registration:binding_restore:00000000-0000-0000-0000-00000000000c",
+              "route_schema_ids": [
+                "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json"
+              ],
+              "storage_family_ids": [
+                "goal_execution_binding_control"
+              ],
+              "storage_instance_id": "bf714f2b-ad87-4a04-8730-ac32ff157d0d"
+            },
+            "enrollment": "enrolled",
+            "implementation_kind": "primary"
+          },
+          {
+            "descriptor": {
+              "disposition": "participating",
+              "native_binding_generation": 1,
+              "native_handler_id": "TEST_ONLY:native-handler:binding_content_delete:00000000-0000-0000-0000-00000000000f",
+              "operation": "binding_content_delete",
+              "original_owner_epoch": 1,
+              "original_owner_ref": "TEST_ONLY:owner:native_registration:c84ecd22-1f1b-4c58-820d-9b058dfdf5d9",
+              "original_registration_ref": "TEST_ONLY:registration:binding_content_delete:00000000-0000-0000-0000-00000000000e",
+              "route_schema_ids": [
+                "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json"
+              ],
+              "storage_family_ids": [
+                "goal_execution_binding_control"
+              ],
+              "storage_instance_id": "bf714f2b-ad87-4a04-8730-ac32ff157d0d"
+            },
+            "enrollment": "enrolled",
+            "implementation_kind": "primary"
+          }
+        ],
+        "qualification": "TEST_ONLY",
+        "registrations": {
+          "binding_content_delete": "TEST_ONLY:registration:binding_content_delete:00000000-0000-0000-0000-00000000000e",
+          "binding_migration": "TEST_ONLY:registration:binding_migration:00000000-0000-0000-0000-00000000000a",
+          "binding_owner_transfer": "TEST_ONLY:registration:binding_owner_transfer:00000000-0000-0000-0000-000000000008",
+          "binding_restore": "TEST_ONLY:registration:binding_restore:00000000-0000-0000-0000-00000000000c",
+          "goal_birth": "TEST_ONLY:registration:goal_birth:00000000-0000-0000-0000-000000000002",
+          "plan_goal_birth_or_attach": "TEST_ONLY:registration:plan_goal_birth_or_attach:00000000-0000-0000-0000-000000000004",
+          "workflow_attach": "TEST_ONLY:registration:workflow_attach:00000000-0000-0000-0000-000000000006"
+        },
+        "root_identity": "TEST_ONLY:native-root:00000000-0000-0000-0000-000000000001",
+        "schema_id": "pm.test_only.native_dispatch_state.v1"
+      }
+    },
+    "examples": {
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "implementations",
+          0,
+          "descriptor"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/disposition/enum": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "disposition"
+        ],
+        "value": "participatingx"
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/native_binding_generation/minimum": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "native_binding_generation"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/native_binding_generation/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "native_binding_generation"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/native_handler_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "native_handler_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/native_handler_id/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "native_handler_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/operation/enum": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "operation"
+        ],
+        "value": "goal_birthx"
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/original_owner_epoch/minimum": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "original_owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/original_owner_epoch/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "original_owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/original_owner_ref/minLength": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "original_owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/original_owner_ref/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "original_owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/original_registration_ref/minLength": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "original_registration_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/original_registration_ref/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "original_registration_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/route_schema_ids/items/minLength": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "route_schema_ids",
+          0
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/route_schema_ids/items/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "route_schema_ids",
+          0
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/route_schema_ids/minItems": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "route_schema_ids"
+        ],
+        "value": []
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/route_schema_ids/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "route_schema_ids"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/storage_family_ids/items/minLength": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "storage_family_ids",
+          0
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/storage_family_ids/items/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "storage_family_ids",
+          0
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/storage_family_ids/minItems": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "storage_family_ids"
+        ],
+        "value": []
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/storage_family_ids/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "storage_family_ids"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/storage_instance_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/storage_instance_id/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "operation"
+        ],
+        "path": [
+          "implementations",
+          0,
+          "descriptor"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/generation/minimum": {
+        "control_name": "0",
+        "path": [
+          "generation"
+        ],
+        "value": 0
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/generation/type": {
+        "control_name": "0",
+        "path": [
+          "generation"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/implementations/items/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "implementations",
+          0
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/implementations/items/properties/enrollment/enum": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "enrollment"
+        ],
+        "value": "enrolledx"
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/implementations/items/properties/implementation_kind/enum": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "implementation_kind"
+        ],
+        "value": "primaryx"
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/implementations/items/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "descriptor"
+        ],
+        "path": [
+          "implementations",
+          0
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/implementations/items/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/implementations/type": {
+        "control_name": "0",
+        "path": [
+          "implementations"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/qualification/const": {
+        "control_name": "0",
+        "path": [
+          "qualification"
+        ],
+        "value": "TEST_ONLYx"
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/registrations/additionalProperties/minLength": {
+        "control_name": "0",
+        "path": [
+          "registrations",
+          "binding_content_delete"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/registrations/additionalProperties/type": {
+        "control_name": "0",
+        "path": [
+          "registrations",
+          "binding_content_delete"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/registrations/type": {
+        "control_name": "0",
+        "path": [
+          "registrations"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/root_identity/minLength": {
+        "control_name": "0",
+        "path": [
+          "root_identity"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/root_identity/type": {
+        "control_name": "0",
+        "path": [
+          "root_identity"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/schema_id/const": {
+        "control_name": "0",
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.test_only.native_dispatch_state.v1x"
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/type": {
+        "control_name": "0",
+        "path": [],
+        "value": null
+      }
+    },
+    "family": "goal.cancelled",
+    "reference": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState",
+    "root": "dg5:27e0616bac3562f6",
+    "route": "registration/state",
+    "row": "dg5/registration/state/schema",
+    "site": [
+      "scripts/pm_goal_dg_cb_owners.py",
+      1535
+    ],
+    "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+    "transaction": true,
+    "variant": null
+  },
+  {
+    "accepted_branches": {
+      "0": {
+        "generation": 1,
+        "implementations": [
+          {
+            "descriptor": {
+              "disposition": "participating",
+              "native_binding_generation": 1,
+              "native_handler_id": "TEST_ONLY:native-handler:goal_birth:00000000-0000-0000-0000-000000000003",
+              "operation": "goal_birth",
+              "original_owner_epoch": 1,
+              "original_owner_ref": "TEST_ONLY:owner:native_registration:c84ecd22-1f1b-4c58-820d-9b058dfdf5d9",
+              "original_registration_ref": "TEST_ONLY:registration:goal_birth:00000000-0000-0000-0000-000000000002",
+              "route_schema_ids": [
+                "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json"
+              ],
+              "storage_family_ids": [
+                "goal_execution_binding_control"
+              ],
+              "storage_instance_id": "bf714f2b-ad87-4a04-8730-ac32ff157d0d"
+            },
+            "enrollment": "enrolled",
+            "implementation_kind": "primary"
+          },
+          {
+            "descriptor": {
+              "disposition": "participating",
+              "native_binding_generation": 1,
+              "native_handler_id": "TEST_ONLY:native-handler:plan_goal_birth_or_attach:00000000-0000-0000-0000-000000000005",
+              "operation": "plan_goal_birth_or_attach",
+              "original_owner_epoch": 1,
+              "original_owner_ref": "TEST_ONLY:owner:native_registration:c84ecd22-1f1b-4c58-820d-9b058dfdf5d9",
+              "original_registration_ref": "TEST_ONLY:registration:plan_goal_birth_or_attach:00000000-0000-0000-0000-000000000004",
+              "route_schema_ids": [
+                "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json"
+              ],
+              "storage_family_ids": [
+                "goal_execution_binding_control"
+              ],
+              "storage_instance_id": "bf714f2b-ad87-4a04-8730-ac32ff157d0d"
+            },
+            "enrollment": "enrolled",
+            "implementation_kind": "primary"
+          },
+          {
+            "descriptor": {
+              "disposition": "participating",
+              "native_binding_generation": 1,
+              "native_handler_id": "TEST_ONLY:native-handler:workflow_attach:00000000-0000-0000-0000-000000000007",
+              "operation": "workflow_attach",
+              "original_owner_epoch": 1,
+              "original_owner_ref": "TEST_ONLY:owner:native_registration:c84ecd22-1f1b-4c58-820d-9b058dfdf5d9",
+              "original_registration_ref": "TEST_ONLY:registration:workflow_attach:00000000-0000-0000-0000-000000000006",
+              "route_schema_ids": [
+                "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json"
+              ],
+              "storage_family_ids": [
+                "goal_execution_binding_control"
+              ],
+              "storage_instance_id": "bf714f2b-ad87-4a04-8730-ac32ff157d0d"
+            },
+            "enrollment": "enrolled",
+            "implementation_kind": "primary"
+          },
+          {
+            "descriptor": {
+              "disposition": "participating",
+              "native_binding_generation": 1,
+              "native_handler_id": "TEST_ONLY:native-handler:binding_owner_transfer:00000000-0000-0000-0000-000000000009",
+              "operation": "binding_owner_transfer",
+              "original_owner_epoch": 1,
+              "original_owner_ref": "TEST_ONLY:owner:native_registration:c84ecd22-1f1b-4c58-820d-9b058dfdf5d9",
+              "original_registration_ref": "TEST_ONLY:registration:binding_owner_transfer:00000000-0000-0000-0000-000000000008",
+              "route_schema_ids": [
+                "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json"
+              ],
+              "storage_family_ids": [
+                "goal_execution_binding_control"
+              ],
+              "storage_instance_id": "bf714f2b-ad87-4a04-8730-ac32ff157d0d"
+            },
+            "enrollment": "enrolled",
+            "implementation_kind": "primary"
+          },
+          {
+            "descriptor": {
+              "disposition": "participating",
+              "native_binding_generation": 1,
+              "native_handler_id": "TEST_ONLY:native-handler:binding_migration:00000000-0000-0000-0000-00000000000b",
+              "operation": "binding_migration",
+              "original_owner_epoch": 1,
+              "original_owner_ref": "TEST_ONLY:owner:native_registration:c84ecd22-1f1b-4c58-820d-9b058dfdf5d9",
+              "original_registration_ref": "TEST_ONLY:registration:binding_migration:00000000-0000-0000-0000-00000000000a",
+              "route_schema_ids": [
+                "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json"
+              ],
+              "storage_family_ids": [
+                "goal_execution_binding_control"
+              ],
+              "storage_instance_id": "bf714f2b-ad87-4a04-8730-ac32ff157d0d"
+            },
+            "enrollment": "enrolled",
+            "implementation_kind": "primary"
+          },
+          {
+            "descriptor": {
+              "disposition": "participating",
+              "native_binding_generation": 1,
+              "native_handler_id": "TEST_ONLY:native-handler:binding_restore:00000000-0000-0000-0000-00000000000d",
+              "operation": "binding_restore",
+              "original_owner_epoch": 1,
+              "original_owner_ref": "TEST_ONLY:owner:native_registration:c84ecd22-1f1b-4c58-820d-9b058dfdf5d9",
+              "original_registration_ref": "TEST_ONLY:registration:binding_restore:00000000-0000-0000-0000-00000000000c",
+              "route_schema_ids": [
+                "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json"
+              ],
+              "storage_family_ids": [
+                "goal_execution_binding_control"
+              ],
+              "storage_instance_id": "bf714f2b-ad87-4a04-8730-ac32ff157d0d"
+            },
+            "enrollment": "enrolled",
+            "implementation_kind": "primary"
+          },
+          {
+            "descriptor": {
+              "disposition": "participating",
+              "native_binding_generation": 1,
+              "native_handler_id": "TEST_ONLY:native-handler:binding_content_delete:00000000-0000-0000-0000-00000000000f",
+              "operation": "binding_content_delete",
+              "original_owner_epoch": 1,
+              "original_owner_ref": "TEST_ONLY:owner:native_registration:c84ecd22-1f1b-4c58-820d-9b058dfdf5d9",
+              "original_registration_ref": "TEST_ONLY:registration:binding_content_delete:00000000-0000-0000-0000-00000000000e",
+              "route_schema_ids": [
+                "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json"
+              ],
+              "storage_family_ids": [
+                "goal_execution_binding_control"
+              ],
+              "storage_instance_id": "bf714f2b-ad87-4a04-8730-ac32ff157d0d"
+            },
+            "enrollment": "enrolled",
+            "implementation_kind": "primary"
+          }
+        ],
+        "qualification": "TEST_ONLY",
+        "registrations": {
+          "binding_content_delete": "TEST_ONLY:registration:binding_content_delete:00000000-0000-0000-0000-00000000000e",
+          "binding_migration": "TEST_ONLY:registration:binding_migration:00000000-0000-0000-0000-00000000000a",
+          "binding_owner_transfer": "TEST_ONLY:registration:binding_owner_transfer:00000000-0000-0000-0000-000000000008",
+          "binding_restore": "TEST_ONLY:registration:binding_restore:00000000-0000-0000-0000-00000000000c",
+          "goal_birth": "TEST_ONLY:registration:goal_birth:00000000-0000-0000-0000-000000000002",
+          "plan_goal_birth_or_attach": "TEST_ONLY:registration:plan_goal_birth_or_attach:00000000-0000-0000-0000-000000000004",
+          "workflow_attach": "TEST_ONLY:registration:workflow_attach:00000000-0000-0000-0000-000000000006"
+        },
+        "root_identity": "TEST_ONLY:native-root:00000000-0000-0000-0000-000000000001",
+        "schema_id": "pm.test_only.native_dispatch_state.v1"
+      }
+    },
+    "examples": {
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "implementations",
+          0,
+          "descriptor"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/disposition/enum": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "disposition"
+        ],
+        "value": "participatingx"
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/native_binding_generation/minimum": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "native_binding_generation"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/native_binding_generation/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "native_binding_generation"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/native_handler_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "native_handler_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/native_handler_id/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "native_handler_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/operation/enum": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "operation"
+        ],
+        "value": "goal_birthx"
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/original_owner_epoch/minimum": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "original_owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/original_owner_epoch/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "original_owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/original_owner_ref/minLength": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "original_owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/original_owner_ref/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "original_owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/original_registration_ref/minLength": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "original_registration_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/original_registration_ref/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "original_registration_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/route_schema_ids/items/minLength": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "route_schema_ids",
+          0
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/route_schema_ids/items/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "route_schema_ids",
+          0
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/route_schema_ids/minItems": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "route_schema_ids"
+        ],
+        "value": []
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/route_schema_ids/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "route_schema_ids"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/storage_family_ids/items/minLength": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "storage_family_ids",
+          0
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/storage_family_ids/items/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "storage_family_ids",
+          0
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/storage_family_ids/minItems": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "storage_family_ids"
+        ],
+        "value": []
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/storage_family_ids/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "storage_family_ids"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/storage_instance_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/properties/storage_instance_id/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "operation"
+        ],
+        "path": [
+          "implementations",
+          0,
+          "descriptor"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "descriptor"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/generation/minimum": {
+        "control_name": "0",
+        "path": [
+          "generation"
+        ],
+        "value": 0
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/generation/type": {
+        "control_name": "0",
+        "path": [
+          "generation"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/implementations/items/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "implementations",
+          0
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/implementations/items/properties/enrollment/enum": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "enrollment"
+        ],
+        "value": "enrolledx"
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/implementations/items/properties/implementation_kind/enum": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0,
+          "implementation_kind"
+        ],
+        "value": "primaryx"
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/implementations/items/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "descriptor"
+        ],
+        "path": [
+          "implementations",
+          0
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/implementations/items/type": {
+        "control_name": "0",
+        "path": [
+          "implementations",
+          0
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/implementations/type": {
+        "control_name": "0",
+        "path": [
+          "implementations"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/qualification/const": {
+        "control_name": "0",
+        "path": [
+          "qualification"
+        ],
+        "value": "TEST_ONLYx"
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/registrations/additionalProperties/minLength": {
+        "control_name": "0",
+        "path": [
+          "registrations",
+          "binding_content_delete"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/registrations/additionalProperties/type": {
+        "control_name": "0",
+        "path": [
+          "registrations",
+          "binding_content_delete"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/registrations/type": {
+        "control_name": "0",
+        "path": [
+          "registrations"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/root_identity/minLength": {
+        "control_name": "0",
+        "path": [
+          "root_identity"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/root_identity/type": {
+        "control_name": "0",
+        "path": [
+          "root_identity"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/properties/schema_id/const": {
+        "control_name": "0",
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.test_only.native_dispatch_state.v1x"
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState/type": {
+        "control_name": "0",
+        "path": [],
+        "value": null
+      }
+    },
+    "family": "goal.cancelled",
+    "reference": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/NativeDispatchState",
+    "root": "dg5:27e0616bac3562f6",
+    "route": "registration/state",
+    "row": "dg5/registration/state/schema",
+    "site": [
+      "scripts/pm_goal_dg_cb_owners.py",
+      1556
+    ],
+    "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+    "transaction": true,
+    "variant": "implementation"
+  }
+]
