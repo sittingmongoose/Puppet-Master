@@ -2865,7 +2865,7 @@ def _certified_snapshot(roots, root, *, identities, namespaces=True, input_roots
     engine = Path(__file__).resolve()
     seen, nodes, keepalive = {}, [], []
     immutable_builtins = (len, type, isinstance, bool, str, int, float, bytes,
-                          dict, list, tuple, set, frozenset, range, enumerate, zip,
+                          dict, list, tuple, set, frozenset, range, enumerate, zip, reversed,
                           abs, all, any, min, max, sum, id, object,
                           BaseException, Exception, ValueError, TypeError, KeyError,
                           AssertionError, RuntimeError, SystemExit)
