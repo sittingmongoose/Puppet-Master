@@ -5567,6 +5567,7 @@
     "DL-2592",
     "DL-2593",
     "DL-2594",
+    "DL-2595",
     "DL-2591",
     "DL-451",
     "DL-694",
@@ -53787,6 +53788,21 @@
     {
       "edge_type": "depends_on",
       "from": "DL-2594",
+      "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2595",
+      "to": "DL-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2595",
+      "to": "DL-2432"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2595",
       "to": "DL-400"
     },
     {
@@ -164535,7 +164551,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-20T02:06:24Z",
+  "generated_at_utc": "2026-11-20T02:07:25Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -217929,6 +217945,23 @@
         "heading_level": 3,
         "heading_line": 62883,
         "line": 62885,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge3_postfix",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2595",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_admission",
+      "source_location": {
+        "heading": "DL-2595: Event Authority corrects wizard.unblocked (merge 3 post-landing)",
+        "heading_level": 3,
+        "heading_line": 62944,
+        "line": 62946,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -327965,10 +327998,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27758,
+    "depends_on_edge_count": 27761,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30983,
-    "node_count": 9613,
+    "edge_count": 30986,
+    "node_count": 9614,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0

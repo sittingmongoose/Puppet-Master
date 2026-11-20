@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L62942
+Source lines: L28747-L63003
 
-Source SHA256: `7ee44eac457e91ae2aca11db19b0e0554c356076ac7672e307c7df72f458e6c1`
+Source SHA256: `c5f9dcca9898804d4ad810bf634e11159115c11a65e9ff5170de08fd8a0fe047`
 
 ---
 
@@ -34201,6 +34201,67 @@ preserved_exact_tokens:
 - e5f90088fe115f2de3fbce4dd8ef706521394bdfb327f46b40b83f06040e26c0
 - 2026-11-19.143
 - 2026-11-19.144
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2595: Event Authority corrects wizard.unblocked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2595
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for wizard.unblocked only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [1].
+  The original admission authority remains Plans/Decision_Log.md#DL-2432; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 c79a0e2a85627074700ca35e9a11c3345090cb883a97d62f3c4897bd62abdb36.
+  Its scope is project_only. Payload editions: project `pm.event_payload.wizard.unblocked.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.144, 518 families, SHA-256 8e56bd6e131652580604cc6d7f734c6b994c1601433f5d79f2c99f2a98ee7d92,
+  to 2026-11-19.145, 518 families, SHA-256 e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/wizard.unblocked.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/wizard.unblocked.json, SHA-256 916a7b2642b0cf8324967f340b95b66adf18725a4ad8755ec7d782bcba9ac5f8.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.295 SHA-256 72d43d91c0f10ded3cbca67ef3a157bd65dec0ed3eecfbd04a301283a61aaf19;
+  after 2026-11-16.296 SHA-256 cfa10c4f1f5f5d303e9d209aae38b1628a8a5c9943f1ba952526e373f3efa02b. Existing semantic owner Plans/Contracts_V0.md#CV-597,
+  payload owner Plans/Contracts_V0.md#CV-597, resource Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2432
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2432
+preserved_exact_tokens:
+- wizard.unblocked
+- c79a0e2a85627074700ca35e9a11c3345090cb883a97d62f3c4897bd62abdb36
+- 2026-11-19.144
+- 2026-11-19.145
 negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
