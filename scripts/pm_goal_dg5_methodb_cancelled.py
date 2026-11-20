@@ -761,9 +761,9 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
     else:
         validator = closure.closure_validator(plain, ident, bank)
         nodes, walked = closure._clause_inventory(validator)
-        if plain.schema['$ref'].endswith('#/$defs/FileSafeJournalOrigin'):
-            # The original not error prints its child schema. Use original nodes
-            # so that the validation message retains that exact schema text.
+        if plain.schema['$ref'].endswith(('#/$defs/FileSafeJournalOrigin', '#/$defs/TerminationResultPhysical')):
+            # A not error prints its child schema. Keep the original node so
+            # the message retains the exact schema text.
             locations = {id(plain._resolver.lookup(location).contents): location
                          for location in nodes if location != '#'}
             nodes, walked = closure._scoped_census(
