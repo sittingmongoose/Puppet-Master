@@ -546,12 +546,18 @@ class OwnerExample:
             ident, binding = root_binding(closure, bank, plain)
             if 'realm' in self.route:
                 require(realm == self.route['realm'], f'owner call reached unexpected realm {realm}')
+            registry_realm = realm
+            if 'registry_realm' in self.route:
+                registry_realm = bank.realm_for(plain.schema['$ref'], realm)
+                require(registry_realm == self.route['registry_realm'],
+                        f'owner validator selected unexpected registry realm {registry_realm}')
             require(ident == self.route['root'], f'owner call reached unexpected root {ident}')
             if edit and len(result['observations']) + 1 == checks:
                 require(edit not in value, 'test example already has the extra member')
                 value[edit] = 'example'
             errors = errors_list(list(plain.iter_errors(value)))
             result['observations'].append(dict(root=ident, binding=binding, site=site, realm=realm, ref=ref,
+                                               registry_realm=registry_realm,
                                                document=copy.deepcopy(value), messages=errors))
             predicate = tables.predicates(tables.rows()[self.row])[self.row]
             decision = predicate({self.row: not errors}, None)
@@ -740,7 +746,8 @@ def fresh_root(census, reference, row, route, binding, closure):
         return census['roots'][ident]
 
     matches = [variant for variant in reference['roots'][ident]
-               if variant['bank'] == binding['bank'] and variant['realm'] == route.get('realm')
+               if variant['bank'] == binding['bank']
+               and variant['realm'] == route.get('registry_realm', route.get('realm'))
                and variant['registry_sha256'] == binding['registry_sha256']
                and variant['validator_class'] == binding['validator_class']
                and json.dumps(variant['selector'], sort_keys=True) == binding['schema']
