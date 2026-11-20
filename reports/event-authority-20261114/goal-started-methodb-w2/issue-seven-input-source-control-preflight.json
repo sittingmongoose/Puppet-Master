@@ -1,0 +1,35 @@
+{
+  "row": "dg5/issue/seven_input:source_control_preflight/schema",
+  "fixtures": [
+    {
+      "route": "issue/seven_input:source_control_preflight",
+      "edition": "v3",
+      "root": "dg5:226a30c5cd85e880",
+      "hash_seed": 8,
+      "edit": [
+        1,
+        [],
+        null
+      ],
+      "error": [
+        [],
+        "type"
+      ]
+    },
+    {
+      "route": "issue/seven_input:source_control_preflight",
+      "edition": "v7",
+      "root": "dg5:90752e442dde5b6f",
+      "hash_seed": 3,
+      "edit": [
+        1,
+        [],
+        null
+      ],
+      "error": [
+        [],
+        "type"
+      ]
+    }
+  ]
+}
