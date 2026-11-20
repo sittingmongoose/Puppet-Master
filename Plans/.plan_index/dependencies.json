@@ -5505,6 +5505,7 @@
     "DL-2529",
     "DL-2530",
     "DL-2531",
+    "DL-2532",
     "DL-451",
     "DL-694",
     "F3-585",
@@ -52669,6 +52670,21 @@
     {
       "edge_type": "depends_on",
       "from": "DL-2531",
+      "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2532",
+      "to": "DL-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2532",
+      "to": "DL-2342"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2532",
       "to": "DL-400"
     },
     {
@@ -163527,7 +163543,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-20T00:50:34Z",
+  "generated_at_utc": "2026-11-20T00:51:36Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -215748,6 +215764,23 @@
         "heading_level": 3,
         "heading_line": 58991,
         "line": 58993,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge3_postfix",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2532",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_admission",
+      "source_location": {
+        "heading": "DL-2532: Event Authority corrects persona.deleted (merge 3 post-landing)",
+        "heading_level": 3,
+        "heading_line": 59053,
+        "line": 59055,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -325886,10 +325919,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27569,
+    "depends_on_edge_count": 27572,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30794,
-    "node_count": 9550,
+    "edge_count": 30797,
+    "node_count": 9551,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
