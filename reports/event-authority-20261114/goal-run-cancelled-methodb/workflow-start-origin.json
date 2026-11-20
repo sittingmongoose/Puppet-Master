@@ -1,0 +1,1594 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:268357740368838d": {
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "first_append_receipt"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/acknowledged_at_utc/format": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "acknowledged_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/acknowledged_at_utc/minLength": {
+        "append_acknowledgment_nonempty": true,
+        "path": [
+          "record",
+          "first_append_receipt",
+          "acknowledged_at_utc"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/acknowledged_at_utc/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "acknowledged_at_utc"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/byte_offset/minimum": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "byte_offset"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/byte_offset/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "byte_offset"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/commit_group_id/minLength": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "commit_group_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/commit_group_id/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "commit_group_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/durability_class/enum": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "durability_class"
+        ],
+        "process_role_or_barrier_enum": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/FirstBarrier/allOf/1/properties/durability_class/const",
+        "value": "ordinaryx"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/durability_state/const": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "durability_state"
+        ],
+        "value": "syncedx"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/durable_end_offset/minimum": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "durable_end_offset"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/durable_end_offset/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "durable_end_offset"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/event_id/minLength": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "event_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/event_id/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "event_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/manifest_generation/minimum": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "manifest_generation"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/manifest_generation/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "manifest_generation"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/segment_generation/minimum": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "segment_generation"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/segment_generation/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "segment_generation"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/segment_name/minLength": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "segment_name"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/segment_name/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "segment_name"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/sequence_id/minimum": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "sequence_id"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/sequence_id/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "sequence_id"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/required": {
+        "member": [
+          "remove",
+          "event_id"
+        ],
+        "path": [
+          "record",
+          "first_append_receipt"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/type": {
+        "path": [
+          "record",
+          "first_append_receipt"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "original_event_value_commitment"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/codec/const": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "codec"
+        ],
+        "value": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/domain/const": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "domain"
+        ],
+        "value": "pm.storage.original_event_value_commitment.v1x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/event_schema_id/const": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "event_schema_id"
+        ],
+        "value": "pm.event.v0x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/event_schema_version/const": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "event_schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/schema_id/const": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "schema_id"
+        ],
+        "value": "pm.storage.original_event_value_commitment.v1x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/schema_version/const": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/sha256/pattern": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/sha256/type": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "sha256"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": [
+          "record",
+          "original_event_value_commitment"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/type": {
+        "path": [
+          "record",
+          "original_event_value_commitment"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "owner"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_epoch/minimum": {
+        "path": [
+          "record",
+          "owner",
+          "owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_epoch/type": {
+        "path": [
+          "record",
+          "owner",
+          "owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_ref/minLength": {
+        "path": [
+          "record",
+          "owner",
+          "owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_ref/type": {
+        "path": [
+          "record",
+          "owner",
+          "owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_claim_epoch/minimum": {
+        "path": [
+          "record",
+          "owner",
+          "server_claim_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_claim_epoch/type": {
+        "path": [
+          "record",
+          "owner",
+          "server_claim_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_id/minLength": {
+        "path": [
+          "record",
+          "owner",
+          "server_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_id/type": {
+        "path": [
+          "record",
+          "owner",
+          "server_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/required": {
+        "member": [
+          "remove",
+          "owner_ref"
+        ],
+        "path": [
+          "record",
+          "owner"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/type": {
+        "path": [
+          "record",
+          "owner"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/type": {
+        "path": [
+          "record",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "candidate"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "path": [
+          "record",
+          "candidate",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "path": [
+          "record",
+          "candidate",
+          "family_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          "record",
+          "candidate",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          "record",
+          "candidate",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          "record",
+          "candidate",
+          "physical_value_sha256"
+        ],
+        "value": "1790f6a534be657a6ac49452bc7c97aaf2067c286d38ccc6f52b6c790dc246eb\n"
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "path": [
+          "record",
+          "candidate",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "path": [
+          "record",
+          "candidate",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "path": [
+          "record",
+          "candidate",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "path": [
+          "record",
+          "candidate",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "path": [
+          "record",
+          "candidate",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "candidate",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "candidate",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "candidate"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "record",
+          "candidate"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/FirstBarrier/allOf/1/properties/durability_class/const": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "durability_class"
+        ],
+        "value": "ordinary"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/properties/actual_source_argument_sha256/pattern": {
+        "path": [
+          "record",
+          "actual_source_argument_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/properties/actual_source_argument_sha256/type": {
+        "path": [
+          "record",
+          "actual_source_argument_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/properties/coordinator_profile/const": {
+        "path": [
+          "record",
+          "coordinator_profile"
+        ],
+        "value": "workflow_start_original.v2x"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/properties/goal_source_argument_sha256/pattern": {
+        "path": [
+          "record",
+          "goal_source_argument_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/properties/goal_source_argument_sha256/type": {
+        "path": [
+          "record",
+          "goal_source_argument_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/properties/issued_at_utc/format": {
+        "path": [
+          "record",
+          "issued_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/properties/issued_at_utc/type": {
+        "path": [
+          "record",
+          "issued_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/properties/issuer_method/const": {
+        "path": [
+          "record",
+          "issuer_method"
+        ],
+        "value": "owner.workflow.activation.commit_start.v2x"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/properties/operation_id/minLength": {
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/properties/operation_id/type": {
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/properties/storage_method/const": {
+        "path": [
+          "record",
+          "storage_method"
+        ],
+        "value": "owner.storage.workflow_start.commit_original.v2x"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/properties/transaction_id/minLength": {
+        "path": [
+          "record",
+          "transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/properties/transaction_id/type": {
+        "path": [
+          "record",
+          "transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Origin/type": {
+        "path": [
+          "record"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageOrigin/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageOrigin/properties/physical_key/minLength": {
+        "path": [
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageOrigin/properties/physical_key/type": {
+        "path": [
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageOrigin/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.workflow_start_origin.v2x"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageOrigin/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageOrigin/properties/storage_instance_id/minLength": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageOrigin/properties/storage_instance_id/type": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageOrigin/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageOrigin/type": {
+        "path": [],
+        "value": true
+      }
+    },
+    "dg5:f93b3eb673401a72": {
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "first_append_receipt"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/acknowledged_at_utc/format": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "acknowledged_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/acknowledged_at_utc/minLength": {
+        "append_acknowledgment_nonempty": true,
+        "path": [
+          "record",
+          "first_append_receipt",
+          "acknowledged_at_utc"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/acknowledged_at_utc/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "acknowledged_at_utc"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/byte_offset/minimum": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "byte_offset"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/byte_offset/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "byte_offset"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/commit_group_id/minLength": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "commit_group_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/commit_group_id/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "commit_group_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/durability_class/enum": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "durability_class"
+        ],
+        "process_role_or_barrier_enum": "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/FirstBarrier/allOf/1/properties/durability_class/const",
+        "value": "ordinaryx"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/durability_state/const": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "durability_state"
+        ],
+        "value": "syncedx"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/durable_end_offset/minimum": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "durable_end_offset"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/durable_end_offset/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "durable_end_offset"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/event_id/minLength": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "event_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/event_id/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "event_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/manifest_generation/minimum": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "manifest_generation"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/manifest_generation/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "manifest_generation"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/segment_generation/minimum": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "segment_generation"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/segment_generation/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "segment_generation"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/segment_name/minLength": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "segment_name"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/segment_name/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "segment_name"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/sequence_id/minimum": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "sequence_id"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/properties/sequence_id/type": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "sequence_id"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/required": {
+        "member": [
+          "remove",
+          "event_id"
+        ],
+        "path": [
+          "record",
+          "first_append_receipt"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt/type": {
+        "path": [
+          "record",
+          "first_append_receipt"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "original_event_value_commitment"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/codec/const": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "codec"
+        ],
+        "value": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/domain/const": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "domain"
+        ],
+        "value": "pm.storage.original_event_value_commitment.v1x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/event_schema_id/const": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "event_schema_id"
+        ],
+        "value": "pm.event.v0x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/event_schema_version/const": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "event_schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/schema_id/const": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "schema_id"
+        ],
+        "value": "pm.storage.original_event_value_commitment.v1x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/schema_version/const": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/sha256/pattern": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/properties/sha256/type": {
+        "path": [
+          "record",
+          "original_event_value_commitment",
+          "sha256"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": [
+          "record",
+          "original_event_value_commitment"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment/type": {
+        "path": [
+          "record",
+          "original_event_value_commitment"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "owner"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_epoch/minimum": {
+        "path": [
+          "record",
+          "owner",
+          "owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_epoch/type": {
+        "path": [
+          "record",
+          "owner",
+          "owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_ref/minLength": {
+        "path": [
+          "record",
+          "owner",
+          "owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_ref/type": {
+        "path": [
+          "record",
+          "owner",
+          "owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_claim_epoch/minimum": {
+        "path": [
+          "record",
+          "owner",
+          "server_claim_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_claim_epoch/type": {
+        "path": [
+          "record",
+          "owner",
+          "server_claim_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_id/minLength": {
+        "path": [
+          "record",
+          "owner",
+          "server_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_id/type": {
+        "path": [
+          "record",
+          "owner",
+          "server_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/required": {
+        "member": [
+          "remove",
+          "owner_ref"
+        ],
+        "path": [
+          "record",
+          "owner"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/type": {
+        "path": [
+          "record",
+          "owner"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/type": {
+        "path": [
+          "record",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "candidate"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "path": [
+          "record",
+          "candidate",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "path": [
+          "record",
+          "candidate",
+          "family_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          "record",
+          "candidate",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          "record",
+          "candidate",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          "record",
+          "candidate",
+          "physical_value_sha256"
+        ],
+        "value": "1790f6a534be657a6ac49452bc7c97aaf2067c286d38ccc6f52b6c790dc246eb\n"
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "path": [
+          "record",
+          "candidate",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "path": [
+          "record",
+          "candidate",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "path": [
+          "record",
+          "candidate",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "path": [
+          "record",
+          "candidate",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "path": [
+          "record",
+          "candidate",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "candidate",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "candidate",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "candidate"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "record",
+          "candidate"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/FirstBarrier/allOf/1/properties/durability_class/const": {
+        "path": [
+          "record",
+          "first_append_receipt",
+          "durability_class"
+        ],
+        "value": "ordinary"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/properties/actual_source_argument_sha256/pattern": {
+        "path": [
+          "record",
+          "actual_source_argument_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/properties/actual_source_argument_sha256/type": {
+        "path": [
+          "record",
+          "actual_source_argument_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/properties/coordinator_profile/const": {
+        "path": [
+          "record",
+          "coordinator_profile"
+        ],
+        "value": "workflow_start_standard_source.v5x"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/properties/goal_source_argument_sha256/pattern": {
+        "path": [
+          "record",
+          "goal_source_argument_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/properties/goal_source_argument_sha256/type": {
+        "path": [
+          "record",
+          "goal_source_argument_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/properties/issued_at_utc/format": {
+        "path": [
+          "record",
+          "issued_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/properties/issued_at_utc/type": {
+        "path": [
+          "record",
+          "issued_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/properties/issuer_method/const": {
+        "path": [
+          "record",
+          "issuer_method"
+        ],
+        "value": "owner.workflow.activation.commit_start.v2x"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/properties/operation_id/minLength": {
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/properties/operation_id/type": {
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/properties/storage_method/const": {
+        "path": [
+          "record",
+          "storage_method"
+        ],
+        "value": "owner.storage.workflow_start.commit_original.v2x"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/properties/transaction_id/minLength": {
+        "path": [
+          "record",
+          "transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/properties/transaction_id/type": {
+        "path": [
+          "record",
+          "transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Origin/type": {
+        "path": [
+          "record"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageOrigin/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageOrigin/properties/physical_key/minLength": {
+        "path": [
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageOrigin/properties/physical_key/type": {
+        "path": [
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageOrigin/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.workflow_start_origin.v6x"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageOrigin/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "6.0.0x"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageOrigin/properties/storage_instance_id/minLength": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageOrigin/properties/storage_instance_id/type": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageOrigin/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageOrigin/type": {
+        "path": [],
+        "value": true
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "fresh_reference_sha256": "6b3d4a5003892728b600bba4917583645956f7e6232195aa04551da4f85c08fd",
+  "routes": [
+    {
+      "call": "issue_physical",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "native_v7",
+      "fresh_literal_sha256": "3dfc5780a09ba8938dd38d6eab8d15b57b959c0e05048e62b04c860e013c7dee",
+      "mutation": false,
+      "realm": "native_consumer",
+      "refusal": "issue/workflow_start_origin/schema/",
+      "registry_realm": "native",
+      "root": "dg5:f93b3eb673401a72",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ]
+    },
+    {
+      "call": "issue_physical",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "original_profile",
+      "fresh_literal_sha256": "fb10a7b78c59c4e9e9748a4fc2112ded1581a1c7d31f7731cbafd437d58d442a",
+      "mutation": false,
+      "realm": "native_consumer",
+      "refusal": "issue/workflow_start_origin/schema/",
+      "root": "dg5:268357740368838d",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ]
+    }
+  ],
+  "row": "dg5/issue/workflow_start_origin/schema",
+  "sites": [
+    [
+      "scripts/pm_goal_dg_r_world.py",
+      446
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}
