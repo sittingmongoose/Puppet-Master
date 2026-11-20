@@ -844,6 +844,35 @@ class Merge2Fix1EvidenceTests(unittest.TestCase):
                 checked += 1
         self.assertGreater(checked,0)
 
+    def test_real_panel_owner_generation_covers_testing_and_storage(self):
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('panel_summary_driver',REPO/'scripts/pm-ea-postfix-correct.py')
+        driver=importlib.util.module_from_spec(spec);spec.loader.exec_module(driver)
+        spec=importlib.util.spec_from_file_location('panel_summary_sweep',REPO/'scripts/pm-ea-owner-sweep.py')
+        sweep=importlib.util.module_from_spec(spec);spec.loader.exec_module(sweep)
+        commit='10ba97e699d51287673d6f1db4d994f54c59b4ed'
+        policies={p['policy_id']:p for p in _read(REPO,'Plans/storage_value_registry.json')['retention_policies']}
+        for family in _read(REPO,'Plans/panel_event_contracts/manifest.json')['families']:
+            event=family['event_type'];row=_row(REPO,event);assignment=sweep.scope_assignment(row,policies)
+            refs=[row['semantic_owner_doc'],row['payload_owner_doc'],'Plans/storage-plan.md#'+family['sp'],
+                  'Plans/Automated_Testing_System.md#'+family['ats']]
+            for ref in refs:
+                with self.subTest(event,ref=ref):
+                    path,unit=ref.split('#',1)
+                    text=subprocess.check_output(['git','-C',str(REPO),'show',commit+':'+path]).decode()
+                    first,last=self.writer.unit_span(text,unit);body='\n'.join(text.splitlines()[first-1:last])
+                    policy='RP-AUTHORITY-INDEFINITE@1.0.0' if unit==family['sp'] else None
+                    fixed=driver.owner_summary(body,event,assignment,[1,3],policy)
+                    self.assertNotEqual(fixed,body)
+                    self.assertIn(event+'@2.0.0 is registered for application_or_project',fixed)
+                    self.assertIn(assignment,fixed)
+                    self.assertEqual(driver.owner_summary(fixed,event,assignment,[1,3],policy),fixed)
+                    if policy:
+                        self.assertIn('Application = `'+policy+'`, Project = `'+policy+'`',fixed)
+                    if unit==family['ats']:
+                        sibling='panel.undocked' if event=='panel.redocked' else 'panel.redocked'
+                        self.assertIn(sibling+'@2.0.0 is registered for project_only',fixed)
+
     def test_real_collaboration_span_digest_and_historical_location(self):
         w = self.writer
         doc = _read(REPO, "reports/event-authority-20261116/admission-merge-2/depth/collaboration.failed.json")

@@ -178,6 +178,21 @@ def decision_entry(number, event, row, before, after, record, depth_path, depth_
     return '### '+number+': Event Authority corrects '+event+' (merge 3 post-landing)\n\n```yaml\n'+yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=120)+'```\n\n'
 
 
+def owner_summary(body, event, assignment, findings, storage_policy=None):
+    """Complete the same family's existing summary and event-policy clause."""
+    if 3 in findings:
+        pattern=r'(Current selected assignment \(2026-11-19\): '+re.escape(event)+r'@[^ ]+ is registered for )project_only(.*?Its event history selects )([^;]+);'
+        new=re.sub(pattern,lambda m:m[1]+'application_or_project'+m[2]+assignment+';',body,flags=re.S)
+        if storage_policy:
+            old='Event history `retention_policy_ref = '+storage_policy+'`, under Plans/Decision_Log.md#DL-401.'
+            explicit='Event history: Application = `'+storage_policy+'`, Project = `'+storage_policy+'`, under Plans/Decision_Log.md#DL-401.'
+            new=new.replace(old,explicit)
+        return new
+    old_assignment='Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project)'
+    pattern=r'(Current selected assignment \(2026-11-19\): '+re.escape(event)+r'@[^ ]+ is registered for application_or_project.*?Its event history selects )'+re.escape(old_assignment)+';'
+    return re.sub(pattern,lambda m:m[1]+assignment+';',body,flags=re.S)
+
+
 def apply_one(plan, event, decision):
     if run('git','status','--porcelain'):
         raise ValueError('application requires a clean tree')
@@ -220,7 +235,8 @@ def apply_one(plan, event, decision):
         assignment=formatter.scope_assignment(row,policies)
         if 3 in family['findings']:
             panel=next(p for p in load('Plans/panel_event_contracts/manifest.json')['families'] if p['event_type']==event)
-            refs={row['semantic_owner_doc'],row['payload_owner_doc'],'Plans/storage-plan.md#'+panel['sp']}
+            refs={row['semantic_owner_doc'],row['payload_owner_doc'],'Plans/storage-plan.md#'+panel['sp'],
+                'Plans/Automated_Testing_System.md#'+panel['ats']}
         else:
             refs={'Plans/storage-plan.md#SP-556','Plans/Contracts_V0.md#CV-556','Plans/Automated_Testing_System.md#ATS-278'}
         w=writer()
@@ -229,14 +245,11 @@ def apply_one(plan, event, decision):
             owner_path,unit=ref.split('#',1)
             text=read(owner_path);start,end=w.unit_span(text,unit);lines=text.splitlines(keepends=True)
             body=''.join(lines[start-1:end])
-            pattern=r'(Current selected assignment \(2026-11-19\): '+re.escape(event)+r'@[^ ]+ is registered for )project_only(.*?Its event history selects )([^;]+);'
-            if 3 in family['findings']:
-                new,count=re.subn(pattern,lambda m:m[1]+'application_or_project'+m[2]+assignment+';',body,flags=re.S)
-            else:
-                old_assignment='Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project)'
-                pattern=r'(Current selected assignment \(2026-11-19\): '+re.escape(event)+r'@[^ ]+ is registered for application_or_project.*?Its event history selects )'+re.escape(old_assignment)+';'
-                new,count=re.subn(pattern,lambda m:m[1]+assignment+';',body,flags=re.S)
-            if count:
+            policy=row['retention_policy_ref']
+            storage_policy=(policy['policy_id']+'@'+policy['policy_version']
+                if 3 in family['findings'] and owner_path=='Plans/storage-plan.md' else None)
+            new=owner_summary(body,event,assignment,family['findings'],storage_policy)
+            if new!=body:
                 edits.setdefault(owner_path,[]).append((start,end,new))
         for owner_path,updates in edits.items():
             lines=read(owner_path).splitlines(keepends=True)
