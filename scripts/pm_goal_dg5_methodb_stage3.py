@@ -272,6 +272,8 @@ def certified_fixture(route, path):
             except RootCapture:
                 pass
         require(len(captured) == 5, 'held append did not supply the EventPhase arguments')
+        if route == 'f5d_after_event_phase':
+            check_certified_evidence_reused(oracle.W, w, route)
         stamp = w.storage.now()
 
         def event_phase():
@@ -482,17 +484,21 @@ def check_certified_evidence_reused(module, world, route):
         require(early in commit and final in commit and commit.index(early) < commit.index(final),
                 'commit no longer checks the same evidence before and after its helper')
     else:
-        retry = inspect.getsource(coordinator.held_retry)
-        check = "self.check_evidence(ctx, evidence, stage='retry')"
+        retry = route == 'retry_evidence_recheck'
+        body = inspect.getsource(coordinator.held_retry if retry else coordinator.f5d)
+        stage = 'retry' if retry else 'append_outer'
+        result_stage = 'retry/result' if retry else 'append/result'
+        check = f"self.check_evidence(ctx, evidence, stage='{stage}')"
         forward = "appended = dict(outcome='event_durable_held', evidence=evidence,"
-        result = "w.realm.validate('coordinator', APPEND + 'AppendedHeld', appended, 'retry/result')"
-        require(all(step in retry for step in (check, forward, result)) and
-                retry.index(check) < retry.index(forward) < retry.index(result), 'retry no longer forwards the checked evidence')
+        result = f"w.realm.validate('coordinator', APPEND + 'AppendedHeld', appended, '{result_stage}')"
+        require(all(step in body for step in (check, forward, result)) and
+                body.index(check) < body.index(forward) < body.index(result),
+                'the result no longer forwards the checked evidence')
         resolver = world.realm.scoped.bank.registries['coordinator'].resolver()
         schema = resolver.lookup(module.APPEND + 'AppendedHeld').contents
         require('evidence' in schema['required'] and
                 schema['properties']['evidence'] == {'$ref': module.APPEND + 'AppendEvidence'},
-                'retry result no longer requires the same evidence definition')
+                'the result no longer requires the same evidence definition')
 
 
 class OwnerCheck:
@@ -1376,6 +1382,7 @@ def main():
         ('dg5/intent/schema', 'arm_intent_check'): 'arm/prepared_intent',
         ('dg5/commit/evidence/schema', 'commit_evidence_recheck'): 'commit_final/evidence/schema/',
         ('dg5/retry/evidence/schema', 'retry_evidence_recheck'): 'retry/result/schema/evidence',
+        ('dg5/append_outer/evidence/schema', 'f5d_after_event_phase'): 'append/result/schema/evidence',
         ('dg5/dgu/reader/receipt/receipt_request/schema', 'receipt_recheck'):
             'dgu/reader/receipt/final/receipt_request/schema/',
         ('dg5/dgu/producer/publish/publication/schema', 'publish_receipted'): 'dgu/progress/schema/',
