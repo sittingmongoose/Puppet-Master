@@ -446,3 +446,19 @@ PROOFS['dg5/start/original_append/schema'] = dict(
         'restored early refusal.'
     ),
 )
+
+PROOFS['dg5/representation/record/schema'] = dict(
+    kind='entailment',
+    families=['goal_run.started'],
+    depends_on=['dg5/projection/record/schema'],
+    sites=[('scripts/pm_goal_dg_s_readers.py', 281), ('scripts/pm_goal_dg_s_readers.py', 483), ('scripts/pm_goal_dg_s_readers.py', 484), ('scripts/pm_goal_dg_s_readers.py', 485), ('scripts/pm_goal_dg_s_readers.py', 486), ('scripts/pm_goal_test_owner_adapters.py', 83)],
+    argument=(
+        'The reader validates the reconstructed document at 484. At 485 it derives and '
+        'validates the expected document using the same Projection definition at 281. At 486 it '
+        'requires type-exact equality with the validated document. A successful return can '
+        'therefore only contain a reconstructed document that satisfies the same schema. '
+        'Disabling the early check leaves the invalid document unchanged and produces the exact '
+        'comparison refusal. Both comparison operands and both original validation messages are '
+        'recorded by the complete-call test.'
+    ),
+)

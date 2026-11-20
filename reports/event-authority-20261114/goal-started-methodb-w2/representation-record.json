@@ -1,0 +1,23 @@
+{
+  "row": "dg5/representation/record/schema",
+  "fixtures": [
+    {
+      "route": "representation/record",
+      "edition": "v3",
+      "root": "dg5:c139b0878f0bd720",
+      "hash_seed": 8,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
