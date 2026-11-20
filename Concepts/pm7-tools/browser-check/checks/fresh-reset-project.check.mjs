@@ -124,10 +124,19 @@ export default async function (t) {
     await t.check(`cycle ${cycle} (${surface}): Reset > Progress forgets the made Project`, !bad.length, bad.join(' | ').slice(0, 1200), { hard: true });
 
     if (cycle === cycles) {
-      /* the fixed screen: close the new install's window by its own close button, so the app shows the default Project
-         selected in the box; original-size capture in the run's look */
+      /* the fixed screen: the new install paints Basic Dark by design, so a requested look other than Basic Dark is
+         picked in the new run's own Look screen (real clicks; the surviving default Project is the one that receives
+         it), then the window is closed by its own close button so the app shows the default Project selected in the
+         box; original-size capture in the run's look */
+      if (look.join('-') !== 'basic-dark') {
+        await a.click('start', undefined, 'look');
+        await a.click('pickFamily', look[0]); await a.click('pickMode', look[1]);
+        await f.waitForFunction((m) => (document.documentElement.getAttribute('data-theme') || '').endsWith('-' + m), look[1], { timeout: 20000 }).catch(() => {});
+        await t.page.waitForTimeout(1200);
+      }
       const closeBtn = f.locator('#pm-o55-onboarding .o55-win [data-o55-do="close"], #pm-o55-onboarding [data-o55-do="close"]').filter({ visible: true }).first();
       if (await closeBtn.count()) { await closeBtn.click(); await f.waitForFunction(() => window.O55 && O55.S && !O55.S.open, null, { timeout: 15000 }).catch(() => {}); await t.page.waitForTimeout(900); }
+      await f.waitForFunction((m) => (document.documentElement.getAttribute('data-theme') || '').endsWith('-' + m), look[1], { timeout: 15000 }).catch(() => {});
       await t.shot(`fo230-after-reset-${surface}-${look.join('-')}`, `FO-230 fixed: after Reset > Progress on a fresh visit, ${DEFAULT_PROJECT} selected, ${look.join(' ')} (${surface}), 1920x1080`);
     }
   }
