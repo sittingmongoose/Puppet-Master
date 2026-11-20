@@ -65,6 +65,62 @@ def nested_resource_pointer(path, pointer):
     return ""
 
 
+def snapshot_run(path):
+    """The migration run directory a scanned file belongs to, or "" for live files.
+
+    Snapshot runs are regenerated from the owner documents at every Plans landing
+    and older runs are then pruned (pm-plan-migration.py snapshot-current), so a
+    pinned exclusion or a citation that names a run path is ephemeral by
+    construction and cannot survive the next landing.
+    """
+    parts = path.split("/")
+    if (len(parts) >= 4 and parts[0] == "Plans" and parts[1] == ".plan_migration"
+            and parts[2].startswith("pds-")):
+        return parts[2]
+    return ""
+
+
+def adjudicate_snapshot_line(root, run, value, coverage):
+    """Accept a mentioning snapshot line only as a verified copy of a covered owner span.
+
+    (a) the line is its run's own span-map row for one owner-document span,
+    (b) the owner document still carries that span's exact bytes at the recorded
+    offsets, and (c) no mentioning code container overlapping the span is left
+    uncovered in the owner document. A copy accepted this way cannot hide a
+    timestamp schema: the owner original is scanned in the same pass, a real
+    declaration there surfaces as its own classified node, and an uncovered
+    mentioning container in the owner span refuses the copy as well.
+    """
+    if (not isinstance(value, dict) or value.get("schema_id") != "pm.plan_migration.span.v1"
+            or value.get("run_id") != run or not isinstance(value.get("span_id"), str)
+            or not isinstance(value.get("source_path"), str)
+            or not value["source_path"].startswith("Plans/") or snapshot_run(value["source_path"])
+            or not isinstance(value.get("sha256"), str)
+            or not isinstance(value.get("byte_start"), int) or isinstance(value.get("byte_start"), bool)
+            or not isinstance(value.get("byte_end"), int) or isinstance(value.get("byte_end"), bool)
+            or not 0 <= value["byte_start"] < value["byte_end"]):
+        return "snapshot_line_unmapped"
+    source = root / value["source_path"]
+    try:
+        data = source.read_bytes()
+    except OSError:
+        return "snapshot_owner_range_missing"
+    start, end = value["byte_start"], value["byte_end"]
+    if end > len(data):
+        return "snapshot_owner_range_missing"
+    if hashlib.sha256(data[start:end]).hexdigest() != value["sha256"]:
+        return "snapshot_owner_text_changed"
+    if source.suffix.lower() not in (".md", ".mdx"):
+        # Container coverage is line-mapped for Markdown owners only.
+        return "snapshot_owner_span_uncovered"
+    first = data[:start].count(b"\n") + 1
+    last = first + data[start:end].count(b"\n")
+    if any(lo <= last and hi >= first
+           for lo, hi, state in coverage.get(value["source_path"], ()) if state == "uncovered"):
+        return "snapshot_owner_span_uncovered"
+    return None
+
+
 def _unique_object(pairs):
     result = {}
     for key, value in pairs:
@@ -363,9 +419,18 @@ def scan(root=ROOT):
     inspected; one that is JSON-shaped but unreadable, that is JSON only once
     unescaped, that is a key, or that lies past the depth bound refuses with a
     named code. A candidate is skipped only when no layer of it is JSON-shaped.
+    A mentioning line of a migration snapshot run carries no pinned exclusion:
+    the run is regenerated and pruned at every Plans landing, so the line is
+    accepted only by adjudicate_snapshot_line, as a verified copy of a span the
+    gate has itself covered in the live owner document.
     """
     root = Path(root)
     rows, errors, used = [], [], set()
+    # Mentioning lines of migration snapshot runs, adjudicated after every file is
+    # scanned (owner documents sort after .plan_migration, so their container
+    # coverage is complete only at the end), and the line-mapped container
+    # coverage of every Markdown document the scan has looked at.
+    snapshot_lines, md_coverage = [], {}
     try:
         files = list(_files(root / "Plans"))
         exclusions = json.loads((root / EXCLUSIONS).read_text())
@@ -382,6 +447,9 @@ def scan(root=ROOT):
             if not re.search(r"data|lineage|non-JSON code|example", r["reason"], re.I):
                 raise ValueError("exclusion_non_runtime_purpose_missing: " + r["path"])
             citations = [part.strip().split("#", 1)[0] for part in r["citation"].split(";")]
+            if any(citation == "Plans/.plan_migration" or citation.startswith("Plans/.plan_migration/")
+                   for citation in citations):
+                raise ValueError("exclusion_purpose_citation_ephemeral: " + r["path"])
             if not citations or any(not (root / citation).is_file() for citation in citations):
                 raise ValueError("exclusion_purpose_citation_unreadable: " + r["path"])
             if r["path"] == INVENTORY:
@@ -465,7 +533,22 @@ def scan(root=ROOT):
         for label, value in documents:
             inspect(value, path, origin if label == "json" else origin + ":" + label)
         if len(rows) == before and (path, origin) not in used and mentions_field(body):
-            unsupported(path, origin, body, "unclassified_mentioning_container")
+            if snapshot_run(path):
+                snapshot_lines.extend(
+                    (path, origin + ("" if label == "json" else ":" + label), value)
+                    for label, value in documents if mentions_field(json.dumps(value)))
+            else:
+                unsupported(path, origin, body, "unclassified_mentioning_container")
+        # unsupported() consults the committed exclusions itself, so the coverage
+        # state is read only after it has run.
+        state = ("rows" if len(rows) > before else
+                 "used" if (path, origin) in used else
+                 "uncovered" if mentions_field(body) and len(rows) == before else "clean")
+        try:
+            line_no = int(origin.split(":")[1])
+        except (IndexError, ValueError):
+            line_no = 0
+        md_coverage.setdefault(path, []).append((line_no, line_no + body.count("\n") + 1, state))
 
     try:
         for file in files:
@@ -497,11 +580,18 @@ def scan(root=ROOT):
                         inspect(value, path, origin)
                         if (len(rows) == before and (path, origin) not in used and path not in schema_paths
                                 and mentions_field(json.dumps(value))):
-                            unsupported(path, origin, json.dumps(value), "unclassified_mentioning_container")
+                            if snapshot_run(path):
+                                snapshot_lines.append((path, origin, value))
+                            else:
+                                unsupported(path, origin, json.dumps(value), "unclassified_mentioning_container")
             except (ValueError, OSError, RecursionError, ImportError) as error:
                 errors.append({"path": path, "error": "scan_read_failed", "detail": str(error)})
     except (ValueError, OSError) as error:
         errors.append({"error": "scan_walk_failed", "detail": str(error)})
+    for path, origin, value in snapshot_lines:
+        code = adjudicate_snapshot_line(root, snapshot_run(path), value, md_coverage)
+        if code:
+            errors.append({"path": path, "origin": origin, "error": code})
     for key in excluded.keys() - used:
         errors.append({"error": "stale_scan_exclusion", "path": key[0], "origin": key[1]})
     return rows, errors
