@@ -5,6 +5,10 @@
 // as "0 captures" or as the part it had, with exit 0. The compare now refuses an empty index (exit 2) and judges the
 // run's capture matrix (<out>/matrix.json, written by the diagnostic): every requested look x screen x variant must be
 // in both runs' indexes and on disk, and both runs must have been asked for the same thing.
+// PM7PERF-STAGEFRAMES-HEX-AS-ID: the diagnostic's DOM normalisation renamed every attribute value of the form #... as an
+// id reference, so fill="#211F1B" became fill="#id1" and a colour change between two builds vanished from the DOM
+// comparison. Only fragment references are renamed now (href / xlink:href "#id", url(#id) anywhere); its DOM() is run
+// here on a stub stage.
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -132,6 +136,29 @@ try {
 		const live = { ...matrix, live: true };
 		const r = compare(run({ matrix: live }), run({ matrix: live }));
 		ok('EMPTY-INDEX: a live run is refused for a pixel comparison (exit 2)', r.code === 2, `exit ${r.code}: ${r.out.trim().split('\n')[0]}`);
+	}
+
+	// -- the DOM normalisation: ids renamed in order of appearance, colours left as they are
+	{
+		// a stub of the stage's root as DOM() walks it: nodeType, tagName, attributes, firstChild / nextSibling, data
+		const el = (tag, attrs, kids = []) => { const n = { nodeType: 1, tagName: tag, attributes: Object.entries(attrs).map(([name, value]) => ({ name, value })), firstChild: kids[0] || null, nextSibling: null }; kids.forEach((k, i) => { k.nextSibling = kids[i + 1] || null; }); return n; };
+		const txt = (data) => ({ nodeType: 3, data, nextSibling: null });
+		const stage = (id, fill, stroke) => el('g', { class: 'pst-root' }, [
+			el('defs', {}, [el('linearGradient', { id: `${id}grad` }), el('clipPath', { id: `${id}clip` })]),
+			el('path', { fill, stroke, 'clip-path': `url(#${id}clip)`, d: 'M0 0L4 4' }),
+			el('rect', { fill: `url(#${id}grad)`, style: 'opacity:.5' }),
+			el('use', { href: `#${id}clip` }), el('use', { 'xlink:href': `#${id}grad` }),
+			el('text', { fill: '#fff' }, [txt('#hashtag')])
+		]);
+		const domOf = (root) => { globalThis.document = { querySelector: () => ({ __pipStage: { root } }) }; try { return check.DOM(); } finally { delete globalThis.document; } };
+		if (typeof check.DOM !== 'function') ok('HEX-AS-ID: the diagnostic exports DOM()', false, 'no DOM export');
+		else {
+			const a = domOf(stage('pm-a-', '#211F1B', '#F2E8D5')), b = domOf(stage('pm-a-', '#312F2B', '#F2E8D5')), c = domOf(stage('pm-zz9-', '#211F1B', '#F2E8D5'));
+			ok('HEX-AS-ID: a fill colour change shows in the DOM', a !== b, 'the two DOMs are the same:\n' + a);
+			ok('HEX-AS-ID: literal colours are kept as written', /fill="#211F1B"/.test(a) && /stroke="#F2E8D5"/.test(a) && /fill="#fff"/.test(a), a);
+			ok('HEX-AS-ID: id references are still renamed (two builds\' different ids, the same DOM)', a === c, 'ids not renamed alike:\n' + a + '\n---\n' + c);
+			ok('HEX-AS-ID: href, xlink:href and url() name the renamed ids', /href="#id\d+"/.test(a) && /xlink:href="#id\d+"/.test(a) && /clip-path="url\(#id\d+\)"/.test(a) && /fill="url\(#id\d+\)"/.test(a), a);
+		}
 	}
 } finally { fs.rmSync(root, { recursive: true, force: true }); }
 

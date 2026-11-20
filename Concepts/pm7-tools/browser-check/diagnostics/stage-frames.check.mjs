@@ -142,16 +142,21 @@ const THAW = (closeTip) => {
 };
 
 // The stage's DOM: elements with sorted attributes, text, ids renamed in order of first appearance
-const DOM = () => {
+// (exported for tools/stage-frames-compare.selftest.mjs, which runs it on a stub stage)
+export const DOM = () => {
 	const host = document.querySelector('#pm-o55-onboarding .o55-stage'), st = host && host.__pipStage;
 	const ids = new Map(), rn = (id) => { if (!ids.has(id)) ids.set(id, 'id' + ids.size); return ids.get(id); };
-	const fix = (v) => v.replace(/url\(#([^)]+)\)/g, (m, id) => `url(#${rn(id)})`).replace(/^#(\S+)$/, (m, id) => '#' + rn(id));
+	/* (fragment references only: url(#id) in any attribute, and "#id" in href / xlink:href. A literal colour such as
+	   fill="#211F1B" is not an id: renamed as one, a colour change between two builds vanished from the DOM comparison,
+	   PM7PERF-STAGEFRAMES-HEX-AS-ID) */
+	const HREF = new Set(['href', 'xlink:href']);
+	const fix = (name, v) => { const u = v.replace(/url\(\s*(['"]?)#([^)'"]+)\1\s*\)/g, (m, q, id) => `url(#${rn(id)})`); return HREF.has(name) ? u.replace(/^#(\S+)$/, (m, id) => '#' + rn(id)) : u; };
 	const out = [];
 	const walk = (n, d) => {
 		const pad = ' '.repeat(d);
 		if (n.nodeType === 3) { if (n.data.length) out.push(pad + JSON.stringify(n.data)); return; }
 		if (n.nodeType !== 1) return;
-		const as = [...n.attributes].map((a) => [a.name, a.name === 'id' ? rn(a.value) : fix(a.value)]).sort((a, b) => (a[0] < b[0] ? -1 : 1));
+		const as = [...n.attributes].map((a) => [a.name, a.name === 'id' ? rn(a.value) : fix(a.name, a.value)]).sort((a, b) => (a[0] < b[0] ? -1 : 1));
 		out.push(pad + '<' + n.tagName.toLowerCase() + as.map(([k, v]) => ` ${k}=${JSON.stringify(v)}`).join('') + '>');
 		for (let c = n.firstChild; c; c = c.nextSibling) walk(c, d + 1);
 	};
