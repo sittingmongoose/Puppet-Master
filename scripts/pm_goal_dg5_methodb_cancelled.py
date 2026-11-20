@@ -135,6 +135,15 @@ def fixture(declare, route, directory):
         custody = world.storage.authenticate_receipt(commit['event_id'], commit['first_append_receipt'])
         owner.check_start_event(start, event, custody)
         return world, lambda: owner.started_record(start, event, custody), (start, event, custody)
+    if route['call'] == 'project_cancelled_record':
+        owner = world.projector_class(world)
+        _, _, _, cancellations, _, _ = owner.acquire()
+        native, = cancellations
+        receipt = native['result']['record']['append_receipt']
+        event = world.storage.read_event(receipt['event_id'])
+        custody = world.storage.authenticate_receipt(receipt['event_id'], receipt)
+        owner.check_cancel_event(native, event, custody)
+        return world, lambda: owner.cancelled_record(native, event, custody), (native, event, custody)
     if route['call'] == 'represent_native_projection':
         owner = world.projector_class(world)
         original_represent = owner.represent
@@ -1035,7 +1044,8 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
         validator = scoped_validator(plain, nodes, exact_locations=locations)
     elif scoped:
         nodes, walked = closure._scoped_census(plain, ident, bank, closure._realm_location)
-        selected = plain.schema.get('$ref', '').endswith('#/$defs/CombinedStorageProjection')
+        selected = plain.schema.get('$ref', '').endswith(
+            ('#/$defs/CombinedStorageProjection', '#/$defs/CancelledProjection'))
         validator = scoped_validator(plain, nodes, bank if selected else None)
     else:
         validator = closure.closure_validator(plain, ident, bank)
