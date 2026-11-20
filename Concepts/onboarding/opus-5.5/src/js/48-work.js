@@ -85,7 +85,7 @@
       icon(CAT[kind], size, 'nx-r-concept nx-lit') + '</span>';
   }
   /* each individual agent is Pip (X1), its face the agent's state (A5's table, PMLogo.STATUS_FACE) */
-  function agentMark(it, size) {
+  function agentMark(it, size, deferDrawing) {
     const L = window.PMLogo;
     if (L && typeof L.mark === 'function') {
       const face = (L.STATUS_FACE && L.STATUS_FACE[it.state]) || 'idle';
@@ -93,14 +93,14 @@
          clock, and holds off screen, in a hidden tab, in drags and while the person is away. In NieR the loader is NieR's
          own (its diamond; L7, Pip never moves there): ruling B covers all ten looks (pm7-build, 2026-10-30) */
       const PL = window.PM_PIP_LOADER;
-      if (moving(it) && PL && typeof PL.html === 'function') { try { return '<span class="wk-pip" aria-hidden="true">' + PL.html({ motion: 'think', px: size || 14, size: (size || 14) + 'px' }) + '</span>'; } catch (_) { /* still */ } }
+      if (moving(it) && PL && typeof PL.html === 'function') { try { return '<span class="wk-pip" aria-hidden="true">' + PL.html({ motion: 'think', px: size || 14, size: (size || 14) + 'px', deferDrawing }) + '</span>'; } catch (_) { /* still */ } }
       try { return '<span class="wk-pip" aria-hidden="true">' + L.mark({ px: size || 14, mood: face, decorative: true }) + '</span>'; } catch (_) { /* fall back */ }
     }
     return icon('robot', size || 12);
   }
   const ROLE_ICON = { server: 'server', db: 'database', script: 'terminal', test: 'terminal', watcher: 'clock', build: 'hammer', browser: 'browser', lsp: 'server', mcp: 'plug', index: 'layers' };
-  function kindMark(it) {
-    if (it.kind === 'agent') return agentMark(it, 14);
+  function kindMark(it, deferDrawing) {
+    if (it.kind === 'agent') return agentMark(it, 14, deferDrawing);
     return icon(ROLE_ICON[it.role] || (it.kind === 'scheduled' ? 'clock' : 'terminal'), 11);
   }
   const SURFACE_ICON = { assistant: 'robot', orchestrator: 'pipeline', wizard: 'route', prd: 'page', scout: 'telescope', system: 'server' };
@@ -241,7 +241,7 @@
     return '<div class="wk-row' + (open ? ' is-open' : '') + (mv ? ' wk-moving wk-off' : '') + '" style="--d:' + (depth || 0) + '" data-kind="' + esc(it.kind) + '" data-work-row="' + esc(it.id) + '"' + (ui.jump === it.id ? ' data-jump="1"' : '') + '>' +
       '<button type="button" class="wk-row-btn" data-work-x="' + esc(it.id) + '" aria-expanded="' + open + '">' +
       '<span class="wk-lead">' + st(W().key(it), 12, mv && it.kind !== 'agent') + '</span>' +
-      '<span class="wk-kind">' + kindMark(it) + '</span>' +
+      '<span class="wk-kind">' + kindMark(it, o.deferLoaderDrawing) + '</span>' +
       '<span class="wk-copy"><strong>' + esc(it.title) + '</strong><span class="wk-sub">' + sub + '</span>' + (meta.length ? '<span class="wk-meta">' + meta.join(' · ') + '</span>' : '') + '</span>' +
       '<span class="wk-right"><b data-tone="' + t + '">' + esc(word(it)) + '</b><i data-work-time="' + esc(it.id) + '">' + esc((o.time || time)(it)) + '</i></span></button>' +
       (open ? detail(it, { where: true }) : '') + '</div>';
@@ -845,7 +845,7 @@
     host.classList.add('wk-list');
     if (o.label) host.setAttribute('aria-label', o.label);
     const fmt = o.words ? spelled : null;
-    const rowsOf = (g) => g.items.map((x) => row(x, g.depth ? g.depth(x) : 0, { expanded: st.expanded, where: !!o.where, time: fmt })).join('');
+    const rowsOf = (g) => g.items.map((x) => row(x, g.depth ? g.depth(x) : 0, { expanded: st.expanded, where: !!o.where, time: fmt, deferLoaderDrawing: o.deferLoaderDrawing })).join('');
     /* o.whenShown: a list in a frame that hides (the rail's panel) paints only while it has a size, and catches up when shown */
     let shown = true, stale = false;
     const ro = o.whenShown && typeof ResizeObserver === 'function' ? new ResizeObserver((es) => { shown = es[es.length - 1].contentRect.width > 0; if (shown && stale) paint(); }) : null;

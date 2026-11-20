@@ -167,8 +167,29 @@
     live.forEach((el) => { if (el.isConnected && el.getAttribute('data-pml-run') === 'off' && el.__pmlVis !== false) start(el); });
   }
 
+  /* A list can ask for its artwork to be drawn after its first layout. Give those insertions
+     separate paint frames so arming a full board does not restyle and raster every mark at once. */
+  const deferredDrawing = new Set();
+  let drawingFrame = 0;
+  function drawDeferred() {
+    drawingFrame = 0;
+    let count = 0;
+    for (const el of deferredDrawing) {
+      deferredDrawing.delete(el);
+      if (!el.isConnected || el.hasAttribute('data-pml-run')) continue;
+      arm(el);
+      if (++count === 2) break;
+    }
+    if (deferredDrawing.size) drawingFrame = requestAnimationFrame(drawDeferred);
+  }
   /* the opt-in, found when it is first styled (pm-loader.css runs pml-arm on an unarmed loader) */
-  D.addEventListener('animationstart', (e) => { if (e.animationName === 'pml-arm') arm(e.target); }, true);
+  D.addEventListener('animationstart', (e) => {
+    if (e.animationName !== 'pml-arm') return;
+    if (e.target.hasAttribute('data-pml-defer')) {
+      deferredDrawing.add(e.target);
+      if (!drawingFrame) drawingFrame = requestAnimationFrame(drawDeferred);
+    } else arm(e.target);
+  }, true);
   D.addEventListener('visibilitychange', () => { if (D.visibilityState === 'hidden') holdAll(); else resumeAll(); });
   /* away: the window has not had the focus for a minute; any return wakes the loaders in phase */
   W.addEventListener('blur', () => { clearTimeout(awayTimer); awayTimer = setTimeout(() => { if (!D.hasFocus()) { away = true; holdAll(); } }, AWAY_MS); });
@@ -216,13 +237,17 @@
     (r.querySelectorAll ? [...list, ...r.querySelectorAll('[data-pip-loader]')] : list).forEach((el) => { if (!el.hasAttribute('data-pml-run')) arm(el); });
   }
   const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-  /* o: { motion = 'swing', px = 16 (the size the host expects), size? (a CSS length; default 1em), className? } */
+  /* o: { motion = 'swing', px = 16, size? (a CSS length; default 1em), className?, deferDrawing? }.
+     A list can lay out the fixed-size slots before drawing the pixel marks and fading them in. */
   function html(o) {
     o = o || {};
     const motion = MOTIONS.indexOf(o.motion) >= 0 ? o.motion : 'swing', px = +o.px > 0 ? +o.px : 16, look = L.look();
     const size = o.size ? ` style="--pml-size:${esc(o.size)}"` : '';
-    return `<span class="pml-ld${o.className ? ' ' + esc(o.className) : ''}" data-pip-loader="${motion}" data-pip-px="${px}" data-pml-look="${look}" aria-hidden="true"${size}>` +
-      (isNier(look) ? NIER : L.mark({ px, motion, mood: motion === 'think' ? 'working' : 'idle', look, decorative: true })) + '</span>';
+    let drawing = '';
+    if (isNier(look)) drawing = NIER;
+    else if (!o.deferDrawing) drawing = L.mark({ px, motion, mood: motion === 'think' ? 'working' : 'idle', look, decorative: true });
+    const defer = o.deferDrawing && !drawing ? ' data-pml-defer' : '';
+    return `<span class="pml-ld${o.className ? ' ' + esc(o.className) : ''}" data-pip-loader="${motion}" data-pip-px="${px}" data-pml-look="${look}" aria-hidden="true"${defer}${size}>${drawing}</span>`;
   }
   /* A host waiting: aria-busy on the host and a loader in it (first, or o.slot: 'end' or an element). The host's own
      words say what it waits for; o.status adds role="status" for a wait with no words of its own. */
