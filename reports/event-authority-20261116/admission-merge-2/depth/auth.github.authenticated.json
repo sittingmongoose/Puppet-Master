@@ -411,7 +411,7 @@
     "retention": {
      "status": "PASS",
      "representation": "integrated_retention_delta",
-     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": \"RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0\", \"decisions\": [\"DL-401\", \"DL-502\"], \"event_type\": \"auth.github.authenticated\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DG6B.self-grade.json\", \"history_policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\", \"lane\": \"DG6B\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-502\", \"family_id\": \"auth_github_authenticated_operation\", \"policy_ref\": \"RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-502\", \"family_id\": \"auth_github_device_code_issued_operation\", \"policy_ref\": \"RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-502\", \"family_id\": \"auth_github_disconnected_operation\", \"policy_ref\": \"RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-502\", \"family_id\": \"auth_github_failed_operation\", \"policy_ref\": \"RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-502\", \"family_id\": \"auth_github_token_polling_operation\", \"policy_ref\": \"RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-670\", \"owner_line\": 31272, \"prior_finding\": \"PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.\", \"question\": null, \"status\": \"BOUND\"}",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": \"RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0\", \"decisions\": [\"DL-401\", \"DL-502\"], \"event_type\": \"auth.github.authenticated\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DG6B.self-grade.json\", \"history_policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\", \"lane\": \"DG6B\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-502\", \"family_id\": \"auth_github_authenticated_operation\", \"policy_ref\": \"RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-502\", \"family_id\": \"auth_github_device_code_issued_operation\", \"policy_ref\": \"RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-502\", \"family_id\": \"auth_github_disconnected_operation\", \"policy_ref\": \"RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-502\", \"family_id\": \"auth_github_failed_operation\", \"policy_ref\": \"RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-502\", \"family_id\": \"auth_github_token_polling_operation\", \"policy_ref\": \"RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-670\", \"owner_line\": 31272, \"prior_finding\": \"PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.\", \"question\": null, \"status\": \"BOUND\"} DL-401 assigns the five GitHub sign-in histories together to the shared Application allowance app:github_sign_in. The cited Storage rule sets the combined 2,000,000-record cap and fail-closed overflow.",
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
@@ -472,6 +472,29 @@
         "new_line_end": 36139,
         "reason": "Expand the exact current assignment through its policy, scope, anchor and effective count in its own cited unit."
        }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Application-wide count buckets under the operational policy (DL-083, DL-089, DL-401, DL-2450)",
+       "line_start": 29096,
+       "line_end": 29101,
+       "quote": "- An EventRecord with `scope_kind=application` and `event_type` `auth.github.device_code.issued`, `auth.github.token.polling`, `auth.github.authenticated`, `auth.github.failed` or `auth.github.disconnected` counts in `app:github_sign_in`. DL-401 gives these five Application-only families this dedicated count. The registered histories select `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` under SP-670.\n- An EventRecord with `scope_kind=application` and `event_type=filesafe.policy_degraded` counts in `app:filesafe_policy_degraded` under DL-2450 and SP-556. Its Project edition counts in its Project partition.\n\nOnly the exact Application families and the Boot aggregate control named above count in these application-wide buckets. A record whose scope or event type is unknown or unregistered is quarantined before append (DL-031 `EVT-05`) and never defaulted into a bucket.\n\n**Count and overflow.** Each application-wide bucket retains at most 2,000,000 records, counting every record in the bucket whichever of its families wrote it, in the existing count order `(retention_anchor_at_utc, sequence_id?, stable_object_id)`. For `app:storage_operational`, `app:platform_capability` and `app:filesafe_policy_degraded`, expiry is inclusive at the terminal-transition anchor plus 220,752,000 seconds. The GitHub sign-in bucket follows SP-670 for its retention anchor and expiry. Compaction removes only expired unheld records. Holds and stronger references override age and count. Overflow fails closed, as for a Project: when a new record would take its bucket past 2,000,000 and no expired unheld member remains to compact, that record is refused and nothing is written. A full bucket never evicts an unexpired or held record, never borrows room from another bucket and never refuses a record of another bucket. Platform evaluations therefore cannot use up the room kept for recovery records (DL-089), sign-in records cannot use up the room of either (DL-401), and FileSafe degradation records cannot use up the room of any other bucket (DL-2450). No application-wide bucket affects a Project bucket.",
+       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "Application-wide count buckets under the operational policy (DL-083, DL-089, DL-401, DL-2450)",
+        "line_start": 29096,
+        "line_end": 29101,
+        "quote": "- An EventRecord with `scope_kind=application` and `event_type` `auth.github.device_code.issued`, `auth.github.token.polling`, `auth.github.authenticated`, `auth.github.failed` or `auth.github.disconnected` counts in `app:github_sign_in`. DL-401 gives these five Application-only families this dedicated count. The registered histories select `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` under SP-670.\n- An EventRecord with `scope_kind=application` and `event_type=filesafe.policy_degraded` counts in `app:filesafe_policy_degraded` under DL-2450 and SP-556. Its Project edition counts in its Project partition.\n\nOnly the exact Application families and the Boot aggregate control named above count in these application-wide buckets. A record whose scope or event type is unknown or unregistered is quarantined before append (DL-031 `EVT-05`) and never defaulted into a bucket.\n\n**Count and overflow.** Each application-wide bucket retains at most 2,000,000 records, counting every record in the bucket whichever of its families wrote it, in the existing count order `(retention_anchor_at_utc, sequence_id?, stable_object_id)`. For `app:storage_operational`, `app:platform_capability` and `app:filesafe_policy_degraded`, expiry is inclusive at the terminal-transition anchor plus 220,752,000 seconds. The GitHub sign-in bucket follows SP-670 for its retention anchor and expiry. Compaction removes only expired unheld records. Holds and stronger references override age and count. Overflow fails closed, as for a Project: when a new record would take its bucket past 2,000,000 and no expired unheld member remains to compact, that record is refused and nothing is written. A full bucket never evicts an unexpired or held record, never borrows room from another bucket and never refuses a record of another bucket. Platform evaluations therefore cannot use up the room kept for recovery records (DL-089), sign-in records cannot use up the room of either (DL-401), and FileSafe degradation records cannot use up the room of any other bucket (DL-2450). No application-wide bucket affects a Project bucket.",
+        "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+        "commit": "5a5392ecf8ca34c79db7cd3ddd303d751e4c8601",
+        "sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+        "line": 29096,
+        "quote_check": "exact",
+        "quote_scope": "unit Application-wide count buckets under the operational policy (DL-083, DL-089, DL-401, DL-2450), Plans/storage-plan.md@5a5392ecf8ca34c79db7cd3ddd303d751e4c8601:29079-29104"
+       },
+       "quote_check": "exact",
+       "quote_scope": "unit Application-wide count buckets under the operational policy (DL-083, DL-089, DL-401, DL-2450), Plans/storage-plan.md:29079-29104"
       }
      ],
      "carried_from": {
@@ -809,9 +832,9 @@
   "row_pointer": "#/families/227"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
-  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
-  "source_assessment_sha256": "14aa0416b73f7ffba73dab4848cacb38f1152114b10ac00b07cd6800c566a9e3",
+  "authority": "MERGE3A deep pair R3 / GitHub sign-in shared count citation",
+  "source_commit": "5a5392ecf8ca34c79db7cd3ddd303d751e4c8601",
+  "source_assessment_sha256": "b552a1771cb2a204bbd7f76004bfca7cd07babee3486dd9abbb59c53b549cb09",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

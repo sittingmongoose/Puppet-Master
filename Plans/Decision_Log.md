@@ -54065,12 +54065,12 @@ canonical_text: 'Correction for auth.github.authenticated only, under DL-077 and
   policy choice or producer adoption. Current row canonical SHA-256 45d76ab72af9bb40d91d94aba64dbb156f89b975d4cf2c52ce9620575cd8ea2f.
   Its scope is application_only. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_authenticated`
   (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, producer requires_owner_adoption).
-
+  The current retention evidence also cites the existing DL-401 shared Application count assignment for all five GitHub sign-in histories in Plans/storage-plan.md:29096-29101 (app:github_sign_in, 2,000,000 records in total).
 
   The correction moves the full registry from 2026-11-18.2, 518 families, SHA-256 ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602,
   to 2026-11-19.1, 518 families, SHA-256 92892e3361a16a91b319533f1d2b5679920496e7e4732294e8fd332762946df3, without changing
   another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/auth.github.authenticated.json.
-  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/auth.github.authenticated.json, SHA-256 b552a1771cb2a204bbd7f76004bfca7cd07babee3486dd9abbb59c53b549cb09.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/auth.github.authenticated.json, SHA-256 3782ced6870e1dbb3e6682a1346e492d394cea69634fff55291503a0f2089b83.
 
 
   The original append checkpoints are preserved: before 2026-11-16.8 SHA-256 f4db9a7626b94ac38d17b1fc3c9634a401fc84220e0edba2b2cef57de270c27e;
@@ -54126,13 +54126,13 @@ canonical_text: 'Correction for auth.github.device_code.issued only, under DL-07
   verdict, policy choice or producer adoption. Current row canonical SHA-256 eef79a3bf7a03fc95cc5441135b8476eecde4b3edac6110a773b1263fab66ff7.
   Its scope is application_only. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_device_code_issued`
   (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, producer requires_owner_adoption).
-
+  The current retention evidence also cites the existing DL-401 shared Application count assignment for all five GitHub sign-in histories in Plans/storage-plan.md:29096-29101 (app:github_sign_in, 2,000,000 records in total).
 
   The correction moves the full registry from 2026-11-19.1, 518 families, SHA-256 92892e3361a16a91b319533f1d2b5679920496e7e4732294e8fd332762946df3,
   to 2026-11-19.2, 518 families, SHA-256 244b18ca98faba7e4e6470cced27b0436888bb452f08ccbc7863e04cabc8b9cc, without changing
   another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/auth.github.device_code.issued.json.
   Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/auth.github.device_code.issued.json, SHA-256
-  f5c082623237014cb88f6e32c70fff63e1820a1467dec11a9de8748ec972420a.
+  6ec30daf31c17f91adb300c3d56b37a594e3fc9dd58b38ef30f9551e3377e529.
 
 
   The original append checkpoints are preserved: before 2026-11-16.9 SHA-256 da4339724d14b5d8b227933467f415a5d7ed6f848adada14a971a18f76b876f5;
@@ -54188,12 +54188,12 @@ canonical_text: 'Correction for auth.github.disconnected only, under DL-077 and 
   policy choice or producer adoption. Current row canonical SHA-256 053efdcca8aa9d86143238bee746aae575fcdc66865ad21469291b17a66f922d.
   Its scope is application_only. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_disconnected`
   (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, producer requires_owner_adoption).
-
+  The current retention evidence also cites the existing DL-401 shared Application count assignment for all five GitHub sign-in histories in Plans/storage-plan.md:29096-29101 (app:github_sign_in, 2,000,000 records in total).
 
   The correction moves the full registry from 2026-11-19.2, 518 families, SHA-256 244b18ca98faba7e4e6470cced27b0436888bb452f08ccbc7863e04cabc8b9cc,
   to 2026-11-19.3, 518 families, SHA-256 58bcbc79d11729d29c5a93b96eb10d8d58c36d65335ad28f0856276b8e69c6ea, without changing
   another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/auth.github.disconnected.json.
-  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/auth.github.disconnected.json, SHA-256 2e836a0a1a270907edf61eebbb67324df88a3cc5108be4acac40ec4c8d5b907a.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/auth.github.disconnected.json, SHA-256 7185507e966df9f0c5f6965557da6bc07cd0e6f7de5745d9d69c6fd648f68245.
 
 
   The original append checkpoints are preserved: before 2026-11-16.10 SHA-256 0c5977669441a847f20cac46f5ebb7266d07addc249c9de969061d41f84e0bd0;
@@ -54249,12 +54249,12 @@ canonical_text: 'Correction for auth.github.failed only, under DL-077 and DL-400
   policy choice or producer adoption. Current row canonical SHA-256 d6ea21fb565a0dd737fef672e1bba9449619490511f69536962d292865adda58.
   Its scope is application_only. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_failed`
   (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, producer requires_owner_adoption).
-
+  The current retention evidence also cites the existing DL-401 shared Application count assignment for all five GitHub sign-in histories in Plans/storage-plan.md:29096-29101 (app:github_sign_in, 2,000,000 records in total).
 
   The correction moves the full registry from 2026-11-19.3, 518 families, SHA-256 58bcbc79d11729d29c5a93b96eb10d8d58c36d65335ad28f0856276b8e69c6ea,
   to 2026-11-19.4, 518 families, SHA-256 5fdf0b711ca8b97a26bfbee654197ba9add00622d1eae0ee21321cf9924480c7, without changing
   another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/auth.github.failed.json.
-  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/auth.github.failed.json, SHA-256 061c80227e5284b114292e996b6f72a8b17aeda0874fd63e6803b2a5ebb7ced1.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/auth.github.failed.json, SHA-256 e45ae5ebf4ee7a8ac51cfda1b19ddba1a59ceb63406e5a0ce132215f3e7a58ce.
 
 
   The original append checkpoints are preserved: before 2026-11-16.11 SHA-256 8e33379963ef36eab321738cc63d1b8da69882db8ab203c8060fee085a455389;
@@ -54310,12 +54310,12 @@ canonical_text: 'Correction for auth.github.token.polling only, under DL-077 and
   policy choice or producer adoption. Current row canonical SHA-256 1393c12ad4ff4ce7374c2eb807b13ef66ad4bbea322f720ea88e4275b000f0e4.
   Its scope is application_only. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_token_polling`
   (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, producer requires_owner_adoption).
-
+  The current retention evidence also cites the existing DL-401 shared Application count assignment for all five GitHub sign-in histories in Plans/storage-plan.md:29096-29101 (app:github_sign_in, 2,000,000 records in total).
 
   The correction moves the full registry from 2026-11-19.4, 518 families, SHA-256 5fdf0b711ca8b97a26bfbee654197ba9add00622d1eae0ee21321cf9924480c7,
   to 2026-11-19.5, 518 families, SHA-256 0b57727b4318858f6bf0b623596b668155b2994660ed6690ffbe5ba24414df1b, without changing
   another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/auth.github.token.polling.json.
-  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/auth.github.token.polling.json, SHA-256 8c7e2b88a9c93c895e47da7658dfeb889cec2097c0efb70dba21f4fc385e2422.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/auth.github.token.polling.json, SHA-256 8ad05acfa6a1ab6c21746f63312f44c9d183eac31c298b78f05dcc4a3c3ec404.
 
 
   The original append checkpoints are preserved: before 2026-11-16.12 SHA-256 00c9224678e694491c50085d4d6b55ced0b6e7e11b95bb205748cf3b31252e1a;
