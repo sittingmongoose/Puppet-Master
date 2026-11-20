@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.103",
+  "sha256": "78ea2e0cdf33fbcc3d88ebde9afce75f5cc96dc670348abd51768c4202fc5685",
   "family_count": 518,
   "row_pointer": "#/families/447"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/447 (canonical row SHA-256 a882bdabd9184828d5e7325f258e0071cab18a5367fba263ae4453e05af203f5). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.103 as #/families/447, canonical row SHA-256 197419038a8b413c317f247f6e5f7ea8a276b61d1457fab6eb7299026e0e3987. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -252,23 +252,45 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1406",
-       "line_start": 50770,
-       "line_end": 50770,
-       "quote": "Current selected assignment (2026-11-19): remote_access.route_migration_state_changed@1.0.0 is registered for",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "line_start": 50773,
+       "line_end": 50780,
+       "quote": "  Current selected assignment (2026-11-19): remote_access.route_migration_state_changed@1.0.0 is registered for\n  application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2365. Its event\n  history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; Plans/storage-plan.md#SP-1406 owns the event\n  policy''s existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their\n  independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires\n  the exact selected schema/scope, original custody, current permission, receipt and required producer adoption.\n  Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native\n  adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1406, Plans/Contracts_V0.md:50737-50819",
+       "quote_scope": "unit CV-1406, Plans/Contracts_V0.md:50740-50822",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1406",
-        "line_start": 48667,
-        "line_end": 48667,
-        "quote": "retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotec",
-        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+        "line_start": 50770,
+        "line_end": 50770,
+        "quote": "Current selected assignment (2026-11-19): remote_access.route_migration_state_changed@1.0.0 is registered for",
+        "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+        "quote_check": "exact",
+        "quote_scope": "unit CV-1406, Plans/Contracts_V0.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:50737-50819",
+        "source_citation": {
+         "path": "Plans/Contracts_V0.md",
+         "unit": "CV-1406",
+         "line_start": 48667,
+         "line_end": 48667,
+         "quote": "retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotec",
+         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+        "line": 50770
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "4afe0c732bec58344096b3cbd10aeedb328e2024",
+        "old_quote": "Current selected assignment (2026-11-19): remote_access.route_migration_state_changed@1.0.0 is registered for",
+        "old_path": "Plans/Contracts_V0.md",
+        "old_unit": "CV-1406",
+        "old_line_start": 50770,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       },
       {
@@ -597,10 +619,9 @@
   "row_pointer": "#/families/447"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "18177aa3a61bafa4e8788c91d2ae0a63498969ac65dc01d0b704d546559560ec",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "4afe0c732bec58344096b3cbd10aeedb328e2024",
+  "source_assessment_sha256": "fe05b1502ffbf3b25747853a208023bf629bf2e31d3c63c4f8555cde4292672d",
+  "native_execution": "NOT_RUN"
  }
 }
