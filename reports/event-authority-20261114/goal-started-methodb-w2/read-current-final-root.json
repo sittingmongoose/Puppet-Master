@@ -1,0 +1,49 @@
+{
+  "row": "dg5/read_current/final/root/schema",
+  "fixtures": [
+    {
+      "route": "read_original/read_current/final/retained",
+      "edition": "v3",
+      "root": "dg5:80c244d6a4b70586",
+      "hash_seed": 8,
+      "validation_site": [
+        "scripts/pm_goal_dg_s_readers.py",
+        94
+      ],
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "read_original/read_current/final/enclosing",
+      "edition": "v3",
+      "root": "dg5:525e53cd7926ee62",
+      "hash_seed": 8,
+      "validation_site": [
+        "scripts/pm_goal_dg_s_readers.py",
+        256
+      ],
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
