@@ -271,7 +271,9 @@ PROOFS = {
         kind='entailed-by-producer-construction',
         families=['goal.updated'],
         depends_on=[],
-        sites=[(U, 1752), (U, 1770), ('Plans/goal_update_command_custody.schema.json', 755)],
+        sites=[(U, 1469), (U, 1490), (U, 1752), (U, 1770), (U, 1777), (U, 1778), (U, 1779),
+               ('Plans/goal_update_command_custody.schema.json', 755),
+               ('Plans/goal_update_command_custody.schema.json', 1711)],
         argument=(
             'freeze (:1752-1770) validates a ProducerInput whose metadata half is the stored '
             'progress producer_metadata verbatim (validated as ProducerMetadata when the '
@@ -280,8 +282,10 @@ PROOFS = {
             'pattern hashes), the read-validated accepted revision, and acceptance fields of '
             'the read-validated source record, each bounded identically in ProducerInput '
             '(:755). The event_identity join (:1765) has already refused any metadata/payload '
-            'identity mismatch before validation. No complete freeze call can make this row '
-            'refuse alone.')),
+            'identity mismatch before validation. The unchanged candidate becomes the required '
+            'producer_input in event_ready Progress, which uses the same ProducerInput '
+            'definition. Disabling only the first schema check reached this exact later '
+            'Progress validation. Restoration repeated the original refusal.')),
     'dg5/dgu/producer/publish/producer_input/schema': dict(
         kind='entailed-by-producer-construction',
         families=['goal.updated'],

@@ -106,7 +106,12 @@ def update_fixture(route, path):
                     admission, current, where=where))
 
         return w, capture
-    if route == 'publish_receipted':
+    if route == 'freeze_input':
+        request = oracle.O.direct_request(w, goal, 'Freeze producer input from committed body')
+        admission = w.command.run(request, stop_after='commit')
+        check_frozen_producer_input(w, oracle.O.UPDATE_URI, publish=False)
+        return w, lambda: w.producer.freeze(goal['scope'], oracle.op_of(admission))
+    if route in ('publish_receipted', 'publish_input'):
         request = oracle.O.direct_request(w, goal, 'Publication after its first receipt')
         admission = w.command.run(request, stop_after='freeze')
         op = oracle.op_of(admission)
@@ -120,7 +125,10 @@ def update_fixture(route, path):
         w.storage.faults = oracle.S.FaultPlan()
         require(w.storage.reservation_state('goal-update-append:' + op)['state'] == 'receipted',
                 'publication example has no durable first receipt')
-        check_publication_reused(w, oracle.O.UPDATE_URI)
+        if route == 'publish_receipted':
+            check_publication_reused(w, oracle.O.UPDATE_URI)
+        else:
+            check_frozen_producer_input(w, oracle.O.UPDATE_URI, publish=True)
         return w, lambda: w.producer.publish(goal['scope'], op)
     _, admission = oracle.run_direct(w, goal)
     progress = oracle.progress(w, goal, oracle.op_of(admission))
@@ -293,6 +301,43 @@ def check_publication_reused(world, uri):
             'publication' in issued['required'] and
             issued['properties']['publication'] == {'$ref': uri + '#/$defs/OriginalPublication'},
             'event-issued progress no longer revalidates the same publication')
+
+
+def check_frozen_producer_input(world, uri, *, publish):
+    from pm_goal_dg_u_owners import T_PROGRESS
+
+    source = world.source
+    bank = source.bank
+    definitions = bank.documents[uri]['$defs']
+    progress = definitions['Progress']['oneOf']
+    active = {'event_ready', 'event_unknown'}
+    branches = {branch['properties']['phase']['const']: branch for branch in progress}
+    require(world.producer.bank is bank and len(progress) == len(branches) and active <= branches.keys() and all(
+        'producer_input' in branches[phase]['required'] and
+        branches[phase]['properties']['producer_input'] == {'$ref': uri + '#/$defs/ProducerInput'} for phase in active),
+        'progress no longer requires the exact producer input on both frozen paths')
+    require(definitions['StorageProgress']['properties']['record']['oneOf'] ==
+            [{'$ref': uri + '#/$defs/' + member} for member in ('Progress', 'ProgressHead')] and
+            definitions['ProgressHead']['properties']['schema_id']['const'] == 'pm.goal.update.progress_head.v1',
+            'stored progress no longer checks the Progress definition')
+    if publish:
+        reader = inspect.getsource(world.producer.publish)
+        require("lambda: w.source.read_progress(scope, op, where)" in reader and
+                "candidate = copy.deepcopy(p['producer_input'])" in reader and
+                'ctx = dict(candidate=candidate)' in reader and
+                "A.same(ctx['candidate'], p['producer_input'])" in reader and
+                'self.unwrap_row(T_PROGRESS, skey, scell' in inspect.getsource(source.read_progress) and
+                "snap['record']['schema_id'] == 'pm.goal.update.progress.v1'" in inspect.getsource(source.read_progress) and
+                source.ROOTS[T_PROGRESS] == uri + '#/$defs/StorageProgress',
+                'original publish no longer checks the input against the read-validated frozen value')
+    else:
+        freeze = inspect.getsource(world.producer.freeze)
+        require("ctx = dict(producer_input=producer_input)" in freeze and
+                "producer_input=ctx['producer_input'])" in freeze and
+                "expected_phase=('body_committed',)" in freeze and
+                'self.progress_writes(scope, op, record,' in inspect.getsource(source.advance) and
+                "'#/$defs/Progress', record, 'dgu/progress')" in inspect.getsource(source.progress_writes),
+                'original freeze no longer forwards the input to Progress')
 
 
 def check_f5a_stored_document(module, world, context, intent, control, route):
@@ -1097,11 +1142,12 @@ def main():
         ('dg5/dgu/reader/receipt/receipt_request/schema', 'receipt_recheck'):
             'dgu/reader/receipt/final/receipt_request/schema/',
         ('dg5/dgu/producer/publish/publication/schema', 'publish_receipted'): 'dgu/progress/schema/',
+        ('dg5/dgu/producer/freeze/producer_input/schema', 'freeze_input'): 'dgu/progress/schema/',
+        ('dg5/dgu/producer/publish/producer_input/schema', 'publish_input'): 'dgu/producer/publish/final_candidate',
         ('dg5/dgu/reader/input/request/schema', 'input_recheck'): 'dgu/reader/input/result/schema/request',
     }.get((row, declare['route']))
-    if 'later_refusal' in declare:
-        require(declare['later_refusal'] == later_refusal,
-                'later validation requires a checked source implication for this row')
+    require(declare.get('later_refusal') == later_refusal,
+            'later validation requires a checked source implication and its exact message')
     census_row, = [item for item in census['rows'] if item['row'] == row]
     root = census['roots'][ident]
     require(census_row['root_ids'] == [ident] and not root.get('inventory_variants'), 'ambiguous root inventory')
