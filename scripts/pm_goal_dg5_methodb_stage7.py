@@ -103,8 +103,25 @@ def stored_producer(directory, negative):
     return world, world.producer.publish, (goal['scope'], updated.op_of(admission)), {}
 
 
+def published_event(directory):
+    world, goal, _, admission, _ = updated._upto(directory, 'publish')
+    event_id = updated.event_of(world, goal, admission)
+    return world, world.storage.read_event(event_id)
+
+
+def event_record(directory, negative):
+    world, event = published_event(directory)
+    if negative:
+        event['correlation_id'] = ''
+    return world, updated.O.S.validate_event_record, (event, 'append/event'), {}
+
+
+FAILURE_ONLY = {'event-record'}
+
+
 # The explicit lines match the input matrix. Validate the observed location on every run.
 CASES = {
+    'event-record': (STORAGE, 473, 'append/event/schema/correlation_id', event_record),
     'stored-producer': (OWNERS, 1807, 'dgu/producer/publish/stored_producer', stored_producer),
     'json-key': (ADAPTERS, 421, 'custody/exact_json/key', json_key),
     'storage-cas': (STORAGE, 1657, 'tx/cas_version', storage_cas),
@@ -138,7 +155,8 @@ def save_proof(output, collector, row, site, table_report, table_path):
     summary = proof / 'tables'
     write(summary / 'summary.json', [table_report])
     write(summary / 'rows.json', [dict(guard=row, table=table_report['table'],
-                                      status='PASS', table_status='PASS')])
+                                      status='PASS' if table_report['status'] == 'PASS' else 'UNPROVED',
+                                      table_status=table_report['status'])])
     write(proof / 'family-rows.json', {FAMILY: [row]})
     write(proof / 'collection.json', dict(calls=collector.calls, failures=collector.failures,
                                         rows={row: {'sites': [site]}}))
@@ -171,8 +189,10 @@ def run(name, output, *, leave_enabled=False):
     result = dict(row=row, location=site, expected=expected, control=control,
                   negative=negative, disabled=disabled, restored=restored)
     write(output / 'calls.json', result)
-    require(control['errors'] == [] and control['code'] is None and
-            collector.rows.get(row, {}).get('controls'), f'{row}: accepted call missed the checker')
+    require(control['errors'] == [] and control['code'] is None, f'{row}: valid input refused')
+    reached_on_acceptance = bool(collector.rows.get(row, {}).get('controls'))
+    require(reached_on_acceptance == (name not in FAILURE_ONLY),
+            f'{row}: accepted call did not match the expected checker path')
     require(collector.rows[row]['sites'] == {site}, f'{row}: checker location changed')
     require(negative['errors'] == restored['errors'] == [row] and
             negative['code'] == restored['code'] == expected, f'{row}: exact refusal did not repeat')
@@ -188,7 +208,10 @@ def run(name, output, *, leave_enabled=False):
     summary.mkdir(parents=True)
     report = sweep.prove_table(collector, ident, [row], sweep.table_records(collector),
                                summary, module_name=table_path.stem)
-    require(report['status'] == 'PASS' and report['proved'] == [row], report)
+    if name in FAILURE_ONLY:
+        require(report['status'] == 'NOT_RUN' and report['reason'] == 'no control vector', report)
+    else:
+        require(report['status'] == 'PASS' and report['proved'] == [row], report)
     save_proof(output, collector, row, site, report, table_path)
     return result
 
