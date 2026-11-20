@@ -179,7 +179,14 @@ def _census_traps(traps):
     tracing = _single_guard_trap('preexisting-trace-hook', 'Refuse to use a trace hook that is already occupied.',
                                  'untracked_refusal', occupied_trace=True, static_pass=True,
                                  error_contains='runtime requires an exclusive trace hook')
-    return [source, metadata, repeated, wrong_root, duplicate, graph, constructor, restoration, tracing]
+    invariants = dict(fixtures['genuine-duplicate'],
+        id='duplicate-equivalent-predicates-different-invariants', status='FAIL', duplicate_proved=False,
+        expected='Equivalent predicates and refusal codes cannot override different declared invariants.',
+        failure_kinds=['infrastructure_or_declaration'], static_pass=True,
+        error_contains='duplicate merges different fields/predicates or overlapping sets')
+    invariants['source'] = invariants['source'].replace(
+        "g.Guard('b',g.Invariant('/x','nonnegative')", "g.Guard('b',g.Invariant('/x','at least zero')")
+    return [source, metadata, repeated, wrong_root, duplicate, graph, constructor, restoration, tracing, invariants]
 
 
 def _schema_suite(g, trap, root):
