@@ -15,12 +15,13 @@ from pathlib import Path
 import sys
 from urllib.parse import urldefrag, urljoin
 
-from jsonschema import Draft202012Validator, FormatChecker, validators
+from jsonschema import Draft202012Validator, validators
 from referencing.exceptions import Unresolvable
 
 from pm_goal_own_c3_w5_oracles import (
     ROOT, LOCATIONS, OriginalPrecondition, MAPS, LISTS, SINGLES, segment,
 )
+from pm_goal_test_numrule import DT
 
 
 DIRECTORY = "Plans/goal_run_certified_consumer_contracts/source-package.v2/"
@@ -37,6 +38,7 @@ class ScopedInstances:
 
     def __init__(self, bank):
         self.bank = bank
+        self.format_checker = DT.format_checker(profile=DT.EVENT_RECORD)
         self.origins = {}
         for realm, documents in bank.documents.items():
             for entry, document in documents:
@@ -77,7 +79,7 @@ class ScopedInstances:
         resolved = self.bank.registries[realm].resolver().lookup(uri)
         return list(self.validator(
             resolved.contents, _resolver=resolved.resolver,
-            format_checker=FormatChecker(),
+            format_checker=self.format_checker,
         ).iter_errors(value))
 
 
