@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pm_goal_dg5_methodb_stage7 as pilot
 from pm_goal_dg5_methodb_stage7_dependencies import source
-from pm_goal_dg5_methodb_stage7_started_adapters import ADAPTERS, FAMILY, start_world
+from pm_goal_dg5_methodb_stage7_started_adapters import A, ADAPTERS, FAMILY, start_world
 import pm_goal_dg5_sweep as dg5
 import pm_goal_guard_sweep as sweep
 import pm_goal_guard_tables as tables
@@ -22,8 +22,17 @@ def missing_original(directory, negative):
     return world, owner.authenticate, (reference, value), {}
 
 
+def missing_subject(directory, negative):
+    world = start_world(directory)
+    owner = A.ActivationOwner(A.OwnerRegistry(), owner_id="TEST_ONLY:stage8-activation")
+    owner.birth("present", "ready")
+    subject = "unborn" if negative else "present"
+    return world, owner.transition, (subject, "ready", 0, "active"), {"cause_ref": "TEST_ONLY:cause"}
+
+
 CASES = {
     "missing-original": (499, 503, "original/unissued", missing_original),
+    "missing-subject": (569, 574, "activation/unborn_subject", missing_subject),
 }
 
 
