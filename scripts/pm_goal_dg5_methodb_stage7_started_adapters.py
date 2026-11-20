@@ -39,7 +39,13 @@ def registry_role_match(directory, negative):
     return world, world.registry.owner, (owner.owner_id, role), {}
 
 
+def codec_key(directory, negative):
+    world = start_world(directory)
+    return world, A.exact_json, ({1 if negative else '1': 'test value'},), {}
+
+
 CASES = {
+    'codec-key': (ADAPTERS, 421, 'custody/exact_json/key', codec_key),
     'registry-role-match': (ADAPTERS, 330, 'registry/role', registry_role_match),
     'registry-duplicate': (ADAPTERS, 322, 'registry/duplicate_id', registry_duplicate),
     'registry-role-type': (ADAPTERS, 321, 'registry/role_type', registry_role_type),
