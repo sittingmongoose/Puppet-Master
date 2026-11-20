@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Original Goal started checker fixtures for selected batch 10 rows."""
 import argparse
+from copy import deepcopy
 from pathlib import Path
 
 import pm_goal_dg_s_oracles as source
@@ -125,7 +126,35 @@ def frame_event_record(directory, negative):
         generation=1, prior_sequence=None, prior_control=False)
 
 
+def native_control(directory, negative):
+    world, handles = source.new_world(source.Suite(directory))
+    if not negative:
+        return world, world.start.commit_start, (source.request(world), handles), {}
+    native = world.owners['native']
+    control = deepcopy(native.current()['control'])
+    control['record']['body_record_sha256'] = '0' * 64
+    table = 'workflow_goal_run_control'
+    key = control['physical_key']
+    cell = W.read_value(world.storage, table, key)
+    world.storage.transact([dict(table=table, key=key, expected=cell['version'],
+                                 value=W.cell_value(world.storage, control))])
+
+    def same_original_selectors(owner_world, acquired):
+        d01 = acquired['d01_current']
+        d01['workflow']['current_control'] = deepcopy(control['record'])
+        actual = W.selector_for(owner_world.ctx, table, key, control)
+        # Change only the copies of the substituted control commitment. In
+        # particular, a D01 selector for the same cell also carries it.
+        for _, selector in W.walk_selectors(d01):
+            if selector['family_id'] == table and selector['physical_key'] == key:
+                selector[W.selector_hash_field(selector)] = actual['physical_value_sha256']
+
+    return world, world.start.commit_start, (source.request(world), handles), {
+        'edits': {'after_acquire': same_original_selectors}}
+
+
 CASES = {
+    'native-control': (START, 829, 'start/native_control_join', native_control),
     'frame-event-record': (pilot.STORAGE, 581, 'Corrupt:event_record:frame/event/schema/correlation_id', frame_event_record),
     'event-record': (pilot.STORAGE, 473, 'append/event/schema/correlation_id', event_record),
     'frame-payload': (pilot.STORAGE, 441, 'frame/payload_cap', frame_payload),
