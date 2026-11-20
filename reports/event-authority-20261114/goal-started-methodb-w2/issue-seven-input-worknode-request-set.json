@@ -1,0 +1,35 @@
+{
+  "row": "dg5/issue/seven_input:worknode_request_set/schema",
+  "fixtures": [
+    {
+      "route": "issue/seven_input:worknode_request_set",
+      "edition": "v3",
+      "root": "dg5:2b68974d8c0b29c5",
+      "hash_seed": 8,
+      "edit": [
+        1,
+        [],
+        null
+      ],
+      "error": [
+        [],
+        "type"
+      ]
+    },
+    {
+      "route": "issue/seven_input:worknode_request_set",
+      "edition": "v7",
+      "root": "dg5:da8903134bf13cbf",
+      "hash_seed": 8,
+      "edit": [
+        1,
+        [],
+        null
+      ],
+      "error": [
+        [],
+        "type"
+      ]
+    }
+  ]
+}
