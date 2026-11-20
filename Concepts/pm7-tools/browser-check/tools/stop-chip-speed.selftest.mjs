@@ -142,4 +142,27 @@ waitingGlow.rows[1].b = { dur: BASE.waiting };
 const visibleGlow = judge(waitingGlow);
 assert.deepEqual(visibleGlow.bad, [{ speed: 'Fast', flow: 'waiting', layer: 'backlight', dur: 3200, want: 1920 }],
 	'a glow still present at the end of its pace must scale in NieR too');
-console.log('stop-chip-speed: 15 cases pass');
+// R62 A2: keep an ineligible pre-application sample, then judge the first later frame.
+const judgePrompt = mod.judgeSpeedPrompt || judge;
+function promptPage() {
+	const R = runPage(true);
+	for (const m of R.marks) {
+		m.appliedFrame = R.rows[m.i].t;
+		R.rows[m.i].g.dur = R.rows[m.i].b.dur = BASE.waiting;
+	}
+	return R;
+}
+const prompt = promptPage();
+assert.equal(judgePrompt(prompt).ok, true, 'the first frame after the save has the new factor');
+const delayed = promptPage();
+delayed.rows.splice(1, 0, { t: 8, flow: 'waiting', g: { dur: BASE.waiting }, b: { dur: BASE.waiting } });
+delayed.marks[1].i++;
+assert.equal(judge(delayed).ok, true, 'the same delayed adoption eventually settles');
+assert.equal(judgePrompt(delayed).ok, false, 'the first eligible frame cannot borrow the later scaled durations');
+const noFrame = promptPage();
+noFrame.marks[0].appliedFrame = noFrame.rows[noFrame.marks[1].i].t;
+assert.equal(judgePrompt(noFrame).ok, false, 'a sample beyond the next speed change cannot stand in');
+const missingFirst = promptPage();
+delete missingFirst.rows[1].g;
+assert.equal(judgePrompt(missingFirst).ok, false, 'missing glyph in the first eligible frame fails');
+console.log('stop-chip-speed: 19 cases pass');

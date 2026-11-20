@@ -107,7 +107,11 @@ const PACE = async ({ speed, windowPart, themePart, themeOnly, speedOnly }) => {
 	SS.token = function () { if (!ownWord) pageWords.push({ at: performance.now(), tid: arguments[0] }); return tok.apply(this, arguments); };
 	const word = () => { ownWord = true; try { SS.token(); } finally { ownWord = false; } lastWord = performance.now(); };
 	let themeNote = null;
-	const mark = (name, extra) => marks.push({ name, i: rows.length, now: performance.now(), ft: document.timeline.currentTime, frac: frac(), ...extra });
+	const mark = (name, extra) => {
+		const entry = { name, i: rows.length, now: performance.now(), ft: document.timeline.currentTime, frac: frac(), ...extra };
+		marks.push(entry);
+		return entry;
+	};
 	// words are released inside a frame callback every 100 ms, as turn-stream.js:352 and thought-stream.js:229 release
 	// them (R32 F4: a timer released them between frames, a path the app does not use)
 	const feedTick = () => { if (!feeding) return; if (performance.now() >= nextWord) { word(); nextWord = performance.now() + 100; } requestAnimationFrame(feedTick); };
@@ -182,6 +186,13 @@ const PACE = async ({ speed, windowPart, themePart, themeOnly, speedOnly }) => {
 			// Measured is put back in a finally so a throw cannot leave Cinematic on for the next cell
 			// (the first failing run read 3520 and 5120 ms there, 2200 and 3200 times 1.6).
 			let speedBack = false;
+			const applySpeed = (choice, name) => {
+				const change = mark(name, { kind: 'speed' });
+				const ok = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', choice);
+				if (!ok) throw new Error('Settings refused ' + choice);
+				// The frame clock may still name a frame from before the Settings task. Only a later frame qualifies.
+				change.appliedFrame = document.timeline.currentTime;
+			};
 			const setMeasured = () => {
 				const okM = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Measured');
 				if (!okM) throw new Error('Settings refused Measured');
@@ -189,9 +200,8 @@ const PACE = async ({ speed, windowPart, themePart, themeOnly, speedOnly }) => {
 			};
 			try {
 				if (!(await inLoop(0.3, 0.4))) throw new Error('speed: the loop never reached .3-.4 (' + snap() + ')');
-				await sleep(2); mark('Animation speed Fast, waiting, mid-loop', { kind: 'speed' });
-				const ok = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Fast');
-				if (!ok) throw new Error('Settings refused Fast');
+				await sleep(2);
+				applySpeed('Fast', 'Animation speed Fast, waiting, mid-loop');
 				// The run of its own waits until the loops show the new length. A fixed 150 ms, on the
 				// long run, still had no glyph on the frame after Slow (glass-dark, Alexis, 2026-11-15).
 				// The run main already had keeps that 150 ms, so it judges the same Fast hand-over.
@@ -203,9 +213,8 @@ const PACE = async ({ speed, windowPart, themePart, themeOnly, speedOnly }) => {
 					// Both cadences are sampled before Measured, for judgeSpeed. This run is the only
 					// one that sets Slow: the demo's ~33 s run has ended by then on the long pace.
 					if (!(await inLoop(0.3, 0.4))) throw new Error('slow: the loop never reached .3-.4 (' + snap() + ')');
-					await sleep(2); mark('Animation speed Slow (Cinematic), waiting, mid-loop', { kind: 'speed' });
-					const okSlow = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Cinematic');
-					if (!okSlow) throw new Error('Settings refused Cinematic');
+					await sleep(2);
+					applySpeed('Cinematic', 'Animation speed Slow (Cinematic), waiting, mid-loop');
 					if (!(await expectDur(1.6))) throw new Error('Slow did not land (' + snap() + ')');
 					await wordAt('word right after Slow');
 					if (!(await quietAt('quiet after Slow', 0.7))) throw new Error('quiet after Slow: no change (' + quietWhy + ')');
@@ -543,34 +552,57 @@ export function everyFrame(R) {
 // mark and the next is the one the speed has settled on (the mark is taken before Settings applies it).
 export const SPEED_FACTOR = { Fast: 0.6, Slow: 1.6, Cinematic: 1.6, Measured: 1 };
 export const LOOP_BASE = { flowing: 2200, waiting: 3200 };
+const speedOf = (mark) => /Fast/.test(mark.name) ? 'Fast' : /Slow|Cinematic/.test(mark.name) ? 'Slow' : null;
+const speedMarks = (R) => (R.marks || []).filter((m) => m.kind === 'speed' && m.i >= 0);
+
+function checkSpeedSample(bad, term, speed, flow) {
+	const glyph = term?.g, backlight = term?.b;
+	const want = LOOP_BASE[flow] * SPEED_FACTOR[speed];
+	if (!(glyph?.dur > 0)) bad.push({ speed, flow, layer: 'glyph', missing: true });
+	else if (Math.abs(glyph.dur - want) > 1) bad.push({ speed, flow, layer: 'glyph', dur: glyph.dur, want });
+	if (backlight?.dur > 0) {
+		if (Math.abs(backlight.dur - want) > 1) bad.push({ speed, flow, layer: 'backlight', dur: backlight.dur, want });
+	} else if (term?.nier !== 'on') bad.push({ speed, flow, layer: 'backlight', missing: true });
+}
+
+export function judgeSpeedPrompt(R) {
+	const marks = speedMarks(R);
+	const bad = [];
+	const frames = [];
+	for (const speed of ['Fast', 'Slow']) {
+		const i = marks.findIndex((mark) => speedOf(mark) === speed);
+		const m = marks[i];
+		const end = marks[i + 1]?.i ?? R.rows.length;
+		const r = Number.isFinite(m?.appliedFrame)
+			? R.rows.slice(m.i, end).find((r) => r.t > m.appliedFrame)
+			: null;
+		if (!r || !Object.hasOwn(LOOP_BASE, r.flow)) {
+			bad.push({ speed, missing: 'first frame after Settings applied the speed' });
+			continue;
+		}
+		checkSpeedSample(bad, r, speed, r.flow);
+		frames.push({ speed, flow: r.flow, glyph: r.g?.dur, backlight: r.b?.dur, after: +(r.t - m.appliedFrame).toFixed(2) });
+	}
+	return { ok: bad.length === 0, bad, frames };
+}
+
 export function judgeSpeed(R) {
-	const marks = (R.marks || []).filter((m) => m.kind === 'speed' && m.i >= 0);
+	const marks = speedMarks(R);
 	const bad = [];
 	const seen = [];
 	// Judge each pace's terminal sample. NieR hides the backlight on restyle, so a glyph-only
 	// NieR sample is allowed even when that pace or another pace earlier showed a glow.
 	for (let s = 0; s < marks.length; s++) {
-		const m = marks[s];
-		const speed = /Fast/.test(m.name) ? 'Fast' : /Slow|Cinematic/.test(m.name) ? 'Slow' : null;
+		const m = marks[s], speed = speedOf(m);
 		if (!speed) continue;
-		const factor = SPEED_FACTOR[speed];
-		const end = s + 1 < marks.length ? marks[s + 1].i : R.rows.length;
+		const end = marks[s + 1]?.i ?? R.rows.length;
 		const lastRow = {};
 		for (let i = m.i; i < end && i < R.rows.length; i++) {
 			const r = R.rows[i];
-			if (!r || (r.flow !== 'waiting' && r.flow !== 'flowing')) continue;
-			lastRow[r.flow] = r;
+			if (r && Object.hasOwn(LOOP_BASE, r.flow)) lastRow[r.flow] = r;
 		}
 		seen.push(speed);
-		for (const flow of ['waiting', 'flowing']) {
-			const term = lastRow[flow], glyph = term?.g, backlight = term?.b;
-			const want = LOOP_BASE[flow] * factor;
-			if (!(glyph?.dur > 0)) bad.push({ speed, flow, layer: 'glyph', missing: true });
-			else if (Math.abs(glyph.dur - want) > 1) bad.push({ speed, flow, layer: 'glyph', dur: glyph.dur, want });
-			if (backlight?.dur > 0) {
-				if (Math.abs(backlight.dur - want) > 1) bad.push({ speed, flow, layer: 'backlight', dur: backlight.dur, want });
-			} else if (term?.nier !== 'on') bad.push({ speed, flow, layer: 'backlight', missing: true });
-		}
+		for (const flow of ['waiting', 'flowing']) checkSpeedSample(bad, lastRow[flow], speed, flow);
 	}
 	if (!seen.includes('Fast') || !seen.includes('Slow')) bad.push({ missing: ['Fast', 'Slow'].filter((x) => !seen.includes(x)) });
 	return { ok: bad.length === 0, bad };
@@ -725,6 +757,9 @@ export default async function (t) {
 				const sev = everyFrame(S);
 				await t.check(`${look}: in every frame of the speed run, the loop is never made anew and never jumps (hand-over, main-thread place, and glyph scale / backlight opacity)`, sev.restarts.length === 0 && sev.worst <= 1,
 					`${sev.restarts.length ? 'new loops ' + sev.restarts.join(', ') + '; ' : ''}${sev.valueFails ? sev.valueFails + ' in-window scale/opacity failure' + (sev.valueFails === 1 ? '' : 's') + '; ' : ''}worst ${(sev.worst * 100).toFixed(0)}%${sev.where ? ': ' + sev.where : ''}`);
+				const prompt = judgeSpeedPrompt(S);
+				await t.check(`${look}: the first frame after each Settings speed save has the Fast or Slow factor`, prompt.ok,
+					JSON.stringify(prompt.ok ? prompt.frames : prompt.bad));
 				const spj = judgeSpeed(S);
 				const missed = spj.bad.some((x) => x.missing);
 				await t.check(`${look}: Animation speed Fast and Slow scale both loops by that speed's factor`, spj.ok,
