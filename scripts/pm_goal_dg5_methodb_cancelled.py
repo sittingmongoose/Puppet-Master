@@ -121,6 +121,8 @@ def fixture(declare, route, directory):
         else:
             target = args[0], args[3]
         return world, action, (target, args, kwargs)
+    if route['call'] == 'read_preserved_issued':
+        return issued_preserved_fixture(world, declare)
     world.build()
     if route['call'] == 'project_checkpoint':
         owner = world.projector_class(world)
@@ -1033,6 +1035,49 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
     return results
 
 
+def issued_preserved_fixture(world, declare):
+    import pm_goal_dg5_closure as closure
+    import pm_goal_dg_r_oracles as original
+    import pm_goal_dg_r_readers as reader
+    import pm_goal_dg_r_world as legacy
+    import pm_goal_test_owner_adapters as adapters
+    from pm_goal_dg5_proofs_r import RETAINED, check_retained_source
+
+    field = declare['row'].removeprefix('dg5/tuple/preserved/').removesuffix('/schema')
+    spec = RETAINED[field]
+    require(type(world) is legacy.CancelWorld and world.edition == 'original_profile',
+            'preserved issuance source proof is for the original profile')
+    reference = getattr(legacy, spec.namespace) + spec.definition
+    child_samples = []
+    validate = legacy.Roots.validate
+
+    def record_issuance(bank, realm, ref, value, label):
+        result = validate(bank, realm, ref, value, label)
+        if label == 'issue/' + spec.family and ref == reference:
+            frame = sys._getframe(1)
+            require(frame.f_code is legacy.PhysOwner.build_wrapper.__code__ and realm == 'native_consumer',
+                    'the original was validated outside its issuing method')
+            plain = bank.validator(realm, ref)
+            ident, binding = root_binding(closure, bank, plain)
+            child_samples.append(dict(root=ident, binding=binding, document=copy.deepcopy(value)))
+        return result
+
+    with patch.object(legacy.Roots, 'validate', record_issuance):
+        world.build()
+    consumer = reader.Consumer(world)
+    check_retained_source(consumer, legacy, adapters, require)
+    request, presentation = original.request_of(world), reader.Presentation(world)
+    stored = world.cancellation[field]
+    require(world.preserved and presentation.cancellation[field] == (stored.owner_id, stored.handle)
+            and stored.family == spec.family and stored.root == reference and stored.realm == 'native_consumer',
+            'the preserved reader did not get the named issuing owner handle')
+    custodian, document = consumer.acquire(presentation.cancellation[field])
+    accepted = [x for x in child_samples if adapters.same(x['document'], document)]
+    require(custodian is stored and len(accepted) == 1, 'the reader value does not match one checked issuance')
+    provenance, = accepted
+    return world, lambda: consumer.read_preserved(request, presentation), (request, presentation, provenance)
+
+
 def check_checkpoint_repeated(owner):
     """The inline projector revalidates the whole afterimage before writing."""
     from pm_goal_dg_r_projector import Projector, ProjectorV7
@@ -1062,6 +1107,7 @@ class OwnerExample:
         self.stop = route['edition'] == 'w12b'
         self.checkpoint = route['call'] == 'project_checkpoint'
         self.preserved_head = route['call'] == 'read_preserved_head'
+        self.preserved_issued = route['call'] == 'read_preserved_issued'
         self.writes = self.pointer or self.checkpoint or route['call'] in (
             'issue_physical', 'filesafe_invocation', 'publish_workflow_head')
 
@@ -1078,6 +1124,12 @@ class OwnerExample:
         code = self.row.removeprefix('dg5/').removesuffix('/schema')
         result = dict(errors=[], observations=[])
         checks = self.route.get('checks', 1)
+        if self.preserved_issued:
+            from pm_goal_test_owner_adapters import same
+
+            provenance = inputs[2]
+            result['checked_issuance'] = dict(root=provenance['root'], binding=provenance['binding'],
+                                                document_sha256=value_sha(provenance['document']))
 
         def decide(bank, realm, ref, value, caller, enforce):
             site = [str(Path(caller.f_code.co_filename).relative_to(self.source)), caller.f_lineno]
@@ -1092,6 +1144,10 @@ class OwnerExample:
                 require(registry_realm == self.route['registry_realm'],
                         f'owner validator selected unexpected registry realm {registry_realm}')
             require(ident == self.route['root'], f'owner call reached unexpected root {ident}')
+            if self.preserved_issued:
+                require(ident == provenance['root'] and binding == provenance['binding']
+                        and same(value, provenance['document']),
+                        'the preserved reader must validate the exact originally checked document')
             if edit and not self.preserved_head and len(result['observations']) + 1 == checks:
                 require(edit not in value, 'test example already has the extra member')
                 value[edit] = 'example' if not self.checkpoint or self.route['edition'] == 'integrated_native' else 'x' * 16384
@@ -1286,6 +1342,12 @@ class OwnerExample:
                             and disabled['refusal'] == 'checkpoint/wrapper/schema/'
                             and disabled['detail'] == before['detail'],
                             'the later checkpoint check must refuse the same invalid afterimage')
+                elif self.preserved_issued:
+                    from pm_goal_dg5_proofs_r import RETAINED
+
+                    field = self.row.split('/')[-2]
+                    require(record['kill'] == 'COVERED_LATER' and disabled['refusal'] == RETAINED[field].later,
+                            'the preserved reader must refuse at its bound original-document check')
                 else:
                     require(record['kill'] == 'KILLED' and not disabled['errors'],
                             f"single-check trial {record['kill']}: {record.get('cut_errors')}")
@@ -1322,6 +1384,10 @@ def publish(source, out, declare, collector, reports, inventories, table_path):
     bindings = out / 'proof/source-bindings.json'
     value = json.loads(bindings.read_text())
     cited = list(declare['sites'])
+    if declare['routes'][0]['call'] == 'read_preserved_issued':
+        from pm_goal_dg5_proofs_r import PROOFS
+
+        cited.extend(PROOFS[declare['row']]['sites'])
     if declare['row'] == 'dg5/checkpoint/afterimage/schema':
         cited.extend(('scripts/pm_goal_dg_r_projector.py', line) for line in (399, 409, 509, 510, 792, 793))
     for relative, _ in cited:
@@ -1391,6 +1457,14 @@ def run(args):
     else:
         require(not {'fresh_reference_sha256', 'fresh_reference_sha256s'} & declare.keys(),
                 'the original census is exact for this row')
+
+    if declare['routes'][0]['call'] == 'read_preserved_issued':
+        name = 'pm_goal_dg5_proofs_r.py'
+        proof_source = source / 'scripts' / name
+        proof = (HERE / name).read_bytes()
+        if not proof_source.exists():
+            proof_source.write_bytes(proof)
+        require(proof_source.read_bytes() == proof, 'the installed preserved reader source proof changed')
 
     sys.path.insert(0, str(source / 'scripts'))
     import pm_goal_dg5_closure as closure
