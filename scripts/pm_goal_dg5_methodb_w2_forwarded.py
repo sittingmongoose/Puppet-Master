@@ -35,6 +35,14 @@ DEPENDENCIES = {
     'dg5/start/original_append/schema': (
         'start/publication_result', 'original_append', 'FullOriginalAppend', 1042, 'original_append/full_value_result'
     ),
+    **{
+        f'dg5/start/{member}/schema': ('start/retained_native', member, definition, 1272, member)
+        for member, definition in (
+            ('control', 'StorageControl'), ('original_d01_head', 'StorageWorkflowHead'),
+            ('original_d01_update', 'StorageWorkflowUpdate'),
+            ('original_d01_origin', 'StorageWorkflowMutationOrigin'),
+        )
+    },
     REPRESENTATION: ('representation/record_equal', None, 'Projection', 486, None),
     **{
         row: (later, 'original_append', 'FullOriginalAppend', 256, 'original_append/full_value_result')
@@ -72,7 +80,8 @@ class ForwardedCall(worker.CompleteCall):
                                f'forwarded validation moved to {site}')
                 target = bank.lookup(reference)
                 selected = target.contents['properties'][member]
-                exact_ref = self.fixture.world.edition.custody + '#/$defs/' + definition
+                exact_ref = self.declaration.get('schema_reference',
+                    self.fixture.world.edition.custody + '#/$defs/' + definition)
                 worker.require(member in target.contents['required'] and set(selected) == {'$ref'} and
                                target.resolver.lookup(selected['$ref']).contents is bank.lookup(exact_ref).contents,
                                'the later schema must require the original definition')
@@ -261,7 +270,8 @@ def check_root(out, name, specification, sites, reference, previous, alter_copy,
                  status='LATER_REFUSAL', later=later_code, seed=int(os.environ['PYTHONHASHSEED']),
                  seconds=round(time.monotonic() - started, 3), calls=experiment.runs,
                  controls=replayed['controls'], gaps=replayed['gaps'], counts=dict(counts),
-                 historical_example_inputs=examples.pins))
+                 historical_example_inputs=examples.pins,
+                 schema_reference=specification.get('schema_reference')))
     print(name, ident, len(replayed['clauses']), len(remaining), later_code, flush=True)
 
 
@@ -270,11 +280,12 @@ def main():
     for name in ('reference', 'matrix', 'out'):
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--case', type=Path, action='append', required=True)
+    parser.add_argument('--native-bindings', type=Path)
     parser.add_argument('--root')
     parser.add_argument('--alter-forwarded-copy', action='store_true')
     args = parser.parse_args()
     cases = [(path, json.loads(path.read_bytes())) for path in args.case]
-    reference = worker.load_reference(args.reference, [case for _, case in cases])
+    reference = worker.load_reference(args.reference, [case for _, case in cases], args.native_bindings)
     reference_digest = worker.sha(args.reference)
     _, rows, _ = worker.stage.matrix_inputs(args.matrix)
     v3, v7 = worker.world.v3_edition(), worker.world.v7_edition()
