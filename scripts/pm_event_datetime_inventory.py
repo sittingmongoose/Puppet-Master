@@ -12,8 +12,11 @@ from collections import Counter
 from functools import lru_cache
 import hashlib
 import json
+import os
 from pathlib import Path
+import posixpath
 import re
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 INVENTORY = "Plans/event_datetime_inventory.json"
@@ -80,10 +83,26 @@ def snapshot_run(path):
     return ""
 
 
-def adjudicate_snapshot_line(root, run, value, coverage):
-    """Accept a mentioning snapshot line only as a verified copy of a covered owner span.
+def snapshot_span_map(run):
+    """The one file of a run whose lines are span-map rows."""
+    return "Plans/.plan_migration/" + run + "/span_map.jsonl"
 
-    (a) the line is its run's own span-map row for one owner-document span,
+
+def _canonical_owner_path(path):
+    """A Plans path spelled the way the scan names it: no ".", "..", empty or control components.
+
+    Coverage is keyed by the scanned spelling, so a span naming its owner any other way
+    ("Plans/./Owner.md", "Plans/../scripts/x.md") would find no coverage and pass (c) vacuously.
+    """
+    return (path.startswith("Plans/") and posixpath.normpath(path) == path
+            and not any(ch in path for ch in "\n\r\x00") and not snapshot_run(path))
+
+
+def adjudicate_snapshot_line(root, path, value, coverage):
+    """The fresh check: accept a mentioning snapshot line only as a verified copy of a covered owner span.
+
+    (a) the line is a row of its run's own span_map.jsonl for one owner-document span
+    named by its canonical Plans path,
     (b) the owner document still carries that span's exact bytes at the recorded
     offsets, and (c) no mentioning code container overlapping the span is left
     uncovered in the owner document. A copy accepted this way cannot hide a
@@ -91,10 +110,12 @@ def adjudicate_snapshot_line(root, run, value, coverage):
     declaration there surfaces as its own classified node, and an uncovered
     mentioning container in the owner span refuses the copy as well.
     """
-    if (not isinstance(value, dict) or value.get("schema_id") != "pm.plan_migration.span.v1"
+    run = snapshot_run(path)
+    if (path != snapshot_span_map(run)
+            or not isinstance(value, dict) or value.get("schema_id") != "pm.plan_migration.span.v1"
             or value.get("run_id") != run or not isinstance(value.get("span_id"), str)
             or not isinstance(value.get("source_path"), str)
-            or not value["source_path"].startswith("Plans/") or snapshot_run(value["source_path"])
+            or not _canonical_owner_path(value["source_path"])
             or not isinstance(value.get("sha256"), str)
             or not isinstance(value.get("byte_start"), int) or isinstance(value.get("byte_start"), bool)
             or not isinstance(value.get("byte_end"), int) or isinstance(value.get("byte_end"), bool)
@@ -119,6 +140,160 @@ def adjudicate_snapshot_line(root, run, value, coverage):
            for lo, hi, state in coverage.get(value["source_path"], ()) if state == "uncovered"):
         return "snapshot_owner_span_uncovered"
     return None
+
+
+CURRENT_RUN_POINTER = "Plans/.plan_migration/current_run.json"
+# Repository-location variables a calling git hook can export. They would point the history reader at a
+# repository other than the tree under --root, so the reader never inherits them.
+_GIT_LOCATION_ENV = frozenset(("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_OBJECT_DIRECTORY",
+                               "GIT_ALTERNATE_OBJECT_DIRECTORIES", "GIT_COMMON_DIR", "GIT_NAMESPACE"))
+
+
+def listed_snapshot_runs(root):
+    """The runs current_run.json names, as its run_id or in its supersedes_run_ids.
+
+    snapshot-current keeps exactly these current-snapshot runs and prunes the others
+    (remove_older_snapshot_runs in pm-plan-migration.py), so no other run directory belongs to
+    the published lineage. An unreadable pointer names none.
+    """
+    try:
+        pointer = json.loads((Path(root) / CURRENT_RUN_POINTER).read_text(), object_pairs_hook=_unique_object)
+    except (OSError, ValueError):
+        return frozenset()
+    if not isinstance(pointer, dict):
+        return frozenset()
+    supersedes = pointer.get("supersedes_run_ids")
+    names = [pointer.get("run_id"), *(supersedes if isinstance(supersedes, list) else ())]
+    return frozenset(name for name in names if isinstance(name, str))
+
+
+class SnapshotHistory:
+    """Owner bytes as of the commit that last changed a run's span_map.jsonl, read through git objects.
+
+    One reader serves one scan. It starts git only when a copy is not fresh and never writes.
+    """
+
+    def __init__(self, root):
+        self.root = Path(root)
+        self.env = {key: value for key, value in os.environ.items() if key not in _GIT_LOCATION_ENV}
+        self.repository, self.runs, self.blobs, self.batch = None, {}, {}, None
+
+    def _git(self, *args):
+        return subprocess.run(["git", "-C", str(self.root), *args], env=self.env, stdin=subprocess.DEVNULL,
+                              stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False)
+
+    def _in_repository(self):
+        """True only when the scanned root is itself the top of a git working tree."""
+        if self.repository is None:
+            try:
+                done = self._git("rev-parse", "--show-toplevel")
+                self.repository = (done.returncode == 0 and Path(os.fsdecode(done.stdout.rstrip(b"\n")))
+                                   .resolve() == self.root.resolve())
+            except OSError:
+                self.repository = False
+        return self.repository
+
+    def blob(self, commit, path):
+        """The raw bytes of the blob at commit:path, or None when there is no such blob."""
+        try:
+            if self.batch is None:
+                self.batch = subprocess.Popen(["git", "-C", str(self.root), "cat-file", "--batch"],
+                                              env=self.env, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                              stderr=subprocess.DEVNULL)
+            self.batch.stdin.write((commit + ":" + path + "\n").encode())
+            self.batch.stdin.flush()
+            header = self.batch.stdout.readline().rstrip(b"\n").rsplit(b" ", 2)
+            if len(header) != 3 or not header[2].isdigit():
+                return None  # "<name> missing" or "<name> ambiguous"
+            size = int(header[2])
+            data = self.batch.stdout.read(size + 1)
+        except OSError:
+            return None
+        return data[:size] if header[1] == b"blob" and len(data) == size + 1 else None
+
+    def close(self):
+        if self.batch is not None:
+            try:
+                self.batch.stdin.close()
+            except OSError:
+                pass
+            self.batch.wait()
+            self.batch.stdout.close()
+
+    def run_commit(self, run):
+        """(commit, None) when the run's working span_map.jsonl is byte-identical to its blob in the commit
+        that last changed it, otherwise (None, refusal)."""
+        if run not in self.runs:
+            self.runs[run] = self._run_commit(run)
+        return self.runs[run]
+
+    def _run_commit(self, run):
+        span_map = snapshot_span_map(run)
+        if not self._in_repository():
+            return None, "snapshot_history_unverifiable"
+        try:
+            done = self._git("-c", "log.showSignature=false", "-c", "log.follow=false",
+                             "log", "-1", "--format=%H", "--", span_map)
+        except OSError:
+            return None, "snapshot_history_unverifiable"
+        commit = done.stdout.decode("ascii", "replace").strip()
+        if done.returncode or not re.fullmatch(r"[0-9a-f]{40}(?:[0-9a-f]{24})?", commit):
+            return None, "snapshot_history_unverifiable"  # no commit carries the run: it is uncommitted
+        committed = self.blob(commit, span_map)
+        try:
+            working = (self.root / span_map).read_bytes()
+        except OSError:
+            working = None
+        if committed is None or working is None:
+            return None, "snapshot_history_unverifiable"
+        if working != committed:
+            return None, "snapshot_history_span_map_edited"
+        return commit, None
+
+    def verify(self, run, value):
+        """None when the span's bytes are the owner's bytes in the run's commit, else the refusal."""
+        commit, refusal = self.run_commit(run)
+        if refusal:
+            return refusal
+        key = (commit, value["source_path"])
+        if key not in self.blobs:
+            self.blobs[key] = self.blob(*key)
+        owner = self.blobs[key]
+        if owner is None:
+            return "snapshot_history_unverifiable"
+        start, end = value["byte_start"], value["byte_end"]
+        if end > len(owner) or hashlib.sha256(owner[start:end]).hexdigest() != value["sha256"]:
+            return "snapshot_history_text_changed"
+        return None
+
+
+def adjudicate_snapshot_copy(root, path, value, coverage, listed, history):
+    """(kind, refusal, fresh check) for one mentioning snapshot line; kind is fresh, history or refused.
+
+    Only a run current_run.json names is adjudicated (snapshot_run_unlisted otherwise). A fresh copy
+    passes adjudicate_snapshot_line against the working tree. When that check fails only because the
+    working-tree owner no longer carries the span's bytes, a span over a Markdown owner is a history
+    copy if those bytes are the owner's bytes in the commit that last changed the run's span_map.jsonl,
+    and that file is byte-identical to its blob there (SnapshotHistory). Every other failure of the
+    fresh check stands: in particular a copy whose bytes are current but whose owner span is uncovered
+    refuses, because the working tree's own coverage decides (c) and history is never consulted.
+
+    (c) is not asked of a history copy. Its text is exact owner text of a recorded commit; the current
+    owner text is scanned in this same pass with its own coverage and its own failures; and only lines
+    that declare nothing reach adjudication at all, because a snapshot line that declares either field
+    becomes an inventory row in inspect() and so its own unclassified schema node.
+    """
+    run = snapshot_run(path)
+    if run not in listed:
+        return "refused", "snapshot_run_unlisted", None
+    fresh = adjudicate_snapshot_line(root, path, value, coverage)
+    if fresh is None:
+        return "fresh", None, None
+    if (fresh not in ("snapshot_owner_text_changed", "snapshot_owner_range_missing")
+            or Path(value["source_path"]).suffix.lower() not in (".md", ".mdx")):
+        return "refused", fresh, None
+    refusal = history.verify(run, value)
+    return ("history", None, fresh) if refusal is None else ("refused", refusal, fresh)
 
 
 def _unique_object(pairs):
@@ -408,7 +583,7 @@ def _exclusion_schema_paths(root, files):
     return loadable
 
 
-def scan(root=ROOT):
+def scan(root=ROOT, report=None):
     """Bounded universe: all Plans files; JSON/JSONL in UTF-8/16/32,
     Markdown/MDX CommonMark fences, indented code, HTML and inline code,
     plus recursively serialized JSON objects, arrays and strings, up to
@@ -421,8 +596,10 @@ def scan(root=ROOT):
     named code. A candidate is skipped only when no layer of it is JSON-shaped.
     A mentioning line of a migration snapshot run carries no pinned exclusion:
     the run is regenerated and pruned at every Plans landing, so the line is
-    accepted only by adjudicate_snapshot_line, as a verified copy of a span the
-    gate has itself covered in the live owner document.
+    accepted only by adjudicate_snapshot_copy, as a fresh copy of a span the gate
+    has itself covered in the live owner document or as a history copy of the
+    owner's bytes in the commit that last changed the run's span map. A dict
+    passed as report receives the fresh/history/refused counts per run.
     """
     root = Path(root)
     rows, errors, used = [], [], set()
@@ -450,6 +627,10 @@ def scan(root=ROOT):
             if any(citation == "Plans/.plan_migration" or citation.startswith("Plans/.plan_migration/")
                    for citation in citations):
                 raise ValueError("exclusion_purpose_citation_ephemeral: " + r["path"])
+            if snapshot_run(r["path"]):
+                # A pinned exclusion on a snapshot line would bypass adjudicate_snapshot_line and, since
+                # inspect() returns early on a pinned container, could hide a declaration there.
+                raise ValueError("exclusion_path_ephemeral: " + r["path"])
             if not citations or any(not (root / citation).is_file() for citation in citations):
                 raise ValueError("exclusion_purpose_citation_unreadable: " + r["path"])
             if r["path"] == INVENTORY:
@@ -520,6 +701,13 @@ def scan(root=ROOT):
         strings(value)
         return count
 
+    def cover(path, origin, body, state):
+        try:
+            line_no = int(origin.split(":")[1])
+        except (IndexError, ValueError):
+            line_no = 0
+        md_coverage.setdefault(path, []).append((line_no, line_no + body.count("\n") + 1, state))
+
     def container(path, origin, body):
         if not schema_candidate(body):
             return
@@ -528,6 +716,9 @@ def scan(root=ROOT):
         except ValueError:
             if schema_candidate(body):
                 unsupported(path, origin, body, "unreadable_mentioning_container")
+            # An unreadable container is covered only by its pinned exclusion; otherwise the owner
+            # failure above was recorded and the container is uncovered for (c) as well.
+            cover(path, origin, body, "used" if (path, origin) in used else "uncovered")
             return
         before = len(rows)
         for label, value in documents:
@@ -541,14 +732,9 @@ def scan(root=ROOT):
                 unsupported(path, origin, body, "unclassified_mentioning_container")
         # unsupported() consults the committed exclusions itself, so the coverage
         # state is read only after it has run.
-        state = ("rows" if len(rows) > before else
-                 "used" if (path, origin) in used else
-                 "uncovered" if mentions_field(body) and len(rows) == before else "clean")
-        try:
-            line_no = int(origin.split(":")[1])
-        except (IndexError, ValueError):
-            line_no = 0
-        md_coverage.setdefault(path, []).append((line_no, line_no + body.count("\n") + 1, state))
+        cover(path, origin, body, "rows" if len(rows) > before else
+              "used" if (path, origin) in used else
+              "uncovered" if mentions_field(body) and len(rows) == before else "clean")
 
     try:
         for file in files:
@@ -588,10 +774,21 @@ def scan(root=ROOT):
                 errors.append({"path": path, "error": "scan_read_failed", "detail": str(error)})
     except (ValueError, OSError) as error:
         errors.append({"error": "scan_walk_failed", "detail": str(error)})
-    for path, origin, value in snapshot_lines:
-        code = adjudicate_snapshot_line(root, snapshot_run(path), value, md_coverage)
-        if code:
-            errors.append({"path": path, "origin": origin, "error": code})
+    listed, history, copies = None, None, {}
+    try:
+        for path, origin, value in snapshot_lines:
+            if history is None:
+                listed, history = listed_snapshot_runs(root), SnapshotHistory(root)
+            kind, refusal, fresh = adjudicate_snapshot_copy(root, path, value, md_coverage, listed, history)
+            copies.setdefault(snapshot_run(path), {"fresh": 0, "history": 0, "refused": 0})[kind] += 1
+            if refusal:
+                errors.append({"path": path, "origin": origin, "error": refusal,
+                               **({"fresh_check": fresh} if fresh else {})})
+    finally:
+        if history is not None:
+            history.close()
+    if report is not None:
+        report["snapshot_copies"] = {run: copies[run] for run in sorted(copies)}
     for key in excluded.keys() - used:
         errors.append({"error": "stale_scan_exclusion", "path": key[0], "origin": key[1]})
     return rows, errors
@@ -875,7 +1072,8 @@ def check_inventory(root=ROOT):
         return {"status": "fail", "nodes": 0, "unclassified_nodes": 0,
                 "storage_nodes": 0, "other_owner_nodes": 0,
                 "failures": [{"error": "inventory_unreadable", "detail": str(error)}]}
-    actual, scan_errors = scan(root)
+    report = {}
+    actual, scan_errors = scan(root, report)
     errors.extend(scan_errors)
     actual_by_key = {node_key(row): row for row in actual}
     expected_by_key = {node_key(row): row for row in expected}
@@ -895,7 +1093,8 @@ def check_inventory(root=ROOT):
             "other_owner_nodes": counts["owner_schema"] - wildcard_count - role_count,
             "wildcard_non_timestamp_nodes": wildcard_count,
             "wildcard_non_timestamp_role_nodes": role_count,
-            "unclassified_nodes": len(actual_by_key.keys() - expected_by_key.keys()), "failures": errors}
+            "unclassified_nodes": len(actual_by_key.keys() - expected_by_key.keys()),
+            "snapshot_copies": report.get("snapshot_copies", {}), "failures": errors}
 
 
 from pm_event_numbers import Refusal
