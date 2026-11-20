@@ -248,6 +248,16 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		else if (set.has('DROPPED')) notPresented++;
 		else unknownShown++;
 	}
+	// Round the total once. Allocate the remaining tenths to the buckets with the largest fractional remainders.
+	const droppedTenths = Math.round(droppedFrames / secs * 10);
+	const exactTenths = [notPresented, partialShown, allShown, unknownShown].map(count => count / secs * 10);
+	const bucketTenths = exactTenths.map(Math.floor);
+	const remaining = droppedTenths - bucketTenths.reduce((sum, tenths) => sum + tenths, 0);
+	const byRemainder = exactTenths.map((tenths, i) => ({ i, remainder: tenths - bucketTenths[i] }))
+		.sort((a, b) => b.remainder - a.remainder);
+	for (const { i } of byRemainder.slice(0, remaining)) bucketTenths[i]++;
+	const [notPresentedPerSec, partialPerSec, presentedAllPerSec, presentationUnknownPerSec] =
+		bucketTenths.map(tenths => tenths / 10);
 	return {
 		secs: r2(secs),
 		gpuPid: gpuPid ?? null,
@@ -276,7 +286,13 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		// shown), partialPerSec ended PRESENTED_PARTIAL (the compositor's part, a scroll say, shown; a main-thread change
 		// late), presentedAllPerSec ended PRESENTED_ALL, presentationUnknownPerSec had no reporter with a final state in the
 		// trace. unflaggedPerSec counts the DroppedFrame events without hasPartialUpdate: only that, it proves no presentation
-		frames: { beginPerSec: r1(beginFrames / secs), drawPerSec: r1(drawFrames / secs), droppedPerSec: r1(droppedFrames / secs), notPresentedPerSec: r1(notPresented / secs), partialPerSec: r1(partialShown / secs), presentedAllPerSec: r1(allShown / secs), presentationUnknownPerSec: r1(unknownShown / secs), unflaggedPerSec: r1(unflaggedDrops / secs) },
+		frames: {
+			beginPerSec: r1(beginFrames / secs),
+			drawPerSec: r1(drawFrames / secs),
+			droppedPerSec: droppedTenths / 10,
+			notPresentedPerSec, partialPerSec, presentedAllPerSec, presentationUnknownPerSec,
+			unflaggedPerSec: r1(unflaggedDrops / secs)
+		},
 		notComposited: [...failed].sort((a, b) => b[1] - a[1]).slice(0, 12),
 		animations: { started: animStarted, composited: composited.size },
 		reporter: { states, smooth, smoothDropped },

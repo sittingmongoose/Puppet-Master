@@ -107,6 +107,27 @@ const sameFrameFork = forkReporter(firstDrop.ts, 1, 'STATE_PRESENTED_PARTIAL');
 const forked = ft.summarise([...ev, firstDrop, originalReporter, sameFrameFork], { url: page }).frames;
 assert.equal(forked.partialPerSec, 0.5, 'reporters that share the frame identity still combine their final states');
 
+// A presentation breakdown keeps the same total in tenths when independent rounding would lose or add a tenth.
+const presentationRates = (secs, states) => {
+	const trace = ev.slice(0, 4);
+	for (const [i, state] of states.entries()) {
+		const ts = firstDrop.ts + i * 1000, seq = firstDrop.args.frameSeqId + i;
+		trace.push({ ...firstDrop, ts, args: { ...firstDrop.args, frameSeqId: seq } });
+		if (state) trace.push({ ...firstReporter, ts, args: { frame_reporter: {
+			...firstReporter.args.frame_reporter, state, frame_sequence: seq
+		} } });
+	}
+	trace.push({ name: 'Idle', ph: 'I', ts: 1 + secs * 1000000, pid: 20, tid: 2 });
+	const { droppedPerSec, notPresentedPerSec, partialPerSec, presentedAllPerSec, presentationUnknownPerSec } =
+		ft.summarise(trace, { url: page }).frames;
+	return { total: droppedPerSec, buckets: [notPresentedPerSec, partialPerSec, presentedAllPerSec, presentationUnknownPerSec] };
+};
+const presentationStates = ['STATE_DROPPED', 'STATE_PRESENTED_PARTIAL', 'STATE_PRESENTED_ALL'];
+assert.deepEqual(presentationRates(3, [...presentationStates, null]), { total: 1.3, buckets: [0.4, 0.3, 0.3, 0.3] },
+	'one drop in each bucket over three seconds distributes 13 tenths among four buckets');
+assert.deepEqual(presentationRates(1.5, presentationStates), { total: 2, buckets: [0.7, 0.7, 0.6, 0] },
+	'three drops over 1.5 seconds distribute 20 tenths and an empty bucket stays zero');
+
 // (5) one renderer, a 1 s window: Blink Paint 300 ms, a full PAC Update 100 ms holding a 60 ms Layerize (self 40 ms),
 // a repainted-layers update 150 ms, another PAC event 50 ms. The old helper filed all 240 ms of PAC under paint.
 const pev = [meta(20, 2, 'CrRendererMain'),
