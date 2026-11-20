@@ -1,0 +1,292 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "usage.event",
+ "findings": [
+  4
+ ],
+ "source_commit": "7656e022ad31325c58747a311d9b5e82a0b1e60b",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2444",
+ "decision_ref": "Plans/Decision_Log.md#DL-2591",
+ "registry_before": {
+  "revision": "2026-11-19.140",
+  "sha256": "6a7bafb6768c94bdb693e2f630a4f371e8513561c1563f0ae2d1954b8e89de14",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.141",
+  "sha256": "07c47ebf5ccfc886ff7f4fce66a096c5b9a2c0732e3eca27253f9baa70dd2fe6",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-usage-event",
+  "family_revision": "1.0.0",
+  "event_type": "usage.event",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Contracts_V0.md#CV-614",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-614",
+  "payload_schema_id": "pm.event_payload.usage_event.v1",
+  "payload_schema_ref": {
+   "path": "Plans/dt_event_contracts.schema.json",
+   "json_pointer": "#/$defs/usage_event",
+   "schema_id": "pm.event_payload.usage_event.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [],
+    "thread_id": [
+     "/payload/thread_id"
+    ],
+    "run_id": [
+     "/payload/run_id"
+    ],
+    "node_id": [
+     "/payload/node_id"
+    ],
+    "attempt_id": [
+     "/payload/attempt_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Contracts_V0.md#CV-614",
+   "Plans/storage-plan.md#SP-594",
+   "Plans/dt_event_contracts.schema.json#/$defs/usage_event",
+   "Plans/dt_event_contracts.json#/families/14",
+   "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "setting_key": "ai.usage.usage-retention",
+   "anchor": "first_durable_save",
+   "anchor_immutable": true,
+   "owner_ref": "Plans/storage-plan.md#SP-594"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.event_payload.usage_event.v1",
+    "payload_schema_ref": {
+     "path": "Plans/dt_event_contracts.schema.json",
+     "json_pointer": "#/$defs/usage_event",
+     "schema_id": "pm.event_payload.usage_event.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-614",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-614",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "setting_key": "ai.usage.usage-retention",
+     "anchor": "first_durable_save",
+     "anchor_immutable": true,
+     "owner_ref": "Plans/storage-plan.md#SP-594"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.event_payload.usage_event.v1",
+    "payload_schema_ref": {
+     "path": "Plans/dt_event_contracts.schema.json",
+     "json_pointer": "#/$defs/usage_event",
+     "schema_id": "pm.event_payload.usage_event.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-614",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-614",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "setting_key": "ai.usage.usage-retention",
+     "anchor": "first_durable_save",
+     "anchor_immutable": true,
+     "owner_ref": "Plans/storage-plan.md#SP-594"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "registry_row": {
+  "family_id": "event-family-usage-event",
+  "family_revision": "1.0.0",
+  "event_type": "usage.event",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Contracts_V0.md#CV-614",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-614",
+  "payload_schema_id": "pm.event_payload.usage_event.v1",
+  "payload_schema_ref": {
+   "path": "Plans/dt_event_contracts.schema.json",
+   "json_pointer": "#/$defs/usage_event",
+   "schema_id": "pm.event_payload.usage_event.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [],
+    "thread_id": [
+     "/payload/thread_id"
+    ],
+    "run_id": [
+     "/payload/run_id"
+    ],
+    "node_id": [
+     "/payload/node_id"
+    ],
+    "attempt_id": [
+     "/payload/attempt_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Contracts_V0.md#CV-614",
+   "Plans/storage-plan.md#SP-594",
+   "Plans/dt_event_contracts.schema.json#/$defs/usage_event",
+   "Plans/dt_event_contracts.json#/families/14",
+   "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "setting_key": "ai.usage.usage-retention",
+   "anchor": "first_durable_save",
+   "anchor_immutable": true,
+   "owner_ref": "Plans/storage-plan.md#SP-594"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.event_payload.usage_event.v1",
+    "payload_schema_ref": {
+     "path": "Plans/dt_event_contracts.schema.json",
+     "json_pointer": "#/$defs/usage_event",
+     "schema_id": "pm.event_payload.usage_event.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-614",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-614",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "setting_key": "ai.usage.usage-retention",
+     "anchor": "first_durable_save",
+     "anchor_immutable": true,
+     "owner_ref": "Plans/storage-plan.md#SP-594"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.event_payload.usage_event.v1",
+    "payload_schema_ref": {
+     "path": "Plans/dt_event_contracts.schema.json",
+     "json_pointer": "#/$defs/usage_event",
+     "schema_id": "pm.event_payload.usage_event.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Contracts_V0.md#CV-614",
+    "read_owner_ref": "Plans/Contracts_V0.md#CV-614",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "setting_key": "ai.usage.usage-retention",
+     "anchor": "first_durable_save",
+     "anchor_immutable": true,
+     "owner_ref": "Plans/storage-plan.md#SP-594"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "predecessor_record_sha256": "55eb55e9f01e9c718a7969064cd22fee7011ccca97c207f3f4624b429341d23e",
+ "predecessor_assessment_sha256": "035cade72ac1521720b4ee8c32d5fa933dbe09fc2550c7ab7d5fbbb966f0807a",
+ "applied_record_sha256": "b0b9e8be4ffecf5727a7db05be31c6a7ab21d3d977c6dc8ddc15b54966674571",
+ "applied_assessment_sha256": "d8466e46263e81266d921e4a8b3bf9ca8935d27efb1688edc9e606c3f308c424",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-594",
+    "line_start": 40869,
+    "line_end": 40869,
+    "quote": "Current selected assignment (2026-11-19): usage.event@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-594, Plans/storage-plan.md:40627-40906",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-594",
+     "line_start": 39349,
+     "line_end": 39349,
+     "quote": "\\ = ai.usage.usage-retention`, `retention_binding.anchor = first_durable_save`: the first successful\\",
+     "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-594",
+    "line_start": 40850,
+    "line_end": 40871,
+    "quote": "  source-result, run-finish or recovery time. There is no count eviction. Daily account/provider/model totals remain\n  canonical, backed up and permanent; commit their accounting before detail cleanup and never rebuild them from\n  expired detail. Holds, required references, recovery, rollback and protected backups still block deletion. This\n  is the existing setting-driven policy selector, not a newly minted policy ID. The registry retention_policy_ref\n  setting-selected form carries setting_key=ai.usage.usage-retention, anchor=first_durable_save, anchor_immutable=true\n  and owner_ref=Plans/storage-plan.md#SP-594, with no policy_id or policy_version. The separate original source\n  rows keep their exact DL-507 assignments; no source-row lifetime is transferred from this event answer. `PENDING_RETENTION_BINDING`\n  is resolved for this event; separate admission, storage implementation and native proof remain required.\n\n\n  Signed answer: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md`,\n  card `E8-1`, send `f66b1af9-f851-493f-a2ee-6b666b477920`, signed 2026-11-14 at 3:25 PM EST (20:25 UTC); SHA-256\n  `509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b`. No Decision Log ID is minted here; integration\n  records the later entry.\n\n\n  This signed binding supersedes earlier pending-retention language for this exact facet, including the prior s4r\n  pending question; other source, checkpoint, custody and admission requirements remain with their existing owners.\n\n\n\n  Current selected assignment (2026-11-19): usage.event@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-594, Plans/storage-plan.md:40629-40908"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  },
+  {
+   "ordinal": 1,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-594",
+    "line_start": 40869,
+    "line_end": 40869,
+    "quote": "Current selected assignment (2026-11-19): usage.event@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-594, Plans/storage-plan.md:40627-40906",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-594",
+     "line_start": 39360,
+     "line_end": 39360,
+     "quote": "\\ anchor=first_durable_save, anchor_immutable=true and owner_ref=Plans/storage-plan.md#SP-594, with no policy_id or policy_version. The separate original source rows keep their exact DL-507 assignments; no source-row lifetime\\",
+     "file_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-594",
+    "line_start": 40850,
+    "line_end": 40871,
+    "quote": "  source-result, run-finish or recovery time. There is no count eviction. Daily account/provider/model totals remain\n  canonical, backed up and permanent; commit their accounting before detail cleanup and never rebuild them from\n  expired detail. Holds, required references, recovery, rollback and protected backups still block deletion. This\n  is the existing setting-driven policy selector, not a newly minted policy ID. The registry retention_policy_ref\n  setting-selected form carries setting_key=ai.usage.usage-retention, anchor=first_durable_save, anchor_immutable=true\n  and owner_ref=Plans/storage-plan.md#SP-594, with no policy_id or policy_version. The separate original source\n  rows keep their exact DL-507 assignments; no source-row lifetime is transferred from this event answer. `PENDING_RETENTION_BINDING`\n  is resolved for this event; separate admission, storage implementation and native proof remain required.\n\n\n  Signed answer: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md`,\n  card `E8-1`, send `f66b1af9-f851-493f-a2ee-6b666b477920`, signed 2026-11-14 at 3:25 PM EST (20:25 UTC); SHA-256\n  `509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b`. No Decision Log ID is minted here; integration\n  records the later entry.\n\n\n  This signed binding supersedes earlier pending-retention language for this exact facet, including the prior s4r\n  pending question; other source, checkpoint, custody and admission requirements remain with their existing owners.\n\n\n\n  Current selected assignment (2026-11-19): usage.event@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-594, Plans/storage-plan.md:40629-40908"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}
