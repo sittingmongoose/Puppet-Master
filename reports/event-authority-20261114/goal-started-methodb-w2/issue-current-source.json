@@ -1,0 +1,23 @@
+{
+  "fixtures": [
+    {
+      "edit": [
+        1,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "edition": "v3",
+      "error": [
+        [],
+        "additionalProperties"
+      ],
+      "hash_seed": 33,
+      "root": "dg5:c5a3e21f071d5db4",
+      "route": "issue/current_source"
+    }
+  ],
+  "row": "dg5/issue/current_source/schema"
+}
