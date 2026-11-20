@@ -1,6 +1,7 @@
 """Source checks for the certified Goal schema coverage table."""
 
 WORLD = 'scripts/pm_goal_dg_cf2_world.py'
+PRODUCER = 'scripts/pm_goal_dg_cf1_world.py'
 FAMILY = 'goal_run.certified'
 MESSAGEPACK = [
     ('scripts/pm_goal_test_owner_adapters.py', 74),
@@ -9,6 +10,25 @@ MESSAGEPACK = [
 ]
 
 PROOFS = {
+    'dg5/producer/payload/schema': {
+        'kind': 'entailed-by-certified-submission-payload',
+        'families': [FAMILY],
+        'depends_on': [],
+        'sites': [
+            *((PRODUCER, line) for line in (129, 1571, 1625, 1626, 1640, 1641, 1655, 1657, 1658, 1669, 1682, 1688)),
+            ('Plans/goal_certified_producer_source_contracts/schemas/producer-submission.v1.schema.json', 99),
+            ('scripts/pm_goal_own_c3_w5_successor_oracles.py', 80),
+        ],
+        'argument': (
+            'The original submission requires a copy of the payload and resolves its reference '
+            'to the same complete schema document. Before that submission, the producer also '
+            'checks all three integer members explicitly and requires its payload and event '
+            'timestamps to be the same value from the decision. It validates the event timestamp '
+            'with the repository parser. Disabling just the earlier payload check forwards '
+            'the unchanged invalid payload to the submission validator. Restoring it repeats '
+            'the original refusal. The original source-issuance write matches in every test.'
+        ),
+    },
     'dg5/current/guard/schema': {
         'kind': 'entailed-by-final-current-guard',
         'families': [FAMILY],

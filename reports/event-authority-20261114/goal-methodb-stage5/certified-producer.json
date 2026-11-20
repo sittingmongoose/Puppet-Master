@@ -1,0 +1,878 @@
+{
+  "accepted_branches": {
+    "optional proof members": {
+      "actor_ref": "TEST_ONLY:actor:certifier",
+      "approval_refs": [
+        "TEST_ONLY:approval"
+      ],
+      "artifact_refs": [
+        "TEST_ONLY:artifact"
+      ],
+      "causation_event_ref": "TEST_ONLY:goal_test.cause:cf1",
+      "correlation_id": "TEST_ONLY:correlation:cf1",
+      "effective_account_ref": "TEST_ONLY:account:1",
+      "effective_model_ref": "TEST_ONLY:model:a-2026",
+      "effective_provider_ref": "TEST_ONLY:provider:a",
+      "event_name": "goal_run.certified",
+      "evidence_refs": [
+        "TEST_ONLY:evidence:TEST_ONLY:worknode:a",
+        "TEST_ONLY:evidence:TEST_ONLY:worknode:b"
+      ],
+      "execution_role": "verifier",
+      "expected_goal_run_revision": 5,
+      "goal_id": "TEST_ONLY:goal:cf1",
+      "goal_revision": 3,
+      "goal_run_revision": 6,
+      "idempotency_key": "goal_run.certified.v3:34:TEST_ONLY:goal_run:cf1-\u03b1-e\u0301-\ud83e\udd8a79:TEST_ONLY:standard-receipt:TEST_ONLY:tx:f5b0cf8e-201f-4744-b95d-a86de8a033a8:179:certified1:51:6",
+      "occurred_at_utc": "2026-11-20T14:42:39.782Z",
+      "payload": {
+        "certification_receipt_ref": "TEST_ONLY:standard-receipt:TEST_ONLY:tx:f5b0cf8e-201f-4744-b95d-a86de8a033a8:17",
+        "final_certifier_decision": "certified",
+        "goal_run_id": "TEST_ONLY:goal_run:cf1-\u03b1-e\u0301-\ud83e\udd8a",
+        "unresolved_risk_refs": [],
+        "validator_outputs": [
+          {
+            "evidence_ref": "TEST_ONLY:evidence:TEST_ONLY:worknode:a",
+            "outcome": "passed",
+            "reason_code": "TEST_ONLY:reason",
+            "validator_id": "TEST_ONLY:validator:TEST_ONLY:worknode:a",
+            "waiver_ref": "TEST_ONLY:waiver"
+          },
+          {
+            "evidence_ref": "TEST_ONLY:evidence:TEST_ONLY:worknode:b",
+            "outcome": "passed",
+            "validator_id": "TEST_ONLY:validator:TEST_ONLY:worknode:b"
+          }
+        ],
+        "worknode_receipt_refs": [
+          "TEST_ONLY:worknode-receipt:TEST_ONLY:worknode:a",
+          "TEST_ONLY:worknode-receipt:TEST_ONLY:worknode:b"
+        ]
+      },
+      "project_id": "TEST_ONLY-project-cf1-\u03b2\u0301",
+      "requested_account_ref": "TEST_ONLY:account:1",
+      "requested_model_ref": "TEST_ONLY:model:a",
+      "requested_provider_ref": "TEST_ONLY:provider:a",
+      "schema_version": "pm.goal_runtime_event.goal_run_certified.schema.v3",
+      "thread_id": "TEST_ONLY:thread:cf1"
+    }
+  },
+  "census_sha256": "cdeb7440041a74b33c0e5af00d25c046e867481f3643818f0f3453882b51503f",
+  "examples": {
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/if/properties/final_certifier_decision/const": {
+      "certified_payload_selector": [
+        {
+          "path": [
+            "payload",
+            "final_certifier_decision"
+          ],
+          "value": "certified_with_approved_exception"
+        },
+        {
+          "path": [
+            "payload",
+            "unresolved_risk_refs"
+          ],
+          "value": [
+            "TEST_ONLY:retained-risk"
+          ]
+        }
+      ],
+      "expected_before": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/0/then/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/final_certifier_decision/const",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/unresolved_risk_refs/maxItems"
+      ],
+      "expected_disabled": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/then/properties/unresolved_risk_refs/maxItems",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/0/then/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/final_certifier_decision/const",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/unresolved_risk_refs/maxItems"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/if/required": {
+      "certified_payload_selector": [
+        {
+          "member": [
+            "remove",
+            "final_certifier_decision"
+          ],
+          "path": [
+            "payload"
+          ]
+        },
+        {
+          "path": [
+            "payload",
+            "unresolved_risk_refs"
+          ],
+          "value": [
+            "TEST_ONLY:retained-risk"
+          ]
+        }
+      ],
+      "expected_before": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/unresolved_risk_refs/maxItems"
+      ],
+      "expected_disabled": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/then/properties/unresolved_risk_refs/maxItems",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/unresolved_risk_refs/maxItems"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/then/properties/unresolved_risk_refs/maxItems": {
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/unresolved_risk_refs/maxItems"
+      ],
+      "control_name": "optional proof members",
+      "path": [
+        "payload",
+        "unresolved_risk_refs"
+      ],
+      "value": [
+        "gc0"
+      ]
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/then/properties/unresolved_risk_refs/type": {
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/ref_array/type"
+      ],
+      "control_name": "optional proof members",
+      "path": [
+        "payload",
+        "unresolved_risk_refs"
+      ],
+      "value": {}
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/then/properties/validator_outputs/not": {
+      "certified_payload_changes": [
+        {
+          "path": [
+            "payload",
+            "validator_outputs"
+          ],
+          "value": [
+            {
+              "evidence_ref": "TEST_ONLY:evidence:TEST_ONLY:worknode:a",
+              "outcome": "failed",
+              "reason_code": "TEST_ONLY:reason",
+              "validator_id": "TEST_ONLY:validator:TEST_ONLY:worknode:a"
+            },
+            {
+              "evidence_ref": "TEST_ONLY:evidence:TEST_ONLY:worknode:b",
+              "outcome": "passed",
+              "validator_id": "TEST_ONLY:validator:TEST_ONLY:worknode:b"
+            }
+          ]
+        }
+      ],
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/validator_outputs/items/properties/outcome/const"
+      ],
+      "path": [
+        "payload",
+        "validator_outputs"
+      ]
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/then/properties/validator_outputs/not/contains": {
+      "certified_payload_selector": [],
+      "expected_before": [],
+      "expected_disabled": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/then/properties/validator_outputs/not"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/then/properties/validator_outputs/not/contains/properties/outcome/enum": {
+      "certified_payload_selector": [],
+      "expected_before": [],
+      "expected_disabled": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/then/properties/validator_outputs/not"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/then/properties/validator_outputs/not/contains/required": {
+      "certified_payload_selector": [
+        {
+          "member": [
+            "remove",
+            "outcome"
+          ],
+          "path": [
+            "payload",
+            "validator_outputs",
+            0
+          ]
+        }
+      ],
+      "expected_before": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/0/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/1/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/required"
+      ],
+      "expected_disabled": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/then/properties/validator_outputs/not",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/0/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/1/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/required"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/then/properties/validator_outputs/not/contains/type": {
+      "certified_payload_selector": [
+        {
+          "path": [
+            "payload",
+            "validator_outputs",
+            0
+          ],
+          "value": false
+        }
+      ],
+      "expected_before": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/type"
+      ],
+      "expected_disabled": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/then/properties/validator_outputs/not",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/type"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/1/if/properties/final_certifier_decision/const": {
+      "certified_payload_selector": [],
+      "expected_before": [],
+      "expected_disabled": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/non_empty_ref_array/minItems"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/1/if/required": {
+      "certified_payload_selector": [
+        {
+          "member": [
+            "remove",
+            "final_certifier_decision"
+          ],
+          "path": [
+            "payload"
+          ]
+        }
+      ],
+      "expected_before": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/required"
+      ],
+      "expected_disabled": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/non_empty_ref_array/minItems"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "payload"
+      ]
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/properties/final_certifier_decision/enum": {
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/final_certifier_decision/const"
+      ],
+      "control_name": "optional proof members",
+      "path": [
+        "payload",
+        "final_certifier_decision"
+      ],
+      "value": "gc:not-a-member"
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/properties/final_certifier_decision/type": {
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/properties/final_certifier_decision/enum",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/final_certifier_decision/const"
+      ],
+      "control_name": "optional proof members",
+      "path": [
+        "payload",
+        "final_certifier_decision"
+      ],
+      "value": {}
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/properties/validator_outputs/items/allOf/1/if/properties/outcome/const": {
+      "certified_payload_selector": [],
+      "expected_before": [],
+      "expected_disabled": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/properties/validator_outputs/items/allOf/1/then/required"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/properties/validator_outputs/items/allOf/1/if/required": {
+      "certified_payload_selector": [
+        {
+          "member": [
+            "remove",
+            "outcome"
+          ],
+          "path": [
+            "payload",
+            "validator_outputs",
+            0
+          ]
+        }
+      ],
+      "expected_before": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/0/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/1/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/required"
+      ],
+      "expected_disabled": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/properties/validator_outputs/items/allOf/1/then/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/0/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/1/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/required"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/properties/validator_outputs/items/allOf/1/then/required": {
+      "certified_payload_changes": [
+        {
+          "path": [
+            "payload",
+            "validator_outputs",
+            0
+          ],
+          "value": {
+            "evidence_ref": "TEST_ONLY:evidence:TEST_ONLY:worknode:a",
+            "outcome": "skipped",
+            "reason_code": "TEST_ONLY:reason",
+            "validator_id": "TEST_ONLY:validator:TEST_ONLY:worknode:a"
+          }
+        }
+      ],
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/validator_outputs/items/properties/outcome/const"
+      ],
+      "path": [
+        "payload",
+        "validator_outputs",
+        0
+      ]
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/properties/validator_outputs/type": {
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/then/properties/validator_outputs/not"
+      ],
+      "control_name": "optional proof members",
+      "path": [
+        "payload",
+        "validator_outputs"
+      ],
+      "value": {}
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/required": {
+      "member": [
+        "remove",
+        "goal_run_id"
+      ],
+      "path": [
+        "payload"
+      ]
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/type": {
+      "control_name": "optional proof members",
+      "path": [
+        "payload"
+      ],
+      "value": null
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/execution_role/enum": {
+      "path": [
+        "execution_role"
+      ],
+      "value": "userx"
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/execution_role/type": {
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/execution_role/enum"
+      ],
+      "control_name": "optional proof members",
+      "path": [
+        "execution_role"
+      ],
+      "value": {}
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/non_empty_ref/minLength": {
+      "path": [
+        "actor_ref"
+      ],
+      "value": ""
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/non_empty_ref/type": {
+      "path": [
+        "actor_ref"
+      ],
+      "value": null
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/non_empty_ref_array/minItems": {
+      "control_name": "optional proof members",
+      "path": [
+        "approval_refs"
+      ],
+      "value": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/non_empty_ref_array/type": {
+      "control_name": "optional proof members",
+      "path": [
+        "approval_refs"
+      ],
+      "value": null
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/non_empty_ref_array/uniqueItems": {
+      "control_name": "optional proof members",
+      "path": [
+        "approval_refs"
+      ],
+      "value": [
+        "TEST_ONLY:approval",
+        "TEST_ONLY:approval"
+      ]
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/non_empty_string/minLength": {
+      "path": [
+        "correlation_id"
+      ],
+      "value": ""
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/non_empty_string/type": {
+      "path": [
+        "correlation_id"
+      ],
+      "value": null
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/ref_array/type": {
+      "path": [
+        "artifact_refs"
+      ],
+      "value": null
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/ref_array/uniqueItems": {
+      "path": [
+        "artifact_refs"
+      ],
+      "value": [
+        "gc",
+        "gc"
+      ]
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/utc_date_time/format": {
+      "path": [
+        "occurred_at_utc"
+      ],
+      "value": "not-a-date-time"
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/utc_date_time/type": {
+      "path": [
+        "occurred_at_utc"
+      ],
+      "value": null
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "payload",
+        "validator_outputs",
+        0
+      ]
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf": {
+      "certified_payload_changes": [
+        {
+          "member": [
+            "remove",
+            "evidence_ref"
+          ],
+          "path": [
+            "payload",
+            "validator_outputs",
+            0
+          ]
+        }
+      ],
+      "path": [
+        "payload",
+        "validator_outputs",
+        0
+      ]
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/0/properties/outcome/const": {
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/properties/outcome/enum",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/validator_outputs/items/properties/outcome/const"
+      ],
+      "control_name": "optional proof members",
+      "path": [
+        "payload",
+        "validator_outputs",
+        1,
+        "outcome"
+      ],
+      "value": "gc:not-a-member"
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/0/required": {
+      "member": [
+        "remove",
+        "evidence_ref"
+      ],
+      "path": [
+        "payload",
+        "validator_outputs",
+        0
+      ]
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/1/properties/outcome/enum": {
+      "certified_payload_selector": [],
+      "control_name": "optional proof members",
+      "expected_before": [],
+      "expected_disabled": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/1/required": {
+      "certified_payload_changes": [
+        {
+          "path": [
+            "payload",
+            "validator_outputs",
+            0
+          ],
+          "value": {
+            "evidence_ref": "TEST_ONLY:evidence:TEST_ONLY:worknode:a",
+            "outcome": "skipped",
+            "validator_id": "TEST_ONLY:validator:TEST_ONLY:worknode:a"
+          }
+        }
+      ],
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/properties/validator_outputs/items/allOf/1/then/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/validator_outputs/items/properties/outcome/const"
+      ],
+      "path": [
+        "payload",
+        "validator_outputs",
+        0
+      ]
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/properties/outcome/enum": {
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/0/properties/outcome/const",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/1/properties/outcome/enum",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/1/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/validator_outputs/items/properties/outcome/const"
+      ],
+      "control_name": "optional proof members",
+      "path": [
+        "payload",
+        "validator_outputs",
+        1,
+        "outcome"
+      ],
+      "value": "gc:not-a-member"
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/properties/outcome/type": {
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/0/properties/outcome/const",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/1/properties/outcome/enum",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf/1/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/properties/outcome/enum",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/validator_outputs/items/properties/outcome/const"
+      ],
+      "control_name": "optional proof members",
+      "path": [
+        "payload",
+        "validator_outputs",
+        1,
+        "outcome"
+      ],
+      "value": {}
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/required": {
+      "member": [
+        "remove",
+        "validator_id"
+      ],
+      "path": [
+        "payload",
+        "validator_outputs",
+        0
+      ]
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/type": {
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/validator_output/oneOf"
+      ],
+      "control_name": "optional proof members",
+      "path": [
+        "payload",
+        "validator_outputs",
+        1
+      ],
+      "value": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/additionalProperties": {
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/unevaluatedProperties"
+      ],
+      "control_name": "optional proof members",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/0/if/properties/payload/properties/final_certifier_decision/const": {
+      "certified_payload_selector": [],
+      "expected_before": [],
+      "expected_disabled": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/0/then/required"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/0/if/properties/payload/required": {
+      "certified_payload_selector": [
+        {
+          "member": [
+            "remove",
+            "final_certifier_decision"
+          ],
+          "path": [
+            "payload"
+          ]
+        }
+      ],
+      "expected_before": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/required"
+      ],
+      "expected_disabled": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/0/then/required"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/0/if/required": {
+      "certified_payload_selector": [
+        {
+          "member": [
+            "remove",
+            "payload"
+          ],
+          "path": []
+        }
+      ],
+      "expected_before": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/required"
+      ],
+      "expected_disabled": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/0/then/required",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/required"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/0/then/required": {
+      "certified_payload_changes": [
+        {
+          "path": [
+            "payload",
+            "final_certifier_decision"
+          ],
+          "value": "certified_with_approved_exception"
+        }
+      ],
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/non_empty_ref_array/minItems",
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/final_certifier_decision/const"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/final_certifier_decision/const": {
+      "certified_payload_changes": [
+        {
+          "path": [
+            "payload",
+            "final_certifier_decision"
+          ],
+          "value": "certified_with_approved_exception"
+        },
+        {
+          "path": [
+            "payload",
+            "unresolved_risk_refs"
+          ],
+          "value": [
+            "TEST_ONLY:retained-risk"
+          ]
+        }
+      ],
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/unresolved_risk_refs/maxItems"
+      ],
+      "control_name": "optional proof members",
+      "path": [
+        "payload",
+        "final_certifier_decision"
+      ]
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/unresolved_risk_refs/maxItems": {
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/$defs/event_payload/allOf/0/then/properties/unresolved_risk_refs/maxItems"
+      ],
+      "control_name": "optional proof members",
+      "path": [
+        "payload",
+        "unresolved_risk_refs"
+      ],
+      "value": [
+        "gc0"
+      ]
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/allOf/1/properties/payload/properties/validator_outputs/items/properties/outcome/const": {
+      "certified_payload_changes": [
+        {
+          "path": [
+            "payload",
+            "validator_outputs",
+            0
+          ],
+          "value": {
+            "evidence_ref": "TEST_ONLY:evidence:TEST_ONLY:worknode:a",
+            "outcome": "skipped",
+            "reason_code": "TEST_ONLY:reason",
+            "validator_id": "TEST_ONLY:validator:TEST_ONLY:worknode:a",
+            "waiver_ref": "TEST_ONLY:waiver"
+          }
+        }
+      ],
+      "path": [
+        "payload",
+        "validator_outputs",
+        0,
+        "outcome"
+      ]
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/properties/event_name/const": {
+      "path": [
+        "event_name"
+      ],
+      "value": "goal_run.certifiedx"
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/properties/event_name/type": {
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/properties/event_name/const"
+      ],
+      "control_name": "optional proof members",
+      "path": [
+        "event_name"
+      ],
+      "value": {}
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/properties/expected_goal_run_revision/minimum": {
+      "path": [
+        "expected_goal_run_revision"
+      ],
+      "value": 0
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/properties/expected_goal_run_revision/type": {
+      "path": [
+        "expected_goal_run_revision"
+      ],
+      "value": 1.5
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/properties/goal_revision/minimum": {
+      "path": [
+        "goal_revision"
+      ],
+      "value": 0
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/properties/goal_revision/type": {
+      "path": [
+        "goal_revision"
+      ],
+      "value": 1.5
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/properties/goal_run_revision/minimum": {
+      "path": [
+        "goal_run_revision"
+      ],
+      "value": 0
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/properties/goal_run_revision/type": {
+      "path": [
+        "goal_run_revision"
+      ],
+      "value": 1.5
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/properties/schema_version/const": {
+      "path": [
+        "schema_version"
+      ],
+      "value": "pm.goal_runtime_event.goal_run_certified.schema.v3x"
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/properties/schema_version/type": {
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/properties/schema_version/const"
+      ],
+      "control_name": "optional proof members",
+      "path": [
+        "schema_version"
+      ],
+      "value": {}
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/required": {
+      "member": [
+        "remove",
+        "event_name"
+      ],
+      "path": []
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/type": {
+      "path": [],
+      "value": true
+    },
+    "pm.goal_runtime_event.goal_run_certified.schema.v3#/unevaluatedProperties": {
+      "certified_payload_messages": [
+        "pm.goal_runtime_event.goal_run_certified.schema.v3#/additionalProperties"
+      ],
+      "control_name": "optional proof members",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    }
+  },
+  "family": "goal_run.certified",
+  "later_refusal": "producer/submission/schema/payload",
+  "root": "dg5:9c8b338493d0a78c",
+  "route": "producer_prepare",
+  "row": "dg5/producer/payload/schema",
+  "site": [
+    "scripts/pm_goal_dg_cf1_world.py",
+    1655
+  ],
+  "source": "5739b80d9b06d0e04609b2d8600a808c1836cebb",
+  "transaction": true
+}
