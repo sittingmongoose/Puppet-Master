@@ -36,6 +36,9 @@ PREFLIGHT_CHOICES = {
     'ReceiptOrigin': (0, 'original_read', 'origin', 'record'),
     'RecordSelector': (0, 'binding', 'full_source', 'source'),
 }
+COMPLETION_SOURCE = ('https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json'
+                     '#/$defs/CurrentCompletionRequirementSource')
+REQUIRED_CHILDREN = ('source', 'record', 'required_children')
 
 
 class Fixture(stage.Fixture):
@@ -47,6 +50,17 @@ class Fixture(stage.Fixture):
             projector, _, _ = stage.original.projected(self.world)
             _, _, _, row = projector.current_row()
             return projector.rep.decode, (row['value'], stage.original.R.original_started(self.world))
+        if self.route == 'projector/result':
+            projector = stage.original.R.StartedProjector(self.world.registry, world=self.world)
+            projector.install()
+            return projector.replay, (projector.stage(),)
+        if self.route in ('read_historical/root', 'read_current/root'):
+            _, reader, _ = stage.original.projected(self.world)
+            return getattr(reader, self.route.split('/')[0]), (stage.original.sreq(self.world),)
+        if self.route == 'issue/current_source':
+            owner = self.world.owners['d01']
+            owner.current_source(self.world.owners['native'].current())
+            return self.issue_arguments(owner, 'current_source')
         if self.route in ('issue/CurrentGoalArgument', 'issue/OriginalGoalArgument'):
             self.bank = self.goal_bank
             owner = self.world.owners['goal']
@@ -180,6 +194,26 @@ class Fixture(stage.Fixture):
             with patch.object(world, 'skeleton', document):
                 return self.action(*self.args)
 
+        if self.route == 'projector/result' and edit:
+            representation = stage.original.R.Representation
+            validate = representation.validate
+            _, path, change = edit
+
+            def result_document(rep, name, value, code):
+                if code == 'projector/result':
+                    changed = rules.apply(value, path, tuple(change))
+                    value.clear()
+                    value.update(changed)
+                return validate(rep, name, value, code)
+
+            with patch.object(representation, 'validate', result_document):
+                return self.action(*self.args)
+
+        if self.route in ('read_historical/root', 'read_current/root') and edit:
+            line = {'read_historical/root': 906, 'read_current/root': 937}[self.route]
+            _, path, change = edit
+            return self.call_reader_result(line, path, change)
+
         if self.route.startswith(('read_append/', 'read_native/')):
             return self.call_reader(edit)
         if self.route in ('publish_result', 'publish_original_append', 'publish_commit',
@@ -193,6 +227,33 @@ class Fixture(stage.Fixture):
             require(position == 1, 'issuer edit must change the document argument')
             value = rules.apply(value, path, tuple(change) if isinstance(change, list) else change)
         return self.action(root, value, kind=self.issue_kind)
+
+    def call_reader_result(self, line, path, change):
+        """Edit the assembled reader result just before its original validation."""
+        reader_source = stage.original.R.__file__
+        seen = []
+
+        def at_result(frame, event, _):
+            if event == 'line' and frame.f_lineno == line:
+                value = frame.f_locals['value']
+                changed = rules.apply(value, path, tuple(change))
+                value.clear()
+                value.update(changed)
+                seen.append(line)
+            return at_result
+
+        def choose_frame(frame, event, _):
+            if event == 'call' and frame.f_code.co_name == 'body' and frame.f_code.co_filename == reader_source:
+                return at_result
+            return None
+
+        previous = sys.gettrace()
+        sys.settrace(choose_frame)
+        try:
+            return self.action(*self.args)
+        finally:
+            sys.settrace(previous)
+            require(seen == [line], 'expected one edit of the final reader document')
 
     def call_reader(self, edit):
         if not edit:
@@ -272,10 +333,10 @@ class Fixture(stage.Fixture):
 
 class CompleteCall(stage.Example):
     def run(self, edit=None, cut=False):
-        if self.fixture.route not in ('publish_result', 'publish_original_append'):
+        if self.fixture.route not in ('publish_result', 'publish_original_append', 'projector/result'):
             return super().run(edit, cut)
-        # These two checks run after the original start has written some or all
-        # of its publication. Every execution starts from an independent copy.
+        # These result checks run after the original call has written changes.
+        # Every execution starts from an independent copy.
         original = self.fixture.path
         require(stage.store(original) == self.before, 'complete-call store preimage changed')
         replay = original.with_name(original.name + f'-late-publication-{len(self.runs)}')
@@ -492,6 +553,33 @@ def member_and_type_implication(plain, nodes, info, name, keyword, cut, path):
     return None
 
 
+def completion_child_implication(nodes, info, name, keyword, cut, path):
+    if name != COMPLETION_SOURCE + '/allOf/1/required' or keyword != 'required':
+        return None
+    for rule, seen_path in pilot.located_errors(cut):
+        if seen_path != tuple(path) or not rule.endswith('/CompletionRequirementSource/required'):
+            continue
+        candidate = nodes[rule.rsplit('/', 1)[0]]
+        if set(info['node']['required']) <= set(candidate['node']['required']) and co_reached(candidate, info, nodes):
+            return dict(covering_rule=rule, members=info['node']['required'],
+                        premise='The two required-member rules apply to the same object in every branch.')
+    return None
+
+
+def empty_completion_children(nodes, info):
+    name = COMPLETION_SOURCE + '/allOf/1/properties/required_children'
+    candidate = nodes.get(name)
+    if not candidate or candidate['node'].get('maxItems') != 0:
+        return None
+    for reach in info['reach']:
+        path = reach['ipath']
+        if path[:4] != (*REQUIRED_CHILDREN, '#') or not any(
+                peer['ipath'] == REQUIRED_CHILDREN and rules.applies(peer, rules.scope_of(reach, nodes))
+                for peer in candidate['reach']):
+            return None
+    return name + '/maxItems'
+
+
 def update_implication(nodes, info, name, keyword, cut, path):
     """Check the original WorkflowUpdate discriminator and its required cause."""
     marker = '#/$defs/WorkflowUpdate'
@@ -703,6 +791,12 @@ def per_rule_candidates(plain, validator, controls, seeds, info, keyword, old, c
         node = info['node']
         value = rules.get(control, path)
         yield from rules.defects(keyword, node, value)
+        if keyword == 'maxItems' and node['x-pm-oracle-id'] == COMPLETION_SOURCE + '/allOf/1/properties/required_children':
+            record = rules.get(control, REQUIRED_CHILDREN[:-1])
+            identity = record['identity']
+            yield [dict(parent_goal_id=identity['goal_id'], parent_goal_run_id=identity['goal_run_id'],
+                        child_goal_id='TEST_ONLY:child-goal', child_goal_run_id='TEST_ONLY:child-run',
+                        original_child_requirement_source=record['original_requirement_authority_sources'][0])]
         if (keyword == 'oneOf' and isinstance(value, dict) and
                 node['x-pm-oracle-id'] in (PREFLIGHT_CUSTODY + name for name in PREFLIGHT_CHOICES)):
             for arm in node['oneOf']:
@@ -782,6 +876,7 @@ def replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword
                            afterimages_implication(nodes, rule_id, cut, path) or
                            event_clock_implication(plain, nodes, info, rule_id, keyword, cut, path) or
                            preflight_implication(nodes, info, rule_id, keyword, cut, path) or
+                           completion_child_implication(nodes, info, rule_id, keyword, cut, path) or
                            stage.regex_implication(plain, node, keyword, rule_id, path, cut))
         record = dict(path=list(path), edit=repr(edit), edit_source=source, control=index,
                       input_sha256=stage.sweep.digest(changed), before=actual, cut=comparison_messages(error_records(cut)),
@@ -795,6 +890,10 @@ def replay_rule(plain, validator, nodes, controls, seeds, rule_id, info, keyword
         record['cls'] = 'COVERED_LATER' if cut else 'KILLED'
         return record, None
     if result is None and mismatch is None:
+        covering = empty_completion_children(nodes, info)
+        if covering:
+            return dict(cls='UNREACHABLE', covering_rule=covering,
+                        premise='Every occurrence requires an item of the same array that must be empty.'), None
         proof = (rules.contradicted_branch(info, nodes) or rules.forbidden_member(info, nodes) or
                  rules.excluded_by_cases(info, nodes))
         if all(reach['empty_domain'] for reach in info['reach']):
@@ -845,6 +944,11 @@ def replay_root(fixture, captured, reference, examples, disable):
                                           examples.get(rule_id, ()), disable, branch_cache, siblings)
             (gaps if problem else results)[rule_id] = problem or record
     require(set(results) | set(gaps) == set(ids), f'{root}: incomplete rule accounting')
+    for name, result in results.items():
+        covering = result.get('covering_rule')
+        if covering:
+            require(results.get(covering, {}).get('cls') == 'KILLED',
+                    f'{name}: the empty array rule must have an isolated refusal')
     return dict(clauses=results, gaps=gaps, controls=controls, clause_inventory=reference['clause_inventory'],
                 clause_ids=ids, bank=bank_name, registry_sha256=reference['registry_sha256'],
                 schema=captured['schema'], validator_class=validator_name,
