@@ -1,0 +1,20 @@
+{
+  "row": "dg5/projector/logical/schema",
+  "fixtures": [
+    {
+      "route": "projector_logical",
+      "edition": "v3",
+      "edit": [
+        1,
+        [],
+        0
+      ],
+      "error": [
+        [
+          "current_generation_id"
+        ],
+        "anyOf"
+      ]
+    }
+  ]
+}
