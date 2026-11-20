@@ -310,12 +310,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1418",
-       "line_start": 72301,
-       "line_end": 72301,
+       "line_start": 72303,
+       "line_end": 72303,
        "quote": "Current selected assignment (2026-11-19): server.endpoint_changed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2403. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1418, Plans/storage-plan.md:72205-72301",
+       "quote_scope": "unit SP-1418, Plans/storage-plan.md:72207-72303",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1418",
@@ -425,12 +425,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1418",
-       "line_start": 72234,
-       "line_end": 72234,
+       "line_start": 72236,
+       "line_end": 72236,
        "quote": "The exact checkpoint in derived redb checkpoints is w3e_server_endpoint_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1418, Plans/storage-plan.md:72205-72301",
+       "quote_scope": "unit SP-1418, Plans/storage-plan.md:72207-72303",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1418",
@@ -633,9 +633,9 @@
   "row_pointer": "#/families/485"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
-  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
-  "source_assessment_sha256": "f976cbd5fafc6165c214ea5e21c1bd22ea18642dbb118c5bcccc6af539407f73",
+  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
+  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
+  "source_assessment_sha256": "3137adc2aaae356614a28216cd74734ffbc25ee819cc42abe089f797c89dcbc7",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

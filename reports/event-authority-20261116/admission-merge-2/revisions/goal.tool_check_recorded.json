@@ -351,13 +351,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-433",
-       "line_start": 56598,
-       "line_end": 56598,
+       "line_start": 56600,
+       "line_end": 56600,
        "quote": "Repeated reads recompute",
        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-433, Plans/storage-plan.md:56542-56603",
+       "quote_scope": "unit SP-433, Plans/storage-plan.md:56544-56605",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -385,13 +385,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-433",
-       "line_start": 56598,
-       "line_end": 56598,
+       "line_start": 56600,
+       "line_end": 56600,
        "quote": "RP-AUTHORITY-INDEFINITE",
        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-433, Plans/storage-plan.md:56542-56603",
+       "quote_scope": "unit SP-433, Plans/storage-plan.md:56544-56605",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -419,13 +419,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-433",
-       "line_start": 56598,
-       "line_end": 56598,
+       "line_start": 56600,
+       "line_end": 56600,
        "quote": "Reject unhandled secrets",
        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-433, Plans/storage-plan.md:56542-56603",
+       "quote_scope": "unit SP-433, Plans/storage-plan.md:56544-56605",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -487,13 +487,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-433",
-       "line_start": 56598,
-       "line_end": 56598,
+       "line_start": 56600,
+       "line_end": 56600,
        "quote": "SP-339 pm inspect / F3-666 call",
        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-433, Plans/storage-plan.md:56542-56603",
+       "quote_scope": "unit SP-433, Plans/storage-plan.md:56544-56605",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -521,13 +521,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-433",
-       "line_start": 56589,
-       "line_end": 56589,
+       "line_start": 56591,
+       "line_end": 56591,
        "quote": "withdrawal",
        "excerpt_sha256": "bb898c0257b7cccbbeee06922b75d27e652a7d96d4e020176f9272b99e7a7ea9",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-433, Plans/storage-plan.md:56542-56603",
+       "quote_scope": "unit SP-433, Plans/storage-plan.md:56544-56605",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -713,9 +713,9 @@
   }
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
-  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
-  "source_assessment_sha256": "6f161d7a697052ba2514ccf90552fa7a8bcc6123f2f9e3097b4969b64a0b67e3",
+  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
+  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
+  "source_assessment_sha256": "0fcc42077cf53b39a780e9e08864788e178e773d597c731e97198f3f571fb3da",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

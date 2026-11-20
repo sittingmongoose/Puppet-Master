@@ -4,7 +4,7 @@
  "family_id": "event-family-browser-representation-delta-created",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2191",
- "decision_section_sha256": "ca7066462db6d8ea26a334059b2ae75b9892cc5e582c57394e9b6c1fec6f0159",
+ "decision_section_sha256": "0e4f6bbdb7e2ea15664bde4c74174056cf7c4b1daae0c86812547d44467623b0",
  "registry_before": {
   "revision": "2026-11-16.54",
   "sha256": "4d6b70ef01294e8b891a73e4606a0e30e1d525c04302cc9b96482c7c6cfad0b9",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "f5d50eb46c628941e72e5a3012b115a126a339bf2728b840fb6a4c44f75de5a6",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/browser.representation.delta_created.json",
-  "sha256": "3735cba54a565cde503811fccf68f737080bc2d890a1f9c181a634e6522408e6"
+  "sha256": "2c12428cb908ba277a5bd3648f082e507f60f482901bdb88289b02d2c486adf4"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
-  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
-  "source_record_sha256": "6e79ce8892f97f415680902b8e667aafbbda57787ebc9bb6c341bbb9efc80c74",
-  "source_assessment_sha256": "5473cecf95a877dd271b5fdd5972eebbcd2d7bc63ad5e9b72126b966ef9bf05f",
-  "source_decision_section_sha256": "2123653ea1a36ca94288019bff229083ca83577c4ed9f0be4626827b2bd991b7",
+  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
+  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
+  "source_record_sha256": "ea6d8b8776073bde7f24fc3a67479d45298b56ff85fdca88c056ecb9e8002a5d",
+  "source_assessment_sha256": "3735cba54a565cde503811fccf68f737080bc2d890a1f9c181a634e6522408e6",
+  "source_decision_section_sha256": "ca7066462db6d8ea26a334059b2ae75b9892cc5e582c57394e9b6c1fec6f0159",
   "original_registry_checkpoints_preserved": true
  }
 }

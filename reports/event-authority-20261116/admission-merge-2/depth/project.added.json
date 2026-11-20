@@ -265,12 +265,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-605",
-       "line_start": 53726,
-       "line_end": 53726,
+       "line_start": 53728,
+       "line_end": 53728,
        "quote": "  Current selected assignment (2026-11-19): project.added@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2359. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-605 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-605, Plans/storage-plan.md:53689-53754",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-605, Plans/storage-plan.md:53691-53756",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-605",
@@ -811,9 +811,9 @@
   "row_pointer": "#/families/441"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
-  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
-  "source_assessment_sha256": "8129af0d9900e3ff0ed4ab3890791feaed085afef1a88b2b27ab709b6d5f2328",
+  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
+  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
+  "source_assessment_sha256": "e67a957b5db9653c9267a07f57fc1c362433dbacb346fc76de34e09cf524823a",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

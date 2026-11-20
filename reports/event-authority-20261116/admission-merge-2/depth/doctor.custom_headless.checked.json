@@ -265,12 +265,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-640",
-       "line_start": 49052,
-       "line_end": 49062,
+       "line_start": 49054,
+       "line_end": 49064,
        "quote": "  Current selected assignment (2026-11-19): doctor.custom_headless.checked@1.0.0 is registered for project_only\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2294. Its event history selects RP-OPERATIONAL-2555D@1.0.0;\n  Plans/storage-plan.md#SP-640 owns the event policy''s existing anchors, counts, holds and deletion rules. Separate\n  stored-value assignment: ds15_doctor_custom_headless_checked_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500;\n  this assigns that stored value, not event history. Separate checkpoint assignment: ds15_doctor_custom_headless_checked_checkpoint\n  uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-640 contract; checkpoint retention grants\n  no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event\n  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,\n  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-640, Plans/storage-plan.md:48986-49092",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-640, Plans/storage-plan.md:48988-49094",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-640",
@@ -578,9 +578,9 @@
   "row_pointer": "#/families/376"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
-  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
-  "source_assessment_sha256": "d423fc0f6e46376a9ad996adc00e5383f6dd16029366ed3203992f1162680392",
+  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
+  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
+  "source_assessment_sha256": "514776038a39176067fc8b15b88c11437bb6ccc287316bbfd3fabf289cb38ebd",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

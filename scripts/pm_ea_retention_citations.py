@@ -21,10 +21,9 @@ GITHUB_SIGN_IN = {
     'auth.github.failed',
     'auth.github.token.polling',
 }
-# These EventRecords have valid Application inputs with no Project. Case L-3
-# supplies the per-Run cap, but the additional Application count needs an
-# owner decision. A reference to SP-349's physical table cannot supply it.
-DT_APPLICATION_COUNT_PENDING = {
+# The Case L-3 assignment recorded in DL-2597 sets a separate Application
+# limit for each of these three families in addition to their per-Run limit.
+DT_SERVER_COUNT = {
     'run.background_enqueued',
     'tool.execution_completed',
     'tool.execution_started',
@@ -253,6 +252,20 @@ def github_count_evidenced(bodies):
     return assignment and shared_limit
 
 
+def dt_count_evidenced(bodies):
+    for body in bodies:
+        clause = re.sub(r'\s+', ' ', body).lower()
+        if (
+            'application eventrecords of' in clause
+            and all(f'`{event}`' in clause for event in DT_SERVER_COUNT)
+            and 'its own sp-349 server-wide counterpart bucket' in clause
+            and '5,000,000 per puppet master server and storage instance' in clause
+            and '1,000,000 per actual run' in clause
+        ):
+            return True
+    return False
+
+
 def effective_count_missing(bodies, event, scope, lower):
     if event in CREW:
         return ('server counterpart' if scope == 'application' else 'project partition') not in lower
@@ -262,7 +275,7 @@ def effective_count_missing(bodies, event, scope, lower):
         return not github_count_evidenced(bodies)
     if event == 'filesafe.policy_degraded':
         return not all(token in lower for token in ('app:filesafe_policy_degraded', 'server', 'dl-2450'))
-    return event in DT_APPLICATION_COUNT_PENDING
+    return event in DT_SERVER_COUNT and not dt_count_evidenced(bodies)
 
 
 def union_missing(bodies, row, policies):
@@ -307,6 +320,8 @@ def union_missing(bodies, row, policies):
         count_owner = 'SP-351' if event in CREW else None
         if scope == 'application' and event in GITHUB_SIGN_IN:
             count_owner = 'DL-401'
+        elif scope == 'application' and event in DT_SERVER_COUNT:
+            count_owner = 'DL-2597'
         elif scope == 'application' and event == 'filesafe.policy_degraded':
             count_owner = 'DL-2450'
         bindings.append(dict(scope=scope, selected=selected, named_in_current_union=named,

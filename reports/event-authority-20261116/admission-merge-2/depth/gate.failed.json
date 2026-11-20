@@ -87,12 +87,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-586",
-       "line_start": 39802,
-       "line_end": 39802,
+       "line_start": 39804,
+       "line_end": 39804,
        "quote": "For gate.failed alone, the newly authored original-source custody",
        "quote_check": "exact",
-       "quote_scope": "unit SP-586, Plans/storage-plan.md:39793-39835",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39795-39837",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-586",
@@ -222,12 +222,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-586",
-       "line_start": 39804,
-       "line_end": 39804,
+       "line_start": 39806,
+       "line_end": 39806,
        "quote": "For gate.failed alone, source codec",
        "quote_check": "exact",
-       "quote_scope": "unit SP-586, Plans/storage-plan.md:39793-39835",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39795-39837",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-586",
@@ -338,12 +338,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-586",
-       "line_start": 39811,
-       "line_end": 39811,
+       "line_start": 39813,
+       "line_end": 39813,
        "quote": "  Current selected assignment (2026-11-19): gate.failed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2316. Its event history selects RP-RUNTIME-365D@1.0.0; Plans/storage-plan.md#SP-586 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-586, Plans/storage-plan.md:39793-39835",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39795-39837",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-586",
@@ -399,12 +399,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-586",
-       "line_start": 39802,
-       "line_end": 39802,
+       "line_start": 39804,
+       "line_end": 39804,
        "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-586, Plans/storage-plan.md:39793-39835",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39795-39837",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-586",
@@ -461,12 +461,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-586",
-       "line_start": 39803,
-       "line_end": 39803,
+       "line_start": 39805,
+       "line_end": 39805,
        "quote": "For gate.failed alone, its SP-278/DL-076 checkpoint",
        "quote_check": "exact",
-       "quote_scope": "unit SP-586, Plans/storage-plan.md:39793-39835",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39795-39837",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-586",
@@ -510,12 +510,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-586",
-       "line_start": 39801,
-       "line_end": 39801,
+       "line_start": 39803,
+       "line_end": 39803,
        "quote": "Withdrawal first cuts off this family's append admission",
        "quote_check": "exact",
-       "quote_scope": "unit SP-586, Plans/storage-plan.md:39793-39835",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39795-39837",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-586",
@@ -612,14 +612,14 @@
        "json_pointer": "#/families/6"
       },
       {
-       "line_end": 39805,
-       "line_start": 39805,
+       "line_end": 39807,
+       "line_start": 39807,
        "path": "Plans/storage-plan.md",
        "quote": "For gate.failed, boolean authority/context flags are exact booleans",
        "unit": "SP-586",
        "quote_check": "exact",
-       "quote_scope": "unit SP-586, Plans/storage-plan.md:39793-39835",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39795-39837",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "line_end": 38681,
         "line_start": 38681,
@@ -756,9 +756,9 @@
   "row_pointer": "#/families/398"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
-  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
-  "source_assessment_sha256": "3e72f64fc28251ad40eff38e131611fe9fa66014c03b3581a96667f18d022d62",
+  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
+  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
+  "source_assessment_sha256": "987c253b00cb9e3d4022e1db676022f3b8b04bc740079aa73804cc37efcfc572",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

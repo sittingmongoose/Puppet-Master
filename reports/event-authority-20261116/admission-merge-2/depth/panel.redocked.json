@@ -56,12 +56,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51603,
-       "line_end": 51603,
+       "line_start": 51605,
+       "line_end": 51605,
        "quote": "Newly authored owner contract for panel.redocked 2.0.0 under DL-045, prepared without admission.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -105,12 +105,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51603,
-       "line_end": 51603,
+       "line_start": 51605,
+       "line_end": 51605,
        "quote": "handlers::panel::redock in the shared panel shell, is this family's sole producer. Successful transition is",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -136,12 +136,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51609,
-       "line_end": 51609,
+       "line_start": 51611,
+       "line_end": 51611,
        "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -234,10 +234,10 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51595,
-       "line_end": 51676,
+       "line_start": 51597,
+       "line_end": 51678,
        "quote": "### SP-664 - panel.redocked current chat-only audit and history\n\n```yaml\nplan_unit_id: SP-664\nunit_type: contract\nstatus: accepted\nowner_doc: Plans/storage-plan.md\ncanonical_text: |-\n  Newly authored owner contract for panel.redocked 2.0.0 under DL-045, prepared without admission. CV-361, SP-330, UCC-203 and F3-637 already govern the product: only the desktop chat can pop out and return, the web client has no Pop out, and restart puts chat in its column without dispatching redock. cmd.panel.redock, handled by handlers::panel::redock in the shared panel shell, is this family's sole producer. Successful transition is detached_window -> chat_column for panel_id=chat and the same window_id. A redock must name the currently detached window; an undock must verify the actual newly settled window for this command. Refusal, stale session/revision, wrong target, web unsupported, no change, preview, cancellation, failed persistence or rollback emits nothing. Neither event advances a Home layout revision, saves popped-out state, writes a host into the Home record or co-emits workspace.layout_changed. persisted=true describes the audit event; host_state_persisted=false is mandatory. The existing expected_layout_revision command input remains a checked original Home-context precondition where supplied, never a host revision or an instruction to advance layout. The current payload is Plans/event_payloads/panel_redocked_v2.schema.json, schema pm.event.panel_redocked.v2; semantic route F3-704, payload route CV-684.\n\n  Identity: EventRecord v2 uses actual original project_id and project~base64url_no_pad(UTF8(project_id)) when Project-scoped; a global_shell invocation without a Project uses null project_id and the unchanged app partition, with actual storage_instance_id/server_id under CV-366. A home_workspace origin requires original Project/workspace_tab_id. No focus/main/empty-Project fallback. Envelope scope, actor_ref, correlation_id, idempotency_key and occurred_at_utc join the frozen payload (settled_at_utc); thread/run/node/attempt/parent/causation are null unless independently authenticated original linkage exists. app_session_id is a fresh opaque identity issued by the shell once per process lifetime and shared by its chat column/window, never a Home tab or a restored identifier. Host revision starts at zero for that session; compare the entire in-memory prior snapshot and advance exactly one for a settled move. Let H be lowercase SHA-256 of canonical MessagePack [storage_instance_id, server_id, scope_partition, app_session_id, \"panel.redocked\", idempotency_key]. event_id=evt_panel_redocked_H and operation_digest=H. Request digest is lowercase SHA-256 of canonical MessagePack of the exact closed preimage {original_command: operation.original_command, candidate_payload: operation.payload}. Both values are the complete frozen closed objects, with every field including settled_at_utc and interaction_transaction_id; omit, normalize or regenerate nothing. original_command retains actor, actual scope/session/window and original expected revisions. Neither changed payload nor changed command may reuse the original digest. Same key with unequal command/digest is conflict before any effect. Session/scope/window joins must match the independently read shell owner, not caller claims.\n\n  Producer ordering: validate exact event registry membership before journal, window effect, append or checkpoint; currently absent is deny. On future admission, under original permission/currentness/session and single-chat-host fence, freeze original command/payload and prior/candidate snapshots into panel_redocked_operation.v1:{storage_instance_id}:{scope_partition}:{app_session_id}:{operation_digest}, schema Plans/panel_event_contracts/panel_redocked_operation.schema.json. A prepared journal has null commit/result/receipt refs. The shell may then perform this single host move and verify the actual OS/shell settled state for the same session/window, holding all other host moves. Persist the authenticated original outcome and immutable candidate snapshot as the committed operation with nonnull owner_commit_ref, result_ref and dispatch_receipt_ref, before append. These refs resolve that operation's original immutable evidence, never live host state after another move. If the effect cannot be proven or the commit fails, keep the operation fenced; terminal success is unavailable. Transient OS/shell state and redb are not claimed to share a transaction. The journal's durable commit records evidence that the transient move really settled; it is never a saved layout and never instructs restart to restore it.\n\n  Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2, including the full-value v2 successor, genuine original eleven-field first AppendReceipt, retained four-field original_append_result and actual original EventRecord. Append only the frozen exact event after durable original commit/readback; independently join instance, identity, semantic payload, sequence, segment/offset and durability. Only then CAS committed -> settled with original_append_result_ref nonnull and publish terminal success. An uncertain append fences later host mutations. Committed/settled retries recover/return the original result and receipt without opening/closing/moving a window or renewing a timestamp. Prepared ambiguity remains fenced while the session lives. After verified old-process termination, no transient host survives: a prepared operation may become abandoned_uncommitted only with original durable-commit and append absence proofs; never infer absence just from a missing window. A committed operation after restart still owes append recovery under its original identity, but never restores its candidate host or dispatches a command. A settled old-session result is historical evidence, never proof of a current popped-out host. No restart redock event is fabricated.\n\n  Custody: the operation is canonical non-rebuildable original audit evidence; it retains frozen prior/candidate host observations, immutable result/dispatch refs and first/full-value receipt custody. No raw chat text, title, window geometry, credentials, account material or absolute local path enters payload/journal; server-side secret screening applies to all strings. Refs grant no access. Disclosure requires current scope membership/source access, deletion checks and current host/session proof for any action after returning helpers. Coherent mandatory backup includes operations, source EventRecords and genuine original receipts under the same Storage recovery boundary. Restored journals are historical evidence only and never input to host restoration. Missing/mixed originals fence mutations and disclose unavailable. No event reader can reconstruct deleted chat bodies.\n\n  Newly authored projector.panel_redocked.history@1.0.0 and reader.panel_redocked.history@1.0.0 expose passive record-backed History audit only; current host is independently read from the running shell. Checkpoint key panel_redocked_checkpoint.v1:{storage_instance_id}:{scope_partition}, schema Plans/panel_event_contracts/panel_redocked_checkpoint.schema.json. Explicitly adopt SP-278/DL-076: complete CURRENT-selected generic EventRecord index, full nine-field durable token, no persisted redb_snapshot_id; rejoin/authenticate actual live snapshot each scan/read/advance. Scan every source sequence through captured frontier, authenticate each exact panel.redocked/scope match, and whole-value CAS prior token/publication/state/frontier/last_event_id in one derived-redb transaction. Checkpoint is bounded frontier only, never an all-history event_refs array. through_sequence_id is complete scanned coverage; last_event_id is last matching event or null. Corrupt/unknown/inadmissible source cannot be skipped. Registry absence forbids advance.\n\n  Reader request binds publication_id, complete durable token and unsigned after_sequence_id (0 initially), all authenticated as untrusted inputs. Verify Storage instance, server/scope and Project joins, live SP-278 source selection and publication state before reading and at disclosure. At most 256 source sequences, 64 exact matching refs and 16384 canonical MessagePack response bytes per page; measure the complete response, stopping before an unreturned match. A single oversized ref/token is invalid metadata, never silently dropped. Continuation repeats exact publication/token and last actually scanned sequence; empty filtered page is incomplete until frontier is reached. No history-count or duration cap is added. Invalid/withdrawn token, cursor beyond frontier or missing coverage returns unavailable, never empty success. A changed generation needs verified SP-278 translation or a verified new publication and restart; no silent substitution. No History call performs a shell action. Rebuild stages a separate publication from verified retained CURRENT-selected source, proves coverage then atomically withdraws old/publishes new. Source deletion rebuilds retained coverage only. Derived eviction makes History unavailable until rebuild; it cannot erase canonical audit.\n\n  Compatibility and withdrawal: immutable Plans/event_payloads/panel_redocked.schema.json is the original 1.0.0 reader only. Its generic hosts, durable settled_panel_state_ref, layout revisions and optional co-emission are historical interpretation, never current chat authority or a new writer. Dispatch reads by the stored payload schema id/version, without rewriting events or treating v1 as v2; unknown versions and unverifiable historical originals remain unavailable. Current writes require only the exact 2.0.0 schema/contract and their own future admission. StorageMigrationCoordinator must install exact new value schemas before activation, with no invented store version. Withdrawal closes writer admission first, fences host moves, settles original in-flight obligations without repeating OS effects, then CAS marks checkpoint withdrawn. Readers refuse staged/withdrawn publications and stale continuations; successor versions require own contract/admission and verified rebuild, never layout aliasing.\n\n  SP-340 physical binding: panel_redocked_operation uses canonical MessagePack in canonical redb, settings_and_layout advisory canonical budget, maximum 16384 encoded bytes checked before effect/commit; panel_redocked_checkpoint uses canonical MessagePack in derived redb, event_log hard derived budget, same maximum. The operation is one bounded original receipt, not an accumulating host/history store; oversized metadata is invalid before effects. Budget pressure never prunes canonical audit or refuses a canonical write; derived pressure evicts/rebuilds. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Retention remains PENDING_RETENTION_DECISION independently for event, operation and checkpoint.» Case L-3 audit-authority/receipt versus telemetry and RP-PROJECTION-3GEN are candidates, not assignments; the saved-layout class is not silently applied to this restart-unsaved host transition. No deletion policy is invented. Fixtures Plans/panel_event_contracts/panel_redocked.fixtures.json and python3 scripts/pm-panel-event-contracts-check.py supply this family's positive/negative schema, identity, retry, original-custody, history boundary and withdrawal oracles. Native OS/storage atomicity, receipt authenticity, SP-278 source proof, crash/recovery, permissions and backup tests remain NOT_RUN.\n  Current append and original retry select replay_policy=dedupe_by_idempotency_key; projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the SP-337 BLAKE3/size/media-type payload_ref, never base64 body stuffing. This does not relax the 16384-byte closed operation/checkpoint maximum: oversized metadata is refused before effects. Identifier patterns require full-string matching, including rejection of a trailing LF; no trimming or normalization. History response is exactly the closed object {publication_id, index_read_token, after_sequence_id, event_refs, complete}; index_read_token is the full nine-field durable token. Measure canonical MessagePack of that entire object for every candidate response, including an empty completion/continuation. Metadata or one matching ref that cannot individually fit returns unavailable without advancing past the match. Static large-valid-token, exact-response-boundary, unpageable-metadata and replay-only negatives do not replace native authorization/byte/CAS proofs.\n  For an application-scope invocation, CV-366 idempotency_key is exactly application@1:{hex(server_id)}:{hex(interaction_transaction_id)}. interaction_transaction_id is the original shell owner operation identity, not a retry timestamp; hex encodes the exact UTF-8 bytes in lowercase. An arbitrary caller key is refused. Project-scope original keys retain their existing format. Numbers follow CV-1100 and SP-1100 beside the SP-278, SP-286 and CV-339 profile owners: each schema integer slot admits current_integer within its own bounds with no lane-wide cap, Storage sequences are uint64, and the producer route is qualified JCS; a retained original keeps its write-time recipe, whose authenticated selection is SP-1101. Every retained read and retained retry first resolves its original through the SP-1101 RetainedDispatcher: the sealed Storage custody at the original event_ref, the exact sealed binding and an installed frozen recipe tuple that pins the exact schema bytes of the edition and selects its payload validator; the frozen verifier recomputes the value commitment, family and event identity of the original. An original without custody, with unsealed bytes, a foreign binding or an uninstalled or foreign recipe refuses as unavailable or unsupported, with no fallback, caller selection or current-then-legacy probing. Timestamps follow CV-1101 with the owner profile of each field (CV-253 storage_utc_z for the two Storage-assigned EventRecord instants it binds).\n\n  PNC-019 s4r retention binding for `panel.redocked` (2026-11-14).\n\n  Event history: Application = `RP-AUTHORITY-INDEFINITE@1.0.0`, Project = `RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.\n\n  Use the existing policy object unchanged: {\"anchor_kind\": \"creation\", \"cardinality_scope\": null, \"expiry_action\": \"none\", \"max_cardinality\": null, \"overflow_action\": \"fail_closed\", \"ttl_seconds\": null}.\n\n  Exact stored value `panel_redocked_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500; this does not assign its referenced bodies or other values.\n\n  Exact stored value `panel_redocked_operation` retains `RP-OPERATIONAL-2555D@1.0.0` under DL-501; this does not assign its referenced bodies or other values.\n\n  Existing `panel_redocked_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0`; derived retention grants no source keepalive.\n\n  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.\n\n\n  Current selected assignment (2026-11-19): panel.redocked@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2528. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null); Historical original admission: Plans/Decision_Log.md#DL-2338 (project_only); Plans/storage-plan.md#SP-664 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: panel_redocked_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history. Separate stored-value assignment: panel_redocked_operation uses RP-OPERATIONAL-2555D@1.0.0 under Plans/Decision_Log.md#DL-501; this assigns that stored value, not event history. Separate checkpoint assignment: panel_redocked_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-664 contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.\ngui_related: false\ngui_classification_reason: Event custody and validation, no new UI.\nsplit_recommended: false\ndepends_on:\n- CV-361\n- SP-330\n- SP-278\n- SP-286\n- CV-339\nunblocks: []\nacceptance_criteria:\n  - \"SP-664 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.\"\n  - \"Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.»\"\nvalidation_surfaces:\n- python3 scripts/pm-panel-event-contracts-check.py\nrisk_class: event_authority\nreasoning_tier: high\ncontext_scope: chat_panel_event_authority\nimplementation_surfaces:\n- Plans/storage-plan.md\n- Plans/panel_event_contracts/\nnode_compile_hint:\n  mode: contract_only\n  create_worknodes: false\n  create_nodeseeds: false\nsource_lineage:\n- Plans/Decision_Log.md#DL-045\n- Plans/Contracts_V0.md#CV-361\n- Plans/storage-plan.md#SP-330\npreserved_exact_tokens:\n- PENDING_RETENTION_DECISION\n- SP-278\n- SP-286\nnegative_constraints:\n- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or\n  native execution proof.\n```\n",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -273,7 +273,7 @@
         "reason": "Re-cite the same complete scope owner unit after correcting current scope authority to DL-2528/2529; preserve the exact received full-unit quotation at 2069703160."
        },
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676"
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678"
       }
      ],
      "predecessor_assessment": {
@@ -290,12 +290,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51605,
-       "line_end": 51605,
+       "line_start": 51607,
+       "line_end": 51607,
        "quote": "Request digest is lowercase SHA-256 of canonical MessagePack of the exact closed preimage {original_command: operation.original_command, candidate_payload: operation.payload}. Both values ar",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -321,12 +321,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51609,
-       "line_end": 51609,
+       "line_start": 51611,
+       "line_end": 51611,
        "quote": "retries",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -339,12 +339,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51620,
-       "line_end": 51620,
+       "line_start": 51622,
+       "line_end": 51622,
        "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -401,12 +401,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51638,
-       "line_end": 51638,
+       "line_start": 51640,
+       "line_end": 51640,
        "quote": "  Current selected assignment (2026-11-19): panel.redocked@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2528. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null); Historical original admission: Plans/Decision_Log.md#DL-2338 (project_only); Plans/storage-plan.md#SP-664 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: panel_redocked_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history. Separate stored-value assignment: panel_redocked_operation uses RP-OPERATIONAL-2555D@1.0.0 under Plans/Decision_Log.md#DL-501; this assigns that stored value, not event history. Separate checkpoint assignment: panel_redocked_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-664 contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -469,12 +469,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51611,
-       "line_end": 51611,
+       "line_start": 51613,
+       "line_end": 51613,
        "quote": "Custody: the operation is canonical non-rebuildable original audit evidence; it retains frozen prior/candidate",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -500,12 +500,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51611,
-       "line_end": 51611,
+       "line_start": 51613,
+       "line_end": 51613,
        "quote": "backup",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -567,12 +567,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51603,
-       "line_end": 51603,
+       "line_start": 51605,
+       "line_end": 51605,
        "quote": "Successful transition is",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -611,12 +611,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51613,
-       "line_end": 51613,
+       "line_start": 51615,
+       "line_end": 51615,
        "quote": "projector.panel_redocked.history@1.0.0 and reader.panel_redocked.history@1.0.0 expose passive record-backed",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -642,12 +642,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51613,
-       "line_end": 51613,
+       "line_start": 51615,
+       "line_end": 51615,
        "quote": "SP-278/DL-076: complete",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -673,12 +673,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51609,
-       "line_end": 51609,
+       "line_start": 51611,
+       "line_end": 51611,
        "quote": "CAS committed -> settled with original_append_result_ref",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -704,12 +704,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51617,
-       "line_end": 51617,
+       "line_start": 51619,
+       "line_end": 51619,
        "quote": "Compatibility and withdrawal: immutable Plans/event_payloads/panel_redocked.schema.json is the original 1.0.0",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -735,12 +735,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51615,
-       "line_end": 51615,
+       "line_start": 51617,
+       "line_end": 51617,
        "quote": "withdrawn token, cursor beyond frontier or missing",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -820,12 +820,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-664",
-       "line_start": 51619,
-       "line_end": 51619,
+       "line_start": 51621,
+       "line_end": 51621,
        "quote": "NOT_RUN.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-664, Plans/storage-plan.md:51595-51676",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-664, Plans/storage-plan.md:51597-51678",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-664",
@@ -1070,9 +1070,9 @@
   "row_pointer": "#/families/420"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
-  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
-  "source_assessment_sha256": "bf63ad20abd658d5beac58043141895e3e8f2968bdee8eb32da6574263524ea7",
+  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
+  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
+  "source_assessment_sha256": "cebb98c4a3461f0dd27942f954c3d0edffbe1a3913b8fb57bda28b72ad0af4fe",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

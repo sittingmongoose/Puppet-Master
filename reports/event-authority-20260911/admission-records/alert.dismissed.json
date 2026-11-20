@@ -4,7 +4,7 @@
  "family_id": "event-family-alert-dismissed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2138",
- "decision_section_sha256": "2ed2b79393d41a29cb66b7bd293a7d7c0648289dead1dea8120025331b7a0c84",
+ "decision_section_sha256": "6872a82c36e9ad820dd3479e5e3e9177fe840f21bad92d86cbe2298a9d82813b",
  "registry_before": {
   "revision": "2026-11-16.1",
   "sha256": "65bcf396439692a0a880b5550ca07725a2603ed43b32bab9657b9c3cc60f65d7",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "17fcf11b5e2f264edeb43ff5c4f901965c6c1d037829fe006a8026db1f98323b",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/alert.dismissed.json",
-  "sha256": "392eaa96f0f6ec70eb0eb0a01827f1579ecad7076169fd318dcd92cc35d18427"
+  "sha256": "1b68befbc6a9a97c73960e7d88287a249a6b6d80caacf7f8f91594fe36eb39b5"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
-  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
-  "source_record_sha256": "7876c87ad93f6b0ef9786406bf451da730d2e04c35509e6197c01af206d23e63",
-  "source_assessment_sha256": "94708829d9e523a75b9527c0d6745749e736b3fabc8ee30aea87f8f692c84aee",
-  "source_decision_section_sha256": "f7072355b68266a493a884690f5edb0a4e3aff184cee30d9c44fd604e0545d73",
+  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
+  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
+  "source_record_sha256": "efa5bec3ad0eb39793748eddf949626e0ddc0bef86b1b6e629c561ddda70c794",
+  "source_assessment_sha256": "392eaa96f0f6ec70eb0eb0a01827f1579ecad7076169fd318dcd92cc35d18427",
+  "source_decision_section_sha256": "2ed2b79393d41a29cb66b7bd293a7d7c0648289dead1dea8120025331b7a0c84",
   "original_registry_checkpoints_preserved": true
  }
 }

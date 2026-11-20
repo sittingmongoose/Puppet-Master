@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L17563-L18959
+Source lines: L17563-L18961
 
-Source SHA256: `f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a`
+Source SHA256: `e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0`
 
 ---
 
@@ -301,6 +301,8 @@ Minimum event-class defaults:
 | `seglog.event_appended` | 7 days; 500,000/instance | compact expired unheld rows |
 | Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |
 | Released safe points | 90 days after last hold release; 64/run and 2,048/project | oldest eligible only; retained hash summary 365 days after its first durable publication (DL-069) |
+
+Application EventRecords of `run.background_enqueued`, `tool.execution_started` and `tool.execution_completed` retain `RP-RUNTIME-365D@1.0.0`. Each family counts its Application records in its own SP-349 Server-wide counterpart bucket, with a cap of 5,000,000 per Puppet Master Server and Storage instance, in addition to the policy’s 1,000,000 per actual Run. A record from one family consumes only its family’s Server allowance. Project records keep the policy’s per-Run and per-Project limits. All records retain the 365-day expiry from actual Run completion, successor compaction and existing holds.
 
 The retained SafePoint hash summary's anchor is the instant of its first successful durable publication (DL-069): preparation, retries, recovery and re-observation never start or reset it, and existing holds and dependencies still override age eligibility. The 90-day full-SafePoint minimum is unchanged.
 

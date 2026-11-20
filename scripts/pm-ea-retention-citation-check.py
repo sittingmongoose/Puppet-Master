@@ -12,7 +12,7 @@ from unittest.mock import patch
 
 import pm_ea_retention_citations as retention
 from pm_ea_retention_citations import (
-    ROOT, DT_APPLICATION_COUNT_PENDING, GITHUB_SIGN_IN, complete_range,
+    ROOT, DT_SERVER_COUNT, GITHUB_SIGN_IN, complete_range,
     missing_facets, range_text, selections, union_missing, without_scope_claims,
 )
 
@@ -31,7 +31,7 @@ def check_received_effective_counts(ready, rows, policies, read):
         return [range_text(item, read_edition) for item in assessment['rows'][0]['cells']['retention']['evidence']]
 
     gap = 'application:effective_count'
-    required_families = GITHUB_SIGN_IN | DT_APPLICATION_COUNT_PENDING
+    required_families = GITHUB_SIGN_IN | DT_SERVER_COUNT
     original = {event: cited_union(event, received) for event in sorted(required_families)}
     regressions, findings, mutations = [], [], []
     for event, union in original.items():
@@ -69,6 +69,25 @@ def check_received_effective_counts(ready, rows, policies, read):
         for name, candidate in controls:
             missing, _ = union_missing(candidate, rows[event], policies)
             killed = missing == [gap] and bool(backup_allowance)
+            mutations.append(dict(event_type=event, mutation=name, killed=killed))
+            if not killed:
+                findings.append(dict(event_type=event, lane=ready[event]['lane'],
+                    missing=['effective count mutation survived: '+name], actual=missing))
+    storage = read('Plans/storage-plan.md')
+    counterpart_rule = next(line for line in storage.splitlines()
+        if 'One app Server-wide counterpart bucket per family supplies' in line)
+    for event in sorted(DT_SERVER_COUNT):
+        current = cited_union(event, read)
+        controls = [
+            ('substitute the general SP-349 physical counterpart rule', original[event] + [counterpart_rule]),
+            ('remove the separate Application cap', [
+                body.replace('5,000,000 per Puppet Master Server and Storage instance', 'REMOVED_APPLICATION_CAP')
+                for body in current
+            ]),
+        ]
+        for name, candidate in controls:
+            missing, _ = union_missing(candidate, rows[event], policies)
+            killed = missing == [gap]
             mutations.append(dict(event_type=event, mutation=name, killed=killed))
             if not killed:
                 findings.append(dict(event_type=event, lane=ready[event]['lane'],

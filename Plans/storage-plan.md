@@ -17854,6 +17854,8 @@ Minimum event-class defaults:
 | Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |
 | Released safe points | 90 days after last hold release; 64/run and 2,048/project | oldest eligible only; retained hash summary 365 days after its first durable publication (DL-069) |
 
+Application EventRecords of `run.background_enqueued`, `tool.execution_started` and `tool.execution_completed` retain `RP-RUNTIME-365D@1.0.0`. Each family counts its Application records in its own SP-349 Server-wide counterpart bucket, with a cap of 5,000,000 per Puppet Master Server and Storage instance, in addition to the policy’s 1,000,000 per actual Run. A record from one family consumes only its family’s Server allowance. Project records keep the policy’s per-Run and per-Project limits. All records retain the 365-day expiry from actual Run completion, successor compaction and existing holds.
+
 The retained SafePoint hash summary's anchor is the instant of its first successful durable publication (DL-069): preparation, retries, recovery and re-observation never start or reset it, and existing holds and dependencies still override age eligibility. The 90-day full-SafePoint minimum is unchanged.
 
 The 19 `runtime_artifact.*` event histories named in DL-075 are assigned `RP-AUTHORITY-INDEFINITE` for the time their full contracts are admitted. This is a retention assignment only: it admits no family, defines no binding, and leaves artifact bodies, original receipts, restore points, Usage and source records under their own policies. Text embedded in those events is retained with them; each full contract must make that and any applicable deletion requirement explicit before admission, and retention never grants access to a linked body.
@@ -39976,7 +39978,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for run.background_e
   rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or
   history rewrite. retention_policy_ref = RP-RUNTIME-365D. Case L-3 directly names Runtime/run/node/attempt: 365
   days after actual run completion, 1,000,000/run and 5,000,000/project, successor compaction. Holds, original anchors
-  and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures:
+  and dependency checks are unchanged; retries never reset the retention anchor. The Application EventRecord count follows the Case L-3 assignment recorded in DL-2597. Checks and positive/negative fixtures:
   python3 scripts/pm-dt-event-contracts.py; ATS-294. Native execution remains NOT_RUN. No registry append, admission,
   owner decision or seal follows.
 
@@ -40222,7 +40224,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for tool.execution_c
   rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or
   history rewrite. retention_policy_ref = RP-RUNTIME-365D. Case L-3 directly names Runtime/run/node/attempt: 365
   days after actual run completion, 1,000,000/run and 5,000,000/project, successor compaction. Holds, original anchors
-  and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures:
+  and dependency checks are unchanged; retries never reset the retention anchor. The Application EventRecord count follows the Case L-3 assignment recorded in DL-2597. Checks and positive/negative fixtures:
   python3 scripts/pm-dt-event-contracts.py; ATS-295. Native execution remains NOT_RUN. No registry append, admission,
   owner decision or seal follows.
 
@@ -40426,7 +40428,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for tool.execution_s
   rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or
   history rewrite. retention_policy_ref = RP-RUNTIME-365D. Case L-3 directly names Runtime/run/node/attempt: 365
   days after actual run completion, 1,000,000/run and 5,000,000/project, successor compaction. Holds, original anchors
-  and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures:
+  and dependency checks are unchanged; retries never reset the retention anchor. The Application EventRecord count follows the Case L-3 assignment recorded in DL-2597. Checks and positive/negative fixtures:
   python3 scripts/pm-dt-event-contracts.py; ATS-296. Native execution remains NOT_RUN. No registry append, admission,
   owner decision or seal follows.
 

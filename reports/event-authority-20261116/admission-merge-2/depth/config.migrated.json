@@ -87,12 +87,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-584",
-       "line_start": 39718,
-       "line_end": 39718,
+       "line_start": 39720,
+       "line_end": 39720,
        "quote": "For config.migrated alone, the newly authored original-source custody",
        "quote_check": "exact",
-       "quote_scope": "unit SP-584, Plans/storage-plan.md:39709-39749",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-584, Plans/storage-plan.md:39711-39751",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-584",
@@ -204,12 +204,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-584",
-       "line_start": 39720,
-       "line_end": 39720,
+       "line_start": 39722,
+       "line_end": 39722,
        "quote": "For config.migrated alone, source codec",
        "quote_check": "exact",
-       "quote_scope": "unit SP-584, Plans/storage-plan.md:39709-39749",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-584, Plans/storage-plan.md:39711-39751",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-584",
@@ -320,12 +320,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-584",
-       "line_start": 39709,
-       "line_end": 39719,
+       "line_start": 39711,
+       "line_end": 39721,
        "quote": "### SP-584 - config.migrated prepared event contract\n\n```yaml\nplan_unit_id: SP-584\nunit_type: schema_contract\nstatus: accepted\nowner_doc: Plans/storage-plan.md\ncanonical_text: |-\n  Newly authored owner contract under DL-045 for config.migrated only. Producer SettingsMigrationCoordinator.branch_granularity calls storage.dt.config_migrated.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For config.migrated, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, source_ref, source_sha256], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.config_migrated.reader.v1@1.0.0 serves Settings migration recovery and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.config_migrated:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/config_migrated_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = RP-OPERATIONAL-2555D. Case L-3 already decides migration/recovery operational history: 2,555 days, 2,000,000/Project, anchored to the original terminal migration transition. SP-349 already decides one app Server-wide counterpart bucket for config.migrated with the same 2,000,000 cap, TTL, holds and backup classification; it never resets per chat. This exact binding is technical work under current policy, not a new lifetime/app-counting question. All original holds/dependencies override expiry; retries do not reset the anchor. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-292. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.\n  For config.migrated alone, the newly authored original-source custody is dt_config_migrated_source at storage/event-sources/dt/config_migrated/{event_id}/{stage}.json, strict Plans/dt_event_contracts.schema.json#/$defs/config_migrated_source; no sibling source is accepted. The codec is pm.dt.source.json.v1 canonical UTF-8 JSON without BOM/newline, maximum 1048576 bytes per stage; reject duplicate keys, nonfinite numbers, malformed Unicode, unknown fields and unsupported version. SHA-256 binds exact bytes; file paths are derived from the validated event_id and literal stage under this Storage instance, never caller paths. SettingsMigrationCoordinator.branch_granularity owns preparation and authenticates SettingsMigrationCoordinator.branch_granularity.resolve_original against the actual original WorktreeGitImprovement.md owner_ref/revision, not the caller's witness or today's reconstructed configuration. Install the exact source schema/codec and append admission via StorageMigrationCoordinator, then validate current family admission, scope, actor and all family predicates before preparing or performing work. Publish prepared.json once under the subject owner lock using SP-131 same-directory temp/fsync/no-overwrite promotion and synchronized parent entries; allocate the original identity first. A byte-identical existing stage is reused; different bytes fence the subject. The owner's existing operation commits its result with this source identity in its original outcome; the resolver proves that join against the actual owner transaction/receipt before completed.json is durably promoted. This is a recoverable prepare/outcome handshake, not an atomic commit across an external tool or Git and Storage. A crash after prepare but before provable outcome remains fenced; query the original owner operation by this exact allocated identity. If it cannot prove original outcome, return unavailable and do not repeat any effect. completed.json is immutable, links prepared_sha256, carries the exact redacted closed payload and frozen envelope_context, and names the immutable owner_outcome_ref. Only then append the exact EventRecord; SP-286/CV-339 full-value v2 resolves the first eleven-field receipt, including its original seal-time timestamp. Source and completed payload/identity/envelope joins and current owner permissions/deletion are revalidated under the final owner lock after every helper. For this family require a barrier-class full flush through original outcome/source files, packs, segment commit frame and canonical receipt before terminal publication or authorizing dependent work. This is a stronger event-specific barrier within SP-336/SP-347, not a change to ordinary receipt loss. Lost acknowledgement returns the original full value and receipt; no fabricated replacement time/result/identity. Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure. An older restore missing any delivered member fences retry/mutation and discloses unavailable; no restore manufactures or replays an external result. Original source retention is the event's exact RP-OPERATIONAL-2555D dependency, including all owner holds/backups; no new expiry/count/deletion choice. This retention binding grants no Event Authority admission. Source bytes are bounded redacted metadata and permission-checked original refs, never raw config/tool output/credentials. The exact new source schema and resolver are technical custody bindings only; no new command, feature or user-visible frequency is selected.\n  For config.migrated alone, its SP-278/DL-076 checkpoint uses null examined_through_sequence_id and null last_applied_event_id for a proven empty prefix; sequence zero is not a fabricated cursor. A nonempty prefix stores the final globally examined sequence, including nonmatching events. The nine-field durable token must equal the actual current generic-index capture (storage instance, root/node/dataset, generation anchor, frontier revision/hash and source_selection); reacquire the live redb snapshot without persisting its id. Capture complete global source coverage, source-frame verification and exact filter/version before evaluating any matching row. The source-verified rows are authoritative; a matching witness hash alone is insufficient. Under the source/maintenance fence and the exact consumer writer lease, recheck the entire old checkpoint value, current token, admission/installed-reader, permissions, tombstones and withdrawal; one redb transaction CASes the entire checkpoint. Failed CAS, changed frontier/source, missing retained prefix, future source version or any failed final guard publishes nothing and returns unavailable. Rows from any Project/application partition remain part of global examined coverage even when filtered out. Empty global source and a nonempty prefix with zero family matches are separate cases. Withdraw first cuts off new append admission under coordinator exclusion; drain admitted receipts, fence reader CAS and fix withdrawn_at_utc once. A withdrawn checkpoint cannot advance or disclose; reinstallation requires fresh governed source verification/rebuild, never zero reset. Rebuild reads retained canonical source and original source/receipt closures under recovery holds; at most three same-key generations, no source eviction from checkpoint pressure. Readers only inspect; recovery never performs a tool, approval, enqueue, notification, Settings or worktree action.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-584, Plans/storage-plan.md:39709-39749",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-584, Plans/storage-plan.md:39711-39751",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-584",
@@ -418,12 +418,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-584",
-       "line_start": 39718,
-       "line_end": 39718,
+       "line_start": 39720,
+       "line_end": 39720,
        "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-584, Plans/storage-plan.md:39709-39749",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-584, Plans/storage-plan.md:39711-39751",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-584",
@@ -480,12 +480,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-584",
-       "line_start": 39719,
-       "line_end": 39719,
+       "line_start": 39721,
+       "line_end": 39721,
        "quote": "For config.migrated alone, its SP-278/DL-076 checkpoint",
        "quote_check": "exact",
-       "quote_scope": "unit SP-584, Plans/storage-plan.md:39709-39749",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-584, Plans/storage-plan.md:39711-39751",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-584",
@@ -529,12 +529,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-584",
-       "line_start": 39717,
-       "line_end": 39717,
+       "line_start": 39719,
+       "line_end": 39719,
        "quote": "Withdrawal first cuts off this family's append admission",
        "quote_check": "exact",
-       "quote_scope": "unit SP-584, Plans/storage-plan.md:39709-39749",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-584, Plans/storage-plan.md:39711-39751",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-584",
@@ -631,14 +631,14 @@
        "json_pointer": "#/families/4"
       },
       {
-       "line_end": 39721,
-       "line_start": 39721,
+       "line_end": 39723,
+       "line_start": 39723,
        "path": "Plans/storage-plan.md",
        "quote": "For config.migrated, boolean authority/context flags are exact booleans",
        "unit": "SP-584",
        "quote_check": "exact",
-       "quote_scope": "unit SP-584, Plans/storage-plan.md:39709-39749",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-584, Plans/storage-plan.md:39711-39751",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "line_end": 38599,
         "line_start": 38599,
@@ -775,9 +775,9 @@
   "row_pointer": "#/families/356"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
-  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
-  "source_assessment_sha256": "fd356e1dad11a256b53fb2bc298839b0389316c37b29f8626bed178619de2476",
+  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
+  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
+  "source_assessment_sha256": "f11872d39ca88e25b0ebbdff2ebcceade3016c59ed54802268ce22ed43bcf869",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }

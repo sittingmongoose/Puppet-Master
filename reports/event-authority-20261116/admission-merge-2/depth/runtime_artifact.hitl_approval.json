@@ -283,12 +283,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-530",
-       "line_start": 54388,
-       "line_end": 54388,
+       "line_start": 54390,
+       "line_end": 54390,
        "quote": "The reused event_record_index rows retain RP-EVENT-INDEX-SOURCE, source-coupled to the retained EventRecord, with complete target-generation rebuild/remapping at compaction. Only event_recor",
        "quote_check": "exact",
-       "quote_scope": "unit SP-530, Plans/storage-plan.md:54377-54414",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-530, Plans/storage-plan.md:54379-54416",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-530",
@@ -475,12 +475,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-530",
-       "line_start": 54386,
-       "line_end": 54386,
+       "line_start": 54388,
+       "line_end": 54388,
        "quote": "The exact physical checkpoint is event_record_index_checkpoint.v1:{storage_instance_id} in the checkpoints table; value pm.storage_value.event_record_index_checkpoint.v1@1.0.0 at Plans/event",
        "quote_check": "exact",
-       "quote_scope": "unit SP-530, Plans/storage-plan.md:54377-54414",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-530, Plans/storage-plan.md:54379-54416",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-530",
@@ -493,12 +493,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-530",
-       "line_start": 54387,
-       "line_end": 54387,
+       "line_start": 54389,
+       "line_end": 54389,
        "quote": "The adopted full-index projector advances rows and frontier atomically in one redb transaction with prior-generation/frontier CAS, as SP-278 requires. The live token has ten fields; any dura",
        "quote_check": "exact",
-       "quote_scope": "unit SP-530, Plans/storage-plan.md:54377-54414",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-530, Plans/storage-plan.md:54379-54416",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-530",
@@ -590,14 +590,14 @@
        }
       },
       {
-       "line_end": 54377,
-       "line_start": 54377,
+       "line_end": 54379,
+       "line_start": 54379,
        "path": "Plans/storage-plan.md",
        "quote": "### SP-530 — runtime_artifact.hitl_approval",
        "unit": "SP-530",
        "quote_check": "exact",
-       "quote_scope": "unit SP-530, Plans/storage-plan.md:54377-54414",
-       "file_sha256": "f3228a151f178cafe76f4fd8f850e6273842b7d05af276400b968ad46491da2a",
+       "quote_scope": "unit SP-530, Plans/storage-plan.md:54379-54416",
+       "file_sha256": "e6fd0e5bd6cccbfc2582d7423e3b9a1b943141965e92b3f966e8585cd4a972a0",
        "source_citation": {
         "line_end": 54288,
         "line_start": 54288,
@@ -914,9 +914,9 @@
   "row_pointer": "#/families/467"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX fix round 2 citation maintenance",
-  "source_commit": "3afd2892f938390f04305b6feeae825fca4abb0f",
-  "source_assessment_sha256": "c110c47de804f22331a48c415c29e8da6e9cf9554eed9251b1c922d5eeca25b3",
+  "authority": "MERGE3A R3 retention evidence and recorded E17-1 A",
+  "source_commit": "90a03df64cf58689b704a2a00203c4e5a27b61c5",
+  "source_assessment_sha256": "4298ed23902243d62349f34d2769da89bd445e913cbd22b37bd832801adeb09a",
   "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }
