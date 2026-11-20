@@ -46,29 +46,48 @@ async function readThrough(t, f, sel) {
 	const a1 = await shot(t, r); await f.waitForTimeout(300); const a2 = await shot(t, r);
 	const mask = motionMask(a1, a2);
 	await f.evaluate((s) => {
-		// the surface and all it holds are marked one by one: the text of everything else goes transparent
-		// the properties set below are inherited: the surface keeps its own, so what it holds keeps theirs
-		const e = document.querySelector(s), c = getComputedStyle(e); e.__bcStyle = e.getAttribute('style');
-		e.style.setProperty('color', c.color, 'important'); e.style.setProperty('-webkit-text-fill-color', c.webkitTextFillColor, 'important');
-		e.style.setProperty('text-shadow', c.textShadow, 'important'); e.style.setProperty('caret-color', c.caretColor, 'important');
-		[e, ...e.querySelectorAll('*')].forEach((n) => n.setAttribute('data-bc-in', ''));
-		const st = document.createElement('style'); st.id = 'bc-through';
-		st.textContent = 'body *:not([data-bc-in]) { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; caret-color: transparent !important; }';
+		const e = document.querySelector(s);
+		let oldStyle = e.getAttribute('style');
+		const c = getComputedStyle(e);
+		for (const property of ['color', '-webkit-text-fill-color', 'text-shadow', 'caret-color']) {
+			e.style.setProperty(property, c.getPropertyValue(property), 'important');
+		}
+		const st = document.createElement('style');
+		st.id = 'bc-through';
+		// Match the live subtree so text added between shots still belongs to the surface (T71).
+		const transparent = '{ color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; caret-color: transparent !important; }';
+		st.textContent = `body *:not(:is(${s}, ${s} *)) ${transparent}`;
+		st.__bcRestore = () => {
+			if (oldStyle === undefined) return;
+			if (oldStyle === null) e.removeAttribute('style');
+			else e.setAttribute('style', oldStyle);
+			oldStyle = undefined;
+		};
+		st.__bcHideSurface = () => {
+			st.__bcRestore();
+			st.textContent += ` ${s}, ${s} * ${transparent}`;
+		};
 		document.head.appendChild(st);
 	}, sel);
-	await f.waitForTimeout(350);
-	const b = await shot(t, r);
-	// the surface's own text: where it is drawn, its re-rasterised glyphs differ a little whatever is behind; those pixels
-	// (grown by 2 px) are not counted
-	await f.evaluate((s) => { const e = document.querySelector(s); ['color', '-webkit-text-fill-color', 'text-shadow'].forEach((k) => e.style.removeProperty(k)); document.getElementById('bc-through').textContent += ' [data-bc-in] { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; }'; }, sel);
-	await f.waitForTimeout(350);
-	const c = await shot(t, r);
-	const own = grow(motionMask(b, c), r.width, r.height, 2);
-	for (let i = 0; i < own.length; i++) if (own[i]) mask[i] = 1;
-	await f.evaluate((s) => { const st = document.getElementById('bc-through'); if (st) st.remove(); document.querySelectorAll('[data-bc-in]').forEach((n) => n.removeAttribute('data-bc-in')); const e = document.querySelector(s); if (e) { if (e.__bcStyle == null) e.removeAttribute('style'); else e.setAttribute('style', e.__bcStyle); } }, sel);
-	const counted = mask.reduce((s, v) => s + (v ? 0 : 1), 0);
-	const m = changed(a2, b, mask);
-	return { rect: r, n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
+	try {
+		await f.waitForTimeout(350);
+		const b = await shot(t, r);
+		// Exclude the surface's own glyphs, grown by 2 px to cover re-rasterisation against another backdrop.
+		await f.evaluate(() => document.getElementById('bc-through').__bcHideSurface());
+		await f.waitForTimeout(350);
+		const c = await shot(t, r);
+		const own = grow(motionMask(b, c), r.width, r.height, 2);
+		for (let i = 0; i < own.length; i++) if (own[i]) mask[i] = 1;
+		const counted = mask.reduce((s, v) => s + (v ? 0 : 1), 0);
+		const m = changed(a2, b, mask);
+		return { rect: r, n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
+	} finally {
+		await f.evaluate(() => {
+			const st = document.getElementById('bc-through');
+			st.remove();
+			st.__bcRestore();
+		});
+	}
 }
 
 export default async function (t) {
