@@ -66,7 +66,21 @@ def complete_projection(directory, negative):
     return world, projector.replay, (generation,), {}
 
 
+def projection_commitment(directory, negative):
+    world, _, _ = source.started(source.Suite(directory))
+    original = R.original_started(world)
+    if negative:
+        # Both presented copies agree. Recomputing the digest over the
+        # untouched original event must still detect the changed value.
+        original['original_append']['exact_custody']['original_event_value_commitment']['sha256'] = '0' * 64
+    rep = R.Representation(world)
+    record = R.projection_record(world, original)
+    wrapper = rep.encode(record, 'grsg_' + '0' * 64)
+    return world, rep.decode, (wrapper, original), {}
+
+
 CASES = {
+    'projection-commitment': (READERS, 491, 'representation/commitment_recomputed', projection_commitment),
     'complete-projection': (READERS, 654, 'projector/reducer/unsupported_same_run:goal_run.blocked', complete_projection),
     'prepared-candidate': (START, 1002, 'start/idempotency_conflict', prepared_candidate),
     'selector': (WORLD, 458, 'start/d01_head_body/selector_type', selector),
