@@ -165,6 +165,38 @@ class Witnesses(unittest.TestCase):
                 c._carried_from([path])
         c._CARRIED_EVIDENCE.clear()
 
+    def test_inventory_uses_the_original_scoped_import(self):
+        from types import SimpleNamespace
+        from pm_goal_own_c3_w5_successor_oracles import ScopedInstances
+
+        source = 'https://example.test/current'
+        target = 'https://example.test/retained'
+        schema = {'$id': source, 'properties': {'n': {'$ref': target + '#/$defs/value'}}}
+        retained = {'$id': target, '$defs': {'value': {'type': 'integer'}}}
+        from referencing.jsonschema import DRAFT202012
+        registries = {'source': Registry().with_resource(source, DRAFT202012.create_resource(schema)),
+                      'retained': Registry().with_resource(target, DRAFT202012.create_resource(retained))}
+        source_entry, target_entry = {'retrieval_uri': source}, {'retrieval_uri': target, 'sha256': 'pinned'}
+        bank = SimpleNamespace(registries=registries,
+                               documents={'source': [(source_entry, schema)],
+                                          'retained': [(target_entry, retained)]},
+                               entries={'retained': {target: target_entry}})
+        bank.explicit_import = lambda realm, entry, pointer, literal, uri: (
+            ('retained', target, 'pinned') if (realm, entry, pointer, literal, uri) ==
+            ('source', source_entry, '/properties/n/$ref', target + '#/$defs/value', target) else None)
+        instance = ScopedInstances(bank)
+        validator = instance.validator(schema, _resolver=registries['source'].resolver(source))
+        self.assertFalse(list(validator.iter_errors({'n': 1})))
+        self.assertTrue(list(validator.iter_errors({'n': '1'})))
+        exact = {}
+        c._describe_inventory(exact, validator, 'scoped-inventory', instance)
+        self.assertEqual(exact.get('clause_ids'), ['retained:' + target + '#/$defs/value/type'], exact)
+        bank.explicit_import = lambda *args: None
+        refused = {}
+        c._describe_inventory(refused, validator, 'scoped-inventory', instance)
+        self.assertNotIn('clause_ids', refused)
+        self.assertIn('unresolved references', refused['error'])
+
     def test_distinct_member_closure_keywords_and_cuts(self):
         schema = {'properties': {'n': {}}, 'additionalProperties': False, 'unevaluatedProperties': False}
         bad = {'extra': 1}

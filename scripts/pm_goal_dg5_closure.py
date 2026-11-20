@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """C12-DG5 schema clause closure over every DG owner root the five families' complete calls validate.
 
-The closure algorithm, classes, defects, cut rule and kill test are GO's
-(scripts/pm_goal_go_schema_closure.py, imported read-only; lane GC's standard). DG5 adds only how
-the roots and their exact validators are obtained from the DG checkers:
+DG5 uses GO's closure walk and witness checks with the DG owners' original
+roots, scoping rules and distinct assertion identities:
 
 * Collection: the family's DG5 source runs once under the DG5 bridge (discovery, no judge). In the
   parent's own run of each captured entry, every validator a bank builds is captured at its outermost
@@ -35,6 +34,7 @@ import pickle
 import sys
 import time
 from pathlib import Path
+from types import SimpleNamespace
 
 import attrs
 import jsonschema
@@ -345,11 +345,11 @@ def _member_guard(keyword, guarded):
     return distinct
 
 
-def _clause_inventory(validator):
+def _clause_inventory(validator, **walk_options):
     go.CURRENT[0] = validator
     go.UNRESOLVED.clear()
     go.RESOLVERS.clear()
-    nodes = go.walk(validator)
+    nodes = go.walk(validator, **walk_options)
     clauses = []
     for location, info in nodes.items():
         node = info['node']
@@ -366,13 +366,76 @@ def _clause_inventory_pin(clauses):
                 sha256=hashlib.sha256('\n'.join(clauses).encode()).hexdigest())
 
 
+def _scoped_census(plain, ident, bank, owner_location):
+    """Follow the original bank's location-scoped imports on its original nodes."""
+    check_ref = plain.VALIDATORS['$ref']
+    inline = AnnotationMemo()
+    annotate(plain.schema, 'dg5-root:' + ident, inline)
+
+    def locate(node):
+        source = owner_location(bank, node)
+        return source if source is not None else inline[id(node)]['x-pm-oracle-id']
+
+    def resolve_reference(node, resolver):
+        targets = []
+
+        def descend(_instance, contents, *, resolver):
+            targets.append(SimpleNamespace(contents=contents, resolver=resolver))
+            return ()
+
+        def validate_reference(*, ref, instance):
+            resolved = resolver.lookup(ref)
+            return descend(instance, resolved.contents, resolver=resolved.resolver)
+
+        observer = SimpleNamespace(_resolver=resolver, descend=descend, _validate_reference=validate_reference)
+        for _ in check_ref(observer, node['$ref'], None, node):
+            raise ValueError('owner reference emitted a refusal during the census')
+        if len(targets) != 1:
+            raise ValueError('owner reference did not select exactly one schema')
+        return targets[0]
+
+    return _clause_inventory(plain, resolve_reference=resolve_reference, locate=locate)
+
+
+def _instance_location(bank, node):
+    origin = bank.origins.get(id(node))
+    if origin is None:
+        return None
+    realm, entry, pointer = origin
+    return realm + ':' + entry['retrieval_uri'] + '#' + pointer
+
+
+def _realm_location(bank, node):
+    origin = bank.node_origin.get(id(node))
+    if origin is None:
+        return None
+    realm, digest, pointer = origin
+    return realm + ':sha256:' + digest + '#' + pointer
+
+
 def _describe_inventory(entry, plain, ident, bank=None):
     try:
-        _, clauses = _clause_inventory(closure_validator(plain, ident, bank))
+        try:
+            _, clauses = _clause_inventory(closure_validator(plain, ident, bank))
+        except ValueError:
+            # The generic walk cannot follow a bank's location-scoped imports.
+            # Preserve the existing census for roots it resolves completely.
+            module = type(bank).__module__
+            if not go.UNRESOLVED:
+                raise
+            if module == 'pm_goal_own_c3_w5_successor_oracles' and type(bank).__name__ == 'ScopedInstances':
+                _, clauses = _scoped_census(plain, ident, bank, _instance_location)
+            elif module in ('pm_goal_dg_int_roots', 'pm_goal_dg_r_world') and hasattr(bank, 'node_origin'):
+                _, clauses = _scoped_census(plain, ident, bank, _realm_location)
+            else:
+                raise
         entry.update(clause_ids=clauses, clause_inventory=_clause_inventory_pin(clauses))
     except Exception as exc:  # Keep the failed root visible in the inventory.
         entry.update(error=f'{type(exc).__name__}: {exc}'[:400])
+        if go.UNRESOLVED:
+            entry['unresolved_references'] = go.UNRESOLVED[:20]
     finally:
+        go.UNRESOLVED.clear()
         go.RESOLVERS.clear()
         go.CURRENT[0] = None
 
