@@ -7,11 +7,14 @@ owner, registry, exact rule walker and gated table runner.
 """
 import argparse
 from collections import Counter
+from contextlib import ExitStack
 import copy
 import gzip
 import hashlib
 import json
+import multiprocessing
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import time
@@ -51,6 +54,16 @@ def update_fixture(route, path):
 
     w = oracle.world(path)
     goal = oracle.O.birth_goal(w)
+    if route == 'terminal':
+        request = oracle.O.direct_request(w, goal, 'Stage 3 terminal evidence')
+        w.command.run(request, stop_after='publish')
+        stamp = w.now()
+
+        def terminalize():
+            with patch.object(w, 'now', return_value=stamp):
+                return w.sir.terminalize(request['command_instance_id'], 'succeeded')
+
+        return w, terminalize
     _, admission = oracle.run_direct(w, goal)
     progress = oracle.progress(w, goal, oracle.op_of(admission))
     request = progress['body_commit']['receipt_request']
@@ -60,6 +73,10 @@ def update_fixture(route, path):
     if route == 'inspect':
         event_request = inspect.request_for(goal['scope'], progress['publication']['event_id'])
         return w, lambda: inspect.inspect(event_request, actor, permission)
+    if route == 'input':
+        return w, oracle._input_call(w, goal, oracle.op_of(admission))
+    if route == 'audit':
+        return w, oracle._audit_call(w, goal, admission)
     if route == 'receipt':
         return w, lambda: w.body.read_receipt(request, actor, permission)
     if route == 'oracle_receipt':
@@ -76,6 +93,14 @@ def certified_fixture(route, path):
         request = oracle.W.guard_request(w, ctx['scope'], ctx['op'], 'original_certification',
                                          'TEST_ONLY:guard-request:method-b')
         return w, lambda: w.guard.read_guard(request)
+    if route == 'arm':
+        run.until('prepare')
+        return w, lambda: w.coordinator.arm(ctx, run.obs['prepared'])
+    if route == 'prepare':
+        return w, lambda: w.coordinator.prepare(ctx)
+    if route == 'retained':
+        run.until('release')
+        return w, lambda: w.coordinator.retained_authority(ctx['scope'], ctx['op'])
     if route == 'f5a':
         run.until('arm')
         intent, control = run.obs['intent'], run.obs['control_armed']
@@ -86,6 +111,10 @@ def certified_fixture(route, path):
         request = oracle.W.recovery_request(w, ctx, run.stored('intent')['record'])
         return w, lambda: w.coordinator.recover_original(request)
     raise ValueError(route)
+
+
+class RootCapture(BaseException):
+    pass
 
 
 class OwnerCheck:
@@ -101,6 +130,7 @@ class OwnerCheck:
         self.disabled_check = disabled_check
         self.runs = []
         self.capture = None
+        self.probe_root = False
 
     def call(self, action, edit, *, require_exact=False):
         import pm_goal_dg5_boundaries as bridge
@@ -149,13 +179,16 @@ class OwnerCheck:
             self.collector.observe(self.row, not errors, tuple(site))
             if not errors and edit is None:
                 self.capture = plain, actual_bank, copy.deepcopy(document)
+                if self.declare.get('transaction') and self.probe_root:
+                    raise RootCapture
             if decision and (not record['cut'] or self.disabled_check == 'row'):
                 return original(bank, *validator_args, args[-1])
             return document
 
         try:
             with patch.object(self.bank_class, 'validate', observe):
-                action()
+                result = action()
+            record['result_sha256'] = self.result_digest(result)
         except Exception as error:
             if type(error).__name__ not in bridge.REFUSAL_CLASSES:
                 raise
@@ -172,7 +205,57 @@ class OwnerCheck:
                     f"got {record.get('refusal')!r}")
         return record
 
-    def prove(self, action):
+    def result_digest(self, result):
+        from pm_goal_go2_closure import value_sha
+
+        return value_sha(result)
+
+    def call_on_copy(self, world, action, edit, require_exact):
+        import pm_goal_dg5_boundaries as bridge
+
+        copied = self.scratch.parent / ('transaction-' + str(len(self.runs)))
+        shutil.copytree(self.scratch, copied)
+        root_path = world.storage.root
+        require(root_path.is_relative_to(self.scratch), 'unexpected backing store')
+        for attr in ('goal_store', 'd01_store'):
+            store = getattr(world, attr, None)
+            require(store is None or store is world.storage or store.root.is_relative_to(self.scratch),
+                    'unexpected auxiliary backing store')
+        manifest = bridge.manifest(bridge.file_state(copied))
+        context = multiprocessing.get_context('fork')
+        receiver, sender = context.Pipe(duplex=False)
+
+        def run_child():
+            try:
+                with ExitStack() as changes:
+                    stores = [world.storage, getattr(world, 'goal_store', None), getattr(world, 'd01_store', None)]
+                    for store in {id(store): store for store in stores if store is not None}.values():
+                        changes.enter_context(patch.object(store, 'root', copied / store.root.relative_to(self.scratch)))
+                    record = self.call(action, edit, require_exact=require_exact)
+                    record['store_wrote'] = bridge.manifest(bridge.file_state(copied)) != manifest
+                    if record['errors']:
+                        require(not record['store_wrote'], 'refused owner call changed its copied store')
+                    sender.send(record)
+            except Exception as error:
+                sender.send({'exception': str(error)})
+            finally:
+                sender.close()
+
+        child = context.Process(target=run_child)
+        child.start()
+        sender.close()
+        try:
+            record = receiver.recv()
+        finally:
+            receiver.close()
+            child.join()
+        require(child.exitcode == 0 and 'exception' not in record, record)
+        self.runs.append(record)
+        for observed in record['observations']:
+            self.collector.observe(self.row, not observed['errors'], tuple(self.site))
+        return record
+
+    def prove(self, world, action):
         import pm_goal_dg5_boundaries as bridge
         import pm_goal_guard_tables as tables
 
@@ -184,7 +267,11 @@ class OwnerCheck:
                 require(document == value, 'complete-call input changed')
                 require(not tables.CUT - {self.row}, 'multiple validation rows disabled')
                 require(bridge.manifest(bridge.file_state(self.scratch)) == initial, 'sealed store changed')
-                result = self.call(action, change, require_exact=not self.collector.replaying)
+                exact = not self.collector.replaying
+                if self.declare.get('transaction'):
+                    result = self.call_on_copy(world, action, change, exact)
+                else:
+                    result = self.call(action, change, require_exact=exact)
                 require(bridge.manifest(bridge.file_state(self.scratch)) == initial, 'passive call changed the store')
                 return result
 
@@ -194,11 +281,20 @@ class OwnerCheck:
             require(not self.collector.failures, self.collector.failures)
             require(record['outcome'] == ('exact_expected' if change else 'control'), record)
             if change:
-                require(record['kill'] == 'KILLED', f'complete call has another refusal: {self.runs[-2]}')
+                require(record['kill'] == 'KILLED',
+                        f"complete-call cut result {record['kill']}: {record.get('cut_errors')}")
                 before, cut, restored = self.runs[-3:]
                 require(before == restored and before['observations'] == cut['observations'] and not cut['errors'],
                         'the complete call did not restore the same document and validation message')
         require(self.runs[0] == self.runs[-1], 'the restored accepted control changed')
+        if self.declare.get('transaction'):
+            self.probe_root = True
+            try:
+                self.call(action, None)
+            except RootCapture:
+                pass
+            finally:
+                self.probe_root = False
         return self.capture
 
 
@@ -337,11 +433,11 @@ def main():
     fixture = args.out / 'fixture'
     fixture.mkdir()
     if declare['family'] == 'goal.updated':
-        _, action = update_fixture(declare['route'], fixture)
+        world, action = update_fixture(declare['route'], fixture)
         bank = RootBank
     else:
         from pm_goal_dg_cf2_world import RealmBank
-        _, action = certified_fixture(declare['route'], fixture)
+        world, action = certified_fixture(declare['route'], fixture)
         bank = RealmBank
 
     closure.patch_validator_classes(force=True)
@@ -350,7 +446,7 @@ def main():
     report = dict(row=row, source=revision, census_sha256=declare['census_sha256'], root=ident,
                   status='NOT_COVERED', reason=None)
     try:
-        plain, actual_bank, accepted = check.prove(action)
+        plain, actual_bank, accepted = check.prove(world, action)
         require({(obs['root'], obs['registry_sha256']) for run in check.runs for obs in run['observations']}
                 == {(ident, root['registry_sha256'])}, 'root or registry differs from the census')
         clauses, gaps = test_rules(plain, actual_bank, accepted, ident, root['clause_ids'],
