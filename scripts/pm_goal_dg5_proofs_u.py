@@ -411,6 +411,17 @@ PROOFS = {
             'record and checks equality before the write. Body Control requires the identical '
             'pending schema for a non-null value. The complete call passed the same invalid '
             'document to that later check with only the earlier check disabled.')),
+    'dg5/dgu/inspect/request/schema': dict(
+        kind='entailed-by-inspection-witness-request',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 1854), (U, 1909), (U, 1918), ('Plans/goal_updated_consumer_contracts.schema.json', 535)],
+        argument=(
+            'The inspection witness requires the exact EventReadRequest and the original caller '
+            'forwards the same request through the same bank. The complete call still refuses '
+            'at the later request field with only the first check disabled. The later witness '
+            'also repeated the exact message for every independently tested request rule. '
+            'This proof covers the required request field of the witness.')),
     'dg5/dgu/reader/input/request/schema': dict(
         kind='entailed-by-input-result-request',
         families=['goal.updated'],
