@@ -868,6 +868,9 @@ class Merge2Fix1EvidenceTests(unittest.TestCase):
                     self.assertNotEqual(fixed,body)
                     self.assertIn(event+'@2.0.0 is registered for application_or_project',fixed)
                     self.assertIn(assignment,fixed)
+                    admission=_read(REPO,RECORDS+'/'+event+'.json')
+                    self.assertIn('as recorded by '+admission['decision_ref']+'.',fixed)
+                    self.assertIn('Historical original admission: '+admission['original_admission_decision_ref']+' (project_only);',fixed)
                     self.assertEqual(driver.owner_summary(fixed,event,assignment,[1,3],policy),fixed)
                     if policy:
                         self.assertIn('Application = `'+policy+'`, Project = `'+policy+'`',fixed)

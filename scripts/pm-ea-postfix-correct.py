@@ -178,11 +178,24 @@ def decision_entry(number, event, row, before, after, record, depth_path, depth_
     return '### '+number+': Event Authority corrects '+event+' (merge 3 post-landing)\n\n```yaml\n'+yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=120)+'```\n\n'
 
 
-def owner_summary(body, event, assignment, findings, storage_policy=None):
+def owner_summary(body, event, assignment, findings, storage_policy=None,
+                  scope_decision=None, original_decision=None):
     """Complete the same family's existing summary and event-policy clause."""
     if 3 in findings:
-        pattern=r'(Current selected assignment \(2026-11-19\): '+re.escape(event)+r'@[^ ]+ is registered for )project_only(.*?Its event history selects )([^;]+);'
-        new=re.sub(pattern,lambda m:m[1]+'application_or_project'+m[2]+assignment+';',body,flags=re.S)
+        if scope_decision is None or original_decision is None:
+            record=load(RECORDS+'/'+event+'.json')
+            scope_decision=scope_decision or record['decision_ref']
+            original_decision=original_decision or record.get('original_admission_decision_ref',record['decision_ref'])
+        if scope_decision == original_decision:
+            raise ValueError('a changed panel scope needs its correction decision')
+        pattern=(r'(Current selected assignment \(2026-11-19\): '+re.escape(event)+
+            r'@[^ ]+ is registered for )(?:project_only|application_or_project)'
+            r'(.*?as recorded by )Plans/Decision_Log\.md#DL-\d+'
+            r'\. Its event history selects [^;]+;'
+            r'(?: Historical original admission: Plans/Decision_Log\.md#DL-\d+ \(project_only\);)?')
+        new=re.sub(pattern,lambda m:m[1]+'application_or_project'+m[2]+scope_decision+
+            '. Its event history selects '+assignment+'; Historical original admission: '+
+            original_decision+' (project_only);',body,flags=re.S)
         if storage_policy:
             old='Event history `retention_policy_ref = '+storage_policy+'`, under Plans/Decision_Log.md#DL-401.'
             explicit='Event history: Application = `'+storage_policy+'`, Project = `'+storage_policy+'`, under Plans/Decision_Log.md#DL-401.'
@@ -248,7 +261,9 @@ def apply_one(plan, event, decision):
             policy=row['retention_policy_ref']
             storage_policy=(policy['policy_id']+'@'+policy['policy_version']
                 if 3 in family['findings'] and owner_path=='Plans/storage-plan.md' else None)
-            new=owner_summary(body,event,assignment,family['findings'],storage_policy)
+            new=owner_summary(body,event,assignment,family['findings'],storage_policy,
+                scope_decision=DL+'#'+number,
+                original_decision=record.get('original_admission_decision_ref',record['decision_ref']))
             if new!=body:
                 edits.setdefault(owner_path,[]).append((start,end,new))
         for owner_path,updates in edits.items():

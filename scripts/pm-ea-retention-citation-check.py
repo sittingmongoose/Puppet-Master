@@ -31,7 +31,7 @@ def main():
     rows = {x['event_type']:x for x in load('Plans/event_family_registry.json')['families']}
     policies = {x['policy_id']:x for x in load('Plans/storage_value_registry.json')['retention_policies']}
     findings, checks, mutations, families = [], [], [], []
-    reviewed = []
+    reviewed,scope_regressions = [],[]
     for event, prepared in sorted(ready.items()):
         cell = load(FOLDER+'/depth/'+event+'.json')['rows'][0]['cells']['retention']
         union = []
@@ -68,7 +68,7 @@ def main():
                         findings.append(dict(event_type=event, lane=prepared['lane'], ordinal=ordinal, missing=['mutation survived: '+facet]))
         if not args.strict_citations:
             row = rows[event]
-            from pm_ea_retention_citations import union_missing
+            from pm_ea_retention_citations import union_missing,without_scope_claims
             gaps, bindings = union_missing(union, row, policies)
             families.append(dict(event_type=event, lane=prepared['lane'], bindings=bindings, missing=gaps))
             if gaps:
@@ -81,6 +81,13 @@ def main():
                     mutations.append(dict(event_type=event, scope=scope, mutation='remove selected policy from all current witnesses', killed=killed))
                     if not killed:
                         findings.append(dict(event_type=event, lane=prepared['lane'], missing=['policy-removal mutation survived']))
+                    scoped=without_scope_claims(union,scope)
+                    scope_gaps,scope_bindings=union_missing(scoped,row,policies)
+                    killed=(scope+':assignment_scope' in scope_gaps and
+                            all(x['named_in_current_union'] for x in scope_bindings))
+                    mutations.append(dict(event_type=event,scope=scope,
+                        mutation='remove EventRecord scope evidence while preserving selected policy',killed=killed))
+                    if not killed:findings.append(dict(event_type=event,lane=prepared['lane'],missing=['scope-removal mutation survived']))
     if args.self_test and not args.strict_citations:
         from pm_ea_retention_citations import union_missing, selections
         baseline='10ba97e699d51287673d6f1db4d994f54c59b4ed'
@@ -127,9 +134,25 @@ def main():
         union_refusals=sum(bool(x.get('baseline_union_missing')) for x in mutations if x['mutation']=='restore complete received retention cell')
         if union_refusals<81:
             findings.append(dict(event_type='shared',lane='shared',missing=['received whole-cell regressions did not reproduce at least 81 refusals'],count=union_refusals))
+        received='20697031603d52f52b3dba3d4d621f909be15e88'
+        @lru_cache(maxsize=64)
+        def received_read(path):
+            return subprocess.check_output(['git','-C',str(ROOT),'show',received+':'+path]).decode()
+        required={'config.validation.failed','parser.error','phase.force_completed'} | {
+            event for event in ready if event.startswith('runtime_artifact.')}
+        if len(required)!=22:findings.append(dict(event_type='shared',lane='shared',missing=['received scope regression population differs'],count=len(required)))
+        for event in sorted(ready):
+            old=__import__('json').loads(received_read(FOLDER+'/depth/'+event+'.json'))['rows'][0]['cells']['retention']
+            old_union=[range_text(item,received_read) for item in old['evidence']]
+            gaps,_=union_missing(old_union,rows[event],policies)
+            if event in required or any(x.endswith(':assignment_scope') for x in gaps):
+                refused=any(x.endswith(':assignment_scope') for x in gaps)
+                scope_regressions.append(dict(event_type=event,source_commit=received,missing=gaps,
+                    required_review_regression=event in required,killed=refused))
+                if not refused:findings.append(dict(event_type=event,lane=ready[event]['lane'],missing=['received unscoped union was credited']))
     result = dict(schema_id='pm.ea.retention_citation_check.v1', input_revision=args.revision or 'working_tree',
         script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-        families=len(ready), citations=len(checks), strict_diagnostic=args.strict_citations, findings=findings, checks=checks, family_checks=families, mutations=mutations, reviewed_range_regressions=reviewed,
+        families=len(ready), citations=len(checks), strict_diagnostic=args.strict_citations, findings=findings, checks=checks, family_checks=families, mutations=mutations, reviewed_range_regressions=reviewed,scope_regressions=scope_regressions,
         by_lane=dict(Counter(x['lane'] for x in findings)))
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)

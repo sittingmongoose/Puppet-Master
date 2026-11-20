@@ -16,6 +16,46 @@ spec.loader.exec_module(w)
 CREW = {'crew.board_message_posted', 'crew.board_message_read', 'crew.board_messages_archived'}
 
 
+def scope_claims(body, scope):
+    """Explicit EventRecord editions, never a policy object's count partition.
+
+    In particular, the word Project in cardinality_scope=project or in an
+    artifact body's partition is not evidence of an EventRecord's scope.
+    Return the scope words so regression controls can remove scope alone
+    without removing the selected policy/setting token.
+    """
+    value = re.sub(r'\\[nrt]', ' ', body).replace('\\', '')
+    pattern = (
+        r'\b(?:application_or_project|both scopes)\b'
+        r'|\b' + scope + r'_only\b'
+        r'|\b' + scope + r'(?=\s*(?:[- ](?:only|scop(?:e|ed))\b|'
+        r'root edition\b|editions?\b|eventrecords?\b|records?\b|history\b|'
+        r'=\s*(?:`|[\"\x27])?(?:RP-|ai\.usage\.usage-retention)))'
+        r'|(?<=scope_kind)' + r'[\s\"\x27:=]*\b' + scope + r'\b'
+        r'|(?<=scope_policy)' + r'[\s\"\x27:=]*\b' + scope + r'\b'
+        r'|(?<=scope)' + r'[\s\"\x27:=]+\b' + scope + r'\b'
+    )
+    # A lookbehind on "scope" alone would also match cardinality_scope and
+    # instance_scope. Only a standalone scope/key is an edition declaration.
+    matches = []
+    for match in re.finditer(pattern, value, re.I):
+        prefix = value[:match.start()]
+        if re.search(r'(?:cardinality_|instance_)scope$', prefix, re.I):
+            continue
+        matches.append((match.start(), match.end()))
+    return value, matches
+
+
+def without_scope_claims(bodies, scope):
+    result = []
+    for body in bodies:
+        value, matches = scope_claims(body, scope)
+        for start, end in reversed(matches):
+            value = value[:start] + ' REMOVED_EVENT_SCOPE ' + value[end:]
+        result.append(value)
+    return result
+
+
 def selections(row):
     if row.get('payload_versions'):
         return {x['scope_kind']: x.get('retention_policy_ref', row['retention_policy_ref']) for x in row['payload_versions']}
@@ -30,7 +70,7 @@ def missing_facets(body, row, policies):
     flat = re.sub(r'\s+', ' ', value).lower()
     missing = []
     for scope, binding in selections(row).items():
-        if not re.search(r'\b' + scope + r'(?:_only|_or_project)?\b|\b' + scope + r'[- ]scope', flat):
+        if not scope_claims(body,scope)[1]:
             missing.append(scope + ':scope')
         token = binding.get('policy_id', binding.get('setting_key', ''))
         if not token or token.lower() not in flat:
@@ -201,7 +241,7 @@ def union_missing(bodies, row, policies):
         exact = bool(policy and policy['policy_version'] == selected.get('policy_version')) if selected.get('policy_id') else selected.get('setting_key') == 'ai.usage.usage-retention'
         if not named or not exact:
             gaps.append(scope+':selected_policy_assignment')
-        scoped = len(selections(row)) == 1 or (scope in lower or ('both scopes' in lower))
+        scoped = any(scope_claims(body, scope)[1] for body in bodies)
         names = {v.get('policy_id', v.get('setting_key')) for v in selections(row).values()}
         if len(names) > 1:
             labels = list(re.finditer(r'\b(application|project)(?=\s*(?:=|editions?\b|records?\b|history\b))', flat, re.I))

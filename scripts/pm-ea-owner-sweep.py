@@ -99,6 +99,17 @@ def decision_binding_matches(body, scope, policy):
     return bool(binding and policy_name(policy) in binding[1])
 
 
+def assignment_decision_problem(subject, scope, decision, admission):
+    """A current scope must be stated by the decision actually cited for it."""
+    allowed={admission['decision_ref'],admission.get('original_admission_decision_ref',admission['decision_ref'])}
+    body=decision_binding_text(decision)
+    declared=set(re.findall(r'\b(?:scope policy|Its scope is)\s+`?(application_or_project|project_only|application_only)\b',body,re.I))
+    if decision not in allowed or subject not in body or declared != {scope}:
+        return dict(decision=decision,stated_scope=scope,decision_scopes=sorted(declared),
+                    allowed_decisions=sorted(allowed))
+    return None
+
+
 @lru_cache(maxsize=2048)
 def clauses(ref):
     """Decode YAML wrapping, while retaining physical line bounds and exact bytes."""
@@ -424,6 +435,25 @@ def postfix_owner_mutations(registry, policies):
         mutated = body + '\n' + old if not old.startswith('**Boundary') else body.split('**Boundary.**')[0] + old
         findings, _ = postfix_owner_findings(registry, policies, {GITHUB_COUNT:mutated})
         mutations.append(dict(mutation=old, killed=all(any(x['event_type']==event and x['kind']=='github_cross_family_registration_boundary' for x in findings) for event in GITHUB)))
+    panels=load('Plans/panel_event_contracts/manifest.json')['families']
+    for event in ('panel.redocked','panel.undocked'):
+        row=registry[event]
+        panel=next(x for x in panels if x['event_type']==event)
+        admission=load('reports/event-authority-20260911/admission-records/'+event+'.json')
+        original=admission['original_admission_decision_ref']
+        refs={row['semantic_owner_doc'],'Plans/storage-plan.md#'+panel['sp'],
+              'Plans/Automated_Testing_System.md#'+panel['ats']}
+        for ref in sorted(refs):
+            selected=[x for x in clauses(ref) if 'Current selected assignment' in x['text'] and event+'@' in x['text']]
+            for clause in selected:
+                match=re.search(r'as recorded by (Plans/Decision_Log\.md#DL-\d+)',clause['text'])
+                positive=bool(match) and assignment_decision_problem(event,row['scope_policy'],match[1],admission) is None
+                killed=assignment_decision_problem(event,row['scope_policy'],original,admission) is not None
+                mutations.append(dict(event_type=event,ref=ref,line_start=clause['line_start'],
+                    mutation='restore original Project-only decision as current two-scope authority',
+                    positive=positive,killed=positive and killed))
+            if len(selected)!=1:
+                mutations.append(dict(event_type=event,ref=ref,mutation='current scope-summary coverage',killed=False))
     return mutations
 
 
@@ -538,8 +568,11 @@ def main():
                     admission = load("reports/event-authority-20260911/admission-records/" + subject + ".json")
                     _, _, decision_body = section(decision)
                     if (version != selected_row.get("family_revision") or family_scope != selected_row.get("scope_policy")
-                            or policy != expected or decision != admission.get("original_admission_decision_ref", admission["decision_ref"]) or subject not in decision_body):
+                            or policy != expected or subject not in decision_body):
                         findings.append(dict(base, kind="current_assignment_differs_from_admitted_row", sentence=value))
+                    problem=assignment_decision_problem(subject,family_scope,decision,admission)
+                    if problem:
+                        findings.append(dict(base,kind='current_scope_decision_mismatch',sentence=value,**problem))
                 if (event == "usage.event" and ref == "Plans/Contracts_V0.md#CV-614"
                         and "Application source retention and coherent backup use this event's same explicit policy" in value):
                     findings.append(dict(base, kind="usage_source_borrows_event_policy", sentence=value))
