@@ -1,0 +1,3462 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:4b055f33aaa123f9": {
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/closed_members": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/properties/locked_at_utc/format": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "locked_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/properties/locked_at_utc/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "locked_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/properties/original_graph_lock_receipt_ref/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_lock_receipt_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/properties/original_graph_lock_receipt_ref/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_lock_receipt_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/properties/original_lock_operation_id/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_lock_operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/properties/original_lock_operation_id/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_lock_operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/required": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "remove",
+          "original_lock_operation_id"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/type": {
+        "path": [
+          "record",
+          "original_graph_lock"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureBinding/closed_members": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureBinding/required": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "remove",
+          "source"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureBinding/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/closed_members": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "family_id"
+        ],
+        "value": "executor_original_input_capturex"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/physical_key/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/physical_key/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/physical_value_sha256/pattern": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "physical_value_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/physical_value_sha256/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_original_input_capture.v1x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/storage_instance_id/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/storage_instance_id/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/required": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/closed_members": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "family_id"
+        ],
+        "value": "executor_original_publication_originx"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/physical_key/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/physical_key/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/physical_value_sha256/pattern": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "physical_value_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/physical_value_sha256/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_original_publication_origin.v1x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/storage_instance_id/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/storage_instance_id/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/required": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "after_control"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/family_id/const": {
+        "path": [
+          "record",
+          "after_control",
+          "family_id"
+        ],
+        "value": "executor_run_execution_controlx"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/physical_key/minLength": {
+        "path": [
+          "record",
+          "after_control",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/physical_key/type": {
+        "path": [
+          "record",
+          "after_control",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          "record",
+          "after_control",
+          "physical_value_sha256"
+        ],
+        "value": "8d7c6457a885f70aa769d794edc14202147089065232865d13f07a1fb0d9d024\n"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/physical_value_sha256/type": {
+        "path": [
+          "record",
+          "after_control",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/schema_id/const": {
+        "path": [
+          "record",
+          "after_control",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_run_execution_control.v1x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/schema_version/const": {
+        "path": [
+          "record",
+          "after_control",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "after_control",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "after_control",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "after_control"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/type": {
+        "path": [
+          "record",
+          "after_control"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/action_authority/const": {
+        "path": [
+          "record",
+          "action_authority"
+        ],
+        "value": "nonex"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/before_control_physical_sha256/anyOf": {
+        "path": [
+          "record",
+          "before_control_physical_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/before_control_physical_sha256/anyOf/0/pattern": {
+        "path": [
+          "record",
+          "before_control_physical_sha256"
+        ],
+        "value": "gc\n"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/before_control_physical_sha256/anyOf/0/type": {
+        "path": [
+          "record",
+          "before_control_physical_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/before_control_physical_sha256/anyOf/1/type": {
+        "path": [
+          "record",
+          "before_control_physical_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/before_revision/minimum": {
+        "path": [
+          "record",
+          "before_revision"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/before_revision/type": {
+        "path": [
+          "record",
+          "before_revision"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/operation/enum": {
+        "path": [
+          "record",
+          "operation"
+        ],
+        "value": "materializex"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/operation_id/minLength": {
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/operation_id/type": {
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/original_graph_lock/anyOf": {
+        "path": [
+          "record",
+          "original_graph_lock"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/original_graph_lock/anyOf/1/type": {
+        "path": [
+          "record",
+          "original_graph_lock"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/published_at_utc/format": {
+        "path": [
+          "record",
+          "published_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/published_at_utc/type": {
+        "path": [
+          "record",
+          "published_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/type": {
+        "path": [
+          "record"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/type": {
+        "path": [
+          "record",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunOperationResult/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunOperationResult/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_run_operation_result.v1x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunOperationResult/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunOperationResult/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunOperationResult/type": {
+        "path": [],
+        "value": true
+      }
+    },
+    "dg5:d6223e40d28212e3": {
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/closed_members": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/properties/locked_at_utc/format": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "locked_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/properties/locked_at_utc/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "locked_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/properties/original_graph_lock_receipt_ref/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_lock_receipt_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/properties/original_graph_lock_receipt_ref/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_lock_receipt_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/properties/original_lock_operation_id/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_lock_operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/properties/original_lock_operation_id/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_lock_operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/required": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "remove",
+          "original_lock_operation_id"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GraphLockObservation/type": {
+        "path": [
+          "record",
+          "original_graph_lock"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureBinding/closed_members": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureBinding/required": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "remove",
+          "source"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureBinding/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/closed_members": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "family_id"
+        ],
+        "value": "executor_original_input_capturex"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/physical_key/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/physical_key/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/physical_value_sha256/pattern": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "physical_value_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/physical_value_sha256/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_original_input_capture.v1x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/storage_instance_id/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/properties/storage_instance_id/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/required": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/InputCaptureSelector/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "source"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/closed_members": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "family_id"
+        ],
+        "value": "executor_original_publication_originx"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/physical_key/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/physical_key/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/physical_value_sha256/pattern": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "physical_value_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/physical_value_sha256/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_original_publication_origin.v1x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/storage_instance_id/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/properties/storage_instance_id/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/required": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginSelector/type": {
+        "control": {
+          "path": [
+            "record",
+            "original_graph_lock"
+          ],
+          "value": {
+            "locked_at_utc": "2026-11-05T09:00:00Z",
+            "original_graph_capture": {
+              "origin": {
+                "family_id": "executor_original_publication_origin",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_publication_origin.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              },
+              "source": {
+                "family_id": "executor_original_input_capture",
+                "physical_key": "x",
+                "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "schema_id": "pm.storage_value.executor_original_input_capture.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "x"
+              }
+            },
+            "original_graph_lock_receipt_ref": "x",
+            "original_lock_operation_id": "x"
+          }
+        },
+        "path": [
+          "record",
+          "original_graph_lock",
+          "original_graph_capture",
+          "origin"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "after_control"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/family_id/const": {
+        "path": [
+          "record",
+          "after_control",
+          "family_id"
+        ],
+        "value": "executor_run_execution_controlx"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/physical_key/minLength": {
+        "path": [
+          "record",
+          "after_control",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/physical_key/type": {
+        "path": [
+          "record",
+          "after_control",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          "record",
+          "after_control",
+          "physical_value_sha256"
+        ],
+        "value": "ae367907844bddc145eea258faa568efa787b31a7aa937f68b02495fa6c90b04\n"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/physical_value_sha256/type": {
+        "path": [
+          "record",
+          "after_control",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/schema_id/const": {
+        "path": [
+          "record",
+          "after_control",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_run_execution_control.v1x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/schema_version/const": {
+        "path": [
+          "record",
+          "after_control",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "after_control",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "after_control",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "after_control"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunControlSelector/type": {
+        "path": [
+          "record",
+          "after_control"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/action_authority/const": {
+        "path": [
+          "record",
+          "action_authority"
+        ],
+        "value": "nonex"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/before_control_physical_sha256/anyOf": {
+        "path": [
+          "record",
+          "before_control_physical_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/before_control_physical_sha256/anyOf/0/pattern": {
+        "path": [
+          "record",
+          "before_control_physical_sha256"
+        ],
+        "value": "gc\n"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/before_control_physical_sha256/anyOf/0/type": {
+        "path": [
+          "record",
+          "before_control_physical_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/before_control_physical_sha256/anyOf/1/type": {
+        "path": [
+          "record",
+          "before_control_physical_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/before_revision/minimum": {
+        "path": [
+          "record",
+          "before_revision"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/before_revision/type": {
+        "path": [
+          "record",
+          "before_revision"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/operation/enum": {
+        "path": [
+          "record",
+          "operation"
+        ],
+        "value": "materializex"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/operation_id/minLength": {
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/operation_id/type": {
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/original_graph_lock/anyOf": {
+        "path": [
+          "record",
+          "original_graph_lock"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/original_graph_lock/anyOf/1/type": {
+        "path": [
+          "record",
+          "original_graph_lock"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/published_at_utc/format": {
+        "path": [
+          "record",
+          "published_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/properties/published_at_utc/type": {
+        "path": [
+          "record",
+          "published_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult/type": {
+        "path": [
+          "record"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/type": {
+        "path": [
+          "record",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunOperationResult/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunOperationResult/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_run_operation_result.v1x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunOperationResult/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunOperationResult/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunOperationResult/type": {
+        "path": [],
+        "value": true
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "routes": [
+    {
+      "call": "issue_physical",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "original_profile",
+      "refusal": "issue/executor_run_operation_result/schema/",
+      "root": "dg5:4b055f33aaa123f9",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ]
+    },
+    {
+      "call": "issue_physical",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "native_v7",
+      "refusal": "issue/executor_run_operation_result/schema/",
+      "root": "dg5:d6223e40d28212e3",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ]
+    }
+  ],
+  "row": "dg5/issue/executor_run_operation_result/schema",
+  "sites": [
+    [
+      "scripts/pm_goal_dg_r_world.py",
+      446
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}
