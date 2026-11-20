@@ -3,12 +3,16 @@
 import argparse
 import ast
 from collections import Counter, defaultdict
+from contextlib import ExitStack
 import gzip
 import json
+import multiprocessing
 import os
 from pathlib import Path
+import shutil
 import sys
 import time
+from unittest.mock import patch
 
 import pm_goal_dg5_methodb_stage1 as stage
 
@@ -21,6 +25,12 @@ TABLE_PREFIX = 'pm_goal_dg5_methodb_w2_phase_'
 
 class Fixture(stage.Fixture):
     def prepare(self):
+        if self.route in ('publish_result', 'publish_original_append'):
+            return self.world.start.commit_start, (stage.original.request(self.world), self.handles)
+        if self.route.startswith(('read_append/', 'read_native/')):
+            method = 'inspect_original' if self.route.startswith('read_append/') else 'read_retained_native'
+            reader = stage.original.R.StartedReaders(self.world.registry, world=self.world)
+            return getattr(reader, method), (stage.original.sreq(self.world),)
         if self.route == 'issue/launch_chain':
             owner = self.world.owners['launch']
             return self.issue_arguments(owner, 'launch_chain')
@@ -41,6 +51,11 @@ class Fixture(stage.Fixture):
         return owner.issue, (entry['root'], value)
 
     def call(self, edit):
+        if self.route.startswith(('read_append/', 'read_native/')):
+            return self.call_reader(edit)
+        if self.route in ('publish_result', 'publish_original_append', 'publish_commit',
+                          'publish_start_origin', 'publish_retained'):
+            return self.call_start(edit)
         if not self.route.startswith('issue/'):
             return super().call(edit)
         root, value = self.args
@@ -49,6 +64,108 @@ class Fixture(stage.Fixture):
             require(position == 1, 'issuer edit must change the document argument')
             value = rules.apply(value, path, tuple(change) if isinstance(change, list) else change)
         return self.action(root, value, kind=self.issue_kind)
+
+    def call_reader(self, edit):
+        if not edit:
+            return self.action(*self.args)
+        route, selected_where = self.route.split('/', 1)
+        _, path, change = edit
+        readers = stage.original.R
+        storage = self.world.storage
+        change_value = lambda value: rules.apply(value, path, tuple(change))
+        if route == 'read_append':
+            original = readers.original_append
+            fetch = storage.full_value_result
+
+            def original_append(world, event_id, where='append'):
+                with ExitStack() as stack:
+                    if where == selected_where:
+                        stack.enter_context(patch.object(storage, 'full_value_result',
+                                                         lambda event_id: change_value(fetch(event_id))))
+                    return original(world, event_id, where=where)
+
+            with patch.object(readers, 'original_append', original_append):
+                return self.action(*self.args)
+        original = readers.retained_native
+        fetch = storage.cell
+        key = self.world.ctx.run_key('workflow_start_control_origin.v1')
+
+        def cell(family, physical_key):
+            value = fetch(family, physical_key)
+            if (family, physical_key) == ('workflow_start_control_origin', key):
+                return dict(value, value=change_value(value['value']))
+            return value
+
+        def retained_native(world, op=None, *, where='retained'):
+            with ExitStack() as stack:
+                if where == selected_where:
+                    stack.enter_context(patch.object(storage, 'cell', cell))
+                return original(world, op, where=where)
+
+        with patch.object(readers, 'retained_native', retained_native):
+            return self.action(*self.args)
+
+    def call_start(self, edit):
+        if not edit:
+            return self.action(*self.args)
+        _, path, change = edit
+        apply = lambda value: rules.apply(value, path, tuple(change))
+        args = list(self.args)
+        if self.route == 'publish_commit':
+            args[-1] = dict(args[-1], commit=apply)
+        elif self.route == 'publish_retained':
+            args[2] = dict(args[2])
+            birth = dict(args[2]['native_birth'])
+            birth['initial_control_origin'] = apply(birth['initial_control_origin'])
+            args[2]['native_birth'] = birth
+        elif self.route == 'publish_result':
+            def union(value):
+                return dict(value, d01_lineage=apply(value['d01_lineage']))
+
+            return self.action(*args, edits={'union': union})
+        elif self.route == 'publish_original_append':
+            storage = self.world.storage
+            original = storage.full_value_result
+            with patch.object(storage, 'full_value_result', lambda event_id: apply(original(event_id))):
+                return self.action(*args)
+        elif self.route == 'publish_start_origin':
+            skeleton = world.skeleton
+            ref = self.world.edition.custody + '#/$defs/StorageOrigin'
+
+            def origin(bank, selector):
+                value = skeleton(bank, selector)
+                return apply(value) if selector == ref else value
+
+            with patch.object(world, 'skeleton', origin):
+                return self.action(*args)
+        return self.action(*args)
+
+
+class CompleteCall(stage.Example):
+    def run(self, edit=None, cut=False):
+        if self.fixture.route not in ('publish_result', 'publish_original_append'):
+            return super().run(edit, cut)
+        # These two checks run after the original start has written some or all
+        # of its publication. Every execution starts from an independent copy.
+        original = self.fixture.path
+        require(stage.store(original) == self.before, 'complete-call store preimage changed')
+        replay = original.with_name(original.name + f'-late-publication-{len(self.runs)}')
+        shutil.copytree(original, replay)
+        require(stage.store(replay) == self.before, 'publication replay copy differs from its source')
+        receiver, sender = multiprocessing.get_context('fork').Pipe(duplex=False)
+        child = multiprocessing.get_context('fork').Process(target=self.in_child, args=(sender, edit, cut, replay))
+        child.start()
+        sender.close()
+        try:
+            record = receiver.recv()
+        finally:
+            receiver.close()
+            child.join()
+        require(child.exitcode == 0, 'complete-call child failed')
+        require(stage.store(original) == self.before, 'complete call changed the original stored test bytes')
+        record['before'] = self.before
+        self.runs.append(record)
+        return record
 
 
 class PreviousExamples:
@@ -99,7 +216,9 @@ def finite_type_implication(validator, nodes, info, keyword, cut, path):
             values = [schema[finite]] if finite == 'const' else schema[finite]
             if keyword == 'type':
                 types = node[keyword] if isinstance(node[keyword], list) else [node[keyword]]
-                holds = all(any(validator.TYPE_CHECKER.is_type(value, name) for name in types) for value in values)
+                # Numeric equality may admit a representation the type rule refuses.
+                holds = all((value is None or type(value) in (bool, str)) and
+                            any(validator.TYPE_CHECKER.is_type(value, name) for name in types) for value in values)
             else:
                 bound = node[keyword]
                 holds = all(isinstance(value, str) and
@@ -115,7 +234,35 @@ def finite_type_implication(validator, nodes, info, keyword, cut, path):
     return None
 
 
-def per_rule_candidates(controls, info, keyword, old):
+def accepted_branch_controls(plain, validator, controls, info, cache):
+    """Reuse the Goal suite's branch fixture construction."""
+    for reach in info['reach']:
+        for variant in range(3):
+            key = (reach['ipath'], tuple(rules.ctx_key(c) for c in reach['ctx']), variant)
+            if key not in cache:
+                try:
+                    value, path = rules.realize(controls[0], reach, variant, validator)
+                except (KeyError, IndexError, TypeError, ValueError, RecursionError):
+                    value, path = None, None
+                cache[key] = None
+                if path is None or value is None or value == controls[0]:
+                    continue
+                if list(plain.iter_errors(value)) or rules.errors_of(validator, value):
+                    continue
+                digest = stage.sweep.digest(value)
+                index = next((i for i, control in enumerate(controls) if stage.sweep.digest(control) == digest), None)
+                if index is None:
+                    index = len(controls)
+                    controls.append(value)
+                cache[key] = (index, path)
+            if cache[key] is not None:
+                yield cache[key]
+
+
+def per_rule_candidates(plain, validator, controls, info, keyword, old, cache):
+    def edits(control, path):
+        return rules.defects(keyword, info['node'], rules.get(control, path))
+
     for index, control in enumerate(controls):
         for path, edit, source in old:
             try:
@@ -123,12 +270,15 @@ def per_rule_candidates(controls, info, keyword, old):
             except (KeyError, IndexError, TypeError, ValueError):
                 continue
         for reach in info['reach']:
-            for path, value in rules.concrete(control, reach['ipath']):
-                for edit in rules.defects(keyword, info['node'], value):
+            for path in rules.concrete(control, reach['ipath']):
+                for edit in edits(control, path):
                     yield index, path, edit, 'installed rule'
+    for index, path in accepted_branch_controls(plain, validator, controls, info, cache):
+        for edit in edits(controls[index], path):
+            yield index, path, edit, 'accepted branch document'
 
 
-def replay_rule(plain, validator, nodes, controls, rule_id, info, keyword, old, disable):
+def replay_rule(plain, validator, nodes, controls, rule_id, info, keyword, old, disable, cache):
     node = info['node']
     if all(any(c[0] in ('if', 'not') for c in reach['ctx']) for reach in info['reach']):
         return dict(cls='SELECTOR_OR_NEGATED', reason='all occurrences are inside an if condition or negation'), None
@@ -137,7 +287,7 @@ def replay_rule(plain, validator, nodes, controls, rule_id, info, keyword, old, 
     _, guard = closure._clause_identity(node, keyword)
     result = None
     tried = set()
-    for index, path, edit, source in per_rule_candidates(controls, info, keyword, old):
+    for index, path, edit, source in per_rule_candidates(plain, validator, controls, info, keyword, old, cache):
         candidate_key = (index, tuple(path), repr(edit))
         if candidate_key in tried:
             continue
@@ -171,6 +321,13 @@ def replay_rule(plain, validator, nodes, controls, rule_id, info, keyword, old, 
             record['implication'] = implication
         record['cls'] = 'COVERED_LATER' if cut else 'KILLED'
         return record, None
+    if result is None:
+        proof = (rules.contradicted_branch(info, nodes) or rules.forbidden_member(info, nodes) or
+                 rules.excluded_by_cases(info, nodes))
+        if all(reach['empty_domain'] for reach in info['reach']):
+            proof = 'Every occurrence requires an item of an array whose installed schema has maxItems: 0.'
+        if proof:
+            return dict(cls='UNREACHABLE', premise=proof), None
     return None, (result or {'reason': 'no example exercised the exact rule on the accepted documents'})
 
 
@@ -201,13 +358,13 @@ def replay_root(fixture, captured, reference, examples, disable):
     controls = list(fixture.variants(captured))
     require(all(not error_records(plain.iter_errors(value)) and not rules.errors_of(validator, value)
                 for value in controls), f'{root}: accepted schema control refused')
-    results, gaps = {}, {}
+    results, gaps, branch_cache = {}, {}, {}
     for location, info in nodes.items():
         node = info['node']
         for keyword in rules.clauses_of(node):
             rule_id = location + '/' + closure.clause_name(node, keyword)
             record, problem = replay_rule(plain, validator, nodes, controls, rule_id, info, keyword,
-                                          examples.get(rule_id, ()), disable)
+                                          examples.get(rule_id, ()), disable, branch_cache)
             (gaps if problem else results)[rule_id] = problem or record
     require(set(results) | set(gaps) == set(ids), f'{root}: incomplete rule accounting')
     return dict(clauses=results, gaps=gaps, controls=controls, clause_inventory=reference['clause_inventory'],
@@ -216,14 +373,15 @@ def replay_root(fixture, captured, reference, examples, disable):
                 schema_sources=bank.resource_origins)
 
 
-def run_case(case, reference, prior_row, output, disable):
+def run_case(case, reference, prior_row, output, disable, selected=None):
     started = time.monotonic()
     name = case['row']
     mapping = reference['rows'][name]
     roots = {ident: reference['roots'][ident] for ident in mapping['roots']}
     seed = int(os.environ['PYTHONHASHSEED'])
-    specs = [entry for entry in case['fixtures'] if entry['hash_seed'] == seed]
-    require(specs, f'{name}: no fixture is declared for this seed')
+    specs = [entry for entry in case['fixtures']
+             if (entry['root'] == selected if selected is not None else entry['hash_seed'] == seed)]
+    require(specs, f'{name}: no fixture is declared for the selected root or seed')
     sites = {(item['path'], item['line']) for item in mapping['current_sites']}
     require(all(sha(ROOT / item['path']) == item['sha256'] and
                 (ROOT / item['path']).read_text().splitlines()[item['line'] - 1].strip() == item['line_text']
@@ -242,7 +400,7 @@ def run_case(case, reference, prior_row, output, disable):
         suite = stage.original.Suite(output / 'stores')
         for spec in specs:
             fixture = Fixture(suite, spec['route'], spec['edition'])
-            experiment = stage.Example(fixture, name, sites, spec)
+            experiment = CompleteCall(fixture, name, sites, spec)
             try:
                 documents = experiment.prove(collector, disable)
             finally:
@@ -291,15 +449,14 @@ def main():
     parser.add_argument('--case', type=Path, action='append', required=True)
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--disable', choices=('row', 'clause', 'inventory'))
+    parser.add_argument('--root', help='replay one exact declared root and publish its proof fragment')
     args = parser.parse_args()
     require(sha(args.reference) == REFERENCE_SHA, 'fresh reference bundle changed')
     with gzip.open(args.reference, 'rt') as stream:
         reference = json.load(stream)
     _, rows, _ = stage.matrix_inputs(args.matrix)
-    if any(spec['edition'] == 'v7' for path in args.case
-           for spec in json.loads(path.read_bytes())['fixtures']
-           if spec['hash_seed'] == int(os.environ['PYTHONHASHSEED'])):
-        world.v7_edition()
+    world.v3_edition()
+    world.v7_edition()
     okay = True
     for path in args.case:
         case = json.loads(path.read_bytes())
@@ -307,7 +464,8 @@ def main():
         specs = case['fixtures']
         require(sorted(row['root'] for row in specs) == sorted(reference['rows'][name]['roots']),
                 f'{name}: declaration omits or repeats an exact root')
-        report = run_case(case, reference, rows[name], args.out / stage.sweep.table_id([name]), args.disable)
+        report = run_case(case, reference, rows[name], args.out / stage.sweep.table_id([name]),
+                          args.disable, args.root)
         print(name, report['status'], report['seconds'], report.get('reason', ''), flush=True)
         okay &= report['status'] == 'READY_FOR_MATRIX'
     return 0 if okay else 1
