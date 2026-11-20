@@ -289,15 +289,20 @@ PROOFS = {
     'dg5/dgu/producer/publish/producer_input/schema': dict(
         kind='entailed-by-producer-construction',
         families=['goal.updated'],
-        depends_on=[],
-        sites=[(U, 1793), (U, 1794), ('Plans/goal_update_command_custody.schema.json', 755)],
+        depends_on=['dg5/dgu/producer/freeze/producer_input/schema'],
+        sites=[(U, 1460), (U, 1461), (U, 1788), (U, 1792), (U, 1793), (U, 1794), (U, 1800),
+               ('Plans/goal_update_command_custody.schema.json', 755),
+               ('Plans/goal_update_command_custody.schema.json', 1711),
+               ('Plans/goal_update_command_custody.schema.json', 1797),
+               ('Plans/goal_update_command_custody.schema.json', 2385)],
         argument=(
             'publish (:1793-1794) validates a verbatim deepcopy of the frozen progress '
             'producer_input, which freeze already validated against the identical '
             'ProducerInput definition (:755) before the snapshot was written and which every '
             'progress read revalidates under the StorageProgress root. The identical value '
-            'cannot newly fail the identical root, so no complete publish call can make this '
-            'row refuse alone; it re-asserts the frozen candidate at the publish boundary.')),
+            'cannot newly fail the identical root. The final candidate equality check '
+            'also compares its unchanged type-exact value against the read-validated frozen '
+            'input. It refused the same invalid document with only the schema check disabled.')),
     'dg5/dgu/producer/publish/publication/schema': dict(
         kind='entailed-by-producer-construction',
         families=['goal.updated'],
