@@ -5,7 +5,7 @@ from pathlib import Path
 
 from pm_goal_dg5_methodb_stage3 import (
     SOURCE_AUDIT_ROOT, certified_payload_messages, edit_example, errors_list, require,
-    source_audit_checks, test_rules,
+    producer_rule_implication, source_audit_checks, test_rules,
 )
 
 
@@ -13,16 +13,27 @@ REPORTS = Path('reports/event-authority-20261114')
 CONSUMER = 'https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/'
 UPDATE = ('https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/'
           'goal_update_command_custody.schema.json#/$defs/')
+BODY = 'https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/'
 AUDITED = {'dg5:ace4bbe951ac01fc': 'AuditedProgress', 'dg5:95a2813c054bed6c': 'AuditedTerminal'}
-READER_ROOTS = AUDITED
+WITNESS = 'dg5:afd84180406074fd'
+READER_ROOTS = {**AUDITED, WITNESS: 'PrivateEventReadWitness'}
 
 COMMON_FIELDS = {
     'source_audit': (('source_audit',), UPDATE + 'StorageSourceAudit', 5, 'updated-source-audit.json'),
     'progress': (('progress', 'record'), UPDATE + 'Progress', 5, 'updated-progress.json'),
 }
-
+INSPECTION_FIELDS = {
+    'body_receipt': (('body_receipt',), BODY + 'storage_receipt', 3, 'updated-body-receipt.json'),
+    'current_event': (('current_event',), CONSUMER + 'SelectedActiveEvent', 5, 'updated-inspect-event.json'),
+    'request': (('request',), CONSUMER + 'EventReadRequest', 5, 'updated-inspect-request.json'),
+    'original_publication': (('original_publication',), UPDATE + 'OriginalPublication',
+                             5, 'updated-publication.json'),
+    'head': (('progress_head',), UPDATE + 'StorageProgress', 5, 'updated-storage-logical-progress.json'),
+}
 
 def reader_fields(ident):
+    if ident == WITNESS:
+        return COMMON_FIELDS | INSPECTION_FIELDS
     terminal = ident == 'dg5:95a2813c054bed6c'
     request = 'updated-audit-request-terminal.json' if terminal else 'updated-audit-request.json'
     fields = COMMON_FIELDS | {'request': (('request',), CONSUMER + 'AuditReadRequest', 5, request)}
@@ -41,12 +52,18 @@ def bound_reader_child(resolver, reference, field, path, child):
     require(path[0] in root['required'], 'the reader no longer requires the tested member')
     if field == 'progress':
         shape = props['progress']
+        if reference.endswith('PrivateEventReadWitness'):
+            shape = shape['allOf'][0]
         require(ref_of(shape) == CONSUMER + 'ProgressSnapshotWrapper',
                 'the reader no longer uses the original progress snapshot')
         snapshot = resolver.lookup(CONSUMER + 'ProgressSnapshotWrapper').contents
         require(ref_of(snapshot['allOf'][0]) == UPDATE + 'StorageProgress' and
                 ref_of(snapshot['allOf'][1]['properties']['record']) == child,
                 'the reader snapshot no longer validates the same record')
+    elif field == 'head':
+        require(ref_of(props['progress_head']) == CONSUMER + 'ProgressHeadWrapper' and
+                ref_of(resolver.lookup(CONSUMER + 'ProgressHeadWrapper').contents['allOf'][0]) == child,
+                'the reader head no longer validates the original stored shape')
     elif field == 'request' and reference.endswith(('AuditedProgress', 'AuditedTerminal')):
         require(ref_of(props['request']['allOf'][0]) == child,
                 'the audit reader no longer validates the original request')
@@ -76,7 +93,7 @@ def run_reader_children(plain, bank, document, census, declaration, disabled, re
                           if closure._registry_digest(candidate.validator(reference)) == observed['registry_sha256']]
         schema = original_bank.validator(reference)
         same_reader_child(closure, actual, bank, schema, original_bank, local['root'], observed['clause_ids'])
-        control = go.get(document, path)
+        control = declaration['birth_receipt_control'] if field == 'body_receipt' else go.get(document, path)
         extra = (source_audit_checks(schema, original_bank, control, census, source, disabled)
                  if local['root'] == SOURCE_AUDIT_ROOT else None)
         rules, gaps = test_rules(schema, original_bank, control, local['root'], observed['clause_ids'],
@@ -166,8 +183,15 @@ def reader_trial(plain, bank, go, validator, ident, nodes, name, keyword, contro
         require(copied_messages(path, source['cut'], cut_text),
                 f'{name}: the reader did not retain the original joined field messages')
         proof = dict(source=reference, field=path, rules=source['implication'])
-    elif status in ('snapshot_only', 'audit_selection'):
-        proof = reader_scope(bank, go, ident, name, case, cut)
+    elif status == 'metadata_constants':
+        at = tuple(case['path'])
+        require(ident == WITNESS and at[:3] == ('progress','record','producer_metadata'),
+                'the metadata proof requires the original inspection progress')
+        def metadata_locations(errors):
+            return {(keyword, location[3:], rule) for keyword, location, rule in locations(errors) if location == at}
+        proof = producer_rule_implication(nodes, name, list(at[3:]), cut, metadata_locations, validator, 'ProducerMetadata')
+    elif status in ('snapshot_only','audit_selection','inspect_phase'):
+        proof = reader_scope(bank, nodes, go, ident, name, case, cut)
     else:
         raise ValueError(f'{name}: another validation message remains without a checked premise')
     return dict(result, cls='COVERED_LATER', implication=proof)
@@ -194,7 +218,7 @@ def reader_pin(validator, nodes, go, name, keyword, control, disabled):
     return proof
 
 
-def reader_scope(bank, go, ident, name, case, errors):
+def reader_scope(bank, nodes, go, ident, name, case, errors):
     resolver = bank.registry.resolver()
     reference = CONSUMER + READER_ROOTS[ident]
     root = resolver.lookup(reference).contents
@@ -225,16 +249,18 @@ def reader_scope(bank, go, ident, name, case, errors):
         return dict(source=reference+'/properties/request/allOf/1', choices=selected,
                     premise='These result documents require a disjoint subset of the original request selections.')
 
-    require(mode == 'snapshot_only', 'unexpected reader scope')
+    require(mode in ('snapshot_only','inspect_phase'), 'unexpected reader scope')
     field = case['field']
-    wrapper = CONSUMER + 'ProgressSnapshotWrapper'
-    require(field == 'progress' and field in root['required'] and ref_of(root['properties'][field]) == wrapper,
-            'the reader no longer selects the progress snapshot')
+    wrapper = CONSUMER + ('ProgressHeadWrapper' if field=='progress_head' else 'ProgressSnapshotWrapper')
+    shape = root['properties'][field]
+    if ident == WITNESS and field == 'progress':
+        shape = shape['allOf'][0]
+    require(field in root['required'] and ref_of(shape)==wrapper, 'the reader no longer selects this progress wrapper')
     schema = resolver.lookup(wrapper).contents
     storage, required = schema['allOf']
     choice = ref_of(required['properties']['record'])
     require(ref_of(storage)==UPDATE+'StorageProgress' and
-            choice == UPDATE+'Progress',
+            choice == UPDATE+('ProgressHead' if field=='progress_head' else 'Progress'),
             'the original progress wrapper no longer requires the same selected definition')
     variants = resolver.lookup(UPDATE+'StorageProgress').contents
     require('record' in variants['required'] and [ref_of(v) for v in variants['properties']['record']['oneOf']] ==
@@ -246,11 +272,42 @@ def reader_scope(bank, go, ident, name, case, errors):
             all({'schema_id','phase'} <= set(phase['required']) and
                 phase['properties']['schema_id']['const'] != head['properties']['schema_id']['const']
                 for phase in phases), 'the head and progress record no longer have disjoint required shapes')
-    excluded = UPDATE+'ProgressHead'
-    require(name.startswith(excluded+'/') or name==UPDATE+'StorageProgress/properties/record/oneOf',
-            'the alternative remains in the explicitly required reader definition')
-    require(any(rule.startswith(choice+'/') for rule in go.locations(errors)),
-            'the explicitly required reader definition did not refuse the same document')
-    return dict(source=wrapper+'/allOf/1/properties/record', definition=choice,
-                rejected_alternative=excluded,
-                premise='The reader explicitly requires this one stored record definition.')
+    if mode == 'snapshot_only':
+        excluded = UPDATE+('Progress' if field=='progress_head' else 'ProgressHead')
+        require(name.startswith(excluded+'/') or name==UPDATE+'StorageProgress/properties/record/oneOf',
+                'the alternative remains in the explicitly required reader definition')
+        require(any(rule.startswith(choice+'/') for rule in go.locations(errors)),
+                'the explicitly required reader definition did not refuse the same document')
+        return dict(source=wrapper+'/allOf/1/properties/record', definition=choice,
+                    rejected_alternative=excluded,
+                    premise='The reader explicitly requires this one stored record definition.')
+    phase_ref = reference+'/properties/progress/allOf/1/properties/record/properties/phase'
+    permitted = root['properties']['progress']['allOf'][1]['properties']['record']['properties']['phase']['enum']
+    progress = nodes[UPDATE+'Progress']['node']
+    head_wrapper = resolver.lookup(CONSUMER+'ProgressHeadWrapper').contents
+    require(ident == WITNESS and field == 'progress' and {'progress_head','progress'} <= set(root['required']) and
+            ref_of(root['properties']['progress_head']) == CONSUMER+'ProgressHeadWrapper' and
+            ref_of(head_wrapper['allOf'][0])==UPDATE+'StorageProgress' and
+            ref_of(head_wrapper['allOf'][1]['properties']['record'])==UPDATE+'ProgressHead',
+            'the inspection witness no longer distinguishes the stored head and snapshot')
+    require(permitted==['event_ready','event_unknown','event_issued'] and phase_ref+'/enum' in go.locations(errors),
+            'the inspection phase check did not refuse this document')
+    require(all('phase' in branch['required'] and branch['type']=='object' for branch in phases),
+            'a progress branch can pass without a phase')
+    loc = name.rsplit('/',1)[0]
+    reaches = nodes[loc]['reach']
+    excluded_phases = set()
+    for reach in reaches:
+        if reach['ipath'][:2] == ('progress_head','record'):
+            continue
+        require(reach['ipath'][:2] == ('progress','record'), 'inspection rule is used outside this phase')
+        index, = [entry[2] for entry in reach['ctx'] if entry[3] is progress]
+        branch = UPDATE+f'Progress/oneOf/{index}'
+        phase = phases[index]['properties']['phase']['const']
+        require(phase not in permitted and name not in (
+            branch+'/required',branch+'/type',branch+'/properties/phase/const'),
+            'the removed rule can affect a permitted phase')
+        excluded_phases.add(phase)
+    require(reaches and excluded_phases, 'no excluded progress phase was verified')
+    return dict(source=phase_ref+'/enum', restrictions=sorted(excluded_phases),
+                premise='The witness requires an event phase, and every applicable progress branch chooses another phase.')
