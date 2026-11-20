@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.85",
+  "sha256": "eb53ed285604b976eece78d091b81e913e7e97df368b7c1424bf721c14e4513d",
   "family_count": 518,
   "row_pointer": "#/families/427"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/427 (canonical row SHA-256 98e927ee1728fbf5cb2cf4f0db9f149f1254571dc0c704fdb3f5f3749da076e3). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.85 as #/families/427, canonical row SHA-256 98e927ee1728fbf5cb2cf4f0db9f149f1254571dc0c704fdb3f5f3749da076e3. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -458,23 +458,45 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 37493,
-       "line_end": 37493,
-       "quote": "Current selected assignment (2026-11-19): persona.selected@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,",
+       "line_start": 37495,
+       "line_end": 37512,
+       "quote": "  Current selected assignment (2026-11-19): persona.selected@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2345. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0\n  (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation,\n  cardinality_scope=null); Plans/storage-plan.md#SP-672 owns the event policy''s existing anchors, counts, holds\n  and deletion rules. Separate stored-value assignment: persona_created_operation uses RP-CONFIG-CURRENT@1.0.0 under\n  Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:\n  persona_deleted_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored\n  value, not event history. Separate stored-value assignment: persona_exported_operation uses RP-CONFIG-CURRENT@1.0.0\n  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:\n  persona_imported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that\n  stored value, not event history. Separate stored-value assignment: persona_selected_operation uses RP-CONFIG-CURRENT@1.0.0\n  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:\n  persona_updated_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored\n  value, not event history. Original sources and coherent backups retain their independent owner policies; the event\n  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,\n  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:37146-37700",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:37148-37702",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-672",
-        "line_start": 36415,
-        "line_end": 36415,
-        "quote": "\\ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-504.\\n\\nUse the existing\\",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 37493,
+        "line_end": 37493,
+        "quote": "Current selected assignment (2026-11-19): persona.selected@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-672, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:37146-37700",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-672",
+         "line_start": 36415,
+         "line_end": 36415,
+         "quote": "\\ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-504.\\n\\nUse the existing\\",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 37493
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "d4f18f40f3a778bf9248b1315f93ce095641134f",
+        "old_quote": "Current selected assignment (2026-11-19): persona.selected@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-672",
+        "old_line_start": 37493,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -834,10 +856,9 @@
   "row_pointer": "#/families/427"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "452f5c327eacb55f5d2331e50aee6828a42decbe6b73ed02299b6aff0205ae6a",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "d4f18f40f3a778bf9248b1315f93ce095641134f",
+  "source_assessment_sha256": "180b8694c17b6439288c623c06f274ecb6450f6fae8177dac1c6a4c7e1c6de91",
+  "native_execution": "NOT_RUN"
  }
 }
