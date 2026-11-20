@@ -2360,10 +2360,27 @@ def _committed_counts(context):
     _, inv, probe, _ = _mods()
     rows = context.inventory()["nodes"]
     roles = json.loads((context.root / probe.ROLES).read_text())
-    classes = [r.get("classification", "wildcard_non_timestamp_role") for r in roles]
+    records = {tuple(r["node"]): r for r in roles}
+    reviewed = {inv.node_key(r): r for r in rows
+                if (r.get("value_evidence") or {}).get("reviewed_role") is not None}
     automatic = [r for r in rows if r["classification"] == "wildcard_non_timestamp"]
-    return (len(roles) == 18 and classes.count("wildcard_non_timestamp_role") == 8 and
-            classes.count("other_owner_observation") == 10 and len(automatic) == 3 and
+    if len(records) != len(roles) or not records or set(records) != set(reviewed):
+        return False
+    documents = {}
+    for key, record in records.items():
+        row = reviewed[key]
+        citation = record.get("citation", {})
+        if (not record.get("role", "").strip() or not record.get("reason", "").strip() or
+                not {"path", "pointer", "value"} <= citation.keys() or
+                record.get("classification", "wildcard_non_timestamp_role") != row["classification"] or
+                row["classification"] not in ("wildcard_non_timestamp_role", "other_owner_observation") or
+                record != row["value_evidence"]["reviewed_role"] or
+                record["value_schema_sha256"] != row["value_evidence"]["value_schema_sha256"]):
+            return False
+        source = inv._source_document(context.root, {"path": citation["path"], "origin": row["origin"]}, documents)
+        if inv.at(source, citation["pointer"]) != citation["value"]:
+            return False
+    return (len(reviewed) == len(roles) and len(automatic) == 3 and
             all(r["value_evidence"]["automatic_credit"] for r in automatic) and
             all(r["profile"] == "owner_schema" for r in rows if "value_evidence" in r))
 
@@ -2494,7 +2511,12 @@ def _kept_roles_sweep(context):
         validator = cls(selector, registry=registry, format_checker=dt.format_checker())
         if any(validator.is_valid({field: v}) for field in row["fields"] for v in sweep):
             return False
-    return len(kept) == 8
+    records = [r for r in _role_rows(context)
+               if r.get("classification", "wildcard_non_timestamp_role") == "wildcard_non_timestamp_role"]
+    expected = {tuple(r["node"]) for r in records}
+    return (bool(expected) and len(expected) == len(records) == len(kept) and
+            {inv.node_key(r) for r in kept} == expected and
+            all(r["value_evidence"]["reviewed_role"] in records for r in kept))
 
 
 # ---------------------------------------------------------------------------
@@ -4062,7 +4084,11 @@ def _node_controls(context):
 
 
 def _node_validator(context, row):
-    """datetime_validator over a neutral reference to the node, its complete committed resource preloaded."""
+    """Neutral node reference with its resource and unique same-file resources preloaded.
+
+    Off-file references still refuse. Additional preloads never select a
+    duplicated $id; the original owner's already-crawled bindings stay fixed.
+    """
     from referencing import Registry, Resource
     from referencing.jsonschema import DRAFT202012
     dt, inv, _, _ = _mods()
@@ -4073,10 +4099,97 @@ def _node_validator(context, row):
     if key not in cache:
         resource = inv.at(document, row["resource_pointer"])
         uri = resource.get("$id") or "urn:pm:datetime-node:" + inv.digest(resource)
-        registry = Registry().with_resource(uri, Resource.from_contents(resource, default_specification=DRAFT202012))
+        # DCH's authenticated per-recipe binding predates this helper. Its
+        # sibling recipes deliberately share historical URIs; preload only
+        # the selected resource after bind_nested_resource verifies it.
+        preload_source = (resource if row["path"] == "Plans/dch_retained_recipes.json" and
+                          row["resource_pointer"] else document)
+        embedded = inv.embedded_resources(preload_source)
+        # Keep the original owner's already-crawled bindings. Some admitted
+        # owner schemas inline the same EventRecord in several positions.
+        original = Registry().with_resource(
+            uri, Resource.from_contents(resource, default_specification=DRAFT202012)).crawl()
+        registry = Registry().with_resources(
+            (identity, Resource.from_contents(inv.at(preload_source, pointer), default_specification=DRAFT202012))
+            for identity, pointer in embedded.items()).crawl()
+        # Only additional preloads need the unique-ID rule. A unique ancestor
+        # can expose an ambiguous nested ID through an absolute or relative
+        # alias; neither alias may introduce a new binding.
+        ambiguous = {node["$id"] for _, node in inv.walk(preload_source)
+                     if isinstance(node.get("$id"), str) and node["$id"] not in embedded}
+        for identity, loaded in list(registry.items()):
+            if (identity not in original and isinstance(loaded.contents, dict) and
+                    loaded.contents.get("$id") in ambiguous):
+                registry = registry.remove(identity)
+        registry = registry.combine(original)
         cache[key] = (uri, dt.datetime_validator({"$ref": uri}, registry=registry))
     uri, validator = cache[key]
     return validator.evolve(schema={"$ref": uri + "#" + row["pointer"][len(row["resource_pointer"]):]})
+
+
+def _node_bank_case(context, *, duplicate=False, unmatched=False, off_file=False, nested=False):
+    _, inv, _, _ = _mods()
+    uri, target = "urn:pm:selfcheck:node-bank-root", "urn:pm:selfcheck:node-bank-value"
+    owner = {"$schema": D202012, "$id": uri, "type": "object",
+             "properties": {"value": {"$ref": target}}, "required": ["value"]}
+    value = {"$schema": D202012, "$id": target, "const": "accepted"}
+    document = {"resources": [owner]}
+    if nested:
+        owner["$defs"] = {"embedded": copy.deepcopy(value)}
+    if not unmatched and not off_file:
+        document["resources"].append(value)
+    if duplicate and not nested:
+        document["resources"].append(copy.deepcopy(value))
+    root = context.scratch()
+    path = "Plans/node-bank.schema.json"
+    write(root, path, document)
+    if off_file:
+        write(root, "Plans/other-node-value.schema.json", value)
+    row = {"path": path, "origin": "json", "pointer": "/resources/0", "resource_pointer": "",
+           "resource_sha256": inv.digest(document)}
+    local = Context(root)
+    try:
+        validator = _node_validator(local, row)
+        try:
+            accepted = validator.is_valid({"value": "accepted"})
+        except Exception as error:  # jsonschema may wrap the closed-loader refusal
+            # WrappedReferencingError compares equal to its wrapped exception;
+            # equality-based cycle detection would hide the actual refusal.
+            seen, refused = set(), False
+            while error is not None and id(error) not in seen:
+                seen.add(id(error))
+                refused |= (isinstance(error, inv.DatetimeAdmissionError) and
+                            error.reason == "datetime_resource_not_preloaded: " + target)
+                error = error.__cause__ or error.__context__
+            return (duplicate or unmatched or off_file) and refused
+        return not (duplicate or unmatched or off_file) and accepted and not validator.is_valid({"value": "wrong"})
+    finally:
+        local.close()
+
+
+check("datetime_node_same_file_resource_control")(_node_bank_case)
+check("datetime_node_duplicate_resource_id_refused")(lambda context: _node_bank_case(context, duplicate=True))
+check("datetime_node_nested_duplicate_resource_id_refused")(
+    lambda context: _node_bank_case(context, duplicate=True, nested=True))
+check("datetime_node_unmatched_resource_id_refused")(lambda context: _node_bank_case(context, unmatched=True))
+check("datetime_node_off_file_resource_not_preloaded")(lambda context: _node_bank_case(context, off_file=True))
+
+
+@check("datetime_node_original_owner_aliases_preserved")
+def _original_owner_aliases(context):
+    from referencing import Registry, Resource
+    from referencing.jsonschema import DRAFT202012
+    _, inv, _, _ = _mods()
+    for path in ("Plans/restore_point_deleted_read_adapter.schema.json", "Plans/restore_point_retained_read.schema.json"):
+        row = next(r for r in _node_rows(context).values() if r["path"] == path)
+        document = inv._source_document(context.root, row, context.cache.setdefault("node_documents", {}))
+        resource = inv.at(document, row["resource_pointer"])
+        original = Registry().with_resource(resource["$id"], Resource.from_contents(
+            resource, default_specification=DRAFT202012)).crawl()
+        validator = _node_validator(context, row)
+        if any(validator._registry.contents(uri) != entry.contents for uri, entry in original.items()):
+            return False
+    return True
 
 
 def _leaves(error):
@@ -5002,6 +5115,25 @@ def _nested_recipe(recipe):
 
 for _recipe in ("raw-v1", "normalized-v2", "strict-v3"):
     check("datetime_nested_recipe_" + _recipe.replace("-", "_"))(_nested_recipe(_recipe))
+
+
+@check("datetime_node_selected_dch_recipes_preserved")
+def _selected_dch_recipes(context):
+    """Each historical URI still selects the exact authenticated recipe bytes."""
+    _, inv, _, _ = _mods()
+    with _nested_fixture(context) as (local, rows, document, fixture):
+        observed = {}
+        for recipe in ("raw-v1", "normalized-v2", "strict-v3"):
+            pointer = "/recipes/" + recipe + NESTED_SUFFIX
+            row = next(r for r in rows if r["pointer"] == pointer)
+            validator = _node_validator(local, row)
+            resource = inv.at(document, pointer)
+            selected = validator._registry.contents(resource["$id"])
+            observed[recipe] = inv.digest(selected)
+            if selected != fixture["resources"][fixture["recipes"][recipe]] or not _node_check(inv.node_key(row))(local):
+                return False
+        return (observed == fixture["recipes"] and observed["raw-v1"] == observed["normalized-v2"] and
+                observed["raw-v1"] != observed["strict-v3"])
 
 
 @check("datetime_nested_scanner_selection_binding_agree")

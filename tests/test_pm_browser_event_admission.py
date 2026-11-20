@@ -74,7 +74,8 @@ def all_prepared_snapshot():
     # inside the upstream40: DL-188's workspace.layout_changed 2.0.0 row (c0d688db9f, 634412b3ac) and DL-300's
     # eleven Goal application editions (102a7e99e8, admitted 5375bfd2a7). The reviewed-successor check below
     # still requires those exact current rows; pm-browser-event-admission.py accepts them by exact digest.
-    if len(registry["families"]) != 40 or GATE.fingerprint(registry["families"]) != "2fe49c025e4db8adc9183a3f32c393333c203f375d9a047cc7a98d48c6f8776e":
+    reviewed = GATE.emit_only_contract().reviewed_s5b_predecessors(registry["families"])
+    if len(reviewed) != 40 or GATE.fingerprint(reviewed) != "2fe49c025e4db8adc9183a3f32c393333c203f375d9a047cc7a98d48c6f8776e":
         raise AssertionError("Synthetic admission fixture requires the unchanged live upstream40")
     preservation, failures = GATE.preexisting_preservation(context[0], registry["families"])
     if len(registry["families"]) != 40 or failures or not preservation["current_preexisting_rows_match_reviewed_successors"]:
@@ -226,6 +227,8 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
     def test_current_manifest_pin_does_not_replace_historical_row_authority(self):
         self.assertEqual(self.admission["preexisting_family_rows_sha256"], GATE.CURRENT39_SHA256)
         current39 = [row for row in self.rows if row["family_id"] in self.admission["preexisting_family_ids"]]
+        # CURRENT39 is the retained post-DL300 checkpoint, before exact approved S5b revisions.
+        current39 = GATE.emit_only_contract().reviewed_s5b_predecessors(current39)
         self.assertEqual(GATE.fingerprint(current39), GATE.CURRENT39_SHA256)
         admission = copy.deepcopy(self.admission)
         admission["preexisting_family_rows_sha256"] = GATE.ORIGINAL39_SHA256
@@ -235,11 +238,15 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
         self.assertFalse(report["current_preexisting_rows_match_reviewed_successors"])
 
     def test_prepared_registration_cannot_escape_with_reviewed_successors(self):
-        prepared = next(row for row in self.admission["rows"] if row["admission_status"] == "prepared_not_admitted")
+        # Build the prepared-ledger state explicitly after all live rows are admitted.
+        # Keep exactly one real central row, so the subset guard is the boundary under test.
+        admission = copy.deepcopy(self.admission)
+        admission["rows"][0]["admission_status"] = "prepared_not_admitted"
+        context = (admission, *CONTEXT[1:])
         for payloads_only in (False, True):
             with self.subTest(payloads_only=payloads_only):
-                registry = {"families": self.rows + [synthetic_family(prepared)]}
-                with registry_snapshot(registry):
+                registry = {"families": copy.deepcopy(self.rows)}
+                with registry_snapshot(registry), patch.object(GATE, "contract_context", return_value=context):
                     report = GATE.validate(payloads_only=payloads_only)
                 self.assertEqual(report["status"], "fail")
                 self.assertIn("exact_admitted_subset_mismatch", {row["error"] for row in report["failures"]})
@@ -747,6 +754,48 @@ class BrowserProgramBindingTests(unittest.TestCase):
         if not (ROOT / GATE.BROWSER_PROGRAM_CONTRACTS).is_file():
             # Before lane s4b's contracts merge, a Program family is pinned but has no contract: it stays closed.
             self.assertEqual(GATE.authority_binding_failures(row), ["browser_program_contract_missing"])
+
+
+
+class Merge2Fix1BrowserTests(unittest.TestCase):
+    """FIX1: full ledger compatibility and bounded successor preservation."""
+    def test_whole_ledger_is_valid(self):
+        result = GATE.validate()
+        self.assertEqual(result["failures"], [])
+        self.assertEqual(result["status"], "pass")
+
+    def test_storage_reference_shape_and_cross_family_refusals(self):
+        schema = GATE.load_json("Plans/browser_event_admission.schema.json")
+        admission = GATE.load_json("Plans/browser_event_admission.json")
+        self.assertEqual(list(GATE.Draft202012Validator(schema).iter_errors(admission)), [])
+        row = next(r for r in admission["rows"] if r["event_type"] == "browser.workspace.closed")
+        prop = schema["properties"]["rows"]["items"]["properties"]["authority_contract_ref"]
+        for ref in ("Plans/other.md#SP-2500", "Plans/storage-plan.md#SP-x", "Plans/storage-plan.md#SP-02500",
+                    "Plans/storage-plan.md#SP-2500/trailing", "Plans/storage-plan.md#SP-2500x"):
+            with self.subTest(ref=ref):
+                self.assertTrue(list(GATE.Draft202012Validator(prop).iter_errors(ref)))
+        wrong = dict(row, authority_contract_ref="Plans/storage-plan.md#SP-2501")
+        self.assertEqual(list(GATE.Draft202012Validator(prop).iter_errors(wrong["authority_contract_ref"])), [])
+        self.assertTrue(GATE.browser_program_binding_failures(wrong))
+        self.assertEqual(GATE.browser_program_binding_failures(row), [])
+
+    def test_s5b_projection_keeps_real_changes_refused(self):
+        rows = GATE.load_json("Plans/event_family_registry.json")["families"]
+        admission = GATE.load_json("Plans/browser_event_admission.json")
+        report, failures = GATE.preexisting_preservation(admission, rows)
+        self.assertEqual(failures, [])
+        self.assertTrue(report["historical_original39_verified"] and report["historical_original40_verified"])
+        pins = json.loads((ROOT / "scripts/pm_ea_reviewed_successors.json").read_text())["families"]
+        for family_id in pins:
+            for field in ("family_revision", "semantic_owner_doc", "payload_owner_doc", "source_refs", "scope_policy"):
+                changed = copy.deepcopy(rows)
+                row = next(r for r in changed if r["family_id"] == family_id)
+                row[field] = ["Plans/forged.md#CV-1"] if field == "source_refs" else "forged"
+                with self.subTest(family=family_id, field=field):
+                    self.assertTrue(GATE.preexisting_preservation(admission, changed)[1])
+        for family_id in GATE.REVIEWED_GOAL_SUCCESSORS:
+            changed = [r for r in rows if r["family_id"] != family_id]
+            self.assertTrue(GATE.preexisting_preservation(admission, changed)[1])
 
 
 if __name__ == "__main__":

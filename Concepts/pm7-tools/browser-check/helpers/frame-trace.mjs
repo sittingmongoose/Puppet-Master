@@ -1,6 +1,6 @@
 // Frame accounting from a DevTools trace, with nothing added to the page: what the renderer's main thread, the
 // renderer's compositor, the raster workers, the display compositor and the GPU thread each cost per second of wall
-// time, how the main thread's time splits (script, style, layout, pre-paint, paint, layerize, commit), how many main
+// time, how the main thread's time splits (script, style, layout, pre-paint, paint, layerize, PAC, commit), how many main
 // frames ran and how long each took, and how many frames the display compositor drew and Chrome counted as dropped.
 // A probe in the page (a rAF loop, a timer) would itself make the page render frames; a trace does not.
 export const TRACE_CATEGORIES = [
@@ -12,8 +12,12 @@ const GROUPS = [
 	['style', /^(UpdateLayoutTree|Document::updateStyle|Document::recalcStyle|RecalculateStyles|Document::rebuildLayoutTree|StyleEngine::|InvalidateStyle)/],
 	['layout', /^(Layout|LocalFrameView::layout|LocalFrameView::performLayout|UpdateLayout)/],
 	['prepaint', /^(PrePaint|LocalFrameView::RunPrePaintLifecyclePhase)/],
-	['paint', /^(Paint$|PaintImage|LocalFrameView::RunPaintLifecyclePhase|PaintArtifactCompositor::|Paint::)/],
-	['layerize', /^(Layerize|UpdateLayer$|UpdateLayerTree|CompositeLayers|PaintArtifactCompositor::Update|LayerTreeHost::UpdateLayers)/],
+	// PM7PERF-FRAMETRACE-PAC-AS-PAINT: layerize is tried before paint, and PaintArtifactCompositor (Chrome's
+	// layerization of the whole page) is its own group, not Blink paint: the old paint pattern matched
+	// PaintArtifactCompositor:: first, so 83-89% of the stage's "paint" figure was layerization (lane X).
+	['layerize', /^(Layerize|UpdateLayer$|UpdateLayerTree|CompositeLayers|LayerTreeHost::UpdateLayers)/],
+	['pac', /^PaintArtifactCompositor::/],
+	['paint', /^(Paint$|PaintImage|LocalFrameView::RunPaintLifecyclePhase|Paint::)/],
 	['commit', /^(Commit$|ProxyMain::BeginMainFrame::commit|LayerTreeHost::.*Commit|ProxyImpl::.*Commit)/],
 	['gc', /^(V8\.GC|MajorGC|MinorGC|BlinkGC|V8\.GCScavenger|CppGC)/],
 	['script', /^(FunctionCall|EvaluateScript|v8\.|V8\.|FireAnimationFrame|TimerFire|EventDispatch|RunMicrotasks|FireIdleCallback|XHR|v8::|Document::serviceScriptedAnimations|PageAnimator::serviceScriptedAnimations|ResizeObserver|IntersectionObserver|MutationObserver)/],
@@ -66,7 +70,7 @@ function selfTimes(evs) {
 export function summarise(trace, { url, allScripts = false } = {}) {
 	const events = Array.isArray(trace) ? trace : trace.traceEvents || [];
 	const threads = new Map(), procs = new Map();
-	let t0 = Infinity, t1 = -Infinity, started = null;
+	let t0 = Infinity, t1 = -Infinity, started = null, layoutCat = false;
 	for (const e of events) {
 		if (e.ph === 'M') {
 			if (e.name === 'thread_name') threads.set(e.pid + ':' + e.tid, e.args.name);
@@ -75,9 +79,16 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		}
 		if (e.name === 'TracingStartedInBrowser') started = e;
 		if (!e.ts || e.cat === '__metadata') continue;
+		// devtools.timeline is the category that carries Layout events; a trace taken without it measures no layouts
+		if (!layoutCat && e.cat && e.cat.split(',').includes('devtools.timeline')) layoutCat = true;
 		if (e.ts < t0) t0 = e.ts;
 		const end = e.ts + (e.dur || 0); if (end > t1) t1 = end;
 	}
+	// The window starts when tracing did (TracingStartedInBrowser), not at the oldest timestamp in the trace: a renderer that
+	// draws rarely (T3's sandbox wrapper around the app's frame) reports a few async begins (PipelineReporter,
+	// BeginImplFrameToSendBeginMainFrame) seconds old, and a 3 s sandbox window read as 21.6 s, every rate about 7 times too
+	// low (lane V, 2026-11-15, Alexis; on the normal surface the two clocks agreed within 10 ms). Busy time is clipped there too.
+	if (started && started.ts > t0 && started.ts < t1) t0 = started.ts;
 	const secs = Math.max(0.001, (t1 - t0) / 1e6);
 	// time under each thread's outermost events: task events nest across categories, so summing them counts twice
 	const byThread = new Map();
@@ -91,7 +102,10 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		for (const [k, a] of per) {
 			a.sort((x, y) => x.ts - y.ts || y.dur - x.dur);
 			let end = -Infinity, sum = 0;
-			for (const e of a) { if (e.ts >= end) { sum += e.dur; end = e.ts + e.dur; } else if (e.ts + e.dur > end) { sum += e.ts + e.dur - end; end = e.ts + e.dur; } }
+			for (const e of a) {
+				const ts = Math.max(e.ts, t0), te = e.ts + e.dur; if (te <= ts) continue;
+				if (ts >= end) { sum += te - ts; end = te; } else if (te > end) { sum += te - end; end = te; }
+			}
 			byThread.set(k, sum);
 		}
 	}
@@ -128,6 +142,9 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 	// main thread split
 	const mainKey = [...threads].find(([k, n]) => n === 'CrRendererMain' && Number(k.split(':')[0]) === rpid)?.[0];
 	const split = {}, other = new Map(); let frameMs = [], mainFrames = 0, styleCount = 0, layoutCount = 0, wholeLayouts = 0, styleElems = 0; const dispatched = {};
+	// PAC updates by name: Update is the full whole-page layerization; a repainted-layers update is split out when the
+	// trace names it (Chrome 157 traces only the full path by name; lane X). Other PAC events, if any, are 'other'.
+	const pacSplit = { full: 0, repainted: 0, other: 0 };
 	const scripts = new Map();
 	// What each main frame came to (PM7PERF-STILL-FRAMES-STARTS). A ProxyMain::BeginMainFrame is a frame START: Chrome
 	// runs the lifecycle and, when nothing changed, abandons it with an EarlyOut_NoUpdates instant inside it and commits
@@ -157,6 +174,7 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		const { self } = selfTimes(evs);
 		for (const [name, us] of self) {
 			const g = groupOf(name); split[g] = (split[g] || 0) + us;
+			if (g === 'pac') { if (name === 'PaintArtifactCompositor::Update') pacSplit.full += us; else if (/Repainted/.test(name)) pacSplit.repainted += us; else pacSplit.other += us; }
 			if (g === 'other') other.set(name, (other.get(name) || 0) + us);
 		}
 		for (const e of evs) {
@@ -178,12 +196,13 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 	const draws = events.filter((e) => vizKeys.has(e.pid + ':' + e.tid) && e.name === 'Display::DrawAndSwap' && (e.ph === 'X' || e.ph === 'B')).map((e) => e.ts).sort((a, b) => a - b);
 	const gaps = draws.slice(1).map((x, i) => (x - draws[i]) / 1000).sort((a, b) => a - b);
 	const drawDur = events.filter((e) => vizKeys.has(e.pid + ':' + e.tid) && e.name === 'Display::DrawAndSwap' && e.ph === 'X').map((e) => e.dur / 1000).sort((a, b) => a - b);
-	let drawFrames = 0, droppedFrames = 0, beginFrames = 0, animStarted = 0;
+	let drawFrames = 0, droppedFrames = 0, unflaggedDrops = 0, beginFrames = 0, animStarted = 0;
+	const dropKeys = [];
 	const failed = new Map(), animNode = new Map(), composited = new Set();
 	for (const e of events) {
 		if (e.pid === rpid) {
 			if (e.name === 'DrawFrame') drawFrames++;
-			else if (e.name === 'DroppedFrame') droppedFrames++;
+			else if (e.name === 'DroppedFrame') { droppedFrames++; if (!e.args?.hasPartialUpdate) unflaggedDrops++; dropKeys.push(`${e.args?.layerTreeId ?? '?'}:${e.args?.frameSeqId ?? '?'}`); }
 			else if (e.name === 'BeginFrame') beginFrames++;
 		}
 		if (e.name === 'Animation') {
@@ -198,20 +217,45 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		}
 	}
 	const states = {}; let smooth = 0, smoothDropped = 0;
+	// the page renderer's frame reporters by layer tree and frame sequence, with the final states they ended in
+	const reported = new Map();
 	for (const e of events) {
 		if (e.name !== 'PipelineReporter' || (e.ph !== 'b' && e.ph !== 'B')) continue;
-		const rep = e.args?.chrome_frame_reporter; if (!rep) continue;
+		// (Chrome 15x writes the reporter as frame_reporter; older builds as chrome_frame_reporter)
+		const rep = e.args?.frame_reporter || e.args?.chrome_frame_reporter; if (!rep) continue;
 		const s = String(rep.state || '').replace(/^STATE_/, '');
 		states[s] = (states[s] || 0) + 1;
 		if (rep.affects_smoothness) { smooth++; if (s === 'DROPPED') smoothDropped++; }
+		if (e.pid === rpid && rep.frame_sequence != null) {
+			const k = `${rep.layer_tree_host_id ?? '?'}:${rep.frame_sequence}`, set = reported.get(k) || new Set();
+			set.add(s); reported.set(k, set);
+		}
+	}
+	// R67-T2: a DroppedFrame's hasPartialUpdate says the frame depended on a partial update, not that it was shown (Chrome
+	// still reports kDropped for kDidNotPresentFrame and kReplacedByNewReporter). Each DroppedFrame is classified by the
+	// final state of its reporter: any presented state = presented (partial when a partial one is among them), only
+	// DROPPED = never presented, no reporter (or none with a final state) = unknown
+	let notPresented = 0, partialShown = 0, allShown = 0, unknownShown = 0;
+	for (const k of dropKeys) {
+		const set = reported.get(k);
+		if (!set) { unknownShown++; continue; }
+		if (set.has('PRESENTED_PARTIAL')) partialShown++;
+		else if (set.has('PRESENTED_ALL')) allShown++;
+		else if (set.has('DROPPED')) notPresented++;
+		else unknownShown++;
 	}
 	return {
 		secs: r2(secs),
 		gpuPid: gpuPid ?? null,
 		// the page's renderer main thread these numbers are of (for frameStarts below)
 		renderer: mainKey ? { pid: Number(mainKey.split(':')[0]), tid: Number(mainKey.split(':')[1]) } : null,
+		// whether the trace carries the Layout category (devtools.timeline): without it no Layout event could appear,
+		// and a forced-layout count of 0 measured nothing (PM7PERF-ONBREST-NO-RENDERER-READS-ZERO)
+		layoutCategory: layoutCat,
 		cost,
 		split,
+		// the PAC group's self time split by update kind, ms a second (split.pac is their sum)
+		pac: { full: perSec(pacSplit.full), repainted: perSec(pacSplit.repainted), other: perSec(pacSplit.other) },
 		other: [...other].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([n, us]) => [n, perSec(us)]),
 		// perSec counts frame STARTS (what every check judged before 2026-11-15); renderedPerSec the starts that were not
 		// abandoned with nothing to update, noUpdatePerSec those that were, commitsPerSec the commit events themselves
@@ -223,7 +267,12 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		// DOM events the page's listeners were called for, by type, in the window (Chrome dispatches one only where a listener hears it)
 		dispatched,
 		drawn: { perSec: r1(draws.length / secs), gapP50: r2(q(gaps, 0.5)), gapP95: r2(q(gaps, 0.95)), gapMax: r2(gaps[gaps.length - 1] || 0), drawP50: r2(q(drawDur, 0.5)), drawP95: r2(q(drawDur, 0.95)) },
-		frames: { beginPerSec: r1(beginFrames / secs), drawPerSec: r1(drawFrames / secs), droppedPerSec: r1(droppedFrames / secs) },
+		// droppedPerSec counts every DroppedFrame event of the page's renderer, as every table has. Each is classified by its
+		// frame reporter's final state (matched by layer tree and frame sequence): notPresentedPerSec ended DROPPED (never
+		// shown), partialPerSec ended PRESENTED_PARTIAL (the compositor's part, a scroll say, shown; a main-thread change
+		// late), presentedAllPerSec ended PRESENTED_ALL, presentationUnknownPerSec had no reporter with a final state in the
+		// trace. unflaggedPerSec counts the DroppedFrame events without hasPartialUpdate: only that, it proves no presentation
+		frames: { beginPerSec: r1(beginFrames / secs), drawPerSec: r1(drawFrames / secs), droppedPerSec: r1(droppedFrames / secs), notPresentedPerSec: r1(notPresented / secs), partialPerSec: r1(partialShown / secs), presentedAllPerSec: r1(allShown / secs), presentationUnknownPerSec: r1(unknownShown / secs), unflaggedPerSec: r1(unflaggedDrops / secs) },
 		notComposited: [...failed].sort((a, b) => b[1] - a[1]).slice(0, 12),
 		animations: { started: animStarted, composited: composited.size },
 		reporter: { states, smooth, smoothDropped },
@@ -288,13 +337,16 @@ export async function traceWindow(cdp, { ms = 3000, during, url, keep, allScript
 	}
 	const complete = new Promise((resolve) => cdp.once('Tracing.tracingComplete', resolve));
 	await cdp.send('Tracing.end');
-	const { stream } = await complete;
+	const done = await complete, { stream } = done;
 	const parts = [];
 	for (;;) { const r = await cdp.send('IO.read', { handle: stream, size: 1 << 22 }); parts.push(r.base64Encoded ? Buffer.from(r.data, 'base64').toString('utf8') : r.data); if (r.eof) break; }
 	await cdp.send('IO.close', { handle: stream });
 	const text = parts.join('');
 	if (keep) (await import('node:fs')).writeFileSync(keep, text);
-	return { at, ...summarise(JSON.parse(text), { url, allScripts }) };
+	// dataLoss: Chrome's own word that the trace buffer filled and events were dropped (lane V, 2026-11-15: two 3 s wheel
+	// windows on Alexis came back with main 6 and 94 ms/s while the board scrolled); a caller that judges a window can
+	// refuse or repeat one that lost data
+	return { at, dataLoss: !!done.dataLossOccurred, ...summarise(JSON.parse(text), { url, allScripts }) };
 }
 
 // The trace's events, parsed, for a caller that measures windows of its own (traceWindow summarises the whole trace).

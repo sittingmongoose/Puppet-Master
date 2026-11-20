@@ -17,7 +17,8 @@ resumption, withdrawal and replay variants. Expected outcomes are derived here
 from those inputs by the owner rules.
 
 Obligation (SP-2201, C12-SL2): the record CAS stores the frozen EventRecord's
-producer fields in the record's `event_obligation` member; the barrier append
+producer fields in the record's row-local, closed `event_obligation` schema
+(inline EventRecord 2.0.0 field definitions, C12-SL3); the barrier append
 adds the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc.
 Native execution remains NOT_RUN.
 """
@@ -52,7 +53,7 @@ ROWS = [
     ('sl_qtn_detect', 'sl_quarantine', 'equal', 'Detection mints the qtn_ identity with occurrence one plus the matching purged records; a re-detection of an open record resolves to it and mints nothing.'),
     ('sl_qtn_decision', 'sl_quarantine', 'equal', 'Each transition is admitted or refused at the first failing stage: closed edge and risk-class state, durable record state, synchronized raw custody, the outcome evidence, the Q policy cleanup clock, holds, then dependencies.'),
     ('sl_qtn_zero', 'sl_quarantine', 'equal', 'A refused transition appends nothing and leaves the record, the live key and the raw custody unchanged.'),
-    ('sl_qtn_record', 'sl_quarantine', 'equal', 'An admitted transition CASes the record state and appends its transition receipt continuing from detected, with the resolution output bound to the resolved bytes, and stores the frozen obligation in event_obligation: owner identity, payload and envelope, and the producer fields the append sends.'),
+    ('sl_qtn_record', 'sl_quarantine', 'equal', 'An admitted transition CASes the record state and appends its transition receipt continuing from detected, with the resolution output bound to the resolved bytes, and stores the frozen obligation in the row-local closed event_obligation: owner identity, payload and envelope, and the producer fields the append sends.'),
     ('sl_qtn_order', 'sl_quarantine', 'equal', 'Raw bytes and the manifest are synchronized before the record CAS; CAS, barrier append and first receipt precede the live-key effect or disposal.'),
     ('sl_qtn_effects', 'sl_quarantine', 'equal', 'The live-key effect is exactly that of the resolution; purged disposes the raw content once; securing and recovery_blocked touch nothing.'),
     ('sl_qtn_payload', 'sl_quarantine', 'equal', 'The payload carries the record identity, source ref, schemas, raw custody hash and ref, risk class, state and transition receipt.'),
@@ -62,7 +63,7 @@ ROWS = [
     ('sl_qtn_cap', 'sl_quarantine', 'equal', 'Cap pressure never evicts an unresolved item, and for Q-CRITICAL blocks new mutation-capable writes.'),
     ('sl_qtn_disclosure', 'sl_quarantine', 'equal', 'A viewer without read access to the source sees only that a value was quarantined; raw bytes leave only through permitted protected explicit export.'),
     ('sl_qtn_restore', 'sl_quarantine', 'equal', 'Restore brings back the raw custody with the record or reports it unavailable, and never re-runs a live-key effect.'),
-    ('sl_qtn_resume', 'sl_quarantine', 'equal', 'A crash resumes the obligation stored in the record or resolves the original receipt; it never re-copies raw bytes over another capture, repeats a live-key effect, purges twice or appends twice.'),
+    ('sl_qtn_resume', 'sl_quarantine', 'equal', 'A crash resumes the obligation stored under the row-local closed schema in the record or resolves the original receipt; it never re-copies raw bytes over another capture, repeats a live-key effect, purges twice or appends twice.'),
     ('sl_qtn_withdrawal', 'sl_quarantine', 'equal', 'Withdrawal resolves or fences pending obligations, keeps record, raw custody and receipts and never releases, resets or purges a value.'),
     ('sl_qtn_replay', 'sl_quarantine', 'equal', 'Same identity and digest returns the original result; a different digest conflicts; unavailable dedupe and projector_replay_only refuse with zero effects.'),
     ('sl_qtn_numbers', 'sl_quarantine', 'error', 'The byte length and the occurrence use shared current_integer with minimum 0 and 1.'),

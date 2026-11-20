@@ -184,5 +184,8 @@ html[data-motion="reduced"] .pm7-mem-layer > .pm7-mem-sheet, html[data-motion="r
 #panel-settings .o55-mem-split-row .o55-num .text-control { width: 64px; }
 #panel-settings .o55-mem-split-total { margin: 10px 0 0; font-size: 12.5px; font-weight: 650; color: var(--k3-text-2); }
 #panel-settings .o55-mem-split-total.is-off { color: var(--k3-amber); }
-@media (prefers-reduced-motion: reduce) { #panel-settings .o55-mem-split-bar span { transition: none; } #panel-settings .mm-row.is-flash { animation: none; } }
-html[data-motion="reduced"] #panel-settings .mm-row.is-flash { animation: none; }
+/* FO-202: with motion reduced the flash's animation paints nothing, so View's note keeps the flash's own tint as a
+   static highlight for the flash's lifetime (the class goes when it ends); the rows change colour without a fade */
+@media (prefers-reduced-motion: reduce) { #panel-settings .o55-mem-split-bar span { transition: none; } #panel-settings .mm-row { transition: none; } #panel-settings .mm-row.is-flash { animation: none; background-color: color-mix(in srgb, var(--k3-accent) 18%, transparent); } }
+html[data-motion="reduced"] #panel-settings .mm-row { transition: none; }
+html[data-motion="reduced"] #panel-settings .mm-row.is-flash { animation: none; background-color: color-mix(in srgb, var(--k3-accent) 18%, transparent); }

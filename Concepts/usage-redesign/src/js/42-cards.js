@@ -1051,9 +1051,10 @@
     var token = card._pmuUnfit = (card._pmuUnfit || 0) + 1, frames = 0;
     function back() {
       if (card._pmuUnfit !== token || !card._pmuFitOn) return;
-      if (!card.isConnected || card.matches(':hover') || card.matches(':focus-visible')) return;
+      if (!card.isConnected || (card.matches(':hover') && !wheelPaused(card)) || card.matches(':focus-visible')) return;
       var head = card.querySelector(':scope > .pmu-cardhead');
-      if (head && head.hasAttribute('data-tools-on')) return;
+      /* (a head held through a wheel pause keeps its fit; releasing it asks again, 42-cards.js releaseHeld) */
+      if (head && (head.hasAttribute('data-tools-on') || head.hasAttribute('data-wheel-held'))) return;
       var titles = head && head.querySelector(':scope > .pmu-cardtitles');
       /* (a yielding title always took at least a pixel, so its room is back exactly when the margin reads 0; the cap only
          guards a card whose margin is held by something else, so a clamp is never left on a resting head) */
@@ -1067,8 +1068,11 @@
   function refitSoon(card) {
     if (!card || !card._pmuFitOn) return;
     if (fitT) cancelAnimationFrame(fitT);
-    fitT = requestAnimationFrame(function () { fitT = null; if (card.isConnected && (card.matches(':hover') || card.matches(':focus-visible'))) fitTools(card); });
+    fitT = requestAnimationFrame(function () { fitT = null; if (card.isConnected && ((card.matches(':hover') && !wheelPaused(card)) || card.matches(':focus-visible'))) fitTools(card); });
   }
+  /* a card of a board in the wheel pause (PERF-USAGE-HOVER, bindTools) shows no hover: its head is not fitted for it, and
+     the pause's end fits the card under the pointer */
+  function wheelPaused(card) { var p = card.parentNode; return !!(p && p.getAttribute && (p.getAttribute('data-op') === 'wheel' || p.hasAttribute('data-wheel-handoff'))); }
   var M = PMU.motion;
 
   /* tool clicks (delegated on the board) */
@@ -1078,7 +1082,193 @@
   function bindTools(b) {
     var boardEl = b.scrollEl || b.el();
     if (!boardEl) return null;
+    /* PERF-USAGE-HOVER (Jared, 2026-11-16, card A: "Pause hover highlights on the Usage page while the mouse wheel
+       turns"). While the wheel turns over the Usage page's board, a card or row that slides under a resting pointer does
+       not light up or show its tool buttons: the board takes data-op="wheel" on the first wheel with room to scroll,
+       or on the first matching pane movement when the wheel check misses it.
+       The mark stays until WHEEL_REST ms after the last wheel or scroll, or until the pointer moves, presses or leaves.
+       The shell's hover engine
+       rests for a board with [data-op] (18-hover.js: no plate light, glow, reticle or magnet on its cards); Usage's
+       in-board :hover rules read the wheel and keyboard handoff markers (20-board.css says more); the head fit
+       below waits too. Chart highlights, readouts, tooltip hit areas and pointer tooltips retain their ordinary
+       behavior. A fully shown tool can still take a press while it fades. When the pause
+       ends, the board drops the value, refits the card under the pointer and sends one pmu-op-end event so the hover
+       engine can relight it without a move. At pause start the card under the pointer keeps its head exactly as it is
+       (data-wheel-held: head tools aside, title yielded and clamped, meta hidden; 20-board.css), so no head moves while
+       the pane and the pointer rest, and cards sliding past do not slide theirs (R122 P3, R123 P-1); the pause's end
+       releases it, and a held card no longer under the pointer then leaves as on a pointer leave (unfitSoon). A gesture
+       that already holds data-op keeps it. Only the Usage page's board pauses (#pmuScroll):
+       a Home dashboard keeps its highlights. */
+    var WHEEL_REST = 150, wheelT = 0, wheelInput = null, wheelAt = null, wheelEl = null, wheelFades = [], wheelHeld = null;
+    var releaseHeld = function () {
+      var head = wheelHeld; wheelHeld = null;
+      if (!head) return;
+      head.removeAttribute('data-wheel-held');
+      if (head.parentNode) unfitSoon(head.parentNode);
+    };
+    var pauseHover = function (el) {
+      var under = el.querySelector(':scope > .pmu-card:hover');
+      /* Only the live board's head is held, only when the pause begins (wheelAt is not set yet: a board mounted later in
+         the burst never showed its hover, so holding would add a head layout it never had), and only from ordinary
+         hover (a gesture's marker already moved its head). */
+      var head = under && !wheelAt && el === b.el() && el.getAttribute('data-op') === null && !el.hasAttribute('data-wheel-handoff') &&
+        under.querySelector(':scope > .pmu-cardhead');
+      if (head && head !== wheelHeld) { releaseHeld(); head.setAttribute('data-wheel-held', ''); wheelHeld = head; }
+      var tools = under && under.querySelector(':scope > .pmu-cardhead > .pmu-cardtools');
+      /* Read before writing the marker. Reversing an incomplete fade-in shortens the opacity transition,
+         so only fully shown tools can use the full pointer-events delay safely. */
+      if (tools && !M.reduced() && !under.matches(':focus-visible') && !tools.matches(':focus-within') &&
+          !tools.hasAttribute('data-wheel-fade')) {
+        var style = getComputedStyle(tools);
+        if (+style.opacity === 1 && style.pointerEvents === 'auto') {
+          tools.setAttribute('data-wheel-fade', '');
+          wheelFades.push(tools);
+        }
+      }
+      el.setAttribute('data-op', 'wheel');
+      /* Notify the engine once for each marked board, including an outgoing ghost with a fading proxy. */
+      try { document.dispatchEvent(new CustomEvent('pmu-op-start', { detail: { board: el } })); } catch (error) { /* none */ }
+      return under;
+    };
+    var clearWheelFades = function () {
+      while (wheelFades.length) wheelFades.pop().removeAttribute('data-wheel-fade');
+    };
+    var wheelEnd = function () {
+      if (wheelT) { clearTimeout(wheelT); wheelT = 0; }
+      if (!wheelAt) return;
+      var held = wheelEl, el = b.el(), point = wheelAt;
+      if (held && held !== el) {
+        if (held.getAttribute('data-op') === 'wheel') held.removeAttribute('data-op');
+        held.removeAttribute('data-wheel-handoff');
+      }
+      var op = el && el.getAttribute('data-op');
+      /* R112: keyboard M/R can take over without a pointer event. Keep the return and its current point until the
+         board's idle sync releases the gesture flags; never release a move/resize marker or notify a live gesture. */
+      if (el && (op !== null && op !== 'wheel' || b.gesture && b.gesture())) {
+        if (op === 'wheel') el.removeAttribute('data-op');
+        el.removeAttribute('data-wheel-handoff');
+        releaseHeld();
+        clearWheelFades();
+        return;
+      }
+      wheelAt = wheelEl = null;
+      if (!el) { releaseHeld(); clearWheelFades(); return; }
+      var card = el && el.isConnected && el.querySelector(':scope > .pmu-card:hover');
+      if (card) {
+        /* R100 T2: a delayed incoming transition is not a visible return. Restore the already-hovered head in one
+           step, then put ordinary hover timing back after it has painted. A newer return owns its cleanup token. */
+        var head = card.querySelector(':scope > .pmu-cardhead'), token = {};
+        if (head) {
+          head._pmuWheelReturn = token; head.classList.add('pmu-wheel-return');
+          requestAnimationFrame(function () { requestAnimationFrame(function () {
+            if (head._pmuWheelReturn === token) { head._pmuWheelReturn = null; head.classList.remove('pmu-wheel-return'); }
+          }); });
+        }
+        /* Fit while hover is still gated: releasing first invalidates the whole board, then the fitter's reads force
+           that work before its own head writes. Publish the fitted head and the released marker together instead. */
+        try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); }
+      }
+      releaseHeld();
+      if (el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
+      el.removeAttribute('data-wheel-handoff');
+      clearWheelFades();
+      try { document.dispatchEvent(new CustomEvent('pmu-op-end', { detail: { board: el, point: point } })); } catch (error) { /* none */ }
+    };
+    var wheelHold = function () { if (wheelT) clearTimeout(wheelT); wheelT = setTimeout(wheelEnd, WHEEL_REST); };
+    /* A room mount can replace the board or clear its marker while the same wheel burst continues (R99). Transfer
+       only our wheel value; a live drag/resize keeps ownership, including before its deferred data-op write. */
+    var wheelBoard = function () {
+      var el = b.el(), op = el && el.getAttribute('data-op');
+      /* R113 P3: endGesture clears the live gesture before idle opSync removes its marker. A completed move/resize
+         can hand that marker to the first scroll; an actual gesture or another operation keeps its ownership. */
+      /* Any input delivered during a live keyboard gesture leaves an existing deadline alone. */
+      if (b.gesture && b.gesture()) return null;
+      if (!el || op !== null && op !== 'wheel' && op !== 'move' && op !== 'resize') { wheelEnd(); return null; }
+      /* R116 P1: the outgoing board still paints and takes hits above the incoming board. Its wheel
+         marker stays until retirement clears its attributes, or a later mount promotes it back to live. */
+      if (wheelEl && wheelEl !== el && wheelEl.getAttribute('data-op') === 'wheel' && !wheelEl.matches('.pmu-ghostboard,.pmu-oldboard')) wheelEl.removeAttribute('data-op');
+      wheelEl = el;
+      if (op !== 'wheel') {
+        var under = pauseHover(el);
+        if (under && (!wheelHeld || wheelHeld.parentNode !== under)) unfitSoon(under);
+      }
+      return el;
+    };
+    var onWheelMount = function () {
+      if (wheelAt) wheelBoard();
+      else {
+        wheelInput = null;
+        /* A reversed ghost can return after the original hold ended. Promotion restores its ordinary hover. */
+        var el = b.el();
+        releaseHeld();
+        if (el) {
+          if (el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
+          el.removeAttribute('data-wheel-handoff');
+        }
+      }
+    };
+    var startWheel = function (point) {
+      wheelInput = null;
+      if (!wheelBoard()) return;
+      /* The outgoing room can still paint above the pane when the wheel begins. */
+      var ghost = boardEl.querySelector(':scope > :is(.pmu-ghostboard,.pmu-oldboard):not(#pmuBoard)');
+      if (ghost && ghost.getAttribute('data-op') !== 'wheel') pauseHover(ghost);
+      wheelAt = point;
+      wheelHold();
+    };
+    var onWheel = function (event) {
+      if (wheelAt) {
+        if (wheelBoard()) { wheelAt = [event.clientX, event.clientY]; wheelHold(); }
+        return;
+      }
+      if ((b.gesture && b.gesture()) || event.defaultPrevented || event.ctrlKey) return;
+      var top = boardEl.scrollTop, left = boardEl.scrollLeft;
+      var dx = event.deltaX || (event.shiftKey ? event.deltaY : 0);
+      var dy = event.shiftKey ? 0 : event.deltaY;
+      /* Mark in wheel dispatch when the pane has room in that direction. A passive listener lets Chromium
+         keep scrolling on the compositor. The scroll listener covers movement this range check missed.
+         R123 P-2: scrollHeight and clientHeight are whole pixels and scrollTop is not, so at the bottom the
+         difference can exceed the real maximum by under a pixel: room means at least one whole pixel. */
+      if ((dy < 0 && top >= 1) || (dy > 0 && boardEl.scrollHeight - boardEl.clientHeight - top >= 1) ||
+          (dx < 0 && left >= 1) || (dx > 0 && boardEl.scrollWidth - boardEl.clientWidth - left >= 1)) {
+        startWheel([event.clientX, event.clientY]);
+        return;
+      }
+      var now = performance.now();
+      if (!wheelInput || now - wheelInput.t >= WHEEL_REST) wheelInput = { top: top, left: left };
+      /* A later scroll can have another cause. Match its direction to a delta in this wheel burst.
+         A platform can deliver Shift-wheel as vertical movement even when horizontal was predicted. */
+      wheelInput.leftward = wheelInput.leftward || dx < 0;
+      wheelInput.rightward = wheelInput.rightward || dx > 0;
+      wheelInput.upward = wheelInput.upward || event.deltaY < 0;
+      wheelInput.downward = wheelInput.downward || event.deltaY > 0;
+      wheelInput.t = now;
+      wheelInput.point = [event.clientX, event.clientY];
+    };
+    var onWheelScroll = function () {
+      if (wheelAt) { if (wheelBoard()) wheelHold(); return; }
+      if (!wheelInput || performance.now() - wheelInput.t >= WHEEL_REST) return;
+      var top = boardEl.scrollTop, left = boardEl.scrollLeft;
+      var y = top - wheelInput.top, x = left - wheelInput.left;
+      if (!(y < 0 && wheelInput.upward || y > 0 && wheelInput.downward ||
+          x < 0 && wheelInput.leftward || x > 0 && wheelInput.rightward)) {
+        wheelInput.top = top; wheelInput.left = left;
+        return;
+      }
+      startWheel(wheelInput.point);
+    };
+    var onWheelMove = function (event) {
+      var point = wheelAt || (wheelInput && wheelInput.point);
+      if (point && (Math.abs(event.clientX - point[0]) >= 1 || Math.abs(event.clientY - point[1]) >= 1)) onWheelResume(event);
+    };
+    /* A direct move to navigation/toolbar has no pointermove in the scroller. Its leave carries the current
+       pointer too: end the hold there, so no return can hit-test the old wheel position. A press also resumes. */
+    var onWheelResume = function (event) {
+      wheelInput = null;
+      if (wheelAt) { wheelAt = [event.clientX, event.clientY]; wheelEnd(); }
+    };
     var onOver = function (event) {
+      if (wheelAt) return;   /* the pause: the tools stay hidden, so nothing is fitted until it ends (wheelEnd fits) */
       var card = event.target.closest && event.target.closest('.pmu-card');
       if (!card || card.contains(event.relatedTarget) || card.parentNode !== b.el()) return;
       try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); }
@@ -1117,7 +1307,34 @@
     boardEl.addEventListener('focusin', onFocusIn);
     boardEl.addEventListener('focusout', onFocusOut);
     boardEl.addEventListener('click', onClick);
+    var pausing = boardEl.id === 'pmuScroll', offWheelMount = null, offWheelSwap = null, offWheelEnd = null;
+    if (pausing) {
+      offWheelMount = b.on('mount', onWheelMount);
+      offWheelSwap = b.on('swap', onWheelMount);   /* Reduce Motion adopts its spare after mount returns */
+      /* An early gesture release leaves the original wheel deadline intact; an expired hold returns once flags clear.
+         Pointer move/leave/press keep updating wheelAt during the handoff, so wheelEnd resolves the live hover. */
+      offWheelEnd = b.on('op-end', function () {
+        if (!wheelAt) return;
+        /* opSync restored the wheel marker if its deadline is still pending. A hold that already
+           expired can now complete its deferred engine return. */
+        if (wheelT) wheelBoard(); else wheelEnd();
+      });
+      boardEl.addEventListener('wheel', onWheel, { passive: true });
+      boardEl.addEventListener('scroll', onWheelScroll, { passive: true });
+      boardEl.addEventListener('pointermove', onWheelMove, { passive: true });
+      boardEl.addEventListener('pointerdown', onWheelResume, { passive: true });
+      boardEl.addEventListener('pointerleave', onWheelResume, { passive: true });
+    }
     return function () {
+      if (pausing) {
+        offWheelMount(); offWheelSwap(); offWheelEnd();
+        wheelEnd();
+        boardEl.removeEventListener('wheel', onWheel, { passive: true });
+        boardEl.removeEventListener('scroll', onWheelScroll, { passive: true });
+        boardEl.removeEventListener('pointermove', onWheelMove, { passive: true });
+        boardEl.removeEventListener('pointerdown', onWheelResume, { passive: true });
+        boardEl.removeEventListener('pointerleave', onWheelResume, { passive: true });
+      }
       boardEl.removeEventListener('pointerover', onOver);
       boardEl.removeEventListener('pointerout', onOut);
       boardEl.removeEventListener('focusin', onFocusIn);

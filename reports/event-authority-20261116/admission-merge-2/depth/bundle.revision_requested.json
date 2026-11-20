@@ -1,0 +1,1056 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
+  "row_pointer": "#/families/311"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "bundle.revision_requested",
+   "family_id": "event-family-bundle-revision-requested",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/311 (canonical row SHA-256 02869639dc964a764e53eb798c2dc7fb022e51306c91527df56c8c78a122c989). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/311",
+       "line_start": 20397,
+       "line_end": 20439,
+       "quote": "\"event_type\": \"bundle.revision_requested\"",
+       "quote_line": 20400,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/311",
+        "line_start": 20353,
+        "line_end": 20395,
+        "quote": "\"event_type\": \"bundle.revision_requested\"",
+        "quote_line": 20356,
+        "file_sha256": "b792a9c1340cdeb0877068ddf67bd603cd29c85cfa8c1608628550992fecbbe7",
+        "quote_check": "exact"
+       },
+       "unit": "#/families/311",
+       "quote_scope": "unit #/families/311, Plans/event_family_registry.json:20397-20439"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact candidate has its own current semantic, payload and Storage contract; retired CWF supplies no active authority.",
+     "evidence": [
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-571",
+       "line_start": 33226,
+       "line_end": 33227,
+       "quote": "bundle.revision_requested` has current semantic ownership here under ACD-049/050, not retired\n  Chain Wizard ownership. The document review owner accepts Resubmit with Annotations for o",
+       "quote_check": "exact",
+       "quote_scope": "unit ACD-571, Plans/assistant-chat-design.md:33219-33269",
+       "file_sha256": "3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948",
+       "source_citation": {
+        "path": "Plans/assistant-chat-design.md",
+        "unit": "ACD-571",
+        "line_start": 33183,
+        "line_end": 33184,
+        "quote": "bundle.revision_requested` has current semantic ownership here under ACD-049/050, not retired\n  Chain Wizard ownership. The document review owner accepts Resubmit with Annotations for o",
+        "file_sha256": "e3f399b7ab0b3835eade30c9b24a3aa71efaca27f2a10db8654b811055cbb9ff"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-590",
+       "line_start": 44526,
+       "line_end": 44527,
+       "quote": "bundle.revision_requested` has payload schema Plans/event_payloads/bundle_revision/revision_requested.schema.json,\n  schema_id pm.event_payload.bundle.revision_requested.v1, schema_vers",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-590, Plans/Contracts_V0.md:44519-44634",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-590",
+        "line_start": 42399,
+        "line_end": 42400,
+        "quote": "bundle.revision_requested` has payload schema Plans/event_payloads/bundle_revision/revision_requested.schema.json,\n  schema_id pm.event_payload.bundle.revision_requested.v1, schema_vers",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS: exact-family integer-only identity/digest/descriptor recipe, original preparation and independent SP-337 event/source transport; all originals authenticate exact nested types and canonical bytes.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-590",
+       "line_start": 44537,
+       "line_end": 44540,
+       "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_requested\",project_id,thr",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-590, Plans/Contracts_V0.md:44519-44634",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-590",
+        "line_start": 42410,
+        "line_end": 42413,
+        "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_requested\",project_id,thr",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-575",
+       "line_start": 54724,
+       "line_end": 54726,
+       "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit SP-575, Plans/storage-plan.md:54717-54855",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-575",
+        "line_start": 54637,
+        "line_end": 54639,
+        "quote": "SP-286 and CV-339 including strict full-value v2 resolution,\\\n  \\ SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\\\n  \\ under DL-045: produ",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-575",
+        "old_quote": "SP-286 and CV-339 including strict full-value v2 resolution,\\\n  \\ SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\\\n  \\ under DL-045: produ",
+        "new_quote": "SP-286 and CV-339 including strict full-value v2 resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract under DL-045: produ",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-579",
+       "line_start": 55339,
+       "line_end": 55340,
+       "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing\n  4 GiB advisory canonical budget, and max_value_bytes=16384.",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit SP-579, Plans/storage-plan.md:55273-55411",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-579",
+        "line_start": 55117,
+        "line_end": 55118,
+        "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384.",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-590",
+       "line_start": 44564,
+       "line_end": 44565,
+       "quote": "NEW SP-337 event-body binding for bundle.revision_requested under DL-045: measure the complete logical body using\n  the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or s",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit CV-590, Plans/Contracts_V0.md:44519-44634",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-590",
+        "line_start": 42437,
+        "line_end": 42437,
+        "quote": "NEW SP-337 event-body binding for bundle.revision_requested under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or s",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-590",
+       "line_start": 44564,
+       "line_end": 44565,
+       "quote": "NEW SP-337 event-body binding for bundle.revision_requested under DL-045: measure the complete logical body using\n  the exact SP-026 canonical MessagePack bytes Storage stores, never",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit CV-590, Plans/Contracts_V0.md:44519-44634",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-590",
+        "line_start": 42437,
+        "line_end": 42437,
+        "quote": "NEW SP-337 event-body binding for bundle.revision_requested under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "canonical_json/exact_equal",
+       "line_start": 788,
+       "line_end": 793,
+       "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "8f8c464ec7cd48766c92983a762703b474a13401f2212dad5f66eacb3a36c796",
+       "source_citation": {
+        "path": "scripts/pm_dcw_event_oracles.py",
+        "unit": "canonical_json/exact_equal",
+        "line_start": 788,
+        "line_end": 793,
+        "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():",
+        "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact 1.0.0 candidate payload is closed and independently validated inside the complete EventRecord envelope.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
+       "unit": "closed root",
+       "line_start": 5,
+       "line_end": 13,
+       "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "7b5015d68c743687ece09d3dad2bd88d7fca311b7afd373eb0eeebd2f18b6dbe",
+       "source_citation": {
+        "path": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
+        "unit": "closed root",
+        "line_start": 5,
+        "line_end": 13,
+        "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+        "file_sha256": "7b5015d68c743687ece09d3dad2bd88d7fca311b7afd373eb0eeebd2f18b6dbe"
+       }
+      },
+      {
+       "path": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
+       "unit": "schema identity",
+       "line_start": 56,
+       "line_end": 63,
+       "quote": "\"const\": \"pm.event_payload.bundle.revision_requested.v1\"\n    },\n    \"schema_version\": {\n      \"const\": \"1.0.0\"\n    },\n    \"event_type\": {\n      \"const\": \"bundle.revision_requested\"\n",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "7b5015d68c743687ece09d3dad2bd88d7fca311b7afd373eb0eeebd2f18b6dbe",
+       "source_citation": {
+        "path": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
+        "unit": "schema identity",
+        "line_start": 56,
+        "line_end": 63,
+        "quote": "\"const\": \"pm.event_payload.bundle.revision_requested.v1\"\n    },\n    \"schema_version\": {\n      \"const\": \"1.0.0\"\n    },\n    \"event_type\": {\n      \"const\": \"bundle.revision_requested\"\n    ",
+        "file_sha256": "7b5015d68c743687ece09d3dad2bd88d7fca311b7afd373eb0eeebd2f18b6dbe"
+       }
+      },
+      {
+       "path": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
+       "unit": "bundle.revision_requested",
+       "line_start": 117,
+       "line_end": 126,
+       "quote": "\"payload_reference\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"blake3\",\n        \"byte_size\",\n        \"media_type\"\n      ],\n      \"properties\": {\n",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "7b5015d68c743687ece09d3dad2bd88d7fca311b7afd373eb0eeebd2f18b6dbe",
+       "source_citation": {
+        "path": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
+        "unit": "bundle.revision_requested",
+        "line_start": 117,
+        "line_end": 126,
+        "quote": "\"payload_reference\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"blake3\",\n        \"byte_size\",\n        \"media_type\"\n      ],\n      \"properties\": {\n     ",
+        "file_sha256": "7b5015d68c743687ece09d3dad2bd88d7fca311b7afd373eb0eeebd2f18b6dbe"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Real Project/current subject joins, frozen identity tuple and full envelope/source equality are explicit; no focus or application fallback.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-590",
+       "line_start": 44540,
+       "line_end": 44541,
+       "quote": "NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_requested\",project_id,thread_id,bundle_id,revision_id,phase_sequence]\n",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-590, Plans/Contracts_V0.md:44519-44634",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-590",
+        "line_start": 42413,
+        "line_end": 42414,
+        "quote": "NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_requested\",project_id,thread_id,bundle_id,revision_id,phase_sequence]\n",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-590",
+       "line_start": 44534,
+       "line_end": 44535,
+       "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-590, Plans/Contracts_V0.md:44519-44634",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-590",
+        "line_start": 42407,
+        "line_end": 42408,
+        "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Normal append uses the existing scoped idempotency policy; lost acknowledgement resolves the original full value/receipt and compatibility replay cannot append.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-590",
+       "line_start": 44537,
+       "line_end": 44540,
+       "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_requested\",project_id,thr",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-590, Plans/Contracts_V0.md:44519-44634",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-590",
+        "line_start": 42410,
+        "line_end": 42413,
+        "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_requested\",project_id,thr",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-590",
+       "line_start": 44554,
+       "line_end": 44556,
+       "quote": "replay_only_not_appendable;\n  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord\n  and Plans/event_record.schema.json, w",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-590, Plans/Contracts_V0.md:44519-44634",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-590",
+        "line_start": 42427,
+        "line_end": 42429,
+        "quote": "replay_only_not_appendable;\n  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord\n  and Plans/event_record.schema.json, w",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\", \"DL-508\"], \"event_type\": \"bundle.revision_requested\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DCW.self-grade.json\", \"history_policy_ref\": \"RP-AUTHORITY-INDEFINITE@1.0.0\", \"lane\": \"DCW\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-508\", \"family_id\": \"revision_run\", \"policy_ref\": \"RP-CHAT-THREAD-LIFETIME@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-575\", \"owner_line\": 50225, \"prior_finding\": \"PENDING_RETENTION_DECISION is the allowed lane exception; event and original source lifetimes need RT assignment before admission.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-575",
+       "line_start": 54812,
+       "line_end": 54812,
+       "quote": "Current selected assignment (2026-11-19): bundle.revision_requested@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-575, Plans/storage-plan.md:54717-54855",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-575",
+        "line_start": 54691,
+        "line_end": 54691,
+        "quote": "\\ `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-508.\\n\\nUse the existing\\",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX4",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Ref-only originals retain existing permission/deletion and coherent backup/restore custody; closed SP-337 overflow references preserve complete source bytes, physical-row inventory and reachable pack/index coverage.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-579",
+       "line_start": 55327,
+       "line_end": 55328,
+       "quote": "mandatory coherent backup authority with original documents, annotations,\n  FileSafe results, immutable intent/results, seglog identity/dedupe and SP-286 custody. Restore admits one ver",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-579, Plans/storage-plan.md:55273-55411",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-579",
+        "line_start": 55106,
+        "line_end": 55107,
+        "quote": "mandatory coherent backup authority with original documents, annotations,\n  FileSafe results, immutable intent/results, seglog identity/dedupe and SP-286 custody. Restore admits one ver",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/dcw/revision_run.schema.json",
+       "unit": "original source root",
+       "line_start": 23,
+       "line_end": 31,
+       "quote": "\"additionalProperties\": false,\n      \"required\": [\n        \"schema_id\",\n        \"schema_version\",\n        \"storage_instance_id\",\n        \"project_id\",\n        \"thread_id\",\n        \"bundle_id\",\n",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "43059e917d67dabf428a4a8cff0aa470fa0fd188087a590ea54ee648b9cac0e3",
+       "source_citation": {
+        "path": "Plans/dcw/revision_run.schema.json",
+        "unit": "original source root",
+        "line_start": 23,
+        "line_end": 31,
+        "quote": "\"additionalProperties\": false,\n      \"required\": [\n        \"schema_id\",\n        \"schema_version\",\n        \"storage_instance_id\",\n        \"project_id\",\n        \"thread_id\",\n        \"bundle_id\",\n       ",
+        "file_sha256": "43059e917d67dabf428a4a8cff0aa470fa0fd188087a590ea54ee648b9cac0e3"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-579",
+       "line_start": 55339,
+       "line_end": 55340,
+       "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing\n  4 GiB advisory canonical budget, and max_value_bytes=16384.",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit SP-579, Plans/storage-plan.md:55273-55411",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-579",
+        "line_start": 55117,
+        "line_end": 55118,
+        "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384.",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "source_storage",
+       "line_start": 532,
+       "line_end": 532,
+       "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "8f8c464ec7cd48766c92983a762703b474a13401f2212dad5f66eacb3a36c796",
+       "source_citation": {
+        "path": "scripts/pm_dcw_event_oracles.py",
+        "unit": "source_storage",
+        "line_start": 532,
+        "line_end": 532,
+        "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})",
+        "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact existing owner success predicate, predecessor receipt and exclusive source serialization are bound; passive history cannot execute the owner.",
+     "evidence": [
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-571",
+       "line_start": 33229,
+       "line_end": 33231,
+       "quote": "predecessor_event_id\n  is null. Source references resolve the exact immutable request/result/interruption recovery evidence, without\n  embedding document or annotation bodies. Existing ",
+       "quote_check": "exact",
+       "quote_scope": "unit ACD-571, Plans/assistant-chat-design.md:33219-33269",
+       "file_sha256": "3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948",
+       "source_citation": {
+        "path": "Plans/assistant-chat-design.md",
+        "unit": "ACD-571",
+        "line_start": 33186,
+        "line_end": 33188,
+        "quote": "predecessor_event_id\n  is null. Source references resolve the exact immutable request/result/interruption recovery evidence, without\n  embedding document or annotation bodies. Existing ",
+        "file_sha256": "e3f399b7ab0b3835eade30c9b24a3aa71efaca27f2a10db8654b811055cbb9ff"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-278 complete source now resolves exact registered path/pointer/schema ID and its full offline reference closure. Genuine run.started v2 and separate owner-supported v1 originals survive read/rebuild/compatibility_read. Native source/redb adapters remain NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-575",
+       "line_start": 54739,
+       "line_end": 54741,
+       "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit SP-575, Plans/storage-plan.md:54717-54855",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-575",
+        "line_start": 54651,
+        "line_end": 54652,
+        "quote": "SP-278 and reuses the existing projector.storage.event_record_index@1.0.0 and\\\n  \\ reader.storage.event_record_index@1.0.0; their physical checkpoint is event_record_index_checkpoint.v1:",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-575",
+        "old_quote": "SP-278 and reuses the existing projector.storage.event_record_index@1.0.0 and\\\n  \\ reader.storage.event_record_index@1.0.0; their physical checkpoint is event_record_index_checkpoint.v1:",
+        "new_quote": "SP-278 and reuses the existing projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint is event_record_index_checkpoint.v1:",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-575",
+       "line_start": 54741,
+       "line_end": 54742,
+       "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit SP-575, Plans/storage-plan.md:54717-54855",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-575",
+        "line_start": 54652,
+        "line_end": 54654,
+        "quote": "event_record_index_checkpoint.v1:{storage_instance_id},\\\n  \\ value pm.storage_value.event_record_index_checkpoint.v1@1.0.0, and lookup rows are event_record_index.v2\\\n  \\ in the current selecte",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-575",
+        "old_quote": "event_record_index_checkpoint.v1:{storage_instance_id},\\\n  \\ value pm.storage_value.event_record_index_checkpoint.v1@1.0.0, and lookup rows are event_record_index.v2\\\n  \\ in the current selecte",
+        "new_quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0, and lookup rows are event_record_index.v2 in the current selecte",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "bundle.revision_requested",
+       "line_start": 1005,
+       "line_end": 1005,
+       "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "8f8c464ec7cd48766c92983a762703b474a13401f2212dad5f66eacb3a36c796",
+       "source_citation": {
+        "path": "scripts/pm_dcw_event_oracles.py",
+        "unit": "bundle.revision_requested",
+        "line_start": 1005,
+        "line_end": 1005,
+        "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})",
+        "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS: current caller admission stays separate from authenticated original dispatch and passive replay policy. occurred_at_utc and family ts use pm_event_datetime.date_time with the EventRecord profile; Storage observed_at_utc and persisted_at_utc use storage_utc_z. SP-1101 selects those profiles for a retained original. Native original authentication remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-575",
+       "line_start": 54767,
+       "line_end": 54768,
+       "quote": "Withdrawal first cuts off new writer admission for bundle.revision_requested; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_revis",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit SP-575, Plans/storage-plan.md:54717-54855",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-575",
+        "line_start": 54672,
+        "line_end": 54673,
+        "quote": "Withdrawal first cuts off new writer admission for bundle.revision_requested; drain or fence its pending\\\n  \\ append work under the original receipt gate, then withdraw reader.bundle_revis",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-575",
+        "old_quote": "Withdrawal first cuts off new writer admission for bundle.revision_requested; drain or fence its pending\\\n  \\ append work under the original receipt gate, then withdraw reader.bundle_revis",
+        "new_quote": "Withdrawal first cuts off new writer admission for bundle.revision_requested; drain or fence its pending append work under the original receipt gate, then withdraw reader.bundle_revis",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-575",
+       "line_start": 54769,
+       "line_end": 54771,
+       "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit SP-575, Plans/storage-plan.md:54717-54855",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-575",
+        "line_start": 54674,
+        "line_end": 54676,
+        "quote": "replacement\\\n  \\ reader must explicitly support retained schemas and authenticate complete SP-278 rebuild/currentness\\\n  \\ before publication. Cutoff does not delete original events or reset",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-575",
+        "old_quote": "replacement\\\n  \\ reader must explicitly support retained schemas and authenticate complete SP-278 rebuild/currentness\\\n  \\ before publication. Cutoff does not delete original events or reset",
+        "new_quote": "replacement reader must explicitly support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does not delete original events or reset",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "bundle.revision_requested",
+       "line_start": 616,
+       "line_end": 617,
+       "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "8f8c464ec7cd48766c92983a762703b474a13401f2212dad5f66eacb3a36c796",
+       "source_citation": {
+        "path": "scripts/pm_dcw_event_oracles.py",
+        "unit": "bundle.revision_requested",
+        "line_start": 616,
+        "line_end": 617,
+        "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})",
+        "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-253",
+       "line_start": 20965,
+       "line_end": 20965,
+       "quote": "persisted timestamps are UTC ISO-8601 values with Z",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-253, Plans/Contracts_V0.md:20956-21005",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-253",
+        "line_start": 20820,
+        "line_end": 20820,
+        "quote": "persisted timestamps are UTC ISO-8601 values with Z",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "require_storage_timestamps",
+       "line_start": 853,
+       "line_end": 853,
+       "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "8f8c464ec7cd48766c92983a762703b474a13401f2212dad5f66eacb3a36c796",
+       "source_citation": {
+        "path": "scripts/pm_dcw_event_oracles.py",
+        "unit": "require_storage_timestamps",
+        "line_start": 853,
+        "line_end": 853,
+        "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)",
+        "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_number_custody.py",
+       "unit": "retained_timestamps",
+       "line_start": 41,
+       "line_end": 41,
+       "quote": "dt.date_time(event[field], profile=dt.STORAGE_UTC_Z)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "b8887586db725c735eb814c27222e7df1798f79f74a9967117ff09abc5c97d58",
+       "source_citation": {
+        "path": "scripts/pm_dcw_number_custody.py",
+        "unit": "retained_timestamps",
+        "line_start": 41,
+        "line_end": 41,
+        "quote": "dt.date_time(event[field], profile=dt.STORAGE_UTC_Z)",
+        "file_sha256": "b8887586db725c735eb814c27222e7df1798f79f74a9967117ff09abc5c97d58"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_number_custody.py",
+       "unit": "install",
+       "line_start": 72,
+       "line_end": 72,
+       "quote": "retained_timestamps(n.decode_storage_value(candidate.record_bytes, profile=n.EVENT_VALUE))",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "b8887586db725c735eb814c27222e7df1798f79f74a9967117ff09abc5c97d58",
+       "source_citation": {
+        "path": "scripts/pm_dcw_number_custody.py",
+        "unit": "install",
+        "line_start": 72,
+        "line_end": 72,
+        "quote": "retained_timestamps(n.decode_storage_value(candidate.record_bytes, profile=n.EVENT_VALUE))",
+        "file_sha256": "b8887586db725c735eb814c27222e7df1798f79f74a9967117ff09abc5c97d58"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS (C12-DCW): all 238 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 15, cut_accepts 179, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 26914 exact kills and 10683 INVALID proposals over 20 real check_schema sites, plus 26891 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_supplement 33); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
+       "unit": "closed root",
+       "line_start": 5,
+       "line_end": 13,
+       "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+       "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts.",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "7b5015d68c743687ece09d3dad2bd88d7fca311b7afd373eb0eeebd2f18b6dbe",
+       "source_citation": {
+        "path": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
+        "unit": "closed root",
+        "line_start": 5,
+        "line_end": 13,
+        "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+        "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts.",
+        "file_sha256": "7b5015d68c743687ece09d3dad2bd88d7fca311b7afd373eb0eeebd2f18b6dbe"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "index_read",
+       "line_start": 482,
+       "line_end": 482,
+       "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "8f8c464ec7cd48766c92983a762703b474a13401f2212dad5f66eacb3a36c796",
+       "source_citation": {
+        "path": "scripts/pm_dcw_event_oracles.py",
+        "unit": "index_read",
+        "line_start": 482,
+        "line_end": 482,
+        "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})",
+        "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12.py",
+       "unit": "schema ledger",
+       "line_start": 395,
+       "line_end": 395,
+       "quote": "EXPECTED = ['refused', 'OE001', 'schema']",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12.py",
+        "unit": "schema ledger",
+        "line_start": 395,
+        "line_end": 395,
+        "quote": "EXPECTED = ['refused', 'OE001', 'schema']",
+        "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12.py",
+       "unit": "schema ledger",
+       "line_start": 439,
+       "line_end": 439,
+       "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12.py",
+        "unit": "schema ledger",
+        "line_start": 439,
+        "line_end": 439,
+        "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)",
+        "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_boundary.py",
+       "unit": "classify",
+       "line_start": 72,
+       "line_end": 72,
+       "quote": "return dict(status='complete_boundary', first=first, cut=single)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "3b42dc9b8ac59d77a40ce6e37290dc6cff7fec003a37f35c30fe9b580937b6a8",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_boundary.py",
+        "unit": "classify",
+        "line_start": 72,
+        "line_end": 72,
+        "quote": "return dict(status='complete_boundary', first=first, cut=single)",
+        "file_sha256": "3b42dc9b8ac59d77a40ce6e37290dc6cff7fec003a37f35c30fe9b580937b6a8"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_implications.py",
+       "unit": "check",
+       "line_start": 147,
+       "line_end": 147,
+       "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "101ef9b2ba3f4cdafa35e7880ae4834b42429d9cf397154f6fedfb1d684af120",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_implications.py",
+        "unit": "check",
+        "line_start": 147,
+        "line_end": 147,
+        "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'",
+        "file_sha256": "101ef9b2ba3f4cdafa35e7880ae4834b42429d9cf397154f6fedfb1d684af120"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_retained.py",
+       "unit": "observe",
+       "line_start": 222,
+       "line_end": 222,
+       "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "30f97e20d1e1bcaa57281c10f9b0933b9481727af2d346eaa413765b32623262",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_retained.py",
+        "unit": "observe",
+        "line_start": 222,
+        "line_end": 222,
+        "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row",
+        "file_sha256": "30f97e20d1e1bcaa57281c10f9b0933b9481727af2d346eaa413765b32623262"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_datetime.py",
+       "unit": "field_profile",
+       "line_start": 50,
+       "line_end": 50,
+       "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2b54ba8612ef5b3b6340b6ccd8faf674f372e204cc77c5eddd95e25f03520501",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_datetime.py",
+        "unit": "field_profile",
+        "line_start": 50,
+        "line_end": 50,
+        "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD",
+        "file_sha256": "2b54ba8612ef5b3b6340b6ccd8faf674f372e204cc77c5eddd95e25f03520501"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_entailments.py",
+       "unit": "run_spec",
+       "line_start": 185,
+       "line_end": 185,
+       "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "f96d834622f3920fcb5b15aba3cb43539b20d8f6f59e0bac260c6b3979ded6e2",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_entailments.py",
+        "unit": "run_spec",
+        "line_start": 185,
+        "line_end": 185,
+        "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)",
+        "file_sha256": "f96d834622f3920fcb5b15aba3cb43539b20d8f6f59e0bac260c6b3979ded6e2"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_cases.py",
+       "unit": "bundle.revision_requested",
+       "line_start": 138,
+       "line_end": 138,
+       "quote": "yield witness('O062', 'bundle.revision_requested', requested, control(requested, 'append'),",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_cases.py",
+        "unit": "bundle.revision_requested",
+        "line_start": 138,
+        "line_end": 138,
+        "quote": "yield witness('O062', 'bundle.revision_requested', requested, control(requested, 'append'),",
+        "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_cases.py",
+       "unit": "bundle.revision_requested",
+       "line_start": 189,
+       "line_end": 189,
+       "quote": "yield witness('O132', 'bundle.revision_requested', requested, control(requested, 'read'), token_key, 'index_currentness', 'read')",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_cases.py",
+        "unit": "bundle.revision_requested",
+        "line_start": 189,
+        "line_end": 189,
+        "quote": "yield witness('O132', 'bundle.revision_requested', requested, control(requested, 'read'), token_key, 'index_currentness', 'read')",
+        "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+       }
+      },
+      {
+       "path": "scripts/pm_dcw_c12_cases.py",
+       "unit": "bundle.revision_requested",
+       "line_start": 197,
+       "line_end": 197,
+       "quote": "yield witness('O133', 'bundle.revision_requested', requested, control(requested, 'read'), index_key, 'index_currentness', 'read')",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_cases.py",
+        "unit": "bundle.revision_requested",
+        "line_start": 197,
+        "line_end": 197,
+        "quote": "yield witness('O133', 'bundle.revision_requested', requested, control(requested, 'read'), index_key, 'index_currentness', 'read')",
+        "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.93",
+  "sha256": "b792a9c1340cdeb0877068ddf67bd603cd29c85cfa8c1608628550992fecbbe7",
+  "family_count": 312,
+  "row_pointer": "#/families/311"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "afd5aace1e0e5556d60a5ec5ab95178e35126fb069499a02688750cd360def16",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
+}

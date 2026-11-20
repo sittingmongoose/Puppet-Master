@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.event_payload.crew_board_message_read.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "scope",
+    "storage_instance_id",
+    "server_id",
+    "run_id",
+    "thread_id",
+    "operation_id",
+    "occurrence",
+    "occurred_at_utc",
+    "crew_id",
+    "message_id",
+    "agent_id",
+    "read_at_utc"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "scope": {
+      "enum": [
+        "application",
+        "project"
+      ]
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "storage_instance_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "server_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "thread_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "occurrence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "occurred_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "crew_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "message_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "agent_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "read_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "scope": {
+            "const": "project"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "project_id"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "project_id"
+          ]
+        }
+      }
+    }
+  ]
+}

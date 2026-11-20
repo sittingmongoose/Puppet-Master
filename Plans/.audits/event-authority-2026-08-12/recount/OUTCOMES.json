@@ -52,6 +52,354 @@
    "outcome": "registered"
   },
   {
+   "event_type": "backup.destination_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "backup.state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "brainstorm.plan_synthesized",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "brainstorm.proposal_added",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "brainstorm.vote_added",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.controller_lease.granted",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.controller_lease.lost",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.controller_lease.renewed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.controller_lease.takeover_completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.controller_lease.takeover_requested",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.document.generation_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.execution_strategy.fallback_selected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.execution_strategy.selected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.navigation.generation_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.page.activated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.page.closed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.page.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.cancelled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.checkpointed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.failed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.paused",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.resumed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.segment.checkpointed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.segment.completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.segment.failed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.segment.started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.segment.timed_out",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.timeout.effect_state_unknown",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.timeout.effects_reconciled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program.timeout.stopped",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program_workspace.checkpointed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program_workspace.closed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program_workspace.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program_workspace.spilled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.program_workspace.updated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.representation.captured",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.representation.delta_created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.representation.invalidated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.representation.queried",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.route.browser_escalated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.route.fetch_selected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.routine.disabled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.routine.generated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.routine.invalidated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.routine.promoted",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.routine.validated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.screenshot.model_attachment_selected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.screenshot.skipped",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.script.compile_failed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.script.compile_started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.script.compiled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.session.interrupted",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.session.reconstructed_on_host",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "browser.workspace.closed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.advice_emitted",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.assignment_paused",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.assignment_resumed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.assignment_started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.assignment_stopped",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.finding_cleared",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.finding_held",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.finding_reconfirmed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.finding_suppressed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.output_quarantined",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.policy_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.review_failed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.review_started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.review_timed_out",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "bsd.workflow_binding_created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.artifact_added",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.cancelled",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.configuration_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.created",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.failed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.message_added",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.participant_completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.participant_started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.paused",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.resumed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "collaboration.started",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "continuity.actor_identified",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "continuity.provenance_recorded",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "continuity.redaction_applied",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "continuity.replay_checkpointed",
+   "outcome": "registered"
+  },
+  {
    "event_type": "discovery.backpressure",
    "outcome": "registered"
   },
@@ -332,6 +680,54 @@
    "outcome": "registered"
   },
   {
+   "event_type": "remote_access.private_endpoint_state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "remote_access.proxy_state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "remote_access.public_security_violation_detected",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "remote_access.remote_link_state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "remote_access.route_migration_state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "remote_access.route_preference_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "remote_access.route_state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "remote_access.route_test_completed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "restore.state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "review.artifact_finalized",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "review.finding_added",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "review.finding_dispositioned",
+   "outcome": "registered"
+  },
+  {
    "event_type": "run.graph_canonical_locked",
    "outcome": "registered"
   },
@@ -373,6 +769,42 @@
   },
   {
    "event_type": "scheduled_dispatch.updated",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.catalog_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.client_pairing_state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.client_revoked",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.client_trust_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.connection_state_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.discovery_expired",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.discovery_observed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.endpoint_changed",
+   "outcome": "registered"
+  },
+  {
+   "event_type": "server.identity_mismatch_detected",
    "outcome": "registered"
   },
   {

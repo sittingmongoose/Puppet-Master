@@ -1,0 +1,120 @@
+[
+ {
+  "event_type": "bundle.revision_requested",
+  "cell": "positive_negative_oracles",
+  "added_evidence": {
+   "path": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
+   "unit": "closed root",
+   "line_start": 5,
+   "line_end": 13,
+   "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+   "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+  },
+  "grade_verdict_unchanged": true
+ },
+ {
+  "event_type": "bundle.revision_started",
+  "cell": "positive_negative_oracles",
+  "added_evidence": {
+   "path": "Plans/event_payloads/bundle_revision/revision_started.schema.json",
+   "unit": "closed root",
+   "line_start": 5,
+   "line_end": 13,
+   "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+   "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+  },
+  "grade_verdict_unchanged": true
+ },
+ {
+  "event_type": "bundle.revision_completed",
+  "cell": "positive_negative_oracles",
+  "added_evidence": {
+   "path": "Plans/event_payloads/bundle_revision/revision_completed.schema.json",
+   "unit": "closed root",
+   "line_start": 5,
+   "line_end": 13,
+   "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+   "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+  },
+  "grade_verdict_unchanged": true
+ },
+ {
+  "event_type": "bundle.revision_interrupted",
+  "cell": "positive_negative_oracles",
+  "added_evidence": {
+   "path": "Plans/event_payloads/bundle_revision/revision_interrupted.schema.json",
+   "unit": "closed root",
+   "line_start": 5,
+   "line_end": 13,
+   "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+   "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+  },
+  "grade_verdict_unchanged": true
+ },
+ {
+  "event_type": "wizard.blocked",
+  "cell": "positive_negative_oracles",
+  "added_evidence": {
+   "path": "Plans/Contracts_V0.md",
+   "unit": "CV-596",
+   "line_start": 42874,
+   "line_end": 42875,
+   "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
+   "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+   "quote_check": "exact",
+   "reanchor": {
+    "old_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,",
+    "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+    "owner_unit": "CV-596"
+   },
+   "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+  },
+  "grade_verdict_unchanged": true
+ },
+ {
+  "event_type": "wizard.deferred_payload.loaded",
+  "cell": "positive_negative_oracles",
+  "added_evidence": {
+   "path": "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json",
+   "unit": "closed root",
+   "line_start": 5,
+   "line_end": 14,
+   "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"schema_id\",\n    \"schema_version\",\n    \"event_type\",\n    \"project_id\",\n    \"thread_id\",\n    \"planning_run_id\",\n    \"named_plan_id\",\n  ",
+   "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+  },
+  "grade_verdict_unchanged": true
+ },
+ {
+  "event_type": "wizard.opened",
+  "cell": "positive_negative_oracles",
+  "added_evidence": {
+   "path": "Plans/event_payloads/planning_wizard/wizard_opened.schema.json",
+   "unit": "closed root",
+   "line_start": 5,
+   "line_end": 14,
+   "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"schema_id\",\n    \"schema_version\",\n    \"event_type\",\n    \"project_id\",\n    \"thread_id\",\n    \"planning_run_id\",\n    \"named_plan_id\",\n  ",
+   "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+  },
+  "grade_verdict_unchanged": true
+ },
+ {
+  "event_type": "wizard.unblocked",
+  "cell": "positive_negative_oracles",
+  "added_evidence": {
+   "path": "Plans/Contracts_V0.md",
+   "unit": "CV-597",
+   "line_start": 43097,
+   "line_end": 43098,
+   "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json\\\n  \\ are required-present, root",
+   "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+   "quote_check": "exact",
+   "reanchor": {
+    "old_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json are required-present, root",
+    "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+    "owner_unit": "CV-597"
+   },
+   "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+  },
+  "grade_verdict_unchanged": true
+ }
+]

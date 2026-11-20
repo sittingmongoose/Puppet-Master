@@ -1,0 +1,932 @@
+{
+ "schema_id": "pm.ea.merge2.registered_revision_manifest.v1",
+ "revisions": [
+  {
+   "event_type": "goal.blocked",
+   "before_row_sha256": "f2775d66d7a4223f52d1c434c450e2cbec6645598a45aca846feceee626f43a1",
+   "registry_row": {
+    "family_id": "event-family-goal-blocked",
+    "family_revision": "3.0.0",
+    "event_type": "goal.blocked",
+    "scope_policy": "application_or_project",
+    "semantic_owner_doc": "Plans/Goal_Runtime_System.md#GRS-203",
+    "payload_owner_doc": "Plans/storage-plan.md#SP-429",
+    "payload_schema_id": "pm.goal_runtime_event.goal_blocked.schema.v3",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/goal_runtime/goal_blocked.v3.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.goal_runtime_event.goal_blocked.schema.v3"
+    },
+    "legacy": {
+     "aliases": [],
+     "admitted_extensions": [],
+     "identity_json_pointers": {
+      "project_id": [
+       "/payload/project_id"
+      ],
+      "thread_id": [
+       "/payload/thread_id"
+      ],
+      "run_id": [
+       "/payload/owning_run_id"
+      ]
+     },
+     "referenced_event_id_pointer": null,
+     "redaction": {
+      "mode": "reject_unhandled_secrets",
+      "transform_id": null,
+      "transform_version": null
+     }
+    },
+    "source_refs": [
+     "Plans/event_payloads/goal_runtime/goal_blocked.schema.json#",
+     "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+     "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration",
+     "Plans/event_payloads/goal_runtime/goal_blocked.v3.schema.json#",
+     "Plans/Goal_Runtime_System.md#GRS-203",
+     "Plans/storage-plan.md#SP-429",
+     "Plans/Contracts_V0.md#CV-422",
+     "Plans/goal_lifecycle_host_contracts/methods.json",
+     "Plans/goal_lifecycle_host_contracts/resources.json"
+    ],
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    },
+    "payload_versions": [
+     {
+      "scope_kind": "project",
+      "payload_schema_id": "pm.goal_runtime_event.goal_blocked.schema.v3",
+      "payload_schema_ref": {
+       "path": "Plans/event_payloads/goal_runtime/goal_blocked.v3.schema.json",
+       "json_pointer": "#",
+       "schema_id": "pm.goal_runtime_event.goal_blocked.schema.v3"
+      },
+      "source_graph_ref": "Plans/goal_lifecycle_host_contracts/methods.json",
+      "producer_admission": "existing_project_policy",
+      "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-203",
+      "read_owner_ref": "Plans/storage-plan.md#SP-429",
+      "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+      "retention_policy_ref": {
+       "registry_schema_id": "pm.storage_value_registry.v2",
+       "policy_id": "RP-AUTHORITY-INDEFINITE",
+       "policy_version": "1.0.0"
+      }
+     },
+     {
+      "scope_kind": "application",
+      "payload_schema_id": "pm.goal_runtime_event.goal_blocked.application.v1",
+      "payload_schema_ref": {
+       "path": "Plans/application_workflow_contracts.schema.json",
+       "json_pointer": "#/$defs/GoalBlockedEventApplicationV1",
+       "schema_id": "pm.goal_runtime_event.goal_blocked.application.v1"
+      },
+      "source_graph_ref": "Plans/application_workflow_source_graph.json",
+      "producer_admission": "requires_owner_adoption",
+      "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+      "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+      "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+      "retention_policy_ref": {
+       "registry_schema_id": "pm.storage_value_registry.v2",
+       "policy_id": "RP-AUTHORITY-INDEFINITE",
+       "policy_version": "1.0.0"
+      }
+     }
+    ],
+    "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+   },
+   "grade_source": {
+    "path": "reports/event-authority-20261115/PNC019-C12-GC-grades.json",
+    "sha256": "7ed5bc9192405b6582e21184cd3d5234751dd76d377d76e08eb5c52dc85044f8"
+   },
+   "authority": "DL-045 and GRS-203",
+   "reason": "Select the prepared Project v3 lifecycle definition; retain the separate dormant application edition exactly.",
+   "activate": {
+    "closed_payload_schema": {
+     "predicate": "exact_successor_selector",
+     "payload_schema_ref": {
+      "path": "Plans/event_payloads/goal_runtime/goal_blocked.v3.schema.json",
+      "json_pointer": "#",
+      "schema_id": "pm.goal_runtime_event.goal_blocked.schema.v3"
+     },
+     "identity_json_pointers": {
+      "project_id": [
+       "/payload/project_id"
+      ],
+      "thread_id": [
+       "/payload/thread_id"
+      ],
+      "run_id": [
+       "/payload/owning_run_id"
+      ]
+     },
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-203",
+       "line_start": 9175,
+       "line_end": 9175,
+       "quote": "**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.blocked` and `pm.goal_runtime_event.goal_blocked.schema.v3`. The existing whole `goal_blocked.schema.json` v2 resource, original envelope/identity, D-R01 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. The registry still selects v2 pending review and integration."
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-203",
+       "line_start": 9179,
+       "line_end": 9179,
+       "quote": "**Envelope and lifecycle custody.** Adopt `Plans/Contracts_V0.md#EventRecord` pm.event.v0@2.0.0 and CV-422, not a local envelope. Explicit Project/thread/Goal/Storage identity must match the actual canonical body and original host caller. Outer event_type is `goal.blocked`, payload_schema_id is `pm.goal_runtime_event.goal_blocked.schema.v3`, Project and thread equal payload values, run_id equals the owning continuation run, and actor/correlation/causation/account facts come from that original caller. No focus/main/null-Project fallback. The immutable event has no objective text, retired Goal topology or provider/tool output. Raw secrets reject before reservation/append. The body remains exactly GRS-048's four states active|paused|blocked|completed, with cancellation outside the enum."
+      }
+     ],
+     "finding": "The registry now selects the exact closed v3 Project successor and its source/identity mapping. The dormant application selector is unchanged; whole-v2 historical interpretation is unchanged. This completes the source grade's explicit registry-selection prerequisite."
+    },
+    "scope_identity": {
+     "predicate": "exact_successor_selector",
+     "payload_schema_ref": {
+      "path": "Plans/event_payloads/goal_runtime/goal_blocked.v3.schema.json",
+      "json_pointer": "#",
+      "schema_id": "pm.goal_runtime_event.goal_blocked.schema.v3"
+     },
+     "identity_json_pointers": {
+      "project_id": [
+       "/payload/project_id"
+      ],
+      "thread_id": [
+       "/payload/thread_id"
+      ],
+      "run_id": [
+       "/payload/owning_run_id"
+      ]
+     },
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-203",
+       "line_start": 9175,
+       "line_end": 9175,
+       "quote": "**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.blocked` and `pm.goal_runtime_event.goal_blocked.schema.v3`. The existing whole `goal_blocked.schema.json` v2 resource, original envelope/identity, D-R01 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. The registry still selects v2 pending review and integration."
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-203",
+       "line_start": 9179,
+       "line_end": 9179,
+       "quote": "**Envelope and lifecycle custody.** Adopt `Plans/Contracts_V0.md#EventRecord` pm.event.v0@2.0.0 and CV-422, not a local envelope. Explicit Project/thread/Goal/Storage identity must match the actual canonical body and original host caller. Outer event_type is `goal.blocked`, payload_schema_id is `pm.goal_runtime_event.goal_blocked.schema.v3`, Project and thread equal payload values, run_id equals the owning continuation run, and actor/correlation/causation/account facts come from that original caller. No focus/main/null-Project fallback. The immutable event has no objective text, retired Goal topology or provider/tool output. Raw secrets reject before reservation/append. The body remains exactly GRS-048's four states active|paused|blocked|completed, with cancellation outside the enum."
+      }
+     ],
+     "finding": "The registry now selects the exact closed v3 Project successor and its source/identity mapping. The dormant application selector is unchanged; whole-v2 historical interpretation is unchanged. This completes the source grade's explicit registry-selection prerequisite."
+    }
+   }
+  },
+  {
+   "event_type": "goal.completed",
+   "before_row_sha256": "021861dd5943dc3115a58042d72f2b62738176bbfee809f3ccfd528dec7d1f8a",
+   "registry_row": {
+    "family_id": "event-family-goal-completed",
+    "family_revision": "3.0.0",
+    "event_type": "goal.completed",
+    "scope_policy": "application_or_project",
+    "semantic_owner_doc": "Plans/Goal_Runtime_System.md#GRS-204",
+    "payload_owner_doc": "Plans/storage-plan.md#SP-430",
+    "payload_schema_id": "pm.goal_runtime_event.goal_completed.schema.v3",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/goal_runtime/goal_completed.v3.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.goal_runtime_event.goal_completed.schema.v3"
+    },
+    "legacy": {
+     "aliases": [],
+     "admitted_extensions": [],
+     "identity_json_pointers": {
+      "project_id": [
+       "/payload/project_id"
+      ],
+      "thread_id": [
+       "/payload/thread_id"
+      ],
+      "run_id": [
+       "/payload/owning_run_id"
+      ]
+     },
+     "referenced_event_id_pointer": null,
+     "redaction": {
+      "mode": "reject_unhandled_secrets",
+      "transform_id": null,
+      "transform_version": null
+     }
+    },
+    "source_refs": [
+     "Plans/event_payloads/goal_runtime/goal_completed.schema.json#",
+     "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+     "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration",
+     "Plans/event_payloads/goal_runtime/goal_completed.v3.schema.json#",
+     "Plans/Goal_Runtime_System.md#GRS-204",
+     "Plans/storage-plan.md#SP-430",
+     "Plans/Contracts_V0.md#CV-423",
+     "Plans/goal_lifecycle_host_contracts/methods.json",
+     "Plans/goal_lifecycle_host_contracts/resources.json"
+    ],
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    },
+    "payload_versions": [
+     {
+      "scope_kind": "project",
+      "payload_schema_id": "pm.goal_runtime_event.goal_completed.schema.v3",
+      "payload_schema_ref": {
+       "path": "Plans/event_payloads/goal_runtime/goal_completed.v3.schema.json",
+       "json_pointer": "#",
+       "schema_id": "pm.goal_runtime_event.goal_completed.schema.v3"
+      },
+      "source_graph_ref": "Plans/goal_lifecycle_host_contracts/methods.json",
+      "producer_admission": "existing_project_policy",
+      "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-204",
+      "read_owner_ref": "Plans/storage-plan.md#SP-430",
+      "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+      "retention_policy_ref": {
+       "registry_schema_id": "pm.storage_value_registry.v2",
+       "policy_id": "RP-AUTHORITY-INDEFINITE",
+       "policy_version": "1.0.0"
+      }
+     },
+     {
+      "scope_kind": "application",
+      "payload_schema_id": "pm.goal_runtime_event.goal_completed.application.v1",
+      "payload_schema_ref": {
+       "path": "Plans/application_workflow_contracts.schema.json",
+       "json_pointer": "#/$defs/GoalCompletedEventApplicationV1",
+       "schema_id": "pm.goal_runtime_event.goal_completed.application.v1"
+      },
+      "source_graph_ref": "Plans/application_workflow_source_graph.json",
+      "producer_admission": "requires_owner_adoption",
+      "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+      "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+      "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+      "retention_policy_ref": {
+       "registry_schema_id": "pm.storage_value_registry.v2",
+       "policy_id": "RP-AUTHORITY-INDEFINITE",
+       "policy_version": "1.0.0"
+      }
+     }
+    ],
+    "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+   },
+   "grade_source": {
+    "path": "reports/event-authority-20261115/PNC019-C12-GC-grades.json",
+    "sha256": "7ed5bc9192405b6582e21184cd3d5234751dd76d377d76e08eb5c52dc85044f8"
+   },
+   "authority": "DL-045 and GRS-204",
+   "reason": "Select the prepared Project v3 lifecycle definition; retain the separate dormant application edition exactly.",
+   "activate": {
+    "closed_payload_schema": {
+     "predicate": "exact_successor_selector",
+     "payload_schema_ref": {
+      "path": "Plans/event_payloads/goal_runtime/goal_completed.v3.schema.json",
+      "json_pointer": "#",
+      "schema_id": "pm.goal_runtime_event.goal_completed.schema.v3"
+     },
+     "identity_json_pointers": {
+      "project_id": [
+       "/payload/project_id"
+      ],
+      "thread_id": [
+       "/payload/thread_id"
+      ],
+      "run_id": [
+       "/payload/owning_run_id"
+      ]
+     },
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-204",
+       "line_start": 9237,
+       "line_end": 9237,
+       "quote": "**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.completed` and `pm.goal_runtime_event.goal_completed.schema.v3`. The existing whole `goal_completed.schema.json` v2 resource, original envelope/identity, D-R04 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. The registry still selects v2 pending review and integration."
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-204",
+       "line_start": 9241,
+       "line_end": 9241,
+       "quote": "**Envelope and lifecycle custody.** Adopt `Plans/Contracts_V0.md#EventRecord` pm.event.v0@2.0.0 and CV-423, not a local envelope. Explicit Project/thread/Goal/Storage identity must match the actual canonical body and original host caller. Outer event_type is `goal.completed`, payload_schema_id is `pm.goal_runtime_event.goal_completed.schema.v3`, Project and thread equal payload values, run_id equals the owning continuation run, and actor/correlation/causation/account facts come from that original caller. No focus/main/null-Project fallback. The immutable event has no objective text, retired Goal topology or provider/tool output. Raw secrets reject before reservation/append. The body remains exactly GRS-048's four states active|paused|blocked|completed, with cancellation outside the enum."
+      }
+     ],
+     "finding": "The registry now selects the exact closed v3 Project successor and its source/identity mapping. The dormant application selector is unchanged; whole-v2 historical interpretation is unchanged. This completes the source grade's explicit registry-selection prerequisite."
+    },
+    "scope_identity": {
+     "predicate": "exact_successor_selector",
+     "payload_schema_ref": {
+      "path": "Plans/event_payloads/goal_runtime/goal_completed.v3.schema.json",
+      "json_pointer": "#",
+      "schema_id": "pm.goal_runtime_event.goal_completed.schema.v3"
+     },
+     "identity_json_pointers": {
+      "project_id": [
+       "/payload/project_id"
+      ],
+      "thread_id": [
+       "/payload/thread_id"
+      ],
+      "run_id": [
+       "/payload/owning_run_id"
+      ]
+     },
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-204",
+       "line_start": 9237,
+       "line_end": 9237,
+       "quote": "**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.completed` and `pm.goal_runtime_event.goal_completed.schema.v3`. The existing whole `goal_completed.schema.json` v2 resource, original envelope/identity, D-R04 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. The registry still selects v2 pending review and integration."
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-204",
+       "line_start": 9241,
+       "line_end": 9241,
+       "quote": "**Envelope and lifecycle custody.** Adopt `Plans/Contracts_V0.md#EventRecord` pm.event.v0@2.0.0 and CV-423, not a local envelope. Explicit Project/thread/Goal/Storage identity must match the actual canonical body and original host caller. Outer event_type is `goal.completed`, payload_schema_id is `pm.goal_runtime_event.goal_completed.schema.v3`, Project and thread equal payload values, run_id equals the owning continuation run, and actor/correlation/causation/account facts come from that original caller. No focus/main/null-Project fallback. The immutable event has no objective text, retired Goal topology or provider/tool output. Raw secrets reject before reservation/append. The body remains exactly GRS-048's four states active|paused|blocked|completed, with cancellation outside the enum."
+      }
+     ],
+     "finding": "The registry now selects the exact closed v3 Project successor and its source/identity mapping. The dormant application selector is unchanged; whole-v2 historical interpretation is unchanged. This completes the source grade's explicit registry-selection prerequisite."
+    }
+   }
+  },
+  {
+   "event_type": "goal_run.stopped",
+   "before_row_sha256": "8acbc2495110aa3ee37fe7469603fe6240250f0a2a4bd756f8973dedc549e0a3",
+   "registry_row": {
+    "family_id": "event-family-goal-run-stopped",
+    "family_revision": "3.0.0",
+    "event_type": "goal_run.stopped",
+    "scope_policy": "project_only",
+    "semantic_owner_doc": "Plans/Goal_Runtime_System.md#GRS-200",
+    "payload_owner_doc": "Plans/storage-plan.md#SP-426",
+    "payload_schema_id": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+    "payload_schema_ref": {
+     "path": "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.goal_runtime_event.goal_run_stopped.schema.v3"
+    },
+    "legacy": {
+     "aliases": [],
+     "admitted_extensions": [],
+     "identity_json_pointers": {
+      "project_id": [
+       "/payload/project_id"
+      ],
+      "thread_id": [
+       "/payload/thread_id"
+      ],
+      "run_id": [
+       "/payload/payload/goal_run_id"
+      ],
+      "actor_ref": [
+       "/payload/actor_ref"
+      ],
+      "requested_account_ref": [
+       "/payload/requested_account_ref"
+      ],
+      "effective_account_ref": [
+       "/payload/effective_account_ref"
+      ],
+      "correlation_id": [
+       "/payload/correlation_id"
+      ]
+     },
+     "referenced_event_id_pointer": null,
+     "redaction": {
+      "mode": "reject_unhandled_secrets",
+      "transform_id": null,
+      "transform_version": null
+     }
+    },
+    "source_refs": [
+     "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json#",
+     "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+     "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration",
+     "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json#",
+     "Plans/Goal_Runtime_System.md#GRS-200",
+     "Plans/Goal_Runtime_System.md#GRS-202",
+     "Plans/Goal_Runtime_System.md#GRS-1110",
+     "Plans/Executor_Protocol.md#EP-200",
+     "Plans/Executor_Protocol.md#EP-1110",
+     "Plans/Executor_Protocol.md#EP-1111",
+     "Plans/storage-plan.md#SP-426",
+     "Plans/storage-plan.md#SP-428",
+     "Plans/storage-plan.md#SP-1110",
+     "Plans/storage-plan.md#SP-1112",
+     "Plans/Contracts_V0.md#CV-420",
+     "Plans/Contracts_V0.md#CV-1110",
+     "Plans/goal_run_stop_block_contracts/contracts.schema.json",
+     "Plans/goal_run_stop_block_contracts/methods.json"
+    ],
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    },
+    "payload_versions": [
+     {
+      "scope_kind": "project",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+      "payload_schema_ref": {
+       "path": "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json",
+       "json_pointer": "#",
+       "schema_id": "pm.goal_runtime_event.goal_run_stopped.schema.v3"
+      },
+      "source_graph_ref": "Plans/goal_run_stop_block_contracts/profile.json",
+      "producer_admission": "existing_project_policy",
+      "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-200",
+      "read_owner_ref": "Plans/storage-plan.md#SP-426",
+      "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+      "retention_policy_ref": {
+       "registry_schema_id": "pm.storage_value_registry.v2",
+       "policy_id": "RP-AUTHORITY-INDEFINITE",
+       "policy_version": "1.0.0"
+      }
+     }
+    ],
+    "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+   },
+   "grade_source": {
+    "path": "reports/event-authority-20261115/PNC019-C12-GC-grades.json",
+    "sha256": "7ed5bc9192405b6582e21184cd3d5234751dd76d377d76e08eb5c52dc85044f8"
+   },
+   "authority": "DL-080 and the exact prepared-registry-rows.json entry",
+   "reason": "Select the exact prepared fresh-birth Project v3 row, preserving the specified older-birth fences and application edition disposition."
+  },
+  {
+   "event_type": "goal_run.blocked",
+   "before_row_sha256": "a710df0551c05462d647638f6efcd13bacb1538399238f3837f7b80ccc6ded0d",
+   "registry_row": {
+    "family_id": "event-family-goal-run-blocked",
+    "family_revision": "3.0.0",
+    "event_type": "goal_run.blocked",
+    "scope_policy": "application_or_project",
+    "semantic_owner_doc": "Plans/Goal_Runtime_System.md#GRS-201",
+    "payload_owner_doc": "Plans/storage-plan.md#SP-427",
+    "payload_schema_id": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+    "payload_schema_ref": {
+     "path": "Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.goal_runtime_event.goal_run_blocked.schema.v3"
+    },
+    "legacy": {
+     "aliases": [],
+     "admitted_extensions": [],
+     "identity_json_pointers": {
+      "project_id": [
+       "/payload/project_id"
+      ],
+      "thread_id": [
+       "/payload/thread_id"
+      ],
+      "run_id": [
+       "/payload/payload/goal_run_id"
+      ],
+      "actor_ref": [
+       "/payload/actor_ref"
+      ],
+      "requested_account_ref": [
+       "/payload/requested_account_ref"
+      ],
+      "effective_account_ref": [
+       "/payload/effective_account_ref"
+      ],
+      "correlation_id": [
+       "/payload/correlation_id"
+      ]
+     },
+     "referenced_event_id_pointer": null,
+     "redaction": {
+      "mode": "reject_unhandled_secrets",
+      "transform_id": null,
+      "transform_version": null
+     }
+    },
+    "source_refs": [
+     "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json#",
+     "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+     "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration",
+     "Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json#",
+     "Plans/Goal_Runtime_System.md#GRS-201",
+     "Plans/Goal_Runtime_System.md#GRS-202",
+     "Plans/Goal_Runtime_System.md#GRS-1110",
+     "Plans/Executor_Protocol.md#EP-200",
+     "Plans/Executor_Protocol.md#EP-1110",
+     "Plans/Executor_Protocol.md#EP-1112",
+     "Plans/storage-plan.md#SP-427",
+     "Plans/storage-plan.md#SP-428",
+     "Plans/storage-plan.md#SP-1111",
+     "Plans/storage-plan.md#SP-1112",
+     "Plans/Contracts_V0.md#CV-421",
+     "Plans/Contracts_V0.md#CV-1110",
+     "Plans/goal_run_stop_block_contracts/contracts.schema.json",
+     "Plans/goal_run_stop_block_contracts/methods.json"
+    ],
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    },
+    "payload_versions": [
+     {
+      "scope_kind": "project",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+      "payload_schema_ref": {
+       "path": "Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json",
+       "json_pointer": "#",
+       "schema_id": "pm.goal_runtime_event.goal_run_blocked.schema.v3"
+      },
+      "source_graph_ref": "Plans/goal_run_stop_block_contracts/profile.json",
+      "producer_admission": "existing_project_policy",
+      "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-201",
+      "read_owner_ref": "Plans/storage-plan.md#SP-427",
+      "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+      "retention_policy_ref": {
+       "registry_schema_id": "pm.storage_value_registry.v2",
+       "policy_id": "RP-AUTHORITY-INDEFINITE",
+       "policy_version": "1.0.0"
+      }
+     },
+     {
+      "scope_kind": "application",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_blocked.application.v1",
+      "payload_schema_ref": {
+       "path": "Plans/application_workflow_contracts.schema.json",
+       "json_pointer": "#/$defs/GoalRunBlockedEventApplicationV1",
+       "schema_id": "pm.goal_runtime_event.goal_run_blocked.application.v1"
+      },
+      "source_graph_ref": "Plans/application_workflow_source_graph.json",
+      "producer_admission": "requires_owner_adoption",
+      "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+      "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+      "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+      "retention_policy_ref": {
+       "registry_schema_id": "pm.storage_value_registry.v2",
+       "policy_id": "RP-AUTHORITY-INDEFINITE",
+       "policy_version": "1.0.0"
+      }
+     }
+    ],
+    "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+   },
+   "grade_source": {
+    "path": "reports/event-authority-20261115/PNC019-C12-GC-grades.json",
+    "sha256": "7ed5bc9192405b6582e21184cd3d5234751dd76d377d76e08eb5c52dc85044f8"
+   },
+   "authority": "DL-080 and the exact prepared-registry-rows.json entry",
+   "reason": "Select the exact prepared fresh-birth Project v3 row, preserving the specified older-birth fences and application edition disposition."
+  },
+  {
+   "event_type": "goal_run.replanned",
+   "before_row_sha256": "cfbe2a47bca2bbe95d8a19be881abf53760a184e00b11ea531a200d9af4beb55",
+   "registry_row": {
+    "family_id": "event-family-goal-run-replanned",
+    "family_revision": "3.0.0",
+    "event_type": "goal_run.replanned",
+    "scope_policy": "project_only",
+    "semantic_owner_doc": "Plans/Goal_Runtime_System.md#GRS-3100",
+    "payload_owner_doc": "Plans/storage-plan.md#SP-3100",
+    "payload_schema_id": "pm.goal_runtime_event.goal_run_replanned.schema.v3",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.goal_runtime_event.goal_run_replanned.schema.v3"
+    },
+    "legacy": {
+     "aliases": [],
+     "admitted_extensions": [],
+     "identity_json_pointers": {
+      "project_id": [
+       "/payload/project_id"
+      ],
+      "thread_id": [
+       "/payload/thread_id"
+      ]
+     },
+     "referenced_event_id_pointer": null,
+     "redaction": {
+      "mode": "reject_unhandled_secrets",
+      "transform_id": null,
+      "transform_version": null
+     }
+    },
+    "source_refs": [
+     "Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json#",
+     "Plans/Goal_Runtime_System.md#GRS-3100",
+     "Plans/Contracts_V0.md#CV-3100",
+     "Plans/storage-plan.md#SP-3100"
+    ],
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-RUNTIME-365D",
+     "policy_version": "1.0.0"
+    }
+   },
+   "grade_source": {
+    "path": "reports/event-authority-20261114/PNC019-RV8B-grades-after.json",
+    "sha256": "a5a2e1985ec53f93e50c9ec1e7bac5a348b9677cdeb81d50eed2641275b3345f"
+   },
+   "authority": "DL-080 and the exact RV8B prepared-registry-row.json",
+   "reason": "Select the exact prepared v3 Replan row for genuine all-writers v8 births; keep the v2 historical resource unchanged.",
+   "activate": {
+    "closed_payload_schema": {
+     "predicate": "exact_successor_selector",
+     "payload_schema_ref": {
+      "path": "Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json",
+      "json_pointer": "#",
+      "schema_id": "pm.goal_runtime_event.goal_run_replanned.schema.v3"
+     },
+     "identity_json_pointers": {
+      "project_id": [
+       "/payload/project_id"
+      ],
+      "thread_id": [
+       "/payload/thread_id"
+      ]
+     },
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-3100",
+       "line_start": 55286,
+       "line_end": 55286,
+       "quote": "Newly authored owner contract under DL-045, written for DL-080 option 1 (PNC-019 lane rv8b, 2026-11-14). goal_run.replanned binds schema ID pm.goal_runtime_event.goal_run_replanned.schema.v3 at Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json, closed at the root (additionalProperties false, unevaluatedProperties false) and self-contained, on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478: expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone; goal_revision is the unchanged Goal context revision; execution_role is runtime_controller. The specific payload keeps the seven v2 fields (goal_run_id, previous_workgraph_ref, new_workgraph_ref, replan_generation with maximum 4294967295, affected_worknode_refs, cancelled_or_resteered_refs, next_action) and adds the required original_graph_patch and original_graph_patch_history from the accepted v8 source, whose graph-patch and OwnerIdentity definitions are inlined under graph_patch_* with their grammar unchanged. It is the restriction successor of the v8 draft clock-split payload (Plans/goal_run_replan_contracts/payload-correspondence.json): each canon instance maps to exactly one draft instance that satisfies the draft's own owner rules, and back; no other draft instance has a canon image. The delivery profile pm.goal_run_replanned.delivery.v3 selects this schema for the v8 Replan writer's WholeProducerSubmission and appended Event (adoption correction C1). The whole v2 schema stays unchanged as the historical reader and is never reinterpreted. Prepared without admission: the registry row keeps v2 until the S5b switch (prepared row in Plans/goal_run_replan_contracts/prepared-registry-row.json)."
+      }
+     ],
+     "finding": "The registry now equals RV8B's exact prepared v3 row, resolving the source grade's sole pending selector prerequisite."
+    }
+   }
+  },
+  {
+   "event_type": "goal.evidence_captured",
+   "before_row_sha256": "42dd026a6347ed01dc6b1a7c431f17302e8ce49f213351a0fbe0278deda3adce",
+   "registry_row": {
+    "family_id": "event-family-goal-evidence-captured",
+    "family_revision": "2.0.0",
+    "event_type": "goal.evidence_captured",
+    "scope_policy": "project_only",
+    "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+    "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+    "payload_schema_id": "pm.goal_runtime_event.goal_evidence_captured.schema.v2",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.goal_runtime_event.goal_evidence_captured.schema.v2"
+    },
+    "legacy": {
+     "aliases": [],
+     "admitted_extensions": [],
+     "identity_json_pointers": {
+      "project_id": [
+       "/payload/project_id"
+      ],
+      "thread_id": [
+       "/payload/thread_id"
+      ]
+     },
+     "referenced_event_id_pointer": null,
+     "redaction": {
+      "mode": "reject_unhandled_secrets",
+      "transform_id": null,
+      "transform_version": null
+     }
+    },
+    "source_refs": [
+     "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json#",
+     "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+     "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration"
+    ],
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    },
+    "payload_versions": [
+     {
+      "scope_kind": "project",
+      "payload_schema_id": "pm.goal_runtime_event.goal_evidence_captured.schema.v2",
+      "payload_schema_ref": {
+       "path": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+       "json_pointer": "#",
+       "schema_id": "pm.goal_runtime_event.goal_evidence_captured.schema.v2"
+      },
+      "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+      "producer_admission": "existing_project_policy",
+      "append_owner_ref": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+      "read_owner_ref": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+      "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+      "retention_policy_ref": {
+       "registry_schema_id": "pm.storage_value_registry.v2",
+       "policy_id": "RP-AUTHORITY-INDEFINITE",
+       "policy_version": "1.0.0"
+      }
+     }
+    ],
+    "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+   },
+   "grade_source": {
+    "path": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+    "sha256": "03bbf66034cd0d8dc9cbcb975e2d008541a29f159b4dbf88c17572f3a599b3d5"
+   },
+   "authority": "DL-409 (Jared's Card 3 A) confirming DL-079",
+   "reason": "Withdraw only the unused application edition at the required registry checkpoint. Project payload, family revision and retention remain unchanged.",
+   "activate": {
+    "scope_identity": {
+     "predicate": "DL409_unused_application_withdrawal",
+     "finding": "DL-409's exact three unused application editions are withdrawn; the existing Project identity and historical schema remain byte-identical.",
+     "evidence": [
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-409",
+       "line_start": 6867,
+       "line_end": 6867,
+       "quote": "the next registry checkpoint withdraws them. Existing project records, schemas and retention stay unchanged; no"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "event_type": "goal.receipt_recorded",
+   "before_row_sha256": "e989dc18d6f34e73ac745229247d81d943f6a11c924a09a51c40beef3c62d5a8",
+   "registry_row": {
+    "family_id": "event-family-goal-receipt-recorded",
+    "family_revision": "2.0.0",
+    "event_type": "goal.receipt_recorded",
+    "scope_policy": "project_only",
+    "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+    "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+    "payload_schema_id": "pm.goal_runtime_event.goal_receipt_recorded.schema.v2",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.goal_runtime_event.goal_receipt_recorded.schema.v2"
+    },
+    "legacy": {
+     "aliases": [],
+     "admitted_extensions": [],
+     "identity_json_pointers": {
+      "project_id": [
+       "/payload/project_id"
+      ],
+      "thread_id": [
+       "/payload/thread_id"
+      ]
+     },
+     "referenced_event_id_pointer": null,
+     "redaction": {
+      "mode": "reject_unhandled_secrets",
+      "transform_id": null,
+      "transform_version": null
+     }
+    },
+    "source_refs": [
+     "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json#",
+     "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+     "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration"
+    ],
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    },
+    "payload_versions": [
+     {
+      "scope_kind": "project",
+      "payload_schema_id": "pm.goal_runtime_event.goal_receipt_recorded.schema.v2",
+      "payload_schema_ref": {
+       "path": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+       "json_pointer": "#",
+       "schema_id": "pm.goal_runtime_event.goal_receipt_recorded.schema.v2"
+      },
+      "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+      "producer_admission": "existing_project_policy",
+      "append_owner_ref": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+      "read_owner_ref": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+      "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+      "retention_policy_ref": {
+       "registry_schema_id": "pm.storage_value_registry.v2",
+       "policy_id": "RP-AUTHORITY-INDEFINITE",
+       "policy_version": "1.0.0"
+      }
+     }
+    ],
+    "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+   },
+   "grade_source": {
+    "path": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+    "sha256": "03bbf66034cd0d8dc9cbcb975e2d008541a29f159b4dbf88c17572f3a599b3d5"
+   },
+   "authority": "DL-409 (Jared's Card 3 A) confirming DL-079",
+   "reason": "Withdraw only the unused application edition at the required registry checkpoint. Project payload, family revision and retention remain unchanged.",
+   "activate": {
+    "scope_identity": {
+     "predicate": "DL409_unused_application_withdrawal",
+     "finding": "DL-409's exact three unused application editions are withdrawn; the existing Project identity and historical schema remain byte-identical.",
+     "evidence": [
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-409",
+       "line_start": 6867,
+       "line_end": 6867,
+       "quote": "the next registry checkpoint withdraws them. Existing project records, schemas and retention stay unchanged; no"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "event_type": "goal.tool_check_recorded",
+   "before_row_sha256": "bcadf945934fbdc8218e9a5357347452db8b42cfb340b44d80e79471363cef4d",
+   "registry_row": {
+    "family_id": "event-family-goal-tool-check-recorded",
+    "family_revision": "2.0.0",
+    "event_type": "goal.tool_check_recorded",
+    "scope_policy": "project_only",
+    "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+    "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+    "payload_schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2"
+    },
+    "legacy": {
+     "aliases": [],
+     "admitted_extensions": [],
+     "identity_json_pointers": {
+      "project_id": [
+       "/payload/project_id"
+      ],
+      "thread_id": [
+       "/payload/thread_id"
+      ]
+     },
+     "referenced_event_id_pointer": null,
+     "redaction": {
+      "mode": "reject_unhandled_secrets",
+      "transform_id": null,
+      "transform_version": null
+     }
+    },
+    "source_refs": [
+     "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json#",
+     "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+     "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration"
+    ],
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    },
+    "payload_versions": [
+     {
+      "scope_kind": "project",
+      "payload_schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2",
+      "payload_schema_ref": {
+       "path": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+       "json_pointer": "#",
+       "schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2"
+      },
+      "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+      "producer_admission": "existing_project_policy",
+      "append_owner_ref": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+      "read_owner_ref": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+      "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+      "retention_policy_ref": {
+       "registry_schema_id": "pm.storage_value_registry.v2",
+       "policy_id": "RP-AUTHORITY-INDEFINITE",
+       "policy_version": "1.0.0"
+      }
+     }
+    ],
+    "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+   },
+   "grade_source": {
+    "path": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+    "sha256": "03bbf66034cd0d8dc9cbcb975e2d008541a29f159b4dbf88c17572f3a599b3d5"
+   },
+   "authority": "DL-409 (Jared's Card 3 A) confirming DL-079",
+   "reason": "Withdraw only the unused application edition at the required registry checkpoint. Project payload, family revision and retention remain unchanged.",
+   "activate": {
+    "scope_identity": {
+     "predicate": "DL409_unused_application_withdrawal",
+     "finding": "DL-409's exact three unused application editions are withdrawn; the existing Project identity and historical schema remain byte-identical.",
+     "evidence": [
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-409",
+       "line_start": 6867,
+       "line_end": 6867,
+       "quote": "the next registry checkpoint withdraws them. Existing project records, schemas and retention stay unchanged; no"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

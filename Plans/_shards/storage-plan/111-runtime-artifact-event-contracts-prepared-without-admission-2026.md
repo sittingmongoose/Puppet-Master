@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L53906-L56860
+Source lines: L53993-L57236
 
-Source SHA256: `bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707`
+Source SHA256: `8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537`
 
 ---
 
@@ -739,71 +739,103 @@ plan_unit_id: SP-575
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "`bundle.revision_requested` explicitly adopts SP-286 and CV-339 including strict full-value v2 resolution,\
-  \ SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\
-  \ under DL-045: producer emitter.bundle_revision_requested@1.0.0 is the document review request handler\
-  \ governed by ACD-571. Before any append, require individual family admission and schema support, current\
-  \ project/thread/bundle permissions, exact source evidence and CV-590 identity. Freeze the prepared\
-  \ complete EventRecord after original source evidence is committed; append through Storage, then resolve\
-  \ the original full-value AppendReceipt before publishing the phase as recorded or starting dependent\
-  \ work. No in-memory notification, caller hash, stale currentness token or partially delivered receipt\
-  \ establishes success. Missing original after confirmed older restore stays unavailable; no replacement\
-  \ receipt or re-execution is inferred. An uncertain start/completion is reconciled with existing revision_run\
-  \ and FileSafe recovery evidence, never restarted by this history reader. A single started phase cannot\
-  \ settle both completed and interrupted; duplicate delivery returns the original immutable result, conflicting\
-  \ semantics fence.\n\nNEW passive consumer reader.bundle_revision_requested_history@1.0.0 queries only\
-  \ this exact event_type, schema_id/version from CV-590, and the authorized project/thread/bundle/revision.\
-  \ It explicitly adopts SP-278 and reuses the existing projector.storage.event_record_index@1.0.0 and\
-  \ reader.storage.event_record_index@1.0.0; their physical checkpoint is event_record_index_checkpoint.v1:{storage_instance_id},\
-  \ value pm.storage_value.event_record_index_checkpoint.v1@1.0.0, and lookup rows are event_record_index.v2\
-  \ in the current selected generation. Complete source coverage, exact root/generation/frontier and actual\
-  \ live ten-field read token must be verified in one read transaction. The generic projector alone advances\
-  \ its existing checkpoint and index rows atomically by predecessor CAS, including nonmatching source\
-  \ rows; max matching sequence is never coverage. This family owns no filtered durable checkpoint, projection\
-  \ or copied body; SP-579 separately materializes its existing original source inventory. No stored read\
-  \ token is added; any future durable token must use DL-076's nine-field projection with no persisted\
-  \ redb_snapshot_id. Consumer output is disposable authorized history, not runner state. Source expiry/deletion\
-  \ is a truthful unavailable result; never rebuild a document or grant access from history.\n\nOriginal\
-  \ document, annotation and revision evidence remain with ACD-049/050, Storage revision_run.v1 and FileSafe.\
-  \ Reads recheck current permissions and actual deletion/availability of every reference. Event bodies\
-  \ contain identifiers, capability metadata and refs only; no annotations, prompt, secret or document\
-  \ text. Coherent backup includes source evidence, original full-value receipt custody and seglog at\
-  \ the same admitted restore boundary; unresolved source/receipt skew fences dependent success. Redaction\
-  \ never grants reference access or rewrites original identity.\n\nretention_policy_ref=PENDING_RETENTION_DECISION.\
-  \ Candidate classes are Case L-3 receipt/audit authority/source lineage versus Chat content for this\
-  \ Deep Plan review history; no exact family assignment is established. Event lifetime and original source\
-  \ bodies are independent. No TTL/count deletion or indefinite class selection is authorized by this\
-  \ draft. Existing generic index/checkpoint retains RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN unchanged.\n\
-  \nWithdrawal first cuts off new writer admission for bundle.revision_requested; drain or fence its pending\
-  \ append work under the original receipt gate, then withdraw reader.bundle_revision_requested_history@1.0.0\
-  \ from dispatch. No history read or rebuild triggers revision, mutation or Multi-Pass Review. A replacement\
-  \ reader must explicitly support retained schemas and authenticate complete SP-278 rebuild/currentness\
-  \ before publication. Cutoff does not delete original events or reset the generic shared checkpoint,\
-  \ and does not withdraw siblings. Unsupported historical versions remain unavailable with evidence,\
-  \ never rewritten on read. Positive/negative static cases live in Plans/bundle_revision_event_fixtures.json;\
-  \ scripts/pm_bundle_revision_events.py checks this family's own full envelope, schema, identity, source\
-  \ custody, terminal settlement and withdrawal predicates. Native append, lost acknowledgement, effect-unknown\
-  \ reconciliation, backup/restore, access/deletion, concurrent CAS, source gaps, cutoff/rebuild and retention-boundary\
-  \ obligations are authored NOT_RUN, and must be exercised on real adapters before native claims. For\
-  \ bundle.revision_requested specifically, SP-579 is adopted as the complete original revision_run physical\
-  \ source contract: validate its source slot, original intent/result, typed key, exclusive latest predecessor/value_revision\
-  \ CAS and independently authenticated full-value first receipt before publication. Its own producer\
-  \ uses dedupe_by_idempotency_key; same identity/digest returns the original full event and receipt,\
-  \ changed semantics conflicts, and unavailable dedupe proof refuses. Read replay never executes that\
-  \ writer. The full-envelope/source/terminal/cutoff/reader/rebuild static matrix is Plans/dcw_event_contract_fixtures.json,\
-  \ run through scripts/pm_bundle_revision_events.py; all normative cases are prepared, with native adapters\
-  \ NOT_RUN.\n\nPNC-019 s4r retention binding for `bundle.revision_requested` (2026-11-14).\n\nEvent history\
-  \ `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-508.\n\nUse the existing\
-  \ policy object unchanged: {\"anchor_kind\": \"creation\", \"cardinality_scope\": null, \"expiry_action\"\
-  : \"none\", \"max_cardinality\": null, \"overflow_action\": \"fail_closed\", \"ttl_seconds\": null}.\n\
-  \nExact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-508; this does\
-  \ not assign its referenced bodies or other values.\n\nExact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0`\
-  \ under DL-508; this does not assign its referenced bodies or other values.\n\nThis paragraph supersedes\
-  \ earlier pending statements only for the exact assigned facets above. All independent source, receipt,\
-  \ referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required\
-  \ references, recovery, rollback, maintenance, protected backups and latest-25-run protection override\
-  \ cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal,\
-  \ no hold release, admission, native proof or governance clearance is granted.\n"
+canonical_text: '`bundle.revision_requested` explicitly adopts SP-286 and CV-339 including strict full-value v2
+  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract
+  under DL-045: producer emitter.bundle_revision_requested@1.0.0 is the document review request handler governed
+  by ACD-571. Before any append, require individual family admission and schema support, current project/thread/bundle
+  permissions, exact source evidence and CV-590 identity. Freeze the prepared complete EventRecord after original
+  source evidence is committed; append through Storage, then resolve the original full-value AppendReceipt before
+  publishing the phase as recorded or starting dependent work. No in-memory notification, caller hash, stale currentness
+  token or partially delivered receipt establishes success. Missing original after confirmed older restore stays
+  unavailable; no replacement receipt or re-execution is inferred. An uncertain start/completion is reconciled with
+  existing revision_run and FileSafe recovery evidence, never restarted by this history reader. A single started
+  phase cannot settle both completed and interrupted; duplicate delivery returns the original immutable result,
+  conflicting semantics fence.
+
+
+  NEW passive consumer reader.bundle_revision_requested_history@1.0.0 queries only this exact event_type, schema_id/version
+  from CV-590, and the authorized project/thread/bundle/revision. It explicitly adopts SP-278 and reuses the existing
+  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint
+  is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,
+  and lookup rows are event_record_index.v2 in the current selected generation. Complete source coverage, exact
+  root/generation/frontier and actual live ten-field read token must be verified in one read transaction. The generic
+  projector alone advances its existing checkpoint and index rows atomically by predecessor CAS, including nonmatching
+  source rows; max matching sequence is never coverage. This family owns no filtered durable checkpoint, projection
+  or copied body; SP-579 separately materializes its existing original source inventory. No stored read token is
+  added; any future durable token must use DL-076''s nine-field projection with no persisted redb_snapshot_id. Consumer
+  output is disposable authorized history, not runner state. Source expiry/deletion is a truthful unavailable result;
+  never rebuild a document or grant access from history.
+
+
+  Original document, annotation and revision evidence remain with ACD-049/050, Storage revision_run.v1 and FileSafe.
+  Reads recheck current permissions and actual deletion/availability of every reference. Event bodies contain identifiers,
+  capability metadata and refs only; no annotations, prompt, secret or document text. Coherent backup includes source
+  evidence, original full-value receipt custody and seglog at the same admitted restore boundary; unresolved source/receipt
+  skew fences dependent success. Redaction never grants reference access or rewrites original identity.
+
+
+  Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref=PENDING_RETENTION_DECISION.»Historical
+  preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): « Candidate classes are Case L-3 receipt/audit
+  authority/source lineage versus Chat content for this Deep Plan review history; no exact family assignment is
+  established.» Event lifetime and original source bodies are independent. No TTL/count deletion or indefinite class
+  selection is authorized by this draft. Existing generic index/checkpoint retains RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN
+  unchanged.
+
+
+  Withdrawal first cuts off new writer admission for bundle.revision_requested; drain or fence its pending append
+  work under the original receipt gate, then withdraw reader.bundle_revision_requested_history@1.0.0 from dispatch.
+  No history read or rebuild triggers revision, mutation or Multi-Pass Review. A replacement reader must explicitly
+  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does
+  not delete original events or reset the generic shared checkpoint, and does not withdraw siblings. Unsupported
+  historical versions remain unavailable with evidence, never rewritten on read. Positive/negative static cases
+  live in Plans/bundle_revision_event_fixtures.json; scripts/pm_bundle_revision_events.py checks this family''s
+  own full envelope, schema, identity, source custody, terminal settlement and withdrawal predicates. Native append,
+  lost acknowledgement, effect-unknown reconciliation, backup/restore, access/deletion, concurrent CAS, source gaps,
+  cutoff/rebuild and retention-boundary obligations are authored NOT_RUN, and must be exercised on real adapters
+  before native claims. For bundle.revision_requested specifically, SP-579 is adopted as the complete original revision_run
+  physical source contract: validate its source slot, original intent/result, typed key, exclusive latest predecessor/value_revision
+  CAS and independently authenticated full-value first receipt before publication. Its own producer uses dedupe_by_idempotency_key;
+  same identity/digest returns the original full event and receipt, changed semantics conflicts, and unavailable
+  dedupe proof refuses. Read replay never executes that writer. The full-envelope/source/terminal/cutoff/reader/rebuild
+  static matrix is Plans/dcw_event_contract_fixtures.json, run through scripts/pm_bundle_revision_events.py; all
+  normative cases are prepared, with native adapters NOT_RUN.
+
+
+  PNC-019 s4r retention binding for `bundle.revision_requested` (2026-11-14).
+
+
+  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
+
+
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action":
+  "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+
+
+  Exact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-508; this does not assign its
+  referenced bodies or other values.
+
+
+  Exact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-508; this does not assign its
+  referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
+
+
+  Current selected assignment (2026-11-19): bundle.revision_requested@1.0.0 is registered for project_only in Plans/event_family_registry.json,
+  as recorded by Plans/Decision_Log.md#DL-2229. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-575
+  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:
+  revision_run uses RP-CHAT-THREAD-LIFETIME@1.0.0 under Plans/Decision_Log.md#DL-508; this assigns that stored value,
+  not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime
+  is not transferred to them. Current append/publication still requires the exact selected schema/scope, original
+  custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved
+  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance
+  seal follows.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
@@ -814,7 +846,8 @@ depends_on:
 - SP-579
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -845,70 +878,102 @@ plan_unit_id: SP-576
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "`bundle.revision_started` explicitly adopts SP-286 and CV-339 including strict full-value v2 resolution,\
-  \ SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\
-  \ under DL-045: producer emitter.bundle_revision_started@1.0.0 is the targeted revision runner governed\
-  \ by ACD-572. Before any append, require individual family admission and schema support, current project/thread/bundle\
-  \ permissions, exact source evidence and CV-591 identity. Freeze the prepared complete EventRecord after\
-  \ original source evidence is committed; append through Storage, then resolve the original full-value\
-  \ AppendReceipt before publishing the phase as recorded or starting dependent work. No in-memory notification,\
-  \ caller hash, stale currentness token or partially delivered receipt establishes success. Missing original\
-  \ after confirmed older restore stays unavailable; no replacement receipt or re-execution is inferred.\
-  \ An uncertain start/completion is reconciled with existing revision_run and FileSafe recovery evidence,\
-  \ never restarted by this history reader. A single started phase cannot settle both completed and interrupted;\
-  \ duplicate delivery returns the original immutable result, conflicting semantics fence.\n\nNEW passive\
-  \ consumer reader.bundle_revision_started_history@1.0.0 queries only this exact event_type, schema_id/version\
-  \ from CV-591, and the authorized project/thread/bundle/revision. It explicitly adopts SP-278 and reuses\
-  \ the existing projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0;\
-  \ their physical checkpoint is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\
-  \ and lookup rows are event_record_index.v2 in the current selected generation. Complete source coverage,\
-  \ exact root/generation/frontier and actual live ten-field read token must be verified in one read transaction.\
-  \ The generic projector alone advances its existing checkpoint and index rows atomically by predecessor\
-  \ CAS, including nonmatching source rows; max matching sequence is never coverage. This family owns\
-  \ no filtered durable checkpoint, projection or copied body; SP-579 separately materializes its existing\
-  \ original source inventory. No stored read token is added; any future durable token must use DL-076's\
-  \ nine-field projection with no persisted redb_snapshot_id. Consumer output is disposable authorized\
-  \ history, not runner state. Source expiry/deletion is a truthful unavailable result; never rebuild\
-  \ a document or grant access from history.\n\nOriginal document, annotation and revision evidence remain\
-  \ with ACD-049/050, Storage revision_run.v1 and FileSafe. Reads recheck current permissions and actual\
-  \ deletion/availability of every reference. Event bodies contain identifiers, capability metadata and\
-  \ refs only; no annotations, prompt, secret or document text. Coherent backup includes source evidence,\
-  \ original full-value receipt custody and seglog at the same admitted restore boundary; unresolved source/receipt\
-  \ skew fences dependent success. Redaction never grants reference access or rewrites original identity.\n\
-  \nretention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\
-  \ lineage versus Chat content for this Deep Plan review history; no exact family assignment is established.\
-  \ Event lifetime and original source bodies are independent. No TTL/count deletion or indefinite class\
-  \ selection is authorized by this draft. Existing generic index/checkpoint retains RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN\
-  \ unchanged.\n\nWithdrawal first cuts off new writer admission for bundle.revision_started; drain or\
-  \ fence its pending append work under the original receipt gate, then withdraw reader.bundle_revision_started_history@1.0.0\
-  \ from dispatch. No history read or rebuild triggers revision, mutation or Multi-Pass Review. A replacement\
-  \ reader must explicitly support retained schemas and authenticate complete SP-278 rebuild/currentness\
-  \ before publication. Cutoff does not delete original events or reset the generic shared checkpoint,\
-  \ and does not withdraw siblings. Unsupported historical versions remain unavailable with evidence,\
-  \ never rewritten on read. Positive/negative static cases live in Plans/bundle_revision_event_fixtures.json;\
-  \ scripts/pm_bundle_revision_events.py checks this family's own full envelope, schema, identity, source\
-  \ custody, terminal settlement and withdrawal predicates. Native append, lost acknowledgement, effect-unknown\
-  \ reconciliation, backup/restore, access/deletion, concurrent CAS, source gaps, cutoff/rebuild and retention-boundary\
-  \ obligations are authored NOT_RUN, and must be exercised on real adapters before native claims. For\
-  \ bundle.revision_started specifically, SP-579 is adopted as the complete original revision_run physical\
-  \ source contract: validate its source slot, original intent/result, typed key, exclusive latest predecessor/value_revision\
-  \ CAS and independently authenticated full-value first receipt before publication. Its own producer\
-  \ uses dedupe_by_idempotency_key; same identity/digest returns the original full event and receipt,\
-  \ changed semantics conflicts, and unavailable dedupe proof refuses. Read replay never executes that\
-  \ writer. The full-envelope/source/terminal/cutoff/reader/rebuild static matrix is Plans/dcw_event_contract_fixtures.json,\
-  \ run through scripts/pm_bundle_revision_events.py; all normative cases are prepared, with native adapters\
-  \ NOT_RUN.\n\nPNC-019 s4r retention binding for `bundle.revision_started` (2026-11-14).\n\nEvent history\
-  \ `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-508.\n\nUse the existing\
-  \ policy object unchanged: {\"anchor_kind\": \"creation\", \"cardinality_scope\": null, \"expiry_action\"\
-  : \"none\", \"max_cardinality\": null, \"overflow_action\": \"fail_closed\", \"ttl_seconds\": null}.\n\
-  \nExact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-508; this does\
-  \ not assign its referenced bodies or other values.\n\nExact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0`\
-  \ under DL-508; this does not assign its referenced bodies or other values.\n\nThis paragraph supersedes\
-  \ earlier pending statements only for the exact assigned facets above. All independent source, receipt,\
-  \ referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required\
-  \ references, recovery, rollback, maintenance, protected backups and latest-25-run protection override\
-  \ cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal,\
-  \ no hold release, admission, native proof or governance clearance is granted.\n"
+canonical_text: '`bundle.revision_started` explicitly adopts SP-286 and CV-339 including strict full-value v2 resolution,
+  SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract under DL-045:
+  producer emitter.bundle_revision_started@1.0.0 is the targeted revision runner governed by ACD-572. Before any
+  append, require individual family admission and schema support, current project/thread/bundle permissions, exact
+  source evidence and CV-591 identity. Freeze the prepared complete EventRecord after original source evidence is
+  committed; append through Storage, then resolve the original full-value AppendReceipt before publishing the phase
+  as recorded or starting dependent work. No in-memory notification, caller hash, stale currentness token or partially
+  delivered receipt establishes success. Missing original after confirmed older restore stays unavailable; no replacement
+  receipt or re-execution is inferred. An uncertain start/completion is reconciled with existing revision_run and
+  FileSafe recovery evidence, never restarted by this history reader. A single started phase cannot settle both
+  completed and interrupted; duplicate delivery returns the original immutable result, conflicting semantics fence.
+
+
+  NEW passive consumer reader.bundle_revision_started_history@1.0.0 queries only this exact event_type, schema_id/version
+  from CV-591, and the authorized project/thread/bundle/revision. It explicitly adopts SP-278 and reuses the existing
+  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint
+  is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,
+  and lookup rows are event_record_index.v2 in the current selected generation. Complete source coverage, exact
+  root/generation/frontier and actual live ten-field read token must be verified in one read transaction. The generic
+  projector alone advances its existing checkpoint and index rows atomically by predecessor CAS, including nonmatching
+  source rows; max matching sequence is never coverage. This family owns no filtered durable checkpoint, projection
+  or copied body; SP-579 separately materializes its existing original source inventory. No stored read token is
+  added; any future durable token must use DL-076''s nine-field projection with no persisted redb_snapshot_id. Consumer
+  output is disposable authorized history, not runner state. Source expiry/deletion is a truthful unavailable result;
+  never rebuild a document or grant access from history.
+
+
+  Original document, annotation and revision evidence remain with ACD-049/050, Storage revision_run.v1 and FileSafe.
+  Reads recheck current permissions and actual deletion/availability of every reference. Event bodies contain identifiers,
+  capability metadata and refs only; no annotations, prompt, secret or document text. Coherent backup includes source
+  evidence, original full-value receipt custody and seglog at the same admitted restore boundary; unresolved source/receipt
+  skew fences dependent success. Redaction never grants reference access or rewrites original identity.
+
+
+  Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref=PENDING_RETENTION_DECISION.»Historical
+  preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): « Candidate classes are Case L-3 receipt/audit
+  authority/source lineage versus Chat content for this Deep Plan review history; no exact family assignment is
+  established.» Event lifetime and original source bodies are independent. No TTL/count deletion or indefinite class
+  selection is authorized by this draft. Existing generic index/checkpoint retains RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN
+  unchanged.
+
+
+  Withdrawal first cuts off new writer admission for bundle.revision_started; drain or fence its pending append
+  work under the original receipt gate, then withdraw reader.bundle_revision_started_history@1.0.0 from dispatch.
+  No history read or rebuild triggers revision, mutation or Multi-Pass Review. A replacement reader must explicitly
+  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does
+  not delete original events or reset the generic shared checkpoint, and does not withdraw siblings. Unsupported
+  historical versions remain unavailable with evidence, never rewritten on read. Positive/negative static cases
+  live in Plans/bundle_revision_event_fixtures.json; scripts/pm_bundle_revision_events.py checks this family''s
+  own full envelope, schema, identity, source custody, terminal settlement and withdrawal predicates. Native append,
+  lost acknowledgement, effect-unknown reconciliation, backup/restore, access/deletion, concurrent CAS, source gaps,
+  cutoff/rebuild and retention-boundary obligations are authored NOT_RUN, and must be exercised on real adapters
+  before native claims. For bundle.revision_started specifically, SP-579 is adopted as the complete original revision_run
+  physical source contract: validate its source slot, original intent/result, typed key, exclusive latest predecessor/value_revision
+  CAS and independently authenticated full-value first receipt before publication. Its own producer uses dedupe_by_idempotency_key;
+  same identity/digest returns the original full event and receipt, changed semantics conflicts, and unavailable
+  dedupe proof refuses. Read replay never executes that writer. The full-envelope/source/terminal/cutoff/reader/rebuild
+  static matrix is Plans/dcw_event_contract_fixtures.json, run through scripts/pm_bundle_revision_events.py; all
+  normative cases are prepared, with native adapters NOT_RUN.
+
+
+  PNC-019 s4r retention binding for `bundle.revision_started` (2026-11-14).
+
+
+  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
+
+
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action":
+  "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+
+
+  Exact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-508; this does not assign its
+  referenced bodies or other values.
+
+
+  Exact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-508; this does not assign its
+  referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
+
+
+  Current selected assignment (2026-11-19): bundle.revision_started@1.0.0 is registered for project_only in Plans/event_family_registry.json,
+  as recorded by Plans/Decision_Log.md#DL-2230. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-576
+  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:
+  revision_run uses RP-CHAT-THREAD-LIFETIME@1.0.0 under Plans/Decision_Log.md#DL-508; this assigns that stored value,
+  not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime
+  is not transferred to them. Current append/publication still requires the exact selected schema/scope, original
+  custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved
+  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance
+  seal follows.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
@@ -919,7 +984,8 @@ depends_on:
 - SP-579
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -950,70 +1016,103 @@ plan_unit_id: SP-577
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "`bundle.revision_completed` explicitly adopts SP-286 and CV-339 including strict full-value v2 resolution,\
-  \ SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\
-  \ under DL-045: producer emitter.bundle_revision_completed@1.0.0 is the targeted revision runner governed\
-  \ by ACD-573. Before any append, require individual family admission and schema support, current project/thread/bundle\
-  \ permissions, exact source evidence and CV-592 identity. Freeze the prepared complete EventRecord after\
-  \ original source evidence is committed; append through Storage, then resolve the original full-value\
-  \ AppendReceipt before publishing the phase as recorded or starting dependent work. No in-memory notification,\
-  \ caller hash, stale currentness token or partially delivered receipt establishes success. Missing original\
-  \ after confirmed older restore stays unavailable; no replacement receipt or re-execution is inferred.\
-  \ An uncertain start/completion is reconciled with existing revision_run and FileSafe recovery evidence,\
-  \ never restarted by this history reader. A single started phase cannot settle both completed and interrupted;\
-  \ duplicate delivery returns the original immutable result, conflicting semantics fence.\n\nNEW passive\
-  \ consumer reader.bundle_revision_completed_history@1.0.0 queries only this exact event_type, schema_id/version\
-  \ from CV-592, and the authorized project/thread/bundle/revision. It explicitly adopts SP-278 and reuses\
-  \ the existing projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0;\
-  \ their physical checkpoint is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\
-  \ and lookup rows are event_record_index.v2 in the current selected generation. Complete source coverage,\
-  \ exact root/generation/frontier and actual live ten-field read token must be verified in one read transaction.\
-  \ The generic projector alone advances its existing checkpoint and index rows atomically by predecessor\
-  \ CAS, including nonmatching source rows; max matching sequence is never coverage. This family owns\
-  \ no filtered durable checkpoint, projection or copied body; SP-579 separately materializes its existing\
-  \ original source inventory. No stored read token is added; any future durable token must use DL-076's\
-  \ nine-field projection with no persisted redb_snapshot_id. Consumer output is disposable authorized\
-  \ history, not runner state. Source expiry/deletion is a truthful unavailable result; never rebuild\
-  \ a document or grant access from history.\n\nOriginal document, annotation and revision evidence remain\
-  \ with ACD-049/050, Storage revision_run.v1 and FileSafe. Reads recheck current permissions and actual\
-  \ deletion/availability of every reference. Event bodies contain identifiers, capability metadata and\
-  \ refs only; no annotations, prompt, secret or document text. Coherent backup includes source evidence,\
-  \ original full-value receipt custody and seglog at the same admitted restore boundary; unresolved source/receipt\
-  \ skew fences dependent success. Redaction never grants reference access or rewrites original identity.\n\
-  \nretention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\
-  \ lineage versus Chat content for this Deep Plan review history; no exact family assignment is established.\
-  \ Event lifetime and original source bodies are independent. No TTL/count deletion or indefinite class\
-  \ selection is authorized by this draft. Existing generic index/checkpoint retains RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN\
-  \ unchanged.\n\nWithdrawal first cuts off new writer admission for bundle.revision_completed; drain\
-  \ or fence its pending append work under the original receipt gate, then withdraw reader.bundle_revision_completed_history@1.0.0\
-  \ from dispatch. No history read or rebuild triggers revision, mutation or Multi-Pass Review. A replacement\
-  \ reader must explicitly support retained schemas and authenticate complete SP-278 rebuild/currentness\
-  \ before publication. Cutoff does not delete original events or reset the generic shared checkpoint,\
-  \ and does not withdraw siblings. Unsupported historical versions remain unavailable with evidence,\
-  \ never rewritten on read. Positive/negative static cases live in Plans/bundle_revision_event_fixtures.json;\
-  \ scripts/pm_bundle_revision_events.py checks this family's own full envelope, schema, identity, source\
-  \ custody, terminal settlement and withdrawal predicates. Native append, lost acknowledgement, effect-unknown\
-  \ reconciliation, backup/restore, access/deletion, concurrent CAS, source gaps, cutoff/rebuild and retention-boundary\
-  \ obligations are authored NOT_RUN, and must be exercised on real adapters before native claims. For\
-  \ bundle.revision_completed specifically, SP-579 is adopted as the complete original revision_run physical\
-  \ source contract: validate its source slot, original intent/result, typed key, exclusive latest predecessor/value_revision\
-  \ CAS and independently authenticated full-value first receipt before publication. Its own producer\
-  \ uses dedupe_by_idempotency_key; same identity/digest returns the original full event and receipt,\
-  \ changed semantics conflicts, and unavailable dedupe proof refuses. Read replay never executes that\
-  \ writer. The full-envelope/source/terminal/cutoff/reader/rebuild static matrix is Plans/dcw_event_contract_fixtures.json,\
-  \ run through scripts/pm_bundle_revision_events.py; all normative cases are prepared, with native adapters\
-  \ NOT_RUN.\n\nPNC-019 s4r retention binding for `bundle.revision_completed` (2026-11-14).\n\nEvent history\
-  \ `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-508.\n\nUse the existing\
-  \ policy object unchanged: {\"anchor_kind\": \"creation\", \"cardinality_scope\": null, \"expiry_action\"\
-  : \"none\", \"max_cardinality\": null, \"overflow_action\": \"fail_closed\", \"ttl_seconds\": null}.\n\
-  \nExact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-508; this does\
-  \ not assign its referenced bodies or other values.\n\nExact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0`\
-  \ under DL-508; this does not assign its referenced bodies or other values.\n\nThis paragraph supersedes\
-  \ earlier pending statements only for the exact assigned facets above. All independent source, receipt,\
-  \ referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required\
-  \ references, recovery, rollback, maintenance, protected backups and latest-25-run protection override\
-  \ cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal,\
-  \ no hold release, admission, native proof or governance clearance is granted.\n"
+canonical_text: '`bundle.revision_completed` explicitly adopts SP-286 and CV-339 including strict full-value v2
+  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract
+  under DL-045: producer emitter.bundle_revision_completed@1.0.0 is the targeted revision runner governed by ACD-573.
+  Before any append, require individual family admission and schema support, current project/thread/bundle permissions,
+  exact source evidence and CV-592 identity. Freeze the prepared complete EventRecord after original source evidence
+  is committed; append through Storage, then resolve the original full-value AppendReceipt before publishing the
+  phase as recorded or starting dependent work. No in-memory notification, caller hash, stale currentness token
+  or partially delivered receipt establishes success. Missing original after confirmed older restore stays unavailable;
+  no replacement receipt or re-execution is inferred. An uncertain start/completion is reconciled with existing
+  revision_run and FileSafe recovery evidence, never restarted by this history reader. A single started phase cannot
+  settle both completed and interrupted; duplicate delivery returns the original immutable result, conflicting semantics
+  fence.
+
+
+  NEW passive consumer reader.bundle_revision_completed_history@1.0.0 queries only this exact event_type, schema_id/version
+  from CV-592, and the authorized project/thread/bundle/revision. It explicitly adopts SP-278 and reuses the existing
+  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint
+  is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,
+  and lookup rows are event_record_index.v2 in the current selected generation. Complete source coverage, exact
+  root/generation/frontier and actual live ten-field read token must be verified in one read transaction. The generic
+  projector alone advances its existing checkpoint and index rows atomically by predecessor CAS, including nonmatching
+  source rows; max matching sequence is never coverage. This family owns no filtered durable checkpoint, projection
+  or copied body; SP-579 separately materializes its existing original source inventory. No stored read token is
+  added; any future durable token must use DL-076''s nine-field projection with no persisted redb_snapshot_id. Consumer
+  output is disposable authorized history, not runner state. Source expiry/deletion is a truthful unavailable result;
+  never rebuild a document or grant access from history.
+
+
+  Original document, annotation and revision evidence remain with ACD-049/050, Storage revision_run.v1 and FileSafe.
+  Reads recheck current permissions and actual deletion/availability of every reference. Event bodies contain identifiers,
+  capability metadata and refs only; no annotations, prompt, secret or document text. Coherent backup includes source
+  evidence, original full-value receipt custody and seglog at the same admitted restore boundary; unresolved source/receipt
+  skew fences dependent success. Redaction never grants reference access or rewrites original identity.
+
+
+  Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref=PENDING_RETENTION_DECISION.»Historical
+  preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): « Candidate classes are Case L-3 receipt/audit
+  authority/source lineage versus Chat content for this Deep Plan review history; no exact family assignment is
+  established.» Event lifetime and original source bodies are independent. No TTL/count deletion or indefinite class
+  selection is authorized by this draft. Existing generic index/checkpoint retains RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN
+  unchanged.
+
+
+  Withdrawal first cuts off new writer admission for bundle.revision_completed; drain or fence its pending append
+  work under the original receipt gate, then withdraw reader.bundle_revision_completed_history@1.0.0 from dispatch.
+  No history read or rebuild triggers revision, mutation or Multi-Pass Review. A replacement reader must explicitly
+  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does
+  not delete original events or reset the generic shared checkpoint, and does not withdraw siblings. Unsupported
+  historical versions remain unavailable with evidence, never rewritten on read. Positive/negative static cases
+  live in Plans/bundle_revision_event_fixtures.json; scripts/pm_bundle_revision_events.py checks this family''s
+  own full envelope, schema, identity, source custody, terminal settlement and withdrawal predicates. Native append,
+  lost acknowledgement, effect-unknown reconciliation, backup/restore, access/deletion, concurrent CAS, source gaps,
+  cutoff/rebuild and retention-boundary obligations are authored NOT_RUN, and must be exercised on real adapters
+  before native claims. For bundle.revision_completed specifically, SP-579 is adopted as the complete original revision_run
+  physical source contract: validate its source slot, original intent/result, typed key, exclusive latest predecessor/value_revision
+  CAS and independently authenticated full-value first receipt before publication. Its own producer uses dedupe_by_idempotency_key;
+  same identity/digest returns the original full event and receipt, changed semantics conflicts, and unavailable
+  dedupe proof refuses. Read replay never executes that writer. The full-envelope/source/terminal/cutoff/reader/rebuild
+  static matrix is Plans/dcw_event_contract_fixtures.json, run through scripts/pm_bundle_revision_events.py; all
+  normative cases are prepared, with native adapters NOT_RUN.
+
+
+  PNC-019 s4r retention binding for `bundle.revision_completed` (2026-11-14).
+
+
+  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
+
+
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action":
+  "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+
+
+  Exact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-508; this does not assign its
+  referenced bodies or other values.
+
+
+  Exact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-508; this does not assign its
+  referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
+
+
+  Current selected assignment (2026-11-19): bundle.revision_completed@1.0.0 is registered for project_only in Plans/event_family_registry.json,
+  as recorded by Plans/Decision_Log.md#DL-2227. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-577
+  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:
+  revision_run uses RP-CHAT-THREAD-LIFETIME@1.0.0 under Plans/Decision_Log.md#DL-508; this assigns that stored value,
+  not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime
+  is not transferred to them. Current append/publication still requires the exact selected schema/scope, original
+  custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved
+  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance
+  seal follows.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
@@ -1024,7 +1123,8 @@ depends_on:
 - SP-579
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -1055,70 +1155,103 @@ plan_unit_id: SP-578
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "`bundle.revision_interrupted` explicitly adopts SP-286 and CV-339 including strict full-value v2 resolution,\
-  \ SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\
-  \ under DL-045: producer emitter.bundle_revision_interrupted@1.0.0 is the targeted revision runner governed\
-  \ by ACD-574. Before any append, require individual family admission and schema support, current project/thread/bundle\
-  \ permissions, exact source evidence and CV-593 identity. Freeze the prepared complete EventRecord after\
-  \ original source evidence is committed; append through Storage, then resolve the original full-value\
-  \ AppendReceipt before publishing the phase as recorded or starting dependent work. No in-memory notification,\
-  \ caller hash, stale currentness token or partially delivered receipt establishes success. Missing original\
-  \ after confirmed older restore stays unavailable; no replacement receipt or re-execution is inferred.\
-  \ An uncertain start/completion is reconciled with existing revision_run and FileSafe recovery evidence,\
-  \ never restarted by this history reader. A single started phase cannot settle both completed and interrupted;\
-  \ duplicate delivery returns the original immutable result, conflicting semantics fence.\n\nNEW passive\
-  \ consumer reader.bundle_revision_interrupted_history@1.0.0 queries only this exact event_type, schema_id/version\
-  \ from CV-593, and the authorized project/thread/bundle/revision. It explicitly adopts SP-278 and reuses\
-  \ the existing projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0;\
-  \ their physical checkpoint is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\
-  \ and lookup rows are event_record_index.v2 in the current selected generation. Complete source coverage,\
-  \ exact root/generation/frontier and actual live ten-field read token must be verified in one read transaction.\
-  \ The generic projector alone advances its existing checkpoint and index rows atomically by predecessor\
-  \ CAS, including nonmatching source rows; max matching sequence is never coverage. This family owns\
-  \ no filtered durable checkpoint, projection or copied body; SP-579 separately materializes its existing\
-  \ original source inventory. No stored read token is added; any future durable token must use DL-076's\
-  \ nine-field projection with no persisted redb_snapshot_id. Consumer output is disposable authorized\
-  \ history, not runner state. Source expiry/deletion is a truthful unavailable result; never rebuild\
-  \ a document or grant access from history.\n\nOriginal document, annotation and revision evidence remain\
-  \ with ACD-049/050, Storage revision_run.v1 and FileSafe. Reads recheck current permissions and actual\
-  \ deletion/availability of every reference. Event bodies contain identifiers, capability metadata and\
-  \ refs only; no annotations, prompt, secret or document text. Coherent backup includes source evidence,\
-  \ original full-value receipt custody and seglog at the same admitted restore boundary; unresolved source/receipt\
-  \ skew fences dependent success. Redaction never grants reference access or rewrites original identity.\n\
-  \nretention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\
-  \ lineage versus Chat content for this Deep Plan review history; no exact family assignment is established.\
-  \ Event lifetime and original source bodies are independent. No TTL/count deletion or indefinite class\
-  \ selection is authorized by this draft. Existing generic index/checkpoint retains RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN\
-  \ unchanged.\n\nWithdrawal first cuts off new writer admission for bundle.revision_interrupted; drain\
-  \ or fence its pending append work under the original receipt gate, then withdraw reader.bundle_revision_interrupted_history@1.0.0\
-  \ from dispatch. No history read or rebuild triggers revision, mutation or Multi-Pass Review. A replacement\
-  \ reader must explicitly support retained schemas and authenticate complete SP-278 rebuild/currentness\
-  \ before publication. Cutoff does not delete original events or reset the generic shared checkpoint,\
-  \ and does not withdraw siblings. Unsupported historical versions remain unavailable with evidence,\
-  \ never rewritten on read. Positive/negative static cases live in Plans/bundle_revision_event_fixtures.json;\
-  \ scripts/pm_bundle_revision_events.py checks this family's own full envelope, schema, identity, source\
-  \ custody, terminal settlement and withdrawal predicates. Native append, lost acknowledgement, effect-unknown\
-  \ reconciliation, backup/restore, access/deletion, concurrent CAS, source gaps, cutoff/rebuild and retention-boundary\
-  \ obligations are authored NOT_RUN, and must be exercised on real adapters before native claims. For\
-  \ bundle.revision_interrupted specifically, SP-579 is adopted as the complete original revision_run\
-  \ physical source contract: validate its source slot, original intent/result, typed key, exclusive latest\
-  \ predecessor/value_revision CAS and independently authenticated full-value first receipt before publication.\
-  \ Its own producer uses dedupe_by_idempotency_key; same identity/digest returns the original full event\
-  \ and receipt, changed semantics conflicts, and unavailable dedupe proof refuses. Read replay never\
-  \ executes that writer. The full-envelope/source/terminal/cutoff/reader/rebuild static matrix is Plans/dcw_event_contract_fixtures.json,\
-  \ run through scripts/pm_bundle_revision_events.py; all normative cases are prepared, with native adapters\
-  \ NOT_RUN.\n\nPNC-019 s4r retention binding for `bundle.revision_interrupted` (2026-11-14).\n\nEvent\
-  \ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-508.\n\nUse the existing\
-  \ policy object unchanged: {\"anchor_kind\": \"creation\", \"cardinality_scope\": null, \"expiry_action\"\
-  : \"none\", \"max_cardinality\": null, \"overflow_action\": \"fail_closed\", \"ttl_seconds\": null}.\n\
-  \nExact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-508; this does\
-  \ not assign its referenced bodies or other values.\n\nExact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0`\
-  \ under DL-508; this does not assign its referenced bodies or other values.\n\nThis paragraph supersedes\
-  \ earlier pending statements only for the exact assigned facets above. All independent source, receipt,\
-  \ referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required\
-  \ references, recovery, rollback, maintenance, protected backups and latest-25-run protection override\
-  \ cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal,\
-  \ no hold release, admission, native proof or governance clearance is granted.\n"
+canonical_text: '`bundle.revision_interrupted` explicitly adopts SP-286 and CV-339 including strict full-value v2
+  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract
+  under DL-045: producer emitter.bundle_revision_interrupted@1.0.0 is the targeted revision runner governed by ACD-574.
+  Before any append, require individual family admission and schema support, current project/thread/bundle permissions,
+  exact source evidence and CV-593 identity. Freeze the prepared complete EventRecord after original source evidence
+  is committed; append through Storage, then resolve the original full-value AppendReceipt before publishing the
+  phase as recorded or starting dependent work. No in-memory notification, caller hash, stale currentness token
+  or partially delivered receipt establishes success. Missing original after confirmed older restore stays unavailable;
+  no replacement receipt or re-execution is inferred. An uncertain start/completion is reconciled with existing
+  revision_run and FileSafe recovery evidence, never restarted by this history reader. A single started phase cannot
+  settle both completed and interrupted; duplicate delivery returns the original immutable result, conflicting semantics
+  fence.
+
+
+  NEW passive consumer reader.bundle_revision_interrupted_history@1.0.0 queries only this exact event_type, schema_id/version
+  from CV-593, and the authorized project/thread/bundle/revision. It explicitly adopts SP-278 and reuses the existing
+  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint
+  is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,
+  and lookup rows are event_record_index.v2 in the current selected generation. Complete source coverage, exact
+  root/generation/frontier and actual live ten-field read token must be verified in one read transaction. The generic
+  projector alone advances its existing checkpoint and index rows atomically by predecessor CAS, including nonmatching
+  source rows; max matching sequence is never coverage. This family owns no filtered durable checkpoint, projection
+  or copied body; SP-579 separately materializes its existing original source inventory. No stored read token is
+  added; any future durable token must use DL-076''s nine-field projection with no persisted redb_snapshot_id. Consumer
+  output is disposable authorized history, not runner state. Source expiry/deletion is a truthful unavailable result;
+  never rebuild a document or grant access from history.
+
+
+  Original document, annotation and revision evidence remain with ACD-049/050, Storage revision_run.v1 and FileSafe.
+  Reads recheck current permissions and actual deletion/availability of every reference. Event bodies contain identifiers,
+  capability metadata and refs only; no annotations, prompt, secret or document text. Coherent backup includes source
+  evidence, original full-value receipt custody and seglog at the same admitted restore boundary; unresolved source/receipt
+  skew fences dependent success. Redaction never grants reference access or rewrites original identity.
+
+
+  Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «retention_policy_ref=PENDING_RETENTION_DECISION.»Historical
+  preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): « Candidate classes are Case L-3 receipt/audit
+  authority/source lineage versus Chat content for this Deep Plan review history; no exact family assignment is
+  established.» Event lifetime and original source bodies are independent. No TTL/count deletion or indefinite class
+  selection is authorized by this draft. Existing generic index/checkpoint retains RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN
+  unchanged.
+
+
+  Withdrawal first cuts off new writer admission for bundle.revision_interrupted; drain or fence its pending append
+  work under the original receipt gate, then withdraw reader.bundle_revision_interrupted_history@1.0.0 from dispatch.
+  No history read or rebuild triggers revision, mutation or Multi-Pass Review. A replacement reader must explicitly
+  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does
+  not delete original events or reset the generic shared checkpoint, and does not withdraw siblings. Unsupported
+  historical versions remain unavailable with evidence, never rewritten on read. Positive/negative static cases
+  live in Plans/bundle_revision_event_fixtures.json; scripts/pm_bundle_revision_events.py checks this family''s
+  own full envelope, schema, identity, source custody, terminal settlement and withdrawal predicates. Native append,
+  lost acknowledgement, effect-unknown reconciliation, backup/restore, access/deletion, concurrent CAS, source gaps,
+  cutoff/rebuild and retention-boundary obligations are authored NOT_RUN, and must be exercised on real adapters
+  before native claims. For bundle.revision_interrupted specifically, SP-579 is adopted as the complete original
+  revision_run physical source contract: validate its source slot, original intent/result, typed key, exclusive
+  latest predecessor/value_revision CAS and independently authenticated full-value first receipt before publication.
+  Its own producer uses dedupe_by_idempotency_key; same identity/digest returns the original full event and receipt,
+  changed semantics conflicts, and unavailable dedupe proof refuses. Read replay never executes that writer. The
+  full-envelope/source/terminal/cutoff/reader/rebuild static matrix is Plans/dcw_event_contract_fixtures.json, run
+  through scripts/pm_bundle_revision_events.py; all normative cases are prepared, with native adapters NOT_RUN.
+
+
+  PNC-019 s4r retention binding for `bundle.revision_interrupted` (2026-11-14).
+
+
+  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
+
+
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action":
+  "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+
+
+  Exact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-508; this does not assign its
+  referenced bodies or other values.
+
+
+  Exact stored value `revision_run` retains `RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-508; this does not assign its
+  referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
+
+
+  Current selected assignment (2026-11-19): bundle.revision_interrupted@1.0.0 is registered for project_only in
+  Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2228. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0;
+  Plans/storage-plan.md#SP-578 owns the event policy''s existing anchors, counts, holds and deletion rules. Separate
+  stored-value assignment: revision_run uses RP-CHAT-THREAD-LIFETIME@1.0.0 under Plans/Decision_Log.md#DL-508; this
+  assigns that stored value, not event history. Original sources and coherent backups retain their independent owner
+  policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected
+  schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration
+  or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice
+  or governance seal follows.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
@@ -1129,7 +1262,8 @@ depends_on:
 - SP-579
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -1218,36 +1352,37 @@ canonical_text: 'NEW original source contract under DL-045 for the existing targ
   access. Retirement never deletes source evidence or clears permanent identities. Legacy values without this complete
   evidence remain read-only compatibility; no guessed copy-forward or receipt backfill. A coordinator may adopt
   only actual complete original evidence after independent equality and restore validation. Unsupported versions
-  fence. retention_policy_ref=PENDING_RETENTION_DECISION with Case L-3 receipt/audit/source-lineage versus Chat-content
-  candidates; extraction grants no TTL or indefinite retention. SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory
-  canonical budget, and max_value_bytes=16384. SP-337 governs larger sources. The closed schema selects #/$defs/inline
-  for a complete source of at most 16384 canonical MessagePack bytes, or #/$defs/payload_reference at the same typed
-  key for the exact complete original source bytes in a content-addressed pack. The reference carries the unchanged
-  schema identity, Storage instance, recovery_epoch, value_revision, exact source_key and source_payload_ref with
-  a 64-character lowercase-hex BLAKE3 id, byte_size and application/vnd.puppetmaster.revision-run+msgpack media_type.
-  Resolved bytes must decode to the closed inline source and agree with every reference/key/identity field. Payload
-  bytes and their index are durable before the reference commit, append or publication. Missing, unreadable, corrupt,
-  wrong-size/type, undurable or substituted payloads fence; a direct redb value over 16384 bytes is refused. The same
-  key/value_revision CAS covers either representation. Coherent backup and verified restore include the physical
-  source row plus its reachable pack/index and all original source/event/receipt dependencies at one boundary; the
-  source inventory hash commits the physical canonical MessagePack row, never a restamped decoded replacement.
-  No truncation, split history or new lifetime is authorized. The canonical group budget is advisory, never a
-  write refusal or source-pruning trigger. Exact 16384-byte inline and 16385-byte referenced sources pass; a
-  16385-byte direct value and invalid references fail through the full checker. No native implementation
-  or buildability follows. A verified restore preserves original source/receipt bytes and their original source
-  recovery_epoch. If the selected current epoch is newer, mutation or successful publication additionally requires
-  the actual SP-286/CV-339 restore_admission covering every dependent original event plus the existing verified
-  backup manifest inventory covering the exact typed source key and SHA-256 of its canonical MessagePack source
-  value; a caller-supplied epoch/hash cannot authorize that binding. Missing admission, source inventory or exact
-  original receipt coverage fences. No original is restamped to the current epoch. Passive history resolves its
-  exact original phase by source_ref even when later source phases exist; it never requires an earlier event to
-  become the mutable latest phase. The complete immutable original request intent is embedded as intent in the same
-  revision_run value: project/thread/bundle/revision, trigger, ordered annotations, requested/effective capability,
-  permission snapshot, authenticated actor, exact source-document ref/version/hash and original accepted_at. Every
-  phase intent_ref resolves to that exact embedded intent and its independently authenticated original owner observation;
-  it is not an unresolved generic receipt or another deferred store. The source edition introduces no replacement
-  annotation/document body authority. Existing source access, eligibility and FileSafe checks remain required before
-  original acceptance; history cannot recreate unavailable bodies.'
+  fence. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «retention_policy_ref=PENDING_RETENTION_DECISION»
+  with Case L-3 receipt/audit/source-lineage versus Chat-content candidates; extraction grants no TTL or indefinite
+  retention. SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing
+  4 GiB advisory canonical budget, and max_value_bytes=16384. SP-337 governs larger sources. The closed schema selects
+  #/$defs/inline for a complete source of at most 16384 canonical MessagePack bytes, or #/$defs/payload_reference
+  at the same typed key for the exact complete original source bytes in a content-addressed pack. The reference
+  carries the unchanged schema identity, Storage instance, recovery_epoch, value_revision, exact source_key and
+  source_payload_ref with a 64-character lowercase-hex BLAKE3 id, byte_size and application/vnd.puppetmaster.revision-run+msgpack
+  media_type. Resolved bytes must decode to the closed inline source and agree with every reference/key/identity
+  field. Payload bytes and their index are durable before the reference commit, append or publication. Missing,
+  unreadable, corrupt, wrong-size/type, undurable or substituted payloads fence; a direct redb value over 16384
+  bytes is refused. The same key/value_revision CAS covers either representation. Coherent backup and verified restore
+  include the physical source row plus its reachable pack/index and all original source/event/receipt dependencies
+  at one boundary; the source inventory hash commits the physical canonical MessagePack row, never a restamped decoded
+  replacement. No truncation, split history or new lifetime is authorized. The canonical group budget is advisory,
+  never a write refusal or source-pruning trigger. Exact 16384-byte inline and 16385-byte referenced sources pass;
+  a 16385-byte direct value and invalid references fail through the full checker. No native implementation or buildability
+  follows. A verified restore preserves original source/receipt bytes and their original source recovery_epoch.
+  If the selected current epoch is newer, mutation or successful publication additionally requires the actual SP-286/CV-339
+  restore_admission covering every dependent original event plus the existing verified backup manifest inventory
+  covering the exact typed source key and SHA-256 of its canonical MessagePack source value; a caller-supplied epoch/hash
+  cannot authorize that binding. Missing admission, source inventory or exact original receipt coverage fences.
+  No original is restamped to the current epoch. Passive history resolves its exact original phase by source_ref
+  even when later source phases exist; it never requires an earlier event to become the mutable latest phase. The
+  complete immutable original request intent is embedded as intent in the same revision_run value: project/thread/bundle/revision,
+  trigger, ordered annotations, requested/effective capability, permission snapshot, authenticated actor, exact
+  source-document ref/version/hash and original accepted_at. Every phase intent_ref resolves to that exact embedded
+  intent and its independently authenticated original owner observation; it is not an unresolved generic receipt
+  or another deferred store. The source edition introduces no replacement annotation/document body authority. Existing
+  source access, eligibility and FileSafe checks remain required before original acceptance; history cannot recreate
+  unavailable bodies.'
 gui_related: false
 gui_classification_reason: Defines original event/source custody and read contracts, without a presentation change.
 depends_on:
@@ -1257,7 +1392,8 @@ depends_on:
 - ACD-050
 unblocks: []
 acceptance_criteria:
-- Prepared without family admission; retention remains PENDING_RETENTION_DECISION.
+- 'Prepared without family admission; Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «retention
+  remains PENDING_RETENTION_DECISION».'
 - The complete positive and negative static oracles pass; native execution is NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -1283,6 +1419,14 @@ negative_constraints:
 ```
 
 
+
+Current selected assignment (2026-11-19): bundle.revision_completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2227. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): bundle.revision_interrupted@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2228. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): bundle.revision_requested@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2229. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): bundle.revision_started@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2230. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### Wizard Opened Original Custody
 
 For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384. The closed source schema selects #/$defs/inline for at most 16384 canonical MessagePack bytes, or #/$defs/payload_reference at the same typed source key for SP-337 overflow. That closed reference retains schema identity, Storage instance, recovery_epoch, value_revision, exact source_key and source_payload_ref (64-character lowercase-hex BLAKE3 id, byte_size, media_type=application/vnd.puppetmaster.wizard-open-evidence+msgpack). It resolves the exact complete original canonical MessagePack source, validated against #/$defs/inline and every original identity/key field. Pack bytes and their index are durable before the reference commit, event append or publication; absent, unreadable, corrupt, wrong-size/type, undurable or substituted payloads fence. A direct redb value over 16384 bytes is refused. Both representations use the existing typed-key/value_revision CAS. Mandatory coherent backup/restore includes the physical row, reachable payload pack/index and the original source/event/receipt dependencies at one verified boundary; the source inventory hash commits the physical canonical MessagePack row. The group budget is advisory and cannot refuse canonical writes or prune history. This changes no retention/deletion policy, original source bytes or event payload. Full-checker positives cover exactly 16384 inline bytes and 16385 referenced bytes; negatives cover 16385 direct bytes and invalid references.
@@ -1291,7 +1435,7 @@ NEW original source and event custody contract for `wizard.opened` alone, under 
 
 Observe the existing successful open result for the real Project and actual current PlanningRun intake child, after owner route/currentness and permission validation. Opening is not proof of seed acceptance; a route click, attempt or failed open emits nothing. predecessor_event_id is null. This event never creates or selects a child on replay. A serialized Storage-instance/recovery-epoch/typed-key writer compare-and-swaps value_revision and inserts one immutable prepared source for the request. Same request/body returns it; conflicting body fences. Freeze the entire original semantic envelope before Storage append; Storage binds its assigned fields under its gate. This family explicitly adopts SP-286/CV-339 full-value v2 receipt resolution, SP-336/SP-347 durability and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. Order is exact-family admission/current owner guards, original source/result commit, normal append using dedupe_by_idempotency_key, original full-value receipt resolution, source proof CAS, then recorded-event/dependent publication. No cross-store atomic transaction is claimed. Attach the original unchanged eleven-field AppendReceipt, original_segment_ref and original_event_value_commitment; event/sequence, synced group/watermark, full-value equality and actual selected Storage instance must all agree. Pending source rows cannot claim recorded success. Crash before append retries the same frozen event; lost acknowledgement resolves its original receipt; crash after receipt attachment returns it without reopening or loading again. Unknown effects, missing source/custody or changed bytes fence, never invent a result or receipt.
 
-Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody at one verified boundary. Restore validates Storage instance, recovery epoch, original refs, hashes and complete event/receipt joins; missing originals, source/receipt skew, an unissued group, partial backup or stale epoch fences mutation and successful publication. A confirmed older restore does not replay a lost post-backup action. Incomplete legacy evidence is compatibility-read only and cannot be upgraded by inference. Source refs require current access/deletion checks; unavailable sources return truthful unavailable. No history read recreates a Project, child or seed, grants access, approves/builds or dispatches work. There is no automatic source deletion; retention_policy_ref=PENDING_RETENTION_DECISION, with Case L-3 receipt/audit/source-lineage versus planning/chat-content candidates.
+Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody at one verified boundary. Restore validates Storage instance, recovery epoch, original refs, hashes and complete event/receipt joins; missing originals, source/receipt skew, an unissued group, partial backup or stale epoch fences mutation and successful publication. A confirmed older restore does not replay a lost post-backup action. Incomplete legacy evidence is compatibility-read only and cannot be upgraded by inference. Source refs require current access/deletion checks; unavailable sources return truthful unavailable. No history read recreates a Project, child or seed, grants access, approves/builds or dispatches work. There is no automatic source deletion; Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «retention_policy_ref=PENDING_RETENTION_DECISION», with Case L-3 receipt/audit/source-lineage versus planning/chat-content candidates.
 
 The independent passive consumer is `reader.wizard_opened_history@1.0.0`, selecting only this exact event/schema/version and authorized actual Project/PlanningRun/child/request. It explicitly adopts SP-278, `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0`, `event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_record_index_checkpoint.v1@1.0.0`. The generic projector atomically commits index rows and its prior-value-CAS checkpoint over complete source coverage including nonmatching rows; max matching sequence is never coverage. The reader verifies root/generation/frontier and the actual live ten-field read token in one read transaction. Any durable token is DL-076's nine-field projection without persisted redb_snapshot_id. No family-specific durable cursor/projection is created. Existing RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN assignments remain. Reads and rebuilds are effect-free; compatibility projector_replay_only cannot append or run the owner.
 
@@ -1300,6 +1444,10 @@ Withdrawal cuts off this exact writer admission first, drains or fences pending 
 
 A verified restore preserves original source/receipt bytes and their original source recovery_epoch. If the selected current epoch is newer, mutation or successful publication additionally requires the actual SP-286/CV-339 restore_admission covering every dependent original event plus the existing verified backup manifest inventory covering the exact typed source key and SHA-256 of its canonical MessagePack source value; a caller-supplied epoch/hash cannot authorize that binding. Missing admission, source inventory or exact original receipt coverage fences. No original is restamped to the current epoch.
 
+
+Current selected assignment (2026-11-19): wizard.deferred_payload.loaded@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2430. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): wizard.opened@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2431. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### Wizard Deferred Payload Loaded Original Custody
 
 For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384. The closed source schema selects #/$defs/inline for at most 16384 canonical MessagePack bytes, or #/$defs/payload_reference at the same typed source key for SP-337 overflow. That closed reference retains schema identity, Storage instance, recovery_epoch, value_revision, exact source_key and source_payload_ref (64-character lowercase-hex BLAKE3 id, byte_size, media_type=application/vnd.puppetmaster.wizard-seed-load-evidence+msgpack). It resolves the exact complete original canonical MessagePack source, validated against #/$defs/inline and every original identity/key field. Pack bytes and their index are durable before the reference commit, event append or publication; absent, unreadable, corrupt, wrong-size/type, undurable or substituted payloads fence. A direct redb value over 16384 bytes is refused. Both representations use the existing typed-key/value_revision CAS. Mandatory coherent backup/restore includes the physical row, reachable payload pack/index and the original source/event/receipt dependencies at one verified boundary; the source inventory hash commits the physical canonical MessagePack row. The group budget is advisory and cannot refuse canonical writes or prune history. This changes no retention/deletion policy, original source bytes or event payload. Full-checker positives cover exactly 16384 inline bytes and 16385 referenced bytes; negatives cover 16385 direct bytes and invalid references.
@@ -1308,7 +1456,7 @@ NEW original source and event custody contract for `wizard.deferred_payload.load
 
 Observe the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual current PlanningRun intake child. The original successful open event and its exact first receipt must already resolve; predecessor_event_id is that wizard.opened event for the same original request, child, Project, Named Plan, seed and context. Loading is distinct from opening; route-open, a stale seed, unsupported raw legacy payload or failed load emits nothing. Receipt-backed acceptance is not a compile/approval/execution grant. A serialized Storage-instance/recovery-epoch/typed-key writer compare-and-swaps value_revision and inserts one immutable prepared source for the request. Same request/body returns it; conflicting body fences. Freeze the entire original semantic envelope before Storage append; Storage binds its assigned fields under its gate. This family explicitly adopts SP-286/CV-339 full-value v2 receipt resolution, SP-336/SP-347 durability and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. Order is exact-family admission/current owner guards, original source/result commit, normal append using dedupe_by_idempotency_key, original full-value receipt resolution, source proof CAS, then recorded-event/dependent publication. No cross-store atomic transaction is claimed. Attach the original unchanged eleven-field AppendReceipt, original_segment_ref and original_event_value_commitment; event/sequence, synced group/watermark, full-value equality and actual selected Storage instance must all agree. Pending source rows cannot claim recorded success. Crash before append retries the same frozen event; lost acknowledgement resolves its original receipt; crash after receipt attachment returns it without reopening or loading again. Unknown effects, missing source/custody or changed bytes fence, never invent a result or receipt.
 
-Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody at one verified boundary. Restore validates Storage instance, recovery epoch, original refs, hashes and complete event/receipt joins; missing originals, source/receipt skew, an unissued group, partial backup or stale epoch fences mutation and successful publication. A confirmed older restore does not replay a lost post-backup action. Incomplete legacy evidence is compatibility-read only and cannot be upgraded by inference. Source refs require current access/deletion checks; unavailable sources return truthful unavailable. No history read recreates a Project, child or seed, grants access, approves/builds or dispatches work. There is no automatic source deletion; retention_policy_ref=PENDING_RETENTION_DECISION, with Case L-3 receipt/audit/source-lineage versus planning/chat-content candidates.
+Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody at one verified boundary. Restore validates Storage instance, recovery epoch, original refs, hashes and complete event/receipt joins; missing originals, source/receipt skew, an unissued group, partial backup or stale epoch fences mutation and successful publication. A confirmed older restore does not replay a lost post-backup action. Incomplete legacy evidence is compatibility-read only and cannot be upgraded by inference. Source refs require current access/deletion checks; unavailable sources return truthful unavailable. No history read recreates a Project, child or seed, grants access, approves/builds or dispatches work. There is no automatic source deletion; Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «retention_policy_ref=PENDING_RETENTION_DECISION», with Case L-3 receipt/audit/source-lineage versus planning/chat-content candidates.
 
 The independent passive consumer is `reader.wizard_deferred_payload_loaded_history@1.0.0`, selecting only this exact event/schema/version and authorized actual Project/PlanningRun/child/request. It explicitly adopts SP-278, `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0`, `event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_record_index_checkpoint.v1@1.0.0`. The generic projector atomically commits index rows and its prior-value-CAS checkpoint over complete source coverage including nonmatching rows; max matching sequence is never coverage. The reader verifies root/generation/frontier and the actual live ten-field read token in one read transaction. Any durable token is DL-076's nine-field projection without persisted redb_snapshot_id. No family-specific durable cursor/projection is created. Existing RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN assignments remain. Reads and rebuilds are effect-free; compatibility projector_replay_only cannot append or run the owner.
 
@@ -1317,6 +1465,8 @@ Withdrawal cuts off this exact writer admission first, drains or fences pending 
 
 A verified restore preserves original source/receipt bytes and their original source recovery_epoch. If the selected current epoch is newer, mutation or successful publication additionally requires the actual SP-286/CV-339 restore_admission covering every dependent original event plus the existing verified backup manifest inventory covering the exact typed source key and SHA-256 of its canonical MessagePack source value; a caller-supplied epoch/hash cannot authorize that binding. Missing admission, source inventory or exact original receipt coverage fences. No original is restamped to the current epoch.
 
+
+Current selected assignment (2026-11-19): wizard.deferred_payload.loaded@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2430. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-550 - filesafe.command_denied persistence and read contract
 
 ```yaml
@@ -1324,27 +1474,53 @@ plan_unit_id: SP-550
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "filesafe.command_denied adopts SP-286 strict full-value custody and SP-278 generic index proof; storage.filesafe_command_denied_history_read.v1@1.0.0\
-  \ is passive with none_required family checkpoint. Project history adopts RP-OPERATIONAL-2555D (DL-422);\
-  \ application history remains PENDING_RETENTION_DECISION.\n\nPNC-019 s4r retention binding for `filesafe.command_denied`\
-  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-422,\
-  \ DL-460.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"terminal_transition\", \"\
-  cardinality_scope\": \"project\", \"expiry_action\": \"compact\", \"max_cardinality\": 2000000, \"overflow_action\"\
-  : \"fail_closed\", \"ttl_seconds\": 220752000}.\n\nOnly an already owner-supported application edition\
-  \ selects `RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D@1.0.0`; Project records select the Project\
-  \ policy and never count in both allowances.\n\nApplication counting, storage-pressure refusal, explicit\
-  \ separately confirmed Server-scoped authorized deletion, immediate hiding, 24-hour active-copy and\
-  \ 30-day backup purge, restore-before-disclosure tombstones and every independent protection follow\
-  \ DL-460 in full. Ordinary file/chat/Project deletion cannot delete this separate application history;\
-  \ this creates no application-wide wipe control.\n\nThis paragraph supersedes earlier pending statements\
-  \ only for the exact assigned facets above. All independent source, receipt, referenced-body and backup\
-  \ lifetimes remain with their own owners. Legal/investigation holds, required references, recovery,\
-  \ rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting\
-  \ access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission,\
-  \ native proof or governance clearance is granted.\n"
+canonical_text: 'filesafe.command_denied adopts SP-286 strict full-value custody and SP-278 generic index proof;
+  storage.filesafe_command_denied_history_read.v1@1.0.0 is passive with none_required family checkpoint. Historical
+  preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Project history adopts RP-OPERATIONAL-2555D
+  (DL-422); application history remains PENDING_RETENTION_DECISION.»
+
+
+  PNC-019 s4r retention binding for `filesafe.command_denied` (2026-11-14).
+
+
+  Event history selects Application = RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D@1.0.0 (anchor_kind=creation,
+  cardinality_scope=instance), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project)
+  as recorded by Plans/Decision_Log.md#DL-2301, under DL-422, DL-460.
+
+
+  Use the existing policy object unchanged: {"anchor_kind": "terminal_transition", "cardinality_scope": "project",
+  "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 220752000}.
+
+
+  Only an already owner-supported application edition selects `RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D@1.0.0`;
+  Project records select the Project policy and never count in both allowances.
+
+
+  Application counting, storage-pressure refusal, explicit separately confirmed Server-scoped authorized deletion,
+  immediate hiding, 24-hour active-copy and 30-day backup purge, restore-before-disclosure tombstones and every
+  independent protection follow DL-460 in full. Ordinary file/chat/Project deletion cannot delete this separate
+  application history; this creates no application-wide wipe control.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
+
+
+  Current selected assignment (2026-11-19): filesafe.command_denied@2.0.0 is registered for application_or_project
+  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2301. Its event history selects Application
+  = RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project
+  = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); Plans/storage-plan.md#SP-550
+  owns the event policy''s existing anchors, counts, holds and deletion rules. Original sources and coherent backups
+  retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication
+  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer
+  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.
+  No native adoption, new retention choice or governance seal follows.'
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - DL-422
@@ -1353,7 +1529,8 @@ depends_on:
 - SP-286
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -1384,7 +1561,7 @@ negative_constraints:
 
 **Redaction and custody.** Snapshot bodies stay off-worktree under FileSafe's exact snapshot custody; SP-337 owns packed blobs and body addressing. Events contain only sanitized previews, non-secret identities, bounded reason/diagnostic text, refs and hashes: never raw command credentials, environment, file bytes or secret path material. Original guarded input stays only in its owner custody, not a second event body. FileSafe checks actor authorization and exact Host/root at admission and on every body read; hash/ref possession grants no access. Storage's coherent backup includes original source, source holds, seglog and SP-286 full-value receipt custody under the same backup/restore epoch. Restore of older state cannot recapture missing original work or replay effects. A deleted/inaccessible body is unavailable; history cannot recreate it or defeat a deletion/hold. No independent body deletion policy is authored.
 
-**Retention — Card 2 item 2.a, DL-422 (review round 7).** Project-scoped `filesafe.command_denied` is seven-year troubleshooting history: `retention_policy_ref = RP-OPERATIONAL-2555D`, reusing the exact existing Storage registry object (fixed_ttl, terminal_transition, 220752000 seconds = 2,555 days, 2,000,000 records per Project, fail_closed overflow, hold_eligible, compact expiry). For this binding the terminal-transition anchor is the saved original refusal or startup-failure result at its first successful durable save, never a retry, reprocessing, recovery, later append or observation time. Expiry is inclusive at that anchor plus 2,555 days. Remove only expired entries that no investigation, active reference, recovery or backup protects; existing legal holds, preserved/recent-run, rollback and maintenance references still override eligibility. If full and no entry may expire, refuse new entries rather than evict an unexpired or protected row. The extra troubleshooting entry may disappear only after expiry and protection checks; its original approval or action result keeps its own lifetime. Supporting approvals, source snapshots and recovery logs retain their own policies. Jared answered "i approve all of it"; the presented deck maps approve all to option A. The accepted answer is landed in `Plans/Decision_Log.md#DL-422` (batch 1); this unit applies its exact option A and shared conditions. This applies exactly item 2.a and Card 2's shared conditions. It adds no counting or deletion rule for future entries outside Projects. **Application scope remains PENDING_RETENTION_DECISION and may not record this event until exact approved rules exist.** Exact remaining question: What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.command_denied` history? A Project policy must not be inferred for it. No original body, snapshot, transaction, generic index or checkpoint lifetime is reopened.
+**Retention — Card 2 item 2.a, DL-422 (review round 7).** Project-scoped `filesafe.command_denied` is seven-year troubleshooting history: `retention_policy_ref = RP-OPERATIONAL-2555D`, reusing the exact existing Storage registry object (fixed_ttl, terminal_transition, 220752000 seconds = 2,555 days, 2,000,000 records per Project, fail_closed overflow, hold_eligible, compact expiry). For this binding the terminal-transition anchor is the saved original refusal or startup-failure result at its first successful durable save, never a retry, reprocessing, recovery, later append or observation time. Expiry is inclusive at that anchor plus 2,555 days. Remove only expired entries that no investigation, active reference, recovery or backup protects; existing legal holds, preserved/recent-run, rollback and maintenance references still override eligibility. If full and no entry may expire, refuse new entries rather than evict an unexpired or protected row. The extra troubleshooting entry may disappear only after expiry and protection checks; its original approval or action result keeps its own lifetime. Supporting approvals, source snapshots and recovery logs retain their own policies. Jared answered "i approve all of it"; the presented deck maps approve all to option A. The accepted answer is landed in `Plans/Decision_Log.md#DL-422` (batch 1); this unit applies its exact option A and shared conditions. This applies exactly item 2.a and Card 2's shared conditions. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «It adds no counting or deletion rule for future entries outside Projects. **Application scope remains PENDING_RETENTION_DECISION and may not record this event until exact approved rules exist.** Exact remaining question: What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.command_denied` history?» A Project policy must not be inferred for it. No original body, snapshot, transaction, generic index or checkpoint lifetime is reopened.
 
 **Withdrawal and rebuild.** Cut off new `filesafe.command_denied` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_command_denied_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
 
@@ -1394,7 +1571,7 @@ For `filesafe.command_denied`, withdrawal captures an independently selected ret
 
 **Exact original/issued joins for `filesafe.command_denied`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_command_denied.contract.json` and `CV-550` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
 
-This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; Application PENDING_RETENTION_DECISION independently blocks application admission; Project retention is decided by DL-422.
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «The static admission oracle still returns missing_event_registration for this exact family; Application PENDING_RETENTION_DECISION independently blocks application admission; Project retention is decided by DL-422.»
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-550, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
@@ -1409,27 +1586,53 @@ plan_unit_id: SP-551
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "filesafe.destructive_override_denied adopts SP-286 strict full-value custody and SP-278 generic index\
-  \ proof; storage.filesafe_destructive_override_denied_history_read.v1@1.0.0 is passive with none_required\
-  \ family checkpoint. Project history adopts RP-AUTHORITY-INDEFINITE (DL-423); application history remains\
-  \ PENDING_RETENTION_DECISION.\n\nPNC-019 s4r retention binding for `filesafe.destructive_override_denied`\
-  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-423,\
-  \ DL-461.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"creation\", \"cardinality_scope\"\
-  : null, \"expiry_action\": \"none\", \"max_cardinality\": null, \"overflow_action\": \"fail_closed\"\
-  , \"ttl_seconds\": null}.\n\nOnly an already owner-supported application edition selects `RP-AUTHORITY-INDEFINITE@1.0.0`;\
-  \ Project records select the Project policy and never count in both allowances.\n\nApplication counting,\
-  \ storage-pressure refusal, explicit separately confirmed Server-scoped authorized deletion, immediate\
-  \ hiding, 24-hour active-copy and 30-day backup purge, restore-before-disclosure tombstones and every\
-  \ independent protection follow DL-461 in full. Ordinary file/chat/Project deletion cannot delete this\
-  \ separate application history; this creates no application-wide wipe control.\n\nThis paragraph supersedes\
-  \ earlier pending statements only for the exact assigned facets above. All independent source, receipt,\
-  \ referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required\
-  \ references, recovery, rollback, maintenance, protected backups and latest-25-run protection override\
-  \ cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal,\
-  \ no hold release, admission, native proof or governance clearance is granted.\n"
+canonical_text: 'filesafe.destructive_override_denied adopts SP-286 strict full-value custody and SP-278 generic
+  index proof; storage.filesafe_destructive_override_denied_history_read.v1@1.0.0 is passive with none_required
+  family checkpoint. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Project
+  history adopts RP-AUTHORITY-INDEFINITE (DL-423); application history remains PENDING_RETENTION_DECISION.»
+
+
+  PNC-019 s4r retention binding for `filesafe.destructive_override_denied` (2026-11-14).
+
+
+  Event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null),
+  Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null) as recorded by Plans/Decision_Log.md#DL-2302,
+  under DL-423, DL-461.
+
+
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action":
+  "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+
+
+  Only an already owner-supported application edition selects `RP-AUTHORITY-INDEFINITE@1.0.0`; Project records select
+  the Project policy and never count in both allowances.
+
+
+  Application counting, storage-pressure refusal, explicit separately confirmed Server-scoped authorized deletion,
+  immediate hiding, 24-hour active-copy and 30-day backup purge, restore-before-disclosure tombstones and every
+  independent protection follow DL-461 in full. Ordinary file/chat/Project deletion cannot delete this separate
+  application history; this creates no application-wide wipe control.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
+
+
+  Current selected assignment (2026-11-19): filesafe.destructive_override_denied@2.0.0 is registered for application_or_project
+  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2302. Its event history selects Application
+  = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0
+  (anchor_kind=creation, cardinality_scope=null); Plans/storage-plan.md#SP-551 owns the event policy''s existing
+  anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner
+  policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected
+  schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration
+  or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice
+  or governance seal follows.'
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - DL-423
@@ -1438,7 +1641,8 @@ depends_on:
 - SP-286
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -1469,7 +1673,7 @@ negative_constraints:
 
 **Redaction and custody.** Snapshot bodies stay off-worktree under FileSafe's exact snapshot custody; SP-337 owns packed blobs and body addressing. Events contain only sanitized previews, non-secret identities, bounded reason/diagnostic text, refs and hashes: never raw command credentials, environment, file bytes or secret path material. Original guarded input stays only in its owner custody, not a second event body. FileSafe checks actor authorization and exact Host/root at admission and on every body read; hash/ref possession grants no access. Storage's coherent backup includes original source, source holds, seglog and SP-286 full-value receipt custody under the same backup/restore epoch. Restore of older state cannot recapture missing original work or replay effects. A deleted/inaccessible body is unavailable; history cannot recreate it or defeat a deletion/hold. No independent body deletion policy is authored.
 
-**Retention — Card 2 item 2.b, DL-423 (review round 7).** Project-scoped `filesafe.destructive_override_denied` is permanent proof of the request, refusal or failure: `retention_policy_ref = RP-AUTHORITY-INDEFINITE`, reusing the exact existing Storage registry object (indefinite, no TTL or count limit, fail_closed overflow, hold_eligible, no expiry action). It never expires by age or count, remains inspectable after seven years, and survives deletion of the file or chat it describes. Only explicit **Delete Puppet Master project data** removes this Project history under existing authorization, deletion and protection rules; **Remove project from list** does not delete that data. If space runs out, refuse new entries instead of dropping old ones. Supporting approvals, source snapshots and recovery logs retain their own lifetimes; permanent EventRecord proof grants no access to a deleted or inaccessible linked body. Jared answered "i approve all of it"; the presented deck maps approve all to option A. The accepted answer is landed in `Plans/Decision_Log.md#DL-423` (batch 1); this unit applies its exact option A and shared conditions. This applies exactly item 2.b and Card 2's shared conditions. It adds no counting or deletion rule for future entries outside Projects. **Application scope remains PENDING_RETENTION_DECISION and may not record this event until exact approved rules exist.** Exact remaining question: What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.destructive_override_denied` history? A Project policy must not be inferred for it. No original body, snapshot, transaction, generic index or checkpoint lifetime is reopened.
+**Retention — Card 2 item 2.b, DL-423 (review round 7).** Project-scoped `filesafe.destructive_override_denied` is permanent proof of the request, refusal or failure: `retention_policy_ref = RP-AUTHORITY-INDEFINITE`, reusing the exact existing Storage registry object (indefinite, no TTL or count limit, fail_closed overflow, hold_eligible, no expiry action). It never expires by age or count, remains inspectable after seven years, and survives deletion of the file or chat it describes. Only explicit **Delete Puppet Master project data** removes this Project history under existing authorization, deletion and protection rules; **Remove project from list** does not delete that data. If space runs out, refuse new entries instead of dropping old ones. Supporting approvals, source snapshots and recovery logs retain their own lifetimes; permanent EventRecord proof grants no access to a deleted or inaccessible linked body. Jared answered "i approve all of it"; the presented deck maps approve all to option A. The accepted answer is landed in `Plans/Decision_Log.md#DL-423` (batch 1); this unit applies its exact option A and shared conditions. This applies exactly item 2.b and Card 2's shared conditions. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «It adds no counting or deletion rule for future entries outside Projects. **Application scope remains PENDING_RETENTION_DECISION and may not record this event until exact approved rules exist.** Exact remaining question: What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.destructive_override_denied` history?» A Project policy must not be inferred for it. No original body, snapshot, transaction, generic index or checkpoint lifetime is reopened.
 
 **Withdrawal and rebuild.** Cut off new `filesafe.destructive_override_denied` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_destructive_override_denied_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
 
@@ -1479,7 +1683,7 @@ For `filesafe.destructive_override_denied`, withdrawal captures an independently
 
 **Exact original/issued joins for `filesafe.destructive_override_denied`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_destructive_override_denied.contract.json` and `CV-551` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
 
-This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; Application PENDING_RETENTION_DECISION independently blocks application admission; Project retention is decided by DL-423.
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «The static admission oracle still returns missing_event_registration for this exact family; Application PENDING_RETENTION_DECISION independently blocks application admission; Project retention is decided by DL-423.»
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-551, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
@@ -1494,13 +1698,12 @@ plan_unit_id: SP-552
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: filesafe.destructive_override_granted adopts SP-286 strict full-value
-  custody and SP-278 generic index proof; storage.filesafe_destructive_override_granted_history_read.v1@1.0.0
-  is passive with none_required family checkpoint. Event-history retention uses
-  RP-AUTHORITY-INDEFINITE under the existing Case L-3 exact-kind default.
+canonical_text: filesafe.destructive_override_granted adopts SP-286 strict full-value custody and SP-278 generic
+  index proof; storage.filesafe_destructive_override_granted_history_read.v1@1.0.0 is passive with none_required
+  family checkpoint. Event-history retention uses RP-AUTHORITY-INDEFINITE under the existing Case L-3 exact-kind
+  default.
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - CV-552
@@ -1508,7 +1711,8 @@ depends_on:
 - SP-286
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -1548,7 +1752,7 @@ For `filesafe.destructive_override_granted`, withdrawal captures an independentl
 
 **Exact original/issued joins for `filesafe.destructive_override_granted`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_destructive_override_granted.contract.json` and `CV-552` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
 
-This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; The resolved retention assignment does not supply registry admission or native adoption.
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The static admission oracle still returns missing_event_registration for this exact family»; The resolved retention assignment does not supply registry admission or native adoption.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-552, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
@@ -1556,6 +1760,8 @@ ContractRef: ContractName:Plans/Contracts_V0.md#CV-552, ContractName:Plans/stora
 
 
 
+
+Current selected assignment (2026-11-19): filesafe.destructive_override_granted@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2303. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-553 - filesafe.destructive_override_requested persistence and read contract
 
 ```yaml
@@ -1563,27 +1769,53 @@ plan_unit_id: SP-553
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "filesafe.destructive_override_requested adopts SP-286 strict full-value custody and SP-278 generic index\
-  \ proof; storage.filesafe_destructive_override_requested_history_read.v1@1.0.0 is passive with none_required\
-  \ family checkpoint. Project history adopts RP-AUTHORITY-INDEFINITE (DL-424); application history remains\
-  \ PENDING_RETENTION_DECISION.\n\nPNC-019 s4r retention binding for `filesafe.destructive_override_requested`\
-  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-424,\
-  \ DL-462.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"creation\", \"cardinality_scope\"\
-  : null, \"expiry_action\": \"none\", \"max_cardinality\": null, \"overflow_action\": \"fail_closed\"\
-  , \"ttl_seconds\": null}.\n\nOnly an already owner-supported application edition selects `RP-AUTHORITY-INDEFINITE@1.0.0`;\
-  \ Project records select the Project policy and never count in both allowances.\n\nApplication counting,\
-  \ storage-pressure refusal, explicit separately confirmed Server-scoped authorized deletion, immediate\
-  \ hiding, 24-hour active-copy and 30-day backup purge, restore-before-disclosure tombstones and every\
-  \ independent protection follow DL-462 in full. Ordinary file/chat/Project deletion cannot delete this\
-  \ separate application history; this creates no application-wide wipe control.\n\nThis paragraph supersedes\
-  \ earlier pending statements only for the exact assigned facets above. All independent source, receipt,\
-  \ referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required\
-  \ references, recovery, rollback, maintenance, protected backups and latest-25-run protection override\
-  \ cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal,\
-  \ no hold release, admission, native proof or governance clearance is granted.\n"
+canonical_text: 'filesafe.destructive_override_requested adopts SP-286 strict full-value custody and SP-278 generic
+  index proof; storage.filesafe_destructive_override_requested_history_read.v1@1.0.0 is passive with none_required
+  family checkpoint. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Project
+  history adopts RP-AUTHORITY-INDEFINITE (DL-424); application history remains PENDING_RETENTION_DECISION.»
+
+
+  PNC-019 s4r retention binding for `filesafe.destructive_override_requested` (2026-11-14).
+
+
+  Event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null),
+  Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null) as recorded by Plans/Decision_Log.md#DL-2304,
+  under DL-424, DL-462.
+
+
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action":
+  "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+
+
+  Only an already owner-supported application edition selects `RP-AUTHORITY-INDEFINITE@1.0.0`; Project records select
+  the Project policy and never count in both allowances.
+
+
+  Application counting, storage-pressure refusal, explicit separately confirmed Server-scoped authorized deletion,
+  immediate hiding, 24-hour active-copy and 30-day backup purge, restore-before-disclosure tombstones and every
+  independent protection follow DL-462 in full. Ordinary file/chat/Project deletion cannot delete this separate
+  application history; this creates no application-wide wipe control.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
+
+
+  Current selected assignment (2026-11-19): filesafe.destructive_override_requested@2.0.0 is registered for application_or_project
+  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2304. Its event history selects Application
+  = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0
+  (anchor_kind=creation, cardinality_scope=null); Plans/storage-plan.md#SP-553 owns the event policy''s existing
+  anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner
+  policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected
+  schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration
+  or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice
+  or governance seal follows.'
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - DL-424
@@ -1592,7 +1824,8 @@ depends_on:
 - SP-286
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -1623,7 +1856,7 @@ negative_constraints:
 
 **Redaction and custody.** Snapshot bodies stay off-worktree under FileSafe's exact snapshot custody; SP-337 owns packed blobs and body addressing. Events contain only sanitized previews, non-secret identities, bounded reason/diagnostic text, refs and hashes: never raw command credentials, environment, file bytes or secret path material. Original guarded input stays only in its owner custody, not a second event body. FileSafe checks actor authorization and exact Host/root at admission and on every body read; hash/ref possession grants no access. Storage's coherent backup includes original source, source holds, seglog and SP-286 full-value receipt custody under the same backup/restore epoch. Restore of older state cannot recapture missing original work or replay effects. A deleted/inaccessible body is unavailable; history cannot recreate it or defeat a deletion/hold. No independent body deletion policy is authored.
 
-**Retention — Card 2 item 2.c, DL-424 (review round 7).** Project-scoped `filesafe.destructive_override_requested` is permanent proof of the request, refusal or failure: `retention_policy_ref = RP-AUTHORITY-INDEFINITE`, reusing the exact existing Storage registry object (indefinite, no TTL or count limit, fail_closed overflow, hold_eligible, no expiry action). It never expires by age or count, remains inspectable after seven years, and survives deletion of the file or chat it describes. Only explicit **Delete Puppet Master project data** removes this Project history under existing authorization, deletion and protection rules; **Remove project from list** does not delete that data. If space runs out, refuse new entries instead of dropping old ones. Supporting approvals, source snapshots and recovery logs retain their own lifetimes; permanent EventRecord proof grants no access to a deleted or inaccessible linked body. Jared answered "i approve all of it"; the presented deck maps approve all to option A. The accepted answer is landed in `Plans/Decision_Log.md#DL-424` (batch 1); this unit applies its exact option A and shared conditions. This applies exactly item 2.c and Card 2's shared conditions. It adds no counting or deletion rule for future entries outside Projects. **Application scope remains PENDING_RETENTION_DECISION and may not record this event until exact approved rules exist.** Exact remaining question: What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.destructive_override_requested` history? A Project policy must not be inferred for it. No original body, snapshot, transaction, generic index or checkpoint lifetime is reopened.
+**Retention — Card 2 item 2.c, DL-424 (review round 7).** Project-scoped `filesafe.destructive_override_requested` is permanent proof of the request, refusal or failure: `retention_policy_ref = RP-AUTHORITY-INDEFINITE`, reusing the exact existing Storage registry object (indefinite, no TTL or count limit, fail_closed overflow, hold_eligible, no expiry action). It never expires by age or count, remains inspectable after seven years, and survives deletion of the file or chat it describes. Only explicit **Delete Puppet Master project data** removes this Project history under existing authorization, deletion and protection rules; **Remove project from list** does not delete that data. If space runs out, refuse new entries instead of dropping old ones. Supporting approvals, source snapshots and recovery logs retain their own lifetimes; permanent EventRecord proof grants no access to a deleted or inaccessible linked body. Jared answered "i approve all of it"; the presented deck maps approve all to option A. The accepted answer is landed in `Plans/Decision_Log.md#DL-424` (batch 1); this unit applies its exact option A and shared conditions. This applies exactly item 2.c and Card 2's shared conditions. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «It adds no counting or deletion rule for future entries outside Projects. **Application scope remains PENDING_RETENTION_DECISION and may not record this event until exact approved rules exist.** Exact remaining question: What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.destructive_override_requested` history?» A Project policy must not be inferred for it. No original body, snapshot, transaction, generic index or checkpoint lifetime is reopened.
 
 **Withdrawal and rebuild.** Cut off new `filesafe.destructive_override_requested` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_destructive_override_requested_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
 
@@ -1633,7 +1866,7 @@ For `filesafe.destructive_override_requested`, withdrawal captures an independen
 
 **Exact original/issued joins for `filesafe.destructive_override_requested`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_destructive_override_requested.contract.json` and `CV-553` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
 
-This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; Application PENDING_RETENTION_DECISION independently blocks application admission; Project retention is decided by DL-424.
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «The static admission oracle still returns missing_event_registration for this exact family; Application PENDING_RETENTION_DECISION independently blocks application admission; Project retention is decided by DL-424.»
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-553, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
@@ -1648,27 +1881,53 @@ plan_unit_id: SP-554
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "filesafe.guard_init_failed adopts SP-286 strict full-value custody and SP-278 generic index proof; storage.filesafe_guard_init_failed_history_read.v1@1.0.0\
-  \ is passive with none_required family checkpoint. Project history adopts RP-OPERATIONAL-2555D (DL-425);\
-  \ application history remains PENDING_RETENTION_DECISION.\n\nPNC-019 s4r retention binding for `filesafe.guard_init_failed`\
-  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-425,\
-  \ DL-463.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"terminal_transition\", \"\
-  cardinality_scope\": \"project\", \"expiry_action\": \"compact\", \"max_cardinality\": 2000000, \"overflow_action\"\
-  : \"fail_closed\", \"ttl_seconds\": 220752000}.\n\nOnly an already owner-supported application edition\
-  \ selects `RP-FILESAFE-GUARD-FAILURE-APPLICATION-2555D@1.0.0`; Project records select the Project policy\
-  \ and never count in both allowances.\n\nApplication counting, storage-pressure refusal, explicit separately\
-  \ confirmed Server-scoped authorized deletion, immediate hiding, 24-hour active-copy and 30-day backup\
-  \ purge, restore-before-disclosure tombstones and every independent protection follow DL-463 in full.\
-  \ Ordinary file/chat/Project deletion cannot delete this separate application history; this creates\
-  \ no application-wide wipe control.\n\nThis paragraph supersedes earlier pending statements only for\
-  \ the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes\
-  \ remain with their own owners. Legal/investigation holds, required references, recovery, rollback,\
-  \ maintenance, protected backups and latest-25-run protection override cleanup without granting access.\
-  \ No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native\
-  \ proof or governance clearance is granted.\n"
+canonical_text: 'filesafe.guard_init_failed adopts SP-286 strict full-value custody and SP-278 generic index proof;
+  storage.filesafe_guard_init_failed_history_read.v1@1.0.0 is passive with none_required family checkpoint. Historical
+  preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Project history adopts RP-OPERATIONAL-2555D
+  (DL-425); application history remains PENDING_RETENTION_DECISION.»
+
+
+  PNC-019 s4r retention binding for `filesafe.guard_init_failed` (2026-11-14).
+
+
+  Event history selects Application = RP-FILESAFE-GUARD-FAILURE-APPLICATION-2555D@1.0.0 (anchor_kind=creation, cardinality_scope=instance),
+  Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project) as recorded
+  by Plans/Decision_Log.md#DL-2305, under DL-425, DL-463.
+
+
+  Use the existing policy object unchanged: {"anchor_kind": "terminal_transition", "cardinality_scope": "project",
+  "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 220752000}.
+
+
+  Only an already owner-supported application edition selects `RP-FILESAFE-GUARD-FAILURE-APPLICATION-2555D@1.0.0`;
+  Project records select the Project policy and never count in both allowances.
+
+
+  Application counting, storage-pressure refusal, explicit separately confirmed Server-scoped authorized deletion,
+  immediate hiding, 24-hour active-copy and 30-day backup purge, restore-before-disclosure tombstones and every
+  independent protection follow DL-463 in full. Ordinary file/chat/Project deletion cannot delete this separate
+  application history; this creates no application-wide wipe control.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
+
+
+  Current selected assignment (2026-11-19): filesafe.guard_init_failed@2.0.0 is registered for application_or_project
+  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2305. Its event history selects Application
+  = RP-FILESAFE-GUARD-FAILURE-APPLICATION-2555D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project
+  = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); Plans/storage-plan.md#SP-554
+  owns the event policy''s existing anchors, counts, holds and deletion rules. Original sources and coherent backups
+  retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication
+  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer
+  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.
+  No native adoption, new retention choice or governance seal follows.'
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - DL-425
@@ -1677,7 +1936,8 @@ depends_on:
 - SP-286
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -1708,7 +1968,7 @@ negative_constraints:
 
 **Redaction and custody.** Snapshot bodies stay off-worktree under FileSafe's exact snapshot custody; SP-337 owns packed blobs and body addressing. Events contain only sanitized previews, non-secret identities, bounded reason/diagnostic text, refs and hashes: never raw command credentials, environment, file bytes or secret path material. Original guarded input stays only in its owner custody, not a second event body. FileSafe checks actor authorization and exact Host/root at admission and on every body read; hash/ref possession grants no access. Storage's coherent backup includes original source, source holds, seglog and SP-286 full-value receipt custody under the same backup/restore epoch. Restore of older state cannot recapture missing original work or replay effects. A deleted/inaccessible body is unavailable; history cannot recreate it or defeat a deletion/hold. No independent body deletion policy is authored.
 
-**Retention — Card 2 item 2.d, DL-425 (review round 7).** Project-scoped `filesafe.guard_init_failed` is seven-year troubleshooting history: `retention_policy_ref = RP-OPERATIONAL-2555D`, reusing the exact existing Storage registry object (fixed_ttl, terminal_transition, 220752000 seconds = 2,555 days, 2,000,000 records per Project, fail_closed overflow, hold_eligible, compact expiry). For this binding the terminal-transition anchor is the saved original refusal or startup-failure result at its first successful durable save, never a retry, reprocessing, recovery, later append or observation time. Expiry is inclusive at that anchor plus 2,555 days. Remove only expired entries that no investigation, active reference, recovery or backup protects; existing legal holds, preserved/recent-run, rollback and maintenance references still override eligibility. If full and no entry may expire, refuse new entries rather than evict an unexpired or protected row. The extra troubleshooting entry may disappear only after expiry and protection checks; its original approval or action result keeps its own lifetime. Supporting approvals, source snapshots and recovery logs retain their own policies. Jared answered "i approve all of it"; the presented deck maps approve all to option A. The accepted answer is landed in `Plans/Decision_Log.md#DL-425` (batch 1); this unit applies its exact option A and shared conditions. This applies exactly item 2.d and Card 2's shared conditions. It adds no counting or deletion rule for future entries outside Projects. **Application scope remains PENDING_RETENTION_DECISION and may not record this event until exact approved rules exist.** Exact remaining question: What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.guard_init_failed` history? A Project policy must not be inferred for it. No original body, snapshot, transaction, generic index or checkpoint lifetime is reopened.
+**Retention — Card 2 item 2.d, DL-425 (review round 7).** Project-scoped `filesafe.guard_init_failed` is seven-year troubleshooting history: `retention_policy_ref = RP-OPERATIONAL-2555D`, reusing the exact existing Storage registry object (fixed_ttl, terminal_transition, 220752000 seconds = 2,555 days, 2,000,000 records per Project, fail_closed overflow, hold_eligible, compact expiry). For this binding the terminal-transition anchor is the saved original refusal or startup-failure result at its first successful durable save, never a retry, reprocessing, recovery, later append or observation time. Expiry is inclusive at that anchor plus 2,555 days. Remove only expired entries that no investigation, active reference, recovery or backup protects; existing legal holds, preserved/recent-run, rollback and maintenance references still override eligibility. If full and no entry may expire, refuse new entries rather than evict an unexpired or protected row. The extra troubleshooting entry may disappear only after expiry and protection checks; its original approval or action result keeps its own lifetime. Supporting approvals, source snapshots and recovery logs retain their own policies. Jared answered "i approve all of it"; the presented deck maps approve all to option A. The accepted answer is landed in `Plans/Decision_Log.md#DL-425` (batch 1); this unit applies its exact option A and shared conditions. This applies exactly item 2.d and Card 2's shared conditions. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «It adds no counting or deletion rule for future entries outside Projects. **Application scope remains PENDING_RETENTION_DECISION and may not record this event until exact approved rules exist.** Exact remaining question: What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.guard_init_failed` history?» A Project policy must not be inferred for it. No original body, snapshot, transaction, generic index or checkpoint lifetime is reopened.
 
 **Withdrawal and rebuild.** Cut off new `filesafe.guard_init_failed` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_guard_init_failed_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
 
@@ -1718,7 +1978,7 @@ For `filesafe.guard_init_failed`, withdrawal captures an independently selected 
 
 **Exact original/issued joins for `filesafe.guard_init_failed`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_guard_init_failed.contract.json` and `CV-554` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
 
-This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; Application PENDING_RETENTION_DECISION independently blocks application admission; Project retention is decided by DL-425.
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «The static admission oracle still returns missing_event_registration for this exact family; Application PENDING_RETENTION_DECISION independently blocks application admission; Project retention is decided by DL-425.»
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-554, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
@@ -1733,27 +1993,52 @@ plan_unit_id: SP-555
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "filesafe.path_denied adopts SP-286 strict full-value custody and SP-278 generic index proof; storage.filesafe_path_denied_history_read.v1@1.0.0\
-  \ is passive with none_required family checkpoint. Project history adopts RP-OPERATIONAL-2555D (DL-426);\
-  \ application history remains PENDING_RETENTION_DECISION.\n\nPNC-019 s4r retention binding for `filesafe.path_denied`\
-  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-426,\
-  \ DL-464.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"terminal_transition\", \"\
-  cardinality_scope\": \"project\", \"expiry_action\": \"compact\", \"max_cardinality\": 2000000, \"overflow_action\"\
-  : \"fail_closed\", \"ttl_seconds\": 220752000}.\n\nOnly an already owner-supported application edition\
-  \ selects `RP-FILESAFE-DENIED-PATH-APPLICATION-2555D@1.0.0`; Project records select the Project policy\
-  \ and never count in both allowances.\n\nApplication counting, storage-pressure refusal, explicit separately\
-  \ confirmed Server-scoped authorized deletion, immediate hiding, 24-hour active-copy and 30-day backup\
-  \ purge, restore-before-disclosure tombstones and every independent protection follow DL-464 in full.\
-  \ Ordinary file/chat/Project deletion cannot delete this separate application history; this creates\
-  \ no application-wide wipe control.\n\nThis paragraph supersedes earlier pending statements only for\
-  \ the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes\
-  \ remain with their own owners. Legal/investigation holds, required references, recovery, rollback,\
-  \ maintenance, protected backups and latest-25-run protection override cleanup without granting access.\
-  \ No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native\
-  \ proof or governance clearance is granted.\n"
+canonical_text: 'filesafe.path_denied adopts SP-286 strict full-value custody and SP-278 generic index proof; storage.filesafe_path_denied_history_read.v1@1.0.0
+  is passive with none_required family checkpoint. Historical preparation snapshot (2026-11-19, stale wording in
+  received dfea17a6c4): «Project history adopts RP-OPERATIONAL-2555D (DL-426); application history remains PENDING_RETENTION_DECISION.»
+
+
+  PNC-019 s4r retention binding for `filesafe.path_denied` (2026-11-14).
+
+
+  Event history selects Application = RP-FILESAFE-DENIED-PATH-APPLICATION-2555D@1.0.0 (anchor_kind=creation, cardinality_scope=instance),
+  Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project) as recorded
+  by Plans/Decision_Log.md#DL-2306, under DL-426, DL-464.
+
+
+  Use the existing policy object unchanged: {"anchor_kind": "terminal_transition", "cardinality_scope": "project",
+  "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 220752000}.
+
+
+  Only an already owner-supported application edition selects `RP-FILESAFE-DENIED-PATH-APPLICATION-2555D@1.0.0`;
+  Project records select the Project policy and never count in both allowances.
+
+
+  Application counting, storage-pressure refusal, explicit separately confirmed Server-scoped authorized deletion,
+  immediate hiding, 24-hour active-copy and 30-day backup purge, restore-before-disclosure tombstones and every
+  independent protection follow DL-464 in full. Ordinary file/chat/Project deletion cannot delete this separate
+  application history; this creates no application-wide wipe control.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
+
+
+  Current selected assignment (2026-11-19): filesafe.path_denied@2.0.0 is registered for application_or_project
+  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2306. Its event history selects Application
+  = RP-FILESAFE-DENIED-PATH-APPLICATION-2555D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project
+  = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); Plans/storage-plan.md#SP-555
+  owns the event policy''s existing anchors, counts, holds and deletion rules. Original sources and coherent backups
+  retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication
+  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer
+  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.
+  No native adoption, new retention choice or governance seal follows.'
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - DL-426
@@ -1762,7 +2047,8 @@ depends_on:
 - SP-286
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -1793,7 +2079,7 @@ negative_constraints:
 
 **Redaction and custody.** Snapshot bodies stay off-worktree under FileSafe's exact snapshot custody; SP-337 owns packed blobs and body addressing. Events contain only sanitized previews, non-secret identities, bounded reason/diagnostic text, refs and hashes: never raw command credentials, environment, file bytes or secret path material. Original guarded input stays only in its owner custody, not a second event body. FileSafe checks actor authorization and exact Host/root at admission and on every body read; hash/ref possession grants no access. Storage's coherent backup includes original source, source holds, seglog and SP-286 full-value receipt custody under the same backup/restore epoch. Restore of older state cannot recapture missing original work or replay effects. A deleted/inaccessible body is unavailable; history cannot recreate it or defeat a deletion/hold. No independent body deletion policy is authored.
 
-**Retention — Card 2 item 2.e, DL-426 (review round 7).** Project-scoped `filesafe.path_denied` is seven-year troubleshooting history: `retention_policy_ref = RP-OPERATIONAL-2555D`, reusing the exact existing Storage registry object (fixed_ttl, terminal_transition, 220752000 seconds = 2,555 days, 2,000,000 records per Project, fail_closed overflow, hold_eligible, compact expiry). For this binding the terminal-transition anchor is the saved original refusal or startup-failure result at its first successful durable save, never a retry, reprocessing, recovery, later append or observation time. Expiry is inclusive at that anchor plus 2,555 days. Remove only expired entries that no investigation, active reference, recovery or backup protects; existing legal holds, preserved/recent-run, rollback and maintenance references still override eligibility. If full and no entry may expire, refuse new entries rather than evict an unexpired or protected row. The extra troubleshooting entry may disappear only after expiry and protection checks; its original approval or action result keeps its own lifetime. Supporting approvals, source snapshots and recovery logs retain their own policies. Jared answered "i approve all of it"; the presented deck maps approve all to option A. The accepted answer is landed in `Plans/Decision_Log.md#DL-426` (batch 1); this unit applies its exact option A and shared conditions. This applies exactly item 2.e and Card 2's shared conditions. It adds no counting or deletion rule for future entries outside Projects. **Application scope remains PENDING_RETENTION_DECISION and may not record this event until exact approved rules exist.** Exact remaining question: What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.path_denied` history? A Project policy must not be inferred for it. No original body, snapshot, transaction, generic index or checkpoint lifetime is reopened.
+**Retention — Card 2 item 2.e, DL-426 (review round 7).** Project-scoped `filesafe.path_denied` is seven-year troubleshooting history: `retention_policy_ref = RP-OPERATIONAL-2555D`, reusing the exact existing Storage registry object (fixed_ttl, terminal_transition, 220752000 seconds = 2,555 days, 2,000,000 records per Project, fail_closed overflow, hold_eligible, compact expiry). For this binding the terminal-transition anchor is the saved original refusal or startup-failure result at its first successful durable save, never a retry, reprocessing, recovery, later append or observation time. Expiry is inclusive at that anchor plus 2,555 days. Remove only expired entries that no investigation, active reference, recovery or backup protects; existing legal holds, preserved/recent-run, rollback and maintenance references still override eligibility. If full and no entry may expire, refuse new entries rather than evict an unexpired or protected row. The extra troubleshooting entry may disappear only after expiry and protection checks; its original approval or action result keeps its own lifetime. Supporting approvals, source snapshots and recovery logs retain their own policies. Jared answered "i approve all of it"; the presented deck maps approve all to option A. The accepted answer is landed in `Plans/Decision_Log.md#DL-426` (batch 1); this unit applies its exact option A and shared conditions. This applies exactly item 2.e and Card 2's shared conditions. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «It adds no counting or deletion rule for future entries outside Projects. **Application scope remains PENDING_RETENTION_DECISION and may not record this event until exact approved rules exist.** Exact remaining question: What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.path_denied` history?» A Project policy must not be inferred for it. No original body, snapshot, transaction, generic index or checkpoint lifetime is reopened.
 
 **Withdrawal and rebuild.** Cut off new `filesafe.path_denied` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_path_denied_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
 
@@ -1803,7 +2089,7 @@ For `filesafe.path_denied`, withdrawal captures an independently selected retain
 
 **Exact original/issued joins for `filesafe.path_denied`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_path_denied.contract.json` and `CV-555` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
 
-This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; Application PENDING_RETENTION_DECISION independently blocks application admission; Project retention is decided by DL-426.
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «The static admission oracle still returns missing_event_registration for this exact family; Application PENDING_RETENTION_DECISION independently blocks application admission; Project retention is decided by DL-426.»
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-555, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
@@ -1818,13 +2104,11 @@ plan_unit_id: SP-556
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: filesafe.policy_degraded adopts SP-286 strict full-value custody and
-  SP-278 generic index proof; storage.filesafe_policy_degraded_history_read.v1@1.0.0
-  is passive with none_required family checkpoint. Event-history retention uses
-  RP-OPERATIONAL-2555D under the existing Case L-3 exact-kind default.
+canonical_text: filesafe.policy_degraded adopts SP-286 strict full-value custody and SP-278 generic index proof;
+  storage.filesafe_policy_degraded_history_read.v1@1.0.0 is passive with none_required family checkpoint. Event-history
+  retention uses RP-OPERATIONAL-2555D under the existing Case L-3 exact-kind default.
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - CV-556
@@ -1832,7 +2116,8 @@ depends_on:
 - SP-286
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -1872,7 +2157,7 @@ For `filesafe.policy_degraded`, withdrawal captures an independently selected re
 
 **Exact original/issued joins for `filesafe.policy_degraded`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_policy_degraded.contract.json` and `CV-556` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
 
-This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; The resolved retention assignment does not supply registry admission or native adoption.
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The static admission oracle still returns missing_event_registration for this exact family»; The resolved retention assignment does not supply registry admission or native adoption.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-556, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
@@ -1880,6 +2165,8 @@ ContractRef: ContractName:Plans/Contracts_V0.md#CV-556, ContractName:Plans/stora
 
 
 
+
+Current selected assignment (2026-11-19): filesafe.policy_degraded@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2307. Its event history selects Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-557 - safe_point.created persistence and read contract
 
 ```yaml
@@ -1887,12 +2174,10 @@ plan_unit_id: SP-557
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: safe_point.created adopts SP-286 strict full-value custody and SP-278
-  generic index proof; storage.safe_point_created_history_read.v1@1.0.0 is passive
-  with none_required family checkpoint. History adopts RP-RUNTIME-365D under DL-401 G28.
+canonical_text: safe_point.created adopts SP-286 strict full-value custody and SP-278 generic index proof; storage.safe_point_created_history_read.v1@1.0.0
+  is passive with none_required family checkpoint. History adopts RP-RUNTIME-365D under DL-401 G28.
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - DL-401
@@ -1901,7 +2186,8 @@ depends_on:
 - SP-286
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -1942,7 +2228,7 @@ For `safe_point.created`, withdrawal captures an independently selected retained
 
 **Exact original/issued joins for `safe_point.created`.** Adopt the complete source graph `Plans/filesafe_event_sources/safe_point_created.contract.json` and `CV-557` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
 
-This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; DL-401 G28 resolves this history classification; registry admission and native adoption remain separate prerequisites.
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The static admission oracle still returns missing_event_registration for this exact family»; DL-401 G28 resolves this history classification; registry admission and native adoption remain separate prerequisites.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-557, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Decision_Log.md#DL-401
 
@@ -1950,6 +2236,8 @@ ContractRef: ContractName:Plans/Contracts_V0.md#CV-557, ContractName:Plans/stora
 
 
 
+
+Current selected assignment (2026-11-19): safe_point.created@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2394. Its event history selects Application = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion, cardinality_scope=run), Project = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion, cardinality_scope=run); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-558 - safe_point.restored persistence and read contract
 
 ```yaml
@@ -1957,12 +2245,10 @@ plan_unit_id: SP-558
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: safe_point.restored adopts SP-286 strict full-value custody and SP-278
-  generic index proof; storage.safe_point_restored_history_read.v1@1.0.0 is passive
-  with none_required family checkpoint. History adopts RP-RUNTIME-365D under DL-401 G28.
+canonical_text: safe_point.restored adopts SP-286 strict full-value custody and SP-278 generic index proof; storage.safe_point_restored_history_read.v1@1.0.0
+  is passive with none_required family checkpoint. History adopts RP-RUNTIME-365D under DL-401 G28.
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - DL-401
@@ -1971,7 +2257,8 @@ depends_on:
 - SP-286
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -2012,12 +2299,14 @@ For `safe_point.restored`, withdrawal captures an independently selected retaine
 
 **Exact original/issued joins for `safe_point.restored`.** Adopt the complete source graph `Plans/filesafe_event_sources/safe_point_restored.contract.json` and `CV-558` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
 
-This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; DL-401 G28 resolves this history classification; registry admission and native adoption remain separate prerequisites.
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The static admission oracle still returns missing_event_registration for this exact family»; DL-401 G28 resolves this history classification; registry admission and native adoption remain separate prerequisites.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-558, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Decision_Log.md#DL-401
 
 **Physical numbers and retained reads for `safe_point.restored` (sweep part 2B numbers).** Storage-assigned sequence, generation and offset integers keep their exact domains end to end under SP-1100: each schema integer slot is admitted by the shared CV-1100 exact-integer call within its own schema bounds, and physical bytes dispatch by purpose (EVENT_VALUE for the CV-339 full-value commitment, APP_PHYSICAL for application bodies) with no float narrowing, signed-zero erasure or lane ceiling; an integer outside a profile's encodable range refuses through its guard row instead of truncating. History reads, retries, recovery and rebuilds resolve every retained original through SP-1101's authenticated dispatcher over the sealed custody catalogue: the recorded write-time edition and frozen resource manifest select the frozen verifier, forged or downgraded custody resolves to no verifier, and current-writer number guards never run on retained bytes. The ordered custody, first-receipt and retention rules above are unchanged. CV-1101 is adopted: observed_at_utc and persisted_at_utc use date_time with the storage_utc_z profile, and every other timestamp this family validates uses date_time with the EventRecord profile. The SP-1101 frozen verifier checks retained originals with those profiles.
 
+
+Current selected assignment (2026-11-19): safe_point.restored@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2395. Its event history selects Application = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion, cardinality_scope=run), Project = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion, cardinality_scope=run); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-429 - Project goal.blocked identity custody and observation
 
 ```yaml

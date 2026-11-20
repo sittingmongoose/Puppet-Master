@@ -363,10 +363,34 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-150",
-              "line_start": 24671,
-              "line_end": 24671,
-              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
+              "unit": "CV-560",
+              "line_start": 41233,
+              "line_end": 41233,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-150",
+                "old_quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-150 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             }
           ],
           "prior": {
@@ -418,17 +442,65 @@
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-150",
-              "line_start": 10979,
-              "line_end": 10979,
-              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+              "unit": "ATS-280",
+              "line_start": 10994,
+              "line_end": 10994,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-150",
+                "old_quote": "Every product refusal of the checker is one named row of a Method B guard table",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-150 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-150",
-              "line_start": 37891,
-              "line_end": 37891,
-              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+              "unit": "CV-560",
+              "line_start": 41212,
+              "line_end": 41212,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-150",
+                "old_quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-150 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -453,17 +525,65 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-150",
-              "line_start": 37903,
-              "line_end": 37903,
-              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+              "unit": "CV-560",
+              "line_start": 41224,
+              "line_end": 41224,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-150",
+                "old_quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-150 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-150",
-              "line_start": 10989,
-              "line_end": 10989,
-              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+              "unit": "ATS-280",
+              "line_start": 11004,
+              "line_end": 11004,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-150",
+                "old_quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-150 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-c12-closure.py",
@@ -856,10 +976,34 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-151",
-              "line_start": 24671,
-              "line_end": 24671,
-              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
+              "unit": "CV-560",
+              "line_start": 41233,
+              "line_end": 41233,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-151",
+                "old_quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-151 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             }
           ],
           "prior": {
@@ -911,17 +1055,65 @@
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-151",
-              "line_start": 10979,
-              "line_end": 10979,
-              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+              "unit": "ATS-280",
+              "line_start": 10994,
+              "line_end": 10994,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-151",
+                "old_quote": "Every product refusal of the checker is one named row of a Method B guard table",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-151 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-151",
-              "line_start": 37891,
-              "line_end": 37891,
-              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+              "unit": "CV-560",
+              "line_start": 41212,
+              "line_end": 41212,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-151",
+                "old_quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-151 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -946,17 +1138,65 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-151",
-              "line_start": 37903,
-              "line_end": 37903,
-              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+              "unit": "CV-560",
+              "line_start": 41224,
+              "line_end": 41224,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-151",
+                "old_quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-151 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-151",
-              "line_start": 10989,
-              "line_end": 10989,
-              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+              "unit": "ATS-280",
+              "line_start": 11004,
+              "line_end": 11004,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-151",
+                "old_quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-151 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-c12-closure.py",
@@ -1349,10 +1589,34 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-152",
-              "line_start": 24671,
-              "line_end": 24671,
-              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
+              "unit": "CV-560",
+              "line_start": 41233,
+              "line_end": 41233,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-152",
+                "old_quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-152 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             }
           ],
           "prior": {
@@ -1404,17 +1668,65 @@
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-152",
-              "line_start": 10979,
-              "line_end": 10979,
-              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+              "unit": "ATS-280",
+              "line_start": 10994,
+              "line_end": 10994,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-152",
+                "old_quote": "Every product refusal of the checker is one named row of a Method B guard table",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-152 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-152",
-              "line_start": 37891,
-              "line_end": 37891,
-              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+              "unit": "CV-560",
+              "line_start": 41212,
+              "line_end": 41212,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-152",
+                "old_quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-152 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -1439,17 +1751,65 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-152",
-              "line_start": 37903,
-              "line_end": 37903,
-              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+              "unit": "CV-560",
+              "line_start": 41224,
+              "line_end": 41224,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-152",
+                "old_quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-152 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-152",
-              "line_start": 10989,
-              "line_end": 10989,
-              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+              "unit": "ATS-280",
+              "line_start": 11004,
+              "line_end": 11004,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-152",
+                "old_quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-152 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-c12-closure.py",
@@ -1842,10 +2202,34 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-153",
-              "line_start": 24671,
-              "line_end": 24671,
-              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
+              "unit": "CV-560",
+              "line_start": 41233,
+              "line_end": 41233,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-153",
+                "old_quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-153 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             }
           ],
           "prior": {
@@ -1897,17 +2281,65 @@
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-153",
-              "line_start": 10979,
-              "line_end": 10979,
-              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+              "unit": "ATS-280",
+              "line_start": 10994,
+              "line_end": 10994,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-153",
+                "old_quote": "Every product refusal of the checker is one named row of a Method B guard table",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-153 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-153",
-              "line_start": 37891,
-              "line_end": 37891,
-              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+              "unit": "CV-560",
+              "line_start": 41212,
+              "line_end": 41212,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-153",
+                "old_quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-153 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -1932,17 +2364,65 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-153",
-              "line_start": 37903,
-              "line_end": 37903,
-              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+              "unit": "CV-560",
+              "line_start": 41224,
+              "line_end": 41224,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-153",
+                "old_quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-153 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-153",
-              "line_start": 10989,
-              "line_end": 10989,
-              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+              "unit": "ATS-280",
+              "line_start": 11004,
+              "line_end": 11004,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-153",
+                "old_quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-153 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-c12-closure.py",
@@ -2335,10 +2815,34 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-154",
-              "line_start": 24671,
-              "line_end": 24671,
-              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
+              "unit": "CV-560",
+              "line_start": 41233,
+              "line_end": 41233,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-154",
+                "old_quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-154 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             }
           ],
           "prior": {
@@ -2390,17 +2894,65 @@
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-154",
-              "line_start": 10979,
-              "line_end": 10979,
-              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+              "unit": "ATS-280",
+              "line_start": 10994,
+              "line_end": 10994,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-154",
+                "old_quote": "Every product refusal of the checker is one named row of a Method B guard table",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-154 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-154",
-              "line_start": 37891,
-              "line_end": 37891,
-              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+              "unit": "CV-560",
+              "line_start": 41212,
+              "line_end": 41212,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-154",
+                "old_quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-154 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -2425,17 +2977,65 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-154",
-              "line_start": 37903,
-              "line_end": 37903,
-              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+              "unit": "CV-560",
+              "line_start": 41224,
+              "line_end": 41224,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-154",
+                "old_quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-154 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-154",
-              "line_start": 10989,
-              "line_end": 10989,
-              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+              "unit": "ATS-280",
+              "line_start": 11004,
+              "line_end": 11004,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-154",
+                "old_quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-154 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-c12-closure.py",
@@ -2828,10 +3428,34 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-155",
-              "line_start": 24671,
-              "line_end": 24671,
-              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
+              "unit": "CV-560",
+              "line_start": 41233,
+              "line_end": 41233,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-155",
+                "old_quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-155 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             }
           ],
           "prior": {
@@ -2883,17 +3507,65 @@
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-155",
-              "line_start": 10979,
-              "line_end": 10979,
-              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+              "unit": "ATS-280",
+              "line_start": 10994,
+              "line_end": 10994,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-155",
+                "old_quote": "Every product refusal of the checker is one named row of a Method B guard table",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-155 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-155",
-              "line_start": 37891,
-              "line_end": 37891,
-              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+              "unit": "CV-560",
+              "line_start": 41212,
+              "line_end": 41212,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-155",
+                "old_quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-155 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -2918,17 +3590,65 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-155",
-              "line_start": 37903,
-              "line_end": 37903,
-              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+              "unit": "CV-560",
+              "line_start": 41224,
+              "line_end": 41224,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-155",
+                "old_quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-155 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-155",
-              "line_start": 10989,
-              "line_end": 10989,
-              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+              "unit": "ATS-280",
+              "line_start": 11004,
+              "line_end": 11004,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-155",
+                "old_quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-155 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-c12-closure.py",
@@ -3321,10 +4041,34 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-156",
-              "line_start": 24671,
-              "line_end": 24671,
-              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
+              "unit": "CV-560",
+              "line_start": 41233,
+              "line_end": 41233,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-156",
+                "old_quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-156 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             }
           ],
           "prior": {
@@ -3376,17 +4120,65 @@
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-156",
-              "line_start": 10979,
-              "line_end": 10979,
-              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+              "unit": "ATS-280",
+              "line_start": 10994,
+              "line_end": 10994,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-156",
+                "old_quote": "Every product refusal of the checker is one named row of a Method B guard table",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-156 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-156",
-              "line_start": 37891,
-              "line_end": 37891,
-              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+              "unit": "CV-560",
+              "line_start": 41212,
+              "line_end": 41212,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-156",
+                "old_quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-156 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -3411,17 +4203,65 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-156",
-              "line_start": 37903,
-              "line_end": 37903,
-              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+              "unit": "CV-560",
+              "line_start": 41224,
+              "line_end": 41224,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-156",
+                "old_quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-156 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-156",
-              "line_start": 10989,
-              "line_end": 10989,
-              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+              "unit": "ATS-280",
+              "line_start": 11004,
+              "line_end": 11004,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-156",
+                "old_quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-156 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-c12-closure.py",
@@ -3814,10 +4654,34 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-157",
-              "line_start": 24671,
-              "line_end": 24671,
-              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
+              "unit": "CV-560",
+              "line_start": 41233,
+              "line_end": 41233,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-157",
+                "old_quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-157 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             }
           ],
           "prior": {
@@ -3869,17 +4733,65 @@
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-157",
-              "line_start": 10979,
-              "line_end": 10979,
-              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+              "unit": "ATS-280",
+              "line_start": 10994,
+              "line_end": 10994,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-157",
+                "old_quote": "Every product refusal of the checker is one named row of a Method B guard table",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-157 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-157",
-              "line_start": 37891,
-              "line_end": 37891,
-              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+              "unit": "CV-560",
+              "line_start": 41212,
+              "line_end": 41212,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-157",
+                "old_quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-157 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -3904,17 +4816,65 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-157",
-              "line_start": 37903,
-              "line_end": 37903,
-              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+              "unit": "CV-560",
+              "line_start": 41224,
+              "line_end": 41224,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-157",
+                "old_quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-157 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-157",
-              "line_start": 10989,
-              "line_end": 10989,
-              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+              "unit": "ATS-280",
+              "line_start": 11004,
+              "line_end": 11004,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-157",
+                "old_quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-157 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-c12-closure.py",
@@ -4307,10 +5267,34 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-158",
-              "line_start": 24671,
-              "line_end": 24671,
-              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
+              "unit": "CV-560",
+              "line_start": 41233,
+              "line_end": 41233,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-158",
+                "old_quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-158 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             }
           ],
           "prior": {
@@ -4362,17 +5346,65 @@
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-158",
-              "line_start": 10979,
-              "line_end": 10979,
-              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+              "unit": "ATS-280",
+              "line_start": 10994,
+              "line_end": 10994,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-158",
+                "old_quote": "Every product refusal of the checker is one named row of a Method B guard table",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-158 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-158",
-              "line_start": 37891,
-              "line_end": 37891,
-              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+              "unit": "CV-560",
+              "line_start": 41212,
+              "line_end": 41212,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-158",
+                "old_quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-158 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -4397,17 +5429,65 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-158",
-              "line_start": 37903,
-              "line_end": 37903,
-              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+              "unit": "CV-560",
+              "line_start": 41224,
+              "line_end": 41224,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-158",
+                "old_quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-158 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-158",
-              "line_start": 10989,
-              "line_end": 10989,
-              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+              "unit": "ATS-280",
+              "line_start": 11004,
+              "line_end": 11004,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-158",
+                "old_quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-158 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-c12-closure.py",
@@ -4800,10 +5880,34 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-159",
-              "line_start": 24671,
-              "line_end": 24671,
-              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
+              "unit": "CV-560",
+              "line_start": 41233,
+              "line_end": 41233,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-159",
+                "old_quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-159 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             }
           ],
           "prior": {
@@ -4855,17 +5959,65 @@
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-159",
-              "line_start": 10979,
-              "line_end": 10979,
-              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+              "unit": "ATS-280",
+              "line_start": 10994,
+              "line_end": 10994,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-159",
+                "old_quote": "Every product refusal of the checker is one named row of a Method B guard table",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-159 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-159",
-              "line_start": 37891,
-              "line_end": 37891,
-              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+              "unit": "CV-560",
+              "line_start": 41212,
+              "line_end": 41212,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-159",
+                "old_quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-159 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -4890,17 +6042,65 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-159",
-              "line_start": 37903,
-              "line_end": 37903,
-              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+              "unit": "CV-560",
+              "line_start": 41224,
+              "line_end": 41224,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-159",
+                "old_quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-159 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-159",
-              "line_start": 10989,
-              "line_end": 10989,
-              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+              "unit": "ATS-280",
+              "line_start": 11004,
+              "line_end": 11004,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-159",
+                "old_quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-159 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-c12-closure.py",
@@ -5293,10 +6493,34 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-160",
-              "line_start": 24671,
-              "line_end": 24671,
-              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
+              "unit": "CV-560",
+              "line_start": 41233,
+              "line_end": 41233,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-160",
+                "old_quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-160 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             }
           ],
           "prior": {
@@ -5348,17 +6572,65 @@
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-160",
-              "line_start": 10979,
-              "line_end": 10979,
-              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+              "unit": "ATS-280",
+              "line_start": 10994,
+              "line_end": 10994,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-160",
+                "old_quote": "Every product refusal of the checker is one named row of a Method B guard table",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-160 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-160",
-              "line_start": 37891,
-              "line_end": 37891,
-              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+              "unit": "CV-560",
+              "line_start": 41212,
+              "line_end": 41212,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-160",
+                "old_quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-160 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -5383,17 +6655,65 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-160",
-              "line_start": 37903,
-              "line_end": 37903,
-              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+              "unit": "CV-560",
+              "line_start": 41224,
+              "line_end": 41224,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-160",
+                "old_quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-160 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-160",
-              "line_start": 10989,
-              "line_end": 10989,
-              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+              "unit": "ATS-280",
+              "line_start": 11004,
+              "line_end": 11004,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-160",
+                "old_quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-160 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-c12-closure.py",
@@ -5786,10 +7106,34 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-161",
-              "line_start": 24671,
-              "line_end": 24671,
-              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
+              "unit": "CV-560",
+              "line_start": 41233,
+              "line_end": 41233,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-161",
+                "old_quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-161 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             }
           ],
           "prior": {
@@ -5841,17 +7185,65 @@
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-161",
-              "line_start": 10979,
-              "line_end": 10979,
-              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+              "unit": "ATS-280",
+              "line_start": 10994,
+              "line_end": 10994,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-161",
+                "old_quote": "Every product refusal of the checker is one named row of a Method B guard table",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-161 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-161",
-              "line_start": 37891,
-              "line_end": 37891,
-              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+              "unit": "CV-560",
+              "line_start": 41212,
+              "line_end": 41212,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-161",
+                "old_quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-161 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -5876,17 +7268,65 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "unit": "F-161",
-              "line_start": 37903,
-              "line_end": 37903,
-              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+              "unit": "CV-560",
+              "line_start": 41224,
+              "line_end": 41224,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Contracts_V0.md",
+                "old_unit": "F-161",
+                "old_quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-161 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared CV-560 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "41170,41268:Plans/Contracts_V0.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-CV-560-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Automated_Testing_System.md",
-              "unit": "F-161",
-              "line_start": 10989,
-              "line_end": 10989,
-              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+              "unit": "ATS-280",
+              "line_start": 11004,
+              "line_end": 11004,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+              "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Automated_Testing_System.md",
+                "old_unit": "F-161",
+                "old_quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds",
+                "method": "recited",
+                "reason": "The grade used the semantic family label F-161 on a shared payload/oracle-owner citation. That label is declared only in FileManager.md. The existing exact clause is in the family package's shared ATS-280 owner, which is already named by current_owner_units. Correct the citation metadata; the quoted clause and the PASS claim are unchanged. The T221 checker remains bounded to the declaring unit.",
+                "history": {
+                  "grade_commit": "de3e012fb48e603d3ec55ee2ba40d161fff662fe",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "10975,11046:Plans/Automated_Testing_System.md",
+                    "de3e012fb48e603d3ec55ee2ba40d161fff662fe..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-ATS-280-DFM.self-grade.log"
+                }
+              }
             },
             {
               "path": "scripts/pm-filemanager-c12-closure.py",

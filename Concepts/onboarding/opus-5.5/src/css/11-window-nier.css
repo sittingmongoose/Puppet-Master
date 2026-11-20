@@ -255,6 +255,14 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railitem::after { c
    current chapter's ink box stood 17 x 21 px under Pip with no word in it, and a finished chapter's rule 30 px under its
    box with none above it; Pip and the boxes either side of him mark the chapter. 66-nier-window.js walks no block there) */
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding[data-o55-layout="narrow"] .o55-railitem::after { content: none; }
+/* FO-209: the narrow bead rail fits between the brand and the controls (10-window.css). At 360 px the brand block
+   (kicker + wide-tracked SETUP counter) left the rail a 31 px track and the last beads lay over the look button, so
+   the narrow brand gives up its decorative kicker and its wide tracking, and the items keep only 1 px of room each
+   side; Change the look stays uncovered at 360 and 390 px. Desktop widths keep the full brand. */
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding[data-o55-layout="narrow"] .o55-railitem { padding-inline: 1px; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding[data-o55-layout="narrow"] .o55-brand { padding-right: 8px; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding[data-o55-layout="narrow"] .o55-brand > .o55nw-kick { display: none; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding[data-o55-layout="narrow"] .o55-brand > .o55nw-sub { letter-spacing: .08em; }
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railstring { top: 13px; height: 9px; background: rgba(var(--o55-nier-ink-rgb), .4); }
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railnode { position: relative; width: 8px; height: 8px; border: 1px solid currentColor; border-radius: 0; background: transparent; box-shadow: none; transition: none; }
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railitem[data-state="done"] { color: var(--text-secondary); }

@@ -112,7 +112,16 @@ async function cell(t, surface, w, h) {
 		await t.page.mouse.move(off.x + p.x, off.y + p.y);
 	};
 	const isOpen = () => f.evaluate((m) => !!document.querySelector(m)?.classList.contains('is-open'), MENU);
-	const shut = async () => { if (await isOpen()) { await t.page.keyboard.press('Escape'); await until((m) => !document.querySelector(m).classList.contains('is-open'), MENU); } };
+	const shut = async () => {
+		if (!await isOpen()) return;
+		await t.page.keyboard.press('Escape');
+		if (await until((m) => !document.querySelector(m).classList.contains('is-open'), MENU, 1000)) return;
+		// the key can land outside the app frame (the sandbox wrapper holds the focus): put focus on a menu item so
+		// Escape reaches the menu's own document, then press again — still a real key, no forced close (FO-238)
+		await f.locator(`${MENU} [role="menuitem"]`).first().focus().catch(() => {});
+		await t.page.keyboard.press('Escape');
+		await until((m) => !document.querySelector(m).classList.contains('is-open'), MENU, 1000);
+	};
 	const openMenu = async (loc, input) => {
 		await loc.scrollIntoViewIfNeeded();
 		if (input === 'mouse') await loc.click({ button: 'right' });
@@ -126,6 +135,17 @@ async function cell(t, surface, w, h) {
 		// item next to it)
 		if (input === 'mouse') {
 			const it = f.locator(`${MENU} [data-pmw-open="${which}"]`);
+			// wait out the sprout entrance before reading the box: its overshoot has a zero-velocity apex where the
+			// 1-frame stability read below breaks early and presses a box the item has already left — for a menu flipped
+			// up at a short viewport the Open item even swings off the top edge mid-sprout, so the press opens nothing
+			// (FO-238). The menu's own transform/opacity transitions tell us when it has landed; bounded so a reduced
+			// motion menu (no transition) presses at once.
+			await f.evaluate((m) => {
+				const el = document.querySelector(m);
+				const runs = (el.getAnimations ? el.getAnimations() : []).filter((a) => a.transitionProperty === 'transform' || a.transitionProperty === 'opacity');
+				const done = Promise.all(runs.map((a) => a.finished.catch(() => {})));
+				return Promise.race([done, new Promise((res) => setTimeout(res, 1500))]);
+			}, MENU);
 			let bb = null;
 			for (let n = 0; n < 60; n++) {
 				const b = await it.boundingBox();

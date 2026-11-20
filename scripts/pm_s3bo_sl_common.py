@@ -177,10 +177,10 @@ def keyword_errors(schema, value):
     """Every non-format keyword diagnostic of the complete owner schema; format is the shared date-time row's.
 
     A registry value schema without $id or external $ref validates directly.
-    Identified schemas, and registry value schemas that reference an owner
-    resource (the event_obligation member of storage_deletion_record and
-    storage_quarantine_record refers to EventRecord 2.0.0), use the s3bo
-    owner-resource catalogue; it never retrieves URLs.
+    Identified schemas and registry value schemas that reference an owner
+    resource use the s3bo owner-resource catalogue; it never retrieves URLs.
+    Deletion and quarantine event_obligation fields are closed inline copies
+    of EventRecord 2.0.0 and take the direct local-schema path above.
     """
     if '$id' not in schema and not _external_refs(schema):
         from jsonschema import Draft202012Validator

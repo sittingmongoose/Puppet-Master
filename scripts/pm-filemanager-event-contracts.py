@@ -1842,6 +1842,7 @@ def main(family=None):
     SCHEMAS = schema_registry()  # Fail before instances, even if no fixture visits a broken ref.
     inputs = integrity_inputs()
     fixtures = inputs["fixtures"]
+    admission = admission_report([r["event_type"] for r in fixtures["rows"] if family is None or r["event_type"] == family])
     validate_fixture_set(fixtures, family)
     witnesses = p2a_cases()
     p2a = 0
@@ -1890,10 +1891,19 @@ def main(family=None):
         validate_owner_adoption(name, row["owner_unit"], inputs["owner"])
     validate_registry_contracts(inputs["registry"], inputs["registry_schema"], inputs["schema"])
     integrity = run_integrity_witnesses(inputs)
-    print(json.dumps({"status": "pass", "families": assessed_families,
+    print(json.dumps({"status": "pass", "admission": admission, "families": assessed_families,
                       "oracle_cases": count, "sweep_p2a_witnesses": p2a, "integrity_witnesses": integrity,
                       "native_execution": "NOT_RUN"}))
     return 0
+
+
+def admission_report(event_types):
+    """Require each selected FileManager family to be prepared or its exact complete DL-077 admission."""
+    import pm_ea_admission_mode as admission_mode
+    summary, failures = admission_mode.lane_gate(event_types, root=ROOT)
+    assert not failures, ('admission mode refused', failures)
+    counts = summary['counts']
+    return 'ABSENT' if not counts['admitted'] else 'RECORD_BOUND' if not counts['prepared'] else 'ABSENT_AND_RECORD_BOUND'
 
 
 if __name__ == "__main__":

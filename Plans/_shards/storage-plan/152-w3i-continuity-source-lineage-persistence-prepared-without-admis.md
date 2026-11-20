@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L76594-L77910
+Source lines: L77203-L78531
 
-Source SHA256: `bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707`
+Source SHA256: `8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537`
 
 ---
 
@@ -33,10 +33,11 @@ plan_unit_id: SP-1600
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: NEWLY AUTHORED continuity.actor_identified@1.0.0 individually adopts CV-1600, SP-286/CV-339 v2 full-value
-  custody, SP-337 and SP-278. Exact append, audit reader, prefix checkpoint CAS, retention, coherent backup, retained-version
-  and withdrawal rules are defined above. Source lineage uses RP-AUTHORITY-INDEFINITE; derived values use RP-PROJECTION-3GEN.
-  Nothing is admitted.
+canonical_text: 'NEWLY AUTHORED continuity.actor_identified@1.0.0 individually adopts CV-1600, SP-286/CV-339 v2
+  full-value custody, SP-337 and SP-278. Exact append, audit reader, prefix checkpoint CAS, retention, coherent
+  backup, retained-version and withdrawal rules are defined above. Source lineage uses RP-AUTHORITY-INDEFINITE;
+  derived values use RP-PROJECTION-3GEN. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing
+  is admitted».'
 gui_related: false
 gui_classification_reason: Audit lineage, storage, and test contracts; no new presentation behavior.
 depends_on:
@@ -78,6 +79,8 @@ negative_constraints:
 - No runtime_continuity alias or receipt reconstructed from current state.
 ```
 
+
+Current selected assignment (2026-11-19): continuity.actor_identified@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2276. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-1601 — `continuity.provenance_recorded` append, read, and custody
 
 **NEWLY AUTHORED Storage owner contract** under DL-450, separately adopted for `continuity.provenance_recorded@1.0.0`. Exact producer `orchestrator.continuity_provenance_recorded.v1@1.0.0` calls `storage.continuity_append.v1@1.0.0`; direct consumer is `storage.continuity_projector.v1@1.0.0`. `reader.orchestrator.continuity_audit.v1@1.0.0` is the operating audit-only reader. No sibling event or `runtime_continuity.*` admission follows. The family uses ordinary CV-317 EventRecord append and Case L-2 / SP-026 / SP-236 canonical SeglogFrameV2 bytes, without a local codec.
@@ -101,10 +104,11 @@ plan_unit_id: SP-1601
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: NEWLY AUTHORED continuity.provenance_recorded@1.0.0 individually adopts CV-1601, SP-286/CV-339 v2
-  full-value custody, SP-337 and SP-278. Exact append, audit reader, prefix checkpoint CAS, retention, coherent
+canonical_text: 'NEWLY AUTHORED continuity.provenance_recorded@1.0.0 individually adopts CV-1601, SP-286/CV-339
+  v2 full-value custody, SP-337 and SP-278. Exact append, audit reader, prefix checkpoint CAS, retention, coherent
   backup, retained-version and withdrawal rules are defined above. Source lineage uses RP-AUTHORITY-INDEFINITE;
-  derived values use RP-PROJECTION-3GEN. Nothing is admitted.
+  derived values use RP-PROJECTION-3GEN. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing
+  is admitted».'
 gui_related: false
 gui_classification_reason: Audit lineage, storage, and test contracts; no new presentation behavior.
 depends_on:
@@ -146,6 +150,8 @@ negative_constraints:
 - No runtime_continuity alias or receipt reconstructed from current state.
 ```
 
+
+Current selected assignment (2026-11-19): continuity.provenance_recorded@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2277. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-1602 — `continuity.redaction_applied` append, read, and custody
 
 **NEWLY AUTHORED Storage owner contract** under DL-450, separately adopted for `continuity.redaction_applied@1.0.0`. Exact producer `orchestrator.continuity_redaction_applied.v1@1.0.0` calls `storage.continuity_append.v1@1.0.0`; direct consumer is `storage.continuity_projector.v1@1.0.0`. `reader.orchestrator.continuity_audit.v1@1.0.0` is the operating audit-only reader. No sibling event or `runtime_continuity.*` admission follows. The family uses ordinary CV-317 EventRecord append and Case L-2 / SP-026 / SP-236 canonical SeglogFrameV2 bytes, without a local codec.
@@ -169,10 +175,11 @@ plan_unit_id: SP-1602
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: NEWLY AUTHORED continuity.redaction_applied@1.0.0 individually adopts CV-1602, SP-286/CV-339 v2
+canonical_text: 'NEWLY AUTHORED continuity.redaction_applied@1.0.0 individually adopts CV-1602, SP-286/CV-339 v2
   full-value custody, SP-337 and SP-278. Exact append, audit reader, prefix checkpoint CAS, retention, coherent
   backup, retained-version and withdrawal rules are defined above. Source lineage uses RP-AUTHORITY-INDEFINITE;
-  derived values use RP-PROJECTION-3GEN. Nothing is admitted.
+  derived values use RP-PROJECTION-3GEN. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing
+  is admitted».'
 gui_related: false
 gui_classification_reason: Audit lineage, storage, and test contracts; no new presentation behavior.
 depends_on:
@@ -214,6 +221,8 @@ negative_constraints:
 - No runtime_continuity alias or receipt reconstructed from current state.
 ```
 
+
+Current selected assignment (2026-11-19): continuity.redaction_applied@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2278. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-1603 — `continuity.replay_checkpointed` append, read, and custody
 
 **NEWLY AUTHORED Storage owner contract** under DL-450, separately adopted for `continuity.replay_checkpointed@1.0.0`. Exact producer `orchestrator.continuity_replay_checkpointed.v1@1.0.0` calls `storage.continuity_append.v1@1.0.0`; direct consumer is `storage.continuity_projector.v1@1.0.0`. `reader.orchestrator.continuity_audit.v1@1.0.0` is the operating audit-only reader. No sibling event or `runtime_continuity.*` admission follows. The family uses ordinary CV-317 EventRecord append and Case L-2 / SP-026 / SP-236 canonical SeglogFrameV2 bytes, without a local codec.
@@ -237,10 +246,11 @@ plan_unit_id: SP-1603
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: NEWLY AUTHORED continuity.replay_checkpointed@1.0.0 individually adopts CV-1603, SP-286/CV-339 v2
-  full-value custody, SP-337 and SP-278. Exact append, audit reader, prefix checkpoint CAS, retention, coherent
+canonical_text: 'NEWLY AUTHORED continuity.replay_checkpointed@1.0.0 individually adopts CV-1603, SP-286/CV-339
+  v2 full-value custody, SP-337 and SP-278. Exact append, audit reader, prefix checkpoint CAS, retention, coherent
   backup, retained-version and withdrawal rules are defined above. Source lineage uses RP-AUTHORITY-INDEFINITE;
-  derived values use RP-PROJECTION-3GEN. Nothing is admitted.
+  derived values use RP-PROJECTION-3GEN. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing
+  is admitted».'
 gui_related: false
 gui_classification_reason: Audit lineage, storage, and test contracts; no new presentation behavior.
 depends_on:
@@ -283,6 +293,8 @@ negative_constraints:
 ```
 
 
+
+Current selected assignment (2026-11-19): continuity.replay_checkpointed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2279. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-1350 - bsd.advice_emitted candidate Storage custody
 
 ```yaml

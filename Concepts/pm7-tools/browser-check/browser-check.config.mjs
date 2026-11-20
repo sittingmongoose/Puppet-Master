@@ -34,6 +34,40 @@ export default (ctx) => {
 	else throw new Error(`no built page at ${page}; build it (python3 Concepts/onboarding/opus-5.5/tools/build.py --out <path>) and pass --set page=<path>`);
 	if (ctx.fleet && /^file:/.test(url)) throw new Error('--host: a browser on another machine can\'t open this machine\'s file:// page. Use ssh and a checkout of the branch on that machine.');
 	let cb = 0;
+	// One viewport for the run's config and for every check that does not ask for a size itself.
+	const defaultViewport = { width: 1920, height: 1080 };
+	// Set true when this test has asked for a size (t.viewport, page.setViewportSize, or t.newContext({viewport})).
+	// Reset at each test; the default page's setViewportSize is wrapped once.
+	let viewportChosen = false;
+	let sizeWrapped = false;
+	// True until this test's first t.app.open(): only that open resets the saved look and the viewport. Later
+	// opens in the same test keep both, so a reopen/reload stand-in still sees what the check saved.
+	let firstOpen = true;
+	// One init script per context. A test's first open sets __pmBcFresh on the outgoing document; the next
+	// document clears its own localStorage before any page script (the boot snippet reads the saved look there),
+	// which also removes the look the outgoing page saved on pagehide. A later open does not set the flag, so a
+	// check that saves and reloads still sees its write. The sandbox has no storage to clear.
+	const freshContexts = new WeakSet();
+	const armFresh = async (t) => {
+		if (!freshContexts.has(t.context)) {
+			freshContexts.add(t.context);
+			await t.context.addInitScript(() => {
+				try {
+					if (sessionStorage.getItem('__pmBcFresh') === '1') {
+						sessionStorage.removeItem('__pmBcFresh');
+						localStorage.clear();
+					}
+				} catch (e) { /* the sandbox: no storage */ }
+			});
+		}
+		const frames = [];
+		if (t.root) frames.push(t.root);
+		const main = t.page && t.page.mainFrame();
+		if (main && main !== t.root) frames.push(main);
+		for (const frame of frames) {
+			await frame.evaluate(() => { try { sessionStorage.setItem('__pmBcFresh', '1'); } catch (e) { /* no storage */ } }).catch(() => {});
+		}
+	};
 	// The one sandbox switch. --set sandbox=1: every check runs its page as T3's file preview shows it, inside
 	// t.openInSandbox at its default flags (allow-scripts allow-forms allow-popups allow-downloads: an opaque origin, no
 	// storage, no modals). --set sandbox=0: every check on a normal page, the provider checks too. Unset: each check's own
@@ -83,7 +117,7 @@ export default (ctx) => {
 	return {
 		name: 'puppetmaster',
 		pageUrl: url,
-		viewport: { width: 1920, height: 1080 },
+		viewport: defaultViewport,
 		consoleErrors: { fail: true, allow: [] },
 		failedRequests: { fail: false },
 		// Silent by default (Jared, 2026-11-10: test runs on his PC played the onboarding sounds). Every frame of every
@@ -91,7 +125,27 @@ export default (ctx) => {
 		// mutes media elements (a JS play() at the call, a native autoplay start at its play event). The audio engine itself still runs: contexts, unlock, logs, taps and analysers
 		// ahead of the destination behave as before, so sound checks keep measuring. `--set audible=1` restores the speakers.
 		prepareContext: async (t, context) => { await silence(context); },
-		beforeEach: async (t) => { await silence(t.context); },
+		// A size the check asks for (t.viewport, page.setViewportSize, or t.newContext({viewport})) is kept.
+		// Anything left by the previous check is not: the test's first open() puts the config viewport back
+		// when this test has not asked for a size. The previous check's media emulation is cleared here too:
+		// t.emulate persists run-wide and is re-applied after every navigation, and a leaked Reduced Motion
+		// removes the onboarding transition's hold (screen-change-hold). A check requests its own motion itself.
+		beforeEach: async (t) => {
+			await silence(t.context);
+			viewportChosen = false;
+			firstOpen = true;
+			t.run.media = null;
+			await t.page.emulateMedia({ reducedMotion: null, colorScheme: null }).catch(() => {});
+			const orig = t.viewport.bind(t);
+			t.viewport = async (w, h) => { viewportChosen = true; return orig(w, h); };
+			const newContext = t.newContext.bind(t);
+			t.newContext = async (opts = {}) => { if (opts && 'viewport' in opts) viewportChosen = true; return newContext(opts); };
+			if (!sizeWrapped) {
+				sizeWrapped = true;
+				const setSize = t.page.setViewportSize.bind(t.page);
+				t.page.setViewportSize = async (size) => { viewportChosen = true; return setSize(size); };
+			}
+		},
 		helpers: {
 			// Whether this check runs in the sandbox: the switch when it is given, else the check's own default
 			sandboxed(t, own = false) { return sandboxArg === null ? own : sandboxArg; },
@@ -102,6 +156,14 @@ export default (ctx) => {
 			// switch at 1 also puts in the sandbox). Returns the frame the app is in, which t.root (what t.until, t.css and the
 			// other checks look at) also is: the page's main frame, or the sandbox's.
 			async open(t, { onboarding = false, query = '', settleMs = 300, sandbox } = {}) {
+				// Boundary between checks: only this test's first open starts from the default saved look and the
+				// config viewport. Later opens keep both, so a reopen/reload stand-in still sees what the check
+				// saved (the product saves on pagehide). A look asked for after the load is unchanged.
+				if (firstOpen) {
+					firstOpen = false;
+					if (!viewportChosen) await t.viewport(defaultViewport.width, defaultViewport.height);
+					await armFresh(t);
+				}
 				const sep = url.includes('?') ? '&' : '?';
 				const u = `${url}${sep}cb=${Date.now()}-${++cb}${onboarding ? '' : '&o55=off'}${query ? '&' + query : ''}`;
 				if (sandbox === true || sandboxArg === true) await t.openInSandbox(u, { settleMs });
@@ -141,6 +203,24 @@ export default (ctx) => {
 				// NieR's switch-on plays a transition first; wait for the painted state rather than a fixed time
 				await f0.waitForFunction(([want, m]) => { const theme = document.documentElement.getAttribute('data-theme') || ''; const nier = !!(window.PM_NIER && PM_NIER.on()) || theme.startsWith('nier'); return nier === want && theme.endsWith('-' + m); }, [family === 'nier', mode], { timeout: 20000 }).catch(() => {});
 				await t.page.waitForTimeout(500);
+				// The painted look can come before the page takes input back: the NieR reboot's plate is pointer-transparent
+				// over the page and holds trusted presses until its reveal, so a click sent in between is swallowed while a
+				// hit-test already lands on the control (KIT-LOOKCOVER). Wait for the page's own cover signal — the same
+				// task that releases the hold sets the plate's pointer-events to none — and fail loudly if it never clears.
+				const coverMs = 20000, coverAt = Date.now();
+				try {
+					await f0.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()), null, { timeout: coverMs });
+				} catch (e) {
+					const cover = await f0.evaluate(() => {
+						const say = (el) => { if (!el) return null; const b = el.getBoundingClientRect(); return `#${el.id || el.className || el.tagName}${el.id ? '' : '.' + String(el.className?.baseVal ?? el.className)} at ${[b.left, b.top, b.width, b.height].map((v) => Math.round(v)).join(',')}${el.style && el.style.pointerEvents ? `, pointer-events ${el.style.pointerEvents}` : ', pointer-events not released'}`; };
+						const plate = document.getElementById('o55np-reboot'), calm = document.getElementById('o55np-calm');
+						const busy = !!(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy());
+						return { theme: document.documentElement.getAttribute('data-theme') || '', busy, plate: say(plate), calm: say(calm) };
+					}).catch(() => null);
+					const held = cover ? [cover.plate && 'the NieR reboot plate ' + cover.plate, cover.calm && 'the calm cover ' + cover.calm, cover.busy && 'PM_THEME_TRANSITION.busy()'].filter(Boolean).join('; ') : '';
+					await t.check(`look ${name} cover clears`, false, `PM_LOOK_COVERED() stayed true for ${coverMs} ms with the pointer held${held ? ' by ' + held : ''}${cover && cover.theme ? ` (data-theme ${cover.theme})` : ''}; a press sent now would be lost`, { hard: true });
+				}
+				t.log(`look ${name}: cover clear (PM_LOOK_COVERED() false) ${Date.now() - coverAt} ms after the painted state`);
 				const got = await f0.evaluate(state);
 				const ok = paintedLookHeld(name, got);
 				return t.check(`look ${name} applied`, ok, `data-theme ${got.theme}, NieR ${got.nier ? 'on' : 'off'}`);

@@ -24,7 +24,7 @@ import pm_ea_admission_mode as admission_mode  # noqa: E402
 
 ADMITTED = "scheduler.pass"            # merge 1, DX, DL-549
 OTHER = "subagent.context_rehydrated"  # merge 1, DM, DL-550
-PREPARED = "debug.investigation.started"  # DDBG, prepared, not registered
+PREPARED = "fixture.prepared"          # synthetic unregistered family; remains prepared after Usage admission
 RECORDS = admission_mode.RECORD_DIR
 REGISTRY = admission_mode.REGISTRY
 
@@ -75,7 +75,7 @@ def _remove_record(root):
 
 def _register_prepared(root):
     row = copy.deepcopy(_row(root, ADMITTED))
-    row["event_type"], row["family_id"] = PREPARED, "event-family-debug-investigation-started"
+    row["event_type"], row["family_id"] = PREPARED, "event-family-fixture-prepared"
     _registry_edit(root, lambda doc: doc["families"].append(row))
 
 
@@ -239,6 +239,438 @@ def run_scenarios(module, repo: Path = REPO, names=None) -> list[dict]:
     return results
 
 
+# --- registered-row revisions (S5b, revision_verdict) -------------------------------------------------------------
+# goal_run.stopped (DL-2437) is judged against the S3 lane's own pinned prepared row; with later revisions applied its
+# pins are proved by the hash-checked pre-revision states (revision_states), never by git here.
+REVISED = "goal_run.stopped"
+PREPARED_ROWS = "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json"
+REVISION_DIR = "reports/event-authority-20261116/admission-merge-2/revisions"
+
+
+def _prepared_entry(root, event_type=REVISED):
+    return copy.deepcopy(next(r for r in _read(root, PREPARED_ROWS)["rows"] if r["event_type"] == event_type))
+
+
+def _revision_edit(change, event_type=REVISED):
+    def apply(root):
+        rel = REVISION_DIR + "/" + event_type + ".json"
+        record = _read(root, rel)
+        change(record)
+        _write(root, rel, record)
+    return apply
+
+
+def _live_edit(change, event_type=REVISED):
+    def apply(root):
+        def edit(doc):
+            row = next(f for f in doc["families"] if f["event_type"] == event_type)
+            change(row)
+        _registry_edit(root, edit)
+    return apply
+
+
+def _revision_removed(root):
+    (root / REVISION_DIR / (REVISED + ".json")).unlink()
+
+
+def _revision_copied(root):
+    other = root / "reports/event-authority-29991231/zz-copy/revisions"
+    other.mkdir(parents=True)
+    shutil.copyfile(root / REVISION_DIR / (REVISED + ".json"), other / (REVISED + ".json"))
+
+
+def _unrevised_row_with_record(root):
+    before = _read(root, REVISION_DIR + "/" + REVISED + ".json")["before_row"]
+    _registry_edit(root, lambda doc: doc.__setitem__(
+        "families", [copy.deepcopy(before) if f["event_type"] == REVISED else f for f in doc["families"]]))
+
+
+def _successor_without_revision(root):
+    """d: an unrevised (pre-revision) tree whose row is wrongly replaced by the prepared successor, with no record."""
+    _unrevised_row_with_record(root)
+    _revision_removed(root)
+    successor = _prepared_entry(root)["registry_row"]
+    _registry_edit(root, lambda doc: doc.__setitem__(
+        "families", [copy.deepcopy(successor) if f["event_type"] == REVISED else f for f in doc["families"]]))
+
+
+def _unrevised_tree(root):
+    """pre: the family's row is still its predecessor and no revision record names it."""
+    _unrevised_row_with_record(root)
+    _revision_removed(root)
+
+
+def _duplicate_revised(root):
+    row = copy.deepcopy(_row(root, REVISED))
+    _registry_edit(root, lambda doc: doc["families"].append(row))
+
+
+def _cell_fails(record):
+    record["rows"][0]["cells"]["retention"]["status"] = "FAIL"
+
+
+# (name, defect, call ('lane' = the S3 prepared row and its replaces pin; 'other_predecessor'), expected mode, code)
+REVISION_SCENARIOS = [
+    ("rev_admitted_tree_revised", None, "lane", "revised", None),
+    ("rev_pre_revision_tree_unrevised", _unrevised_tree, "lane", "unrevised", None),
+    ("rev_registered_twice", _duplicate_revised, "lane", "refused", "revision_family_not_registered_once"),
+    ("rev_a_record_deleted", _revision_removed, "lane", "refused", "revised_without_revision_record"),
+    ("rev_d_unrevised_row_marked_successor", _successor_without_revision, "lane", "refused", "revised_without_revision_record"),
+    ("rev_second_record", _revision_copied, "lane", "refused", "revision_record_not_for_family"),
+    ("rev_record_other_schema", _revision_edit(_set(["schema_id"], "pm.other.v1")), "lane", "refused", "revision_record_not_for_family"),
+    ("rev_record_without_revision", _unrevised_row_with_record, "lane", "refused", "revision_record_without_revision"),
+    ("rev_c_live_row_differs_from_prepared", _live_edit(lambda r: r["source_refs"].append("Plans/Decision_Log.md#DL-2437")),
+     "lane", "refused", "registry_row_differs_from_prepared_successor"),
+    ("rev_c_any_v3_row", _live_edit(lambda r: r.__setitem__("semantic_owner_doc", "Plans/Goal_Runtime_System.md#GRS-201")),
+     "lane", "refused", "registry_row_differs_from_prepared_successor"),
+    ("rev_record_row_differs", _revision_edit(lambda r: r["registry_row"]["source_refs"].append("x")), "lane", "refused",
+     "registry_row_differs_from_revision_row"),
+    ("rev_predecessor_pin_differs", None, "other_predecessor", "refused", "revision_predecessor_mismatch"),
+    ("rev_record_cell_fails", _revision_edit(_cell_fails), "lane", "refused", "revision_record_incomplete"),
+    ("rev_record_native_claimed", _revision_edit(_set(["native_execution"], "PASS")), "lane", "refused", "revision_record_incomplete"),
+    ("rev_manifest_sha256", _revision_edit(lambda r: r["manifest"].__setitem__("sha256", _flip(r["manifest"]["sha256"]))),
+     "lane", "refused", "revision_manifest_mismatch"),
+    ("rev_b_record_before_revision", _revision_edit(lambda r: r["registry_before"].__setitem__("revision", "2026-11-16.999")),
+     "lane", "refused", "revision_registry_before_mismatch"),
+    ("rev_b_record_after_revision", _revision_edit(lambda r: r["registry_after"].__setitem__("revision", "2026-11-16.998")),
+     "lane", "refused", "revision_registry_after_mismatch"),
+    ("rev_b_record_after_sha256", _revision_edit(lambda r: r["registry_after"].__setitem__("sha256", _flip(r["registry_after"]["sha256"]))),
+     "lane", "refused", "revision_registry_after_mismatch"),
+    ("rev_decision_other_entry", _revision_edit(_set(["decision_ref"], "Plans/Decision_Log.md#DL-2436")), "lane", "refused",
+     "revision_decision_does_not_pin"),
+]
+
+
+def run_revision_scenarios(module, repo: Path = REPO, names=None) -> list[dict]:
+    """Each revision scenario's expected and observed verdict through `module` (the helper or a mutant)."""
+    results = []
+    with tempfile.TemporaryDirectory(prefix="pm-ea-revision-mode-") as scratch:
+        base = Path(scratch) / "base"
+        for rel in admission_mode.inputs([REVISED], repo) + [PREPARED_ROWS]:
+            (base / rel).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(repo / rel, base / rel)
+        for name, defect, call, mode, code in REVISION_SCENARIOS:
+            if names is not None and name not in names:
+                continue
+            root = Path(scratch) / name
+            shutil.copytree(base, root)
+            if defect is not None:
+                defect(root)
+            module.reset_caches()
+            entry = _prepared_entry(root)
+            predecessor = dict(entry["replaces"])
+            if call == "other_predecessor":
+                predecessor["family_revision"] = "1.0.0"
+            try:
+                got = module.revision_verdict(REVISED, root=root, successor_row=entry["registry_row"], predecessor=predecessor)
+                observed, error = {"mode": got.get("mode"), "code": got.get("code")}, None
+            except Exception as exc:  # reported, never a kill
+                observed, error = None, type(exc).__name__ + ": " + str(exc)[:300]
+            results.append({"scenario": name, "family": REVISED, "expected": {"mode": mode, "code": code},
+                            "observed": observed, "error": error, "ok": observed == {"mode": mode, "code": code}})
+            shutil.rmtree(root)
+    return results
+
+
+# --- merge-2 lane checkers (ADMIT-MODE2): each lane's own admission function, read from its checker source ---------
+# The function is compiled alone (ast), with ROOT bound to a disposable tree, so no checker module is imported.
+# Each lane case: (lane, checker, function, family, adapter(fn, family, root, registry) -> True when accepted).
+import ast  # noqa: E402
+import json as _json  # noqa: E402
+
+
+def lane_function(checker: str, name: str, root: Path, extra: dict | None = None):
+    source = (REPO / checker).read_text(encoding="utf-8")
+    node = next(n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef) and n.name == name)
+    namespace = {"ROOT": root, "json": _json, "copy": copy, "Path": Path, "Any": object, **(extra or {})}
+    exec(compile(ast.Module(body=[node], type_ignores=[]), checker, "exec"), namespace)
+    return namespace[name]
+
+
+def _dc_extra(root):
+    return {"REGISTRY_PATH": REGISTRY, "LEDGER_PATH": "Plans/collaboration_event_admission.json",
+            "load": lambda path, where=root: _read(Path(where), path)}
+
+
+LANE_CASES = [
+    ("DMEM", "scripts/pm_memory_maintenance_events.py", "unadmitted_registrations", "memory.dedup_sweep.completed",
+     lambda fn, et, root, reg: fn({f["event_type"] for f in reg["families"]}, [et]) == {}, None),
+    ("DT", "scripts/pm-dt-event-contracts.py", "registration_refusal", "approval.denied",
+     lambda fn, et, root, reg: fn(et, {f["event_type"] for f in reg["families"]}) is None, None),
+    ("DO", "scripts/pm-orchestrator-event-contracts.py", "registration_refusal", "config.validation.failed",
+     lambda fn, et, root, reg: fn(et, {f["event_type"] for f in reg["families"]}) is None, None),
+    ("DCH", "scripts/pm_dch_events.py", "registration_refusal", "chat.message",
+     lambda fn, et, root, reg: fn(et, reg) is None, None),
+    ("DCH-stop", "scripts/pm_dch_stop.py", "registration_refusal", "chat.response_stop_requested",
+     lambda fn, et, root, reg: fn(et, reg) is None, None),
+    ("DG6A-alert", "scripts/pm-alert-event-contracts-check.py", "registration_refusal", "alert.acknowledged",
+     lambda fn, et, root, reg: fn(et, {f["event_type"] for f in reg["families"]}) is None, None),
+    ("DG6A-concern", "scripts/pm-concern-created-contracts-check.py", "registration_refusal", "concern.created",
+     lambda fn, et, root, reg: fn(et, {f["event_type"] for f in reg["families"]}) is None, None),
+    ("DG6A-panel", "scripts/pm-panel-event-contracts-check.py", "registration_refusal", "panel.redocked",
+     lambda fn, et, root, reg: fn(et, {f["event_type"] for f in reg["families"]}) is None, None),
+    ("DG6B", "scripts/pm-dg6b-event-contracts.py", "unadmitted_registrations", "auth.github.authenticated",
+     lambda fn, et, root, reg: fn({et}, reg) == [], None),
+    ("DS15", "scripts/pm-ds15-event-contracts.py", "admission_text_refusal", "dev.session.started",
+     lambda fn, et, root, reg: fn(et, reg) is None, None),
+    ("DS15-deck2", "scripts/pm-ds15-deck2-contracts.py", "registration_refusal", "browser.context_shared",
+     lambda fn, et, root, reg: fn(et, reg) is None, None),
+    ("DF", "scripts/pm_filesafe_event_authority.py", "unadmitted_matches", "safe_point.created",
+     lambda fn, et, root, reg: fn(et, reg) == 0, None),
+    ("DCW", "scripts/pm_dcw_event_oracles.py", "admission_report", "wizard.blocked",
+     lambda fn, et, root, reg: _accepts(fn, [et]), None),
+    ("DMEM-report", "scripts/pm_memory_maintenance_events.py", "admission_report", "memory.dedup_sweep.completed",
+     lambda fn, et, root, reg: _accepts(fn, [et]), None),
+    ("DG6A-alert-report", "scripts/pm-alert-event-contracts-check.py", "admission_report", "alert.acknowledged",
+     lambda fn, et, root, reg: _accepts(fn, [et]), None),
+    ("DG6A-concern-report", "scripts/pm-concern-created-contracts-check.py", "admission_report", "concern.created",
+     lambda fn, et, root, reg: _accepts(fn, [et]), None),
+    ("DG6A-panel-report", "scripts/pm-panel-event-contracts-check.py", "admission_report", "panel.redocked",
+     lambda fn, et, root, reg: _accepts(fn, [et]), None),
+    ("DG6A-card5", "scripts/pm-card5-event-contracts-check.py", "admission_label", "bundle.note_created",
+     lambda fn, et, root, reg: _accepts(fn, et), None),
+    ("DR", "scripts/pm-runtime-artifact-event-drafts.py", "admission_report", "runtime_artifact.screenshot",
+     lambda fn, et, root, reg: (lambda failures: (fn([et], failures), failures)[1] == [])([]), None),
+    ("DC", "scripts/pm_collaboration_events.py", "admission_mode_failures", "collaboration.created",
+     lambda fn, et, root, reg: fn(root, [et] if any(f["event_type"] == et for f in reg["families"]) else []) == [], _dc_extra),
+]
+
+
+# T252: every family selected by DF's contract main goes through the same record gate.
+DF_CONTRACT_FAMILIES = tuple(r["event_type"] for r in _read(REPO, "Plans/filesafe_event_contract_fixtures.json")["families"])
+LANE_CASES.extend(
+    ("DF-contracts:" + family, "scripts/pm_filesafe_event_contracts.py", "admission_report", family,
+     lambda fn, et, root, reg: (lambda failures: (fn([et], failures), failures)[1] == [])([]), None)
+    for family in DF_CONTRACT_FAMILIES
+)
+
+
+# Missing-record sweep: all twelve FileManager families need the same record gate.
+DFM_CONTRACT_FAMILIES = tuple(r["event_type"] for r in _read(REPO, "Plans/filemanager_event_contract_fixtures.json")["rows"])
+LANE_CASES.extend(
+    ("DFM:" + family, "scripts/pm-filemanager-event-contracts.py", "admission_report", family,
+     lambda fn, et, root, reg: _accepts(fn, [et]), None)
+    for family in DFM_CONTRACT_FAMILIES
+)
+
+
+# Real missing-record false passes: both W3D entrypoints, all W3E and all W3I families.
+for _lane, _checker, _families in [
+    ("W3D-direct", "scripts/pm_w3d_bsd_events.py", [r["event_type"] for r in _read(REPO, "Plans/bsd_event_oracle_plan.json")["families"]]),
+    ("W3D-wrapper", "scripts/pm-w3d-event-contracts.py", [r["event_type"] for r in _read(REPO, "Plans/bsd_event_oracle_plan.json")["families"]]),
+    ("W3E", "scripts/pm_w3e_event_oracles.py", [r["event_type"] for r in _read(REPO, "Plans/event_authority_w3e_oracle_plan.json")["families"]]),
+    ("W3I", "scripts/pm_w3i_continuity_oracles.py", ["continuity.actor_identified", "continuity.provenance_recorded", "continuity.redaction_applied", "continuity.replay_checkpointed"]),
+]:
+    LANE_CASES.extend(
+        (_lane + ":" + family, _checker, "admission_failures", family,
+         lambda fn, et, root, reg: fn([et]) == [], None)
+        for family in _families
+    )
+
+REVISION_LANE_CASES = [
+    ("S3-own_b", "scripts/pm_goal_own_b_oracles.py", "goal.blocked"),
+    ("S3-own_b", "scripts/pm_goal_own_b_oracles.py", "goal.completed"),
+    ("S3-replan", "scripts/pm_goal_run_replan_oracles.py", "goal_run.replanned"),
+]
+
+
+def run_revision_lane_scenarios(module, repo: Path = REPO):
+    """Six actual registry/record states through each new revision lane's own function."""
+    results = []
+    sys.modules["pm_ea_admission_mode"] = module
+    try:
+        with tempfile.TemporaryDirectory(prefix="pm-ea-revision-lanes-") as scratch:
+            base = Path(scratch) / "base"
+            for rel in admission_mode.inputs([c[2] for c in REVISION_LANE_CASES], repo):
+                (base / rel).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(repo / rel, base / rel)
+            for lane, checker, family in REVISION_LANE_CASES:
+                for scenario, accepted in [("admitted_tree", True), ("a_record_deleted", False),
+                        ("b_record_does_not_match", False), ("c_live_row_differs_from_pinned", False),
+                        ("d_prepared_successor_registered", False), ("pre_revision_tree", True)]:
+                    root = Path(scratch) / (family + "-" + scenario)
+                    shutil.copytree(base, root)
+                    rel = REVISION_DIR + "/" + family + ".json"
+                    record = _read(root, rel)
+                    if scenario in ("a_record_deleted", "d_prepared_successor_registered", "pre_revision_tree"):
+                        (root / rel).unlink()
+                    if scenario == "b_record_does_not_match":
+                        record["registry_after"]["revision"] = "2026-11-16.997"
+                        _write(root, rel, record)
+                    if scenario == "c_live_row_differs_from_pinned":
+                        _registry_edit(root, lambda doc: next(r for r in doc["families"] if r["event_type"] == family).__setitem__("family_revision", "9.9.9"))
+                    if scenario == "pre_revision_tree":
+                        _registry_edit(root, lambda doc: doc.__setitem__("families", [copy.deepcopy(record["before_row"]) if r["event_type"] == family else r for r in doc["families"]]))
+                    module.reset_caches()
+                    try:
+                        fn = lane_function(checker, "revision_admission_failures", root)
+                        observed, error = fn([family]) == [], None
+                    except Exception as exc:
+                        observed, error = None, type(exc).__name__ + ": " + str(exc)[:300]
+                    results.append(dict(lane=lane, family=family, scenario=scenario, expected_accepted=accepted,
+                                        observed_accepted=observed, error=error, ok=observed is accepted))
+                    shutil.rmtree(root)
+    finally:
+        sys.modules["pm_ea_admission_mode"] = admission_mode
+    return results
+
+
+def _accepts(fn, *args):
+    try:
+        fn(*args)
+    except AssertionError:
+        return False
+    return True
+
+
+def _lane_record_removed(et):
+    return lambda root: (root / RECORDS / (et + ".json")).unlink()
+
+
+def _lane_record_after_revision(et):
+    return _record_edit(lambda r: r["registry_after"].__setitem__("revision", "2026-11-16.997"), et)
+
+
+def _lane_live_row_differs(et):
+    def apply(root):
+        def edit(doc):
+            next(f for f in doc["families"] if f["event_type"] == et)["family_revision"] = "9.9.9"
+        _registry_edit(root, edit)
+    return apply
+
+
+def _lane_unregistered(et):
+    """pre: the family's row and record withdrawn (the pre-admission state of this family)."""
+    def apply(root):
+        _registry_edit(root, lambda doc: doc.__setitem__("families", [f for f in doc["families"] if f["event_type"] != et]))
+        (root / RECORDS / (et + ".json")).unlink()
+    return apply
+
+
+def _lane_prepared_registered(et):
+    """d: on that pre-admission state, the prepared family wrongly registered (its own row, no record)."""
+    def apply(root):
+        row = copy.deepcopy(_row(root, et))
+        _lane_unregistered(et)(root)
+        _registry_edit(root, lambda doc: doc["families"].append(row))
+    return apply
+
+
+LANE_DEFECTS = [
+    ("admitted_tree", None, True),
+    ("a_record_deleted", _lane_record_removed, False),
+    ("b_record_does_not_match", _lane_record_after_revision, False),
+    ("c_live_row_differs_from_pinned", _lane_live_row_differs, False),
+    ("d_prepared_family_registered", _lane_prepared_registered, False),
+    ("pre_admission_tree", _lane_unregistered, True),
+]
+
+
+def run_lane_scenarios(module, repo: Path = REPO, lanes=None) -> list[dict]:
+    """Each lane case under each defect: accepted or refused through the lane's own function and `module`."""
+    results = []
+    sys.modules["pm_ea_admission_mode"] = module
+    try:
+        with tempfile.TemporaryDirectory(prefix="pm-ea-lane-mode-") as scratch:
+            base = Path(scratch) / "base"
+            families = [case[3] for case in LANE_CASES]
+            for rel in admission_mode.inputs(families, repo) + ["Plans/collaboration_event_admission.json"]:
+                (base / rel).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(repo / rel, base / rel)
+            for lane, checker, name, family, adapter, extra in LANE_CASES:
+                if lanes is not None and lane not in lanes:
+                    continue
+                for defect_name, defect, accepted in LANE_DEFECTS:
+                    root = Path(scratch) / (lane + "-" + defect_name)
+                    shutil.copytree(base, root)
+                    if defect is not None:
+                        defect(family)(root)
+                    module.reset_caches()
+                    try:
+                        fn = lane_function(checker, name, root, extra(root) if extra else None)
+                        observed, error = adapter(fn, family, root, _read(root, REGISTRY)), None
+                    except Exception as exc:  # reported, never a kill
+                        observed, error = None, type(exc).__name__ + ": " + str(exc)[:300]
+                    results.append({"lane": lane, "family": family, "scenario": defect_name, "expected_accepted": accepted,
+                                    "observed_accepted": observed, "error": error, "ok": observed is accepted})
+                    shutil.rmtree(root)
+    finally:
+        sys.modules["pm_ea_admission_mode"] = admission_mode
+    return results
+
+
+GOAL_CASES = [  # S3: pm_goal_own_a_oracles.replaces_or_selected over the revision defects (True = prepared/identity holds)
+    ("rev_admitted_tree_revised", True), ("rev_pre_revision_tree_unrevised", True), ("rev_a_record_deleted", False),
+    ("rev_b_record_after_revision", False), ("rev_c_any_v3_row", False), ("rev_d_unrevised_row_marked_successor", False),
+]
+
+
+def run_goal_scenarios(module, repo: Path = REPO) -> list[dict]:
+    results = []
+    defects = {name: defect for name, defect, *_ in REVISION_SCENARIOS}
+    sys.modules["pm_ea_admission_mode"] = module
+    try:
+        with tempfile.TemporaryDirectory(prefix="pm-ea-goal-mode-") as scratch:
+            base = Path(scratch) / "base"
+            for rel in admission_mode.inputs([REVISED], repo) + [PREPARED_ROWS]:
+                (base / rel).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(repo / rel, base / rel)
+            for name, accepted in GOAL_CASES:
+                root = Path(scratch) / name
+                shutil.copytree(base, root)
+                if defects[name] is not None:
+                    defects[name](root)
+                module.reset_caches()
+                try:
+                    ok_fn = lane_function("scripts/pm_goal_own_a_oracles.py", "prepared_replaces_ok", root)
+                    fn = lane_function("scripts/pm_goal_own_a_oracles.py", "replaces_or_selected", root,
+                                       {"prepared_replaces_ok": ok_fn})
+                    observed, error = fn(_prepared_entry(root), _row(root, REVISED)), None
+                except Exception as exc:  # reported, never a kill
+                    observed, error = None, type(exc).__name__ + ": " + str(exc)[:300]
+                results.append({"lane": "S3", "family": REVISED, "scenario": name, "expected_accepted": accepted,
+                                "observed_accepted": observed, "error": error, "ok": observed is accepted})
+                shutil.rmtree(root)
+    finally:
+        sys.modules["pm_ea_admission_mode"] = admission_mode
+    return results
+
+
+# revised_predecessor_rows: the S3 historical reader keeps goal_run.stopped's v2 selection only while its revision
+# is record-bound ('refused' = the v2 predecessor is withheld, the protective outcome).
+PREDECESSOR_CASES = [
+    ("rev_admitted_tree_revised", "admitted"), ("rev_a_record_deleted", "refused"), ("rev_b_record_after_revision", "refused"),
+    ("rev_c_any_v3_row", "refused"), ("rev_record_without_revision", "refused"), ("rev_pre_revision_tree_unrevised", "refused"),
+]
+
+
+def run_predecessor_scenarios(module, repo: Path = REPO) -> list[dict]:
+    results = []
+    defects = {name: defect for name, defect, *_ in REVISION_SCENARIOS}
+    with tempfile.TemporaryDirectory(prefix="pm-ea-predecessor-") as scratch:
+        base = Path(scratch) / "base"
+        for rel in admission_mode.inputs([REVISED], repo) + [PREPARED_ROWS]:
+            (base / rel).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(repo / rel, base / rel)
+        before = _read(base, REVISION_DIR + "/" + REVISED + ".json")["before_row"]
+        for name, expected in PREDECESSOR_CASES:
+            root = Path(scratch) / name
+            shutil.copytree(base, root)
+            if defects[name] is not None:
+                defects[name](root)
+            module.reset_caches()
+            try:
+                rows = module.revised_predecessor_rows(root)
+                kept = any(admission_mode.canonical_sha256(r) == admission_mode.canonical_sha256(before) for r in rows)
+                observed, error = {"mode": "admitted" if kept else "refused", "code": None}, None
+            except Exception as exc:  # reported, never a kill
+                observed, error = None, type(exc).__name__ + ": " + str(exc)[:300]
+            results.append({"scenario": "predecessor:" + name, "family": REVISED, "expected": {"mode": expected, "code": None},
+                            "observed": observed, "error": error, "ok": observed == {"mode": expected, "code": None}})
+            shutil.rmtree(root)
+    return results
+
+
 class AdmissionModeStandingNegatives(unittest.TestCase):
     def test_every_scenario_has_its_expected_verdict(self):
         results = run_scenarios(admission_mode)
@@ -251,6 +683,129 @@ class AdmissionModeStandingNegatives(unittest.TestCase):
     def test_every_refusal_code_is_reached(self):
         reached = {code for *_, mode, code in SCENARIOS if mode == "refused"}
         self.assertEqual(reached, set(admission_mode.CODES))
+
+
+class LaneAdmissionFunctions(unittest.TestCase):
+    def test_every_lane_function_accepts_only_the_record_bound_admission(self):
+        results = run_lane_scenarios(admission_mode)
+        self.assertEqual(len(results), len(LANE_CASES) * len(LANE_DEFECTS))
+        for result in results:
+            with self.subTest(result["lane"] + ":" + result["scenario"]):
+                self.assertIsNone(result["error"])
+                self.assertTrue(result["ok"], result)
+
+
+    def test_output_metadata_names_record_bound_and_prepared_states(self):
+        for lane, checker, name, family, _, _ in LANE_CASES:
+            if lane not in ('DMEM-report', 'DG6A-alert-report', 'DG6A-concern-report', 'DG6A-panel-report'):
+                continue
+            with self.subTest(lane):
+                fn = lane_function(checker, name, REPO)
+                row = _row(REPO, family)
+                ref = row['retention_policy_ref']
+                policy = 'RECORD_BOUND:' + ref['policy_id'] + '@' + ref['policy_version']
+                self.assertEqual(fn([family]), dict(admission='RECORD_BOUND', retention={family: policy},
+                                                    admission_counts=dict(prepared=0, admitted=1, refused=0)))
+                self.assertEqual(fn([PREPARED]), dict(admission='ABSENT', retention={PREPARED: 'PENDING_RETENTION_DECISION'},
+                                                      admission_counts=dict(prepared=1, admitted=0, refused=0)))
+                mixed = fn([family, PREPARED])
+                self.assertEqual(mixed['admission'], 'ABSENT_AND_RECORD_BOUND')
+                self.assertEqual(mixed['retention'], {family: policy, PREPARED: 'PENDING_RETENTION_DECISION'})
+
+
+    def test_new_revision_lane_gates_keep_only_the_exact_record_bound_successor(self):
+        results = run_revision_lane_scenarios(admission_mode)
+        self.assertEqual(len(results), len(REVISION_LANE_CASES) * 6)
+        for result in results:
+            with self.subTest(result["lane"] + ":" + result["family"] + ":" + result["scenario"]):
+                self.assertIsNone(result["error"])
+                self.assertTrue(result["ok"], result)
+
+
+class RevisionModeStandingNegatives(unittest.TestCase):
+    def test_every_revision_scenario_has_its_expected_verdict(self):
+        results = run_revision_scenarios(admission_mode)
+        self.assertEqual(len(results), len(REVISION_SCENARIOS))
+        for result in results:
+            with self.subTest(result["scenario"]):
+                self.assertIsNone(result["error"])
+                self.assertTrue(result["ok"], result)
+
+    def test_goal_prepared_identity_accepts_only_the_exact_selected_successor(self):
+        results = run_goal_scenarios(admission_mode)
+        self.assertEqual(len(results), len(GOAL_CASES))
+        for result in results:
+            with self.subTest(result["scenario"]):
+                self.assertIsNone(result["error"])
+                self.assertTrue(result["ok"], result)
+
+    def test_predecessor_rows_only_through_the_exact_revision_record(self):
+        results = run_predecessor_scenarios(admission_mode)
+        self.assertEqual(len(results), len(PREDECESSOR_CASES))
+        for result in results:
+            with self.subTest(result["scenario"]):
+                self.assertIsNone(result["error"])
+                self.assertTrue(result["ok"], result)
+
+    def test_every_revision_refusal_code_is_reached(self):
+        reached = {code for *_, mode, code in REVISION_SCENARIOS if mode == "refused"}
+        self.assertEqual(reached, set(admission_mode.REVISION_CODES))
+
+
+
+class Merge2Fix1EvidenceTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("fix1_writer", REPO / "scripts/pm-ea-admission-writer.py")
+        cls.writer = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cls.writer)
+
+    def test_real_collaboration_span_digest_and_historical_location(self):
+        w = self.writer
+        doc = _read(REPO, "reports/event-authority-20261116/admission-merge-2/depth/collaboration.failed.json")
+        item = doc["rows"][0]["cells"]["scope_identity"]["evidence"][0]
+        current = w.refresh_evidence(item)
+        lines = (REPO / current["path"]).read_text().splitlines()
+        excerpt = "\n".join(lines[current["line_start"] - 1:current["line_end"]])
+        self.assertEqual(current["excerpt_sha256"], hashlib.sha256(excerpt.encode()).hexdigest())
+        self.assertIn(current["quote"], excerpt)
+        self.assertEqual(current["source_citation"].get("excerpt_sha256"), item.get("source_citation", item).get("excerpt_sha256"))
+
+    def test_literal_quote_digest_is_not_replaced_by_line_digest(self):
+        w = self.writer
+        path = "Plans/storage-plan.md"
+        text = (REPO / path).read_text()
+        unit = "SP-638"; span = w.unit_span(text, unit)
+        line = next((i, line) for i,line in enumerate(text.splitlines()[span[0]-1:span[1]], span[0]) if len(line)>80)
+        item = dict(path=path,unit=unit,line_start=line[0],line_end=line[0],quote=line[1][:40],excerpt_sha256="0"*64)
+        current = w.refresh_evidence(item, digest_convention="literal_quote")
+        self.assertEqual(current["excerpt_sha256"], hashlib.sha256(item["quote"].encode()).hexdigest())
+        self.assertNotEqual(current["excerpt_sha256"], hashlib.sha256(line[1].encode()).hexdigest())
+
+    def test_real_do_bare_heading_relocates_with_separate_source(self):
+        w = self.writer
+        delta = _read(REPO, "reports/event-authority-20261114/C12-DO.self-grade.json")
+        family = next(x for x in delta["families"] if x["event_type"]=="subagent.completed")
+        item = dict(family["evidence"][0], unit=family["owner_unit"])
+        current = w.refresh_evidence(item,source_commit=delta["implementation_commit"])
+        self.assertEqual(current["source_citation"]["line"], item["line"])
+        self.assertNotEqual(current["line"], item["line"])
+        self.assertEqual((REPO / current["path"]).read_text().splitlines()[current["line"]-1],current["quote"])
+        with self.assertRaises(w.Gap):
+            w.refresh_evidence(dict(item,sha256="0"*64), source_commit=delta["implementation_commit"])
+        with self.assertRaises(w.Gap):
+            w.refresh_evidence(item)
+
+    def test_card1b_owners_follow_roles(self):
+        import pm_ea_admission_rows as rows
+        rows.SELF_GRADES["DMEM"]="reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        parent = _read(REPO, "Plans/memory_maintenance_contracts.json")
+        ref = parent["card1b_prepared_contracts_ref"]
+        for original in _read(REPO,ref)["families"]:
+            contract = rows.lane_contract("DMEM", original["event_type"])
+            self.assertEqual(contract["owners"], {k:original[k+"_owner"] for k in ("semantic","payload","storage")})
+            self.assertTrue(contract["contract_ref"].startswith(ref+"#/families/"))
 
 
 if __name__ == "__main__":

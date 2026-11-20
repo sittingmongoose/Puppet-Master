@@ -124,9 +124,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 44062,
-              "line_end": 44064,
-              "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
+              "line_start": 54637,
+              "line_end": 54639,
+              "quote": "SP-286 and CV-339 including strict full-value v2 resolution,\\\n  \\ SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\\\n  \\ under DL-045: produ",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-575"
+              }
             },
             {
               "path": "Plans/storage-plan.md",
@@ -341,16 +348,30 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 44077,
-              "line_end": 44079,
-              "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
+              "line_start": 54651,
+              "line_end": 54652,
+              "quote": "SP-278 and reuses the existing projector.storage.event_record_index@1.0.0 and\\\n  \\ reader.storage.event_record_index@1.0.0; their physical checkpoint is event_record_index_checkpoint.v1:",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-575"
+              }
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 44079,
-              "line_end": 44080,
-              "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
+              "line_start": 54652,
+              "line_end": 54654,
+              "quote": "event_record_index_checkpoint.v1:{storage_instance_id},\\\n  \\ value pm.storage_value.event_record_index_checkpoint.v1@1.0.0, and lookup rows are event_record_index.v2\\\n  \\ in the current selecte",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-575"
+              }
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -375,16 +396,30 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 44103,
-              "line_end": 44104,
-              "quote": "Withdrawal first cuts off new writer admission for bundle.revision_requested; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_revis"
+              "line_start": 54672,
+              "line_end": 54673,
+              "quote": "Withdrawal first cuts off new writer admission for bundle.revision_requested; drain or fence its pending\\\n  \\ append work under the original receipt gate, then withdraw reader.bundle_revis",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "Withdrawal first cuts off new writer admission for bundle.revision_requested; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_revis",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-575"
+              }
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 44105,
-              "line_end": 44107,
-              "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
+              "line_start": 54674,
+              "line_end": 54676,
+              "quote": "replacement\\\n  \\ reader must explicitly support retained schemas and authenticate complete SP-278 rebuild/currentness\\\n  \\ before publication. Cutoff does not delete original events or reset",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset ",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-575"
+              }
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -434,6 +469,14 @@
           "representation": "exact_normative_owner",
           "finding": "PASS (C12-DCW): all 238 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 15, cut_accepts 179, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 26914 exact kills and 10683 INVALID proposals over 20 real check_schema sites, plus 26891 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_supplement 33); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
+              "unit": "closed root",
+              "line_start": 5,
+              "line_end": 13,
+              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",
@@ -689,9 +732,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 44161,
-              "line_end": 44163,
-              "quote": "SP-286 and CV-339 including strict full-value v2 resolution,\n  SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract under DL-045:\n  produ"
+              "line_start": 54743,
+              "line_end": 54745,
+              "quote": "SP-286 and CV-339 including strict full-value v2 resolution,\\\n  \\ SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\\\n  \\ under DL-045: produ",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "SP-286 and CV-339 including strict full-value v2 resolution,\n  SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract under DL-045:\n  produ",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-576"
+              }
             },
             {
               "path": "Plans/storage-plan.md",
@@ -906,16 +956,30 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 44175,
-              "line_end": 44177,
-              "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
+              "line_start": 54756,
+              "line_end": 54758,
+              "quote": "SP-278 and reuses\\\n  \\ the existing projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0;\\\n  \\ their physical checkpoint is event_record_index_checkpoint.v1:",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-576"
+              }
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 44177,
-              "line_end": 44178,
-              "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
+              "line_start": 54758,
+              "line_end": 54759,
+              "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\\\n  \\ and lookup rows are event_record_index.v2 in the current selecte",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-576"
+              }
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -940,16 +1004,30 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 44201,
-              "line_end": 44202,
-              "quote": "Withdrawal first cuts off new writer admission for bundle.revision_started; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_revisio"
+              "line_start": 54777,
+              "line_end": 54778,
+              "quote": "Withdrawal first cuts off new writer admission for bundle.revision_started; drain or\\\n  \\ fence its pending append work under the original receipt gate, then withdraw reader.bundle_revisio",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "Withdrawal first cuts off new writer admission for bundle.revision_started; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_revisio",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-576"
+              }
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 44203,
-              "line_end": 44205,
-              "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
+              "line_start": 54779,
+              "line_end": 54781,
+              "quote": "replacement\\\n  \\ reader must explicitly support retained schemas and authenticate complete SP-278 rebuild/currentness\\\n  \\ before publication. Cutoff does not delete original events or reset",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset ",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-576"
+              }
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -999,6 +1077,14 @@
           "representation": "exact_normative_owner",
           "finding": "PASS (C12-DCW): all 235 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 14, cut_accepts 177, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 30264 exact kills and 12977 INVALID proposals over 20 real check_schema sites, plus 13450 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/event_payloads/bundle_revision/revision_started.schema.json",
+              "unit": "closed root",
+              "line_start": 5,
+              "line_end": 13,
+              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",
@@ -1233,9 +1319,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 44259,
-              "line_end": 44261,
-              "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
+              "line_start": 54848,
+              "line_end": 54850,
+              "quote": "SP-286 and CV-339 including strict full-value v2 resolution,\\\n  \\ SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\\\n  \\ under DL-045: produ",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-577"
+              }
             },
             {
               "path": "Plans/storage-plan.md",
@@ -1450,16 +1543,30 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 44274,
-              "line_end": 44276,
-              "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
+              "line_start": 54861,
+              "line_end": 54863,
+              "quote": "SP-278 and reuses\\\n  \\ the existing projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0;\\\n  \\ their physical checkpoint is event_record_index_checkpoint.v1:",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-577"
+              }
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 44276,
-              "line_end": 44277,
-              "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
+              "line_start": 54863,
+              "line_end": 54864,
+              "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\\\n  \\ and lookup rows are event_record_index.v2 in the current selecte",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-577"
+              }
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -1484,16 +1591,30 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 44300,
-              "line_end": 44301,
-              "quote": "Withdrawal first cuts off new writer admission for bundle.revision_completed; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_revis"
+              "line_start": 54882,
+              "line_end": 54883,
+              "quote": "Withdrawal first cuts off new writer admission for bundle.revision_completed; drain\\\n  \\ or fence its pending append work under the original receipt gate, then withdraw reader.bundle_revis",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "Withdrawal first cuts off new writer admission for bundle.revision_completed; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_revis",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-577"
+              }
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 44302,
-              "line_end": 44304,
-              "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
+              "line_start": 54884,
+              "line_end": 54886,
+              "quote": "replacement\\\n  \\ reader must explicitly support retained schemas and authenticate complete SP-278 rebuild/currentness\\\n  \\ before publication. Cutoff does not delete original events or reset",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset ",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-577"
+              }
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -1543,6 +1664,14 @@
           "representation": "exact_normative_owner",
           "finding": "PASS (C12-DCW): all 238 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 15, cut_accepts 179, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 29329 exact kills and 12664 INVALID proposals over 20 real check_schema sites, plus 13450 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/event_payloads/bundle_revision/revision_completed.schema.json",
+              "unit": "closed root",
+              "line_start": 5,
+              "line_end": 13,
+              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",
@@ -1784,9 +1913,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 44358,
-              "line_end": 44360,
-              "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
+              "line_start": 54953,
+              "line_end": 54955,
+              "quote": "SP-286 and CV-339 including strict full-value v2 resolution,\\\n  \\ SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\\\n  \\ under DL-045: produ",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-578"
+              }
             },
             {
               "path": "Plans/storage-plan.md",
@@ -2001,16 +2137,30 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 44373,
-              "line_end": 44375,
-              "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
+              "line_start": 54966,
+              "line_end": 54968,
+              "quote": "SP-278 and reuses\\\n  \\ the existing projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0;\\\n  \\ their physical checkpoint is event_record_index_checkpoint.v1:",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-578"
+              }
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 44375,
-              "line_end": 44376,
-              "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
+              "line_start": 54968,
+              "line_end": 54969,
+              "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\\\n  \\ and lookup rows are event_record_index.v2 in the current selecte",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-578"
+              }
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -2035,16 +2185,30 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 44399,
-              "line_end": 44400,
-              "quote": "Withdrawal first cuts off new writer admission for bundle.revision_interrupted; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_rev"
+              "line_start": 54987,
+              "line_end": 54988,
+              "quote": "Withdrawal first cuts off new writer admission for bundle.revision_interrupted; drain\\\n  \\ or fence its pending append work under the original receipt gate, then withdraw reader.bundle_rev",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "Withdrawal first cuts off new writer admission for bundle.revision_interrupted; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_rev",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-578"
+              }
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 44401,
-              "line_end": 44403,
-              "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
+              "line_start": 54989,
+              "line_end": 54991,
+              "quote": "replacement\\\n  \\ reader must explicitly support retained schemas and authenticate complete SP-278 rebuild/currentness\\\n  \\ before publication. Cutoff does not delete original events or reset",
+              "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset ",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "SP-578"
+              }
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
@@ -2094,6 +2258,14 @@
           "representation": "exact_normative_owner",
           "finding": "PASS (C12-DCW): all 235 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 14, cut_accepts 177, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 30562 exact kills and 13226 INVALID proposals over 20 real check_schema sites, plus 13450 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/event_payloads/bundle_revision/revision_interrupted.schema.json",
+              "unit": "closed root",
+              "line_start": 5,
+              "line_end": 13,
+              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",
@@ -2276,9 +2448,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 39537,
-              "line_end": 39537,
-              "quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,"
+              "line_start": 42858,
+              "line_end": 42859,
+              "quote": "Semantic owner is current\\\n  \\ Plans/Planning_Wizard.md#PWIZ-002,",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-596"
+              }
             }
           ],
           "prior": {
@@ -2296,9 +2475,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 39565,
-              "line_end": 39565,
-              "quote": "Producer emitter.wizard_blocked@1.0.0 is the responsible Planning Wizard component''s observer of its original"
+              "line_start": 42881,
+              "line_end": 42882,
+              "quote": "Producer emitter.wizard_blocked@1.0.0\\\n  \\ is the responsible Planning Wizard component's observer of its original",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "Producer emitter.wizard_blocked@1.0.0 is the responsible Planning Wizard component''s observer of its original",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-596"
+              }
             }
           ],
           "prior": {
@@ -2316,9 +2502,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 39556,
-              "line_end": 39556,
-              "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,"
+              "line_start": 42874,
+              "line_end": 42875,
+              "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-596"
+              }
             },
             {
               "path": "Plans/event_payloads/planning_wizard/wizard_blocked.schema.json",
@@ -2363,9 +2556,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 39590,
-              "line_end": 39590,
-              "quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,"
+              "line_start": 42904,
+              "line_end": 42905,
+              "quote": "Retry compares exactly the producer-owned semantic fields enumerated\\\n  \\ by CV-339: event_type, scope_kind, project_id,",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-596"
+              }
             }
           ],
           "prior": {
@@ -2410,9 +2610,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 39623,
-              "line_end": 39623,
-              "quote": "NEW original custody source wizard_blocked_evidence is materialized in Plans/storage_value_registry.json under"
+              "line_start": 42935,
+              "line_end": 42936,
+              "quote": "NEW original custody source wizard_blocked_evidence\\\n  \\ is materialized in Plans/storage_value_registry.json under",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "NEW original custody source wizard_blocked_evidence is materialized in Plans/storage_value_registry.json under",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-596"
+              }
             }
           ],
           "prior": {
@@ -2430,9 +2637,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 39606,
-              "line_end": 39606,
-              "quote": "The planning component''s immutable observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run."
+              "line_start": 42919,
+              "line_end": 42920,
+              "quote": "The planning component's immutable\\\n  \\ observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "The planning component''s immutable observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-596"
+              }
             }
           ],
           "prior": {
@@ -2450,9 +2664,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 39660,
-              "line_end": 39660,
-              "quote": "NEW passive operating consumer reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported"
+              "line_start": 42969,
+              "line_end": 42970,
+              "quote": "NEW passive operating consumer\\\n  \\ reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "NEW passive operating consumer reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-596"
+              }
             }
           ],
           "prior": {
@@ -2477,9 +2698,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 39654,
-              "line_end": 39654,
-              "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253,"
+              "line_start": 42966,
+              "line_end": 42967,
+              "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord\\\n  \\ profile; under CV-253,",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253,",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-596"
+              }
             },
             {
               "path": "scripts/pm_dcw_blockage_events.py",
@@ -2508,6 +2736,21 @@
           "representation": "exact_normative_owner",
           "finding": "PASS (C12-DCW): all 219 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 5, complete_boundary_reclassified 11, cut_accepts 167, entailed 17, precondition 19). The whole-definition OE001 schema ledger has 20160 exact kills and 8428 INVALID proposals over 15 real check_schema sites, plus 3756 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (witnessed 1353, witnessed_by_shared_site 13, witnessed_supplement 43); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-596",
+              "line_start": 42874,
+              "line_end": 42875,
+              "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-596"
+              },
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",
@@ -2656,9 +2899,33 @@
         {
           "path": "Plans/Planning_Wizard.md",
           "unit": "PWIZ-098",
-          "line_start": 4207,
-          "line_end": 4214,
-          "quote": "wizard.deferred_payload.loaded Observation\n\n```yaml\nplan_unit_id: PWIZ-098\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Planning_Wizard.md\ncanonical_text: wizard.deferred_pa"
+          "line_start": 4921,
+          "line_end": 4928,
+          "quote": "wizard.deferred_payload.loaded Observation\n\n```yaml\nplan_unit_id: PWIZ-098\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Planning_Wizard.md\ncanonical_text: \"wizard.deferred_pa",
+          "file_sha256": "1ad47262e90672e8a724c242df2866d8a91a5c6f659c4f7f079582d3a38cdb7f",
+          "quote_check": "exact",
+          "reanchor": {
+            "old_path": "Plans/Planning_Wizard.md",
+            "old_unit": "PWIZ-098",
+            "old_quote": "wizard.deferred_payload.loaded Observation\n\n```yaml\nplan_unit_id: PWIZ-098\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Planning_Wizard.md\ncanonical_text: wizard.deferred_pa",
+            "method": "normalized",
+            "reason": "YAML scalar delimiter representation; unique match in the same unit.",
+            "history": {
+              "grade_commit": "e51cec575ed750b90fd81d719acd81555e1c86ab",
+              "command": [
+                "git",
+                "-C",
+                "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                "log",
+                "--format=fuller",
+                "-L",
+                "4921,4992:Plans/Planning_Wizard.md",
+                "e51cec575ed750b90fd81d719acd81555e1c86ab..HEAD"
+              ],
+              "exit_code": 0,
+              "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-PWIZ-098-DCW.self-grade.log"
+            }
+          }
         },
         {
           "path": "Plans/Contracts_V0.md",
@@ -2702,9 +2969,33 @@
             {
               "path": "Plans/Planning_Wizard.md",
               "unit": "PWIZ-098",
-              "line_start": 4909,
-              "line_end": 4916,
-              "quote": "wizard.deferred_payload.loaded Observation\n\n```yaml\nplan_unit_id: PWIZ-098\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Planning_Wizard.md\ncanonical_text: wizard.deferred_pa"
+              "line_start": 4921,
+              "line_end": 4928,
+              "quote": "wizard.deferred_payload.loaded Observation\n\n```yaml\nplan_unit_id: PWIZ-098\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Planning_Wizard.md\ncanonical_text: \"wizard.deferred_pa",
+              "file_sha256": "1ad47262e90672e8a724c242df2866d8a91a5c6f659c4f7f079582d3a38cdb7f",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Planning_Wizard.md",
+                "old_unit": "PWIZ-098",
+                "old_quote": "wizard.deferred_payload.loaded Observation\n\n```yaml\nplan_unit_id: PWIZ-098\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Planning_Wizard.md\ncanonical_text: wizard.deferred_pa",
+                "method": "normalized",
+                "reason": "YAML scalar delimiter representation; unique match in the same unit.",
+                "history": {
+                  "grade_commit": "e51cec575ed750b90fd81d719acd81555e1c86ab",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "4921,4992:Plans/Planning_Wizard.md",
+                    "e51cec575ed750b90fd81d719acd81555e1c86ab..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-PWIZ-098-DCW.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Contracts_V0.md",
@@ -2954,9 +3245,16 @@
             {
               "path": "Plans/Planning_Wizard.md",
               "unit": "PWIZ-098",
-              "line_start": 4923,
-              "line_end": 4924,
-              "quote": "predecessor_event_id is that wizard.opened event for the same original request, child, Project, Named\n  Plan, seed and context. Loading is distinct from opening; route-open, a stale see"
+              "line_start": 4935,
+              "line_end": 4937,
+              "quote": "predecessor_event_id is that\\\n  \\ wizard.opened event for the same original request, child, Project, Named Plan, seed and context. Loading\\\n  \\ is distinct from opening; route-open, a stale see",
+              "file_sha256": "1ad47262e90672e8a724c242df2866d8a91a5c6f659c4f7f079582d3a38cdb7f",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "predecessor_event_id is that wizard.opened event for the same original request, child, Project, Named\n  Plan, seed and context. Loading is distinct from opening; route-open, a stale see",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "PWIZ-098"
+              }
             }
           ],
           "prior": {
@@ -3067,6 +3365,14 @@
           "representation": "exact_normative_owner",
           "finding": "PASS (C12-DCW): all 218 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 8, complete_boundary_reclassified 12, cut_accepts 165, entailed 16, precondition 17). The whole-definition OE001 schema ledger has 26513 exact kills and 11176 INVALID proposals over 23 real check_schema sites, plus 17834 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 21, witnessed 2790, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json",
+              "unit": "closed root",
+              "line_start": 5,
+              "line_end": 14,
+              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"schema_id\",\n    \"schema_version\",\n    \"event_type\",\n    \"project_id\",\n    \"thread_id\",\n    \"planning_run_id\",\n    \"named_plan_id\",\n  ",
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",
@@ -3235,9 +3541,33 @@
         {
           "path": "Plans/Planning_Wizard.md",
           "unit": "PWIZ-097",
-          "line_start": 4150,
-          "line_end": 4157,
-          "quote": "wizard.opened Observation\n\n```yaml\nplan_unit_id: PWIZ-097\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Planning_Wizard.md\ncanonical_text: wizard.opened is a newly authored t"
+          "line_start": 4852,
+          "line_end": 4859,
+          "quote": "wizard.opened Observation\n\n```yaml\nplan_unit_id: PWIZ-097\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Planning_Wizard.md\ncanonical_text: \"wizard.opened is a newly authored t",
+          "file_sha256": "1ad47262e90672e8a724c242df2866d8a91a5c6f659c4f7f079582d3a38cdb7f",
+          "quote_check": "exact",
+          "reanchor": {
+            "old_path": "Plans/Planning_Wizard.md",
+            "old_unit": "PWIZ-097",
+            "old_quote": "wizard.opened Observation\n\n```yaml\nplan_unit_id: PWIZ-097\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Planning_Wizard.md\ncanonical_text: wizard.opened is a newly authored t",
+            "method": "normalized",
+            "reason": "YAML scalar delimiter representation; unique match in the same unit.",
+            "history": {
+              "grade_commit": "e51cec575ed750b90fd81d719acd81555e1c86ab",
+              "command": [
+                "git",
+                "-C",
+                "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                "log",
+                "--format=fuller",
+                "-L",
+                "4852,4920:Plans/Planning_Wizard.md",
+                "e51cec575ed750b90fd81d719acd81555e1c86ab..HEAD"
+              ],
+              "exit_code": 0,
+              "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-PWIZ-097-DCW.self-grade.log"
+            }
+          }
         },
         {
           "path": "Plans/Contracts_V0.md",
@@ -3283,7 +3613,31 @@
               "unit": "PWIZ-097",
               "line_start": 4852,
               "line_end": 4859,
-              "quote": "wizard.opened Observation\n\n```yaml\nplan_unit_id: PWIZ-097\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Planning_Wizard.md\ncanonical_text: wizard.opened is a newly authored t"
+              "quote": "wizard.opened Observation\n\n```yaml\nplan_unit_id: PWIZ-097\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Planning_Wizard.md\ncanonical_text: \"wizard.opened is a newly authored t",
+              "file_sha256": "1ad47262e90672e8a724c242df2866d8a91a5c6f659c4f7f079582d3a38cdb7f",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/Planning_Wizard.md",
+                "old_unit": "PWIZ-097",
+                "old_quote": "wizard.opened Observation\n\n```yaml\nplan_unit_id: PWIZ-097\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Planning_Wizard.md\ncanonical_text: wizard.opened is a newly authored t",
+                "method": "normalized",
+                "reason": "YAML scalar delimiter representation; unique match in the same unit.",
+                "history": {
+                  "grade_commit": "e51cec575ed750b90fd81d719acd81555e1c86ab",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "4852,4920:Plans/Planning_Wizard.md",
+                    "e51cec575ed750b90fd81d719acd81555e1c86ab..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-PWIZ-097-DCW.self-grade.log"
+                }
+              }
             },
             {
               "path": "Plans/Contracts_V0.md",
@@ -3520,8 +3874,15 @@
               "path": "Plans/Planning_Wizard.md",
               "unit": "PWIZ-097",
               "line_start": 4866,
-              "line_end": 4867,
-              "quote": "predecessor_event_id is null. This event never creates or selects a child on replay.\n  The exact producer is emitter.wizard_opened@1.0.0, the current Planning Wizard deferred-intake own"
+              "line_end": 4868,
+              "quote": "predecessor_event_id\\\n  \\ is null. This event never creates or selects a child on replay. The exact producer is emitter.wizard_opened@1.0.0,\\\n  \\ the current Planning Wizard deferred-intake own",
+              "file_sha256": "1ad47262e90672e8a724c242df2866d8a91a5c6f659c4f7f079582d3a38cdb7f",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "predecessor_event_id is null. This event never creates or selects a child on replay.\n  The exact producer is emitter.wizard_opened@1.0.0, the current Planning Wizard deferred-intake own",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "PWIZ-097"
+              }
             }
           ],
           "prior": {
@@ -3632,6 +3993,14 @@
           "representation": "exact_normative_owner",
           "finding": "PASS (C12-DCW): all 213 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 7, complete_boundary_reclassified 12, cut_accepts 164, entailed 14, precondition 16). The whole-definition OE001 schema ledger has 21671 exact kills and 8464 INVALID proposals over 19 real check_schema sites, plus 15642 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 12, witnessed 1933, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/event_payloads/planning_wizard/wizard_opened.schema.json",
+              "unit": "closed root",
+              "line_start": 5,
+              "line_end": 14,
+              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"schema_id\",\n    \"schema_version\",\n    \"event_type\",\n    \"project_id\",\n    \"thread_id\",\n    \"planning_run_id\",\n    \"named_plan_id\",\n  ",
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",
@@ -3835,9 +4204,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 39762,
-              "line_end": 39762,
-              "quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,"
+              "line_start": 43082,
+              "line_end": 43083,
+              "quote": "Semantic owner is current\\\n  \\ Plans/Planning_Wizard.md#PWIZ-002,",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-597"
+              }
             }
           ],
           "prior": {
@@ -3855,9 +4231,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 39789,
-              "line_end": 39789,
-              "quote": "Producer emitter.wizard_unblocked@1.0.0 is the responsible Planning Wizard component''s observer of its original"
+              "line_start": 43104,
+              "line_end": 43105,
+              "quote": "Producer emitter.wizard_unblocked@1.0.0\\\n  \\ is the responsible Planning Wizard component's observer of its original",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "Producer emitter.wizard_unblocked@1.0.0 is the responsible Planning Wizard component''s observer of its original",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-597"
+              }
             }
           ],
           "prior": {
@@ -3875,9 +4258,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 39780,
-              "line_end": 39780,
-              "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json are required-present, root"
+              "line_start": 43097,
+              "line_end": 43098,
+              "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json\\\n  \\ are required-present, root",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json are required-present, root",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-597"
+              }
             },
             {
               "path": "Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json",
@@ -3922,9 +4312,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 39814,
-              "line_end": 39814,
-              "quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,"
+              "line_start": 43127,
+              "line_end": 43128,
+              "quote": "Retry compares exactly the producer-owned semantic fields enumerated\\\n  \\ by CV-339: event_type, scope_kind, project_id,",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-597"
+              }
             }
           ],
           "prior": {
@@ -3969,9 +4366,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 39848,
-              "line_end": 39848,
-              "quote": "NEW original custody source wizard_unblocked_evidence is materialized in Plans/storage_value_registry.json under"
+              "line_start": 43159,
+              "line_end": 43160,
+              "quote": "NEW original custody source wizard_unblocked_evidence\\\n  \\ is materialized in Plans/storage_value_registry.json under",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "NEW original custody source wizard_unblocked_evidence is materialized in Plans/storage_value_registry.json under",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-597"
+              }
             }
           ],
           "prior": {
@@ -3989,9 +4393,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 39830,
-              "line_end": 39830,
-              "quote": "The planning component''s immutable conditions_cleared observation identifies the complete required conditions"
+              "line_start": 43142,
+              "line_end": 43143,
+              "quote": "The planning component's immutable\\\n  \\ conditions_cleared observation identifies the complete required conditions",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "The planning component''s immutable conditions_cleared observation identifies the complete required conditions",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-597"
+              }
             }
           ],
           "prior": {
@@ -4009,9 +4420,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 39885,
-              "line_end": 39885,
-              "quote": "NEW passive operating consumer reader.wizard_unblocked_history@1.0.0 selects only wizard.unblocked at this exact"
+              "line_start": 43193,
+              "line_end": 43194,
+              "quote": "NEW passive operating consumer\\\n  \\ reader.wizard_unblocked_history@1.0.0 selects only wizard.unblocked at this exact",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "NEW passive operating consumer reader.wizard_unblocked_history@1.0.0 selects only wizard.unblocked at this exact",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-597"
+              }
             }
           ],
           "prior": {
@@ -4036,9 +4454,16 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 39879,
-              "line_end": 39879,
-              "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253,"
+              "line_start": 43190,
+              "line_end": 43191,
+              "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord\\\n  \\ profile; under CV-253,",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253,",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-597"
+              }
             },
             {
               "path": "scripts/pm_dcw_blockage_events.py",
@@ -4067,6 +4492,21 @@
           "representation": "exact_normative_owner",
           "finding": "PASS (C12-DCW): all 234 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 6, complete_boundary_reclassified 11, cut_accepts 180, entailed 17, precondition 20). The whole-definition OE001 schema ledger has 24007 exact kills and 10368 INVALID proposals over 19 real check_schema sites, plus 5022 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (witnessed 1729, witnessed_by_shared_site 13, witnessed_supplement 66); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-597",
+              "line_start": 43097,
+              "line_end": 43098,
+              "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json\\\n  \\ are required-present, root",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json are required-present, root",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-597"
+              },
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",

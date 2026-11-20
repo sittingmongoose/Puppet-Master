@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6722-L7532
+Source lines: L6722-L7543
 
-Source SHA256: `e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d`
+Source SHA256: `a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c`
 
 ---
 
@@ -751,34 +751,30 @@ plan_unit_id: ATS-285
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: Nine prepared exact families in Plans/debug_investigation_event_fixtures.json have independent
-  closed-payload, identity, Project join, replay/idempotency, original-receipt, custody, compatibility
-  and withdrawal oracles in scripts/pm-debug-investigation-events.py. DL-428 state_changed covers all
-  six Failed reasons and rejects every other failure pairing, separates failed_cleanup, compares original
-  before-state/phase, refuses terminal in-place restart and preserves historical opening/new-linked-work
-  semantics. DL-429 instrumentation_state_changed covers every approved transition row and each source
-  alternative, all eight legal pairs, whole-lane never-needed proof, verified removal including detach,
-  exact visible leftovers/recovery, retry authorization/count/attempt ceiling, pending handoff acceptance,
-  retained responsibility on failure, no second unaccepted handoff, no cleaned restart, restore/permission/overlap
-  guards and immutable original detail joins. Each current writer/retry refuses projector_replay_only;
-  every family has its own missing-field/version/unknown-field, encoded project partition, changed semantic
-  digest, native custody/CAS/permission/withdrawal obligations and none_required transient-checkpoint
-  assertion. The pre-existing seven contracts and mode-resolution cases retain their prior scope. Eagerly
-  resolve every schema reference, including unvisited definitions; malformed references fail the whole
-  checker. Retained original positives ignore current live transition state and current-writer replay
-  policy while forged or withdrawn originals refuse. scripts/pm-debug-investigation-standing-checks.py
-  promotes each family's bad candidates and rejects successful exits masquerading as failure. Static fixtures
-  use projected original facts; they never prove native receipt, proof dereference, payload-pack, writer
-  exclusion, recovery, CAS or effects. Those obligations remain authored and NOT_RUN. Number, physical
-  and date-time checks call the shared helpers of CV-1100, SP-1100 and CV-1101 (current_integer at every
-  companion-schema integer slot with its schema bounds, qualified RFC 8785 identity and producer digests,
-  EVENT_VALUE inline sizes, exact uint64 Storage metadata, date_time with the EventRecord profile and with
-  CV-253 storage_utc_z), and the shared number corpus runs through the complete checker. Every refusal is
-  a named guard-table row proved by the shared guard-isolation tool. No local number, date-time or proof
-  helper is introduced.
+canonical_text: Nine prepared exact families in Plans/debug_investigation_event_fixtures.json have independent closed-payload,
+  identity, Project join, replay/idempotency, original-receipt, custody, compatibility and withdrawal oracles in
+  scripts/pm-debug-investigation-events.py. DL-428 state_changed covers all six Failed reasons and rejects every
+  other failure pairing, separates failed_cleanup, compares original before-state/phase, refuses terminal in-place
+  restart and preserves historical opening/new-linked-work semantics. DL-429 instrumentation_state_changed covers
+  every approved transition row and each source alternative, all eight legal pairs, whole-lane never-needed proof,
+  verified removal including detach, exact visible leftovers/recovery, retry authorization/count/attempt ceiling,
+  pending handoff acceptance, retained responsibility on failure, no second unaccepted handoff, no cleaned restart,
+  restore/permission/overlap guards and immutable original detail joins. Each current writer/retry refuses projector_replay_only;
+  every family has its own missing-field/version/unknown-field, encoded project partition, changed semantic digest,
+  native custody/CAS/permission/withdrawal obligations and none_required transient-checkpoint assertion. The pre-existing
+  seven contracts and mode-resolution cases retain their prior scope. Eagerly resolve every schema reference, including
+  unvisited definitions; malformed references fail the whole checker. Retained original positives ignore current
+  live transition state and current-writer replay policy while forged or withdrawn originals refuse. scripts/pm-debug-investigation-standing-checks.py
+  promotes each family's bad candidates and rejects successful exits masquerading as failure. Static fixtures use
+  projected original facts; they never prove native receipt, proof dereference, payload-pack, writer exclusion,
+  recovery, CAS or effects. Those obligations remain authored and NOT_RUN. Number, physical and date-time checks
+  call the shared helpers of CV-1100, SP-1100 and CV-1101 (current_integer at every companion-schema integer slot
+  with its schema bounds, qualified RFC 8785 identity and producer digests, EVENT_VALUE inline sizes, exact uint64
+  Storage metadata, date_time with the EventRecord profile and with CV-253 storage_utc_z), and the shared number
+  corpus runs through the complete checker. Every refusal is a named guard-table row proved by the shared guard-isolation
+  tool. No local number, date-time or proof helper is introduced.
 gui_related: false
-gui_classification_reason: Event persistence and reader contract; existing UI behavior remains owned by
-  its surface.
+gui_classification_reason: Event persistence and reader contract; existing UI behavior remains owned by its surface.
 depends_on:
 - CV-570
 - CV-571
@@ -792,7 +788,8 @@ depends_on:
 - CV-578
 unblocks: []
 acceptance_criteria:
-- Exact family remains unadmitted until its own integration landing and all open product cells close.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Exact family remains unadmitted until its
+  own integration landing and all open product cells close».'
 - Named positive and negative static oracles pass; native execution is NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm-debug-investigation-events.py
@@ -819,3 +816,17 @@ negative_constraints:
 ```
 
 <a id="collaboration-event-oracles-dl-090-2026-11-04"></a>
+
+Current selected assignment (2026-11-19): debug.investigation.context_item_added@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2283. Its event history selects RP-OPERATIONAL-2555D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): debug.investigation.context_item_state_changed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2284. Its event history selects RP-OPERATIONAL-2555D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): debug.investigation.exported@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2285. Its event history selects RP-OPERATIONAL-2555D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): debug.investigation.imported@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2286. Its event history selects RP-OPERATIONAL-2555D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): debug.investigation.started@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2287. Its event history selects RP-OPERATIONAL-2555D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): debug.investigation.target_bound@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2288. Its event history selects RP-OPERATIONAL-2555D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): debug.investigation.verification_recorded@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2289. Its event history selects RP-OPERATIONAL-2555D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.

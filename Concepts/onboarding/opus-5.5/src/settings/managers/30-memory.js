@@ -50,14 +50,31 @@
   }
   const notes = () => store().notes;
   const noteById = id => notes().find(n => n.id === id) || null;
-  /* FO-198: a note's identity keeps the letters and numbers of every script (NFKC, lowercase, \p{L}\p{N}); the old
-     ASCII-only key emptied every non-ASCII note, so two distinct notes shared one key and the second was dropped.
-     An empty key (emoji-only or punctuation-only words) is never a duplicate. */
-  const norm = t => String(t || '').normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+  /* FO-198: a note's identity keeps the letters, marks and numbers of every script (NFKC, lowercase, \p{L}\p{M}\p{N});
+     the old ASCII-only key emptied every non-ASCII note, so two distinct notes shared one key and the second was dropped.
+     FO-204: the combining marks (\p{M}) stay too — vowel and tone marks are what tell Hindi 'सिर' from 'सुर' and Thai
+     'ก่า' from 'ก้า', and stripping them collapsed those pairs into one note.
+     FO-205: symbols (\p{S}: currency, math, emoji) stay as well, so '$500' and '€500', '+5' and '-5', and two notes
+     that differ only in their emoji are different notes; a dash (\p{Pd}) directly before a digit is read as a minus
+     sign (U+2212) and kept, so '-5' and '−5' are one note. Other punctuation still drops out, so ASCII duplicates
+     that differ only in case or punctuation still dedupe. An empty key (punctuation-only words) is a duplicate only
+     of the very same trimmed NFKC text.
+     FO-205 rounds 2-3: the key now drops ONLY punctuation (\p{P}) and spaces (\p{Z}, \s), and keeps everything else,
+     the invisible format characters (\p{Cf}) included. A joined emoji (woman + zero-width joiner + laptop) is one
+     picture, the England and Scotland flags differ only in their invisible tag characters, and the same joiners
+     shape Persian and Indic words; turning any of them into a space merged distinct notes and lost the second.
+     FO-205 round 4: emoji built from punctuation keep it. NFKC is applied around pictographs, never to them (it
+     would turn the double exclamation and exclamation-question emoji into '!!' and '!?'), and a punctuation mark
+     followed by the emoji selector (U+FE0F) or the keycap mark (U+20E3) is part of that emoji, so the '#' and '*'
+     keycaps stay two notes. */
+  const norm = t => String(t || '').replace(/[^\p{Extended_Pictographic}]+/gu, s => s.normalize('NFKC')).toLowerCase()
+    .replace(/\p{Pd}(?=\p{Nd})/gu, '\u2212')
+    .replace(/(?:[\p{Z}\s]|(?!\p{Extended_Pictographic})\p{P}(?![\uFE0F\u20E3]))+/gu, ' ').trim();
   function addNote(text, level) {
     const words = String(text || '').trim(); if (!words) return null;
     const key = norm(words);
-    const same = key ? notes().find(n => norm(n.text) === key) : null;
+    const same = key ? notes().find(n => norm(n.text) === key)
+      : notes().find(n => String(n.text || '').trim().normalize('NFKC') === words.normalize('NFKC'));
     if (same) { Object.assign(same, { level: level || same.level, archived: false, saved: 'Today' }); saveState(); return same; }
     const st = store(); const n = { id: 'u' + (++st.seq) + '-' + Date.now().toString(36), text: words, level: level === 'every' ? 'every' : 'project', saved: 'Today' };
     notes().unshift(n); saveState(); return n;
@@ -67,8 +84,8 @@
   const UI = { page: { q: '', level: 'all', arch: false }, sheet: { q: '', level: 'all', arch: false } };
   let flash = '', flashTimer = 0;
   function visible(place) {
-    const u = UI[place], q = u.q.trim().toLowerCase();
-    return notes().filter(n => (u.level === 'all' || n.level === u.level) && (!q || n.text.toLowerCase().includes(q)));
+    const u = UI[place], q = u.q.trim().normalize('NFKC').toLowerCase();
+    return notes().filter(n => (u.level === 'all' || n.level === u.level) && (!q || n.text.normalize('NFKC').toLowerCase().includes(q)));
   }
   function rowHtml(n, place) {
     return `<div class="mm-row${n.archived ? ' is-archived' : ''}${flash === n.id ? ' is-flash' : ''}" data-mm-note="${a(n.id)}">`
@@ -224,7 +241,7 @@
   };
 
   /* ---------- the sheet over the chat (mock 10): the same page, the chat column's height under its header ---------- */
-  let sheet = null, lookReady = false, portalWas = null, opener = null;
+  let sheet = null, lookReady = false, portalWas = null, opener = null, closeTimer = 0;
   const chatPanel = () => document.getElementById('chatPanel');
   const narrow = () => window.innerWidth <= 600;
   function ensureSheet() {
@@ -269,6 +286,21 @@
     const head = panel.querySelector('.chat-header');
     const hb = head && head.getBoundingClientRect();
     sheet.el.style.top = (narrow() ? 28 : hb && hb.height ? Math.round(hb.bottom - r.top) : 46) + 'px';
+  }
+  /* FO-199: a held chat resize moves the column without a window resize or a body change, so the sheet follows the
+     panel's own size too. The observer's callback runs before that frame paints, so no frame spills over the edge. */
+  let panelRO = null, roPanel = null;
+  function watchChatPanel() {
+    const panel = chatPanel(); if (!panel) return;
+    if (!panelRO) panelRO = new ResizeObserver(() => { if (sheet && !sheet.layer.hidden) placeSheet(); });
+    if (roPanel !== panel) { if (roPanel) panelRO.unobserve(roPanel); panelRO.observe(panel); roPanel = panel; }
+  }
+  /* FO-210: a completed close releases the observer and clears the recorded target, so nothing stays subscribed
+     while the sheet is closed and a reopen observes again. A reopen during the close animation cancels the timer
+     (FO-200), so this never runs for a sheet that came back. */
+  function unwatchChatPanel() {
+    if (panelRO) { panelRO.disconnect(); panelRO = null; }
+    roPanel = null;
   }
   /* Settings' look per theme, borrowed: every #panel-settings rule that styles a part the page draws (tokens, card,
      row, switch, field, dropdown trigger, buttons, tag, dialog) is copied once with .pm7-mem-sheet in its place, in
@@ -329,6 +361,7 @@
     const panel = chatPanel(); if (!panel) return { ok: false, error: 'no_chat' };
     sheetLook();
     const s = ensureSheet();
+    watchChatPanel();
     opener = from || document.activeElement;
     store();
     UI.sheet = { q: '', level: 'all', arch: false };
@@ -337,6 +370,8 @@
     redraw('sheet', true);
     if (!portalWas) { portalWas = window.PM7_SETTINGS_TOME.portal; window.PM7_SETTINGS_TOME.portal = () => (sheet && !sheet.layer.hidden ? sheet.portal : portalWas()); }
     syncInline();
+    /* FO-200: a reopen always wins over a close still animating out */
+    clearTimeout(closeTimer); closeTimer = 0;
     s.layer.hidden = false;
     s.layer.classList.toggle('is-narrow', narrow());
     placeSheet();
@@ -351,8 +386,9 @@
     sheet.portal.querySelectorAll('.overlay, .drawer-wrap').forEach(n => n.remove());
     const layer = sheet.layer;
     layer.classList.remove('is-open');
-    const done = () => { layer.hidden = true; };
-    if (motionReduced() || document.documentElement.getAttribute('data-motion') === 'reduced') done(); else setTimeout(done, 220);
+    const done = () => { closeTimer = 0; layer.hidden = true; unwatchChatPanel(); };
+    clearTimeout(closeTimer);
+    if (motionReduced() || document.documentElement.getAttribute('data-motion') === 'reduced') done(); else closeTimer = setTimeout(done, 220);
     if (restore && opener && opener.isConnected) try { opener.focus({ preventScroll: true }); } catch (e) { /* gone */ }
     opener = null;
   }
@@ -370,6 +406,8 @@
   /* ---------- the chat's handle (pm7-port/js/80-quiet-memory.js) ---------- */
   window.PM7_MEMORY = {
     openSheet, closeSheet, isOpen: () => !!(sheet && !sheet.layer.hidden),
+    /* read-only probe: whether the chat-panel observer is subscribed (the kit asserts it is released while closed) */
+    observingChat: () => !!panelRO,
     save: (text, level) => { const n = addNote(text, level); if (n) { lightUp(n.id); redrawAll(); } return n ? { ok: true, id: n.id, level: n.level } : { ok: false }; },
     on: memoryOn, notes: () => clone(notes()), get: id => { const n = noteById(id); return n ? clone(n) : null; },
     levelLabel, levelPhrase

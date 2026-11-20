@@ -23,13 +23,14 @@
 #panel-usage .pmu-wswitch-track > i { position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform 260ms var(--pmu-ease-spring); }
 #panel-usage .pmu-wswitch.on .pmu-wswitch-track { background: var(--pmu-accent); }
 #panel-usage .pmu-wswitch.on .pmu-wswitch-track > i { transform: translateX(12px); }
-#panel-usage .pmu-wswitch:hover { color: var(--pmu-ink); }
+/* (:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) on the in-board :hover rules below: the wheel pause, 20-board.css PERF-USAGE-HOVER) */
+#panel-usage .pmu-wswitch:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { color: var(--pmu-ink); }
 #panel-usage .pmu-textbtn { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border: 1px solid color-mix(in srgb, var(--pmu-accent) 55%, transparent); border-radius: 8px;
   background: transparent; color: var(--pmu-accent); font: inherit; font-size: 12.5px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: none; }
 /* E7 (census HARD: the app's late hover-tag binding restyled pager buttons and their border transition ran after the settle):
    the colour eases only while the pointer or focus is on the button */
-#panel-usage .pmu-textbtn:is(:hover, :focus-visible) { transition: background-color calc(160ms * var(--pmu-speed, 1)), border-color calc(160ms * var(--pmu-speed, 1)); }
-#panel-usage .pmu-textbtn:hover:not([disabled]) { background: color-mix(in srgb, var(--pmu-accent) 10%, transparent); }
+#panel-usage .pmu-textbtn:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), :focus-visible) { transition: background-color calc(160ms * var(--pmu-speed, 1)), border-color calc(160ms * var(--pmu-speed, 1)); }
+#panel-usage .pmu-textbtn:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)):not([disabled]) { background: color-mix(in srgb, var(--pmu-accent) 10%, transparent); }
 #panel-usage .pmu-textbtn[disabled] { border-color: var(--pmu-rule); color: var(--pmu-ink-3); cursor: default; }
 #panel-usage .pmu-textbtn.is-primary { background: color-mix(in srgb, var(--pmu-accent) 12%, transparent); }
 #panel-usage .pmu-more { flex: none; grid-column: 1 / -1; padding: 4px 0 0; color: var(--pmu-ink-3); font-size: 12px; }
@@ -79,7 +80,7 @@
 #panel-usage .pmu-caveat { display: inline-grid; place-items: center; flex: none; width: 18px; height: 18px; margin-left: auto; color: var(--pmu-ink-3); cursor: help;
   border-radius: 50%; outline-offset: 2px; transition: color calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), background-color calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
 #panel-usage .pmu-caveat svg { width: 15px; height: 15px; }
-#panel-usage .pmu-caveat:hover, #panel-usage .pmu-caveat:focus-visible { color: var(--pmu-ink); background: var(--pmu-row-hover); }
+#panel-usage .pmu-caveat:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), #panel-usage .pmu-caveat:focus-visible { color: var(--pmu-ink); background: var(--pmu-row-hover); }
 #panel-usage .pmu-herohead > .pmu-caveat { align-self: flex-start; margin-top: 2px; }
 #panel-usage .pmu-trendlegend > .pmu-caveat, #panel-usage .pmu-colscap > .pmu-caveat { margin-left: auto; vertical-align: middle; }
 html[data-theme^="retro"] #panel-usage .pmu-caveat, html[data-o55-nier="on"] #panel-usage .pmu-caveat { border-radius: 0; }
@@ -135,7 +136,7 @@ html[data-theme^="retro"] #panel-usage .pmu-caveat, html[data-o55-nier="on"] #pa
 #panel-usage .pmu-lrow { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, max-content); align-items: center; column-gap: 10px; height: 32px; min-width: 0; margin: 0 -8px; padding: 0 8px;
   border-radius: 8px; border-bottom: 1px solid transparent; transition: background-color 180ms; }
 #panel-usage .pmu-list .pmu-lrow + .pmu-lrow { box-shadow: 0 -1px 0 var(--pmu-rule-2); }
-#panel-usage .pmu-lrow:hover { background: var(--pmu-row-hover); }
+#panel-usage .pmu-lrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 #panel-usage .pmu-lrow.is-click { cursor: pointer; }
 #panel-usage .pmu-list.is-two .pmu-lrow { height: 44px; }
 #panel-usage .pmu-list.has-note .pmu-lrow { grid-template-columns: auto minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, max-content); }
@@ -170,11 +171,11 @@ html[data-theme^="retro"] #panel-usage .pmu-caveat, html[data-o55-nier="on"] #pa
   font: inherit; font-size: 12.5px; white-space: nowrap; cursor: pointer; }
 #panel-usage .pmu-tfilter b { font-weight: 600; color: var(--pmu-ink); }
 #panel-usage .pmu-tfilter .pmu-glyph { width: 12px; height: 12px; }
-#panel-usage .pmu-tfilter:hover { border-color: var(--pmu-rule-strong); color: var(--pmu-ink-2); }
+#panel-usage .pmu-tfilter:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { border-color: var(--pmu-rule-strong); color: var(--pmu-ink-2); }
 #panel-usage .pmu-tcount { margin-left: auto; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; }
 #panel-usage .pmu-trow { display: grid; align-items: center; column-gap: 12px; height: 32px; min-width: 0; margin: 0 -14px; padding: 0 14px; border-bottom: 1px solid var(--pmu-rule-2); font-size: 13px; transition: background-color 180ms; }
 #panel-usage .pmu-thead { height: 28px; background: var(--pmu-card-2); border-top: 1px solid var(--pmu-rule-2); }
-#panel-usage .pmu-tbody .pmu-trow:hover { background: var(--pmu-row-hover); }
+#panel-usage .pmu-tbody .pmu-trow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 #panel-usage .pmu-trow.is-click { cursor: pointer; }
 #panel-usage .pmu-tcell { min-width: 0; color: var(--pmu-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-tcell em { font-style: normal; color: var(--pmu-ink-3); }
@@ -312,7 +313,7 @@ html[data-theme^="retro"] #panel-usage .pmu-caveat, html[data-o55-nier="on"] #pa
 #panel-usage .pmu-qticks i.is-now { transform: translateX(-100%); color: var(--pmu-ink-2); }
 #panel-usage .pmu-qgroup { display: flex; align-items: center; gap: 8px; width: auto; height: 36px; margin: 0 -14px; padding: 0 14px; border: 0; border-top: 1px solid var(--pmu-rule-2); background: transparent;
   color: var(--pmu-ink-3); font: inherit; font-size: 12.5px; text-align: left; cursor: pointer; transition: background-color 180ms; }
-#panel-usage .pmu-qgroup:hover { background: var(--pmu-row-hover); }
+#panel-usage .pmu-qgroup:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 #panel-usage .pmu-qgroup b { font-size: 13.5px; font-weight: 640; color: var(--pmu-ink); }
 #panel-usage .pmu-qchev { display: inline-grid; place-items: center; flex: none; width: 18px; height: 18px; color: var(--pmu-ink-3); transition: transform 260ms var(--pmu-ease-spring); }
 #panel-usage .pmu-qchev svg { width: 14px; height: 14px; }
@@ -348,7 +349,7 @@ html[data-theme^="retro"] #panel-usage .pmu-caveat, html[data-o55-nier="on"] #pa
 #panel-usage .pmu-agline { display: grid; grid-template-columns: 52px 18px minmax(0, 1fr) auto; align-items: center; column-gap: 10px; height: 42px; margin: 0 -6px; padding: 0 6px; border-radius: 7px;
   cursor: pointer; transition: background-color 180ms; }
 #panel-usage .pmu-card[data-tw="xs"] .pmu-agline, #panel-usage .pmu-card[data-tw="s"] .pmu-agline { grid-template-columns: 46px 18px minmax(0, 1fr) auto; column-gap: 8px; height: 48px; }
-#panel-usage .pmu-agline:hover { background: var(--pmu-row-hover); }
+#panel-usage .pmu-agline:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 #panel-usage .pmu-agtime { font-size: 13px; font-weight: 600; color: var(--pmu-ink); white-space: nowrap; }
 #panel-usage .pmu-agtext { display: flex; flex-direction: column; min-width: 0; }
 #panel-usage .pmu-agtext b { font-size: 13px; font-weight: 540; color: var(--pmu-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -556,7 +557,7 @@ html[data-theme$="-light"] #panel-usage .pmu-skyfill::before { box-shadow: 0 1px
 /* the reset word is centred on its tower and may run a pixel or two past a 37 px column ("Oct 16" in the NieR face was
    cut to "Oct 1", agent 4); every word is at most six characters, so neighbours never meet */
 #panel-usage .pmu-skyreset { max-width: none; font-size: 11px; line-height: 18px; color: var(--pmu-ink-3); white-space: nowrap; overflow: visible; }
-#panel-usage .pmu-skycol:hover .pmu-skytrack { box-shadow: var(--pmu-l-track-in, none), 0 0 0 1px color-mix(in srgb, var(--c) 55%, transparent); }
+#panel-usage .pmu-skycol:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-skytrack { box-shadow: var(--pmu-l-track-in, none), 0 0 0 1px color-mix(in srgb, var(--c) 55%, transparent); }
 /* the plot keeps a 40 px gutter on the right for the auto-switch level, so its word never sits on a gauge's value; the
    floor is one lit rule the towers stand on */
 #panel-usage .pmu-skyplot { padding-right: 40px; }
@@ -593,7 +594,9 @@ html[data-o55-nier="on"] #panel-usage .pmu-skytrack { border-radius: 0; backgrou
   background: radial-gradient(circle at 35% 30%, var(--cb, var(--c)), var(--c) 70%); box-shadow: 0 0 0 1.5px var(--pmu-card), 0 0 14px -2px color-mix(in srgb, var(--c) 60%, transparent); }
 #panel-usage .pmu-atdot.is-est { background: color-mix(in srgb, var(--c) 72%, var(--pmu-card)); box-shadow: 0 0 0 1.5px var(--pmu-card); }
 #panel-usage .pmu-atdot.is-pending { background: transparent; border: 1.5px dashed var(--c); box-shadow: none; }
-#panel-usage .pmu-atdot:hover { z-index: 2; box-shadow: 0 0 0 1.5px var(--pmu-card), 0 0 0 3px color-mix(in srgb, var(--c) 55%, transparent); }
+/* Overlapping attempt dots keep their tooltip hit order during the wheel pause. */
+#panel-usage .pmu-atdot:hover { z-index: 2; }
+#panel-usage .pmu-atdot:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { box-shadow: 0 0 0 1.5px var(--pmu-card), 0 0 0 3px color-mix(in srgb, var(--c) 55%, transparent); }
 #panel-usage .pmu-ataxis { position: relative; height: 22px; }
 #panel-usage .pmu-ataxis span { position: absolute; top: 6px; transform: translateX(-50%); font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .04em; color: var(--pmu-ink-3); white-space: nowrap; }
 #panel-usage .pmu-ataxis span.is-now { transform: translateX(-100%); color: var(--pmu-ink-2); font-weight: 600; }
@@ -672,7 +675,7 @@ html[data-theme^="retro"] #panel-usage .pmu-heronote, html[data-o55-nier="on"] #
 #panel-usage .pmu-wplot { position: relative; flex: none; padding-left: var(--lab); padding-right: var(--edge); }
 #panel-usage .pmu-wlanes { position: absolute; left: 0; right: 0; top: 0; }
 #panel-usage .pmu-wlane { position: absolute; left: 0; right: 0; border-bottom: 1px solid var(--pmu-rule-2); cursor: pointer; }
-#panel-usage .pmu-wlane:hover { background: var(--pmu-row-hover); }
+#panel-usage .pmu-wlane:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 #panel-usage .pmu-wlab { position: absolute; left: 0; top: 50%; display: flex; align-items: center; gap: 7px; width: calc(var(--lab) - 10px); transform: translateY(-50%);
   font-size: 12.5px; font-weight: 540; color: var(--pmu-ink-2); white-space: nowrap; overflow: hidden; }
 #panel-usage .pmu-wtrack { position: absolute; left: var(--lab); right: var(--edge); top: 0; bottom: 0; }
@@ -731,7 +734,7 @@ html[data-o55-nier="on"] #panel-usage .pmu-wmk em { border-radius: 0; background
 #panel-usage .pmu-headmore .pmu-glyph { width: 13px; height: 13px; opacity: .8; }
 #panel-usage .pmu-headmore .pmu-glyph svg { width: 13px; height: 13px; }
 #panel-usage .pmu-headmore b { font-weight: 600; font-variant-numeric: tabular-nums; }
-#panel-usage .pmu-headmore:hover { color: var(--pmu-ink-2); }
+#panel-usage .pmu-headmore:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { color: var(--pmu-ink-2); }
 html[data-o55-nier="on"] #panel-usage .pmu-headmore { font-family: var(--pmu-mono); letter-spacing: .04em; }
 #panel-usage .pmu-headmore.is-inline { margin-left: auto; align-self: center; padding-left: 4px; }
 #panel-usage .pmu-kpi .pmu-kpiline.has-count-row { flex-wrap: wrap; row-gap: 0; }

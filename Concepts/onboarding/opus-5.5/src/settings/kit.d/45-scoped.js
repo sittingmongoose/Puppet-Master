@@ -139,7 +139,8 @@ function o55OpenAround(selector) {
     const el = root.querySelector(selector); if (!el) return ++tries > 30;
     let item = el.closest('.pm51-acc-item:not(.is-open)');
     while (item) { const t = item.querySelector(':scope > .pm51-acc-head .pm51-acc-toggle'); if (t) t.click(); else break; item = item.parentElement && item.parentElement.closest('.pm51-acc-item:not(.is-open)'); }
-    el.closest('details:not([open])') && (el.closest('details:not([open])').open = true);
+    const d = el.closest('details:not([open])');
+    if (d) { if (PM51.fillDisclosure) PM51.fillDisclosure(d); d.open = true; }
     return true;
   };
   if (!go()) { const t = window.setInterval(() => { if (go()) window.clearInterval(t); }, 70); }
@@ -251,7 +252,7 @@ PM51.pickSource = setting => {
   const ctl = from ? o55PickControl(from) : null;
   if (!ctl) return { static: true, reason: row.perWhere || 'Change it where it is shown.' };
   return {
-    items: [...ctl.options].map(o => ({ raw: o.value, label: o.textContent, hint: o.dataset.meta || '', on: o.value === ctl.value, marks: [], why: o.dataset.disabled === '1' ? (o.dataset.reason || 'Not available here.') : '' })),
+    items: [...ctl.options].map(o => ({ raw: o.value, label: o.textContent, hint: o.dataset.meta || o.dataset.sub || '', on: o.value === ctl.value, marks: [], why: o.dataset.disabled === '1' ? (o.dataset.reason || 'Not available here.') : '' })),
     commit(value) {
       const live = o55PickControl(from); if (!live) return false;
       const i = [...live.options].findIndex(o => o.value === String(value)); if (i < 0) return false;

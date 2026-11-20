@@ -28,7 +28,7 @@
   const TAKES_IN = ['image-understanding', 'transcription'];
   const S = {
     output: 'media.io.media-output', master: 'media.capabilities.master', input: 'media.io.media-input', kinds: 'media.capabilities.enabled-types',
-    provider: 'media.image.provider', model: 'media.image.model', vision: 'media.io.vision-bridge', visionBackup: 'media.io.vision-fallback-model',
+    model: 'media.image.model', vision: 'media.io.vision-bridge', visionBackup: 'media.io.vision-fallback-model',
     folder: 'media.io.artifacts-location'
   };
   /* The inventory rows each ability draws; search and Details land on the ability that owns them. */
@@ -41,7 +41,7 @@
     'video-generation': ['media.capabilities.video-duration', 'media.capabilities.video-resolution']
   };
   const MORE = { 'image-generation': ['media.capabilities.response-format', 'media.capabilities.seed', 'media.capabilities.prompt-optimizer'] };
-  const OWNS = Object.assign({ [S.provider]: 'image-generation', [S.model]: 'image-generation', [S.visionBackup]: 'image-understanding' },
+  const OWNS = Object.assign({ [S.model]: 'image-generation', [S.visionBackup]: 'image-understanding' },
     ...Object.entries(SWITCH).map(([k, id]) => ({ [id]: k })),
     ...Object.entries(DEFAULTS).concat(Object.entries(MORE)).map(([k, ids]) => Object.fromEntries(ids.map(id => [id, k]))));
   /* The picture service is one inventory choice; each option needs a signed-in service (and, for two of them, an
@@ -106,12 +106,14 @@
 
   /* ---------- reading the state ---------------------------------------------------------------------------------- */
   const svcLabel = n => PM51.serviceName(n);
-  const pictureChoice = () => PICTURE[PM51.value(S.provider)] || null;
   const serviceOf = id => (state.providers || []).find(p => p.id === id);
+  /* FO-217: the picture route is the source of truth, as in picturePanel. The retired media.image.provider read
+     undefined, so Uses, the unset status, Check and diagnostics denied the saved selection. */
   const primaryOf = r => {
     if (r.id !== 'image-generation') return r.primary;
-    const pc = pictureChoice(); if (!pc) return { provider: 'Not configured', model: '', account: 'None' };
-    return { provider: pc.label, model: r.primary && r.primary.picture === PM51.value(S.provider) ? r.primary.model : '', account: r.primary && r.primary.account, picture: true };
+    const pc = r.primary && PICTURE[r.primary.picture];
+    if (!pc) return { provider: 'Not configured', model: '', account: 'None' };
+    return { provider: pc.label, model: r.primary.model || '', account: r.primary.account, picture: true };
   };
   const unset = r => { const p = primaryOf(r); return !p || p.provider === 'Not configured'; };
   const abilityOn = r => SWITCH[r.id] ? on(SWITCH[r.id]) : r.id === 'image-generation' ? (PM51.value(S.kinds) || []).includes('image') : r.status !== 'disabled';
@@ -163,8 +165,13 @@
     return '';
   }
   const DEFAULT_MODEL = '';
-  const modelChoices = (svc, fit) => [{ value: DEFAULT_MODEL, label: 'The service\'s default model', meta: 'Recommended' }, ...svc.models.map(m => ({ value: m.name, label: m.name, meta: fit && !m.fit ? 'May not support this' : '' }))];
-  const modelField = (svc, want, fit = true, only = '') => PM51.field('Model', PM51.select(want || DEFAULT_MODEL, modelChoices(svc, fit), { label: 'Model', cls: 'pm51-media-model' }), svc.id === 'tool' ? 'Built in. Nothing is sent to an AI service.' : only ? 'The service\'s default model is its own model for this job. Other models appear only when they can do it.' : 'Only models you have turned on appear here.');
+  const modelChoices = (svc, fit) => [{ value: DEFAULT_MODEL, label: 'The service\'s default model', meta: 'Recommended' }, ...svc.models.map(m => ({ value: m.name, label: m.name, meta: fit && !m.fit ? 'May not support this' : '', brand: svc.label }))];
+  /* FO-182/183: every ability's model is chosen in the shared model picker (kit.d/31-model-rows.js), as every Settings
+     model row is; the inventory row it sets names it (Making pictures, videos, speech, music), and the manager's own
+     list (this service's models, the service's own default first) is its choices */
+  const MODEL_ROW = { 'image-generation': 'media.image.model', 'video-generation': 'media.capabilities.video-model', 'text-to-speech': 'media.capabilities.tts-model', 'audio-generation': 'media.capabilities.music-model', 'image-understanding': 'media.io.vision-model', transcription: 'media.io.transcription-model' };
+  const modelPick = (route, want, choices) => PM51.modelSelect(MODEL_ROW[route] || `media.${route}.model`, want || DEFAULT_MODEL, { choices, label: 'Model', cls: 'pm51-media-model' });
+  const modelField = (svc, want, fit = true, only = '', route = '') => PM51.field('Model', modelPick(route, want, modelChoices(svc, fit)), svc.id === 'tool' ? 'Built in. Nothing is sent to an AI service.' : only ? 'The service\'s default model is its own model for this job. Other models appear only when they can do it.' : 'Only models you have turned on appear here.');
   const accountField = (svc, want) => svc.accounts.length > 1 ? PM51.field('Account', PM51.select(want, svc.accounts.map(x => [x.name, x.name]), { label: 'Account', cls: 'pm51-media-account' }), 'The account whose usage this ability spends.') : svc.accounts.length ? PM51.note(`Uses ${svc.accounts[0].name}.`) : PM51.note('No account needed.');
   /* "The service's default model" everywhere is the inventory's Service default; picking a model anywhere is the override. */
   function syncModelMode() {
@@ -173,13 +180,15 @@
   }
 
   function picturePanel(r) {
-    const cur = PM51.value(S.provider);
+    /* FO-212: the picture route the row saves to is the source of truth; the retired media.image.provider reads
+       undefined, so a reopen lost the chosen service and model */
+    const cur = r.primary && PICTURE[r.primary.picture] ? r.primary.picture : 'None';
     const first = Object.keys(PICTURE).find(k => !pictureBlock(PICTURE[k]));
     /* the panel opens on what is chosen now, "No service" when nothing is (lane-aimore 3: it opened on ChatGPT / Codex
        plan while the ability said "Nothing yet"); the first service that can be used is only marked as such */
     const want = PICTURE[cur] ? cur : 'None';
     const opts = [{ value: 'None', label: 'No service', meta: 'Pictures are not made' }, ...Object.entries(PICTURE).map(([v, pc]) => { const why = pictureBlock(pc); return { value: v, label: pc.label, meta: why ? (/API key/.test(why) ? 'Needs an API key' : 'Needs sign-in') : v === first && !PICTURE[cur] ? `${pc.short} · can be used now` : pc.short, disabled: !!why, reason: why }; })];
-    const models = k => { const pc = PICTURE[k]; if (!pc) return ''; return PM51.field('Model', PM51.select(r.primary && r.primary.picture === k ? r.primary.model : DEFAULT_MODEL, [{ value: DEFAULT_MODEL, label: 'The service\'s default model', meta: 'Recommended' }, { value: pc.model, label: pc.model }], { label: 'Model', cls: 'pm51-media-model' })); };
+    const models = k => { const pc = PICTURE[k]; if (!pc) return ''; return PM51.field('Model', modelPick('image-generation', r.primary && r.primary.picture === k ? r.primary.model : DEFAULT_MODEL, [{ value: DEFAULT_MODEL, label: 'The service\'s default model', meta: 'Recommended' }, { value: pc.model, label: pc.model, brand: pc.label }])); };
     PM51.panel({
       title: PICTURE[cur] ? 'Change the picture service' : 'Choose the picture service', subtitle: 'Image Generation · make pictures', icon: 'image',
       body: PM51.panelSection('Service', PM51.field('Service that makes pictures', PM51.select(want, opts, { action: 'pm51-media-picture', label: 'Service that makes pictures', cls: 'pm51-media-svc' }), 'Greyed out services need a sign-in first. Set them up under AI Services.'))
@@ -191,7 +200,7 @@
         const p = PICTURE[v] ? serviceOf(PICTURE[v].svc) : null;
         r.primary = v === 'None' ? { provider: 'Not configured', model: '', account: 'None' } : { provider: PICTURE[v].label, picture: v, model, account: ((p && p.accounts) || []).find(x => x.active)?.nickname || '' };
         r.lastCheck = 'Not checked since the change';
-        commit(S.provider, v); syncModelMode(); save();
+        syncModelMode(); save();
         PM51.toast('Picture service saved', v === 'None' ? 'Pictures are not made until you choose a service.' : `Image Generation now uses ${PICTURE[v].label}.`);
       }
     });
@@ -199,7 +208,7 @@
   PM51.onChange('media-picture', el => {
     const body = el.closest('.pm51-panel-body'); const slot = body && body.querySelector('.pm51-media-model-slot'); if (!slot) return;
     const pc = PICTURE[el.value];
-    slot.innerHTML = pc ? PM51.field('Model', PM51.select(DEFAULT_MODEL, [{ value: DEFAULT_MODEL, label: 'The service\'s default model', meta: 'Recommended' }, { value: pc.model, label: pc.model }], { label: 'Model', cls: 'pm51-media-model' })) : PM51.note('Pictures are not made until you choose a service.');
+    slot.innerHTML = pc ? PM51.field('Model', modelPick('image-generation', DEFAULT_MODEL, [{ value: DEFAULT_MODEL, label: 'The service\'s default model', meta: 'Recommended' }, { value: pc.model, label: pc.model, brand: pc.label }])) : PM51.note('Pictures are not made until you choose a service.');
   });
 
   function changeServicePanel(r) {
@@ -210,7 +219,7 @@
     const cur = services.find(s => s.label === curName) || services.find(s => s.models.some(m => m.fit)) || services[0];
     const svcOpts = services.map(s => ({ value: s.id, label: s.label, meta: CAP[r.id] && !s.models.some(m => m.fit) ? 'No model here can do this' : '' }));
     const body = PM51.panelSection('Service', PM51.field('Service', PM51.select(cur.id, svcOpts, { action: 'pm51-media-svc', data: { route: r.id }, label: 'Service', cls: 'pm51-media-svc' }), 'Only services you are signed in to appear here. Set more up under AI Services.'))
-      + PM51.panelSection('Model', `<div class="pm51-media-model-slot">${modelField(cur, cur.label === curName ? r.primary?.model : '', !!CAP[r.id], ONLY_FIT[r.id])}</div>`)
+      + PM51.panelSection('Model', `<div class="pm51-media-model-slot">${modelField(cur, cur.label === curName ? r.primary?.model : '', !!CAP[r.id], ONLY_FIT[r.id], r.id)}</div>`)
       + PM51.panelSection('Account', `<div class="pm51-media-account-slot">${accountField(cur, r.primary?.account)}</div>`);
     PM51.panel({
       title: unset(r) ? 'Choose service' : 'Change service', subtitle: `${r.name} · ${SHORT[r.id] || ''}`, body,
@@ -232,7 +241,7 @@
   PM51.onChange('media-svc', el => {
     const r = byId(ds(el, 'route')); const body = el.closest('.pm51-panel-body'); if (!body) return;
     const svc = serviceOptions(r).find(s => s.id === el.value); if (!svc) return;
-    const m = body.querySelector('.pm51-media-model-slot'); if (m) m.innerHTML = modelField(svc, '', !!CAP[r.id], ONLY_FIT[r.id]);
+    const m = body.querySelector('.pm51-media-model-slot'); if (m) m.innerHTML = modelField(svc, '', !!CAP[r.id], ONLY_FIT[r.id], r.id);
     const x = body.querySelector('.pm51-media-account-slot'); if (x) x.innerHTML = accountField(svc, svc.accounts[0]?.name);
   });
 
@@ -241,14 +250,16 @@
     const fb = r.fallbacks || (r.fallbacks = []);
     const auto = r.id === 'image-understanding' && PM51.value(S.visionBackup) === 'auto';
     const mode = r.id === 'image-understanding' ? PM51.panelSection('Which backup', PM51.segmented(auto ? 'auto' : 'choose a specific model', [['auto', 'The best one available'], ['choose a specific model', 'Models I pick']], { action: 'pm51-media-vision-mode', data: { route: r.id }, label: 'Which backup' }), 'Used when the main model cannot look at a picture.') : '';
-    if (auto) return mode + PM51.note('Puppet Master picks a signed-in model that can see pictures, starting with the one you use most.');
+    /* FO-183: the automatic backup names the model it resolves to now */
+    const now = auto && PM51.modelResolve ? PM51.modelResolve(S.visionBackup, 'auto') : null;
+    if (auto) return mode + PM51.note(`Puppet Master picks a signed-in model that can see pictures, starting with the one you use most.${now && now.name ? ` Now: ${now.name}.` : ''}`);
     const rows = fb.map((f, i) => ({
       label: endpointText(f), help: accountText(f),
       control: PM51.iconBtn({ icon: 'up', label: 'Move up', action: 'pm51-media-fb-move', data: { route: r.id, index: i, dir: -1 }, disabled: i === 0, reason: 'Already first.' }) + PM51.iconBtn({ icon: 'down', label: 'Move down', action: 'pm51-media-fb-move', data: { route: r.id, index: i, dir: 1 }, disabled: i === fb.length - 1, reason: 'Already last.' }) + PM51.iconBtn({ icon: 'trash', label: 'Remove', action: 'pm51-media-fb-remove', data: { route: r.id, index: i } }) + PM51.toggle(f.enabled !== false, { action: 'pm51-media-fb-toggle', data: { route: r.id, index: i }, label: `Use ${endpointText(f)}` })
     }));
-    const options = [{ value: '', label: 'Choose a service…' }, ...serviceOptions(r).flatMap(s => (ONLY_FIT[r.id] && s.id !== 'tool' ? [{ value: `${s.id}::`, label: `${s.label} · default model`, meta: '', group: s.label }] : []).concat(s.models.map(m => ({ value: `${s.id}::${m.name}`, label: `${s.label} · ${m.name}`, meta: CAP[r.id] && !m.fit ? 'May not support this' : '', group: s.label }))))];
+    const options = [{ value: '', label: 'Choose a model…', pre: true, none: true }, ...serviceOptions(r).flatMap(s => (ONLY_FIT[r.id] && s.id !== 'tool' ? [{ value: `${s.id}::`, label: 'The service\'s default model', meta: '', brand: s.label }] : []).concat(s.models.map(m => ({ value: `${s.id}::${m.name}`, label: m.name, meta: CAP[r.id] && !m.fit ? 'May not support this' : '', brand: s.label }))))];
     return mode + PM51.panelSection('Tried in this order', rows.length ? PM51.rows(rows, { cls: 'pm51-media-order' }) : PM51.note('No backups yet. If the main service fails, this ability stops and tells you.'), 'Each one is only used when the one above it fails.')
-      + PM51.panelSection('Add another', PM51.field('Service and model', PM51.select('', options, { action: 'pm51-media-fb-add', data: { route: r.id }, label: 'Add a backup' })));
+      + PM51.panelSection('Add another', PM51.field('Service and model', PM51.modelSelect(r.id === 'image-understanding' ? S.visionBackup : `media.${r.id}.backup`, '', { choices: options, action: 'pm51-media-fb-add', data: { route: r.id }, label: 'Add a backup' })));
   }
   const repaint = (el, r) => { const body = el.closest('.pm51-panel-body'); if (body) body.innerHTML = fallbackBody(r); saveState(); };
   PM51.on('media-fb-move', el => { const r = byId(ds(el, 'route')); const i = Number(ds(el, 'index')), to = i + Number(ds(el, 'dir')); if (to < 0 || to >= r.fallbacks.length) return; const [x] = r.fallbacks.splice(i, 1); r.fallbacks.splice(to, 0, x); repaint(el, r); });
@@ -286,7 +297,7 @@
 
   /* ---------- one ability --------------------------------------------------------------------------------------- */
   const orow = ({ label, help, control, home, wide }) => `<div class="setting-row o55-row o55-scoped${wide ? ' is-wide' : ''}"${home ? ` data-setting-id="${a(home)}"` : ''}><div class="setting-copy"><div class="setting-label">${h(label)}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div><div class="setting-control">${control}</div><span></span></div>`;
-  const valueWith = (text, btn) => `<span class="pm51-row-value">${h(text)}</span>${btn ? PM51.btn(Object.assign({ small: true }, btn)) : ''}`;
+  const valueWith = (text, btn) => PM51.valueWith(text, btn);
   function ownRow(r, key) {
     const def = OWN[key]; const o = r.output || {}; const v = o[key];
     const opts = (def.by ? def.by[r.id] : def.options) || [];
@@ -308,12 +319,12 @@
     const off = !!block || !abilityOn(r);
     const p = primaryOf(r);
     const uses = orow({
-      label: 'Uses', help: accountText(p), home: r.id === 'image-generation' ? S.provider : null,
+      label: 'Uses', help: accountText(p),
       control: valueWith(endpointText(p), { label: unset(r) ? 'Choose' : 'Change', icon: 'route', action: 'pm51-media-change', data })
     });
     const backup = orow({ label: 'If that fails, use', help: fallbackText(r), home: r.id === 'image-understanding' ? S.visionBackup : null, control: PM51.btn({ label: 'Edit', icon: 'edit', small: true, action: 'pm51-media-fallbacks', data }) });
     const check = orow({ label: 'Last check', help: off ? 'Turn the ability on to check it.' : 'One small request through the main service.', control: valueWith(lastCheck(r), { label: 'Check', icon: 'test', action: 'pm51-media-check', data, disabled: off || unset(r), reason: off ? 'Turn the ability on first.' : 'Choose a service first.' }) });
-    const saveRow = SUBFOLDER[r.id] ? orow({ label: 'Saves to', help: keepText(), home: S.folder, control: `<span class="pm51-row-value o55-media-path">${h(saveText(r))}</span>${PM51.btn({ label: 'Change', icon: 'folder', small: true, action: 'pm51-media-saveto', data })}` }) : '';
+    const saveRow = SUBFOLDER[r.id] ? orow({ label: 'Saves to', help: keepText(), home: S.folder, control: PM51.valueWith(saveText(r), { label: 'Change', icon: 'folder', action: 'pm51-media-saveto', data }, 'o55-media-path') }) : '';
     const defaults = (DEFAULTS[r.id] || []).length ? PM51.bound.rows(DEFAULTS[r.id]) : '';
     const own = (OWN_KEYS[r.id] || []).filter(k => (r.output || {})[k] != null).map(k => ownRow(r, k));
     if (r.id === 'artifact-output') own.unshift(fileTypesRow(r));
@@ -383,7 +394,7 @@
     const e = PM51.placement.byId[id]; if (e && e.tab) PM51.setTab(ID, e.tab);
     if (OWNS[id]) { PM51.setTab(ID, 'abilities'); PM51.setSel(ID, OWNS[id]); }
   });
-  [S.output, S.master, S.input, S.kinds, S.provider, S.visionBackup, S.folder, 'media.io.artifact-retention', ...Object.values(SWITCH)].forEach(id => PM51.watch(id, () => PM51.refresh(ID, { swap: false })));
+  [S.output, S.master, S.input, S.kinds, S.visionBackup, S.folder, 'media.io.artifact-retention', ...Object.values(SWITCH)].forEach(id => PM51.watch(id, () => PM51.refresh(ID, { swap: false })));
 
   /* ---------- actions ------------------------------------------------------------------------------------------- */
   const route = el => byId(ds(el, 'route'));

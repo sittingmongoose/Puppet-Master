@@ -1,0 +1,735 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
+  "row_pointer": "#/families/322"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "chat.response_stop_requested",
+   "family_id": "event-family-chat-response-stop-requested",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/322 (canonical row SHA-256 c6f7ddf0dcde3bfdacd596a38bdb7f7383bb0f6b91d323ac4160e0a402047304). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/322",
+       "line_start": 21240,
+       "line_end": 21325,
+       "quote": "\"event_type\": \"chat.response_stop_requested\"",
+       "quote_line": 21243,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/322",
+        "line_start": 21196,
+        "line_end": 21281,
+        "quote": "\"event_type\": \"chat.response_stop_requested\"",
+        "quote_line": 21199,
+        "file_sha256": "c538effdf00626511ac849ebfe41afd36c80a9986b29b7b8b399701067a107f0",
+        "quote_check": "exact"
+       },
+       "unit": "#/families/322",
+       "quote_scope": "unit #/families/322, Plans/event_family_registry.json:21240-21325"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "ACD-627/628, CV-647 and SP-627/628 govern this exact request and its saved turn outcome, with conditional retirement.",
+     "evidence": [
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-627",
+       "line_start": 33049,
+       "line_end": 33049,
+       "quote": "The existing cmd.chat.stop handler is the sole producer.",
+       "quote_check": "exact",
+       "quote_scope": "unit ACD-627, Plans/assistant-chat-design.md:33047-33134",
+       "file_sha256": "3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948",
+       "source_citation": {
+        "path": "Plans/assistant-chat-design.md",
+        "unit": "ACD-627",
+        "line_start": 33008,
+        "line_end": 33008,
+        "quote": "The existing cmd.chat.stop handler is the sole producer.",
+        "file_sha256": "e3f399b7ab0b3835eade30c9b24a3aa71efaca27f2a10db8654b811055cbb9ff"
+       }
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-628",
+       "line_start": 33137,
+       "line_end": 33137,
+       "quote": "The record is assistant_turn_stop_outcome",
+       "quote_check": "exact",
+       "quote_scope": "unit ACD-628, Plans/assistant-chat-design.md:33135-33218",
+       "file_sha256": "3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948",
+       "source_citation": {
+        "path": "Plans/assistant-chat-design.md",
+        "unit": "ACD-628",
+        "line_start": 33096,
+        "line_end": 33096,
+        "quote": "The record is assistant_turn_stop_outcome",
+        "file_sha256": "e3f399b7ab0b3835eade30c9b24a3aa71efaca27f2a10db8654b811055cbb9ff"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The original cmd.chat.stop owner freezes actual targets, commits intent/request/first receipt before cancellation, preserves the original deadline and durably saves the result before queue release.",
+     "evidence": [
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-627",
+       "line_start": 33051,
+       "line_end": 33051,
+       "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name.",
+       "quote_check": "exact",
+       "quote_scope": "unit ACD-627, Plans/assistant-chat-design.md:33047-33134",
+       "file_sha256": "3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948",
+       "source_citation": {
+        "path": "Plans/assistant-chat-design.md",
+        "unit": "ACD-627",
+        "line_start": 33010,
+        "line_end": 33010,
+        "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name.",
+        "file_sha256": "e3f399b7ab0b3835eade30c9b24a3aa71efaca27f2a10db8654b811055cbb9ff"
+       }
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-627",
+       "line_start": 33051,
+       "line_end": 33051,
+       "quote": "append this one request-history entry and recover/read back its first receipt before delivering cancellation",
+       "quote_check": "exact",
+       "quote_scope": "unit ACD-627, Plans/assistant-chat-design.md:33047-33134",
+       "file_sha256": "3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948",
+       "source_citation": {
+        "path": "Plans/assistant-chat-design.md",
+        "unit": "ACD-627",
+        "line_start": 33010,
+        "line_end": 33010,
+        "quote": "append this one request-history entry and recover/read back its first receipt before delivering cancellation",
+        "file_sha256": "e3f399b7ab0b3835eade30c9b24a3aa71efaca27f2a10db8654b811055cbb9ff"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Separate closed Project/application request and saved-outcome schema editions 1.0.0 are defined with exact field rosters.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-647",
+       "line_start": 39491,
+       "line_end": 39491,
+       "quote": "Plans/dch_stop_request.schema.json selects closed Project",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:39489-39582",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-647",
+        "line_start": 37682,
+        "line_end": 37682,
+        "quote": "Plans/dch_stop_request.schema.json selects closed Project",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-628",
+       "line_start": 33137,
+       "line_end": 33137,
+       "quote": "The record has exactly schema_id, schema_version, storage_instance_id, scope, computer_id, thread_id, assistant_turn_id",
+       "quote_check": "exact",
+       "quote_scope": "unit ACD-628, Plans/assistant-chat-design.md:33135-33218",
+       "file_sha256": "3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948",
+       "source_citation": {
+        "path": "Plans/assistant-chat-design.md",
+        "unit": "ACD-628",
+        "line_start": 33096,
+        "line_end": 33096,
+        "quote": "The record has exactly schema_id, schema_version, storage_instance_id, scope, computer_id, thread_id, assistant_turn_id",
+        "file_sha256": "e3f399b7ab0b3835eade30c9b24a3aa71efaca27f2a10db8654b811055cbb9ff"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Actual original Storage/Server/Computer/thread/assistant-turn/work joins, reversible Project partitions, original operation identity and exact CV-366 application key are explicit.",
+     "evidence": [
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-627",
+       "line_start": 33053,
+       "line_end": 33053,
+       "quote": "Application keys adopt CV-366 exactly:",
+       "quote_check": "exact",
+       "quote_scope": "unit ACD-627, Plans/assistant-chat-design.md:33047-33134",
+       "file_sha256": "3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948",
+       "source_citation": {
+        "path": "Plans/assistant-chat-design.md",
+        "unit": "ACD-627",
+        "line_start": 33012,
+        "line_end": 33012,
+        "quote": "Application keys adopt CV-366 exactly:",
+        "file_sha256": "e3f399b7ab0b3835eade30c9b24a3aa71efaca27f2a10db8654b811055cbb9ff"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-627",
+       "line_start": 46927,
+       "line_end": 46927,
+       "quote": "Every component joins the actual record and original request/source; the Storage instance is independently read.",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-627, Plans/storage-plan.md:46923-47119",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-627",
+        "line_start": 44981,
+        "line_end": 44981,
+        "quote": "Every component joins the actual record and original request/source; the Storage instance is independently read.",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact event/key/semantic identity returns original first receipt without new effects; conflicts and unavailable dedupe refuse. Replay reads evidence only and Storage metadata stays outside the producer projection.",
+     "evidence": [
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-627",
+       "line_start": 33053,
+       "line_end": 33053,
+       "quote": "Same key and producer-semantic body returns the original result/first receipt",
+       "quote_check": "exact",
+       "quote_scope": "unit ACD-627, Plans/assistant-chat-design.md:33047-33134",
+       "file_sha256": "3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948",
+       "source_citation": {
+        "path": "Plans/assistant-chat-design.md",
+        "unit": "ACD-627",
+        "line_start": 33012,
+        "line_end": 33012,
+        "quote": "Same key and producer-semantic body returns the original result/first receipt",
+        "file_sha256": "e3f399b7ab0b3835eade30c9b24a3aa71efaca27f2a10db8654b811055cbb9ff"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-647",
+       "line_start": 39493,
+       "line_end": 39493,
+       "quote": "excluding only Storage-assigned sequence_id, observed_at_utc and persisted_at_utc",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:39489-39582",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-647",
+        "line_start": 37684,
+        "line_end": 37684,
+        "quote": "excluding only Storage-assigned sequence_id, observed_at_utc and persisted_at_utc",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Signed E8-2 option A assigns the saved `dch_stop_outcome` (the existing canonical `assistant_turn_stop_outcome` family specified in SP-627) exactly the Stop request history's `RP-CHAT-THREAD-LIFETIME@1.0.0` policy under DL-401 G15. The governing chat is the one in the original authenticated Stop request, joined through `stop_request_event_id`, actual Storage instance, scope and thread; it cannot be replaced by the current caller's chat. Keep and delete the result with that same chat in Project and application scope. Apply the same shared 250,000-entry thread count and linked-successor rule without early eviction, the immediate deletion-hide rule, unheld active-copy purge within 24 hours and backup-byte purge within 30 days. Holds delay physical purge without restoring visibility. Independent first receipts, work records and referenced bodies keep their own policies. This resolves the saved outcome's pending retention question and adds no second history event, new record family, count allowance, hold exception or writer admission. Exact-key custody, full storage materialization and original request/result barriers remain required before actual writes.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-627",
+       "line_start": 47061,
+       "line_end": 47061,
+       "quote": "Current selected assignment (2026-11-19): chat.response_stop_requested@1.0.0 is registered for application_or_project",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-627, Plans/storage-plan.md:46923-47119",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-627",
+        "line_start": 45121,
+        "line_end": 45121,
+        "quote": "Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401.",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX4",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "No-secret refs, exact canonical source/request/result/receipt/pack custody, coherent restore and current authorization/deletion/hold checks are family-specific. A missing result cannot be reconstructed from display or delivery.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-647",
+       "line_start": 39491,
+       "line_end": 39491,
+       "quote": "References contain no credentials, instructions, transcript bodies, raw output or newly copied evidence.",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:39489-39582",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-647",
+        "line_start": 37682,
+        "line_end": 37682,
+        "quote": "References contain no credentials, instructions, transcript bodies, raw output or newly copied evidence.",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-627",
+       "line_start": 46925,
+       "line_end": 46925,
+       "quote": "Backup/restore must recover canonical request bytes",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-627, Plans/storage-plan.md:46923-47119",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-627",
+        "line_start": 44979,
+        "line_end": 44979,
+        "quote": "Backup/restore must recover canonical request bytes",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Cancelled versus timeout is bound to actual original work and the 3000 ms grace, saved result/readback and separate user-action queue barriers. Immutable result CAS, repeat/conflict and unresolved recovery behavior are explicit.",
+     "evidence": [
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-628",
+       "line_start": 33139,
+       "line_end": 33139,
+       "quote": "cancelled requires verified all-target stopping within the original three-second grace",
+       "quote_check": "exact",
+       "quote_scope": "unit ACD-628, Plans/assistant-chat-design.md:33135-33218",
+       "file_sha256": "3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948",
+       "source_citation": {
+        "path": "Plans/assistant-chat-design.md",
+        "unit": "ACD-628",
+        "line_start": 33098,
+        "line_end": 33098,
+        "quote": "cancelled requires verified all-target stopping within the original three-second grace",
+        "file_sha256": "e3f399b7ab0b3835eade30c9b24a3aa71efaca27f2a10db8654b811055cbb9ff"
+       }
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-627",
+       "line_start": 33051,
+       "line_end": 33051,
+       "quote": "A separate user Send, Send now, Edit or Remove under ACD-471 must still release the queue",
+       "quote_check": "exact",
+       "quote_scope": "unit ACD-627, Plans/assistant-chat-design.md:33047-33134",
+       "file_sha256": "3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948",
+       "source_citation": {
+        "path": "Plans/assistant-chat-design.md",
+        "unit": "ACD-627",
+        "line_start": 33010,
+        "line_end": 33010,
+        "quote": "A separate user Send, Send now, Edit or Remove under ACD-471 must still release the queue",
+        "file_sha256": "e3f399b7ab0b3835eade30c9b24a3aa71efaca27f2a10db8654b811055cbb9ff"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact passive Stop reader explicitly adopts the generic SP-278 projector, checkpoint and nine-field durable token, atomic advance, current frontier/coverage validation and side-effect-free rebuild. It creates no domain cursor and never rebuilds canonical outcomes.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-627",
+       "line_start": 46929,
+       "line_end": 46929,
+       "quote": "The exact passive operating consumer is reader.chat.response_stop_requested@1.0.0",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-627, Plans/storage-plan.md:46923-47119",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-627",
+        "line_start": 44983,
+        "line_end": 44983,
+        "quote": "The exact passive operating consumer is reader.chat.response_stop_requested@1.0.0",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-627",
+       "line_start": 46929,
+       "line_end": 46929,
+       "quote": "SP-278 owns source-order advance, complete captured coverage and frontier/predecessor CAS with index rows atomically",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-627, Plans/storage-plan.md:46923-47119",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-627",
+        "line_start": 44983,
+        "line_end": 44983,
+        "quote": "SP-278 owns source-order advance, complete captured coverage and frontier/predecessor CAS with index rows atomically",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Written editions and original provenance remain authoritative with current custody; writer/read publication fences and separately versioned rebuild are defined. Three conditional retirement applications preserve old bytes and do not claim native cutover.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-647",
+       "line_start": 39495,
+       "line_end": 39495,
+       "quote": "Writer withdrawal cuts this exact family off before new operations",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:39489-39582",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-647",
+        "line_start": 37686,
+        "line_end": 37686,
+        "quote": "Writer withdrawal cuts this exact family off before new operations",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-628",
+       "line_start": 47122,
+       "line_end": 47122,
+       "quote": "native restart/recovery verification is NOT_RUN, so no applied runtime cutoff is claimed.",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-628, Plans/storage-plan.md:47120-47189",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-628",
+        "line_start": 45133,
+        "line_end": 45133,
+        "quote": "native restart/recovery verification is NOT_RUN, so no applied runtime cutoff is claimed.",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-647",
+       "line_start": 39493,
+       "line_end": 39493,
+       "quote": "The Stop contract has one current edition",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:39489-39582",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-647",
+        "line_start": 37684,
+        "line_end": 37684,
+        "quote": "The Stop contract has one current edition",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "integrated_criterion12_delta",
+     "finding": "Exact-family C12 PASS from reports/event-authority-20261114/c12-ch2/C12-GRADES.json",
+     "evidence": [
+      {
+       "line": 33049,
+       "path": "Plans/assistant-chat-design.md",
+       "quote": "Newly authored owner contract for `chat.response_stop_requested`",
+       "unit": "ACD-627",
+       "line_start": 33049,
+       "line_end": 33049,
+       "quote_check": "exact",
+       "quote_scope": "unit ACD-627, Plans/assistant-chat-design.md:33047-33134",
+       "file_sha256": "3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948",
+       "source_citation": {
+        "line": 32988,
+        "path": "Plans/assistant-chat-design.md",
+        "quote": "Newly authored owner contract for `chat.response_stop_requested`",
+        "unit": "ACD-627",
+        "line_start": 33008,
+        "line_end": 33008,
+        "file_sha256": "e3f399b7ab0b3835eade30c9b24a3aa71efaca27f2a10db8654b811055cbb9ff"
+       }
+      },
+      {
+       "line": 33139,
+       "path": "Plans/assistant-chat-design.md",
+       "quote": "Historical reads validate the written schema/recipe and exact original request/source/Storage custody",
+       "unit": "ACD-628",
+       "line_start": 33139,
+       "line_end": 33139,
+       "quote_check": "exact",
+       "quote_scope": "unit ACD-628, Plans/assistant-chat-design.md:33135-33218",
+       "file_sha256": "3c0db6e2125bee8ee6fb342b1c9a41446481fdebd0ac64b82e43b07a34df5948",
+       "source_citation": {
+        "line": 33078,
+        "path": "Plans/assistant-chat-design.md",
+        "quote": "Historical reads validate the written schema/recipe and exact original request/source/Storage custody",
+        "unit": "ACD-628",
+        "line_start": 33098,
+        "line_end": 33098,
+        "file_sha256": "e3f399b7ab0b3835eade30c9b24a3aa71efaca27f2a10db8654b811055cbb9ff"
+       }
+      },
+      {
+       "line": 39493,
+       "path": "Plans/Contracts_V0.md",
+       "quote": "The Stop contract has one current edition",
+       "unit": "CV-647",
+       "line_start": 39493,
+       "line_end": 39493,
+       "quote_check": "exact",
+       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:39489-39582",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "line": 34363,
+        "path": "Plans/Contracts_V0.md",
+        "quote": "The Stop contract has one current edition",
+        "unit": "CV-647",
+        "line_start": 37684,
+        "line_end": 37684,
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "line": 46925,
+       "path": "Plans/storage-plan.md",
+       "quote": "Newly authored persistence contract under DL-045, DL-406 and DL-427",
+       "unit": "SP-627",
+       "line_start": 46925,
+       "line_end": 46925,
+       "quote_check": "exact",
+       "quote_scope": "unit SP-627, Plans/storage-plan.md:46923-47119",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "line": 37982,
+        "path": "Plans/storage-plan.md",
+        "quote": "Newly authored persistence contract under DL-045, DL-406 and DL-427",
+        "unit": "SP-627",
+        "line_start": 44979,
+        "line_end": 44979,
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "line": 364,
+       "path": "scripts/pm_dch_stop.py",
+       "quote": "def request_original_outcome(",
+       "unit": null,
+       "line_start": 364,
+       "line_end": 364,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "a984eebac9ca20457c1752a1e5cfcaf511459ff868c10e7840178c3183d8ffed",
+       "source_citation": {
+        "line": 364,
+        "path": "scripts/pm_dch_stop.py",
+        "quote": "def request_original_outcome(",
+        "unit": null,
+        "line_start": 364,
+        "line_end": 364,
+        "file_sha256": "8ca7d7f68e691c6279408dbbf6260724f834b1fb5029ed0f11bf70ff1467050e"
+       }
+      },
+      {
+       "line": 422,
+       "path": "scripts/pm_dch_stop.py",
+       "quote": "def sealed_outcome(",
+       "unit": null,
+       "line_start": 422,
+       "line_end": 422,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "a984eebac9ca20457c1752a1e5cfcaf511459ff868c10e7840178c3183d8ffed",
+       "source_citation": {
+        "line": 422,
+        "path": "scripts/pm_dch_stop.py",
+        "quote": "def sealed_outcome(",
+        "unit": null,
+        "line_start": 422,
+        "line_end": 422,
+        "file_sha256": "8ca7d7f68e691c6279408dbbf6260724f834b1fb5029ed0f11bf70ff1467050e"
+       }
+      },
+      {
+       "line": 391,
+       "path": "scripts/pm_dch_stop.py",
+       "quote": "def _sealed_request(",
+       "unit": null,
+       "line_start": 391,
+       "line_end": 391,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "a984eebac9ca20457c1752a1e5cfcaf511459ff868c10e7840178c3183d8ffed",
+       "source_citation": {
+        "line": 391,
+        "path": "scripts/pm_dch_stop.py",
+        "quote": "def _sealed_request(",
+        "unit": null,
+        "line_start": 391,
+        "line_end": 391,
+        "file_sha256": "8ca7d7f68e691c6279408dbbf6260724f834b1fb5029ed0f11bf70ff1467050e"
+       }
+      },
+      {
+       "line": 356,
+       "path": "scripts/pm_dch_schema_coverage.py",
+       "quote": "def run(m,selected=None):",
+       "unit": null,
+       "line_start": 356,
+       "line_end": 356,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "39ce74df03f2a14a1d4ad420ea6135ccb6b29385ea0f54fe9fde16460621cea6",
+       "source_citation": {
+        "line": 356,
+        "path": "scripts/pm_dch_schema_coverage.py",
+        "quote": "def run(m,selected=None):",
+        "unit": null,
+        "line_start": 356,
+        "line_end": 356,
+        "file_sha256": "39ce74df03f2a14a1d4ad420ea6135ccb6b29385ea0f54fe9fde16460621cea6"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.104",
+  "sha256": "c538effdf00626511ac849ebfe41afd36c80a9986b29b7b8b399701067a107f0",
+  "family_count": 323,
+  "row_pointer": "#/families/322"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "0136cce012410c9534a1f3ad1274911bcc79fd1b7ffc1b830b23761406cc5404",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
+}

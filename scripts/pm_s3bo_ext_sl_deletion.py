@@ -23,7 +23,8 @@ storage-writer posture and purge/compaction authority; a retry to `requested`,
 `purge_pending` or `purged`, or one whose revalidation fails, is refused.
 
 Obligation (SP-2200, C12-SL2): the record CAS stores the frozen EventRecord's
-producer fields in the record's `event_obligation` member; the barrier append
+producer fields in the record's row-local, closed `event_obligation` schema
+(inline EventRecord 2.0.0 field definitions, C12-SL3); the barrier append
 adds the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc.
 Native execution remains NOT_RUN.
 """
@@ -55,7 +56,7 @@ PAYLOAD_SCHEMA = w.schema_for(DEL)
 ROWS = [
     ('sl_del_decision', 'sl_deletion', 'equal', 'Each coordinator step is admitted or refused at the first failing stage of the fixed admission order: edge (a retry after failed goes only to logically_hidden) and payload conditional, durable record state, scope and reachability, holds, tombstone and hide, writer and maintenance authority (also for a retry), verified committed successor generation.'),
     ('sl_del_zero', 'sl_deletion', 'equal', 'A refused step appends nothing and leaves the record, projections, checkpoints, purge/compaction dispatch and holds unchanged.'),
-    ('sl_del_record', 'sl_deletion', 'equal', 'An admitted step CASes the record to the new state, appends the event to event_refs, records the current blockers, hide receipt and generation, and stores the frozen obligation in event_obligation: owner identity, payload and envelope, and the producer fields the append sends.'),
+    ('sl_del_record', 'sl_deletion', 'equal', 'An admitted step CASes the record to the new state, appends the event to event_refs, records the current blockers, hide receipt and generation, and stores the frozen obligation in the row-local closed event_obligation: owner identity, payload and envelope, and the producer fields the append sends.'),
     ('sl_del_order', 'sl_deletion', 'equal', 'Admission, record CAS with the frozen obligation, barrier append and first receipt precede the dependent effect and the command result.'),
     ('sl_del_effects', 'sl_deletion', 'equal', 'The dependent effect is exactly projection hide for logically_hidden and purge dispatch for purge_pending; no step clears a hold.'),
     ('sl_del_payload', 'sl_deletion', 'equal', 'The payload carries the state, current blockers, deadline, tombstone, scope ref, generation only for purge states and failure reason only for failed.'),
@@ -63,7 +64,7 @@ ROWS = [
     ('sl_del_envelope', 'sl_deletion', 'equal', 'A thread deletion names the deleted thread, Project-data deletion has null thread; Project id null exactly when the payload omits it; run and attempt null.'),
     ('sl_del_retry', 'sl_deletion', 'equal', 'A retry after failed reuses deletion_id and the request key, takes the next ordinal and revalidates holds, tombstone, scope, writer and purge authority before its logically_hidden successor.'),
     ('sl_del_replay', 'sl_deletion', 'equal', 'Same identity and digest returns the original receipt and result; a different digest conflicts; unavailable dedupe and projector_replay_only refuse with zero effects.'),
-    ('sl_del_resume', 'sl_deletion', 'equal', 'A crash before the append resumes the obligation stored in the record once; after the commit frame it resolves the original receipt and never appends, hides, purges or re-evaluates holds again.'),
+    ('sl_del_resume', 'sl_deletion', 'equal', 'A crash before the append resumes the obligation stored under the row-local closed schema in the record once; after the commit frame it resolves the original receipt and never appends, hides, purges or re-evaluates holds again.'),
     ('sl_del_handler', 'sl_deletion', 'equal', 'Handlers only submit; remove-from-list is a registry tombstone only; Project-data deletion needs its separate confirmation.'),
     ('sl_del_reader', 'sl_deletion', 'equal', 'History is available only with complete coverage and a verified token, otherwise unavailable; canonical readers use the deletion record, never the event.'),
     ('sl_del_withdrawal', 'sl_deletion', 'equal', 'Withdrawal resolves durable obligations by their original receipt, fences the rest, keeps every record, tombstone and receipt and never deletes, restores or un-hides.'),

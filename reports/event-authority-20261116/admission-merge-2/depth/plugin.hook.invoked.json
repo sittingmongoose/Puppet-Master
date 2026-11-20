@@ -1,0 +1,802 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
+  "row_pointer": "#/families/432"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "plugin.hook.invoked",
+   "family_id": "event-family-plugin-hook-invoked",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/432 (canonical row SHA-256 7d5820abc8785c2db913c1ee0d273fc3fd86426607b88e38de43cc222f0b34b2). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/432",
+       "line_start": 28104,
+       "line_end": 28183,
+       "quote": "\"event_type\": \"plugin.hook.invoked\"",
+       "quote_line": 28107,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/432",
+        "line_start": 28054,
+        "line_end": 28133,
+        "quote": "\"event_type\": \"plugin.hook.invoked\"",
+        "quote_line": 28057,
+        "file_sha256": "b33a81d441c8eed8eb31a8886e81d36b187e06061c66a4253772e3c384c4142a",
+        "quote_check": "exact"
+       },
+       "unit": "#/families/432",
+       "quote_scope": "unit #/families/432, Plans/event_family_registry.json:28104-28183"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PLUG-133 explicitly owns this exact prepared family; CV-690 routes its payload.",
+     "evidence": [
+      {
+       "path": "Plans/Plugins_System.md",
+       "unit": "PLUG-133",
+       "line_start": 4798,
+       "line_end": 4798,
+       "quote": "**Newly authored owner contract for `plugin.hook.invoked` at payload version `1.0.0`.** Search: exact token in live top-level Plans Markdown/JSON/JSONL, then this owner, Contracts EventRecor",
+       "excerpt_sha256": "ee8314a27f0b800995fbd3a0c3bd46e2c4d5c5701a2f8fe3fcb12a9862e7c1c3",
+       "file_sha256": "ddd8af20bd919318e67b7488a4391bb6a9655cc3233643dfbdad278d29cc8132",
+       "quote_check": "exact",
+       "quote_scope": "unit PLUG-133, Plans/Plugins_System.md:4772-4808",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Plugins_System.md",
+        "unit": "PLUG-133",
+        "line_start": 4798,
+        "line_end": 4798,
+        "quote": "**Newly authored owner contract for `plugin.hook.invoked` at payload version `1.0.0`.** Search: exact token in live top-level Plans Markdown/JSON/JSONL, then this owner, Contracts EventRecor",
+        "excerpt_sha256": "ee8314a27f0b800995fbd3a0c3bd46e2c4d5c5701a2f8fe3fcb12a9862e7c1c3",
+        "file_sha256": "ddd8af20bd919318e67b7488a4391bb6a9655cc3233643dfbdad278d29cc8132"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact observer and original source result ordering; explicit SP-286/CV-339/SP-291/SP-336 adoption and original receipt recovery.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-671",
+       "line_start": 37010,
+       "line_end": 37010,
+       "quote": "The sole producer `hook dispatch completion observer` first validates actual source/permission/receipt ownership, the closed payload and installed writer/schema/retention admission. The exis",
+       "excerpt_sha256": "6e1aee5851bfa9eb2f9c931c38e1530ce97b4887b9e9e805338238ce8930da80",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-671",
+        "line_start": 36179,
+        "line_end": 36179,
+        "quote": "The sole producer `hook dispatch completion observer` first validates actual source/permission/receipt ownership, the closed payload and installed writer/schema/retention admission. The exis",
+        "excerpt_sha256": "6e1aee5851bfa9eb2f9c931c38e1530ce97b4887b9e9e805338238ce8930da80",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-671",
+       "line_start": 37017,
+       "line_end": 37017,
+       "quote": "For `plugin.hook.invoked`, the newly authored physical operation binding measures the complete canonical MessagePack value, independently of EventRecord body size. The closed `plugin_hook_invoked_oper",
+       "excerpt_sha256": "9481ce478af469b0b7fe952f64cb142278b9de4a60ae3fe0dd759ea758a2e262",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-671",
+        "line_start": 36186,
+        "line_end": 36186,
+        "quote": "For `plugin.hook.invoked`, the newly authored physical operation binding measures the complete canonical MessagePack value, independently of EventRecord body size. The closed `plugin_hook_invoked_oper",
+        "excerpt_sha256": "9481ce478af469b0b7fe952f64cb142278b9de4a60ae3fe0dd759ea758a2e262",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact closed version-1 payload and operation definitions; schema validation and secret/extension negatives pass. Timestamps use the shared CV-1101 date_time predicate (EventRecord profile) and every integer slot the shared current_integer (sweep part 2B).",
+     "evidence": [
+      {
+       "path": "Plans/dg6b_event_contracts.schema.json",
+       "unit": "#/$defs/plugin_hook_invoked",
+       "line_start": 2406,
+       "line_end": 2406,
+       "quote": "    \"plugin_hook_invoked\": {",
+       "excerpt_sha256": "6e9450b7ed64e4e9aa86a214dcd50460ba2681011f3686ded684346f3a7ec812",
+       "file_sha256": "9b9fbeee2937faaee144ce94e1a17c463087badf7cd2d3b0021a60a87be860fe",
+       "quote_check": "exact",
+       "quote_scope": "unit #/$defs/plugin_hook_invoked, Plans/dg6b_event_contracts.schema.json:2406-2498",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/dg6b_event_contracts.schema.json",
+        "unit": "#/$defs/plugin_hook_invoked",
+        "line_start": 2406,
+        "line_end": 2406,
+        "quote": "    \"plugin_hook_invoked\": {",
+        "excerpt_sha256": "6e9450b7ed64e4e9aa86a214dcd50460ba2681011f3686ded684346f3a7ec812",
+        "file_sha256": "9b9fbeee2937faaee144ce94e1a17c463087badf7cd2d3b0021a60a87be860fe"
+       },
+       "json_pointer": "#/$defs/plugin_hook_invoked"
+      },
+      {
+       "path": "scripts/pm-dg6b-event-contracts.py",
+       "unit": "event_record_date_time",
+       "line_start": 561,
+       "line_end": 561,
+       "quote": "def event_record_date_time(value):",
+       "excerpt_sha256": "160818d31090f19f1cd8ef904a9bdafe049509c6f74cac341bc9d786c6b2cb79",
+       "file_sha256": "177fd566d171ec504a3e4f6b298dbd362809bb18bc5447484daeea71905d2c43",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "scripts/pm-dg6b-event-contracts.py",
+        "unit": "event_record_date_time",
+        "line_start": 561,
+        "line_end": 561,
+        "quote": "def event_record_date_time(value):",
+        "excerpt_sha256": "160818d31090f19f1cd8ef904a9bdafe049509c6f74cac341bc9d786c6b2cb79",
+        "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180"
+       }
+      },
+      {
+       "path": "scripts/pm-dg6b-event-contracts.py",
+       "unit": "current_integer_slot",
+       "line_start": 189,
+       "line_end": 189,
+       "quote": "def current_integer_slot(checker, value):",
+       "excerpt_sha256": "5409f7b96d52337211d07a6529fe72870a8657dabc62bede68cc1812d0c007c4",
+       "file_sha256": "177fd566d171ec504a3e4f6b298dbd362809bb18bc5447484daeea71905d2c43",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "scripts/pm-dg6b-event-contracts.py",
+        "unit": "current_integer_slot",
+        "line_start": 189,
+        "line_end": 189,
+        "quote": "def current_integer_slot(checker, value):",
+        "excerpt_sha256": "5409f7b96d52337211d07a6529fe72870a8657dabc62bede68cc1812d0c007c4",
+        "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Both source and actual inline payload validate exact JSON types before field reads; custody joins use typed canonical bytes, so boolean/integer equality cannot preserve a forged identity.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-671",
+       "line_start": 36966,
+       "line_end": 36966,
+       "quote": "application@1:{hex(server_id)}:{hex(owner_operation_id)}",
+       "excerpt_sha256": "f021b441a447da8dc6d75d05b73da15284e77fb8544fd86b7d77fb6639093933",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-671",
+        "line_start": 36135,
+        "line_end": 36135,
+        "quote": "application@1:{hex(server_id)}:{hex(owner_operation_id)}",
+        "excerpt_sha256": "f021b441a447da8dc6d75d05b73da15284e77fb8544fd86b7d77fb6639093933",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "scripts/pm-dg6b-event-contracts.py",
+       "unit": "digest_of",
+       "line_start": 143,
+       "line_end": 143,
+       "quote": "def digest_of(value, side):",
+       "excerpt_sha256": "af9cadf5c8e0a9d03ba625a8845c8214dde590676edebe7ff7655e497922448d",
+       "file_sha256": "177fd566d171ec504a3e4f6b298dbd362809bb18bc5447484daeea71905d2c43",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "scripts/pm-dg6b-event-contracts.py",
+        "unit": "digest_of",
+        "line_start": 143,
+        "line_end": 143,
+        "quote": "def digest_of(value, side):",
+        "excerpt_sha256": "af9cadf5c8e0a9d03ba625a8845c8214dde590676edebe7ff7655e497922448d",
+        "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180"
+       }
+      },
+      {
+       "path": "scripts/pm-dg6b-event-contracts.py",
+       "unit": "adapter_contract",
+       "line_start": 262,
+       "line_end": 262,
+       "quote": "def adapter_contract(kind, value, name=",
+       "excerpt_sha256": "097e38d1c55947ec0362ec7a26cd467d3ede0ca7011e135f55cfa519f9357de4",
+       "file_sha256": "177fd566d171ec504a3e4f6b298dbd362809bb18bc5447484daeea71905d2c43",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "scripts/pm-dg6b-event-contracts.py",
+        "unit": "adapter_contract",
+        "line_start": 262,
+        "line_end": 262,
+        "quote": "def adapter_contract(kind, value, name=",
+        "excerpt_sha256": "097e38d1c55947ec0362ec7a26cd467d3ede0ca7011e135f55cfa519f9357de4",
+        "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Retries compare the CV-317 producer semantic digest (shared producer_semantic_digest, qualified RFC 8785 JCS, PQ01 before effects). Storage-assigned sequence and timestamps stay excluded. Current replay-only writes refuse while authentic retained replay-only history remains readable.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-671",
+       "line_start": 37014,
+       "line_end": 37014,
+       "quote": "`plugin.hook.invoked` selects current-writer `replay_policy=dedupe_by_idempotency_key`",
+       "excerpt_sha256": "1c98287c98722a8a726f52e5fb2b9496843b41765450455433f86a4d59db33be",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-671",
+        "line_start": 36183,
+        "line_end": 36183,
+        "quote": "`plugin.hook.invoked` selects current-writer `replay_policy=dedupe_by_idempotency_key`",
+        "excerpt_sha256": "1c98287c98722a8a726f52e5fb2b9496843b41765450455433f86a4d59db33be",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "scripts/pm-dg6b-event-contracts.py",
+       "unit": "digest_of",
+       "line_start": 143,
+       "line_end": 143,
+       "quote": "def digest_of(value, side):",
+       "excerpt_sha256": "af9cadf5c8e0a9d03ba625a8845c8214dde590676edebe7ff7655e497922448d",
+       "file_sha256": "177fd566d171ec504a3e4f6b298dbd362809bb18bc5447484daeea71905d2c43",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "scripts/pm-dg6b-event-contracts.py",
+        "unit": "digest_of",
+        "line_start": 143,
+        "line_end": 143,
+        "quote": "def digest_of(value, side):",
+        "excerpt_sha256": "af9cadf5c8e0a9d03ba625a8845c8214dde590676edebe7ff7655e497922448d",
+        "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180"
+       }
+      },
+      {
+       "path": "scripts/pm-dg6b-event-contracts.py",
+       "unit": "adapter_contract",
+       "line_start": 262,
+       "line_end": 262,
+       "quote": "def adapter_contract(kind, value, name=",
+       "excerpt_sha256": "097e38d1c55947ec0362ec7a26cd467d3ede0ca7011e135f55cfa519f9357de4",
+       "file_sha256": "177fd566d171ec504a3e4f6b298dbd362809bb18bc5447484daeea71905d2c43",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "scripts/pm-dg6b-event-contracts.py",
+        "unit": "adapter_contract",
+        "line_start": 262,
+        "line_end": 262,
+        "quote": "def adapter_contract(kind, value, name=",
+        "excerpt_sha256": "097e38d1c55947ec0362ec7a26cd467d3ede0ca7011e135f55cfa519f9357de4",
+        "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180"
+       }
+      },
+      {
+       "path": "scripts/pm-dg6b-event-contracts.py",
+       "unit": "producer_digest",
+       "line_start": 968,
+       "line_end": 968,
+       "quote": "def producer_digest(event, side):",
+       "excerpt_sha256": "0c48a14a3861401cc02536c850d03ad85f576f9ed9dbdc656b94343a31491321",
+       "file_sha256": "177fd566d171ec504a3e4f6b298dbd362809bb18bc5447484daeea71905d2c43",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "scripts/pm-dg6b-event-contracts.py",
+        "unit": "producer_digest",
+        "line_start": 968,
+        "line_end": 968,
+        "quote": "def producer_digest(event, side):",
+        "excerpt_sha256": "0c48a14a3861401cc02536c850d03ad85f576f9ed9dbdc656b94343a31491321",
+        "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180"
+       }
+      },
+      {
+       "path": "scripts/pm-dg6b-event-contracts.py",
+       "unit": "number_qualification",
+       "line_start": 982,
+       "line_end": 982,
+       "quote": "def number_qualification(event, payload):",
+       "excerpt_sha256": "03e8c343949fb630ee7291e57c3eda23cf30a4e2d85b5e423608f10633180c97",
+       "file_sha256": "177fd566d171ec504a3e4f6b298dbd362809bb18bc5447484daeea71905d2c43",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "scripts/pm-dg6b-event-contracts.py",
+        "unit": "number_qualification",
+        "line_start": 982,
+        "line_end": 982,
+        "quote": "def number_qualification(event, payload):",
+        "excerpt_sha256": "03e8c343949fb630ee7291e57c3eda23cf30a4e2d85b5e423608f10633180c97",
+        "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": \"RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0\", \"decisions\": [\"DL-401\", \"DL-419\", \"DL-415\", \"DL-503\"], \"event_type\": \"plugin.hook.invoked\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DG6B.self-grade.json\", \"history_policy_ref\": \"RP-TELEMETRY-90D@1.0.0\", \"lane\": \"DG6B\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-503\", \"family_id\": \"plugin_hook_blocked_operation\", \"policy_ref\": \"RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_hook_error_operation\", \"policy_ref\": \"RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_hook_invoked_operation\", \"policy_ref\": \"RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_load_failed_operation\", \"policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_loaded_operation\", \"policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_permission_override_operation\", \"policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_tool_collision_operation\", \"policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_tool_registered_operation\", \"policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-671\", \"owner_line\": 31510, \"prior_finding\": \"PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-671",
+       "line_start": 36788,
+       "line_end": 36788,
+       "quote": "Current selected assignment (2026-11-19): plugin.hook.invoked@1.0.0 is registered for application_or_project in",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-671",
+        "line_start": 35972,
+        "line_end": 35972,
+        "quote": "Event history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-419, DL-415, DL-503.\\n\\",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX4",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-671",
+       "line_start": 36788,
+       "line_end": 36788,
+       "quote": "Current selected assignment (2026-11-19): plugin.hook.invoked@1.0.0 is registered for application_or_project in",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-671",
+        "line_start": 36096,
+        "line_end": 36096,
+        "quote": "\\ or other values.\\n\\nExact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0`\\",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX4",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Closed proof adapters accept only JSON booleans; every copied payload field joins exact original typed bytes. Separate selection resolution has its own bounded physical value and authenticated SP-337 route.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-671",
+       "line_start": 36977,
+       "line_end": 36977,
+       "quote": "Custody: the operation record holds only the closed payload, actual actor/scope and original receipt reference. Credential secret custody remains github_api/OS-store only; plugin original re",
+       "excerpt_sha256": "aa80c6b160a9250e49c5e912cd520b75dff4581b36a98cebbea3f95bfd629f4e",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-671",
+        "line_start": 36146,
+        "line_end": 36146,
+        "quote": "Custody: the operation record holds only the closed payload, actual actor/scope and original receipt reference. Credential secret custody remains github_api/OS-store only; plugin original re",
+        "excerpt_sha256": "aa80c6b160a9250e49c5e912cd520b75dff4581b36a98cebbea3f95bfd629f4e",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "scripts/pm-dg6b-event-contracts.py",
+       "unit": "digest_of",
+       "line_start": 143,
+       "line_end": 143,
+       "quote": "def digest_of(value, side):",
+       "excerpt_sha256": "af9cadf5c8e0a9d03ba625a8845c8214dde590676edebe7ff7655e497922448d",
+       "file_sha256": "177fd566d171ec504a3e4f6b298dbd362809bb18bc5447484daeea71905d2c43",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "scripts/pm-dg6b-event-contracts.py",
+        "unit": "digest_of",
+        "line_start": 143,
+        "line_end": 143,
+        "quote": "def digest_of(value, side):",
+        "excerpt_sha256": "af9cadf5c8e0a9d03ba625a8845c8214dde590676edebe7ff7655e497922448d",
+        "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180"
+       }
+      },
+      {
+       "path": "scripts/pm-dg6b-event-contracts.py",
+       "unit": "adapter_contract",
+       "line_start": 262,
+       "line_end": 262,
+       "quote": "def adapter_contract(kind, value, name=",
+       "excerpt_sha256": "097e38d1c55947ec0362ec7a26cd467d3ede0ca7011e135f55cfa519f9357de4",
+       "file_sha256": "177fd566d171ec504a3e4f6b298dbd362809bb18bc5447484daeea71905d2c43",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "scripts/pm-dg6b-event-contracts.py",
+        "unit": "adapter_contract",
+        "line_start": 262,
+        "line_end": 262,
+        "quote": "def adapter_contract(kind, value, name=",
+        "excerpt_sha256": "097e38d1c55947ec0362ec7a26cd467d3ede0ca7011e135f55cfa519f9357de4",
+        "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "B2 dispatch outcomes require a catalogued hook or documented lifecycle alias. Coherent unknown hooks refuse without replaying dispatch or rewriting retained spellings.",
+     "evidence": [
+      {
+       "path": "Plans/Plugins_System.md",
+       "unit": "PLUG-133",
+       "line_start": 4800,
+       "line_end": 4800,
+       "quote": "Producer: **hook dispatch completion observer**. A hook dispatch has completed with measured duration. This observation is independent from its Block or error outcome and is never replayed a",
+       "excerpt_sha256": "1b77a4d97f97f7a1a426748f8317ce107db2b4982ac3e63eea9150846950b755",
+       "file_sha256": "ddd8af20bd919318e67b7488a4391bb6a9655cc3233643dfbdad278d29cc8132",
+       "quote_check": "exact",
+       "quote_scope": "unit PLUG-133, Plans/Plugins_System.md:4772-4808",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Plugins_System.md",
+        "unit": "PLUG-133",
+        "line_start": 4800,
+        "line_end": 4800,
+        "quote": "Producer: **hook dispatch completion observer**. A hook dispatch has completed with measured duration. This observation is independent from its Block or error outcome and is never replayed a",
+        "excerpt_sha256": "1b77a4d97f97f7a1a426748f8317ce107db2b4982ac3e63eea9150846950b755",
+        "file_sha256": "ddd8af20bd919318e67b7488a4391bb6a9655cc3233643dfbdad278d29cc8132"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact family read-through consumer adopts SP-278 generic index/checkpoint, no private projection; live snapshot fence and nine-field durable token explicitly separated.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-671",
+       "line_start": 37021,
+       "line_end": 37021,
+       "quote": "Consumer **`consumer.plugin_hook_invoked.history@1.0.0`** serves only the existing authenticated plugin audit/history reader. It explicitly adopts **SP-278** and reads through `projector.sto",
+       "excerpt_sha256": "3d2264bc47299748d56bf9f6b506733cd3bfbbb03dea52ef96717c2bc769b186",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-671",
+        "line_start": 36190,
+        "line_end": 36190,
+        "quote": "Consumer **`consumer.plugin_hook_invoked.history@1.0.0`** serves only the existing authenticated plugin audit/history reader. It explicitly adopts **SP-278** and reads through `projector.sto",
+        "excerpt_sha256": "3d2264bc47299748d56bf9f6b506733cd3bfbbb03dea52ef96717c2bc769b186",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact at-write provenance, current reader/access and negative fences require JSON booleans; the retained original resolves through SP-1101 sealed custody and the shared RetainedDispatcher, whose frozen verifier recomputes identity and joins from the sealed bytes (HR01), before its at-write validation and the independent Storage bytes. Retained timestamps keep their owner profile.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-671",
+       "line_start": 36979,
+       "line_end": 36979,
+       "quote": "Compatibility: no legacy tuple or unversioned sketch can be a native writer; unsupported version quarantines before append/read. A versioned migration must retain original ID/receipt and ver",
+       "excerpt_sha256": "ee71b229878797ef387c1f44922417b4202c3cf67fbddac43ca0f064a7c0d439",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-671",
+        "line_start": 36148,
+        "line_end": 36148,
+        "quote": "Compatibility: no legacy tuple or unversioned sketch can be a native writer; unsupported version quarantines before append/read. A versioned migration must retain original ID/receipt and ver",
+        "excerpt_sha256": "ee71b229878797ef387c1f44922417b4202c3cf67fbddac43ca0f064a7c0d439",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "scripts/pm-dg6b-event-contracts.py",
+       "unit": "digest_of",
+       "line_start": 143,
+       "line_end": 143,
+       "quote": "def digest_of(value, side):",
+       "excerpt_sha256": "af9cadf5c8e0a9d03ba625a8845c8214dde590676edebe7ff7655e497922448d",
+       "file_sha256": "177fd566d171ec504a3e4f6b298dbd362809bb18bc5447484daeea71905d2c43",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "scripts/pm-dg6b-event-contracts.py",
+        "unit": "digest_of",
+        "line_start": 143,
+        "line_end": 143,
+        "quote": "def digest_of(value, side):",
+        "excerpt_sha256": "af9cadf5c8e0a9d03ba625a8845c8214dde590676edebe7ff7655e497922448d",
+        "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180"
+       }
+      },
+      {
+       "path": "scripts/pm-dg6b-event-contracts.py",
+       "unit": "adapter_contract",
+       "line_start": 262,
+       "line_end": 262,
+       "quote": "def adapter_contract(kind, value, name=",
+       "excerpt_sha256": "097e38d1c55947ec0362ec7a26cd467d3ede0ca7011e135f55cfa519f9357de4",
+       "file_sha256": "177fd566d171ec504a3e4f6b298dbd362809bb18bc5447484daeea71905d2c43",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "scripts/pm-dg6b-event-contracts.py",
+        "unit": "adapter_contract",
+        "line_start": 262,
+        "line_end": 262,
+        "quote": "def adapter_contract(kind, value, name=",
+        "excerpt_sha256": "097e38d1c55947ec0362ec7a26cd467d3ede0ca7011e135f55cfa519f9357de4",
+        "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180"
+       }
+      },
+      {
+       "path": "scripts/pm-dg6b-event-contracts.py",
+       "unit": "history_contract",
+       "line_start": 491,
+       "line_end": 491,
+       "quote": "custody, refusal = custody_store.resolve_original(name, case['original'])",
+       "excerpt_sha256": "823a1e21a7b21f10100c7ebbf5a5fc90df76de9ead6ec97657c4fd5dd5e8c420",
+       "file_sha256": "177fd566d171ec504a3e4f6b298dbd362809bb18bc5447484daeea71905d2c43",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "scripts/pm-dg6b-event-contracts.py",
+        "unit": "history_contract",
+        "line_start": 491,
+        "line_end": 491,
+        "quote": "custody, refusal = custody_store.resolve_original(name, case['original'])",
+        "excerpt_sha256": "823a1e21a7b21f10100c7ebbf5a5fc90df76de9ead6ec97657c4fd5dd5e8c420",
+        "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180"
+       }
+      },
+      {
+       "path": "scripts/pm_dg6b_original_custody.py",
+       "unit": "frozen_verifier",
+       "line_start": 192,
+       "line_end": 192,
+       "quote": "def frozen_verifier(name):",
+       "excerpt_sha256": "d5d3ca2b00133a9eef2aae26d0c82e209aeb4c2e6ff60ff4ac77b53ff8d56fd8",
+       "file_sha256": "e3d6ea94398fc03e38685bf143e6e9644ce5bf947166548f5ab2e4a0fc7909f6",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "scripts/pm_dg6b_original_custody.py",
+        "unit": "frozen_verifier",
+        "line_start": 192,
+        "line_end": 192,
+        "quote": "def frozen_verifier(name):",
+        "excerpt_sha256": "d5d3ca2b00133a9eef2aae26d0c82e209aeb4c2e6ff60ff4ac77b53ff8d56fd8",
+        "file_sha256": "e3d6ea94398fc03e38685bf143e6e9644ce5bf947166548f5ab2e4a0fc7909f6"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "ATS-335: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 84 proved row cells (1 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-335",
+       "line_start": 7407,
+       "line_end": 7407,
+       "quote": "- `plugin.hook.invoked`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed",
+       "excerpt_sha256": "b3bbc7c0c6f184f26f3b94ede6cfdd6e9388abd78f6c70f7505937ab0dfcc08c",
+       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "quote_check": "exact",
+       "quote_scope": "unit ATS-335, Plans/Automated_Testing_System.md:7372-7417",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Automated_Testing_System.md",
+        "unit": "ATS-335",
+        "line_start": 7407,
+        "line_end": 7407,
+        "quote": "- `plugin.hook.invoked`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed",
+        "excerpt_sha256": "b3bbc7c0c6f184f26f3b94ede6cfdd6e9388abd78f6c70f7505937ab0dfcc08c",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
+      },
+      {
+       "path": "scripts/pm-dg6b-event-contracts.py",
+       "unit": "enforced_event_record_validator",
+       "line_start": 1081,
+       "line_end": 1081,
+       "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+       "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+       "file_sha256": "177fd566d171ec504a3e4f6b298dbd362809bb18bc5447484daeea71905d2c43",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "scripts/pm-dg6b-event-contracts.py",
+        "unit": "enforced_event_record_validator",
+        "line_start": 1081,
+        "line_end": 1081,
+        "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+        "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+        "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.214",
+  "sha256": "b33a81d441c8eed8eb31a8886e81d36b187e06061c66a4253772e3c384c4142a",
+  "family_count": 433,
+  "row_pointer": "#/families/432"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "772f5529b2a1aa96edeeda257b558842ec7e2a3ccb621d1a4035e0d784aa72de",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
+}

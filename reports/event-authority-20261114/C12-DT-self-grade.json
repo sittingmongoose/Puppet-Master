@@ -1348,11 +1348,18 @@
      "unit": "worktree.deleted retry_oracle"
     },
     {
-     "line_end": 34129,
-     "line_start": 34129,
+     "line_end": 39706,
+     "line_start": 39705,
      "path": "Plans/storage-plan.md",
-     "quote": "For worktree.deleted, boolean authority/context flags are exact booleans",
-     "unit": "SP-596"
+     "quote": "For worktree.deleted, boolean authority/context\\\n  \\ flags are exact booleans",
+     "unit": "SP-596",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+     "quote_check": "exact",
+     "reanchor": {
+      "old_quote": "For worktree.deleted, boolean authority/context flags are exact booleans",
+      "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+      "owner_unit": "SP-596"
+     }
     },
     {
      "line_end": 2572,

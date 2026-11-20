@@ -1290,7 +1290,7 @@ def main():
     for row in contracts:
         event = row['event_type']
         check(row['append_policy'] == 'dedupe_by_idempotency_key', event + ': selected current append policy')
-        check(event not in [f['event_type'] for f in registry['families']], event+': absent registry')
+        check((note := registration_refusal(event, registry)) is None, event+': absent registry'+(note or ''))
         if row['outcome']=='blocked_on_Jared':
             continue
         schema = json.loads((ROOT/row['payload_schema_ref']).read_text())
@@ -1548,6 +1548,20 @@ def main():
     for label, ok in ch2_checks(subject):
         check(ok, label)
     return finish()
+
+
+def registration_refusal(event, registry):
+    """None while `event` is unregistered (prepared) or registered as its exact, complete DL-077 admission.
+
+    Admission-aware mode (PNC-019 stream E; scripts/pm_ea_admission_mode.py): any other registration keeps the
+    preparation refusal, with the admission-mode code appended to its message.
+    """
+    if not any(f.get('event_type') == event for f in registry['families']):
+        return None
+    import pm_ea_admission_mode as admission_mode
+    mode = admission_mode.verdict(event, root=ROOT, registry=registry)
+    return None if mode['mode'] == 'admitted' else ' (admission mode refused: ' + mode['code'] + ')'
+
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description=__doc__)

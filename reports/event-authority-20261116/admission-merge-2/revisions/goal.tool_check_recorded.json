@@ -1,0 +1,722 @@
+{
+ "schema_id": "pm.assurance.event_authority.registered_revision_depth.v1",
+ "assessment_kind": "registered_family_twelve_criteria",
+ "native_execution": "NOT_RUN",
+ "registry_before": {
+  "revision": "2026-11-16.305",
+  "family_count": 517,
+  "sha256": "222914703a8985ef96769e5a7d8f6558bfa09110707d424dbfabae4facc3ef40"
+ },
+ "registry_after": {
+  "revision": "2026-11-16.306",
+  "family_count": 517,
+  "sha256": "774f6d49c5662d6115e42b880c855b5d415fd3eb234627e7405a3f493bd83204"
+ },
+ "decision_ref": "Plans/Decision_Log.md#DL-2442",
+ "manifest": {
+  "path": "reports/event-authority-20261116/admission-merge-2/registered-revision-input.json",
+  "sha256": "bbf2678bacf973529a9d0597eadbad5c40f15449c7e4dd87191273c30fa3bbb5"
+ },
+ "before_row": {
+  "family_id": "event-family-goal-tool-check-recorded",
+  "family_revision": "2.0.0",
+  "event_type": "goal.tool_check_recorded",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+  "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+  "payload_schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json#",
+   "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+   "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "existing_project_policy",
+    "append_owner_ref": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+    "read_owner_ref": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.application.v1",
+    "payload_schema_ref": {
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "json_pointer": "#/$defs/GoalToolCheckRecordedEventApplicationV1",
+     "schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.application.v1"
+    },
+    "source_graph_ref": "Plans/application_workflow_source_graph.json",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+    "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "registry_row": {
+  "family_id": "event-family-goal-tool-check-recorded",
+  "family_revision": "2.0.0",
+  "event_type": "goal.tool_check_recorded",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+  "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+  "payload_schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json#",
+   "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+   "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2",
+    "payload_schema_ref": {
+     "path": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.goal_runtime_event.goal_tool_check_recorded.schema.v2"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "existing_project_policy",
+    "append_owner_ref": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+    "read_owner_ref": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "rows": [
+  {
+   "event_type": "goal.tool_check_recorded",
+   "family_id": "event-family-goal-tool-check-recorded",
+   "family_revision": "2.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Existing family at #/families/18 now selects the pinned successor; canonical row SHA-256 69a491e540c14b25f82cf6f4969b840c84b26718d84d42a2f5c0f46ca347b45a.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/18",
+       "line_start": 1221,
+       "line_end": 1284,
+       "quote": "\"event_type\": \"goal.tool_check_recorded\"",
+       "quote_line": 1224,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "quote_scope": "unit #/families/18, Plans/event_family_registry.json:1221-1284",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/18",
+        "line_start": 1221,
+        "line_end": 1284,
+        "quote": "\"event_type\": \"goal.tool_check_recorded\"",
+        "quote_line": 1224,
+        "file_sha256": "774f6d49c5662d6115e42b880c855b5d415fd3eb234627e7405a3f493bd83204"
+       },
+       "unit": "#/families/18"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-207",
+       "line_start": 9406,
+       "line_end": 9406,
+       "quote": "Newly authored",
+       "excerpt_sha256": "d3b9ae32af9692ea4f6aea7db7d7912c6f870d6f956028c1847b13def1473445",
+       "file_sha256": "459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47",
+       "quote_check": "exact",
+       "quote_scope": "unit GRS-207, Plans/Goal_Runtime_System.md:9360-9413",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "unit": "GRS-207",
+        "line_start": 9406,
+        "line_end": 9406,
+        "quote": "Newly authored",
+        "excerpt_sha256": "9f01283ace83984d22640d7ebe5d5d8f447ea9695a00b6661e56ad098f3b6fc1",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+      "sha256": "03bbf66034cd0d8dc9cbcb975e2d008541a29f159b4dbf88c17572f3a599b3d5",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-207",
+       "line_start": 9406,
+       "line_end": 9406,
+       "quote": "No host, worker",
+       "excerpt_sha256": "d3b9ae32af9692ea4f6aea7db7d7912c6f870d6f956028c1847b13def1473445",
+       "file_sha256": "459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47",
+       "quote_check": "exact",
+       "quote_scope": "unit GRS-207, Plans/Goal_Runtime_System.md:9360-9413",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "unit": "GRS-207",
+        "line_start": 9406,
+        "line_end": 9406,
+        "quote": "No host, worker",
+        "excerpt_sha256": "3ba294f42b0039ee348b626e115e0e84cf71db2d92afcf94cb415e213af30154",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+      "sha256": "03bbf66034cd0d8dc9cbcb975e2d008541a29f159b4dbf88c17572f3a599b3d5",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-426",
+       "line_start": 46367,
+       "line_end": 46367,
+       "quote": "whole historical reader resource",
+       "excerpt_sha256": "65708c42e8d56c51633dc54c51112add0a2750befa7067aa1219eef9e444195f",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-426, Plans/Contracts_V0.md:46325-46368",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-426",
+        "line_start": 44404,
+        "line_end": 44404,
+        "quote": "whole historical reader resource",
+        "excerpt_sha256": "0fe8886c7d418ab269457848b69d55a1987ee153f310032ae46599c4a4262d20",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+      "sha256": "03bbf66034cd0d8dc9cbcb975e2d008541a29f159b4dbf88c17572f3a599b3d5",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "selected_prepared_contract",
+     "finding": "DL-409's exact three unused application editions are withdrawn; the existing Project identity and historical schema remain byte-identical.",
+     "evidence": [
+      {
+       "path": "Plans/Decision_Log.md@0c904de00426b0089ba5d56349fda8ea16cc9f88",
+       "unit": "DL-409",
+       "line_start": 6867,
+       "line_end": 6867,
+       "quote": "the next registry checkpoint withdraws them. Existing project records, schemas and retention stay unchanged; no",
+       "quote_check": "exact",
+       "quote_scope": "unit DL-409, Plans/Decision_Log.md:6852-6909",
+       "file_sha256": "de39dfd0788226c8df09671900d2fefcd37ac40fdaa4a3d295fab10fe1d3b131",
+       "source_citation": {
+        "path": "Plans/Decision_Log.md",
+        "unit": "DL-409",
+        "line_start": 6867,
+        "line_end": 6867,
+        "quote": "the next registry checkpoint withdraws them. Existing project records, schemas and retention stay unchanged; no",
+        "file_sha256": "b63c485fe123b05e8dca7434766050940f8ec12da1e2e9dc19f24ad8c084668f"
+       },
+       "current_citation": {
+        "path": "Plans/Decision_Log.md",
+        "unit": "DL-409",
+        "line_start": 6867,
+        "line_end": 6867,
+        "quote": "the next registry checkpoint withdraws them. Existing project records, schemas and retention stay unchanged; no",
+        "quote_scope": "unit DL-409, Plans/Decision_Log.md:6852-6909",
+        "excerpt_sha256": "0c0149ddec8d4601bd02f197d5f420f3f729e32294b53113e5bb21da63bcd7c7"
+       },
+       "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88"
+      }
+     ],
+     "source_grade": {
+      "path": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+      "sha256": "03bbf66034cd0d8dc9cbcb975e2d008541a29f159b4dbf88c17572f3a599b3d5",
+      "field": "scope_identity",
+      "status": "PASS",
+      "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. "
+     },
+     "predicate": "DL409_unused_application_withdrawal"
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-433",
+       "line_start": 56592,
+       "line_end": 56592,
+       "quote": "Repeated reads recompute",
+       "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-433, Plans/storage-plan.md:56536-56597",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-433",
+        "line_start": 56216,
+        "line_end": 56216,
+        "quote": "Repeated reads recompute",
+        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+      "sha256": "03bbf66034cd0d8dc9cbcb975e2d008541a29f159b4dbf88c17572f3a599b3d5",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-433",
+       "line_start": 56592,
+       "line_end": 56592,
+       "quote": "RP-AUTHORITY-INDEFINITE",
+       "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-433, Plans/storage-plan.md:56536-56597",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-433",
+        "line_start": 56216,
+        "line_end": 56216,
+        "quote": "RP-AUTHORITY-INDEFINITE",
+        "excerpt_sha256": "a009bffbf68539df571c200041e114c8efc887e799e677590bb2a7bff3b66227",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+      "sha256": "03bbf66034cd0d8dc9cbcb975e2d008541a29f159b4dbf88c17572f3a599b3d5",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-433",
+       "line_start": 56592,
+       "line_end": 56592,
+       "quote": "Reject unhandled secrets",
+       "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-433, Plans/storage-plan.md:56536-56597",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-433",
+        "line_start": 56216,
+        "line_end": 56216,
+        "quote": "Reject unhandled secrets",
+        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+      "sha256": "03bbf66034cd0d8dc9cbcb975e2d008541a29f159b4dbf88c17572f3a599b3d5",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-207",
+       "line_start": 9408,
+       "line_end": 9408,
+       "quote": "Preserve tool_call_id",
+       "excerpt_sha256": "2bb3eaa532eaa7eff8e82023474e182da24ee24b1613963eeaf80ff13e11a2af",
+       "file_sha256": "459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47",
+       "quote_check": "exact",
+       "quote_scope": "unit GRS-207, Plans/Goal_Runtime_System.md:9360-9413",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "unit": "GRS-207",
+        "line_start": 9408,
+        "line_end": 9408,
+        "quote": "Preserve tool_call_id",
+        "excerpt_sha256": "2bb3eaa532eaa7eff8e82023474e182da24ee24b1613963eeaf80ff13e11a2af",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+      "sha256": "03bbf66034cd0d8dc9cbcb975e2d008541a29f159b4dbf88c17572f3a599b3d5",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-433",
+       "line_start": 56592,
+       "line_end": 56592,
+       "quote": "SP-339 pm inspect / F3-666 call",
+       "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-433, Plans/storage-plan.md:56536-56597",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-433",
+        "line_start": 56216,
+        "line_end": 56216,
+        "quote": "SP-339 pm inspect / F3-666 call",
+        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+      "sha256": "03bbf66034cd0d8dc9cbcb975e2d008541a29f159b4dbf88c17572f3a599b3d5",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.tool_check_recorded: GRS-207, SP-433, CV-426 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. Every current app/Project writer is prohibited before dedupe. Original lawful history retains its meaning; app withdrawal is approved for next checkpoint. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-433",
+       "line_start": 56583,
+       "line_end": 56583,
+       "quote": "withdrawal",
+       "excerpt_sha256": "bb898c0257b7cccbbeee06922b75d27e652a7d96d4e020176f9272b99e7a7ea9",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-433, Plans/storage-plan.md:56536-56597",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-433",
+        "line_start": 56207,
+        "line_end": 56207,
+        "quote": "withdrawal",
+        "excerpt_sha256": "ba2df9d5cba876e7865ed21669b986c1e109c4dea8ef2aa4d19b4b1ffae74022",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+      "sha256": "03bbf66034cd0d8dc9cbcb975e2d008541a29f159b4dbf88c17572f3a599b3d5",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executable_oracle_with_real_vector_phase_tables_complete_boundary_kill_ledger_and_schema_clause_closure",
+     "finding": "394 checker and owner-schema rows evaluated by goal.tool_check_recorded's complete calls: 335 CLOSED (gated tool 004bdedd63 PASS on real observation vectors and a goal.tool_check_recorded declared witness whose single-row cut makes the complete checker accept and whose restoration repeats the refusal, or a declared duplicate set), 59 CLOSED_BY_PROOF (source-bound proofs whose covering rows are closed in this family), 0 OPEN. Owner-schema clause closure over 5 roots (clause occurrences): 259 KILLED, 0 DUPLICATE_GROUP_KILLED, 6 DUPLICATE_SET_KILLED, 63 COVERED_BY_PROOF (lane GC classes: 259 KILLED, 69 COVERED_LATER with named clauses), 0 uncovered; 25 if-selector and 0 not-subschema clauses listed apart. Declared-target uncapped ledger, invalid mutations listed apart, shared number corpus through the ATS-211 and ATS-1119 readers, sealed-receipt retained reads with store snapshots, distinct-copy join witnesses; date-time inventory NOT_RUN; native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family record",
+       "line_start": 1089,
+       "line_end": 1089,
+       "quote": "\"family\": \"goal.tool_check_recorded\"",
+       "excerpt_sha256": "eb2591662b588d066fdadd225cf039b0bc352f99c5ad0ca6b614410f2eb2cd8a",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+        "unit": "C12-GH2 core: family record",
+        "line_start": 1089,
+        "line_end": 1089,
+        "quote": "\"family\": \"goal.tool_check_recorded\"",
+        "excerpt_sha256": "eb2591662b588d066fdadd225cf039b0bc352f99c5ad0ca6b614410f2eb2cd8a",
+        "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030"
+       }
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family coverage matrix status",
+       "line_start": 1090,
+       "line_end": 1090,
+       "quote": "\"goal.tool_check_recorded_matrix\": \"",
+       "excerpt_sha256": "1331a1b8d8763d92d1a0572ad44207d563e809dc45db6791fc1f3f662d9b7b55",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+        "unit": "C12-GH2 core: family coverage matrix status",
+        "line_start": 1090,
+        "line_end": 1090,
+        "quote": "\"goal.tool_check_recorded_matrix\": \"",
+        "excerpt_sha256": "1331a1b8d8763d92d1a0572ad44207d563e809dc45db6791fc1f3f662d9b7b55",
+        "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030"
+       }
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+       "unit": "C12-GH2 core: family owner-schema clause closure",
+       "line_start": 1091,
+       "line_end": 1091,
+       "quote": "\"goal.tool_check_recorded_closure\": \"",
+       "excerpt_sha256": "86b13cc4ebe84174ac55a22e48686c351b717f93bc22824a263c0e9850a46d6f",
+       "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+        "unit": "C12-GH2 core: family owner-schema clause closure",
+        "line_start": 1091,
+        "line_end": 1091,
+        "quote": "\"goal.tool_check_recorded_closure\": \"",
+        "excerpt_sha256": "86b13cc4ebe84174ac55a22e48686c351b717f93bc22824a263c0e9850a46d6f",
+        "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030"
+       }
+      },
+      {
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "C12-GH1 kill rule: cut accepts and restoration repeats the refusal",
+       "line_start": 360,
+       "line_end": 360,
+       "quote": "record['kill'] = 'KILLED'",
+       "excerpt_sha256": "1c4cfe8d2b203a98ba1c49cf6c5a6ac2bd5f6e6cb915914bdb2c6f33c74a797f",
+       "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_goal_guard_sweep.py",
+        "unit": "C12-GH1 kill rule: cut accepts and restoration repeats the refusal",
+        "line_start": 360,
+        "line_end": 360,
+        "quote": "record['kill'] = 'KILLED'",
+        "excerpt_sha256": "1c4cfe8d2b203a98ba1c49cf6c5a6ac2bd5f6e6cb915914bdb2c6f33c74a797f",
+        "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e"
+       }
+      },
+      {
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "C12-GH1 gated proof on real vectors: unobserved row refused",
+       "line_start": 640,
+       "line_end": 640,
+       "quote": "entry.update(status='REFUSED', reason='row_never_observed_by_complete_checker', proved=[])",
+       "excerpt_sha256": "87c20b25dbd83e012d10b5c597eb8c95dd1587658887d36aa7b2abb4ba4087cf",
+       "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_goal_guard_sweep.py",
+        "unit": "C12-GH1 gated proof on real vectors: unobserved row refused",
+        "line_start": 640,
+        "line_end": 640,
+        "quote": "entry.update(status='REFUSED', reason='row_never_observed_by_complete_checker', proved=[])",
+        "excerpt_sha256": "87c20b25dbd83e012d10b5c597eb8c95dd1587658887d36aa7b2abb4ba4087cf",
+        "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e"
+       }
+      },
+      {
+       "path": "scripts/pm_goal_c12_gh2_closure.py",
+       "unit": "C12-GH2 closure: two independent reachability walks",
+       "line_start": 210,
+       "line_end": 210,
+       "quote": "entry.update(cls='UNCOVERED', reason='reached by the independent walk, not inventoried as a row')",
+       "excerpt_sha256": "df8e025b72a1013f9a0c78728ec02701b416643e3b27ac1abd8080a6c60c0f44",
+       "file_sha256": "0b56e1c4a2f8eb16296e37a983afa97c56efcc1c9c411696528dce1b72a2d1b1",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_goal_c12_gh2_closure.py",
+        "unit": "C12-GH2 closure: two independent reachability walks",
+        "line_start": 210,
+        "line_end": 210,
+        "quote": "entry.update(cls='UNCOVERED', reason='reached by the independent walk, not inventoried as a row')",
+        "excerpt_sha256": "df8e025b72a1013f9a0c78728ec02701b416643e3b27ac1abd8080a6c60c0f44",
+        "file_sha256": "0b56e1c4a2f8eb16296e37a983afa97c56efcc1c9c411696528dce1b72a2d1b1"
+       }
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-207",
+       "line_start": 9406,
+       "line_end": 9406,
+       "quote": "Newly authored",
+       "excerpt_sha256": "d3b9ae32af9692ea4f6aea7db7d7912c6f870d6f956028c1847b13def1473445",
+       "file_sha256": "459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47",
+       "quote_check": "exact",
+       "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged.",
+       "quote_scope": "unit GRS-207, Plans/Goal_Runtime_System.md:9360-9413",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "unit": "GRS-207",
+        "line_start": 9406,
+        "line_end": 9406,
+        "quote": "Newly authored",
+        "excerpt_sha256": "9f01283ace83984d22640d7ebe5d5d8f447ea9695a00b6661e56ad098f3b6fc1",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+        "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261115/PNC019-C12-GH2-grades.json",
+      "sha256": "03bbf66034cd0d8dc9cbcb975e2d008541a29f159b4dbf88c17572f3a599b3d5",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "e10cd2bbab5cdbee6bd5b615a3521c7f7f0b6ff37eae2aa8f24ecd969129b4f3",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
+}

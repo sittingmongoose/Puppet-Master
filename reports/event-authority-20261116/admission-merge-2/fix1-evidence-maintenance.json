@@ -1,0 +1,56 @@
+{
+  "status": "pass",
+  "base": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "registry_before": {
+    "revision": "2026-11-18.1",
+    "sha256": "aa6188dd713badcfa9c902d24d917b764b23a6a9e2290bdb58de8776a2f79a5e",
+    "family_count": 518
+  },
+  "registry_after": {
+    "revision": "2026-11-18.2",
+    "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+    "family_count": 518
+  },
+  "admissions_added": 0,
+  "verdicts_changed": false,
+  "counts": {
+    "citations_refreshed": 9035,
+    "re_cited": 23,
+    "excerpt_digests_recomputed": 33,
+    "same_unit_recorded_reanchors": 4
+  },
+  "schema_id": "pm.ea.merge2.fix1.maintenance.v1",
+  "prose_head": "55aecc69b0ed447088ffd3c364fe60c06739018a",
+  "prose_merge": "b0278272bee5b4ab76a346b21596d694d9bed23e",
+  "corrected_owner_families": [
+    "memory.monthly_summary.completed",
+    "memory.monthly_summary.started",
+    "memory.prune_archive.completed",
+    "memory.prune_archive.started"
+  ],
+  "evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-fix1/evidence/record-maintenance.json",
+    "sha256": "7572894afd62754657f90c7e2fc6a39fb2c81c4dc64640641a92d3a9835e2697"
+  },
+  "citation_audit": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-fix1/evidence/refresh-preview.json",
+    "sha256": "6b4c9f04805e13efdb0cd23cfcf533b9169b153bc7543550c7b5a6b44d5344ff"
+  },
+  "historical_pins": "Original one-family append checkpoints and immutable Git source records are retained. Decision Log quotations retain their explicit historical Git edition plus a separate current excerpt locator; the external final verification receipt pins the complete current Decision Log to avoid recursive hashes.",
+  "tool_rows": [
+    "T258",
+    "T259",
+    "T262"
+  ],
+  "native_execution": "NOT_RUN",
+  "numeric_exclusion_maintenance": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-fix1/evidence/numrule-maintenance/exclusion-maintenance.json",
+    "sha256": "67d295080e5f6d98017b59615dddc03395c2d0dccde33bd206e2d0cd7013d396",
+    "source_file": "scripts/pm_event_datetime_exclusions.json",
+    "source_sha256": "d09c8ec5d2a91543fe0acf23284eda5b5e1d58da679ff58c00e3338bfdebee5a",
+    "preserved_rows": 1190,
+    "refreshed_coordinates": 364,
+    "schema_classification_changed": false,
+    "reason": "Refresh exact non-runtime YAML/index container pins after the approved owner edits and final regeneration; no validator predicate or schema-node reclassification."
+  }
+}

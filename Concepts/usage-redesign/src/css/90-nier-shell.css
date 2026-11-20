@@ -69,7 +69,8 @@ html[data-o55-nier="on"] #panel-usage .pmu-h:is([data-edge="e"], [data-edge="w"]
 html[data-o55-nier="on"] #panel-usage .pmu-seg-ink { background: var(--o55-nier-ink); transition-timing-function: steps(4, end); }
 html[data-o55-nier="on"] #panel-usage .pmu-toggle[aria-checked="true"], html[data-o55-nier="on"] #panel-usage .pmu-toggle.on { background: var(--o55-nier-ink); }
 html[data-o55-nier="on"] #panel-usage .pmu-toggle::after { background: var(--surface); box-shadow: none; transition-timing-function: steps(3, end); }
-html[data-o55-nier="on"] #panel-usage .pmu-row:hover, html[data-o55-nier="on"] #panel-usage .pmu-irow:hover { background: rgba(var(--o55-nier-ink-rgb), .08); }
+/* (:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) on the in-board :hover rules below: the wheel pause, 20-board.css PERF-USAGE-HOVER) */
+html[data-o55-nier="on"] #panel-usage .pmu-row:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), html[data-o55-nier="on"] #panel-usage .pmu-irow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: rgba(var(--o55-nier-ink-rgb), .08); }
 
 /* menus under NieR: ink panel frame, ink highlight row with on-ink text, mono section labels */
 html[data-o55-nier="on"] #panel-usage .pmu-menu { --pmu-menu-bg: var(--surface); --pmu-menu-border: var(--o55-nier-ink); --pmu-menu-shadow: 5px 5px 0 rgba(var(--o55-nier-ink-rgb), .22);

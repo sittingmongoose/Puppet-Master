@@ -223,10 +223,19 @@
      "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e"
     },
     {
-     "line": 15750,
+     "line": 16643,
      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-     "quote": "  Closed payload: Plans/ds15_browser_context_shared.schema.json",
-     "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e"
+     "quote": "Closed payload:\\\n  \\ Plans/ds15_browser_context_shared.schema.json",
+     "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+     "line_start": 16643,
+     "line_end": 16644,
+     "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d",
+     "quote_check": "exact",
+     "reanchor": {
+      "old_quote": "  Closed payload: Plans/ds15_browser_context_shared.schema.json",
+      "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+      "owner_unit": "SMPFS-320"
+     }
     },
     {
      "line": 662,

@@ -271,6 +271,8 @@
   /* Look reveal: a circular (Retro: stepped) reveal of the new world from the chosen tile. Browser View Transitions
      when available; otherwise the scene cross-fade already covers the change. Input never waits for it. */
   function applyLook(family, mode, originEl) {
+    /* (a look picked here is the person's choice: closed unfinished, the window saves it, FO-216) */
+    S.lookPicked = true;
     const apply = () => {
       try { window.PM_THEME.setFamily(family, { persist: false }); window.PM_THEME.setMode(mode, { persist: false }); }
       catch (_) { document.documentElement.setAttribute('data-theme', (typeof window.PM_THEME_PAINT_FAMILY === 'function' ? window.PM_THEME_PAINT_FAMILY(family) : family) + '-' + mode); }
@@ -1671,6 +1673,8 @@
     /* reopening the same run in the same page keeps the live session: operations still running (a Project being
        created, a key being added) report into the objects they started with */
     const live = resumable && S.sess && S.sess.started === saved.started;
+    /* (a new run replaces the record: the Projects it names are kept in setup's own record first, R87-P2) */
+    if ((opts.fresh || !resumable) && O55.shell && O55.shell.keepSetup) O55.shell.keepSetup();
     S.sess = live ? S.sess : resumable ? Object.assign(freshSession(), saved) : freshSession();
     if (opts.fresh || (saved && (saved.status === 'done' || saved.status === 'skipped'))) S.sess = freshSession();
     S.resumed = !!(saved && !opts.fresh && saved.status === 'closed');
@@ -1692,6 +1696,7 @@
     const sd = opts.screen && opts.seed !== false && SCREENS.defs[S.sess.screen].seed;
     if (sd) { try { sd(S); } catch (e) { console.warn('O55 seed', S.sess.screen, e); } }
     S.resumedShownOn = S.resumed ? S.sess.screen : null;
+    S.lookPicked = false;
     returnFocus = opts.returnFocus || document.activeElement;
     S.open = true; S.save();
     if (installHold) { installHold.disconnect(); installHold = null; }
@@ -1699,6 +1704,8 @@
     document.documentElement.setAttribute('data-o55-open', 'true');
     if (window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.pause) { try { window.PM_DEMO.clock.pause(); S.pausedClock = true; } catch (_) {} }
     if (S.env.lowResource) O55.motion.setLowResource(true, 'scenario');
+    /* (the look chosen last wins, FO-216: one chosen since this run was closed is the run's now) */
+    if (resumable && !opts.fresh && S.sess.lookLeft) { if (lookChosenSince(S.sess.lookLeft)) adoptLook(); delete S.sess.lookLeft; S.save(); }
     setInert(true); reapplyLook(); syncTheme(false); layoutClass();
     if (O55.talk) O55.talk.refresh(); /* (a Project chosen since, or a mode set in Settings, is read again) */
     r.setAttribute('data-o55-ambient', 'on');
@@ -1756,6 +1763,62 @@
     Object.values(S.sess.drafts).forEach((d) => O55.draft.set(d, { theme_family: 'basic', theme_mode: 'dark' }));
     if (n && n.parts && n.background) S.sess.look = { nier: false, parts: n.parts().slice(), background: n.background() };
   }
+  /* FO-216: the look chosen last wins. A run closed unfinished leaves its look on the page (an unsaved preview lingers,
+     O55.nierLook.closed) and notes it (lookLeft): the look painted then, the look Settings had saved then, and the page
+     load it was in. Resumed, it compares: in the same page a painted look that is no longer the one it left was chosen
+     since (Settings, the title bar's look menu, another Project loaded); after a reload, which drops the lingering preview
+     and is no choice, only a saved look that has changed was. Such a look is the run's now (adoptLook): its drafts, so
+     Pick a look starts on it, and NieR in the session, so it is what reapplyLook paints and what closing again leaves.
+     Otherwise the run's own look comes back, as before (a reload painted the saved theme while the drafts kept the pick).
+     Lane Q's probe: Settings to NieR Light after a run in Basic Light, resumed, showed Basic Light, NieR off, and left it. */
+  const PAGE_LOAD = String((window.performance && performance.timeOrigin) || Date.now());
+  /* (NieR's parts and background are part of the look: a background changed alone in Settings is a choice too, R55 F2) */
+  function paintedLook() {
+    const th = O55.theme(), n = window.PM_NIER;
+    let parts = '', bg = '';
+    try { if (n && n.parts) parts = n.parts().slice().sort().join(','); if (n && n.background) bg = String(n.background() || ''); } catch (_) { /* not ready */ }
+    return [askedFamily(th), th.selectedMode, !!(n && (n.wanted ? n.wanted() : n.on())), parts, bg].join('|');
+  }
+  function storedLook() {
+    try {
+      const P = window.PM51; if (!P || typeof P.value !== 'function') return null;
+      const v = (id) => { const x = P.value(id); return Array.isArray(x) ? x.slice().sort().join(',') : String(x ?? ''); };
+      return ['general.visual.theme', 'general.visual.theme-mode', 'general.visual.nier-mode', 'general.visual.nier-parts', 'general.visual.nier-background'].map(v).concat(window.PM_ACTIVE_PROJECT_ID || '').join('|');
+    } catch (_) { return null; }
+  }
+  function lookChosenSince(left) {
+    if (!left || typeof left !== 'object') return false;
+    if (left.page === PAGE_LOAD) return paintedLook() !== left.painted;
+    const now = storedLook();
+    return now != null && left.stored != null && now !== left.stored;
+  }
+  /* FO-219: a run the page left with its window open (a reload, the tab closed) was still 'active' at the next load, and
+     nothing offered it again: no window, no Resume chip, no bell entry. At load (95-boot.js) it is now what a run closed
+     unfinished is: 'closed', noting the look the page shows then (lookLeft, so a look chosen before it is resumed wins, as
+     FO-216 has it), offered by the Resume chip and the bell's entry, resumed on its step; it never opens by itself. The
+     smaller change than reopening it: a reload brings no window up over the app, and the closed run's path (chip, bell,
+     resume, the look's rules, Run Onboarding Again starting over) is the one already there. */
+  function parkStale() {
+    const saved = O55.store.get(KEY, null);
+    if (S.open || !saved || saved.v !== 1 || saved.status !== 'active') return false;
+    saved.status = 'closed';
+    saved.lookLeft = { page: PAGE_LOAD, painted: paintedLook(), stored: storedLook() };
+    return O55.store.set(KEY, saved);
+  }
+  function adoptLook() {
+    const th = O55.theme(), n = window.PM_NIER, nier = !!(n && (n.wanted ? n.wanted() : n.on()));
+    const family = nier ? 'nier' : askedFamily(th), mode = th.selectedMode;
+    Object.values(S.sess.drafts).forEach((d) => O55.draft.set(d, { theme_family: family, theme_mode: mode }));
+    if (n && n.parts && n.background) S.sess.look = { nier, parts: n.parts().slice(), background: n.background() };
+  }
+  /* a look picked in the window is the person's choice when the page goes away with the window still open too (a reload,
+     the tab closed): saved then, as an unfinished close saves it, so the page and the run's drafts agree when it comes back
+     (stream F's blind review R1 of FO-216); with nothing picked, nothing is written */
+  window.addEventListener('pagehide', () => {
+    if (!S.open || !S.lookPicked || !O55.shell || !O55.shell.commitLook) return;
+    S.lookPicked = false;
+    try { O55.shell.commitLook(S); } catch (_) { /* the page is going */ }
+  });
   /* A reopened run shows its own look again (a reload painted the saved theme while the drafts kept the pick): the
      family and mode from the drafts, and NieR Mode from the session (O55.nierLook), still previews */
   function reapplyLook() {
@@ -1780,6 +1843,17 @@
     S.root.querySelectorAll('.o55-win > .o55-toast').forEach((n) => n.remove()); /* (a toast is this run's moment) */
     if (O55.nierLook && O55.nierLook.closed) O55.nierLook.closed(reason); /* an unsaved NieR preview lingers like the look's */
     S.sess.status = reason === 'skip' ? 'skipped' : reason === 'done' ? 'done' : 'closed';
+    /* (the look it leaves, for a resume to tell a look chosen since: lookChosenSince, FO-216) */
+    if (S.sess.status === 'closed') S.sess.lookLeft = { page: PAGE_LOAD, painted: paintedLook(), stored: storedLook() };
+    /* the look chosen last wins wherever it was chosen (pm-fo-lead, FO-216): one picked in this window is saved as it closes
+       unfinished, as the finished setup saves it (O55.shell.commitLook, written once the close has played: flushLook
+       below), so the page keeps it and a reload shows it; a look the window only showed (a new install's Basic Dark, a
+       resumed run's own) is not a choice and is left unsaved, as before */
+    /* (once written, the saved look the close noted is the one after this save, not before it: a later Settings choice
+       back to the look before it is then a choice, also over a reload, R57 F1; the save itself is no outside choice) */
+    const keepLeft = () => { if (!S.open && S.sess && S.sess.status === 'closed' && S.sess.lookLeft) { S.sess.lookLeft.stored = storedLook(); S.sess.lookLeft.painted = paintedLook(); S.save(); } };
+    if (S.sess.status === 'closed' && S.lookPicked && O55.shell && O55.shell.commitLook) O55.shell.commitLook(S, { defer: true, after: keepLeft });
+    S.lookPicked = false;
     S.save();
     S.open = false; S.tip = null;
     const r = S.root;
@@ -1869,5 +1943,5 @@
     return true;
   }
 
-  Object.assign(O55.ui, { S, build, open, close, go, back, onBranch, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip, act, fill, prewarm });
+  Object.assign(O55.ui, { S, build, open, close, go, back, onBranch, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip, act, fill, prewarm, parkStale });
 })();

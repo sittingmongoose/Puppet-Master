@@ -4090,6 +4090,7 @@ def main(argv=None):
     parser.add_argument('--json', help='write the summary here as well')
     parser.add_argument('--fail-fast', action='store_true', help='stop at the first failure (mutation runs)')
     args = parser.parse_args(argv)
+    assert not (refused := admission_failures(FAMILIES)), ('admission mode refused', refused)
     eager = {rel: eager_refs(RESOURCES[rel]) for rel in RESOURCE_FILES
              if rel.startswith('Plans/event_payloads/') or rel in ('Plans/event_record.schema.json',)}
     eager['receipt custody_v2'] = eager_refs({'$ref': RECEIPT_ID + '#/$defs/custody_v2'})
@@ -4162,6 +4163,12 @@ def main(argv=None):
     print(text if not failures else json.dumps({k: summary[k] for k in ('status', 'failure_count', 'failures')},
                                                indent=1, default=str)[:20000])
     return 0 if not failures else 1
+
+
+def admission_failures(event_types):
+    """Refuse any selected prepared family registered outside its exact complete DL-077 admission."""
+    import pm_ea_admission_mode as admission_mode
+    return admission_mode.gate_failures(admission_mode.verdicts(event_types, root=ROOT))
 
 
 if __name__ == '__main__':

@@ -131,8 +131,25 @@ function o55Number(setting, value) {
      `scale` divides for display and multiplies back when saving */
   const scale = Number(row.scale) || 1;
   const shown = Number.isFinite(n) && !(row.zero && n === 0) ? (scale === 1 ? n : +(n / scale).toFixed(2)) : '';
-  return `<label class="o55-num"><input class="text-control" type="number" inputmode="decimal" step="${a(row.step || 'any')}"${bounds} value="${a(shown)}" placeholder="${a(row.placeholder || '')}" data-action="${scale === 1 ? 'input-setting' : 'o55-scaled-input'}" data-setting="${a(setting.id)}" data-scale="${scale}" data-value-suffix="${a(suffix)}" aria-label="${a(PM51.rowLabel(setting))}">${unit ? `<span class="o55-unit">${h(unit)}</span>` : ''}</label>`;
+  return `<label class="o55-num"><input class="text-control" type="number" inputmode="${row.whole ? 'numeric' : 'decimal'}" step="${a(row.step || 'any')}"${bounds} value="${a(shown)}" placeholder="${a(row.placeholder || '')}" data-action="${scale === 1 ? 'input-setting' : 'o55-scaled-input'}" data-setting="${a(setting.id)}" data-scale="${scale}" data-value-suffix="${a(suffix)}" aria-label="${a(PM51.rowLabel(setting))}">${unit ? `<span class="o55-unit">${h(unit)}</span>` : ''}</label>`;
 }
+/* A count that takes whole numbers only (rows.d `whole`): a fractional entry is refused with a short reason and the
+   box keeps the last saved value, as the number dialog refuses an out-of-range entry (FO-208). The stored value is
+   never fractional. */
+const o55WholeInput = handleInputAction;
+handleInputAction = function (action, el) {
+  if (action === 'input-setting' && el && el.dataset && el.dataset.setting && (O55R[el.dataset.setting] || {}).whole) {
+    const raw = String(el.value == null ? '' : el.value).trim();
+    if (raw !== '' && !/^[+-]?\d+$/.test(raw)) {
+      const row = O55R[el.dataset.setting], s = findSettingGlobal(el.dataset.setting);
+      const lo = o55Bound(row, s && s.setting, 'min'), hi = o55Bound(row, s && s.setting, 'max');
+      showToast('Whole numbers only', Number.isFinite(lo) && Number.isFinite(hi) ? `Between ${lo} and ${hi}.` : 'This count takes whole numbers.', 'info');
+      if (s) el.value = settingValue(s.setting);
+      return;
+    }
+  }
+  return o55WholeInput(action, el);
+};
 function o55Inherited(setting, value) {
   const n = Number(value);
   if (Number.isFinite(n) && value !== '' && value != null) return `<span class="o55-inherit">${o55Number(Object.assign({}, setting), n)}<button type="button" class="o55-textbtn" data-action="o55-auto-number" data-setting="${a(setting.id)}">Use automatic</button></span>`;
@@ -235,6 +252,11 @@ function o55Text(setting, value) {
 const O55_PROJECT_BASE = '${PROJECT_ROOT}/';
 function o55Path(setting, value) {
   const row = O55R[setting.id] || {}; value = o55Shown(setting, value);
+  /* a folder whose stored default names the execution host's home (the inventory's {kind, relative_path}) reads as
+     the path it resolves to, "~/…", the way every other path row reads; the stored value stays as it is (FO-207) */
+  if (typeof value === 'string' && value.startsWith('{')) {
+    try { const d = JSON.parse(value); if (d && d.kind === 'execution_host_home_relative' && typeof d.relative_path === 'string') value = '~/' + d.relative_path; } catch (e) { /* not a structured default */ }
+  }
   /* a path kept relative to the project reads as "project/…"; typing keeps the ${PROJECT_ROOT}/ part */
   const base = typeof value === 'string' && value.startsWith(O55_PROJECT_BASE) ? O55_PROJECT_BASE : '';
   const shown = base ? value.slice(base.length) : value;
@@ -343,7 +365,16 @@ renderSettingsSection = function (section, workspace, index) {
   if (def) owners = def.owner ? `<div class="owner-redirects o55-owner-line"><span>${h(def.owner.text)}</span>${(def.owner.buttons || []).map(b => `<button type="button" class="btn" data-action="${a(b.action)}">${h(b.label)}</button>`).join('')}</div>` : '';
   else { try { owners = typeof renderOwnerRedirects === 'function' ? renderOwnerRedirects(section) : ''; } catch (e) { owners = ''; } }
   const idle = section.settings.length > 0 && section.settings.every(st => (O55R[st.id] || {}).when && !PM51.relevant(st.id));
-  return `<section class="settings-section o55-group${idle ? ' o55-sec-off' : ''}" id="section-${a(section.id)}" data-section-id="${a(section.id)}">
+  /* A page's third section on is skipped until it nears the screen (content-visibility: auto,
+     styles.d/29-navigation-motion.css), sized meanwhile by its intrinsic size. A chapter is drawn new on every visit, so
+     that size was never a remembered one: every far section was 460 px, Code & Tools' Terminal look (49 rows, 3,494 px)
+     landed inside Chrome's margin of the screen, and it and its neighbour were styled and laid out in the new chapter's
+     first frame, then skipped again in the next (FO-196, lane U, 2026-11-14). Each section now gives its own size from
+     its rows: 64 px and 70 a row (112 when the host is narrow), what 73 drawn sections measure (65 + 71 a row). An
+     arrival at Code & Tools styled 2,666 elements in its first frame and now 1,016; that frame's style and layout went
+     from 133 to 79 ms and release -> first frame from 294 to 221 ms on a P1000 (traces, A-B-B-A). */
+  const est = Math.round(64 + section.settings.length * (hostIsNarrow() ? 112 : 70));
+  return `<section class="settings-section o55-group${idle ? ' o55-sec-off' : ''}" id="section-${a(section.id)}" data-section-id="${a(section.id)}" style="contain-intrinsic-size:auto ${est}px">
       <header class="o55-group-head"><h3 class="o55-group-title">${h(section.label)}</h3>${section.description ? `<p class="o55-group-help">${h(section.description)}</p>` : ''}</header>
       ${owners}<div class="setting-list">${section.settings.map(s => renderSettingRow(s, section, workspace)).join('')}</div>
     </section>`;
@@ -485,10 +516,11 @@ function o55NumberDialog(found) {
   const min = o55Bound(row, s, 'min'), max = o55Bound(row, s, 'max');
   PM51.panel({
     title: PM51.rowLabel(s), eyebrow: 'Set a number', icon: 'sliders', size: 'narrow', summary: PM51.rowHelp(s),
-    body: PM51.panelSection('Value', PM51.field(unit ? `Value (${unit})` : 'Value', `<input class="text-control o55-numinput" type="number" inputmode="decimal" step="any"${Number.isFinite(min) ? ` min="${min}"` : ''}${Number.isFinite(max) ? ` max="${max}"` : ''} placeholder="${a(row.placeholder || '')}" data-autofocus aria-label="Value"/>`, Number.isFinite(min) && Number.isFinite(max) ? `Between ${min} and ${max}.` : 'Leave it on Automatic to follow the default.')),
+    body: PM51.panelSection('Value', PM51.field(unit ? `Value (${unit})` : 'Value', `<input class="text-control o55-numinput" type="number" inputmode="${row.whole ? 'numeric' : 'decimal'}" step="${a(row.step || 'any')}"${Number.isFinite(min) ? ` min="${min}"` : ''}${Number.isFinite(max) ? ` max="${max}"` : ''} placeholder="${a(row.placeholder || '')}" data-autofocus aria-label="Value"/>`, Number.isFinite(min) && Number.isFinite(max) ? `Between ${min} and ${max}.` : 'Leave it on Automatic to follow the default.')),
     primaryLabel: 'Use this number', onPrimary: w => {
       const v = Number(w.querySelector('.o55-numinput').value);
       if (w.querySelector('.o55-numinput').value === '' || !Number.isFinite(v) || (Number.isFinite(min) && v < min) || (Number.isFinite(max) && v > max)) { showToast('Enter a number', Number.isFinite(min) && Number.isFinite(max) ? `Between ${min} and ${max}.` : 'A whole number or a decimal.', 'info'); return false; }
+      if (row.whole && !Number.isInteger(v)) { showToast('Whole numbers only', Number.isFinite(min) && Number.isFinite(max) ? `Between ${min} and ${max}.` : 'This count takes whole numbers.', 'info'); return false; }
       const scale = Number(row.scale) || 1, stored = scale === 1 ? v : scale > 1 ? Math.round(v * scale) : +(v * scale).toFixed(6);
       if (!commitSettingValue(s.id, stored)) return false; saveState(); refreshSettingRow(s.id); o55Changed(s, stored);
     }

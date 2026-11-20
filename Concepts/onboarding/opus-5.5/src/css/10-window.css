@@ -12,10 +12,15 @@
 #pm-o55-onboarding[hidden] { display: none !important; }
 html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 /* the app beneath the window is inert and dimmed (its demo clock is paused too): its own loops (working pulses, status
-   dots) hold still until the window closes, so every frame's work is the window's own. Restyled in the same frame that
-   makes the app inert, which the window's first held frame already pays for. The parts are marked data-o55-held by
-   the window (60-ui-core.js setInert), so an inert toggle elsewhere (the editor's sheet) matches nothing here. */
-html[data-o55-open] body > [data-o55-held], html[data-o55-open] body > [data-o55-held] * { animation-play-state: paused !important; }
+   dots) hold still until the window closes, so every frame's work is the window's own. Each element of the app that
+   runs a CSS animation is marked data-o55-loop by js/14-window-hold.js in the frame that draws the click's dim, so the
+   loops are held there, not in the mount's long frame, and let go a frame after the close's wake: a hold or resume
+   taken in a long frame is taken by that frame's stale time, and every held loop jumped by the frame's length
+   (FO-181). Keyed on the mark alone, so only the marked elements restyle; the rule on every element of the app it
+   replaces (`html[data-o55-open] body > [data-o55-held] *`) cost about 240 ms of style at each open and close.
+   !important and the two :not(#...) (an id's weight each) because some loops are set inline or by an !important
+   shorthand, which also sets the play state (NieR Mode's diamonds, the loaders), as in 21-shell-still.css. */
+[data-o55-loop]:not(#o55-loop-a):not(#o55-loop-b) { animation-play-state: paused !important; }
 /* NieR Mode's diamond loaders (styles.d/14-nier-parts.css) set their animation with an !important shorthand, which
    resets the play state and outranks the line above: under the window they are paused here by name, so ticking NieR
    Mode in the window never wakes the app beneath (performance rule 6; review W9).
@@ -494,6 +499,14 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-stage { border-right: 0; border-bottom: 1px solid var(--o55-line); }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-raillabel:not(.o55-railjump) { display: none; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-brand span, #pm-o55-onboarding[data-o55-layout="narrow"] .o55-close span { display: none; }
+/* FO-209: at phone width the bead rail must fit between the brand and the controls: NieR's letter-spaced items ran
+   onto the look button and covered it, so a real click on Change the look timed out (390x844, light and dark; at 360
+   the brand block left the rail a 31 px track). Only the room around the beads shrinks, and only in the narrow
+   layout; each string keeps hanging from its bead's centre. NieR's brand gives up its decorative kicker and wide
+   tracking there (11-window-nier.css). */
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-head { gap: 6px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-railitem { padding-inline: 1px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-railstring { left: calc(1px + var(--o55-node-w, 10px) / 2); }
 /* how the app talks to me (21-talk.js): the mode's mark and name, the name folding away with Close's where the bar is
    narrow; its hover and focus are the header's other buttons' */
 .o55-talk .o55-talkglyph { display: inline-grid; place-items: center; }

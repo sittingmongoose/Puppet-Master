@@ -1,8 +1,10 @@
 // FO-162 (Jared, card Q5, answer B: "Follow the Plans' five areas"). Settings > Readiness & Doctor groups its checkup in
 // the five areas "What is checked" names (system.health.check-scope: AI providers, Storage, Sign-ins, Performance,
-// Dependencies), in that order, and the chips of "What is checked" read the same five names.
+// Dependencies), in that order. FO-211: the row's chips read the inventory's option_labels (AI services, Storage and
+// backups, Accounts and sign-ins, Speed, Tools and code) while the stored values stay the five canonical names.
 //  areas     The checkup's groups (the sections with a Check Again button) are exactly the five, in order, each with a
-//            one-line help; "What is checked" lists the same five; each of the 14 checks of the seven old groups
+//            one-line help; "What is checked" chips read the five option_labels (FO-211) and keep the stored values;
+//            each of the 14 checks of the seven old groups
 //            (permanent ids, the row keys) is in exactly one area, the one REPORT.md maps it to, and no other row is
 //            there; a save made before FO-162 (the seven old groups) opens in the five areas with each check's own
 //            result kept.
@@ -18,6 +20,8 @@ import { LOOKS } from '../browser-check.config.mjs';
 import { setLookBySetting, guardPaintedLook } from '../helpers/settings-look.mjs';
 
 const AREAS = ['AI providers', 'Storage', 'Sign-ins', 'Performance', 'Dependencies'];
+// FO-211: what the chips read (the inventory's option_labels for system.health.check-scope), in the same order
+const LABELS = ['AI services', 'Storage and backups', 'Accounts and sign-ins', 'Speed', 'Tools and code'];
 // every check of the seven groups on main before FO-162, by its permanent id (the row key), and its area
 const MAP = {
 	'ai:antigravity': 'AI providers', 'ai:claude': 'AI providers',
@@ -52,6 +56,7 @@ const READ = (B) => {
 	const scope = body ? [...body.querySelectorAll('[data-setting="system.health.check-scope"][data-value]')] : [];
 	return {
 		scope: scope.map(txt),
+		scopeValues: scope.map((e) => e.getAttribute('data-value')),
 		areas: sections.map((s) => ({
 			title: txt(s.querySelector('.pm51-section-title')),
 			help: txt(s.querySelector('.pm51-section-help')),
@@ -96,7 +101,19 @@ for (const surface of ['normal', 'sandbox']) {
 		await f.evaluate((m) => { window.__fo162Map = m; }, MAP);
 		const r = await f.evaluate(READ, B);
 		await t.check('the checkup\'s groups are the five areas, in order', JSON.stringify(r.areas.map((a) => a.title)) === JSON.stringify(AREAS), r.areas.map((a) => a.title).join(' | '));
-		await t.check('What is checked lists the same five, in order', JSON.stringify(r.scope) === JSON.stringify(AREAS), r.scope.join(' | '));
+		await t.check('What is checked lists the five option_labels, in order (FO-211)', JSON.stringify(r.scope) === JSON.stringify(LABELS), r.scope.join(' | '));
+		await t.check('the chips keep the stored values (the five canonical areas)', JSON.stringify(r.scopeValues) === JSON.stringify(AREAS), r.scopeValues.join(' | '));
+		const storedScope = await f.evaluate(() => JSON.stringify(PM51.value('system.health.check-scope')));
+		await t.check('the stored scope is still the five canonical values', storedScope === JSON.stringify(AREAS), storedScope);
+		// a real press on a chip stores the raw value, never its label: Speed off and back on
+		await f.locator(`${B} [data-setting="system.health.check-scope"][data-value="Performance"]`).first().click();
+		await t.page.waitForTimeout(300);
+		const off = await f.evaluate(() => PM51.value('system.health.check-scope'));
+		await t.check('turning Speed off stores the raw value gone (Performance), not the label', Array.isArray(off) && !off.includes('Performance') && !off.includes('Speed') && off.length === 4, JSON.stringify(off));
+		await f.locator(`${B} [data-setting="system.health.check-scope"][data-value="Performance"]`).first().click();
+		await t.page.waitForTimeout(300);
+		const on = await f.evaluate(() => PM51.value('system.health.check-scope'));
+		await t.check('turning Speed back on restores the five canonical values', Array.isArray(on) && on.length === 5 && AREAS.every((v) => on.includes(v)), JSON.stringify(on));
 		for (const a of r.areas) await t.check(`${a.title}: says what it checks in one short line`, a.help.length >= 12 && a.help.length <= 64 && /\.$/.test(a.help) && (a.help.match(/\. /g) || []).length === 0, `"${a.help}" (${a.help.length} chars)`);
 		const where = {};
 		for (const a of r.areas) for (const row of a.rows) (where[row.key] = where[row.key] || []).push(a.title);

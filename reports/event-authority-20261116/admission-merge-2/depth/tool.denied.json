@@ -1,0 +1,841 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
+  "row_pointer": "#/families/507"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "tool.denied",
+   "family_id": "event-family-tool-denied",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/507 (canonical row SHA-256 89cba62d04987d23e2bf771d959863f9c273a01b36e75580f6a32d56dd34ed9c). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/507",
+       "line_start": 32921,
+       "line_end": 33012,
+       "quote": "\"event_type\": \"tool.denied\"",
+       "quote_line": 32924,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/507",
+        "line_start": 32871,
+        "line_end": 32962,
+        "quote": "\"event_type\": \"tool.denied\"",
+        "quote_line": 32874,
+        "file_sha256": "b70b778d811fc11bf541106f1e536da2240ab22e2f5cbddfa09ec2d8b2641611",
+        "quote_check": "exact"
+       },
+       "unit": "#/families/507",
+       "quote_scope": "unit #/families/507, Plans/event_family_registry.json:32921-33012"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-610/SP-590 govern this exact family independently.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-610",
+       "line_start": 35649,
+       "line_end": 35649,
+       "quote": "Newly authored owner contract under DL-045 for tool.denied@1.0.0 only",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35641-35681",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-610",
+        "line_start": 35277,
+        "line_end": 35277,
+        "quote": "Newly authored owner contract under DL-045 for tool.denied@1.0.0 only",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "DL-430 resolves F1: only policy/user refusal emits tool.denied before dispatch. FileSafe saves its dedicated refusal entry and emits no tool.denied; reason and allowed recovery actions stay visible, no execution failure or automatic retry.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-610",
+       "quote": "DL-430 resolves FileSafe non-emission: a FileSafe block saves only its dedicated FileSafe refusal entry, never tool.denied.",
+       "line_start": 35649,
+       "line_end": 35649,
+       "quote_check": "exact",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35641-35681",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-610",
+        "quote": "DL-430 resolves FileSafe non-emission: a FileSafe block saves only its dedicated FileSafe refusal entry, never tool.denied.",
+        "line_start": 35277,
+        "line_end": 35277,
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/Tools.md",
+       "unit": "heading:12. Implementation checklist (ordered for implementation plan)",
+       "quote": "Per DL-430, save only the dedicated FileSafe refusal entry for a FileSafe block; do not emit `tool.denied`.",
+       "line_start": 1496,
+       "line_end": 1496,
+       "quote_check": "exact",
+       "quote_scope": "unit heading:12. Implementation checklist (ordered for implementation plan), Plans/Tools.md:1489-1512",
+       "file_sha256": "c53e1f511323d2b029b93798ac3080a116f00947920912fe9c933393c4d2d22e",
+       "source_citation": {
+        "path": "Plans/Tools.md",
+        "unit": "section 12",
+        "quote": "Per DL-430, save only the dedicated FileSafe refusal entry for a FileSafe block; do not emit `tool.denied`.",
+        "line_start": 1496,
+        "line_end": 1496,
+        "file_sha256": "71c6920b3d7d5974d2b69814640300405bef873087fda23a02bbaef57c6c0035"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
+       }
+      },
+      {
+       "path": "Plans/FileSafe.md",
+       "unit": "heading:2. Recovery options",
+       "quote": "Per DL-430, a FileSafe block saves only its dedicated FileSafe refusal entry and never emits `tool.denied`",
+       "line_start": 2845,
+       "line_end": 2845,
+       "quote_check": "exact",
+       "quote_scope": "unit heading:2. Recovery options, Plans/FileSafe.md:2842-2862",
+       "file_sha256": "89becad1a1bce7ab45ca2d49609e6364167aa8470ed0165926afcbd64e400f2c",
+       "source_citation": {
+        "path": "Plans/FileSafe.md",
+        "unit": "Runtime Blocked-State Integration Addendum",
+        "quote": "Per DL-430, a FileSafe block saves only its dedicated FileSafe refusal entry and never emits `tool.denied`",
+        "line_start": 2845,
+        "line_end": 2845,
+        "file_sha256": "89becad1a1bce7ab45ca2d49609e6364167aa8470ed0165926afcbd64e400f2c"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact closed payload/source schemas and 41 Storage mirrors validate; every patterned identifier is guarded by exact length or full-match termination and trailing-LF refusal cases. Sweep part 2B: every format: date-time field of the payload, sources and checkpoint runs the shared registered CV-1101 predicate (EventRecord profile; 7 owner-valid forms accepted and 15 malformed forms refused per populated field), and every integer slot takes only an exact integer through the shared current_integer within its own owner bounds (integral floats and values past the maximum refused).",
+     "evidence": [
+      {
+       "path": "Plans/dt_event_contracts.schema.json",
+       "unit": "#/$defs/tool_denied",
+       "line_start": 3180,
+       "line_end": 3180,
+       "quote": "\"const\": \"pm.event_payload.tool_denied.v1\"",
+       "quote_check": "exact",
+       "quote_scope": "unit #/$defs/tool_denied, Plans/dt_event_contracts.schema.json:3155-3611",
+       "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213",
+       "source_citation": {
+        "path": "Plans/dt_event_contracts.schema.json",
+        "unit": "Plans/dt_event_contracts.schema.json#/$defs/tool_denied",
+        "line_start": 3180,
+        "line_end": 3180,
+        "quote": "\"const\": \"pm.event_payload.tool_denied.v1\"",
+        "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213"
+       },
+       "json_pointer": "#/$defs/tool_denied"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-610",
+       "line_start": 35655,
+       "line_end": 35655,
+       "quote": "The closed payload carries blocked_reason_code, failure_class, ordered allowed_action_ids, headless_denied, permission_snapshot_id and executed_at_all=false.",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35641-35681",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-610",
+        "line_start": 35283,
+        "line_end": 35283,
+        "quote": "The closed payload carries blocked_reason_code, failure_class, ordered allowed_action_ids, headless_denied, permission_snapshot_id and executed_at_all=false.",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 198,
+       "line_end": 198,
+       "quote": "DATE_TIME_FORMAT = format_checker(profile=EVENT_RECORD)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 198,
+        "line_end": 198,
+        "quote": "DATE_TIME_FORMAT = format_checker(profile=EVENT_RECORD)",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 214,
+       "line_end": 214,
+       "quote": "Draft202012Validator, type_checker=Draft202012Validator.TYPE_CHECKER.redefine('integer', exact_integer_type))",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 214,
+        "line_end": 214,
+        "quote": "Draft202012Validator, type_checker=Draft202012Validator.TYPE_CHECKER.redefine('integer', exact_integer_type))",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-610",
+       "line_start": 35657,
+       "line_end": 35657,
+       "quote": "For tool.denied alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35641-35681",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-610",
+        "line_start": 35285,
+        "line_end": 35285,
+        "quote": "For tool.denied alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "F2: blocked_sequence, approval_scope_key, ordered actions and effective permission snapshot join the original frozen source in both scope editions.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-610",
+       "line_start": 35655,
+       "line_end": 35655,
+       "quote": "All mapping fields and both blocked-episode fields join before exactly before append",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35641-35681",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-610",
+        "line_start": 35283,
+        "line_end": 35283,
+        "quote": "All mapping fields and both blocked-episode fields join before exactly before append",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Original full-value retry/conflict custody remains; both current writer and retry refuse projector_replay_only as replay_only_not_appendable. Sweep part 2B: the producer digest is the shared producer_semantic_digest over the unchanged CV-317 projection (pinned bytes unchanged), and the current writer qualifies it before append: an exact integer the JCS route cannot preserve (2^53+1, 2^60, u64 max, a 4,400-digit integer) refuses number_domain at SV36 and the retry route has no digest (AM02); 2^53 is accepted; retained originals with those integers stay readable through SP-1101 custody (F16 closed).",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-610",
+       "line_start": 35654,
+       "line_end": 35654,
+       "quote": "For tool.denied alone, current writer and retry paths refuse",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35641-35681",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-610",
+        "line_start": 35282,
+        "line_end": 35282,
+        "quote": "For tool.denied alone, current writer and retry paths refuse",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 515,
+       "line_end": 515,
+       "quote": "return pm_event_numbers.producer_semantic_digest(event)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 515,
+        "line_end": 515,
+        "quote": "return pm_event_numbers.producer_semantic_digest(event)",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 882,
+       "line_end": 882,
+       "quote": "yield 'src_replay', {'historical': historical, 'replay_policy': event['replay_policy'], 'producer_refusal': producer_refusal(event)}",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 882,
+        "line_end": 882,
+        "quote": "yield 'src_replay', {'historical': historical, 'replay_policy': event['replay_policy'], 'producer_refusal': producer_refusal(event)}",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-610",
+       "line_start": 35657,
+       "line_end": 35657,
+       "quote": "For tool.denied alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35641-35681",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-610",
+        "line_start": 35285,
+        "line_end": 35285,
+        "quote": "For tool.denied alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Existing exact policy and SP-349 counterpart binding, original anchor and holds are preserved. Sweep part 2B (CV-1101): the retention age compares exact instants after the shared predicate (offsets, complete fractions; RT05/RT06 refuse a malformed time) instead of host datetime arithmetic.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-590",
+       "line_start": 40144,
+       "line_end": 40144,
+       "quote": "retention_policy_ref = RP-RUNTIME-365D",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-590, Plans/storage-plan.md:40136-40177",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-590",
+        "line_start": 38993,
+        "line_end": 38993,
+        "quote": "retention_policy_ref = RP-RUNTIME-365D",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 2486,
+       "line_end": 2486,
+       "quote": "now_refusal, now = exact_instant(value['now'])",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 2486,
+        "line_end": 2486,
+        "quote": "now_refusal, now = exact_instant(value['now'])",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Redacted metadata, permission-checked references and coherent original source/receipt backup closure remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-590",
+       "line_start": 40145,
+       "line_end": 40145,
+       "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-590, Plans/storage-plan.md:40136-40177",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-590",
+        "line_start": 38994,
+        "line_end": 38994,
+        "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "DL-430 resolves F1: only policy/user refusal emits tool.denied before dispatch. FileSafe saves its dedicated refusal entry and emits no tool.denied; reason and allowed recovery actions stay visible, no execution failure or automatic retry.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-610",
+       "quote": "DL-430 resolves FileSafe non-emission: a FileSafe block saves only its dedicated FileSafe refusal entry, never tool.denied.",
+       "line_start": 35649,
+       "line_end": 35649,
+       "quote_check": "exact",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35641-35681",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-610",
+        "quote": "DL-430 resolves FileSafe non-emission: a FileSafe block saves only its dedicated FileSafe refusal entry, never tool.denied.",
+        "line_start": 35277,
+        "line_end": 35277,
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/Tools.md",
+       "unit": "heading:12. Implementation checklist (ordered for implementation plan)",
+       "quote": "Per DL-430, save only the dedicated FileSafe refusal entry for a FileSafe block; do not emit `tool.denied`.",
+       "line_start": 1496,
+       "line_end": 1496,
+       "quote_check": "exact",
+       "quote_scope": "unit heading:12. Implementation checklist (ordered for implementation plan), Plans/Tools.md:1489-1512",
+       "file_sha256": "c53e1f511323d2b029b93798ac3080a116f00947920912fe9c933393c4d2d22e",
+       "source_citation": {
+        "path": "Plans/Tools.md",
+        "unit": "section 12",
+        "quote": "Per DL-430, save only the dedicated FileSafe refusal entry for a FileSafe block; do not emit `tool.denied`.",
+        "line_start": 1496,
+        "line_end": 1496,
+        "file_sha256": "71c6920b3d7d5974d2b69814640300405bef873087fda23a02bbaef57c6c0035"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
+       }
+      },
+      {
+       "path": "Plans/FileSafe.md",
+       "unit": "heading:2. Recovery options",
+       "quote": "Per DL-430, a FileSafe block saves only its dedicated FileSafe refusal entry and never emits `tool.denied`",
+       "line_start": 2845,
+       "line_end": 2845,
+       "quote_check": "exact",
+       "quote_scope": "unit heading:2. Recovery options, Plans/FileSafe.md:2842-2862",
+       "file_sha256": "89becad1a1bce7ab45ca2d49609e6364167aa8470ed0165926afcbd64e400f2c",
+       "source_citation": {
+        "path": "Plans/FileSafe.md",
+        "unit": "Runtime Blocked-State Integration Addendum",
+        "quote": "Per DL-430, a FileSafe block saves only its dedicated FileSafe refusal entry and never emits `tool.denied`",
+        "line_start": 2845,
+        "line_end": 2845,
+        "file_sha256": "89becad1a1bce7ab45ca2d49609e6364167aa8470ed0165926afcbd64e400f2c"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact-family SP-278 adoption and complete globally examined prefix/CAS remain; full-string token hashes and source Storage identity are now enforced, including a coherent foreign-token negative.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-590",
+       "line_start": 40146,
+       "line_end": 40146,
+       "quote": "For tool.denied alone, its SP-278/DL-076 checkpoint",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-590, Plans/storage-plan.md:40136-40177",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-590",
+        "line_start": 38995,
+        "line_end": 38995,
+        "quote": "For tool.denied alone, its SP-278/DL-076 checkpoint",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "scripts/pm_dt_table_cp_token.py",
+       "unit": "CP14_token_storage",
+       "line_start": 20,
+       "line_end": 20,
+       "quote": "def CP14_token_storage(value, context):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "3ffbb77f1d1cebde79dcad3337caf1c9909400c6711478d09f5f15d1f4b361fc",
+       "source_citation": {
+        "path": "scripts/pm_dt_table_cp_token.py",
+        "unit": "CP14_token_storage",
+        "line_start": 20,
+        "line_end": 20,
+        "quote": "def CP14_token_storage(value, context):",
+        "file_sha256": "3ffbb77f1d1cebde79dcad3337caf1c9909400c6711478d09f5f15d1f4b361fc"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Version/withdrawal/read gates and governed source rebuild remain; no zero reset or history rewrite. Sweep part 2B (SP-1101): the historical reader resolves the sealed original and its frozen recipe and resources through the shared RetainedDispatcher for the binding the record claims (HR13); no caller-supplied original, flag or schema selects or narrows the recipe, and owner-valid broad timestamps stay readable with their exact spelling.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-590",
+       "line_start": 40144,
+       "line_end": 40144,
+       "quote": "Withdrawal first cuts off this family's append admission",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-590, Plans/storage-plan.md:40136-40177",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-590",
+        "line_start": 38993,
+        "line_end": 38993,
+        "quote": "Withdrawal first cuts off this family's append admission",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 1224,
+       "line_end": 1224,
+       "quote": "custody = _CUSTODY['dispatcher'].resolve(original_ref(completed, event), binding, disclose=lambda b: True)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 1224,
+        "line_end": 1224,
+        "quote": "custody = _CUSTODY['dispatcher'].resolve(original_ref(completed, event), binding, disclose=lambda b: True)",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-610",
+       "line_start": 35657,
+       "line_end": 35657,
+       "quote": "For tool.denied alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35641-35681",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-610",
+        "line_start": 35285,
+        "line_end": 35285,
+        "quote": "For tool.denied alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "integrated_criterion12_delta",
+     "finding": "Exact-family C12 PASS from reports/event-authority-20261114/C12-DT-self-grade.json",
+     "evidence": [
+      {
+       "line_end": 9244,
+       "line_start": 9244,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "For tool.denied alone, round-1 fixtures refuse",
+       "unit": "ATS-295",
+       "quote_check": "exact",
+       "quote_scope": "unit ATS-295, Plans/Automated_Testing_System.md:9231-9269",
+       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "source_citation": {
+        "line_end": 9233,
+        "line_start": 9233,
+        "path": "Plans/Automated_Testing_System.md",
+        "quote": "For tool.denied alone, round-1 fixtures refuse",
+        "unit": "ATS-295",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
+      },
+      {
+       "line_end": 103857,
+       "line_start": 103857,
+       "path": "Plans/dt_event_contract_fixtures.json",
+       "quote": "\"producer_semantic_digest\": \"adc41858b6ae79d17050c9606b8a0cb74c934b542b12a2cc78fe71f3626b8df4\"",
+       "unit": "#/families/10",
+       "quote_check": "exact",
+       "quote_scope": "unit #/families/10, Plans/dt_event_contract_fixtures.json:92113-104501",
+       "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365",
+       "source_citation": {
+        "line_end": 103857,
+        "line_start": 103857,
+        "path": "Plans/dt_event_contract_fixtures.json",
+        "quote": "\"producer_semantic_digest\": \"adc41858b6ae79d17050c9606b8a0cb74c934b542b12a2cc78fe71f3626b8df4\"",
+        "unit": "tool.denied retry_oracle",
+        "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365"
+       },
+       "json_pointer": "#/families/10"
+      },
+      {
+       "line_end": 40148,
+       "line_start": 40148,
+       "path": "Plans/storage-plan.md",
+       "quote": "For tool.denied, boolean authority/context flags are exact booleans",
+       "unit": "SP-590",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-590, Plans/storage-plan.md:40136-40177",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "line_end": 38997,
+        "line_start": 38997,
+        "path": "Plans/storage-plan.md",
+        "quote": "For tool.denied, boolean authority/context flags are exact booleans",
+        "unit": "SP-590",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "line_end": 2572,
+       "line_start": 2572,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def family_checks(c, inputs, check):",
+       "unit": "complete original suite",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 2572,
+        "line_start": 2572,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def family_checks(c, inputs, check):",
+        "unit": "complete original suite",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "line_end": 1388,
+       "line_start": 1388,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def retained_custody_checks(c, f, schemas, check):",
+       "unit": "sealed receipt and store",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 1388,
+        "line_start": 1388,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def retained_custody_checks(c, f, schemas, check):",
+        "unit": "sealed receipt and store",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "line_end": 242,
+       "line_start": 242,
+       "path": "scripts/pm_dt_c12_schema.py",
+       "quote": "def schema_witnesses(dt, inputs, out):",
+       "unit": "whole-definition covering",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "95ecbab453e7816c3fe3fa6863a6ae0aab2cf0a238636cdd52a7e62af99a8870",
+       "source_citation": {
+        "line_end": 242,
+        "line_start": 242,
+        "path": "scripts/pm_dt_c12_schema.py",
+        "quote": "def schema_witnesses(dt, inputs, out):",
+        "unit": "whole-definition covering",
+        "file_sha256": "95ecbab453e7816c3fe3fa6863a6ae0aab2cf0a238636cdd52a7e62af99a8870"
+       }
+      },
+      {
+       "line_end": 44,
+       "line_start": 44,
+       "path": "scripts/pm-dt-c12-closure.py",
+       "quote": "check(schema['uncontrolled_rules'] == 0",
+       "unit": "coverage control",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "fedacd8204d3579d61670ce2156b078fd3e2325b18ea7e74c1457b00eee96404",
+       "source_citation": {
+        "line_end": 44,
+        "line_start": 44,
+        "path": "scripts/pm-dt-c12-closure.py",
+        "quote": "check(schema['uncontrolled_rules'] == 0",
+        "unit": "coverage control",
+        "file_sha256": "fedacd8204d3579d61670ce2156b078fd3e2325b18ea7e74c1457b00eee96404"
+       }
+      },
+      {
+       "line_end": 2260,
+       "line_start": 2260,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def number_corpus_checks(c, f, schemas, check):",
+       "unit": "shared numbers",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 2260,
+        "line_start": 2260,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def number_corpus_checks(c, f, schemas, check):",
+        "unit": "shared numbers",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "line_end": 2111,
+       "line_start": 2111,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def datetime_checks(c, f, schemas, check):",
+       "unit": "shared datetime",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 2111,
+        "line_start": 2111,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def datetime_checks(c, f, schemas, check):",
+        "unit": "shared datetime",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.289",
+  "sha256": "b70b778d811fc11bf541106f1e536da2240ab22e2f5cbddfa09ec2d8b2641611",
+  "family_count": 508,
+  "row_pointer": "#/families/507"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "1aa1e0726bf803b7a5ca794baded49468b60ef22259ff2a66fd286710ebf4883",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
+}

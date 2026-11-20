@@ -1,0 +1,603 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
+  "row_pointer": "#/families/238"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "browser.context_share_revoked",
+   "family_id": "event-family-browser-context-share-revoked",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/238 (canonical row SHA-256 620d220923c921849b3e600c1daf579a65af643d8e929600b99cbad35f1b9820). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/238",
+       "line_start": 16588,
+       "line_end": 16671,
+       "quote": "\"event_type\": \"browser.context_share_revoked\"",
+       "quote_line": 16591,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/238",
+        "line_start": 16544,
+        "line_end": 16627,
+        "quote": "\"event_type\": \"browser.context_share_revoked\"",
+        "quote_line": 16547,
+        "file_sha256": "111a17ab633a198a96701fe42f95f2f7f6e6aac61c0efdb6cb513e34c815ffd5",
+        "quote_check": "exact"
+       },
+       "unit": "#/families/238",
+       "quote_scope": "unit #/families/238, Plans/event_family_registry.json:16588-16671"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-321 independently defines owner_doc for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-321",
+       "line_start": 18138,
+       "line_end": 18138,
+       "quote": "newly authored owner contract",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-321",
+        "line_start": 16772,
+        "line_end": 16772,
+        "quote": "newly authored owner contract",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-321 independently defines producer for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-321",
+       "line_start": 18158,
+       "line_end": 18158,
+       "quote": "Producer:",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-321",
+        "line_start": 16788,
+        "line_end": 16788,
+        "quote": "Producer:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-321 independently defines closed_payload_schema for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/ds15_browser_context_share_revoked.schema.json",
+       "unit": "root",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"additionalProperties\": false",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "f17249b20985fb777980c381c6d426d69020c6f0e0dfac68d1c87508814b6bc6",
+       "source_citation": {
+        "path": "Plans/ds15_browser_context_share_revoked.schema.json",
+        "unit": "root",
+        "line_start": 5,
+        "line_end": 5,
+        "quote": "\"additionalProperties\": false",
+        "file_sha256": "f17249b20985fb777980c381c6d426d69020c6f0e0dfac68d1c87508814b6bc6"
+       }
+      },
+      {
+       "path": "Plans/ds15_browser_context_share_revoked.schema.json",
+       "unit": "root",
+       "line_start": 16,
+       "line_end": 16,
+       "quote": "\"const\": \"1.0.0\"",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "f17249b20985fb777980c381c6d426d69020c6f0e0dfac68d1c87508814b6bc6",
+       "source_citation": {
+        "path": "Plans/ds15_browser_context_share_revoked.schema.json",
+        "unit": "root",
+        "line_start": 16,
+        "line_end": 16,
+        "quote": "\"const\": \"1.0.0\"",
+        "file_sha256": "f17249b20985fb777980c381c6d426d69020c6f0e0dfac68d1c87508814b6bc6"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-321 independently defines scope_identity for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-321",
+       "line_start": 18163,
+       "line_end": 18163,
+       "quote": "Scope and identity:",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-321",
+        "line_start": 16792,
+        "line_end": 16792,
+        "quote": "Scope and identity:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-321 independently defines replay_idempotency for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-321",
+       "line_start": 18205,
+       "line_end": 18205,
+       "quote": "Replay and transitions:",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-321",
+        "line_start": 16833,
+        "line_end": 16833,
+        "quote": "Replay and transitions:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\", \"DL-458\", \"DL-459\"], \"event_type\": \"browser.context_share_revoked\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DS15-self-grade.json\", \"history_policy_ref\": \"RP-CHAT-THREAD-LIFETIME@1.0.0\", \"lane\": \"DS15\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-459\", \"family_id\": \"projector.checkpoint.ds15.browser_context_share_revoked:{scope_key}\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"owner\": \"Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321\", \"owner_line\": 15894, \"prior_finding\": \"DL-401 G10 names Chat, but the governing chat(s) for an all-grants revoke and the scope-wide checkpoint lifetime are pending.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-321",
+       "line_start": 18295,
+       "line_end": 18295,
+       "quote": "Current selected assignment (2026-11-19): browser.context_share_revoked@1.0.0 is registered for application_or_project",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-321",
+        "line_start": 16874,
+        "line_end": 16874,
+        "quote": "\\ (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401,\\",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX4",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-321 independently defines redaction_custody for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-321",
+       "line_start": 18195,
+       "line_end": 18195,
+       "quote": "Original source and custody:",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-321",
+        "line_start": 16824,
+        "line_end": 16824,
+        "quote": "Original source and custody:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-321 independently defines transitions for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-321",
+       "line_start": 18158,
+       "line_end": 18158,
+       "quote": "Producer:",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-321",
+        "line_start": 16788,
+        "line_end": 16788,
+        "quote": "Producer:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-321 independently defines consumers_checkpoints for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-321",
+       "line_start": 18212,
+       "line_end": 18212,
+       "quote": "Consumer and checkpoint:",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-321",
+        "line_start": 16840,
+        "line_end": 16840,
+        "quote": "Consumer and checkpoint:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-321 independently defines compatibility_withdrawal for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-321",
+       "line_start": 18238,
+       "line_end": 18238,
+       "quote": "Compatibility and withdrawal:",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-321",
+        "line_start": 16863,
+        "line_end": 16864,
+        "quote": "Compatibility\\\n  \\ and withdrawal:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SMPFS-321",
+        "old_quote": "Compatibility\\\n  \\ and withdrawal:",
+        "new_quote": "Compatibility and withdrawal:",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "integrated_criterion12_delta",
+     "finding": "SMPFS-321 browser.context_share_revoked@1.0.0: every guard row the complete deck-2 checker reaches for this family (184 rows in 97 tables) is proved by the gated tool from this family's own single-defect witnesses (153 rows) or carries a checked entailment proof (17 singleton-table rows, 14 family-constant or earlier-boundary rows); 1783 evaluated schema clause sites: 1278 isolated or branch witnesses through the real validator and phase row, 1030 exact complete-boundary kills, the rest applicator, condition, sibling-entailed or co-asserted with named clauses; shared date-time battery, number corpus and edge sweep, sealed-receipt retained reads with custody snapshots, and the full original suite pass. Native execution NOT_RUN; membership ABSENT; independent review NOT_RUN.",
+     "evidence": [
+      {
+       "line": 18244,
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "quote": "Oracles:",
+       "sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "line_start": 18244,
+       "line_end": 18244,
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "source_citation": {
+        "line": 15810,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "quote": "  Oracles: ",
+        "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+        "line_start": 16091,
+        "line_end": 16091,
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       },
+       "unit": "SMPFS-321",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
+       }
+      },
+      {
+       "line": 18245,
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "quote": "python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_share_revoked",
+       "sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "line_start": 18245,
+       "line_end": 18245,
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "source_citation": {
+        "line": 15810,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "quote": "python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_share_revoked",
+        "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+        "line_start": 16903,
+        "line_end": 16903,
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       },
+       "unit": "SMPFS-321",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
+       }
+      },
+      {
+       "line": 18173,
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "quote": "Closed payload: Plans/ds15_browser_context_share_revoked.schema.json",
+       "sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "line_start": 18173,
+       "line_end": 18173,
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+       "source_citation": {
+        "line": 15804,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "quote": "  Closed payload: Plans/ds15_browser_context_share_revoked.schema.json",
+        "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+        "line_start": 16801,
+        "line_end": 16801,
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       },
+       "unit": "SMPFS-321",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
+       }
+      },
+      {
+       "line": 586,
+       "path": "reports/event-authority-20261104/DS15-self-grade.json",
+       "quote": "\"status\": \"PARTIAL\"",
+       "sha256": "18a7c5c82459c8b9df297996322c3478f002c2c44816395cc83283af3037097b",
+       "line_start": 586,
+       "line_end": 586,
+       "quote_check": "exact",
+       "quote_scope": "unit #/rows/1/cells/positive_negative_oracles, reports/event-authority-20261104/DS15-self-grade.json:585-604",
+       "file_sha256": "18a7c5c82459c8b9df297996322c3478f002c2c44816395cc83283af3037097b",
+       "source_citation": {
+        "line": 386,
+        "path": "reports/event-authority-20261104/DS15-self-grade.json",
+        "quote": "\"status\": \"PARTIAL\"",
+        "sha256": "fe434edd4145ea5f898cff46db99a3c95183f3526cbf1ccd34a87b78cf66cd69",
+        "line_start": 184,
+        "line_end": 184,
+        "file_sha256": "18a7c5c82459c8b9df297996322c3478f002c2c44816395cc83283af3037097b"
+       },
+       "unit": "#/rows/1/cells/positive_negative_oracles",
+       "json_pointer": "#/rows/1/cells/positive_negative_oracles"
+      },
+      {
+       "line": 1356,
+       "path": "scripts/pm-ds15-event-contracts.py",
+       "quote": "def claimed_range(first, last, rows):",
+       "sha256": "e240382b525faa67249f2051abc9e366415c4587b652da5a5ba34923169dc366",
+       "line_start": 1356,
+       "line_end": 1356,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "e240382b525faa67249f2051abc9e366415c4587b652da5a5ba34923169dc366",
+       "source_citation": {
+        "line": 1356,
+        "path": "scripts/pm-ds15-event-contracts.py",
+        "quote": "def claimed_range(first, last, rows):",
+        "sha256": "c8419b67ec7bc0540e9a679ffa92fbe873ca6c0d303de4896150f0f793715a23",
+        "line_start": 1356,
+        "line_end": 1356,
+        "file_sha256": "c8419b67ec7bc0540e9a679ffa92fbe873ca6c0d303de4896150f0f793715a23"
+       }
+      },
+      {
+       "line": 160,
+       "path": "scripts/pm-ds15-deck2-contracts.py",
+       "quote": "    if not retry and not context_ok(c, d.get('context')):",
+       "sha256": "3b51a915f43818a527d5935bf71aa827e8855d71c9086e9615d5f86a81e2fd2c",
+       "line_start": 160,
+       "line_end": 160,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "3b51a915f43818a527d5935bf71aa827e8855d71c9086e9615d5f86a81e2fd2c",
+       "source_citation": {
+        "line": 160,
+        "path": "scripts/pm-ds15-deck2-contracts.py",
+        "quote": "    if not retry and not context_ok(c, d.get('context')):",
+        "sha256": "b96e362a41375545398b6bb299ad372a54b4e062ee5fc30a30ad4dd326edf2fc",
+        "line_start": 160,
+        "line_end": 160,
+        "file_sha256": "b96e362a41375545398b6bb299ad372a54b4e062ee5fc30a30ad4dd326edf2fc"
+       }
+      },
+      {
+       "line": 2,
+       "path": "scripts/pm_ds15_c12_cases.py",
+       "quote": "\"\"\"C12-DS15 own-family witnesses for the seven deck-2 families",
+       "sha256": "61cb2a29509cc15c759c97d32a3fcd502a1a1339e1dd5e585e575f9b0548ac32",
+       "line_start": 2,
+       "line_end": 2,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "61cb2a29509cc15c759c97d32a3fcd502a1a1339e1dd5e585e575f9b0548ac32",
+       "source_citation": {
+        "line": 2,
+        "path": "scripts/pm_ds15_c12_cases.py",
+        "quote": "\"\"\"C12-DS15 own-family witnesses for the seven deck-2 families",
+        "sha256": "61cb2a29509cc15c759c97d32a3fcd502a1a1339e1dd5e585e575f9b0548ac32",
+        "line_start": 2,
+        "line_end": 2,
+        "file_sha256": "61cb2a29509cc15c759c97d32a3fcd502a1a1339e1dd5e585e575f9b0548ac32"
+       }
+      },
+      {
+       "line": 42,
+       "path": "scripts/pm-ds15-guard-tables.py",
+       "quote": "    parser.add_argument('--family'",
+       "sha256": "5efd072ab74b8e13534808259d7d76ab6a09be55486917c75a9f1422949f3a8c",
+       "line_start": 42,
+       "line_end": 42,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "5efd072ab74b8e13534808259d7d76ab6a09be55486917c75a9f1422949f3a8c",
+       "source_citation": {
+        "line": 42,
+        "path": "scripts/pm-ds15-guard-tables.py",
+        "quote": "    parser.add_argument('--family'",
+        "sha256": "5efd072ab74b8e13534808259d7d76ab6a09be55486917c75a9f1422949f3a8c",
+        "line_start": 42,
+        "line_end": 42,
+        "file_sha256": "5efd072ab74b8e13534808259d7d76ab6a09be55486917c75a9f1422949f3a8c"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.20",
+  "sha256": "111a17ab633a198a96701fe42f95f2f7f6e6aac61c0efdb6cb513e34c815ffd5",
+  "family_count": 239,
+  "row_pointer": "#/families/238"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "0a1ea8d58439b265b6b879832c9fbdcc46ea63db5c62d09447bb650039ca4ccb",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
+}

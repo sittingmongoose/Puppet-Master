@@ -18,7 +18,7 @@ spec.loader.exec_module(gate)
 
 # DL-078 moves this pin with every registration that passes the full procedure; any other
 # registry change still needs Jared's own checkpoint approval.
-APPROVED_CHECKPOINT_FAMILY_COUNT = 219  # moved under DL-078 by each registration
+APPROVED_CHECKPOINT_FAMILY_COUNT = 518  # moved under DL-078 by each registration
 
 
 def record_pinned_family_ids(families):
@@ -70,6 +70,8 @@ class TestingSessionEventTests(unittest.TestCase):
         admitted_ids |= record_pinned_family_ids(families) - upstream_ids
         proposed_ids = {"event-family-settings-layer-changed", "event-family-approval-chat-tool-requested",
                         "event-family-approval-chat-tool-resolved"}
+        # s2's DL-412 step-form records also pin these three DL-300 rows; count them once, as proposed.
+        admitted_ids -= proposed_ids
         for ident in proposed_ids:
             self.assertTrue(all(v["producer_admission"] == "requires_owner_adoption" for v in live[ident]["payload_versions"]))
         self.assertEqual({row["family_id"] for row in families}, upstream_ids | admitted_ids | proposed_ids)

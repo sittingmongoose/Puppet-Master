@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L41701-L44736
+Source lines: L43828-L46699
 
-Source SHA256: `e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a`
+Source SHA256: `58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8`
 
 ---
 
@@ -716,8 +716,8 @@ canonical_text: '`bundle.revision_requested` has payload schema Plans/event_payl
   and permission_snapshot_id must resolve through their existing owners. Project scope is mandatory: EventRecord
   scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
   focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
-  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload follows the SP-337 representation below, redaction_profile=secret_refs_only,
-  replay_policy=dedupe_by_idempotency_key.
+  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload follows the SP-337
+  representation below, redaction_profile=secret_refs_only, replay_policy=dedupe_by_idempotency_key.
 
 
   NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array ["bundle.revision_requested",project_id,thread_id,bundle_id,revision_id,phase_sequence]
@@ -737,14 +737,50 @@ canonical_text: '`bundle.revision_requested` has payload schema Plans/event_payl
   The schema is prepared without registry admission. Normal append refuses projector_replay_only as replay_only_not_appendable;
   compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord
   and Plans/event_record.schema.json, without a local envelope schema. Envelope event_type and payload_schema_id
-  equal this exact payload; node_id, requested_account_ref and effective_account_ref are null; all
-  migration fields are null for current native writes; parent_event_id equals predecessor_event_id, producer_sequence_id
-  equals phase_sequence, occurred_at_utc equals ts. Actor is the original authenticated owner frozen in SP-579 source,
-  not a reader or retry actor. Storage alone assigns sequence/observed/persisted fields. Source/result/prepared-event
-  equality is mandatory under SP-579.
+  equal this exact payload; node_id, requested_account_ref and effective_account_ref are null; all migration fields
+  are null for current native writes; parent_event_id equals predecessor_event_id, producer_sequence_id equals phase_sequence,
+  occurred_at_utc equals ts. Actor is the original authenticated owner frozen in SP-579 source, not a reader or
+  retry actor. Storage alone assigns sequence/observed/persisted fields. Source/result/prepared-event equality is
+  mandatory under SP-579.
 
 
-  NEW SP-337 event-body binding for bundle.revision_requested under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded byte count>,"media_type":"application/vnd.puppetmaster.event.bundle-revision-requested+msgpack"}. #/$defs/payload_reference closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is invalid. This string representation preserves the shared EventRecord shape. CV-1100 governs raw current tokens and each declared integer slot: -0, decimal/exponent tokens, string numbers, booleans and other wrong types refuse without coercion; 01 and -01 are invalid JSON. The family identity retains its exact compact UTF-8 JSON array, ensure_ascii=false and comma/colon separators; the descriptor retains sorted-key compact integer JSON. These local recipes keep their existing IDs, fields and tuple order. CV-317/CV-1100 governs the complete producer-semantic JCS projection and qualifies its exact binary64 and emitted decimal values before effects; it does not impose a source-schema cap. SP-026/SP-236/SP-1100 governs full physical EventRecord/source bytes and CV-339 commitments, preserving the full owner uint64 domain, finite float kind and signed zero where the selected original schema allows them. SP-278 keeps its separate binding wrapper/profile. SP-286/SP-1101 selects one authenticated original schema/resource/number recipe outside request data for retained reads and original receipt recovery; current token/type admission never narrows a lawful retained original. Current caller retry admission remains separate from verifying that original. Descriptor text must equal that canonical encoding, so alternate spelling, key order, whitespace, duplicate keys or escaped numeric text refuses. phase_sequence and byte_size use this same integer-only domain in local and composed validators. Every original-value, prepared-event, source and receipt join compares exact nested types and canonical bytes, never language numeric equality. Every boolean guard checks the exact boolean type before its value; payloads retain their closed object type. It contains metadata only, never a base64 body. payload_schema_id continues to identify this family''s complete logical body, which the reader validates against the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3, this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted, wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record overflow references are independent and cannot stand in for this event reference. Freeze this representation and descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref, excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry. Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view may change replay_policy only; authenticate every other supplied field against the retained original before checking its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal, not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
+  NEW SP-337 event-body binding for bundle.revision_requested under DL-045: measure the complete logical body using
+  the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At
+  most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger
+  body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and
+  payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded
+  byte count>,"media_type":"application/vnd.puppetmaster.event.bundle-revision-requested+msgpack"}. #/$defs/payload_reference
+  closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is
+  invalid. This string representation preserves the shared EventRecord shape. CV-1100 governs raw current tokens
+  and each declared integer slot: -0, decimal/exponent tokens, string numbers, booleans and other wrong types refuse
+  without coercion; 01 and -01 are invalid JSON. The family identity retains its exact compact UTF-8 JSON array,
+  ensure_ascii=false and comma/colon separators; the descriptor retains sorted-key compact integer JSON. These local
+  recipes keep their existing IDs, fields and tuple order. CV-317/CV-1100 governs the complete producer-semantic
+  JCS projection and qualifies its exact binary64 and emitted decimal values before effects; it does not impose
+  a source-schema cap. SP-026/SP-236/SP-1100 governs full physical EventRecord/source bytes and CV-339 commitments,
+  preserving the full owner uint64 domain, finite float kind and signed zero where the selected original schema
+  allows them. SP-278 keeps its separate binding wrapper/profile. SP-286/SP-1101 selects one authenticated original
+  schema/resource/number recipe outside request data for retained reads and original receipt recovery; current token/type
+  admission never narrows a lawful retained original. Current caller retry admission remains separate from verifying
+  that original. Descriptor text must equal that canonical encoding, so alternate spelling, key order, whitespace,
+  duplicate keys or escaped numeric text refuses. phase_sequence and byte_size use this same integer-only domain
+  in local and composed validators. Every original-value, prepared-event, source and receipt join compares exact
+  nested types and canonical bytes, never language numeric equality. Every boolean guard checks the exact boolean
+  type before its value; payloads retain their closed object type. It contains metadata only, never a base64 body.
+  payload_schema_id continues to identify this family''s complete logical body, which the reader validates against
+  the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3,
+  this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and
+  their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted,
+  wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record
+  overflow references are independent and cannot stand in for this event reference. Freeze this representation and
+  descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref,
+  excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry.
+  Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view
+  may change replay_policy only; authenticate every other supplied field against the retained original before checking
+  its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal,
+  not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event
+  pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload
+  inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
@@ -752,7 +788,8 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -776,6 +813,8 @@ negative_constraints:
 - No event admission, new UI behavior, retention choice, native execution proof or governance seal.
 ```
 
+
+Current selected assignment (2026-11-19): bundle.revision_requested@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2229. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### CV-591 - Bundle Revision Started Closed Event Contract
 
 ```yaml
@@ -793,8 +832,8 @@ canonical_text: '`bundle.revision_started` has payload schema Plans/event_payloa
   and permission_snapshot_id must resolve through their existing owners. Project scope is mandatory: EventRecord
   scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
   focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
-  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload follows the SP-337 representation below, redaction_profile=secret_refs_only,
-  replay_policy=dedupe_by_idempotency_key.
+  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload follows the SP-337
+  representation below, redaction_profile=secret_refs_only, replay_policy=dedupe_by_idempotency_key.
 
 
   NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array ["bundle.revision_started",project_id,thread_id,bundle_id,revision_id,phase_sequence]
@@ -814,14 +853,50 @@ canonical_text: '`bundle.revision_started` has payload schema Plans/event_payloa
   The schema is prepared without registry admission. Normal append refuses projector_replay_only as replay_only_not_appendable;
   compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord
   and Plans/event_record.schema.json, without a local envelope schema. Envelope event_type and payload_schema_id
-  equal this exact payload; node_id, requested_account_ref and effective_account_ref are null; all
-  migration fields are null for current native writes; parent_event_id equals predecessor_event_id, producer_sequence_id
-  equals phase_sequence, occurred_at_utc equals ts. Actor is the original authenticated owner frozen in SP-579 source,
-  not a reader or retry actor. Storage alone assigns sequence/observed/persisted fields. Source/result/prepared-event
-  equality is mandatory under SP-579.
+  equal this exact payload; node_id, requested_account_ref and effective_account_ref are null; all migration fields
+  are null for current native writes; parent_event_id equals predecessor_event_id, producer_sequence_id equals phase_sequence,
+  occurred_at_utc equals ts. Actor is the original authenticated owner frozen in SP-579 source, not a reader or
+  retry actor. Storage alone assigns sequence/observed/persisted fields. Source/result/prepared-event equality is
+  mandatory under SP-579.
 
 
-  NEW SP-337 event-body binding for bundle.revision_started under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded byte count>,"media_type":"application/vnd.puppetmaster.event.bundle-revision-started+msgpack"}. #/$defs/payload_reference closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is invalid. This string representation preserves the shared EventRecord shape. CV-1100 governs raw current tokens and each declared integer slot: -0, decimal/exponent tokens, string numbers, booleans and other wrong types refuse without coercion; 01 and -01 are invalid JSON. The family identity retains its exact compact UTF-8 JSON array, ensure_ascii=false and comma/colon separators; the descriptor retains sorted-key compact integer JSON. These local recipes keep their existing IDs, fields and tuple order. CV-317/CV-1100 governs the complete producer-semantic JCS projection and qualifies its exact binary64 and emitted decimal values before effects; it does not impose a source-schema cap. SP-026/SP-236/SP-1100 governs full physical EventRecord/source bytes and CV-339 commitments, preserving the full owner uint64 domain, finite float kind and signed zero where the selected original schema allows them. SP-278 keeps its separate binding wrapper/profile. SP-286/SP-1101 selects one authenticated original schema/resource/number recipe outside request data for retained reads and original receipt recovery; current token/type admission never narrows a lawful retained original. Current caller retry admission remains separate from verifying that original. Descriptor text must equal that canonical encoding, so alternate spelling, key order, whitespace, duplicate keys or escaped numeric text refuses. phase_sequence and byte_size use this same integer-only domain in local and composed validators. Every original-value, prepared-event, source and receipt join compares exact nested types and canonical bytes, never language numeric equality. Every boolean guard checks the exact boolean type before its value; payloads retain their closed object type. It contains metadata only, never a base64 body. payload_schema_id continues to identify this family''s complete logical body, which the reader validates against the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3, this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted, wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record overflow references are independent and cannot stand in for this event reference. Freeze this representation and descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref, excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry. Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view may change replay_policy only; authenticate every other supplied field against the retained original before checking its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal, not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
+  NEW SP-337 event-body binding for bundle.revision_started under DL-045: measure the complete logical body using
+  the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At
+  most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger
+  body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and
+  payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded
+  byte count>,"media_type":"application/vnd.puppetmaster.event.bundle-revision-started+msgpack"}. #/$defs/payload_reference
+  closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is
+  invalid. This string representation preserves the shared EventRecord shape. CV-1100 governs raw current tokens
+  and each declared integer slot: -0, decimal/exponent tokens, string numbers, booleans and other wrong types refuse
+  without coercion; 01 and -01 are invalid JSON. The family identity retains its exact compact UTF-8 JSON array,
+  ensure_ascii=false and comma/colon separators; the descriptor retains sorted-key compact integer JSON. These local
+  recipes keep their existing IDs, fields and tuple order. CV-317/CV-1100 governs the complete producer-semantic
+  JCS projection and qualifies its exact binary64 and emitted decimal values before effects; it does not impose
+  a source-schema cap. SP-026/SP-236/SP-1100 governs full physical EventRecord/source bytes and CV-339 commitments,
+  preserving the full owner uint64 domain, finite float kind and signed zero where the selected original schema
+  allows them. SP-278 keeps its separate binding wrapper/profile. SP-286/SP-1101 selects one authenticated original
+  schema/resource/number recipe outside request data for retained reads and original receipt recovery; current token/type
+  admission never narrows a lawful retained original. Current caller retry admission remains separate from verifying
+  that original. Descriptor text must equal that canonical encoding, so alternate spelling, key order, whitespace,
+  duplicate keys or escaped numeric text refuses. phase_sequence and byte_size use this same integer-only domain
+  in local and composed validators. Every original-value, prepared-event, source and receipt join compares exact
+  nested types and canonical bytes, never language numeric equality. Every boolean guard checks the exact boolean
+  type before its value; payloads retain their closed object type. It contains metadata only, never a base64 body.
+  payload_schema_id continues to identify this family''s complete logical body, which the reader validates against
+  the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3,
+  this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and
+  their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted,
+  wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record
+  overflow references are independent and cannot stand in for this event reference. Freeze this representation and
+  descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref,
+  excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry.
+  Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view
+  may change replay_policy only; authenticate every other supplied field against the retained original before checking
+  its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal,
+  not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event
+  pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload
+  inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
@@ -829,7 +904,8 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -853,6 +929,8 @@ negative_constraints:
 - No event admission, new UI behavior, retention choice, native execution proof or governance seal.
 ```
 
+
+Current selected assignment (2026-11-19): bundle.revision_started@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2230. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### CV-592 - Bundle Revision Completed Closed Event Contract
 
 ```yaml
@@ -870,8 +948,8 @@ canonical_text: '`bundle.revision_completed` has payload schema Plans/event_payl
   and permission_snapshot_id must resolve through their existing owners. Project scope is mandatory: EventRecord
   scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
   focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
-  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload follows the SP-337 representation below, redaction_profile=secret_refs_only,
-  replay_policy=dedupe_by_idempotency_key.
+  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload follows the SP-337
+  representation below, redaction_profile=secret_refs_only, replay_policy=dedupe_by_idempotency_key.
 
 
   NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array ["bundle.revision_completed",project_id,thread_id,bundle_id,revision_id,phase_sequence]
@@ -891,14 +969,50 @@ canonical_text: '`bundle.revision_completed` has payload schema Plans/event_payl
   The schema is prepared without registry admission. Normal append refuses projector_replay_only as replay_only_not_appendable;
   compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord
   and Plans/event_record.schema.json, without a local envelope schema. Envelope event_type and payload_schema_id
-  equal this exact payload; node_id, requested_account_ref and effective_account_ref are null; all
-  migration fields are null for current native writes; parent_event_id equals predecessor_event_id, producer_sequence_id
-  equals phase_sequence, occurred_at_utc equals ts. Actor is the original authenticated owner frozen in SP-579 source,
-  not a reader or retry actor. Storage alone assigns sequence/observed/persisted fields. Source/result/prepared-event
-  equality is mandatory under SP-579.
+  equal this exact payload; node_id, requested_account_ref and effective_account_ref are null; all migration fields
+  are null for current native writes; parent_event_id equals predecessor_event_id, producer_sequence_id equals phase_sequence,
+  occurred_at_utc equals ts. Actor is the original authenticated owner frozen in SP-579 source, not a reader or
+  retry actor. Storage alone assigns sequence/observed/persisted fields. Source/result/prepared-event equality is
+  mandatory under SP-579.
 
 
-  NEW SP-337 event-body binding for bundle.revision_completed under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded byte count>,"media_type":"application/vnd.puppetmaster.event.bundle-revision-completed+msgpack"}. #/$defs/payload_reference closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is invalid. This string representation preserves the shared EventRecord shape. CV-1100 governs raw current tokens and each declared integer slot: -0, decimal/exponent tokens, string numbers, booleans and other wrong types refuse without coercion; 01 and -01 are invalid JSON. The family identity retains its exact compact UTF-8 JSON array, ensure_ascii=false and comma/colon separators; the descriptor retains sorted-key compact integer JSON. These local recipes keep their existing IDs, fields and tuple order. CV-317/CV-1100 governs the complete producer-semantic JCS projection and qualifies its exact binary64 and emitted decimal values before effects; it does not impose a source-schema cap. SP-026/SP-236/SP-1100 governs full physical EventRecord/source bytes and CV-339 commitments, preserving the full owner uint64 domain, finite float kind and signed zero where the selected original schema allows them. SP-278 keeps its separate binding wrapper/profile. SP-286/SP-1101 selects one authenticated original schema/resource/number recipe outside request data for retained reads and original receipt recovery; current token/type admission never narrows a lawful retained original. Current caller retry admission remains separate from verifying that original. Descriptor text must equal that canonical encoding, so alternate spelling, key order, whitespace, duplicate keys or escaped numeric text refuses. phase_sequence and byte_size use this same integer-only domain in local and composed validators. Every original-value, prepared-event, source and receipt join compares exact nested types and canonical bytes, never language numeric equality. Every boolean guard checks the exact boolean type before its value; payloads retain their closed object type. It contains metadata only, never a base64 body. payload_schema_id continues to identify this family''s complete logical body, which the reader validates against the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3, this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted, wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record overflow references are independent and cannot stand in for this event reference. Freeze this representation and descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref, excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry. Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view may change replay_policy only; authenticate every other supplied field against the retained original before checking its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal, not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
+  NEW SP-337 event-body binding for bundle.revision_completed under DL-045: measure the complete logical body using
+  the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At
+  most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger
+  body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and
+  payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded
+  byte count>,"media_type":"application/vnd.puppetmaster.event.bundle-revision-completed+msgpack"}. #/$defs/payload_reference
+  closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is
+  invalid. This string representation preserves the shared EventRecord shape. CV-1100 governs raw current tokens
+  and each declared integer slot: -0, decimal/exponent tokens, string numbers, booleans and other wrong types refuse
+  without coercion; 01 and -01 are invalid JSON. The family identity retains its exact compact UTF-8 JSON array,
+  ensure_ascii=false and comma/colon separators; the descriptor retains sorted-key compact integer JSON. These local
+  recipes keep their existing IDs, fields and tuple order. CV-317/CV-1100 governs the complete producer-semantic
+  JCS projection and qualifies its exact binary64 and emitted decimal values before effects; it does not impose
+  a source-schema cap. SP-026/SP-236/SP-1100 governs full physical EventRecord/source bytes and CV-339 commitments,
+  preserving the full owner uint64 domain, finite float kind and signed zero where the selected original schema
+  allows them. SP-278 keeps its separate binding wrapper/profile. SP-286/SP-1101 selects one authenticated original
+  schema/resource/number recipe outside request data for retained reads and original receipt recovery; current token/type
+  admission never narrows a lawful retained original. Current caller retry admission remains separate from verifying
+  that original. Descriptor text must equal that canonical encoding, so alternate spelling, key order, whitespace,
+  duplicate keys or escaped numeric text refuses. phase_sequence and byte_size use this same integer-only domain
+  in local and composed validators. Every original-value, prepared-event, source and receipt join compares exact
+  nested types and canonical bytes, never language numeric equality. Every boolean guard checks the exact boolean
+  type before its value; payloads retain their closed object type. It contains metadata only, never a base64 body.
+  payload_schema_id continues to identify this family''s complete logical body, which the reader validates against
+  the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3,
+  this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and
+  their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted,
+  wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record
+  overflow references are independent and cannot stand in for this event reference. Freeze this representation and
+  descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref,
+  excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry.
+  Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view
+  may change replay_policy only; authenticate every other supplied field against the retained original before checking
+  its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal,
+  not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event
+  pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload
+  inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
@@ -906,7 +1020,8 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -930,6 +1045,8 @@ negative_constraints:
 - No event admission, new UI behavior, retention choice, native execution proof or governance seal.
 ```
 
+
+Current selected assignment (2026-11-19): bundle.revision_completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2227. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### CV-593 - Bundle Revision Interrupted Closed Event Contract
 
 ```yaml
@@ -947,8 +1064,8 @@ canonical_text: '`bundle.revision_interrupted` has payload schema Plans/event_pa
   and permission_snapshot_id must resolve through their existing owners. Project scope is mandatory: EventRecord
   scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
   focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
-  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload follows the SP-337 representation below, redaction_profile=secret_refs_only,
-  replay_policy=dedupe_by_idempotency_key.
+  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload follows the SP-337
+  representation below, redaction_profile=secret_refs_only, replay_policy=dedupe_by_idempotency_key.
 
 
   NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array ["bundle.revision_interrupted",project_id,thread_id,bundle_id,revision_id,phase_sequence]
@@ -975,7 +1092,43 @@ canonical_text: '`bundle.revision_interrupted` has payload schema Plans/event_pa
   Source/result/prepared-event equality is mandatory under SP-579.
 
 
-  NEW SP-337 event-body binding for bundle.revision_interrupted under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded byte count>,"media_type":"application/vnd.puppetmaster.event.bundle-revision-interrupted+msgpack"}. #/$defs/payload_reference closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is invalid. This string representation preserves the shared EventRecord shape. CV-1100 governs raw current tokens and each declared integer slot: -0, decimal/exponent tokens, string numbers, booleans and other wrong types refuse without coercion; 01 and -01 are invalid JSON. The family identity retains its exact compact UTF-8 JSON array, ensure_ascii=false and comma/colon separators; the descriptor retains sorted-key compact integer JSON. These local recipes keep their existing IDs, fields and tuple order. CV-317/CV-1100 governs the complete producer-semantic JCS projection and qualifies its exact binary64 and emitted decimal values before effects; it does not impose a source-schema cap. SP-026/SP-236/SP-1100 governs full physical EventRecord/source bytes and CV-339 commitments, preserving the full owner uint64 domain, finite float kind and signed zero where the selected original schema allows them. SP-278 keeps its separate binding wrapper/profile. SP-286/SP-1101 selects one authenticated original schema/resource/number recipe outside request data for retained reads and original receipt recovery; current token/type admission never narrows a lawful retained original. Current caller retry admission remains separate from verifying that original. Descriptor text must equal that canonical encoding, so alternate spelling, key order, whitespace, duplicate keys or escaped numeric text refuses. phase_sequence and byte_size use this same integer-only domain in local and composed validators. Every original-value, prepared-event, source and receipt join compares exact nested types and canonical bytes, never language numeric equality. Every boolean guard checks the exact boolean type before its value; payloads retain their closed object type. It contains metadata only, never a base64 body. payload_schema_id continues to identify this family''s complete logical body, which the reader validates against the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3, this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted, wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record overflow references are independent and cannot stand in for this event reference. Freeze this representation and descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref, excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry. Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view may change replay_policy only; authenticate every other supplied field against the retained original before checking its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal, not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
+  NEW SP-337 event-body binding for bundle.revision_interrupted under DL-045: measure the complete logical body
+  using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size.
+  At most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger
+  body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and
+  payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded
+  byte count>,"media_type":"application/vnd.puppetmaster.event.bundle-revision-interrupted+msgpack"}. #/$defs/payload_reference
+  closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is
+  invalid. This string representation preserves the shared EventRecord shape. CV-1100 governs raw current tokens
+  and each declared integer slot: -0, decimal/exponent tokens, string numbers, booleans and other wrong types refuse
+  without coercion; 01 and -01 are invalid JSON. The family identity retains its exact compact UTF-8 JSON array,
+  ensure_ascii=false and comma/colon separators; the descriptor retains sorted-key compact integer JSON. These local
+  recipes keep their existing IDs, fields and tuple order. CV-317/CV-1100 governs the complete producer-semantic
+  JCS projection and qualifies its exact binary64 and emitted decimal values before effects; it does not impose
+  a source-schema cap. SP-026/SP-236/SP-1100 governs full physical EventRecord/source bytes and CV-339 commitments,
+  preserving the full owner uint64 domain, finite float kind and signed zero where the selected original schema
+  allows them. SP-278 keeps its separate binding wrapper/profile. SP-286/SP-1101 selects one authenticated original
+  schema/resource/number recipe outside request data for retained reads and original receipt recovery; current token/type
+  admission never narrows a lawful retained original. Current caller retry admission remains separate from verifying
+  that original. Descriptor text must equal that canonical encoding, so alternate spelling, key order, whitespace,
+  duplicate keys or escaped numeric text refuses. phase_sequence and byte_size use this same integer-only domain
+  in local and composed validators. Every original-value, prepared-event, source and receipt join compares exact
+  nested types and canonical bytes, never language numeric equality. Every boolean guard checks the exact boolean
+  type before its value; payloads retain their closed object type. It contains metadata only, never a base64 body.
+  payload_schema_id continues to identify this family''s complete logical body, which the reader validates against
+  the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3,
+  this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and
+  their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted,
+  wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record
+  overflow references are independent and cannot stand in for this event reference. Freeze this representation and
+  descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref,
+  excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry.
+  Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view
+  may change replay_policy only; authenticate every other supplied field against the retained original before checking
+  its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal,
+  not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event
+  pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload
+  inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
@@ -983,7 +1136,8 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -1008,6 +1162,8 @@ negative_constraints:
 ```
 
 
+
+Current selected assignment (2026-11-19): bundle.revision_interrupted@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2228. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### CV-594 - Deferred Intake wizard.opened Payload And Identity
 
 ```yaml
@@ -1015,41 +1171,16 @@ plan_unit_id: CV-594
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: 'wizard.opened has the closed payload Plans/event_payloads/planning_wizard/wizard_opened.schema.json,
-  schema_id pm.event_payload.wizard.opened.v1, schema_version 1.0.0; every property is required-present and additionalProperties=false.
-  It adopts Contracts_V0.md#EventRecord and Plans/event_record.schema.json unchanged. Current scope_kind=project;
-  envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id and requested/effective
-  account refs are null because this observation is not runtime execution. actor_ref is the authenticated original
-  request actor. correlation_id=request_id; causation_event_id=parent_event_id=predecessor_event_id; producer_sequence_id
-  is null, occurred_at_utc=ts, payload_schema_id=decoded_payload.schema_id, redaction_profile=secret_refs_only,
-  replay_policy=dedupe_by_idempotency_key; native migration fields are all null. Storage assigns sequence/observed/persisted
-  fields. Payload representation follows the SP-337 binding below; refs never carry bodies, credentials or local paths.
+canonical_text: |-
+  wizard.opened has the closed payload Plans/event_payloads/planning_wizard/wizard_opened.schema.json, schema_id pm.event_payload.wizard.opened.v1, schema_version 1.0.0; every property is required-present and additionalProperties=false. It adopts Contracts_V0.md#EventRecord and Plans/event_record.schema.json unchanged. Current scope_kind=project; envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id and requested/effective account refs are null because this observation is not runtime execution. actor_ref is the authenticated original request actor. correlation_id=request_id; causation_event_id=parent_event_id=predecessor_event_id; producer_sequence_id is null, occurred_at_utc=ts, payload_schema_id=decoded_payload.schema_id, redaction_profile=secret_refs_only, replay_policy=dedupe_by_idempotency_key; native migration fields are all null. Storage assigns sequence/observed/persisted fields. Payload representation follows the SP-337 binding below; refs never carry bodies, credentials or local paths.
 
+  NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON ["wizard.opened",project_id,planning_run_id,thread_id,request_id] with ensure_ascii=false and comma/colon separators. event_id="evt_wizard_opened_"+digest and idempotency_key="wizard.opened:"+digest. request_id is the existing immutable command instance identity, not a new id on retry; a genuine distinct user open request has its own existing request identity. Freeze all source/result fields, seed version/hash, current child revision/hash, actor, permission snapshot, project-context hash, causality and ts at original preparation. Same identity and same producer semantic digest returns the original full value and first receipt; changed semantic digest is idempotency_conflict, missing dedupe proof is dedupe_unavailable. Normal append refuses projector_replay_only with replay_only_not_appendable. Passive readers cannot emit. Observe the existing successful open result for the real Project and actual current PlanningRun intake child, after owner route/currentness and permission validation. Opening is not proof of seed acceptance; a route click, attempt or failed open emits nothing. predecessor_event_id is null. This event never creates or selects a child on replay.
 
-  NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON ["wizard.opened",project_id,planning_run_id,thread_id,request_id]
-  with ensure_ascii=false and comma/colon separators. event_id="evt_wizard_opened_"+digest and idempotency_key="wizard.opened:"+digest.
-  request_id is the existing immutable command instance identity, not a new id on retry; a genuine distinct user
-  open request has its own existing request identity. Freeze all source/result fields, seed version/hash, current
-  child revision/hash, actor, permission snapshot, project-context hash, causality and ts at original preparation.
-  Same identity and same producer semantic digest returns the original full value and first receipt; changed semantic
-  digest is idempotency_conflict, missing dedupe proof is dedupe_unavailable. Normal append refuses projector_replay_only
-  with replay_only_not_appendable. Passive readers cannot emit. Observe the existing successful open result for
-  the real Project and actual current PlanningRun intake child, after owner route/currentness and permission validation.
-  Opening is not proof of seed acceptance; a route click, attempt or failed open emits nothing. predecessor_event_id
-  is null. This event never creates or selects a child on replay.
+  Every payload ref must resolve to the actual original source request/result in Plans/dcw/wizard_open_evidence.schema.json; payload joins compare exact child, Named Plan, thread group, seed identity/version/hash, permission snapshot and project context; seed_kind comes from the current PWIZ-001 closed set. No stale source, retired raw payload or event-name alias is accepted. Unsupported versions quarantine without reader/checkpoint advance. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «This is prepared without registry admission; retention_policy_ref=PENDING_RETENTION_DECISION with Case L-3 receipt/audit/source-lineage versus planning/chat content candidates.» The complete positive/negative matrix for this exact family is Plans/dcw_event_contract_fixtures.json, checked by scripts/pm_bundle_revision_events.py, with native execution NOT_RUN. Original custody and restore remain independently required; a successful static fixture never supplies native source authority.
 
+  NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger body cannot append inline: payload is the empty object selected by this schema's #/$defs/referenced_stub and payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded byte count>,"media_type":"application/vnd.puppetmaster.event.wizard-opened+msgpack"}. #/$defs/payload_reference closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is invalid. This string representation preserves the shared EventRecord shape. CV-1100 governs raw current tokens and each declared integer slot: -0, decimal/exponent tokens, string numbers, booleans and other wrong types refuse without coercion; 01 and -01 are invalid JSON. The family identity retains its exact compact UTF-8 JSON array, ensure_ascii=false and comma/colon separators; the descriptor retains sorted-key compact integer JSON. These local recipes keep their existing IDs, fields and tuple order. CV-317/CV-1100 governs the complete producer-semantic JCS projection and qualifies its exact binary64 and emitted decimal values before effects; it does not impose a source-schema cap. SP-026/SP-236/SP-1100 governs full physical EventRecord/source bytes and CV-339 commitments, preserving the full owner uint64 domain, finite float kind and signed zero where the selected original schema allows them. SP-278 keeps its separate binding wrapper/profile. SP-286/SP-1101 selects one authenticated original schema/resource/number recipe outside request data for retained reads and original receipt recovery; current token/type admission never narrows a lawful retained original. Current caller retry admission remains separate from verifying that original. Descriptor text must equal that canonical encoding, so alternate spelling, key order, whitespace, duplicate keys or escaped numeric text refuses. phase_sequence and byte_size use this same integer-only domain in local and composed validators. Every original-value, prepared-event, source and receipt join compares exact nested types and canonical bytes, never language numeric equality. Every boolean guard checks the exact boolean type before its value; payloads retain their closed object type. It contains metadata only, never a base64 body. payload_schema_id continues to identify this family's complete logical body, which the reader validates against the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3, this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted, wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record overflow references are independent and cannot stand in for this event reference. Freeze this representation and descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref, excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry. Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view may change replay_policy only; authenticate every other supplied field against the retained original before checking its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal, not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload inventory fences. No truncation, product limit, retention/deletion answer or admission is added.
 
-  Every payload ref must resolve to the actual original source request/result in Plans/dcw/wizard_open_evidence.schema.json;
-  payload joins compare exact child, Named Plan, thread group, seed identity/version/hash, permission snapshot and
-  project context; seed_kind comes from the current PWIZ-001 closed set. No stale source, retired raw payload or
-  event-name alias is accepted. Unsupported versions quarantine without reader/checkpoint advance. This is prepared
-  without registry admission; retention_policy_ref=PENDING_RETENTION_DECISION with Case L-3 receipt/audit/source-lineage
-  versus planning/chat content candidates. The complete positive/negative matrix for this exact family is Plans/dcw_event_contract_fixtures.json,
-  checked by scripts/pm_bundle_revision_events.py, with native execution NOT_RUN. Original custody and restore remain
-  independently required; a successful static fixture never supplies native source authority.
-
-
-  NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded byte count>,"media_type":"application/vnd.puppetmaster.event.wizard-opened+msgpack"}. #/$defs/payload_reference closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is invalid. This string representation preserves the shared EventRecord shape. CV-1100 governs raw current tokens and each declared integer slot: -0, decimal/exponent tokens, string numbers, booleans and other wrong types refuse without coercion; 01 and -01 are invalid JSON. The family identity retains its exact compact UTF-8 JSON array, ensure_ascii=false and comma/colon separators; the descriptor retains sorted-key compact integer JSON. These local recipes keep their existing IDs, fields and tuple order. CV-317/CV-1100 governs the complete producer-semantic JCS projection and qualifies its exact binary64 and emitted decimal values before effects; it does not impose a source-schema cap. SP-026/SP-236/SP-1100 governs full physical EventRecord/source bytes and CV-339 commitments, preserving the full owner uint64 domain, finite float kind and signed zero where the selected original schema allows them. SP-278 keeps its separate binding wrapper/profile. SP-286/SP-1101 selects one authenticated original schema/resource/number recipe outside request data for retained reads and original receipt recovery; current token/type admission never narrows a lawful retained original. Current caller retry admission remains separate from verifying that original. Descriptor text must equal that canonical encoding, so alternate spelling, key order, whitespace, duplicate keys or escaped numeric text refuses. phase_sequence and byte_size use this same integer-only domain in local and composed validators. Every original-value, prepared-event, source and receipt join compares exact nested types and canonical bytes, never language numeric equality. Every boolean guard checks the exact boolean type before its value; payloads retain their closed object type. It contains metadata only, never a base64 body. payload_schema_id continues to identify this family''s complete logical body, which the reader validates against the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3, this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted, wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record overflow references are independent and cannot stand in for this event reference. Freeze this representation and descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref, excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry. Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view may change replay_policy only; authenticate every other supplied field against the retained original before checking its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal, not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
+  Current selected assignment (2026-11-19): wizard.opened@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2431. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/Planning_Wizard.md#PWIZ-097 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: wizard_open_evidence uses RP-CHAT-THREAD-LIFETIME@1.0.0 under Plans/Decision_Log.md#DL-508; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Defines original event/source custody and read contracts, without a presentation change.
 depends_on:
@@ -1058,8 +1189,8 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- Prepared without family admission; retention remains PENDING_RETENTION_DECISION.
-- The complete positive and negative static oracles pass; native execution is NOT_RUN.
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Prepared without family admission; retention remains PENDING_RETENTION_DECISION.»"
+  - "The complete positive and negative static oracles pass; native execution is NOT_RUN."
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -1088,43 +1219,16 @@ plan_unit_id: CV-595
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: 'wizard.deferred_payload.loaded has the closed payload Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json,
-  schema_id pm.event_payload.wizard.deferred_payload.loaded.v1, schema_version 1.0.0; every property is required-present
-  and additionalProperties=false. It adopts Contracts_V0.md#EventRecord and Plans/event_record.schema.json unchanged.
-  Current scope_kind=project; envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id
-  and requested/effective account refs are null because this observation is not runtime execution. actor_ref is
-  the authenticated original request actor. correlation_id=request_id; causation_event_id=parent_event_id=predecessor_event_id;
-  producer_sequence_id is null, occurred_at_utc=ts, payload_schema_id=decoded_payload.schema_id, redaction_profile=secret_refs_only,
-  replay_policy=dedupe_by_idempotency_key; native migration fields are all null. Storage assigns sequence/observed/persisted
-  fields. Payload representation follows the SP-337 binding below; refs never carry bodies, credentials or local paths.
+canonical_text: |-
+  wizard.deferred_payload.loaded has the closed payload Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json, schema_id pm.event_payload.wizard.deferred_payload.loaded.v1, schema_version 1.0.0; every property is required-present and additionalProperties=false. It adopts Contracts_V0.md#EventRecord and Plans/event_record.schema.json unchanged. Current scope_kind=project; envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id and requested/effective account refs are null because this observation is not runtime execution. actor_ref is the authenticated original request actor. correlation_id=request_id; causation_event_id=parent_event_id=predecessor_event_id; producer_sequence_id is null, occurred_at_utc=ts, payload_schema_id=decoded_payload.schema_id, redaction_profile=secret_refs_only, replay_policy=dedupe_by_idempotency_key; native migration fields are all null. Storage assigns sequence/observed/persisted fields. Payload representation follows the SP-337 binding below; refs never carry bodies, credentials or local paths.
 
+  NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON ["wizard.deferred_payload.loaded",project_id,planning_run_id,thread_id,request_id] with ensure_ascii=false and comma/colon separators. event_id="evt_wizard_deferred_payload_loaded_"+digest and idempotency_key="wizard.deferred_payload.loaded:"+digest. request_id is the existing immutable command instance identity, not a new id on retry; a genuine distinct user open request has its own existing request identity. Freeze all source/result fields, seed version/hash, current child revision/hash, actor, permission snapshot, project-context hash, causality and ts at original preparation. Same identity and same producer semantic digest returns the original full value and first receipt; changed semantic digest is idempotency_conflict, missing dedupe proof is dedupe_unavailable. Normal append refuses projector_replay_only with replay_only_not_appendable. Passive readers cannot emit. Observe the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual current PlanningRun intake child. The original successful open event and its exact first receipt must already resolve; predecessor_event_id is that wizard.opened event for the same original request, child, Project, Named Plan, seed and context. Loading is distinct from opening; route-open, a stale seed, unsupported raw legacy payload or failed load emits nothing. Receipt-backed acceptance is not a compile/approval/execution grant.
 
-  NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON ["wizard.deferred_payload.loaded",project_id,planning_run_id,thread_id,request_id]
-  with ensure_ascii=false and comma/colon separators. event_id="evt_wizard_deferred_payload_loaded_"+digest and
-  idempotency_key="wizard.deferred_payload.loaded:"+digest. request_id is the existing immutable command instance
-  identity, not a new id on retry; a genuine distinct user open request has its own existing request identity. Freeze
-  all source/result fields, seed version/hash, current child revision/hash, actor, permission snapshot, project-context
-  hash, causality and ts at original preparation. Same identity and same producer semantic digest returns the original
-  full value and first receipt; changed semantic digest is idempotency_conflict, missing dedupe proof is dedupe_unavailable.
-  Normal append refuses projector_replay_only with replay_only_not_appendable. Passive readers cannot emit. Observe
-  the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual current PlanningRun
-  intake child. The original successful open event and its exact first receipt must already resolve; predecessor_event_id
-  is that wizard.opened event for the same original request, child, Project, Named Plan, seed and context. Loading
-  is distinct from opening; route-open, a stale seed, unsupported raw legacy payload or failed load emits nothing.
-  Receipt-backed acceptance is not a compile/approval/execution grant.
+  Every payload ref must resolve to the actual original source request/result in Plans/dcw/wizard_seed_load_evidence.schema.json; payload joins compare exact child, Named Plan, thread group, seed identity/version/hash, permission snapshot and project context; seed_kind comes from the current PWIZ-001 closed set. No stale source, retired raw payload or event-name alias is accepted. Unsupported versions quarantine without reader/checkpoint advance. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «This is prepared without registry admission; retention_policy_ref=PENDING_RETENTION_DECISION with Case L-3 receipt/audit/source-lineage versus planning/chat content candidates.» The complete positive/negative matrix for this exact family is Plans/dcw_event_contract_fixtures.json, checked by scripts/pm_bundle_revision_events.py, with native execution NOT_RUN. Original custody and restore remain independently required; a successful static fixture never supplies native source authority.
 
+  NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger body cannot append inline: payload is the empty object selected by this schema's #/$defs/referenced_stub and payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded byte count>,"media_type":"application/vnd.puppetmaster.event.wizard-deferred-payload-loaded+msgpack"}. #/$defs/payload_reference closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is invalid. This string representation preserves the shared EventRecord shape. CV-1100 governs raw current tokens and each declared integer slot: -0, decimal/exponent tokens, string numbers, booleans and other wrong types refuse without coercion; 01 and -01 are invalid JSON. The family identity retains its exact compact UTF-8 JSON array, ensure_ascii=false and comma/colon separators; the descriptor retains sorted-key compact integer JSON. These local recipes keep their existing IDs, fields and tuple order. CV-317/CV-1100 governs the complete producer-semantic JCS projection and qualifies its exact binary64 and emitted decimal values before effects; it does not impose a source-schema cap. SP-026/SP-236/SP-1100 governs full physical EventRecord/source bytes and CV-339 commitments, preserving the full owner uint64 domain, finite float kind and signed zero where the selected original schema allows them. SP-278 keeps its separate binding wrapper/profile. SP-286/SP-1101 selects one authenticated original schema/resource/number recipe outside request data for retained reads and original receipt recovery; current token/type admission never narrows a lawful retained original. Current caller retry admission remains separate from verifying that original. Descriptor text must equal that canonical encoding, so alternate spelling, key order, whitespace, duplicate keys or escaped numeric text refuses. phase_sequence and byte_size use this same integer-only domain in local and composed validators. Every original-value, prepared-event, source and receipt join compares exact nested types and canonical bytes, never language numeric equality. Every boolean guard checks the exact boolean type before its value; payloads retain their closed object type. It contains metadata only, never a base64 body. payload_schema_id continues to identify this family's complete logical body, which the reader validates against the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3, this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted, wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record overflow references are independent and cannot stand in for this event reference. Freeze this representation and descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref, excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry. Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view may change replay_policy only; authenticate every other supplied field against the retained original before checking its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal, not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload inventory fences. No truncation, product limit, retention/deletion answer or admission is added.
 
-  Every payload ref must resolve to the actual original source request/result in Plans/dcw/wizard_seed_load_evidence.schema.json;
-  payload joins compare exact child, Named Plan, thread group, seed identity/version/hash, permission snapshot and
-  project context; seed_kind comes from the current PWIZ-001 closed set. No stale source, retired raw payload or
-  event-name alias is accepted. Unsupported versions quarantine without reader/checkpoint advance. This is prepared
-  without registry admission; retention_policy_ref=PENDING_RETENTION_DECISION with Case L-3 receipt/audit/source-lineage
-  versus planning/chat content candidates. The complete positive/negative matrix for this exact family is Plans/dcw_event_contract_fixtures.json,
-  checked by scripts/pm_bundle_revision_events.py, with native execution NOT_RUN. Original custody and restore remain
-  independently required; a successful static fixture never supplies native source authority.
-
-
-  NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded byte count>,"media_type":"application/vnd.puppetmaster.event.wizard-deferred-payload-loaded+msgpack"}. #/$defs/payload_reference closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is invalid. This string representation preserves the shared EventRecord shape. CV-1100 governs raw current tokens and each declared integer slot: -0, decimal/exponent tokens, string numbers, booleans and other wrong types refuse without coercion; 01 and -01 are invalid JSON. The family identity retains its exact compact UTF-8 JSON array, ensure_ascii=false and comma/colon separators; the descriptor retains sorted-key compact integer JSON. These local recipes keep their existing IDs, fields and tuple order. CV-317/CV-1100 governs the complete producer-semantic JCS projection and qualifies its exact binary64 and emitted decimal values before effects; it does not impose a source-schema cap. SP-026/SP-236/SP-1100 governs full physical EventRecord/source bytes and CV-339 commitments, preserving the full owner uint64 domain, finite float kind and signed zero where the selected original schema allows them. SP-278 keeps its separate binding wrapper/profile. SP-286/SP-1101 selects one authenticated original schema/resource/number recipe outside request data for retained reads and original receipt recovery; current token/type admission never narrows a lawful retained original. Current caller retry admission remains separate from verifying that original. Descriptor text must equal that canonical encoding, so alternate spelling, key order, whitespace, duplicate keys or escaped numeric text refuses. phase_sequence and byte_size use this same integer-only domain in local and composed validators. Every original-value, prepared-event, source and receipt join compares exact nested types and canonical bytes, never language numeric equality. Every boolean guard checks the exact boolean type before its value; payloads retain their closed object type. It contains metadata only, never a base64 body. payload_schema_id continues to identify this family''s complete logical body, which the reader validates against the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3, this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted, wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record overflow references are independent and cannot stand in for this event reference. Freeze this representation and descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref, excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry. Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view may change replay_policy only; authenticate every other supplied field against the retained original before checking its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal, not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
+  Current selected assignment (2026-11-19): wizard.deferred_payload.loaded@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2430. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/Planning_Wizard.md#PWIZ-098 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: wizard_seed_load_evidence uses RP-CHAT-THREAD-LIFETIME@1.0.0 under Plans/Decision_Log.md#DL-508; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Defines original event/source custody and read contracts, without a presentation change.
 depends_on:
@@ -1133,8 +1237,8 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- Prepared without family admission; retention remains PENDING_RETENTION_DECISION.
-- The complete positive and negative static oracles pass; native execution is NOT_RUN.
+  - "Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Prepared without family admission; retention remains PENDING_RETENTION_DECISION.»"
+  - "The complete positive and negative static oracles pass; native execution is NOT_RUN."
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -1163,182 +1267,44 @@ plan_unit_id: CV-596
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: "NEWLY AUTHORED OWNER CONTRACT for wizard.blocked under DL-045 and DL-431; prepared without admission.\
-  \ Exact family membership remains ABSENT in Plans/event_family_registry.json: neither this unit nor\
-  \ its schema permits a current writer until individual registry admission. Semantic owner is current\
-  \ Plans/Planning_Wizard.md#PWIZ-002, extended for this exact event by this unit; payload/persistence\
-  \ binding is this unit plus CV-233. Jared's only quoted words are \"i approve all of it\". The deck's\
-  \ approve-all mapping selects A, as recorded in landed Plans/Decision_Log.md#DL-431. Answer source is\
-  \ /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md;\
-  \ frozen deck E-CARDS-2.as-presented-6db25be3.md SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30.\
-  \ The approved option's explanatory prose is the card's text, not a Jared quotation.\n\nUnder DL-431\
-  \ (deck-2 Card 4.a option A), attach Blocked to the whole Planning Run. Save it only when the component\
-  \ responsible for planning records a blockage or repair attempt that prevents every otherwise permitted\
-  \ next step. A stalled topic does not block the run if another can continue. Count completed repair\
-  \ attempts for that blockage; add no three-round trigger. You see the whole run's blockage and report.\
-  \ This applies to the current Planning Wizard, successor of the retired Chain Wizard, not a restored\
-  \ wizard-status lifecycle. wizard_id is the PlanningRun planning_run_id; thread_id is nullable incidental\
-  \ context and never selects a topic as the blocked subject. Existing route_target owns navigation and\
-  \ blocked/remediation owns the episode identity: blockage_id is that exact owner episode, never a new\
-  \ runtime/node identity. CV-233's report_ref and optional detail refs remain inspection only; resume_url\
-  \ is serialized route_target transport, not another navigation primitive.\n\nAll properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\
-  \ are required-present, root additionalProperties=false, schema_id=pm.event_payload.wizard.blocked.v1\
-  \ and schema_version=1.0.0. Preserve CV-233 minima wizard_id, nullable thread_id, round_count, report_ref,\
-  \ resume_url and ts. Added project_id, planning_run_id, blockage_id, observation_id, source_ref, permission_snapshot_id,\
-  \ predecessor_event_id and route_target_ref bind the actual original observation; route_target_ref must\
-  \ resolve through the existing route owner to the same Project/PlanningRun and exact resume_url. Reports/routes\
-  \ require independent current access and availability. No report body, prompt, secret, credential, raw\
-  \ local path or topic-status snapshot is copied into the event.\n\nProducer emitter.wizard_blocked@1.0.0\
-  \ is the responsible Planning Wizard component's observer of its original planning result. It explicitly\
-  \ adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody, SP-336/SP-347 durability and Case\
-  \ L-2/SP-026/SP-236 original frame bytes. Before append require exact family/version admission, original\
-  \ observation/permission/current PlanningRun reservation, then commit the original observation and freeze\
-  \ the complete EventRecord. Append via Storage; resolve the independently issued original full event,\
-  \ semantic digest, full-value commitment, first receipt and durable group before publishing recorded\
-  \ success or allowing a dependent observation. A lost acknowledgement resolves the original, never re-executes\
-  \ planning, repair or the clearing action. Missing original/dedupe proof is unavailable; changed semantics\
-  \ is idempotency_conflict; unknown effect fences publication and goes to the existing owner's recovery.\
-  \ A confirmed older restore does not replay lost post-backup work.\n\nScope is project-only, using a\
-  \ real Project under PWIZ-002; application/no-project writes refuse. Adopt Plans/event_record.schema.json\
-  \ unchanged. Envelope project_id/thread_id equal payload; runtime run_id/node_id/attempt_id, account\
-  \ refs and producer_sequence_id are null. actor_ref is the authenticated original planning observation\
-  \ actor; occurred_at_utc=ts; correlation_id=blockage_id; causation_event_id=parent_event_id=predecessor_event_id;\
-  \ payload_schema_id identifies the decoded logical body; redaction_profile=secret_refs_only; current\
-  \ replay_policy=dedupe_by_idempotency_key; native migration fields are null. Storage alone assigns sequence/observed/persisted\
-  \ values and original receipt metadata. NEW identity recipe for wizard.blocked: lowercase SHA-256 of\
-  \ the existing UTF-8 compact JSON string-only array [\"wizard.blocked\",project_id,planning_run_id,blockage_id,observation_id],\
-  \ ensure_ascii=false and comma/colon separators. event_id=\"evt_wizard_blocked_\"+digest; idempotency_key=\"\
-  wizard.blocked:\"+digest. observation_id is the responsible component's immutable observation identity\
-  \ reused on delivery/retry, never a reader-generated request. It is independent of incidental thread\
-  \ focus. source_ref=\"wizard_blocked_evidence:\"+digest. All observed source/actor/causality/time/body/ref\
-  \ fields freeze at preparation.\n\nRetry compares exactly the producer-owned semantic fields enumerated\
-  \ by CV-339: event_type, scope_kind, project_id, thread_id, run_id, node_id, attempt_id, actor_ref,\
-  \ requested_account_ref, effective_account_ref, occurred_at_utc, producer_sequence_id, correlation_id,\
-  \ causation_event_id, parent_event_id, idempotency_key, payload_schema_id, payload, payload_ref, redaction_profile\
-  \ and migration. It excludes Storage-assigned sequence/observed/persisted and receipt metadata. Same\
-  \ identity and semantic digest returns the exact original full value and first receipt, with independent\
-  \ full-original authentication. Receipt-only retry reuses the authenticated original reservation and\
-  \ first receipt after live value_revision, predecessor, episode-open or effect state has advanced; it\
-  \ never reapplies those current effect/CAS gates or re-executes work. Current family admission, writer\
-  \ cutoff/drain, write/read permissions and original custody still apply. Missing original proof remains\
-  \ unavailable even after live advancement. Both current append and retry refuse projector_replay_only\
-  \ as replay_only_not_appendable. Historical original readers accept either retained dedupe_by_idempotency_key\
-  \ or projector_replay_only originals valid under their original owner recipe. A compatibility view may\
-  \ alter only replay_policy; all other supplied fields must authenticate against the actual retained\
-  \ original before resolving its receipt. No history read reruns planning, modifies run status, repairs\
-  \ a condition, resumes work, grants authority or emits an event.\n\nThe planning component's immutable\
-  \ observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.\
-  \ Its required_conditions, cleared_conditions and complete next_steps describe the actual run at that\
-  \ observation, not the focused topic. required_conditions is nonempty; cleared conditions and every\
-  \ step's preventing conditions refer only to that set. There must be an otherwise permitted next step,\
-  \ and every such step must have an unresolved required preventing condition. Empty next-step lists,\
-  \ topic-only stalls, ordinary waits while another topic can continue, a report edit, page open, reprocessing\
-  \ or three completed rounds alone are not the predicate. round_count equals the number of distinct actually\
-  \ completed original repair attempts for this blockage, joined independently by project/run/blockage/status;\
-  \ running or proposed attempts do not count. A repair observation requires an actual newly completed\
-  \ attempt. Zero, one and more than three completed attempts are supported, with no threshold or ceiling.\
-  \ predecessor_event_id is null for the original Blocked observation or the latest receipt-backed Blocked\
-  \ observation of this episode for a later observation. Preserve the authenticated episode chain and\
-  \ completed repair history. The current PlanningRun value_revision, latest predecessor and open-episode\
-  \ reservation are CAS inputs at preparation; a cleared episode cannot append another update under its\
-  \ old reservation. A later new blockage uses the planning owner's distinct episode identity. Receipt\
-  \ reconciliation is not a repeat planning or repair action.\n\nNEW original custody source wizard_blocked_evidence\
-  \ is materialized in Plans/storage_value_registry.json under typed key tuple [wizard_blocked_evidence.v1,project_id,planning_run_id,blockage_id,observation_id].\
-  \ Its complete closed logical schema is Plans/dcw/wizard_blocked_evidence.schema.json#/$defs/inline,\
-  \ schema_id=pm.storage_value.wizard_blocked_evidence.v1@1.0.0, containing storage_instance_id, recovery_epoch,\
-  \ value_revision, source_ref, original observation, prepared full event, publication and exact original\
-  \ receipt/commitment/segment. The authenticated planning observation is independently resolved; all\
-  \ Project/run/episode/observation/permission/actor/time joins and every original repair/action/route/ref\
-  \ fact must agree field by field. This is canonical non-rebuildable source custody in the existing runs_and_goals\
-  \ storage group, existing SP-340 budget, never a disposable status projection. Current access, permission\
-  \ snapshot and actual deletion/availability are checked at every read including every predecessor source.\
-  \ Backup captures all reachable original planning observations, attempts/actions, routes/reports, sources,\
-  \ full events/first custody and payload packs/indexes coherently at one Storage instance and admitted\
-  \ recovery boundary. Restore adopts the existing closed restore_admission and exact members plus source/event\
-  \ payload inventories; each member owner_id is this event's exact emitter, owner_operation_id is source_ref\
-  \ and owner_operation_sha256 hashes the complete physical original source under SP-026. A claimed source/member\
-  \ hash never substitutes for independently admitted original custody; omitted sources, substituted bytes,\
-  \ missing pack/index, unissued receipts, skew or stale boundary fences mutation and successful publication.\
-  \ Original absence is truthful unavailable/data loss, never source reconstruction from the history.\n\
-  \nSP-337 applies independently to this event and to every source record. Measure complete SP-026 canonical\
-  \ MessagePack bytes, not JSON characters. The existing 16,384-byte inline limit includes exactly 16,384.\
-  \ A larger logical event uses payload={} and payload_ref as the existing compact sorted-key UTF-8 JSON\
-  \ descriptor string with blake3, byte_size and exact media_type application/vnd.puppetmaster.event.wizard-blocked+msgpack;\
-  \ schema #/$defs/payload_reference closes the descriptor and #/$defs/referenced_stub closes the empty\
-  \ body. Validate original canonical bytes, BLAKE3, complete size/media type and decoded closed payload\
-  \ plus all identity/custody joins. Complete source overflow independently selects its source schema\
-  \ #/$defs/payload_reference physical wrapper under the same typed key/CAS and exact application/vnd.puppetmaster.wizard-blocked-evidence+msgpack\
-  \ media type. Each physical redb value also stays within the same existing inline limit. Both packs\
-  \ and indexes must be durable before reference commit, append or publication. Body/source references\
-  \ are not interchangeable, truncated or inline base64 encodings. Missing/unreadable/undurable/wrong\
-  \ bytes refuse on every applicable path without checkpoint advance. No new number ceiling, serializer\
-  \ or date-time grammar is defined: CV-253 and original Storage byte/number owners apply, with CV-1100/SP-1100/SP-1101\
-  \ and CV-1101. Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord\
-  \ profile; under CV-253, Storage observed_at_utc and persisted_at_utc use its storage_utc_z profile,\
-  \ and SP-1101 selects these profiles for a retained original. Exact typed original comparisons never\
-  \ use language equality across types or normalize physical signed zero.\n\nNEW passive operating consumer\
-  \ reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported payload edition\
-  \ and the authorized Project/PlanningRun/blockage. It explicitly adopts SP-278 and DL-076, reusing projector.storage.event_record_index@1.0.0\
-  \ and reader.storage.event_record_index@1.0.0. Physical checkpoint key is event_record_index_checkpoint.v1:{storage_instance_id},\
-  \ value pm.storage_value.event_record_index_checkpoint.v1@1.0.0, dataset event_record_index.v2 in the\
-  \ current selected generation. Authenticate complete captured source coverage across matching/nonmatching\
-  \ families and Projects, exact Storage identity, source bytes/row joins, generation/anchor/frontier,\
-  \ transaction and current ten-field live token. The generic projector alone publishes rows and checkpoint\
-  \ atomically under predecessor CAS. Max matching sequence is not coverage. No filtered durable checkpoint,\
-  \ durable token or copied status projection is introduced; if a token is persisted it is DL-076's nine-field\
-  \ projection, never redb_snapshot_id. Retained originals and every original predecessor authenticate\
-  \ before authorized display. Rebuild is passive, requires admitted replacement reader and complete current\
-  \ source coverage, and cannot reconstruct deleted sources or grant access.\n\nRetention is explicit:\
-  \ event retention_policy_ref=PENDING_RETENTION_DECISION. The original wizard_blocked_evidence source\
-  \ is explicitly NEW technical class assignment to existing RP-AUTHORITY-INDEFINITE under Case L-3: it\
-  \ is non-rebuildable original planning operation/audit/source-lineage custody, refs and commitments\
-  \ only. Keep it indefinitely with no count eviction; storage pressure fails closed. This assigns no\
-  \ event-history or report/action-content lifetime. Exact question: For wizard.blocked event history,\
-  \ which Case L-3 class/lifetime applies: planning/chat content or authority/source-lineage audit, and\
-  \ which release anchor governs deletion? Candidate owners are Case L-3 planning/chat content versus\
-  \ immutable receipt/audit/source-lineage classes; that table does not name this exact event-history\
-  \ assignment. No TTL/count/indefinite choice is inferred from this deck. Existing original SP-286 receipt\
-  \ authority retains its own RP-AUTHORITY-INDEFINITE rules; existing generic index/checkpoint retain\
-  \ RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN. Report/action/source content retains its actual owner's\
-  \ independent lifetime and access/hold/deletion policy; a held receipt never recreates deleted content.\n\
-  \nCompatibility/withdrawal for wizard.blocked alone: dispatch only explicitly supported exact family/schema/version;\
-  \ unknown or incomplete legacy originals are unavailable/quarantined without rewrite or checkpoint advance.\
-  \ No retired three-round or wizard-status aliases become writers. Reader eligibility uses the authenticated\
-  \ recipe/edition in force at original write, not current writer CAS/live state; historical dispatch\
-  \ cannot be forged to select a weaker recipe. Withdrawal cuts off this writer's new admission first,\
-  \ drains or fences pending work under the original-receipt gate, then withdraws this exact reader from\
-  \ dispatch. A replacement must support retained original editions and complete authenticated SP-278\
-  \ rebuild before publication. Cutoff never deletes originals, resets the generic checkpoint or withdraws\
-  \ a sibling. Read access/deletion and reader withdrawal still apply after live writer state changes.\n\
-  \nPositive/negative static oracles for this exact family are Plans/dcw_blockage_event_fixtures.json\
-  \ and scripts/pm_dcw_blockage_fixtures.py, checked by python3 scripts/pm_dcw_blockage_events.py --family\
-  \ wizard.blocked. They cover producer/refusal predicates, counts or full clearance, envelope/source\
-  \ identities, original metadata/receipt, independent predecessors, SP-337 source and event sizes, current\
-  \ retry versus retained history, complete mixed-source index/CAS, access, restore and withdrawal. New\
-  \ negatives preserve observational copies and have valid single-fact repair controls. Shared-tool predicate-isolation\
-  \ proof remains B3 sweep; no local proof-script rebuild or complete check-11 claim is made. These oracles\
-  \ check ts and occurred_at_utc with the CV-1101 EventRecord profile and Storage observed_at_utc and\
-  \ persisted_at_utc with storage_utc_z, including retained originals. The number-only bindings below\
-  \ do not change timestamp admission or retained timestamp strings. Native planning adapters, original\
-  \ authentication, append/lost-ack, CAS concurrency, actual Storage bytes/CRC, crash recovery, backup/restore,\
-  \ retention-boundary and access/deletion campaigns are authored obligations with execution NOT_RUN;\
-  \ static success never supplies native authority or admission.\nNumber-only adoption: CV-1100 supplies\
-  \ current raw-token and schema integer-slot admission and the complete CV-317 producer projection. Preserve\
-  \ this family's string-only compact identity array and every existing ID, field and tuple position.\
-  \ SP-026/SP-236/SP-1100 supplies physical EventRecord/source bytes and CV-339 full-value commitments\
-  \ without erasing finite float kind or signed zero allowed by an authenticated original schema. SP-278\
-  \ remains its own uint-only binding profile. SP-286/SP-1101 authenticates the original edition and exact\
-  \ frozen number/resource recipe before retained read or receipt recovery; request data never chooses\
-  \ a weaker recipe and current caller retry admission stays separate. These bindings add no logical integer\
-  \ cap or history rewrite. \n\nPNC-019 s4r retention binding for `wizard.blocked` (2026-11-14).\n\nEvent\
-  \ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.\n\nUse the existing\
-  \ policy object unchanged: {\"anchor_kind\": \"creation\", \"cardinality_scope\": null, \"expiry_action\"\
-  : \"none\", \"max_cardinality\": null, \"overflow_action\": \"fail_closed\", \"ttl_seconds\": null}.\n\
-  \nThis paragraph supersedes earlier pending statements only for the exact assigned facets above. All\
-  \ independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation\
-  \ holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
-  \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
-  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
+canonical_text: |-
+  NEWLY AUTHORED OWNER CONTRACT for wizard.blocked under DL-045 and DL-431; prepared without admission. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Exact family membership remains ABSENT in Plans/event_family_registry.json: neither this unit nor its schema permits a current writer until individual registry admission.» Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002, extended for this exact event by this unit; payload/persistence binding is this unit plus CV-233. Jared's only quoted words are "i approve all of it". The deck's approve-all mapping selects A, as recorded in landed Plans/Decision_Log.md#DL-431. Answer source is /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md; frozen deck E-CARDS-2.as-presented-6db25be3.md SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. The approved option's explanatory prose is the card's text, not a Jared quotation.
+
+  Under DL-431 (deck-2 Card 4.a option A), attach Blocked to the whole Planning Run. Save it only when the component responsible for planning records a blockage or repair attempt that prevents every otherwise permitted next step. A stalled topic does not block the run if another can continue. Count completed repair attempts for that blockage; add no three-round trigger. You see the whole run's blockage and report. This applies to the current Planning Wizard, successor of the retired Chain Wizard, not a restored wizard-status lifecycle. wizard_id is the PlanningRun planning_run_id; thread_id is nullable incidental context and never selects a topic as the blocked subject. Existing route_target owns navigation and blocked/remediation owns the episode identity: blockage_id is that exact owner episode, never a new runtime/node identity. CV-233's report_ref and optional detail refs remain inspection only; resume_url is serialized route_target transport, not another navigation primitive.
+
+  All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false, schema_id=pm.event_payload.wizard.blocked.v1 and schema_version=1.0.0. Preserve CV-233 minima wizard_id, nullable thread_id, round_count, report_ref, resume_url and ts. Added project_id, planning_run_id, blockage_id, observation_id, source_ref, permission_snapshot_id, predecessor_event_id and route_target_ref bind the actual original observation; route_target_ref must resolve through the existing route owner to the same Project/PlanningRun and exact resume_url. Reports/routes require independent current access and availability. No report body, prompt, secret, credential, raw local path or topic-status snapshot is copied into the event.
+
+  Producer emitter.wizard_blocked@1.0.0 is the responsible Planning Wizard component's observer of its original planning result. It explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody, SP-336/SP-347 durability and Case L-2/SP-026/SP-236 original frame bytes. Before append require exact family/version admission, original observation/permission/current PlanningRun reservation, then commit the original observation and freeze the complete EventRecord. Append via Storage; resolve the independently issued original full event, semantic digest, full-value commitment, first receipt and durable group before publishing recorded success or allowing a dependent observation. A lost acknowledgement resolves the original, never re-executes planning, repair or the clearing action. Missing original/dedupe proof is unavailable; changed semantics is idempotency_conflict; unknown effect fences publication and goes to the existing owner's recovery. A confirmed older restore does not replay lost post-backup work.
+
+  Scope is project-only, using a real Project under PWIZ-002; application/no-project writes refuse. Adopt Plans/event_record.schema.json unchanged. Envelope project_id/thread_id equal payload; runtime run_id/node_id/attempt_id, account refs and producer_sequence_id are null. actor_ref is the authenticated original planning observation actor; occurred_at_utc=ts; correlation_id=blockage_id; causation_event_id=parent_event_id=predecessor_event_id; payload_schema_id identifies the decoded logical body; redaction_profile=secret_refs_only; current replay_policy=dedupe_by_idempotency_key; native migration fields are null. Storage alone assigns sequence/observed/persisted values and original receipt metadata. NEW identity recipe for wizard.blocked: lowercase SHA-256 of the existing UTF-8 compact JSON string-only array ["wizard.blocked",project_id,planning_run_id,blockage_id,observation_id], ensure_ascii=false and comma/colon separators. event_id="evt_wizard_blocked_"+digest; idempotency_key="wizard.blocked:"+digest. observation_id is the responsible component's immutable observation identity reused on delivery/retry, never a reader-generated request. It is independent of incidental thread focus. source_ref="wizard_blocked_evidence:"+digest. All observed source/actor/causality/time/body/ref fields freeze at preparation.
+
+  Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id, thread_id, run_id, node_id, attempt_id, actor_ref, requested_account_ref, effective_account_ref, occurred_at_utc, producer_sequence_id, correlation_id, causation_event_id, parent_event_id, idempotency_key, payload_schema_id, payload, payload_ref, redaction_profile and migration. It excludes Storage-assigned sequence/observed/persisted and receipt metadata. Same identity and semantic digest returns the exact original full value and first receipt, with independent full-original authentication. Receipt-only retry reuses the authenticated original reservation and first receipt after live value_revision, predecessor, episode-open or effect state has advanced; it never reapplies those current effect/CAS gates or re-executes work. Current family admission, writer cutoff/drain, write/read permissions and original custody still apply. Missing original proof remains unavailable even after live advancement. Both current append and retry refuse projector_replay_only as replay_only_not_appendable. Historical original readers accept either retained dedupe_by_idempotency_key or projector_replay_only originals valid under their original owner recipe. A compatibility view may alter only replay_policy; all other supplied fields must authenticate against the actual retained original before resolving its receipt. No history read reruns planning, modifies run status, repairs a condition, resumes work, grants authority or emits an event.
+
+  The planning component's immutable observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run. Its required_conditions, cleared_conditions and complete next_steps describe the actual run at that observation, not the focused topic. required_conditions is nonempty; cleared conditions and every step's preventing conditions refer only to that set. There must be an otherwise permitted next step, and every such step must have an unresolved required preventing condition. Empty next-step lists, topic-only stalls, ordinary waits while another topic can continue, a report edit, page open, reprocessing or three completed rounds alone are not the predicate. round_count equals the number of distinct actually completed original repair attempts for this blockage, joined independently by project/run/blockage/status; running or proposed attempts do not count. A repair observation requires an actual newly completed attempt. Zero, one and more than three completed attempts are supported, with no threshold or ceiling. predecessor_event_id is null for the original Blocked observation or the latest receipt-backed Blocked observation of this episode for a later observation. Preserve the authenticated episode chain and completed repair history. The current PlanningRun value_revision, latest predecessor and open-episode reservation are CAS inputs at preparation; a cleared episode cannot append another update under its old reservation. A later new blockage uses the planning owner's distinct episode identity. Receipt reconciliation is not a repeat planning or repair action.
+
+  NEW original custody source wizard_blocked_evidence is materialized in Plans/storage_value_registry.json under typed key tuple [wizard_blocked_evidence.v1,project_id,planning_run_id,blockage_id,observation_id]. Its complete closed logical schema is Plans/dcw/wizard_blocked_evidence.schema.json#/$defs/inline, schema_id=pm.storage_value.wizard_blocked_evidence.v1@1.0.0, containing storage_instance_id, recovery_epoch, value_revision, source_ref, original observation, prepared full event, publication and exact original receipt/commitment/segment. The authenticated planning observation is independently resolved; all Project/run/episode/observation/permission/actor/time joins and every original repair/action/route/ref fact must agree field by field. This is canonical non-rebuildable source custody in the existing runs_and_goals storage group, existing SP-340 budget, never a disposable status projection. Current access, permission snapshot and actual deletion/availability are checked at every read including every predecessor source. Backup captures all reachable original planning observations, attempts/actions, routes/reports, sources, full events/first custody and payload packs/indexes coherently at one Storage instance and admitted recovery boundary. Restore adopts the existing closed restore_admission and exact members plus source/event payload inventories; each member owner_id is this event's exact emitter, owner_operation_id is source_ref and owner_operation_sha256 hashes the complete physical original source under SP-026. A claimed source/member hash never substitutes for independently admitted original custody; omitted sources, substituted bytes, missing pack/index, unissued receipts, skew or stale boundary fences mutation and successful publication. Original absence is truthful unavailable/data loss, never source reconstruction from the history.
+
+  SP-337 applies independently to this event and to every source record. Measure complete SP-026 canonical MessagePack bytes, not JSON characters. The existing 16,384-byte inline limit includes exactly 16,384. A larger logical event uses payload={} and payload_ref as the existing compact sorted-key UTF-8 JSON descriptor string with blake3, byte_size and exact media_type application/vnd.puppetmaster.event.wizard-blocked+msgpack; schema #/$defs/payload_reference closes the descriptor and #/$defs/referenced_stub closes the empty body. Validate original canonical bytes, BLAKE3, complete size/media type and decoded closed payload plus all identity/custody joins. Complete source overflow independently selects its source schema #/$defs/payload_reference physical wrapper under the same typed key/CAS and exact application/vnd.puppetmaster.wizard-blocked-evidence+msgpack media type. Each physical redb value also stays within the same existing inline limit. Both packs and indexes must be durable before reference commit, append or publication. Body/source references are not interchangeable, truncated or inline base64 encodings. Missing/unreadable/undurable/wrong bytes refuse on every applicable path without checkpoint advance. No new number ceiling, serializer or date-time grammar is defined: CV-253 and original Storage byte/number owners apply, with CV-1100/SP-1100/SP-1101 and CV-1101. Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253, Storage observed_at_utc and persisted_at_utc use its storage_utc_z profile, and SP-1101 selects these profiles for a retained original. Exact typed original comparisons never use language equality across types or normalize physical signed zero.
+
+  NEW passive operating consumer reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported payload edition and the authorized Project/PlanningRun/blockage. It explicitly adopts SP-278 and DL-076, reusing projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0. Physical checkpoint key is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0, dataset event_record_index.v2 in the current selected generation. Authenticate complete captured source coverage across matching/nonmatching families and Projects, exact Storage identity, source bytes/row joins, generation/anchor/frontier, transaction and current ten-field live token. The generic projector alone publishes rows and checkpoint atomically under predecessor CAS. Max matching sequence is not coverage. No filtered durable checkpoint, durable token or copied status projection is introduced; if a token is persisted it is DL-076's nine-field projection, never redb_snapshot_id. Retained originals and every original predecessor authenticate before authorized display. Rebuild is passive, requires admitted replacement reader and complete current source coverage, and cannot reconstruct deleted sources or grant access.
+
+  Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Retention is explicit: event retention_policy_ref=PENDING_RETENTION_DECISION.» The original wizard_blocked_evidence source is explicitly NEW technical class assignment to existing RP-AUTHORITY-INDEFINITE under Case L-3: it is non-rebuildable original planning operation/audit/source-lineage custody, refs and commitments only. Keep it indefinitely with no count eviction; storage pressure fails closed. This assigns no event-history or report/action-content lifetime. Exact question: For wizard.blocked event history, which Case L-3 class/lifetime applies: planning/chat content or authority/source-lineage audit, and which release anchor governs deletion? Candidate owners are Case L-3 planning/chat content versus immutable receipt/audit/source-lineage classes; that table does not name this exact event-history assignment. No TTL/count/indefinite choice is inferred from this deck. Existing original SP-286 receipt authority retains its own RP-AUTHORITY-INDEFINITE rules; existing generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN. Report/action/source content retains its actual owner's independent lifetime and access/hold/deletion policy; a held receipt never recreates deleted content.
+
+  Compatibility/withdrawal for wizard.blocked alone: dispatch only explicitly supported exact family/schema/version; unknown or incomplete legacy originals are unavailable/quarantined without rewrite or checkpoint advance. No retired three-round or wizard-status aliases become writers. Reader eligibility uses the authenticated recipe/edition in force at original write, not current writer CAS/live state; historical dispatch cannot be forged to select a weaker recipe. Withdrawal cuts off this writer's new admission first, drains or fences pending work under the original-receipt gate, then withdraws this exact reader from dispatch. A replacement must support retained original editions and complete authenticated SP-278 rebuild before publication. Cutoff never deletes originals, resets the generic checkpoint or withdraws a sibling. Read access/deletion and reader withdrawal still apply after live writer state changes.
+
+  Positive/negative static oracles for this exact family are Plans/dcw_blockage_event_fixtures.json and scripts/pm_dcw_blockage_fixtures.py, checked by python3 scripts/pm_dcw_blockage_events.py --family wizard.blocked. They cover producer/refusal predicates, counts or full clearance, envelope/source identities, original metadata/receipt, independent predecessors, SP-337 source and event sizes, current retry versus retained history, complete mixed-source index/CAS, access, restore and withdrawal. New negatives preserve observational copies and have valid single-fact repair controls. Shared-tool predicate-isolation proof remains B3 sweep; no local proof-script rebuild or complete check-11 claim is made. These oracles check ts and occurred_at_utc with the CV-1101 EventRecord profile and Storage observed_at_utc and persisted_at_utc with storage_utc_z, including retained originals. The number-only bindings below do not change timestamp admission or retained timestamp strings. Native planning adapters, original authentication, append/lost-ack, CAS concurrency, actual Storage bytes/CRC, crash recovery, backup/restore, retention-boundary and access/deletion campaigns are authored obligations with execution NOT_RUN; static success never supplies native authority or admission.
+  Number-only adoption: CV-1100 supplies current raw-token and schema integer-slot admission and the complete CV-317 producer projection. Preserve this family's string-only compact identity array and every existing ID, field and tuple position. SP-026/SP-236/SP-1100 supplies physical EventRecord/source bytes and CV-339 full-value commitments without erasing finite float kind or signed zero allowed by an authenticated original schema. SP-278 remains its own uint-only binding profile. SP-286/SP-1101 authenticates the original edition and exact frozen number/resource recipe before retained read or receipt recovery; request data never chooses a weaker recipe and current caller retry admission stays separate. These bindings add no logical integer cap or history rewrite.
+
+  PNC-019 s4r retention binding for `wizard.blocked` (2026-11-14).
+
+  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.
+
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+
+  Current selected assignment (2026-11-19): wizard.blocked@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2429. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/Contracts_V0.md#CV-596 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Defines event/source contracts for approved Planning Run behavior; no new presentation
   is designed.
@@ -1387,182 +1353,44 @@ plan_unit_id: CV-597
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: "NEWLY AUTHORED OWNER CONTRACT for wizard.unblocked under DL-045 and DL-432; prepared without admission.\
-  \ Exact family membership remains ABSENT in Plans/event_family_registry.json: neither this unit nor\
-  \ its schema permits a current writer until individual registry admission. Semantic owner is current\
-  \ Plans/Planning_Wizard.md#PWIZ-002, extended for this exact event by this unit; payload/persistence\
-  \ binding is this unit plus CV-234. Jared's only quoted words are \"i approve all of it\". The deck's\
-  \ approve-all mapping selects A, as recorded in landed Plans/Decision_Log.md#DL-432. Answer source is\
-  \ /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md;\
-  \ frozen deck E-CARDS-2.as-presented-6db25be3.md SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30.\
-  \ The approved option's explanatory prose is the card's text, not a Jared quotation.\n\nUnder DL-432\
-  \ (deck-2 Card 4.b option A), save Unblocked when the responsible planning component records that all\
-  \ required blocking conditions for that same run have cleared. Link the authorized action that actually\
-  \ cleared it to the original blockage. Clearing another topic, opening a page, reprocessing old history\
-  \ or merely editing a report does not count. You see clearance as soon as that work can resume. DL-431\
-  \ selects the whole Planning Run for the card's run/topic choice. This applies to the current Planning\
-  \ Wizard, successor of the retired Chain Wizard. wizard_id is planning_run_id, thread_id is nullable\
-  \ incidental context, and blockage_id is the same original blocked/remediation episode. Neither an intake\
-  \ child nor a runtime node becomes the subject. This is the clearance boundary itself: it does not wait\
-  \ for the next planning step to finish successfully.\n\nAll properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json\
-  \ are required-present, root additionalProperties=false, schema_id=pm.event_payload.wizard.unblocked.v1\
-  \ and schema_version=1.0.0. Preserve CV-234 minima wizard_id, nullable thread_id, resolution_source\
-  \ and ts. Added project_id, planning_run_id, blockage_id, observation_id, source_ref, permission_snapshot_id,\
-  \ predecessor_event_id and blocked_event_id bind the exact original episode and clearing observation.\
-  \ resolution_source names the authorized original clearing action; predecessor_event_id names the latest\
-  \ receipt-backed Blocked observation and blocked_event_id the root of that same authenticated chain.\
-  \ No action body, report text, secret, credentials or local path is embedded.\n\nProducer emitter.wizard_unblocked@1.0.0\
-  \ is the responsible Planning Wizard component's observer of its original planning result. It explicitly\
-  \ adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody, SP-336/SP-347 durability and Case\
-  \ L-2/SP-026/SP-236 original frame bytes. Before append require exact family/version admission, original\
-  \ observation/permission/current PlanningRun reservation, then commit the original observation and freeze\
-  \ the complete EventRecord. Append via Storage; resolve the independently issued original full event,\
-  \ semantic digest, full-value commitment, first receipt and durable group before publishing recorded\
-  \ success or allowing a dependent observation. A lost acknowledgement resolves the original, never re-executes\
-  \ planning, repair or the clearing action. Missing original/dedupe proof is unavailable; changed semantics\
-  \ is idempotency_conflict; unknown effect fences publication and goes to the existing owner's recovery.\
-  \ A confirmed older restore does not replay lost post-backup work.\n\nScope is project-only, using a\
-  \ real Project under PWIZ-002; application/no-project writes refuse. Adopt Plans/event_record.schema.json\
-  \ unchanged. Envelope project_id/thread_id equal payload; runtime run_id/node_id/attempt_id, account\
-  \ refs and producer_sequence_id are null. actor_ref is the authenticated original planning observation\
-  \ actor; occurred_at_utc=ts; correlation_id=blockage_id; causation_event_id=parent_event_id=predecessor_event_id;\
-  \ payload_schema_id identifies the decoded logical body; redaction_profile=secret_refs_only; current\
-  \ replay_policy=dedupe_by_idempotency_key; native migration fields are null. Storage alone assigns sequence/observed/persisted\
-  \ values and original receipt metadata. NEW identity recipe for wizard.unblocked: lowercase SHA-256\
-  \ of the existing UTF-8 compact JSON string-only array [\"wizard.unblocked\",project_id,planning_run_id,blockage_id,observation_id],\
-  \ ensure_ascii=false and comma/colon separators. event_id=\"evt_wizard_unblocked_\"+digest; idempotency_key=\"\
-  wizard.unblocked:\"+digest. observation_id is the responsible component's immutable observation identity\
-  \ reused on delivery/retry, never a reader-generated request. It is independent of incidental thread\
-  \ focus. source_ref=\"wizard_unblocked_evidence:\"+digest. All observed source/actor/causality/time/body/ref\
-  \ fields freeze at preparation.\n\nRetry compares exactly the producer-owned semantic fields enumerated\
-  \ by CV-339: event_type, scope_kind, project_id, thread_id, run_id, node_id, attempt_id, actor_ref,\
-  \ requested_account_ref, effective_account_ref, occurred_at_utc, producer_sequence_id, correlation_id,\
-  \ causation_event_id, parent_event_id, idempotency_key, payload_schema_id, payload, payload_ref, redaction_profile\
-  \ and migration. It excludes Storage-assigned sequence/observed/persisted and receipt metadata. Same\
-  \ identity and semantic digest returns the exact original full value and first receipt, with independent\
-  \ full-original authentication. Receipt-only retry reuses the authenticated original reservation and\
-  \ first receipt after live value_revision, predecessor, episode-open or effect state has advanced; it\
-  \ never reapplies those current effect/CAS gates or re-executes work. Current family admission, writer\
-  \ cutoff/drain, write/read permissions and original custody still apply. Missing original proof remains\
-  \ unavailable even after live advancement. Both current append and retry refuse projector_replay_only\
-  \ as replay_only_not_appendable. Historical original readers accept either retained dedupe_by_idempotency_key\
-  \ or projector_replay_only originals valid under their original owner recipe. A compatibility view may\
-  \ alter only replay_policy; all other supplied fields must authenticate against the actual retained\
-  \ original before resolving its receipt. No history read reruns planning, modifies run status, repairs\
-  \ a condition, resumes work, grants authority or emits an event.\n\nThe planning component's immutable\
-  \ conditions_cleared observation identifies the complete required conditions for this same whole-run\
-  \ episode, and every required condition is cleared. Authenticate the receipt-backed latest Blocked predecessor,\
-  \ its full source and entire original blockage chain, even on append, retry, read, rebuild and compatibility\
-  \ paths; blocked_event_id must be the chain's original Blocked, never another episode or the latest\
-  \ update mislabeled as the original. Preserve completed repair history and all original required-condition\
-  \ evidence; a later owner observation may add required conditions and cannot silently drop unaccounted\
-  \ original conditions. resolution_source is the reference to the independently authenticated authorized\
-  \ action that actually cleared the final required conditions, not an invented resolution enum. The action's\
-  \ original Project, PlanningRun and blockage match, authorized is exactly true, effect is conditions_cleared,\
-  \ its actual nonempty remaining_before set belongs to the episode, all of that set is cleared by the\
-  \ action and remaining_after is empty. A different topic/run/episode, unauthorized action, page open,\
-  \ history reprocessing, report-only edit, failed repair or partial clearance emits no Unblocked. The\
-  \ original action may have any already authorized owner action kind; this contract creates no new action\
-  \ or permission. A next-step success is unnecessary. Current value_revision/latest predecessor/open-episode\
-  \ CAS serializes clearance; duplicate delivery returns the same original result, and another clearing\
-  \ action after the episode has closed cannot append a second clearance. The observer records the existing\
-  \ result and never performs the clearing action itself.\n\nNEW original custody source wizard_unblocked_evidence\
-  \ is materialized in Plans/storage_value_registry.json under typed key tuple [wizard_unblocked_evidence.v1,project_id,planning_run_id,blockage_id,observation_id].\
-  \ Its complete closed logical schema is Plans/dcw/wizard_unblocked_evidence.schema.json#/$defs/inline,\
-  \ schema_id=pm.storage_value.wizard_unblocked_evidence.v1@1.0.0, containing storage_instance_id, recovery_epoch,\
-  \ value_revision, source_ref, original observation, prepared full event, publication and exact original\
-  \ receipt/commitment/segment. The authenticated planning observation is independently resolved; all\
-  \ Project/run/episode/observation/permission/actor/time joins and every original repair/action/route/ref\
-  \ fact must agree field by field. This is canonical non-rebuildable source custody in the existing runs_and_goals\
-  \ storage group, existing SP-340 budget, never a disposable status projection. Current access, permission\
-  \ snapshot and actual deletion/availability are checked at every read including every predecessor source.\
-  \ Backup captures all reachable original planning observations, attempts/actions, routes/reports, sources,\
-  \ full events/first custody and payload packs/indexes coherently at one Storage instance and admitted\
-  \ recovery boundary. Restore adopts the existing closed restore_admission and exact members plus source/event\
-  \ payload inventories; each member owner_id is this event's exact emitter, owner_operation_id is source_ref\
-  \ and owner_operation_sha256 hashes the complete physical original source under SP-026. A claimed source/member\
-  \ hash never substitutes for independently admitted original custody; omitted sources, substituted bytes,\
-  \ missing pack/index, unissued receipts, skew or stale boundary fences mutation and successful publication.\
-  \ Original absence is truthful unavailable/data loss, never source reconstruction from the history.\n\
-  \nSP-337 applies independently to this event and to every source record. Measure complete SP-026 canonical\
-  \ MessagePack bytes, not JSON characters. The existing 16,384-byte inline limit includes exactly 16,384.\
-  \ A larger logical event uses payload={} and payload_ref as the existing compact sorted-key UTF-8 JSON\
-  \ descriptor string with blake3, byte_size and exact media_type application/vnd.puppetmaster.event.wizard-unblocked+msgpack;\
-  \ schema #/$defs/payload_reference closes the descriptor and #/$defs/referenced_stub closes the empty\
-  \ body. Validate original canonical bytes, BLAKE3, complete size/media type and decoded closed payload\
-  \ plus all identity/custody joins. Complete source overflow independently selects its source schema\
-  \ #/$defs/payload_reference physical wrapper under the same typed key/CAS and exact application/vnd.puppetmaster.wizard-unblocked-evidence+msgpack\
-  \ media type. Each physical redb value also stays within the same existing inline limit. Both packs\
-  \ and indexes must be durable before reference commit, append or publication. Body/source references\
-  \ are not interchangeable, truncated or inline base64 encodings. Missing/unreadable/undurable/wrong\
-  \ bytes refuse on every applicable path without checkpoint advance. No new number ceiling, serializer\
-  \ or date-time grammar is defined: CV-253 and original Storage byte/number owners apply, with CV-1100/SP-1100/SP-1101\
-  \ and CV-1101. Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord\
-  \ profile; under CV-253, Storage observed_at_utc and persisted_at_utc use its storage_utc_z profile,\
-  \ and SP-1101 selects these profiles for a retained original. Exact typed original comparisons never\
-  \ use language equality across types or normalize physical signed zero.\n\nNEW passive operating consumer\
-  \ reader.wizard_unblocked_history@1.0.0 selects only wizard.unblocked at this exact supported payload\
-  \ edition and the authorized Project/PlanningRun/blockage. It explicitly adopts SP-278 and DL-076, reusing\
-  \ projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0. Physical checkpoint\
-  \ key is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\
-  \ dataset event_record_index.v2 in the current selected generation. Authenticate complete captured source\
-  \ coverage across matching/nonmatching families and Projects, exact Storage identity, source bytes/row\
-  \ joins, generation/anchor/frontier, transaction and current ten-field live token. The generic projector\
-  \ alone publishes rows and checkpoint atomically under predecessor CAS. Max matching sequence is not\
-  \ coverage. No filtered durable checkpoint, durable token or copied status projection is introduced;\
-  \ if a token is persisted it is DL-076's nine-field projection, never redb_snapshot_id. Retained originals\
-  \ and every original predecessor authenticate before authorized display. Rebuild is passive, requires\
-  \ admitted replacement reader and complete current source coverage, and cannot reconstruct deleted sources\
-  \ or grant access.\n\nRetention is explicit: event retention_policy_ref=PENDING_RETENTION_DECISION.\
-  \ The original wizard_unblocked_evidence source is explicitly NEW technical class assignment to existing\
-  \ RP-AUTHORITY-INDEFINITE under Case L-3: it is non-rebuildable original planning operation/audit/source-lineage\
-  \ custody, refs and commitments only. Keep it indefinitely with no count eviction; storage pressure\
-  \ fails closed. This assigns no event-history or report/action-content lifetime. Exact question: For\
-  \ wizard.unblocked event history, which Case L-3 class/lifetime applies: planning/chat content or authority/source-lineage\
-  \ audit, and which release anchor governs deletion? Candidate owners are Case L-3 planning/chat content\
-  \ versus immutable receipt/audit/source-lineage classes; that table does not name this exact event-history\
-  \ assignment. No TTL/count/indefinite choice is inferred from this deck. Existing original SP-286 receipt\
-  \ authority retains its own RP-AUTHORITY-INDEFINITE rules; existing generic index/checkpoint retain\
-  \ RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN. Report/action/source content retains its actual owner's\
-  \ independent lifetime and access/hold/deletion policy; a held receipt never recreates deleted content.\n\
-  \nCompatibility/withdrawal for wizard.unblocked alone: dispatch only explicitly supported exact family/schema/version;\
-  \ unknown or incomplete legacy originals are unavailable/quarantined without rewrite or checkpoint advance.\
-  \ No retired three-round or wizard-status aliases become writers. Reader eligibility uses the authenticated\
-  \ recipe/edition in force at original write, not current writer CAS/live state; historical dispatch\
-  \ cannot be forged to select a weaker recipe. Withdrawal cuts off this writer's new admission first,\
-  \ drains or fences pending work under the original-receipt gate, then withdraws this exact reader from\
-  \ dispatch. A replacement must support retained original editions and complete authenticated SP-278\
-  \ rebuild before publication. Cutoff never deletes originals, resets the generic checkpoint or withdraws\
-  \ a sibling. Read access/deletion and reader withdrawal still apply after live writer state changes.\n\
-  \nPositive/negative static oracles for this exact family are Plans/dcw_blockage_event_fixtures.json\
-  \ and scripts/pm_dcw_blockage_fixtures.py, checked by python3 scripts/pm_dcw_blockage_events.py --family\
-  \ wizard.unblocked. They cover producer/refusal predicates, counts or full clearance, envelope/source\
-  \ identities, original metadata/receipt, independent predecessors, SP-337 source and event sizes, current\
-  \ retry versus retained history, complete mixed-source index/CAS, access, restore and withdrawal. New\
-  \ negatives preserve observational copies and have valid single-fact repair controls. Shared-tool predicate-isolation\
-  \ proof remains B3 sweep; no local proof-script rebuild or complete check-11 claim is made. These oracles\
-  \ check ts and occurred_at_utc with the CV-1101 EventRecord profile and Storage observed_at_utc and\
-  \ persisted_at_utc with storage_utc_z, including retained originals. The number-only bindings below\
-  \ do not change timestamp admission or retained timestamp strings. Native planning adapters, original\
-  \ authentication, append/lost-ack, CAS concurrency, actual Storage bytes/CRC, crash recovery, backup/restore,\
-  \ retention-boundary and access/deletion campaigns are authored obligations with execution NOT_RUN;\
-  \ static success never supplies native authority or admission.\nNumber-only adoption: CV-1100 supplies\
-  \ current raw-token and schema integer-slot admission and the complete CV-317 producer projection. Preserve\
-  \ this family's string-only compact identity array and every existing ID, field and tuple position.\
-  \ SP-026/SP-236/SP-1100 supplies physical EventRecord/source bytes and CV-339 full-value commitments\
-  \ without erasing finite float kind or signed zero allowed by an authenticated original schema. SP-278\
-  \ remains its own uint-only binding profile. SP-286/SP-1101 authenticates the original edition and exact\
-  \ frozen number/resource recipe before retained read or receipt recovery; request data never chooses\
-  \ a weaker recipe and current caller retry admission stays separate. These bindings add no logical integer\
-  \ cap or history rewrite. \n\nPNC-019 s4r retention binding for `wizard.unblocked` (2026-11-14).\n\n\
-  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.\n\nUse the existing\
-  \ policy object unchanged: {\"anchor_kind\": \"creation\", \"cardinality_scope\": null, \"expiry_action\"\
-  : \"none\", \"max_cardinality\": null, \"overflow_action\": \"fail_closed\", \"ttl_seconds\": null}.\n\
-  \nThis paragraph supersedes earlier pending statements only for the exact assigned facets above. All\
-  \ independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation\
-  \ holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
-  \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
-  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
+canonical_text: |-
+  NEWLY AUTHORED OWNER CONTRACT for wizard.unblocked under DL-045 and DL-432; prepared without admission. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Exact family membership remains ABSENT in Plans/event_family_registry.json: neither this unit nor its schema permits a current writer until individual registry admission.» Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002, extended for this exact event by this unit; payload/persistence binding is this unit plus CV-234. Jared's only quoted words are "i approve all of it". The deck's approve-all mapping selects A, as recorded in landed Plans/Decision_Log.md#DL-432. Answer source is /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md; frozen deck E-CARDS-2.as-presented-6db25be3.md SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. The approved option's explanatory prose is the card's text, not a Jared quotation.
+
+  Under DL-432 (deck-2 Card 4.b option A), save Unblocked when the responsible planning component records that all required blocking conditions for that same run have cleared. Link the authorized action that actually cleared it to the original blockage. Clearing another topic, opening a page, reprocessing old history or merely editing a report does not count. You see clearance as soon as that work can resume. DL-431 selects the whole Planning Run for the card's run/topic choice. This applies to the current Planning Wizard, successor of the retired Chain Wizard. wizard_id is planning_run_id, thread_id is nullable incidental context, and blockage_id is the same original blocked/remediation episode. Neither an intake child nor a runtime node becomes the subject. This is the clearance boundary itself: it does not wait for the next planning step to finish successfully.
+
+  All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json are required-present, root additionalProperties=false, schema_id=pm.event_payload.wizard.unblocked.v1 and schema_version=1.0.0. Preserve CV-234 minima wizard_id, nullable thread_id, resolution_source and ts. Added project_id, planning_run_id, blockage_id, observation_id, source_ref, permission_snapshot_id, predecessor_event_id and blocked_event_id bind the exact original episode and clearing observation. resolution_source names the authorized original clearing action; predecessor_event_id names the latest receipt-backed Blocked observation and blocked_event_id the root of that same authenticated chain. No action body, report text, secret, credentials or local path is embedded.
+
+  Producer emitter.wizard_unblocked@1.0.0 is the responsible Planning Wizard component's observer of its original planning result. It explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody, SP-336/SP-347 durability and Case L-2/SP-026/SP-236 original frame bytes. Before append require exact family/version admission, original observation/permission/current PlanningRun reservation, then commit the original observation and freeze the complete EventRecord. Append via Storage; resolve the independently issued original full event, semantic digest, full-value commitment, first receipt and durable group before publishing recorded success or allowing a dependent observation. A lost acknowledgement resolves the original, never re-executes planning, repair or the clearing action. Missing original/dedupe proof is unavailable; changed semantics is idempotency_conflict; unknown effect fences publication and goes to the existing owner's recovery. A confirmed older restore does not replay lost post-backup work.
+
+  Scope is project-only, using a real Project under PWIZ-002; application/no-project writes refuse. Adopt Plans/event_record.schema.json unchanged. Envelope project_id/thread_id equal payload; runtime run_id/node_id/attempt_id, account refs and producer_sequence_id are null. actor_ref is the authenticated original planning observation actor; occurred_at_utc=ts; correlation_id=blockage_id; causation_event_id=parent_event_id=predecessor_event_id; payload_schema_id identifies the decoded logical body; redaction_profile=secret_refs_only; current replay_policy=dedupe_by_idempotency_key; native migration fields are null. Storage alone assigns sequence/observed/persisted values and original receipt metadata. NEW identity recipe for wizard.unblocked: lowercase SHA-256 of the existing UTF-8 compact JSON string-only array ["wizard.unblocked",project_id,planning_run_id,blockage_id,observation_id], ensure_ascii=false and comma/colon separators. event_id="evt_wizard_unblocked_"+digest; idempotency_key="wizard.unblocked:"+digest. observation_id is the responsible component's immutable observation identity reused on delivery/retry, never a reader-generated request. It is independent of incidental thread focus. source_ref="wizard_unblocked_evidence:"+digest. All observed source/actor/causality/time/body/ref fields freeze at preparation.
+
+  Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id, thread_id, run_id, node_id, attempt_id, actor_ref, requested_account_ref, effective_account_ref, occurred_at_utc, producer_sequence_id, correlation_id, causation_event_id, parent_event_id, idempotency_key, payload_schema_id, payload, payload_ref, redaction_profile and migration. It excludes Storage-assigned sequence/observed/persisted and receipt metadata. Same identity and semantic digest returns the exact original full value and first receipt, with independent full-original authentication. Receipt-only retry reuses the authenticated original reservation and first receipt after live value_revision, predecessor, episode-open or effect state has advanced; it never reapplies those current effect/CAS gates or re-executes work. Current family admission, writer cutoff/drain, write/read permissions and original custody still apply. Missing original proof remains unavailable even after live advancement. Both current append and retry refuse projector_replay_only as replay_only_not_appendable. Historical original readers accept either retained dedupe_by_idempotency_key or projector_replay_only originals valid under their original owner recipe. A compatibility view may alter only replay_policy; all other supplied fields must authenticate against the actual retained original before resolving its receipt. No history read reruns planning, modifies run status, repairs a condition, resumes work, grants authority or emits an event.
+
+  The planning component's immutable conditions_cleared observation identifies the complete required conditions for this same whole-run episode, and every required condition is cleared. Authenticate the receipt-backed latest Blocked predecessor, its full source and entire original blockage chain, even on append, retry, read, rebuild and compatibility paths; blocked_event_id must be the chain's original Blocked, never another episode or the latest update mislabeled as the original. Preserve completed repair history and all original required-condition evidence; a later owner observation may add required conditions and cannot silently drop unaccounted original conditions. resolution_source is the reference to the independently authenticated authorized action that actually cleared the final required conditions, not an invented resolution enum. The action's original Project, PlanningRun and blockage match, authorized is exactly true, effect is conditions_cleared, its actual nonempty remaining_before set belongs to the episode, all of that set is cleared by the action and remaining_after is empty. A different topic/run/episode, unauthorized action, page open, history reprocessing, report-only edit, failed repair or partial clearance emits no Unblocked. The original action may have any already authorized owner action kind; this contract creates no new action or permission. A next-step success is unnecessary. Current value_revision/latest predecessor/open-episode CAS serializes clearance; duplicate delivery returns the same original result, and another clearing action after the episode has closed cannot append a second clearance. The observer records the existing result and never performs the clearing action itself.
+
+  NEW original custody source wizard_unblocked_evidence is materialized in Plans/storage_value_registry.json under typed key tuple [wizard_unblocked_evidence.v1,project_id,planning_run_id,blockage_id,observation_id]. Its complete closed logical schema is Plans/dcw/wizard_unblocked_evidence.schema.json#/$defs/inline, schema_id=pm.storage_value.wizard_unblocked_evidence.v1@1.0.0, containing storage_instance_id, recovery_epoch, value_revision, source_ref, original observation, prepared full event, publication and exact original receipt/commitment/segment. The authenticated planning observation is independently resolved; all Project/run/episode/observation/permission/actor/time joins and every original repair/action/route/ref fact must agree field by field. This is canonical non-rebuildable source custody in the existing runs_and_goals storage group, existing SP-340 budget, never a disposable status projection. Current access, permission snapshot and actual deletion/availability are checked at every read including every predecessor source. Backup captures all reachable original planning observations, attempts/actions, routes/reports, sources, full events/first custody and payload packs/indexes coherently at one Storage instance and admitted recovery boundary. Restore adopts the existing closed restore_admission and exact members plus source/event payload inventories; each member owner_id is this event's exact emitter, owner_operation_id is source_ref and owner_operation_sha256 hashes the complete physical original source under SP-026. A claimed source/member hash never substitutes for independently admitted original custody; omitted sources, substituted bytes, missing pack/index, unissued receipts, skew or stale boundary fences mutation and successful publication. Original absence is truthful unavailable/data loss, never source reconstruction from the history.
+
+  SP-337 applies independently to this event and to every source record. Measure complete SP-026 canonical MessagePack bytes, not JSON characters. The existing 16,384-byte inline limit includes exactly 16,384. A larger logical event uses payload={} and payload_ref as the existing compact sorted-key UTF-8 JSON descriptor string with blake3, byte_size and exact media_type application/vnd.puppetmaster.event.wizard-unblocked+msgpack; schema #/$defs/payload_reference closes the descriptor and #/$defs/referenced_stub closes the empty body. Validate original canonical bytes, BLAKE3, complete size/media type and decoded closed payload plus all identity/custody joins. Complete source overflow independently selects its source schema #/$defs/payload_reference physical wrapper under the same typed key/CAS and exact application/vnd.puppetmaster.wizard-unblocked-evidence+msgpack media type. Each physical redb value also stays within the same existing inline limit. Both packs and indexes must be durable before reference commit, append or publication. Body/source references are not interchangeable, truncated or inline base64 encodings. Missing/unreadable/undurable/wrong bytes refuse on every applicable path without checkpoint advance. No new number ceiling, serializer or date-time grammar is defined: CV-253 and original Storage byte/number owners apply, with CV-1100/SP-1100/SP-1101 and CV-1101. Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253, Storage observed_at_utc and persisted_at_utc use its storage_utc_z profile, and SP-1101 selects these profiles for a retained original. Exact typed original comparisons never use language equality across types or normalize physical signed zero.
+
+  NEW passive operating consumer reader.wizard_unblocked_history@1.0.0 selects only wizard.unblocked at this exact supported payload edition and the authorized Project/PlanningRun/blockage. It explicitly adopts SP-278 and DL-076, reusing projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0. Physical checkpoint key is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0, dataset event_record_index.v2 in the current selected generation. Authenticate complete captured source coverage across matching/nonmatching families and Projects, exact Storage identity, source bytes/row joins, generation/anchor/frontier, transaction and current ten-field live token. The generic projector alone publishes rows and checkpoint atomically under predecessor CAS. Max matching sequence is not coverage. No filtered durable checkpoint, durable token or copied status projection is introduced; if a token is persisted it is DL-076's nine-field projection, never redb_snapshot_id. Retained originals and every original predecessor authenticate before authorized display. Rebuild is passive, requires admitted replacement reader and complete current source coverage, and cannot reconstruct deleted sources or grant access.
+
+  Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Retention is explicit: event retention_policy_ref=PENDING_RETENTION_DECISION.» The original wizard_unblocked_evidence source is explicitly NEW technical class assignment to existing RP-AUTHORITY-INDEFINITE under Case L-3: it is non-rebuildable original planning operation/audit/source-lineage custody, refs and commitments only. Keep it indefinitely with no count eviction; storage pressure fails closed. This assigns no event-history or report/action-content lifetime. Exact question: For wizard.unblocked event history, which Case L-3 class/lifetime applies: planning/chat content or authority/source-lineage audit, and which release anchor governs deletion? Candidate owners are Case L-3 planning/chat content versus immutable receipt/audit/source-lineage classes; that table does not name this exact event-history assignment. No TTL/count/indefinite choice is inferred from this deck. Existing original SP-286 receipt authority retains its own RP-AUTHORITY-INDEFINITE rules; existing generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN. Report/action/source content retains its actual owner's independent lifetime and access/hold/deletion policy; a held receipt never recreates deleted content.
+
+  Compatibility/withdrawal for wizard.unblocked alone: dispatch only explicitly supported exact family/schema/version; unknown or incomplete legacy originals are unavailable/quarantined without rewrite or checkpoint advance. No retired three-round or wizard-status aliases become writers. Reader eligibility uses the authenticated recipe/edition in force at original write, not current writer CAS/live state; historical dispatch cannot be forged to select a weaker recipe. Withdrawal cuts off this writer's new admission first, drains or fences pending work under the original-receipt gate, then withdraws this exact reader from dispatch. A replacement must support retained original editions and complete authenticated SP-278 rebuild before publication. Cutoff never deletes originals, resets the generic checkpoint or withdraws a sibling. Read access/deletion and reader withdrawal still apply after live writer state changes.
+
+  Positive/negative static oracles for this exact family are Plans/dcw_blockage_event_fixtures.json and scripts/pm_dcw_blockage_fixtures.py, checked by python3 scripts/pm_dcw_blockage_events.py --family wizard.unblocked. They cover producer/refusal predicates, counts or full clearance, envelope/source identities, original metadata/receipt, independent predecessors, SP-337 source and event sizes, current retry versus retained history, complete mixed-source index/CAS, access, restore and withdrawal. New negatives preserve observational copies and have valid single-fact repair controls. Shared-tool predicate-isolation proof remains B3 sweep; no local proof-script rebuild or complete check-11 claim is made. These oracles check ts and occurred_at_utc with the CV-1101 EventRecord profile and Storage observed_at_utc and persisted_at_utc with storage_utc_z, including retained originals. The number-only bindings below do not change timestamp admission or retained timestamp strings. Native planning adapters, original authentication, append/lost-ack, CAS concurrency, actual Storage bytes/CRC, crash recovery, backup/restore, retention-boundary and access/deletion campaigns are authored obligations with execution NOT_RUN; static success never supplies native authority or admission.
+  Number-only adoption: CV-1100 supplies current raw-token and schema integer-slot admission and the complete CV-317 producer projection. Preserve this family's string-only compact identity array and every existing ID, field and tuple position. SP-026/SP-236/SP-1100 supplies physical EventRecord/source bytes and CV-339 full-value commitments without erasing finite float kind or signed zero allowed by an authenticated original schema. SP-278 remains its own uint-only binding profile. SP-286/SP-1101 authenticates the original edition and exact frozen number/resource recipe before retained read or receipt recovery; request data never chooses a weaker recipe and current caller retry admission stays separate. These bindings add no logical integer cap or history rewrite.
+
+  PNC-019 s4r retention binding for `wizard.unblocked` (2026-11-14).
+
+  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.
+
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+
+  Current selected assignment (2026-11-19): wizard.unblocked@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2432. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/Contracts_V0.md#CV-597 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
 gui_related: false
 gui_classification_reason: Defines event/source contracts for approved Planning Run behavior; no new presentation
   is designed.
@@ -1610,19 +1438,18 @@ plan_unit_id: CV-550
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: filesafe.command_denied owns the prepared closed 2.0.0 payload and
-  exact original-source, producer, scope and transition joins. The checked whole normalized
-  segment is denied before spawn. Preserve segment index and actual denial code; denial
-  never grants an override or runs the command.
+canonical_text: filesafe.command_denied owns the prepared closed 2.0.0 payload and exact original-source, producer,
+  scope and transition joins. The checked whole normalized segment is denied before spawn. Preserve segment index
+  and actual denial code; denial never grants an override or runs the command.
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - F2-213
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -1685,6 +1512,8 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-550, ContractName:Plans/FileS
 
 **Exact numbers and retained dispatch for `filesafe.command_denied` (sweep part 2B numbers).** Current inputs follow CV-1100 exactly. Raw JSON text is parsed only by the shared current decoder: `-0`, `01`, non-finite tokens and duplicate keys refuse before any commitment. Every schema integer slot of this family's closed roots is recorded during schema validation and admitted by the shared exact-integer call, with range left to the slot's own schema bounds; a fraction or exponent spelling (`1.0`, `1e0`, `-0.0`) is never folded to an integer, and no blanket integer walk or lane ceiling exists. The complete canonical body, the CV-317 producer digest and every other RFC 8785 use here are CV-1100 qualified RFC 8785: a value that binary64 or the emitted decimal cannot preserve refuses before acceptance. SP-1100 purpose profiles supply the CV-339 full-value commitment and application body bytes; an integer a profile cannot encode refuses through its guard row. Retained originals resolve only through SP-1101: Storage's sealed custody catalogue (write-time edition plus frozen resource manifest) authenticates the original, the installed recipe tuple selects the frozen verifier, application body codecs stay pinned by that catalogue, and no current number guard runs on a retained original. The df-event-v2 identity preimage and the local original-source recipes (Project canonical MessagePack, CV-366 accepted_source) are unchanged. Every timestamp this family validates is checked by the shared CV-1101 predicate date_time: schema format date-time fields, including occurred_at_utc, payload ts and the family's other source timestamps, use the EventRecord profile; Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z profile. The SP-1101 frozen verifier uses those same profiles. datetime_validator and the inventory gate run at batch-2 integration.
 
+
+Current selected assignment (2026-11-19): filesafe.command_denied@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2301. Its event history selects Application = RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### CV-551 - filesafe.destructive_override_denied closed contract
 
 ```yaml
@@ -1692,19 +1521,18 @@ plan_unit_id: CV-551
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: filesafe.destructive_override_denied owns the prepared closed 2.0.0
-  payload and exact original-source, producer, scope and transition joins. A rejected
-  request emits denial and leaves the original guarded command blocked. Missing authentication
-  may omit operator/auth realm; absence never becomes anonymous permission.
+canonical_text: filesafe.destructive_override_denied owns the prepared closed 2.0.0 payload and exact original-source,
+  producer, scope and transition joins. A rejected request emits denial and leaves the original guarded command
+  blocked. Missing authentication may omit operator/auth realm; absence never becomes anonymous permission.
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - F2-213
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -1771,6 +1599,8 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-551, ContractName:Plans/FileS
 
 **Exact numbers and retained dispatch for `filesafe.destructive_override_denied` (sweep part 2B numbers).** Current inputs follow CV-1100 exactly. Raw JSON text is parsed only by the shared current decoder: `-0`, `01`, non-finite tokens and duplicate keys refuse before any commitment. Every schema integer slot of this family's closed roots is recorded during schema validation and admitted by the shared exact-integer call, with range left to the slot's own schema bounds; a fraction or exponent spelling (`1.0`, `1e0`, `-0.0`) is never folded to an integer, and no blanket integer walk or lane ceiling exists. The complete canonical body, the CV-317 producer digest and every other RFC 8785 use here are CV-1100 qualified RFC 8785: a value that binary64 or the emitted decimal cannot preserve refuses before acceptance. SP-1100 purpose profiles supply the CV-339 full-value commitment and application body bytes; an integer a profile cannot encode refuses through its guard row. Retained originals resolve only through SP-1101: Storage's sealed custody catalogue (write-time edition plus frozen resource manifest) authenticates the original, the installed recipe tuple selects the frozen verifier, application body codecs stay pinned by that catalogue, and no current number guard runs on a retained original. The df-event-v2 identity preimage and the local original-source recipes (Project canonical MessagePack, CV-366 accepted_source) are unchanged. Every timestamp this family validates is checked by the shared CV-1101 predicate date_time: schema format date-time fields, including occurred_at_utc, payload ts and the family's other source timestamps, use the EventRecord profile; Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z profile. The SP-1101 frozen verifier uses those same profiles. datetime_validator and the inventory gate run at batch-2 integration.
 
+
+Current selected assignment (2026-11-19): filesafe.destructive_override_denied@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2302. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### CV-552 - filesafe.destructive_override_granted closed contract
 
 ```yaml
@@ -1778,20 +1608,19 @@ plan_unit_id: CV-552
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: filesafe.destructive_override_granted owns the prepared closed 2.0.0
-  payload and exact original-source, producer, scope and transition joins. Only an
-  authenticated operator, exact authorized scope, reason and future expiry can yield
-  a grant. The event is audit of the original receipt, never execution authority by
-  itself. Expired, mismatched or changed-root grants cannot authorize a command.
+canonical_text: filesafe.destructive_override_granted owns the prepared closed 2.0.0 payload and exact original-source,
+  producer, scope and transition joins. Only an authenticated operator, exact authorized scope, reason and future
+  expiry can yield a grant. The event is audit of the original receipt, never execution authority by itself. Expired,
+  mismatched or changed-root grants cannot authorize a command.
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - F2-213
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -1858,6 +1687,8 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-552, ContractName:Plans/FileS
 
 **Exact numbers and retained dispatch for `filesafe.destructive_override_granted` (sweep part 2B numbers).** Current inputs follow CV-1100 exactly. Raw JSON text is parsed only by the shared current decoder: `-0`, `01`, non-finite tokens and duplicate keys refuse before any commitment. Every schema integer slot of this family's closed roots is recorded during schema validation and admitted by the shared exact-integer call, with range left to the slot's own schema bounds; a fraction or exponent spelling (`1.0`, `1e0`, `-0.0`) is never folded to an integer, and no blanket integer walk or lane ceiling exists. The complete canonical body, the CV-317 producer digest and every other RFC 8785 use here are CV-1100 qualified RFC 8785: a value that binary64 or the emitted decimal cannot preserve refuses before acceptance. SP-1100 purpose profiles supply the CV-339 full-value commitment and application body bytes; an integer a profile cannot encode refuses through its guard row. Retained originals resolve only through SP-1101: Storage's sealed custody catalogue (write-time edition plus frozen resource manifest) authenticates the original, the installed recipe tuple selects the frozen verifier, application body codecs stay pinned by that catalogue, and no current number guard runs on a retained original. The df-event-v2 identity preimage and the local original-source recipes (Project canonical MessagePack, CV-366 accepted_source) are unchanged. Every timestamp this family validates is checked by the shared CV-1101 predicate date_time: schema format date-time fields, including occurred_at_utc, payload ts and the family's other source timestamps, use the EventRecord profile; Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z profile. The SP-1101 frozen verifier uses those same profiles. datetime_validator and the inventory gate run at batch-2 integration.
 
+
+Current selected assignment (2026-11-19): filesafe.destructive_override_granted@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2303. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### CV-553 - filesafe.destructive_override_requested closed contract
 
 ```yaml
@@ -1865,19 +1696,18 @@ plan_unit_id: CV-553
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: filesafe.destructive_override_requested owns the prepared closed 2.0.0
-  payload and exact original-source, producer, scope and transition joins. Record
-  the authenticated request before evaluation. PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 alone
-  is never a grant; requested scope and duration cannot broaden the accepted scope.
+canonical_text: filesafe.destructive_override_requested owns the prepared closed 2.0.0 payload and exact original-source,
+  producer, scope and transition joins. Record the authenticated request before evaluation. PUPPET_MASTER_ALLOW_DESTRUCTIVE=1
+  alone is never a grant; requested scope and duration cannot broaden the accepted scope.
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - F2-213
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -1942,6 +1772,8 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-553, ContractName:Plans/FileS
 
 **Exact numbers and retained dispatch for `filesafe.destructive_override_requested` (sweep part 2B numbers).** Current inputs follow CV-1100 exactly. Raw JSON text is parsed only by the shared current decoder: `-0`, `01`, non-finite tokens and duplicate keys refuse before any commitment. Every schema integer slot of this family's closed roots is recorded during schema validation and admitted by the shared exact-integer call, with range left to the slot's own schema bounds; a fraction or exponent spelling (`1.0`, `1e0`, `-0.0`) is never folded to an integer, and no blanket integer walk or lane ceiling exists. The complete canonical body, the CV-317 producer digest and every other RFC 8785 use here are CV-1100 qualified RFC 8785: a value that binary64 or the emitted decimal cannot preserve refuses before acceptance. SP-1100 purpose profiles supply the CV-339 full-value commitment and application body bytes; an integer a profile cannot encode refuses through its guard row. Retained originals resolve only through SP-1101: Storage's sealed custody catalogue (write-time edition plus frozen resource manifest) authenticates the original, the installed recipe tuple selects the frozen verifier, application body codecs stay pinned by that catalogue, and no current number guard runs on a retained original. The df-event-v2 identity preimage and the local original-source recipes (Project canonical MessagePack, CV-366 accepted_source) are unchanged. Every timestamp this family validates is checked by the shared CV-1101 predicate date_time: schema format date-time fields, including occurred_at_utc, payload ts and the family's other source timestamps, use the EventRecord profile; Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z profile. The SP-1101 frozen verifier uses those same profiles. datetime_validator and the inventory gate run at batch-2 integration.
 
+
+Current selected assignment (2026-11-19): filesafe.destructive_override_requested@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2304. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### CV-554 - filesafe.guard_init_failed closed contract
 
 ```yaml
@@ -1949,19 +1781,18 @@ plan_unit_id: CV-554
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: filesafe.guard_init_failed owns the prepared closed 2.0.0 payload
-  and exact original-source, producer, scope and transition joins. On initialization
-  failure block the affected capability; no disabled fallback. Embedded known-destructive
-  baseline does not make a failed authoritative guard healthy.
+canonical_text: filesafe.guard_init_failed owns the prepared closed 2.0.0 payload and exact original-source, producer,
+  scope and transition joins. On initialization failure block the affected capability; no disabled fallback. Embedded
+  known-destructive baseline does not make a failed authoritative guard healthy.
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - F2-213
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -2024,6 +1855,8 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-554, ContractName:Plans/FileS
 
 **Exact numbers and retained dispatch for `filesafe.guard_init_failed` (sweep part 2B numbers).** Current inputs follow CV-1100 exactly. Raw JSON text is parsed only by the shared current decoder: `-0`, `01`, non-finite tokens and duplicate keys refuse before any commitment. Every schema integer slot of this family's closed roots is recorded during schema validation and admitted by the shared exact-integer call, with range left to the slot's own schema bounds; a fraction or exponent spelling (`1.0`, `1e0`, `-0.0`) is never folded to an integer, and no blanket integer walk or lane ceiling exists. The complete canonical body, the CV-317 producer digest and every other RFC 8785 use here are CV-1100 qualified RFC 8785: a value that binary64 or the emitted decimal cannot preserve refuses before acceptance. SP-1100 purpose profiles supply the CV-339 full-value commitment and application body bytes; an integer a profile cannot encode refuses through its guard row. Retained originals resolve only through SP-1101: Storage's sealed custody catalogue (write-time edition plus frozen resource manifest) authenticates the original, the installed recipe tuple selects the frozen verifier, application body codecs stay pinned by that catalogue, and no current number guard runs on a retained original. The df-event-v2 identity preimage and the local original-source recipes (Project canonical MessagePack, CV-366 accepted_source) are unchanged. Every timestamp this family validates is checked by the shared CV-1101 predicate date_time: schema format date-time fields, including occurred_at_utc, payload ts and the family's other source timestamps, use the EventRecord profile; Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z profile. The SP-1101 frozen verifier uses those same profiles. datetime_validator and the inventory gate run at batch-2 integration.
 
+
+Current selected assignment (2026-11-19): filesafe.guard_init_failed@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2305. Its event history selects Application = RP-FILESAFE-GUARD-FAILURE-APPLICATION-2555D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### CV-555 - filesafe.path_denied closed contract
 
 ```yaml
@@ -2031,20 +1864,18 @@ plan_unit_id: CV-555
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: filesafe.path_denied owns the prepared closed 2.0.0 payload and exact
-  original-source, producer, scope and transition joins. Canonicalize existing path
-  or nearest existing parent, verify actual root and recheck TOCTOU before effect.
-  Refusal leaves the file untouched and preserves the denial code and permission/scope
-  refs.
+canonical_text: filesafe.path_denied owns the prepared closed 2.0.0 payload and exact original-source, producer,
+  scope and transition joins. Canonicalize existing path or nearest existing parent, verify actual root and recheck
+  TOCTOU before effect. Refusal leaves the file untouched and preserves the denial code and permission/scope refs.
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - F2-213
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -2107,6 +1938,8 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-555, ContractName:Plans/FileS
 
 **Exact numbers and retained dispatch for `filesafe.path_denied` (sweep part 2B numbers).** Current inputs follow CV-1100 exactly. Raw JSON text is parsed only by the shared current decoder: `-0`, `01`, non-finite tokens and duplicate keys refuse before any commitment. Every schema integer slot of this family's closed roots is recorded during schema validation and admitted by the shared exact-integer call, with range left to the slot's own schema bounds; a fraction or exponent spelling (`1.0`, `1e0`, `-0.0`) is never folded to an integer, and no blanket integer walk or lane ceiling exists. The complete canonical body, the CV-317 producer digest and every other RFC 8785 use here are CV-1100 qualified RFC 8785: a value that binary64 or the emitted decimal cannot preserve refuses before acceptance. SP-1100 purpose profiles supply the CV-339 full-value commitment and application body bytes; an integer a profile cannot encode refuses through its guard row. Retained originals resolve only through SP-1101: Storage's sealed custody catalogue (write-time edition plus frozen resource manifest) authenticates the original, the installed recipe tuple selects the frozen verifier, application body codecs stay pinned by that catalogue, and no current number guard runs on a retained original. The df-event-v2 identity preimage and the local original-source recipes (Project canonical MessagePack, CV-366 accepted_source) are unchanged. Every timestamp this family validates is checked by the shared CV-1101 predicate date_time: schema format date-time fields, including occurred_at_utc, payload ts and the family's other source timestamps, use the EventRecord profile; Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z profile. The SP-1101 frozen verifier uses those same profiles. datetime_validator and the inventory gate run at batch-2 integration.
 
+
+Current selected assignment (2026-11-19): filesafe.path_denied@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2306. Its event history selects Application = RP-FILESAFE-DENIED-PATH-APPLICATION-2555D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### CV-556 - filesafe.policy_degraded closed contract
 
 ```yaml
@@ -2114,20 +1947,19 @@ plan_unit_id: CV-556
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: filesafe.policy_degraded owns the prepared closed 2.0.0 payload and
-  exact original-source, producer, scope and transition joins. Valid only while authoritative
-  enforcement is intact; an advisory failure or embedded authoritative fallback can
-  be reported. Missing or empty allowlists, roots, unresolved canonical paths or failed
+canonical_text: filesafe.policy_degraded owns the prepared closed 2.0.0 payload and exact original-source, producer,
+  scope and transition joins. Valid only while authoritative enforcement is intact; an advisory failure or embedded
+  authoritative fallback can be reported. Missing or empty allowlists, roots, unresolved canonical paths or failed
   init require refusal, never a degraded success.
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - F2-213
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -2190,6 +2022,8 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-556, ContractName:Plans/FileS
 
 **Exact numbers and retained dispatch for `filesafe.policy_degraded` (sweep part 2B numbers).** Current inputs follow CV-1100 exactly. Raw JSON text is parsed only by the shared current decoder: `-0`, `01`, non-finite tokens and duplicate keys refuse before any commitment. Every schema integer slot of this family's closed roots is recorded during schema validation and admitted by the shared exact-integer call, with range left to the slot's own schema bounds; a fraction or exponent spelling (`1.0`, `1e0`, `-0.0`) is never folded to an integer, and no blanket integer walk or lane ceiling exists. The complete canonical body, the CV-317 producer digest and every other RFC 8785 use here are CV-1100 qualified RFC 8785: a value that binary64 or the emitted decimal cannot preserve refuses before acceptance. SP-1100 purpose profiles supply the CV-339 full-value commitment and application body bytes; an integer a profile cannot encode refuses through its guard row. Retained originals resolve only through SP-1101: Storage's sealed custody catalogue (write-time edition plus frozen resource manifest) authenticates the original, the installed recipe tuple selects the frozen verifier, application body codecs stay pinned by that catalogue, and no current number guard runs on a retained original. The df-event-v2 identity preimage and the local original-source recipes (Project canonical MessagePack, CV-366 accepted_source) are unchanged. Every timestamp this family validates is checked by the shared CV-1101 predicate date_time: schema format date-time fields, including occurred_at_utc, payload ts and the family's other source timestamps, use the EventRecord profile; Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z profile. The SP-1101 frozen verifier uses those same profiles. datetime_validator and the inventory gate run at batch-2 integration.
 
+
+Current selected assignment (2026-11-19): filesafe.policy_degraded@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2307. Its event history selects Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### CV-557 - safe_point.created closed contract
 
 ```yaml
@@ -2197,20 +2031,19 @@ plan_unit_id: CV-557
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: safe_point.created owns the prepared closed 2.0.0 payload and exact
-  original-source, producer, scope and transition joins. Publish only after immutable
-  manifest and blobs verify and the safe_point_record is durably committed. The capture
-  precedes mutation; worktree-bound writes carry all four worktree fields. Failed
-  or unsupported capture never permits mutation.
+canonical_text: safe_point.created owns the prepared closed 2.0.0 payload and exact original-source, producer, scope
+  and transition joins. Publish only after immutable manifest and blobs verify and the safe_point_record is durably
+  committed. The capture precedes mutation; worktree-bound writes carry all four worktree fields. Failed or unsupported
+  capture never permits mutation.
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - F2-213
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -2285,6 +2118,8 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-557, ContractName:Plans/FileS
 
 **Exact numbers and retained dispatch for `safe_point.created` (sweep part 2B numbers).** Current inputs follow CV-1100 exactly. Raw JSON text is parsed only by the shared current decoder: `-0`, `01`, non-finite tokens and duplicate keys refuse before any commitment. Every schema integer slot of this family's closed roots is recorded during schema validation and admitted by the shared exact-integer call, with range left to the slot's own schema bounds; a fraction or exponent spelling (`1.0`, `1e0`, `-0.0`) is never folded to an integer, and no blanket integer walk or lane ceiling exists. The complete canonical body, the CV-317 producer digest and every other RFC 8785 use here are CV-1100 qualified RFC 8785: a value that binary64 or the emitted decimal cannot preserve refuses before acceptance. SP-1100 purpose profiles supply the CV-339 full-value commitment and application body bytes; an integer a profile cannot encode refuses through its guard row. Retained originals resolve only through SP-1101: Storage's sealed custody catalogue (write-time edition plus frozen resource manifest) authenticates the original, the installed recipe tuple selects the frozen verifier, application body codecs stay pinned by that catalogue, and no current number guard runs on a retained original. The df-event-v2 identity preimage and the local original-source recipes (Project canonical MessagePack, CV-366 accepted_source) are unchanged. Every timestamp this family validates is checked by the shared CV-1101 predicate date_time: schema format date-time fields, including occurred_at_utc, payload ts and the family's other source timestamps, use the EventRecord profile; Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z profile. The SP-1101 frozen verifier uses those same profiles. datetime_validator and the inventory gate run at batch-2 integration.
 
+
+Current selected assignment (2026-11-19): safe_point.created@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2394. Its event history selects Application = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion, cardinality_scope=run), Project = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion, cardinality_scope=run); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### CV-558 - safe_point.restored closed contract
 
 ```yaml
@@ -2292,21 +2127,20 @@ plan_unit_id: CV-558
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: safe_point.restored owns the prepared closed 2.0.0 payload and exact
-  original-source, producer, scope and transition joins. Publish only the journal-proven
-  outcome. restored_clean requires target equality, restore_failed pre-restore equality,
-  restore_skipped preflight equality without mutation, restore_refused no mutation,
-  recovery_required keeps fences. restored_with_conflicts is forbidden. Restart reconciles
-  the same transaction before dispatch.
+canonical_text: safe_point.restored owns the prepared closed 2.0.0 payload and exact original-source, producer,
+  scope and transition joins. Publish only the journal-proven outcome. restored_clean requires target equality,
+  restore_failed pre-restore equality, restore_skipped preflight equality without mutation, restore_refused no mutation,
+  recovery_required keeps fences. restored_with_conflicts is forbidden. Restart reconciles the same transaction
+  before dispatch.
 gui_related: false
-gui_classification_reason: Event authority and storage contracts; no presentation
-  change.
+gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
 - F2-213
 unblocks: []
 acceptance_criteria:
-- The exact family remains unadmitted until independent admission.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «The exact family remains unadmitted until
+  independent admission».'
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
@@ -2377,6 +2211,8 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-558, ContractName:Plans/FileS
 
 **Exact numbers and retained dispatch for `safe_point.restored` (sweep part 2B numbers).** Current inputs follow CV-1100 exactly. Raw JSON text is parsed only by the shared current decoder: `-0`, `01`, non-finite tokens and duplicate keys refuse before any commitment. Every schema integer slot of this family's closed roots is recorded during schema validation and admitted by the shared exact-integer call, with range left to the slot's own schema bounds; a fraction or exponent spelling (`1.0`, `1e0`, `-0.0`) is never folded to an integer, and no blanket integer walk or lane ceiling exists. The complete canonical body, the CV-317 producer digest and every other RFC 8785 use here are CV-1100 qualified RFC 8785: a value that binary64 or the emitted decimal cannot preserve refuses before acceptance. SP-1100 purpose profiles supply the CV-339 full-value commitment and application body bytes; an integer a profile cannot encode refuses through its guard row. Retained originals resolve only through SP-1101: Storage's sealed custody catalogue (write-time edition plus frozen resource manifest) authenticates the original, the installed recipe tuple selects the frozen verifier, application body codecs stay pinned by that catalogue, and no current number guard runs on a retained original. The df-event-v2 identity preimage and the local original-source recipes (Project canonical MessagePack, CV-366 accepted_source) are unchanged. Every timestamp this family validates is checked by the shared CV-1101 predicate date_time: schema format date-time fields, including occurred_at_utc, payload ts and the family's other source timestamps, use the EventRecord profile; Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z profile. The SP-1101 frozen verifier uses those same profiles. datetime_validator and the inventory gate run at batch-2 integration.
 
+
+Current selected assignment (2026-11-19): safe_point.restored@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2395. Its event history selects Application = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion, cardinality_scope=run), Project = RP-RUNTIME-365D@1.0.0 (anchor_kind=run_completion, cardinality_scope=run); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### CV-420 - Current goal_run.stopped v3 payload contract
 
 ```yaml

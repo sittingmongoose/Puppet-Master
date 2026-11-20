@@ -1,0 +1,23 @@
+[
+  {
+    "path": "Plans/event_payloads/admission_merge2/crew_board_message_posted.schema.json",
+    "schema_id": "pm.event_payload.crew_board_message_posted.v1",
+    "source": "Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_message_posted",
+    "validation_keywords_unchanged": true,
+    "source_node_sha256": "1997b6224afddbc410379830f5aec2b9f764396788299f124f68a1727a5a08ef"
+  },
+  {
+    "path": "Plans/event_payloads/admission_merge2/crew_board_message_read.schema.json",
+    "schema_id": "pm.event_payload.crew_board_message_read.v1",
+    "source": "Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_message_read",
+    "validation_keywords_unchanged": true,
+    "source_node_sha256": "5e9326b80cc27ef6e6bb9d34c864261e4ea7aea3c5efa3086df80a2c292bd3e6"
+  },
+  {
+    "path": "Plans/event_payloads/admission_merge2/crew_board_messages_archived.schema.json",
+    "schema_id": "pm.event_payload.crew_board_messages_archived.v1",
+    "source": "Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_messages_archived",
+    "validation_keywords_unchanged": true,
+    "source_node_sha256": "bb6b85e063a6eb9f0fdba065a6f615eba16ed76b45686bf21ba5879b88b77302"
+  }
+]

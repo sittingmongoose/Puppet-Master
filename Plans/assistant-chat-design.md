@@ -31799,7 +31799,9 @@ command_payload_definitions:
 
 ### ACD-610 — bundle.selection_forward_blocked
 
-Newly authored owner contract under DL-045 for `bundle.selection_forward_blocked` only, revision 1.0.0, prepared without admission. Exact producer: Document review selection-forward handler. A privacy/sensitivity, expired or scrubbed handoff is blocked. Keep the pending chip visible with its exact reason; never clear it or claim a successful handoff. No message or annotation is created. For bundle.selection_forward_blocked, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_forward_blocked", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-630; persistence/read route: SP-610.
+Newly authored owner contract under DL-045 for `bundle.selection_forward_blocked` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Document review selection-forward handler. A privacy/sensitivity, expired or scrubbed handoff is blocked. Keep the pending chip visible with its exact reason; never clear it or claim a successful handoff. No message or annotation is created. For bundle.selection_forward_blocked, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_forward_blocked", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-630; persistence/read route: SP-610.
+
+Current membership (2026-11-18) — bundle.selection_forward_blocked@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-610
@@ -31809,8 +31811,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: '### ACD-610 — bundle.selection_forward_blocked
 
 
-  Newly authored owner contract under DL-045 for `bundle.selection_forward_blocked` only, revision 1.0.0, prepared
-  without admission. Exact producer: Document review selection-forward handler. A privacy/sensitivity, expired or
+  Newly authored owner contract under DL-045 for `bundle.selection_forward_blocked` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Document review selection-forward handler. A privacy/sensitivity, expired or
   scrubbed handoff is blocked. Keep the pending chip visible with its exact reason; never clear it or claim a successful
   handoff. No message or annotation is created. For bundle.selection_forward_blocked, freeze operation_id from the
   original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The
@@ -31832,15 +31833,16 @@ canonical_text: '### ACD-610 — bundle.selection_forward_blocked
   for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
   Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
   The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
-  route: CV-630; persistence/read route: SP-610.'
+  route: CV-630; persistence/read route: SP-610.
+
+  Current membership (2026-11-18) — bundle.selection_forward_blocked@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -31858,7 +31860,7 @@ source_lineage:
 preserved_exact_tokens:
 - bundle.selection_forward_blocked
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -31866,7 +31868,9 @@ owner_hints:
 
 ### ACD-611 — bundle.selection_sent_to_chat
 
-Newly authored owner contract under DL-045 for `bundle.selection_sent_to_chat` only, revision 1.0.0, prepared without admission. Exact producer: Document review selection-to-chat handler. Resolve the requested target once: explicit selection, owning page surface, then explicit new-thread creation when necessary. After creating the visible pending chip, record the effective target. This event is chip handoff success, not sending a message; sending later clears the chips only on success. For bundle.selection_sent_to_chat, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_sent_to_chat", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-631; persistence/read route: SP-611.
+Newly authored owner contract under DL-045 for `bundle.selection_sent_to_chat` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Document review selection-to-chat handler. Resolve the requested target once: explicit selection, owning page surface, then explicit new-thread creation when necessary. After creating the visible pending chip, record the effective target. This event is chip handoff success, not sending a message; sending later clears the chips only on success. For bundle.selection_sent_to_chat, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_sent_to_chat", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-631; persistence/read route: SP-611.
+
+Current membership (2026-11-18) — bundle.selection_sent_to_chat@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-611
@@ -31876,8 +31880,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: '### ACD-611 — bundle.selection_sent_to_chat
 
 
-  Newly authored owner contract under DL-045 for `bundle.selection_sent_to_chat` only, revision 1.0.0, prepared
-  without admission. Exact producer: Document review selection-to-chat handler. Resolve the requested target once:
+  Newly authored owner contract under DL-045 for `bundle.selection_sent_to_chat` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Document review selection-to-chat handler. Resolve the requested target once:
   explicit selection, owning page surface, then explicit new-thread creation when necessary. After creating the
   visible pending chip, record the effective target. This event is chip handoff success, not sending a message;
   sending later clears the chips only on success. For bundle.selection_sent_to_chat, freeze operation_id from the
@@ -31900,15 +31903,16 @@ canonical_text: '### ACD-611 — bundle.selection_sent_to_chat
   for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
   Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
   The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
-  route: CV-631; persistence/read route: SP-611.'
+  route: CV-631; persistence/read route: SP-611.
+
+  Current membership (2026-11-18) — bundle.selection_sent_to_chat@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -31926,7 +31930,7 @@ source_lineage:
 preserved_exact_tokens:
 - bundle.selection_sent_to_chat
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -31934,7 +31938,9 @@ owner_hints:
 
 ### ACD-612 — chat.message
 
-Newly authored owner contract under DL-045 for `chat.message` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat transcript commit handler. Commit a canonical typed message once at a durable message boundary; streamed display deltas are not independent messages. Keep edit/supersession lineage under the transcript owner. First user-message commit also creates the durable thread; an unsent draft has no durable thread event. For chat.message, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.message", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-632; persistence/read route: SP-612.
+Newly authored owner contract under DL-045 for `chat.message` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat transcript commit handler. Commit a canonical typed message once at a durable message boundary; streamed display deltas are not independent messages. Keep edit/supersession lineage under the transcript owner. First user-message commit also creates the durable thread; an unsent draft has no durable thread event. For chat.message, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.message", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-632; persistence/read route: SP-612.
+
+Current membership (2026-11-18) — chat.message@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-612
@@ -31944,7 +31950,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: '### ACD-612 — chat.message
 
 
-  Newly authored owner contract under DL-045 for `chat.message` only, revision 1.0.0, prepared without admission.
+  Newly authored owner contract under DL-045 for `chat.message` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration.
   Exact producer: Assistant Chat transcript commit handler. Commit a canonical typed message once at a durable message
   boundary; streamed display deltas are not independent messages. Keep edit/supersession lineage under the transcript
   owner. First user-message commit also creates the durable thread; an unsent draft has no durable thread event.
@@ -31967,15 +31973,16 @@ canonical_text: '### ACD-612 — chat.message
   success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original
   evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation.
   This text defines no new user command or feature. The event cannot emit until its own admission and all required
-  owner source graphs are complete. Semantic/payload route: CV-632; persistence/read route: SP-612.'
+  owner source graphs are complete. Semantic/payload route: CV-632; persistence/read route: SP-612.
+
+  Current membership (2026-11-18) — chat.message@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -31993,7 +32000,7 @@ source_lineage:
 preserved_exact_tokens:
 - chat.message
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -32001,7 +32008,9 @@ owner_hints:
 
 ### ACD-614 — chat.thread_created
 
-Newly authored owner contract under DL-045 for `chat.thread_created` only, revision 1.0.0, prepared without admission. Exact producer: cmd.chat.thread.commit_first_message handler. Mint thr_{ulid} only when the first user message commits. creating to active occurs once; discard_empty_draft emits no durable creation and creates no tombstone. Commit the message and canonical thread together before append. For chat.thread_created, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-634; persistence/read route: SP-614.
+Newly authored owner contract under DL-045 for `chat.thread_created` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: cmd.chat.thread.commit_first_message handler. Mint thr_{ulid} only when the first user message commits. creating to active occurs once; discard_empty_draft emits no durable creation and creates no tombstone. Commit the message and canonical thread together before append. For chat.thread_created, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-634; persistence/read route: SP-614.
+
+Current membership (2026-11-18) — chat.thread_created@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-614
@@ -32011,7 +32020,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: '### ACD-614 — chat.thread_created
 
 
-  Newly authored owner contract under DL-045 for `chat.thread_created` only, revision 1.0.0, prepared without admission.
+  Newly authored owner contract under DL-045 for `chat.thread_created` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration.
   Exact producer: cmd.chat.thread.commit_first_message handler. Mint thr_{ulid} only when the first user message
   commits. creating to active occurs once; discard_empty_draft emits no durable creation and creates no tombstone.
   Commit the message and canonical thread together before append. For chat.thread_created, freeze operation_id from
@@ -32034,15 +32043,16 @@ canonical_text: '### ACD-614 — chat.thread_created
   for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
   Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
   The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
-  route: CV-634; persistence/read route: SP-614.'
+  route: CV-634; persistence/read route: SP-614.
+
+  Current membership (2026-11-18) — chat.thread_created@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -32060,7 +32070,7 @@ source_lineage:
 preserved_exact_tokens:
 - chat.thread_created
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -32068,7 +32078,9 @@ owner_hints:
 
 ### ACD-615 — chat.thread_deleted
 
-Newly authored owner contract under DL-045 for `chat.thread_deleted` only, revision 1.0.0, prepared without admission. Exact producer: cmd.chat.thread.delete handler. Delete from active, suspended or archived only. Write the storage-owned content-free deletion record and hide immediately. Unheld content purges within 24 hours; backup bytes at most 30 days unless held, with tombstone replay before visibility. No undo and no resurrection; worktree keep/remove is independent. For chat.thread_deleted, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_deleted", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-635; persistence/read route: SP-615.
+Newly authored owner contract under DL-045 for `chat.thread_deleted` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: cmd.chat.thread.delete handler. Delete from active, suspended or archived only. Write the storage-owned content-free deletion record and hide immediately. Unheld content purges within 24 hours; backup bytes at most 30 days unless held, with tombstone replay before visibility. No undo and no resurrection; worktree keep/remove is independent. For chat.thread_deleted, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_deleted", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-635; persistence/read route: SP-615.
+
+Current membership (2026-11-18) — chat.thread_deleted@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-615
@@ -32078,7 +32090,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: '### ACD-615 — chat.thread_deleted
 
 
-  Newly authored owner contract under DL-045 for `chat.thread_deleted` only, revision 1.0.0, prepared without admission.
+  Newly authored owner contract under DL-045 for `chat.thread_deleted` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration.
   Exact producer: cmd.chat.thread.delete handler. Delete from active, suspended or archived only. Write the storage-owned
   content-free deletion record and hide immediately. Unheld content purges within 24 hours; backup bytes at most
   30 days unless held, with tombstone replay before visibility. No undo and no resurrection; worktree keep/remove
@@ -32102,15 +32114,16 @@ canonical_text: '### ACD-615 — chat.thread_deleted
   external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal
   is checked before starting a new operation. This text defines no new user command or feature. The event cannot
   emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-635;
-  persistence/read route: SP-615.'
+  persistence/read route: SP-615.
+
+  Current membership (2026-11-18) — chat.thread_deleted@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -32128,7 +32141,7 @@ source_lineage:
 preserved_exact_tokens:
 - chat.thread_deleted
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -32136,7 +32149,9 @@ owner_hints:
 
 ### ACD-616 — chat.thread_worktree_bound
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_bound` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat WorktreeManager create/bind completion handler. After successful creation and canonical worktree_record write, bind the thread and reverse key atomically, enforcing 1:1. Changes during an in-flight turn are refused; next turn freezes the new binding. For chat.thread_worktree_bound, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_bound", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-636; persistence/read route: SP-616.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_bound` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat WorktreeManager create/bind completion handler. After successful creation and canonical worktree_record write, bind the thread and reverse key atomically, enforcing 1:1. Changes during an in-flight turn are refused; next turn freezes the new binding. For chat.thread_worktree_bound, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_bound", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-636; persistence/read route: SP-616.
+
+Current membership (2026-11-18) — chat.thread_worktree_bound@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-616
@@ -32146,8 +32161,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: '### ACD-616 — chat.thread_worktree_bound
 
 
-  Newly authored owner contract under DL-045 for `chat.thread_worktree_bound` only, revision 1.0.0, prepared without
-  admission. Exact producer: Assistant Chat WorktreeManager create/bind completion handler. After successful creation
+  Newly authored owner contract under DL-045 for `chat.thread_worktree_bound` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat WorktreeManager create/bind completion handler. After successful creation
   and canonical worktree_record write, bind the thread and reverse key atomically, enforcing 1:1. Changes during
   an in-flight turn are refused; next turn freezes the new binding. For chat.thread_worktree_bound, freeze operation_id
   from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries).
@@ -32169,15 +32183,16 @@ canonical_text: '### ACD-616 — chat.thread_worktree_bound
   for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
   Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
   The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
-  route: CV-636; persistence/read route: SP-616.'
+  route: CV-636; persistence/read route: SP-616.
+
+  Current membership (2026-11-18) — chat.thread_worktree_bound@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -32195,7 +32210,7 @@ source_lineage:
 preserved_exact_tokens:
 - chat.thread_worktree_bound
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -32203,7 +32218,9 @@ owner_hints:
 
 ### ACD-617 — chat.thread_worktree_create_failed
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_create_failed` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat WorktreeManager create failure handler. A failed or timed-out creation records its sanitized error and origin without claiming a binding. Preserve any unresolved external effect for reconciliation; do not retry git on replay. For chat.thread_worktree_create_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_create_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-637; persistence/read route: SP-617.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_create_failed` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat WorktreeManager create failure handler. A failed or timed-out creation records its sanitized error and origin without claiming a binding. Preserve any unresolved external effect for reconciliation; do not retry git on replay. For chat.thread_worktree_create_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_create_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-637; persistence/read route: SP-617.
+
+Current membership (2026-11-18) — chat.thread_worktree_create_failed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-617
@@ -32213,8 +32230,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: '### ACD-617 — chat.thread_worktree_create_failed
 
 
-  Newly authored owner contract under DL-045 for `chat.thread_worktree_create_failed` only, revision 1.0.0, prepared
-  without admission. Exact producer: Assistant Chat WorktreeManager create failure handler. A failed or timed-out
+  Newly authored owner contract under DL-045 for `chat.thread_worktree_create_failed` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat WorktreeManager create failure handler. A failed or timed-out
   creation records its sanitized error and origin without claiming a binding. Preserve any unresolved external effect
   for reconciliation; do not retry git on replay. For chat.thread_worktree_create_failed, freeze operation_id from
   the original accepted operation before its effect (fresh entropy for a new operation, retained across retries).
@@ -32236,15 +32252,16 @@ canonical_text: '### ACD-617 — chat.thread_worktree_create_failed
   for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
   Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
   The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
-  route: CV-637; persistence/read route: SP-617.'
+  route: CV-637; persistence/read route: SP-617.
+
+  Current membership (2026-11-18) — chat.thread_worktree_create_failed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -32262,7 +32279,7 @@ source_lineage:
 preserved_exact_tokens:
 - chat.thread_worktree_create_failed
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -32270,7 +32287,9 @@ owner_hints:
 
 ### ACD-618 — chat.thread_worktree_merge_failed
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_merge_failed` only, revision 1.0.0, prepared without admission. Exact producer: cmd.chat.worktree.merge failure completion handler. Under the existing merge lock, capture failed merge/guard or hook result and conflicts. Rebase conflicts auto-abort under W.8.5. No success result or automatic unbind is published. For chat.thread_worktree_merge_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merge_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-638; persistence/read route: SP-618.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_merge_failed` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: cmd.chat.worktree.merge failure completion handler. Under the existing merge lock, capture failed merge/guard or hook result and conflicts. Rebase conflicts auto-abort under W.8.5. No success result or automatic unbind is published. For chat.thread_worktree_merge_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merge_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-638; persistence/read route: SP-618.
+
+Current membership (2026-11-18) — chat.thread_worktree_merge_failed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-618
@@ -32280,8 +32299,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: '### ACD-618 — chat.thread_worktree_merge_failed
 
 
-  Newly authored owner contract under DL-045 for `chat.thread_worktree_merge_failed` only, revision 1.0.0, prepared
-  without admission. Exact producer: cmd.chat.worktree.merge failure completion handler. Under the existing merge
+  Newly authored owner contract under DL-045 for `chat.thread_worktree_merge_failed` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: cmd.chat.worktree.merge failure completion handler. Under the existing merge
   lock, capture failed merge/guard or hook result and conflicts. Rebase conflicts auto-abort under W.8.5. No success
   result or automatic unbind is published. For chat.thread_worktree_merge_failed, freeze operation_id from the original
   accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic
@@ -32303,15 +32321,16 @@ canonical_text: '### ACD-618 — chat.thread_worktree_merge_failed
   for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
   Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
   The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
-  route: CV-638; persistence/read route: SP-618.'
+  route: CV-638; persistence/read route: SP-618.
+
+  Current membership (2026-11-18) — chat.thread_worktree_merge_failed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -32329,7 +32348,7 @@ source_lineage:
 preserved_exact_tokens:
 - chat.thread_worktree_merge_failed
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -32337,7 +32356,9 @@ owner_hints:
 
 ### ACD-619 — chat.thread_worktree_merged
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_merged` only, revision 1.0.0, prepared without admission. Exact producer: cmd.chat.worktree.merge success completion handler. After W.8 guards, tests and actual completed git strategy, record result commit. Rebase includes worktree rebase and main-repository ff-merge under one lock. Keep binding until explicit user cleanup. For chat.thread_worktree_merged, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merged", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-639; persistence/read route: SP-619.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_merged` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: cmd.chat.worktree.merge success completion handler. After W.8 guards, tests and actual completed git strategy, record result commit. Rebase includes worktree rebase and main-repository ff-merge under one lock. Keep binding until explicit user cleanup. For chat.thread_worktree_merged, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merged", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-639; persistence/read route: SP-619.
+
+Current membership (2026-11-18) — chat.thread_worktree_merged@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-619
@@ -32347,8 +32368,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: '### ACD-619 — chat.thread_worktree_merged
 
 
-  Newly authored owner contract under DL-045 for `chat.thread_worktree_merged` only, revision 1.0.0, prepared without
-  admission. Exact producer: cmd.chat.worktree.merge success completion handler. After W.8 guards, tests and actual
+  Newly authored owner contract under DL-045 for `chat.thread_worktree_merged` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: cmd.chat.worktree.merge success completion handler. After W.8 guards, tests and actual
   completed git strategy, record result commit. Rebase includes worktree rebase and main-repository ff-merge under
   one lock. Keep binding until explicit user cleanup. For chat.thread_worktree_merged, freeze operation_id from
   the original accepted operation before its effect (fresh entropy for a new operation, retained across retries).
@@ -32370,15 +32390,16 @@ canonical_text: '### ACD-619 — chat.thread_worktree_merged
   for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
   Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
   The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
-  route: CV-639; persistence/read route: SP-619.'
+  route: CV-639; persistence/read route: SP-619.
+
+  Current membership (2026-11-18) — chat.thread_worktree_merged@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -32396,7 +32417,7 @@ source_lineage:
 preserved_exact_tokens:
 - chat.thread_worktree_merged
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -32404,7 +32425,9 @@ owner_hints:
 
 ### ACD-620 — chat.thread_worktree_pr_created
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_pr_created` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat Create PR API success handler. After auto-push succeeds and PR API returns the actual PR, record URL and number. Keep worktree bound; create no cleanup modal. For chat.thread_worktree_pr_created, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-640; persistence/read route: SP-620.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_pr_created` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat Create PR API success handler. After auto-push succeeds and PR API returns the actual PR, record URL and number. Keep worktree bound; create no cleanup modal. For chat.thread_worktree_pr_created, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-640; persistence/read route: SP-620.
+
+Current membership (2026-11-18) — chat.thread_worktree_pr_created@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-620
@@ -32414,8 +32437,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: '### ACD-620 — chat.thread_worktree_pr_created
 
 
-  Newly authored owner contract under DL-045 for `chat.thread_worktree_pr_created` only, revision 1.0.0, prepared
-  without admission. Exact producer: Assistant Chat Create PR API success handler. After auto-push succeeds and
+  Newly authored owner contract under DL-045 for `chat.thread_worktree_pr_created` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat Create PR API success handler. After auto-push succeeds and
   PR API returns the actual PR, record URL and number. Keep worktree bound; create no cleanup modal. For chat.thread_worktree_pr_created,
   freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
   retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_created", "1.0.0", storage_instance_id,
@@ -32436,15 +32458,16 @@ canonical_text: '### ACD-620 — chat.thread_worktree_pr_created
   success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original
   evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation.
   This text defines no new user command or feature. The event cannot emit until its own admission and all required
-  owner source graphs are complete. Semantic/payload route: CV-640; persistence/read route: SP-620.'
+  owner source graphs are complete. Semantic/payload route: CV-640; persistence/read route: SP-620.
+
+  Current membership (2026-11-18) — chat.thread_worktree_pr_created@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -32462,7 +32485,7 @@ source_lineage:
 preserved_exact_tokens:
 - chat.thread_worktree_pr_created
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -32470,7 +32493,9 @@ owner_hints:
 
 ### ACD-621 — chat.thread_worktree_pr_failed
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_pr_failed` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat Create PR failure handler. Push failure records phase push; an API failure after successful push records phase api. Neither opens the PR panel. A retry has a new operation identity only if the original external effect has been reconciled. For chat.thread_worktree_pr_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-641; persistence/read route: SP-621.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_pr_failed` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat Create PR failure handler. Push failure records phase push; an API failure after successful push records phase api. Neither opens the PR panel. A retry has a new operation identity only if the original external effect has been reconciled. For chat.thread_worktree_pr_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-641; persistence/read route: SP-621.
+
+Current membership (2026-11-18) — chat.thread_worktree_pr_failed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-621
@@ -32480,8 +32505,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: '### ACD-621 — chat.thread_worktree_pr_failed
 
 
-  Newly authored owner contract under DL-045 for `chat.thread_worktree_pr_failed` only, revision 1.0.0, prepared
-  without admission. Exact producer: Assistant Chat Create PR failure handler. Push failure records phase push;
+  Newly authored owner contract under DL-045 for `chat.thread_worktree_pr_failed` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat Create PR failure handler. Push failure records phase push;
   an API failure after successful push records phase api. Neither opens the PR panel. A retry has a new operation
   identity only if the original external effect has been reconciled. For chat.thread_worktree_pr_failed, freeze
   operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained
@@ -32503,15 +32527,16 @@ canonical_text: '### ACD-621 — chat.thread_worktree_pr_failed
   success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original
   evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation.
   This text defines no new user command or feature. The event cannot emit until its own admission and all required
-  owner source graphs are complete. Semantic/payload route: CV-641; persistence/read route: SP-621.'
+  owner source graphs are complete. Semantic/payload route: CV-641; persistence/read route: SP-621.
+
+  Current membership (2026-11-18) — chat.thread_worktree_pr_failed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -32529,7 +32554,7 @@ source_lineage:
 preserved_exact_tokens:
 - chat.thread_worktree_pr_failed
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -32537,13 +32562,15 @@ owner_hints:
 
 ### ACD-622 — chat.thread_worktree_pre_merge_test_failed
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_test_failed` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat pre-merge test completion handler. After the matching started operation, record failure, duration and actual exit status. Respect W.8 test gate and existing explicit override rules; replay cannot authorize an override or merge. For chat.thread_worktree_pre_merge_test_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-642; persistence/read route: SP-622.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_test_failed` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat pre-merge test completion handler. After the matching started operation, record failure, duration and actual exit status. Respect W.8 test gate and existing explicit override rules; replay cannot authorize an override or merge. For chat.thread_worktree_pre_merge_test_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-642; persistence/read route: SP-622.
 
 Under W.9.2/W.9.3, bind started_event_id to the actual retained chat.thread_worktree_pre_merge_test_started EventRecord for the same original operation, scope/Server, Computer, thread, worktree, exact command and strategy; the actual terminal outcome must join that started identity and original duration. The closed failure payload adds test_outcome=exit|timeout|process_error and error_ref. For exit, actual and payload exit_code are the same nonzero integer and error_ref=null; ordinary exit 0 is Pass and cannot emit this failure even with user_override. For timeout or process_error, actual and payload exit_code=null (never invented 0 or an invented exit status); process_error requires the same original scrubbed error_ref. Timeout and process-error handling reuse the existing W.9.3 failure/override UI and cleanup, with no new behavior. Missing/mismatched started operation or actual terminal evidence refuses the event. Native process execution/custody remains NOT_RUN.
 
 The terminal-to-started join first resolves the retained started EventRecord in its independently read actual Storage instance, validates its supported original envelope and Project/application payload edition, and verifies the exact original Storage commitment and current retention, authorization, deletion, hold and withdrawal facts. Resolve inline or verified SP-337 referenced bodies before comparing operation, scope, Computer, thread, worktree, command, strategy and actual outcome. Accept starts that were valid when written, including retained projector_replay_only compatibility history and a valid second Storage instance after live-state changes; a current-writer guard must never gate this historical original. Forged, withdrawn, foreign, unsupported or unavailable starts refuse. No caller-supplied started payload or fixture default supplies authority.
 
 The retained started record, its inline or SP-337 body and original Storage commitment all use record_number_rule() under CV-642–644/SP-624 protected write provenance, including raw-v1 and normalized-v2 history. Only the new terminal payload and current outcome/observation use strict-v4. A current writer/type/format guard never reaches the historical start; independently forged recipes, original bytes, withdrawal and access still refuse.
+
+Current membership (2026-11-18) — chat.thread_worktree_pre_merge_test_failed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-622
@@ -32554,7 +32581,7 @@ canonical_text: '### ACD-622 — chat.thread_worktree_pre_merge_test_failed
 
 
   Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_test_failed` only, revision
-  1.0.0, prepared without admission. Exact producer: Assistant Chat pre-merge test completion handler. After
+  1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat pre-merge test completion handler. After
   the matching started operation, record failure, duration and actual exit status. Respect W.8 test gate and
   existing explicit override rules; replay cannot authorize an override or merge. For chat.thread_worktree_pre_merge_test_failed,
   freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
@@ -32595,15 +32622,16 @@ canonical_text: '### ACD-622 — chat.thread_worktree_pre_merge_test_failed
   The terminal-to-started join first resolves the retained started EventRecord in its independently read actual Storage instance, validates its supported original envelope and Project/application payload edition, and verifies the exact original Storage commitment and current retention, authorization, deletion, hold and withdrawal facts. Resolve inline or verified SP-337 referenced bodies before comparing operation, scope, Computer, thread, worktree, command, strategy and actual outcome. Accept starts that were valid when written, including retained projector_replay_only compatibility history and a valid second Storage instance after live-state changes; a current-writer guard must never gate this historical original. Forged, withdrawn, foreign, unsupported or unavailable starts refuse. No caller-supplied started payload or fixture default supplies authority.
 
 
-  The retained started record, its inline or SP-337 body and original Storage commitment all use record_number_rule() under CV-642–644/SP-624 protected write provenance, including raw-v1 and normalized-v2 history. Only the new terminal payload and current outcome/observation use strict-v4. A current writer/type/format guard never reaches the historical start; independently forged recipes, original bytes, withdrawal and access still refuse.'
+  The retained started record, its inline or SP-337 body and original Storage commitment all use record_number_rule() under CV-642–644/SP-624 protected write provenance, including raw-v1 and normalized-v2 history. Only the new terminal payload and current outcome/observation use strict-v4. A current writer/type/format guard never reaches the historical start; independently forged recipes, original bytes, withdrawal and access still refuse.
+
+  Current membership (2026-11-18) — chat.thread_worktree_pre_merge_test_failed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 - Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
   cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
@@ -32623,7 +32651,7 @@ source_lineage:
 preserved_exact_tokens:
 - chat.thread_worktree_pre_merge_test_failed
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -32631,13 +32659,15 @@ owner_hints:
 
 ### ACD-623 — chat.thread_worktree_pre_merge_test_passed
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_test_passed` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat pre-merge test completion handler. After matching started operation, record successful test and duration for this strategy. It does not prove post-hook state or permit replay to run a merge. For chat.thread_worktree_pre_merge_test_passed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_passed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-643; persistence/read route: SP-623.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_test_passed` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat pre-merge test completion handler. After matching started operation, record successful test and duration for this strategy. It does not prove post-hook state or permit replay to run a merge. For chat.thread_worktree_pre_merge_test_passed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_passed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-643; persistence/read route: SP-623.
 
 Under W.9.2/W.9.3, started_event_id resolves the actual matching started EventRecord for the same original operation, scope/Server, Computer, thread, worktree, exact command and strategy. Original terminal evidence has kind=exit and exit_code=0 and the same duration; a nonzero exit, timeout, process error or another started operation cannot emit this passed family. This is a binding of existing Pass semantics, not authority to rerun tests or merge during replay.
 
 The terminal-to-started join first resolves the retained started EventRecord in its independently read actual Storage instance, validates its supported original envelope and Project/application payload edition, and verifies the exact original Storage commitment and current retention, authorization, deletion, hold and withdrawal facts. Resolve inline or verified SP-337 referenced bodies before comparing operation, scope, Computer, thread, worktree, command, strategy and actual outcome. Accept starts that were valid when written, including retained projector_replay_only compatibility history and a valid second Storage instance after live-state changes; a current-writer guard must never gate this historical original. Forged, withdrawn, foreign, unsupported or unavailable starts refuse. No caller-supplied started payload or fixture default supplies authority.
 
 The retained started record, its inline or SP-337 body and original Storage commitment all use record_number_rule() under CV-642–644/SP-624 protected write provenance, including raw-v1 and normalized-v2 history. Only the new terminal payload and current outcome/observation use strict-v4. A current writer/type/format guard never reaches the historical start; independently forged recipes, original bytes, withdrawal and access still refuse.
+
+Current membership (2026-11-18) — chat.thread_worktree_pre_merge_test_passed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-623
@@ -32648,7 +32678,7 @@ canonical_text: '### ACD-623 — chat.thread_worktree_pre_merge_test_passed
 
 
   Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_test_passed` only, revision
-  1.0.0, prepared without admission. Exact producer: Assistant Chat pre-merge test completion handler. After
+  1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat pre-merge test completion handler. After
   matching started operation, record successful test and duration for this strategy. It does not prove post-hook
   state or permit replay to run a merge. For chat.thread_worktree_pre_merge_test_passed, freeze operation_id
   from the original accepted operation before its effect (fresh entropy for a new operation, retained across
@@ -32684,15 +32714,16 @@ canonical_text: '### ACD-623 — chat.thread_worktree_pre_merge_test_passed
   The terminal-to-started join first resolves the retained started EventRecord in its independently read actual Storage instance, validates its supported original envelope and Project/application payload edition, and verifies the exact original Storage commitment and current retention, authorization, deletion, hold and withdrawal facts. Resolve inline or verified SP-337 referenced bodies before comparing operation, scope, Computer, thread, worktree, command, strategy and actual outcome. Accept starts that were valid when written, including retained projector_replay_only compatibility history and a valid second Storage instance after live-state changes; a current-writer guard must never gate this historical original. Forged, withdrawn, foreign, unsupported or unavailable starts refuse. No caller-supplied started payload or fixture default supplies authority.
 
 
-  The retained started record, its inline or SP-337 body and original Storage commitment all use record_number_rule() under CV-642–644/SP-624 protected write provenance, including raw-v1 and normalized-v2 history. Only the new terminal payload and current outcome/observation use strict-v4. A current writer/type/format guard never reaches the historical start; independently forged recipes, original bytes, withdrawal and access still refuse.'
+  The retained started record, its inline or SP-337 body and original Storage commitment all use record_number_rule() under CV-642–644/SP-624 protected write provenance, including raw-v1 and normalized-v2 history. Only the new terminal payload and current outcome/observation use strict-v4. A current writer/type/format guard never reaches the historical start; independently forged recipes, original bytes, withdrawal and access still refuse.
+
+  Current membership (2026-11-18) — chat.thread_worktree_pre_merge_test_passed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 - Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
   cases applicable to this exact family; native evidence remains NOT_RUN.
 validation_surfaces:
@@ -32712,7 +32743,7 @@ source_lineage:
 preserved_exact_tokens:
 - chat.thread_worktree_pre_merge_test_passed
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -32720,7 +32751,9 @@ owner_hints:
 
 ### ACD-624 — chat.thread_worktree_pre_merge_test_started
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_test_started` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat pre-merge test launch handler. Acquire merge lock then re-check dirty/conflict/active-run/detached-HEAD guards. Capture target and strategy and safe-point worktree snapshot before mutation-capable tests. Started precedes exactly one terminal test outcome; no test on earlier rebase conflict. For chat.thread_worktree_pre_merge_test_started, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_started", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-644; persistence/read route: SP-624.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_test_started` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat pre-merge test launch handler. Acquire merge lock then re-check dirty/conflict/active-run/detached-HEAD guards. Capture target and strategy and safe-point worktree snapshot before mutation-capable tests. Started precedes exactly one terminal test outcome; no test on earlier rebase conflict. For chat.thread_worktree_pre_merge_test_started, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_started", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-644; persistence/read route: SP-624.
+
+Current membership (2026-11-18) — chat.thread_worktree_pre_merge_test_started@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-624
@@ -32731,7 +32764,7 @@ canonical_text: '### ACD-624 — chat.thread_worktree_pre_merge_test_started
 
 
   Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_test_started` only, revision 1.0.0,
-  prepared without admission. Exact producer: Assistant Chat pre-merge test launch handler. Acquire merge lock then
+  prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat pre-merge test launch handler. Acquire merge lock then
   re-check dirty/conflict/active-run/detached-HEAD guards. Capture target and strategy and safe-point worktree snapshot
   before mutation-capable tests. Started precedes exactly one terminal test outcome; no test on earlier rebase conflict.
   For chat.thread_worktree_pre_merge_test_started, freeze operation_id from the original accepted operation before
@@ -32754,15 +32787,16 @@ canonical_text: '### ACD-624 — chat.thread_worktree_pre_merge_test_started
   external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal
   is checked before starting a new operation. This text defines no new user command or feature. The event cannot
   emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-644;
-  persistence/read route: SP-624.'
+  persistence/read route: SP-624.
+
+  Current membership (2026-11-18) — chat.thread_worktree_pre_merge_test_started@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -32780,7 +32814,7 @@ source_lineage:
 preserved_exact_tokens:
 - chat.thread_worktree_pre_merge_test_started
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -32788,7 +32822,9 @@ owner_hints:
 
 ### ACD-625 — chat.thread_worktree_renamed
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_renamed` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat title-generated worktree rename completion handler. After successful title-driven branch rename, update records and emit old/new branch names; keep worktree identity/path and original temp name. Failure retains the temporary branch and emits no renamed success. For chat.thread_worktree_renamed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_renamed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-645; persistence/read route: SP-625.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_renamed` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat title-generated worktree rename completion handler. After successful title-driven branch rename, update records and emit old/new branch names; keep worktree identity/path and original temp name. Failure retains the temporary branch and emits no renamed success. For chat.thread_worktree_renamed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_renamed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-645; persistence/read route: SP-625.
+
+Current membership (2026-11-18) — chat.thread_worktree_renamed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-625
@@ -32798,8 +32834,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: '### ACD-625 — chat.thread_worktree_renamed
 
 
-  Newly authored owner contract under DL-045 for `chat.thread_worktree_renamed` only, revision 1.0.0, prepared without
-  admission. Exact producer: Assistant Chat title-generated worktree rename completion handler. After successful
+  Newly authored owner contract under DL-045 for `chat.thread_worktree_renamed` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat title-generated worktree rename completion handler. After successful
   title-driven branch rename, update records and emit old/new branch names; keep worktree identity/path and original
   temp name. Failure retains the temporary branch and emits no renamed success. For chat.thread_worktree_renamed,
   freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
@@ -32821,15 +32856,16 @@ canonical_text: '### ACD-625 — chat.thread_worktree_renamed
   success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original
   evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation.
   This text defines no new user command or feature. The event cannot emit until its own admission and all required
-  owner source graphs are complete. Semantic/payload route: CV-645; persistence/read route: SP-625.'
+  owner source graphs are complete. Semantic/payload route: CV-645; persistence/read route: SP-625.
+
+  Current membership (2026-11-18) — chat.thread_worktree_renamed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -32847,7 +32883,7 @@ source_lineage:
 preserved_exact_tokens:
 - chat.thread_worktree_renamed
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -32855,7 +32891,9 @@ owner_hints:
 
 ### ACD-626 — chat.thread_worktree_unbound
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_unbound` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat unbind/remove/delete cleanup or lazy path revalidation handler. After explicit unbind, guarded removal/delete cleanup or verified path_missing, remove binding and reverse key atomically. Archive/completion/failure and Project switch are not unbind. Never recreate a missing worktree silently. For chat.thread_worktree_unbound, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_unbound", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-646; persistence/read route: SP-626.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_unbound` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat unbind/remove/delete cleanup or lazy path revalidation handler. After explicit unbind, guarded removal/delete cleanup or verified path_missing, remove binding and reverse key atomically. Archive/completion/failure and Project switch are not unbind. Never recreate a missing worktree silently. For chat.thread_worktree_unbound, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_unbound", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-646; persistence/read route: SP-626.
+
+Current membership (2026-11-18) — chat.thread_worktree_unbound@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-626
@@ -32865,8 +32903,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: '### ACD-626 — chat.thread_worktree_unbound
 
 
-  Newly authored owner contract under DL-045 for `chat.thread_worktree_unbound` only, revision 1.0.0, prepared without
-  admission. Exact producer: Assistant Chat unbind/remove/delete cleanup or lazy path revalidation handler. After
+  Newly authored owner contract under DL-045 for `chat.thread_worktree_unbound` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: Assistant Chat unbind/remove/delete cleanup or lazy path revalidation handler. After
   explicit unbind, guarded removal/delete cleanup or verified path_missing, remove binding and reverse key atomically.
   Archive/completion/failure and Project switch are not unbind. Never recreate a missing worktree silently. For
   chat.thread_worktree_unbound, freeze operation_id from the original accepted operation before its effect (fresh
@@ -32889,15 +32926,16 @@ canonical_text: '### ACD-626 — chat.thread_worktree_unbound
   external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal
   is checked before starting a new operation. This text defines no new user command or feature. The event cannot
   emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-646;
-  persistence/read route: SP-626.'
+  persistence/read route: SP-626.
+
+  Current membership (2026-11-18) — chat.thread_worktree_unbound@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -32915,7 +32953,7 @@ source_lineage:
 preserved_exact_tokens:
 - chat.thread_worktree_unbound
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -32923,7 +32961,9 @@ owner_hints:
 
 ### ACD-613 — chat.thread_archived
 
-Newly authored owner contract under DL-045 for `chat.thread_archived` only, revision 1.0.0, prepared without admission. Exact producer: cmd.chat.thread.archive lifecycle handler for the existing manual Archive action, dispatched by cataloged cmd.chat.archive; the lifecycle spelling is an owner interface, not a new command registration. Adopt DL-280/DL-287, ACD-071/074/508 and the catalog guard thread_selected && !active_run_in_thread. No chat auto-archives, in Project or application scope. Only active or suspended may commit to archived; creating, already archived and deleted refuse a new transition. Revalidate current permission, exact selected thread/Server/Computer, expected lifecycle revision and absence of an active run at commit. CAS the canonical thread revision once and read back archived before append. Preserve thread id, transcript, lineage, citations, attachments, audit metadata and existing folder/worktree; hide from active lists and prune only existing transient composer/queue/cache state under ACD-074/075. Archive performs no folder/worktree cleanup, purge, delete or automatic retention action. A later explicit unarchive keeps the same identity; replay cannot override it or a deletion tombstone. For chat.thread_archived, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_archived", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-633; persistence/read route: SP-613.
+Newly authored owner contract under DL-045 for `chat.thread_archived` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration. Exact producer: cmd.chat.thread.archive lifecycle handler for the existing manual Archive action, dispatched by cataloged cmd.chat.archive; the lifecycle spelling is an owner interface, not a new command registration. Adopt DL-280/DL-287, ACD-071/074/508 and the catalog guard thread_selected && !active_run_in_thread. No chat auto-archives, in Project or application scope. Only active or suspended may commit to archived; creating, already archived and deleted refuse a new transition. Revalidate current permission, exact selected thread/Server/Computer, expected lifecycle revision and absence of an active run at commit. CAS the canonical thread revision once and read back archived before append. Preserve thread id, transcript, lineage, citations, attachments, audit metadata and existing folder/worktree; hide from active lists and prune only existing transient composer/queue/cache state under ACD-074/075. Archive performs no folder/worktree cleanup, purge, delete or automatic retention action. A later explicit unarchive keeps the same identity; replay cannot override it or a deletion tombstone. For chat.thread_archived, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_archived", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-633; persistence/read route: SP-613.
+
+Current membership (2026-11-18) — chat.thread_archived@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 ```yaml
 plan_unit_id: ACD-613
@@ -32933,7 +32973,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: '### ACD-613 — chat.thread_archived
 
 
-  Newly authored owner contract under DL-045 for `chat.thread_archived` only, revision 1.0.0, prepared without admission.
+  Newly authored owner contract under DL-045 for `chat.thread_archived` only, revision 1.0.0, prepared without admission before the 2026-11-18 registration.
   Exact producer: cmd.chat.thread.archive lifecycle handler for the existing manual Archive action, dispatched by
   cataloged cmd.chat.archive; the lifecycle spelling is an owner interface, not a new command registration. Adopt
   DL-280/DL-287, ACD-071/074/508 and the catalog guard thread_selected && !active_run_in_thread. No chat auto-archives,
@@ -32963,7 +33003,9 @@ canonical_text: '### ACD-613 — chat.thread_archived
   for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
   Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
   The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
-  route: CV-633; persistence/read route: SP-613.'
+  route: CV-633; persistence/read route: SP-613.
+
+  Current membership (2026-11-18) — chat.thread_archived@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -32974,8 +33016,7 @@ depends_on:
 - DL-287
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
@@ -32997,7 +33038,7 @@ preserved_exact_tokens:
 - cmd.chat.archive
 - No chat auto-archives
 negative_constraints:
-- No event admission or native execution proof; no retention choice.
+- Preparation itself grants no event admission or native execution proof; no retention choice.
 owner_hints:
 - Plans/assistant-chat-design.md
 ```
@@ -33097,7 +33138,7 @@ DL-406 and DL-427 authorize this newly authored saved result on the actual assis
 
 The record is immutable per (actual Storage instance, Server, scope partition, Computer, thread, assistant turn, Stop request). SP-627 defines its exact key and physical custody. Commit absent-to-present by whole-value CAS and verified durable readback; an identical repeat returns the saved result, differing result bytes conflict and never overwrite it. cancelled requires verified all-target stopping within the original three-second grace; timeout requires the original grace to have expired with targeted work unresolved. Stop delivery alone proves neither. The canonical outcome and pending-operation first-receipt/source custody survive restart and coherent backup recovery; never reconstruct an outcome from the request event, partial reply, live state or missing row. A missing or unresolved outcome holds the queue. Historical reads validate the written schema/recipe and exact original request/source/Storage custody with current authorization, deletion and hold checks, irrespective of later turn state. They cannot cancel anything, release the queue or make a partial reply complete.
 
-DL-427 requires the replacement to be fully specified and verified to survive restart and recovery before old outcome names retire. ATS-306 specifies these verification obligations; static models are contract evidence only and native execution remains NOT_RUN. SP-628 records the three separate conditional retirement applications and preserves original readable bytes. The saved record's retention_policy_ref is PENDING_RETENTION_DECISION; the exact question is recorded in SP-627 and Plans/dch_stop_contracts.json. This unit chooses no lifetime or deletion exception.
+DL-427 requires the replacement to be fully specified and verified to survive restart and recovery before old outcome names retire. ATS-306 specifies these verification obligations; static models are contract evidence only and native execution remains NOT_RUN. SP-628 records the three separate conditional retirement applications and preserves original readable bytes. The saved record's Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «retention_policy_ref is PENDING_RETENTION_DECISION»; the exact question is recorded in SP-627 and Plans/dch_stop_contracts.json. This unit chooses no lifetime or deletion exception.
 
 ```yaml
 plan_unit_id: ACD-628
@@ -33136,9 +33177,9 @@ canonical_text: '### ACD-628 — saved assistant-turn Stop outcome
   DL-427 requires the replacement to be fully specified and verified to survive restart and recovery before old
   outcome names retire. ATS-306 specifies these verification obligations; static models are contract evidence only
   and native execution remains NOT_RUN. SP-628 records the three separate conditional retirement applications and
-  preserves original readable bytes. The saved record''s retention_policy_ref is PENDING_RETENTION_DECISION; the
-  exact question is recorded in SP-627 and Plans/dch_stop_contracts.json. This unit chooses no lifetime or deletion
-  exception.'
+  preserves original readable bytes. The saved record''s Historical preparation snapshot (2026-11-19, received 2bda6aeed0):
+  «retention_policy_ref is PENDING_RETENTION_DECISION»; the exact question is recorded in SP-627 and Plans/dch_stop_contracts.json.
+  This unit chooses no lifetime or deletion exception.'
 gui_related: true
 gui_classification_reason: Governs visible reply Stop and queue behavior.
 depends_on:
@@ -33173,6 +33214,8 @@ owner_hints:
 - Plans/assistant-chat-design.md
 ```
 
+
+Current selected assignment (2026-11-19): chat.response_stop_requested@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2240. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### ACD-571 - Bundle Revision Requested Event Semantics
 
 ```yaml
@@ -33197,7 +33240,8 @@ depends_on:
 - ACD-050
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -33221,6 +33265,8 @@ negative_constraints:
 - No event admission, new UI behavior, retention choice, native execution proof or governance seal.
 ```
 
+
+Current selected assignment (2026-11-19): bundle.revision_requested@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2229. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### ACD-572 - Bundle Revision Started Event Semantics
 
 ```yaml
@@ -33245,7 +33291,8 @@ depends_on:
 - ACD-050
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -33269,6 +33316,8 @@ negative_constraints:
 - No event admission, new UI behavior, retention choice, native execution proof or governance seal.
 ```
 
+
+Current selected assignment (2026-11-19): bundle.revision_started@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2230. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### ACD-573 - Bundle Revision Completed Event Semantics
 
 ```yaml
@@ -33293,7 +33342,8 @@ depends_on:
 - ACD-050
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -33317,6 +33367,8 @@ negative_constraints:
 - No event admission, new UI behavior, retention choice, native execution proof or governance seal.
 ```
 
+
+Current selected assignment (2026-11-19): bundle.revision_completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2227. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### ACD-574 - Bundle Revision Interrupted Event Semantics
 
 ```yaml
@@ -33341,7 +33393,8 @@ depends_on:
 - ACD-050
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -33364,3 +33417,5 @@ preserved_exact_tokens:
 negative_constraints:
 - No event admission, new UI behavior, retention choice, native execution proof or governance seal.
 ```
+
+Current selected assignment (2026-11-19): bundle.revision_interrupted@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2228. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
