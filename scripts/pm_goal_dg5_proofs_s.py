@@ -554,3 +554,17 @@ PROOFS['dg5/start/original_d01_head/schema'] = dict(
         'call records the same member at both sites.'
     ),
 )
+
+PROOFS['dg5/start/original_d01_origin/schema'] = dict(
+    kind='entailment',
+    families=['goal_run.started'],
+    depends_on=['dg5/start/retained_native/schema'],
+    sites=[('scripts/pm_goal_dg_s_start.py', 1268), ('scripts/pm_goal_dg_s_start.py', 1269), ('scripts/pm_goal_dg_s_start.py', 1270), ('scripts/pm_goal_dg_s_start.py', 1271), ('scripts/pm_goal_dg_s_start.py', 1272)],
+    argument=(
+        'The original_d01_origin document checked at 1268 is held unchanged as a required '
+        'member of RetainedNativeStart at 1269–1271. The check at 1272 requires the same schema '
+        'definition. The isolated example records the original message again at the later '
+        'check, and the early message returns when the early check is restored. The accepted '
+        'call records the same member at both sites.'
+    ),
+)
