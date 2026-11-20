@@ -192,7 +192,79 @@ def frame_shape(directory):
                 source=[source(ST, 470, 577, 579, 581, 583)])
 
 
+def proposal(directory):
+    """Reproduce the omitted direct proposal entry and its two owner prerequisites."""
+    world, _, existing, _ = pilot.updated._proposal(directory / 'admitted')
+    valid = deepcopy(existing)
+    valid['command_instance_id'] += ':stage7'
+    valid_fixture = world, world.sir.admit_proposal, (valid,), {}
+    collector = sweep.Collector(judge=False)
+    control = pilot.call(valid_fixture, 'valid proposal', collector, valid=True)
+    verdict(control)
+    pilot.require(collector.rows[PROPOSAL]['sites'] == {(U, 770)} and collector.rows[PROPOSAL]['controls'],
+                  'valid proposal did not reach the expected schema row')
+    ref = O.CONTRACTS_URI + '#/$defs/GoalUpdateProposalRequest'
+    definitions = ['GoalUpdateProposalRequest', 'Target', 'Scope']
+    roots = {name: world.sir.bank.registry.resolver().lookup(ref.replace('GoalUpdateProposalRequest', name)).contents
+             for name in definitions}
+    for name, expected in (('GoalUpdateProposalRequest', '#/$defs/Target'), ('Target', '#/$defs/Scope'),
+                           ('Scope', None)):
+        schema = roots[name]
+        pilot.require(schema['type'] == 'object' and schema['additionalProperties'] is False and
+                      set(schema['required']) == set(schema['properties']), f'unexpected {name} object domain')
+        refs = [part['$ref'] for part in schema['properties'].values() if '$ref' in part]
+        pilot.require(refs == ([expected] if expected else []) and
+                      all(p.get('type') in ('string', 'integer') or 'const' in p or '$ref' in p
+                          for p in schema['properties'].values()), f'unexpected {name} leaf domain')
+
+    body = ast.parse((pilot.ROOT / U).read_text())
+    calls = sorted(node.lineno for node in ast.walk(body) if isinstance(node, ast.Call) and
+                   isinstance(node.func, ast.Name) and node.func.id == 'jcs')
+    pilot.require(calls == [237, 728, 773, 878], 'simultaneous JCS call inventory changed')
+    source_scope = pilot.ROOT / 'scripts/pm_goal_dg5_boundaries.py'
+    entries = ast.parse(source_scope.read_text())
+    siri = [node for node in ast.walk(entries) if isinstance(node, ast.Dict) for k, v in zip(node.keys, node.values)
+            if isinstance(k, ast.Constant) and k.value == 'SirOwner' and isinstance(v, ast.Tuple) and
+            'admit_proposal' not in ast.literal_eval(v)]
+    pilot.require(len(siri) == 1, 'the collector already names the proposal entry or the entry list moved')
+
+    changes = {}
+    malformed = deepcopy(valid)
+    storage_id = malformed['target']['scope']['storage_instance_id']
+    malformed['target']['scope']['storage_instance_id'] = storage_id.replace('-', '')
+    changes['uuid'] = (malformed, 'dgu/sir/proposal/schema/target/scope/storage_instance_id', None, None)
+    with_key = deepcopy(valid)
+    with_key['target']['scope'][1] = 'test'
+    changes['key'] = (with_key, 'dgu/sir/proposal/schema/target/scope', site(170), 'dgu/jcs/key')
+    with_bytes = deepcopy(valid)
+    with_bytes['target']['objective_text'] = b'changed type'
+    changes['value'] = (with_bytes, 'dgu/sir/proposal/schema/target/objective_text', site(178), 'dgu/jcs/type')
+    expected_keywords = {'uuid': 'format', 'key': 'additionalProperties', 'value': 'type'}
+    trials = {}
+    for name, (value, error, later_row, later_code) in changes.items():
+        errors = world.sir.bank.errors(ref, value)
+        pilot.require(len(errors) == 1 and errors[0].validator == expected_keywords[name],
+                      f'proposal {name} has a different schema error')
+        fixture = world, world.sir.admit_proposal, (value,), {}
+        runs = options(fixture, 'invalid proposal ' + name,
+                       dict(baseline=(), proposal_schema_disabled=(PROPOSAL,), restored=()))
+        verdict(runs['baseline'], PROPOSAL, error)
+        verdict(runs['proposal_schema_disabled'], later_row, later_code)
+        verdict(runs['restored'], PROPOSAL, error)
+        trials[name] = dict(runs, validation_keyword=errors[0].validator,
+                            validation_message=errors[0].message)
+    return dict(row=PROPOSAL, owners=[site(170), site(178)], control=control, trials=trials,
+                current_collector='Add admit_proposal to the SirOwner original entries, then capture an accepting '
+                                  'original proposal and U5/N/target_uuid_malformed. Walk the full reached proposal '
+                                  'definition before treating either dependent owner row as closed.',
+                source=[source(U, 170, 178, 237, 722, 728, 770, 773, 877, 878),
+                        source(PROPOSAL_SCHEMA, 34, 36, 45, 59, 61, 78, 84, 90, 92, 119, 120),
+                        source('scripts/pm_goal_dg5_boundaries.py', 1118),
+                        source('scripts/pm_goal_dg_u_oracles.py', 1265, 1272, 1273)])
+
+
 CHECKS = {
+    'proposal': proposal,
     'frame_shape': frame_shape,
     'event_type': event_type,
     'scope_project': scope_project,
