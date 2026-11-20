@@ -62,7 +62,19 @@ def withdrawn_handle(directory, negative):
     return world, owner.resolve, (handle,), {}
 
 
+def original_ref_type(directory, negative):
+    world = start_world(directory)
+    owner = world.owners['native']
+    value = {'value': 'first'}
+    # The real issuer accepts this ref when supplied explicitly. It creates
+    # the original whose type is then checked by the complete authenticate call.
+    ref = 1 if negative else 'TEST_ONLY:stage7-original-ref'
+    owner.issue(None, value, ref=ref)
+    return world, owner.authenticate, (ref, value), {}
+
+
 CASES = {
+    'original-ref-type': (ADAPTERS, 497, 'original/ref_type', original_ref_type),
     'withdrawn-handle': (ADAPTERS, 484, 'original/withdrawn', withdrawn_handle),
     'issue-immutable': (ADAPTERS, 466, 'issue/immutable_ref', issue_immutable),
     'codec-key': (ADAPTERS, 421, 'custody/exact_json/key', codec_key),
