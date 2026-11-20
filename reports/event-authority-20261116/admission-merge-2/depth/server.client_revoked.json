@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.111",
+  "sha256": "a994a852a99ad4f74431532c27ddeae0b7b698802e69f7a84fc1eb16baa75908",
   "family_count": 518,
   "row_pointer": "#/families/480"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/480 (canonical row SHA-256 049ad0efbaead45ded15ef0a6ccb0094f0b0c55306f5c8d7a031505054462fb5). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.111 as #/families/480, canonical row SHA-256 bfafaf4b9ecfd4bea6a2e6f2cf268729fd5ac796ce15d4665f9d95d0cf7cd212. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -266,23 +266,45 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1413",
-       "line_start": 51341,
-       "line_end": 51341,
-       "quote": "Current selected assignment (2026-11-19): server.client_revoked@1.0.0 is registered for application_only in Plans/event_family_registry.json,",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "line_start": 51344,
+       "line_end": 51350,
+       "quote": "  Current selected assignment (2026-11-19): server.client_revoked@1.0.0 is registered for application_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2398. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-1413\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Original sources and coherent backups\n  retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication\n  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer\n  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.\n  No native adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1413, Plans/Contracts_V0.md:51310-51389",
+       "quote_scope": "unit CV-1413, Plans/Contracts_V0.md:51313-51392",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1413",
-        "line_start": 49093,
-        "line_end": 49093,
-        "quote": "retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the delet",
-        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+        "line_start": 51341,
+        "line_end": 51341,
+        "quote": "Current selected assignment (2026-11-19): server.client_revoked@1.0.0 is registered for application_only in Plans/event_family_registry.json,",
+        "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+        "quote_check": "exact",
+        "quote_scope": "unit CV-1413, Plans/Contracts_V0.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:51310-51389",
+        "source_citation": {
+         "path": "Plans/Contracts_V0.md",
+         "unit": "CV-1413",
+         "line_start": 49093,
+         "line_end": 49093,
+         "quote": "retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the delet",
+         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+        "line": 51341
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "88181b7ddd7e84377adf20f33673d890c3b5436a",
+        "old_quote": "Current selected assignment (2026-11-19): server.client_revoked@1.0.0 is registered for application_only in Plans/event_family_registry.json,",
+        "old_path": "Plans/Contracts_V0.md",
+        "old_unit": "CV-1413",
+        "old_line_start": 51341,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       },
       {
@@ -611,10 +633,9 @@
   "row_pointer": "#/families/480"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "4831aa88d13d70736272f63997d09f4f510861d9e3b8dedf1ea4488798fa63d9",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "88181b7ddd7e84377adf20f33673d890c3b5436a",
+  "source_assessment_sha256": "fe54c8f9fc4bef664ef119221df58677c9c3885ecfdeae46d471645eb6d53b27",
+  "native_execution": "NOT_RUN"
  }
 }
