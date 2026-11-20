@@ -296,13 +296,66 @@ def _guard_key(cls):
             id(cls.FORMAT_CHECKER), getattr(evolve, '__code__', None), cells)
 
 
+_CLOSED_KEYWORDS = {'additionalProperties', 'unevaluatedProperties'}
+
+
+def clause_name(node, keyword):
+    # Keep established IDs where exactly one member-closure keyword applies.
+    if keyword in _CLOSED_KEYWORDS and _CLOSED_KEYWORDS <= set(go.clauses_of(node)):
+        return keyword
+    return go.name_of(keyword)
+
+
+def _schema_guard(node, keyword):
+    return common.schema_guard(node, keyword, clause_name=clause_name(node, keyword))
+
+
+def _guard_for_location(clause):
+    node, name = clause.rsplit('/', 1)
+    return common.schema_guard({'x-pm-oracle-id': node}, name, clause_name=name)
+
+
+def _clause_inventory(validator):
+    go.CURRENT[0] = validator
+    go.UNRESOLVED.clear()
+    go.RESOLVERS.clear()
+    nodes = go.walk(validator)
+    clauses = []
+    for location, info in nodes.items():
+        node = info['node']
+        clauses.extend(location + '/' + clause_name(node, keyword) for keyword in go.clauses_of(node))
+    if len(set(clauses)) != len(clauses):
+        raise ValueError('duplicate clause IDs in schema inventory')
+    if go.UNRESOLVED:
+        raise ValueError(f'{len(go.UNRESOLVED)} unresolved references in schema inventory')
+    return nodes, sorted(clauses)
+
+
+def _clause_inventory_pin(clauses):
+    return dict(identity='dg5-distinct-keywords-v1', count=len(clauses),
+                sha256=hashlib.sha256('\n'.join(clauses).encode()).hexdigest())
+
+
+def _describe_inventory(entry, plain, ident, bank=None):
+    try:
+        _, clauses = _clause_inventory(closure_validator(plain, ident, bank))
+        entry.update(clause_ids=clauses, clause_inventory=_clause_inventory_pin(clauses))
+    except Exception as exc:  # Keep the failed root visible in the inventory.
+        entry.update(error=f'{type(exc).__name__}: {exc}'[:400])
+    finally:
+        go.RESOLVERS.clear()
+        go.CURRENT[0] = None
+
+
 def guarded_class(cls):
     if cls in GUARDED:
         return cls
     key = _guard_key(cls)
     if key in _GUARD_MEMO:
         return _GUARD_MEMO[key]
-    g = jsonschema.validators.extend(cls, {k: common._keyword_guard(k, f) for k, f in cls.VALIDATORS.items()})
+    keywords = {k: common._keyword_guard(k, getattr(f, '_goal_keyword_source', f), identify=_schema_guard)
+                for k, f in cls.VALIDATORS.items()}
+    g = jsonschema.validators.extend(cls, keywords)
     original_evolve = cls.evolve
 
     def evolve(self, **changes):
@@ -435,7 +488,7 @@ def memo_agree(reference_v, memo_v, records, seeds):
     first_ident = None
     for info in nodes.values():
         for keyword in go.clauses_of(info['node']):
-            first_ident = common.schema_guard(info['node'], keyword)
+            first_ident = _schema_guard(info['node'], keyword)
             break
         if first_ident:
             break
@@ -531,7 +584,7 @@ def _restore_search_wrappers(orig):
 
 
 def _witness_problem(reference_v, clause, entry, value):
-    ident = common.guard_for_location(clause)
+    ident = _guard_for_location(clause)
     errs = go.errors_of(reference_v, value)
     if clause not in go.locations(errs):
         return 'input not refused at the clause'
@@ -908,12 +961,10 @@ def _agree_one(ident, plain, bank_object, seeds, records, args):
 def _close_one(ident, plain, bank_object, seeds, records, args, carried, donor_seed_lists=()):
     """Agree, (memo) search and witness-verify one root; returns (entries, meta)."""
     v, search_v, meta = _prepare_search_validator(ident, plain, bank_object, seeds, records, args)
-    go.UNRESOLVED.clear()
+    nodes, clauses = _clause_inventory(search_v)
     budget = args.budget or 10**12
     if args.per_clause:
-        go.CURRENT[0] = search_v
-        clauses = sum(len(go.clauses_of(info['node'])) for info in go.walk(search_v).values())
-        budget = max(budget if args.budget else 0, args.per_clause * clauses)
+        budget = max(args.budget, args.per_clause * len(clauses))
     go2_orig = _install_go2_search(donor_seed_lists, residual=bool(carried)) if args.donors else None
     orig = _install_search_wrappers(v, search_v, args.sample_every)
     evidence = _CARRIED_EVIDENCE.get(ident, {}) if carried else {}
@@ -924,7 +975,10 @@ def _close_one(ident, plain, bank_object, seeds, records, args, carried, donor_s
         import pm_goal_go2_closure as _go2
         _go2.CONTROL_STORE.update(controls)
     try:
-        entries, branch_controls, spent = go.close_root(ident, search_v, seeds, budget, carried=carried or None)
+        entries, branch_controls, spent = go.close_root(ident, search_v, seeds, budget, carried=carried or None,
+                                                         clause_name=clause_name, nodes=nodes)
+        if entries.keys() != set(clauses):
+            raise ValueError('closure report does not cover its exact clause inventory')
     finally:
         _restore_search_wrappers(orig)
         if args.donors:
@@ -955,6 +1009,7 @@ def _close_one(ident, plain, bank_object, seeds, records, args, carried, donor_s
     meta['validations'] = spent
     meta['budget'] = dict(budget=budget, clause_cap=args.clause_cap)
     meta['unresolved_refs'] = list(go.UNRESOLVED)
+    meta['clause_inventory'] = _clause_inventory_pin(clauses)
     if _WIT['store']:
         import gzip
         store_path = Path(str(args.out) + '.' + ident + '.witnesses.pkl.gz')
@@ -1039,7 +1094,8 @@ def _main_from_dump(args):
                   calls=data['meta'].get('calls'), collection_failures=[], roots={},
                   from_dump=dict(path=str(args.from_dump),
                                  sha256=hashlib.sha256(args.from_dump.read_bytes()).hexdigest()),
-                  mode='agree-only' if args.agree_only else 'close',
+                  mode='assertion-inventory' if args.inventory_only else
+                       ('agree-only' if args.agree_only else 'close'),
                   native_execution='NOT_RUN')
     for number, ident in enumerate(sorted(data['roots'])):
         if number % total != part or (args.roots and not any(r in ident for r in args.roots)):
@@ -1051,6 +1107,14 @@ def _main_from_dump(args):
                      rebuild_note=dumped.get('rebuild_note'), schema=json.dumps(dumped['schema'], sort_keys=True))
         report['roots'][ident] = entry
         if args.inventory_only:
+            if dumped['rebuild'] == 'recollect':
+                entry['error'] = 'inventory needs recollection: ' + str(dumped.get('rebuild_note'))[:300]
+            else:
+                try:
+                    plain = _rebuild_plain(dumped)
+                    _describe_inventory(entry, plain, ident)
+                except Exception as exc:
+                    entry['error'] = f'{type(exc).__name__}: {exc}'[:400]
             continue
         if dumped['rebuild'] == 'recollect':
             entry.update(error='recollect-required: ' + str(dumped.get('rebuild_note'))[:300],
@@ -1091,7 +1155,7 @@ def _main_from_dump(args):
     args.out.write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
     print(json.dumps(dict(roots=len(report['roots']), totals=report['totals'],
                           uncovered=len(report['uncovered']), seconds=report['seconds'])))
-    return 0
+    return int(args.inventory_only and (not report['roots'] or any(r.get('error') for r in report['roots'].values())))
 
 
 def main():
@@ -1136,6 +1200,13 @@ def main():
                   closure_tool_sha256=go.TOOL_SHA256, dg5_adapter_sha256=TOOL_SHA256, source=args.source,
                   family=args.family, calls=collector.calls, collection_failures=collector.failures, roots={},
                   native_execution='NOT_RUN')
+    if args.inventory_only:
+        report['mode'] = 'assertion-inventory'
+        reached = set()
+        for record in collector.ledger:
+            if record['family'] == args.family and record.get('sig') is not None:
+                reached.update(collector.signature_list[record['sig']])
+        report['row_inventory'] = {name: sorted(collector.rows[name]['sites']) for name in sorted(reached)}
     ordered = sorted(SLOTS.items(), key=lambda item: root_id(item[0]))
     report['all_roots'] = {root_id(k): dict(bank=s['bank'], schema=k[1], validator_class=k[0], registry_sha256=k[2], calls=s['calls'], refused=s['refused'],
                                             rows=sorted(s.get('rows', ())),
@@ -1173,6 +1244,9 @@ def main():
                      seeds=len(slot['seeds']), seed_sha256=sorted(slot['seeds']))
         report['roots'][ident] = entry
         if args.inventory_only:
+            _describe_inventory(entry, slot['validator'], ident, slot['bank_object'])
+            slot['records'] = []
+            slot['seeds'] = {}
             continue
         try:
             entries, meta = _close_one(ident, slot['validator'], slot['bank_object'],
@@ -1204,6 +1278,8 @@ def main():
     args.out.write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
     print(json.dumps(dict(roots=len(report['roots']), totals=report['totals'], uncovered=len(report['uncovered']),
                           seconds=report['seconds'])))
+    if args.inventory_only:
+        return int(not report['roots'] or bool(collector.failures) or any(r.get('error') for r in report['roots'].values()))
     return 0
 
 

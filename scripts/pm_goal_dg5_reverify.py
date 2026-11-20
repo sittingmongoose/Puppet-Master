@@ -112,7 +112,7 @@ def reconstruct(v, nodes, clause, entry, controls, raw):
     if info is None:
         return None, 'clause absent from the reference walk'
     keyword = next((k for k in c.go.clauses_of(info['node'])
-                    if c.go.name_of(k) == clause.rsplit('/', 1)[1]), None)
+                    if c.clause_name(info['node'], k) == clause.rsplit('/', 1)[1]), None)
     if keyword is None:
         return None, 'keyword absent from the reference walk'
     by_ipath = collections.defaultdict(list)
@@ -160,8 +160,7 @@ def reverify(dump_path, report_paths, out_path, root_filter=()):
         v = c.closure_validator(plain, ident)
         if c.agree(plain, v, dumped['records']):
             raise ValueError('reference agreement failed: ' + ident)
-        c.go.CURRENT[0] = v
-        nodes = c.go.walk(v)
+        nodes, inventory = c._clause_inventory(v)
         entries, raw, controls, branches = {}, {}, {}, []
         for path, source in reports:
             root = source['roots'].get(ident)
@@ -209,8 +208,16 @@ def reverify(dump_path, report_paths, out_path, root_filter=()):
         root = dict(bank=dumped['bank'], rows=dumped.get('rows', []), families=dumped.get('families', []),
                     clauses=entries, counts=dict(collections.Counter(e['cls'] for e in entries.values())),
                     verify=result, reconstruction_failures=problems)
+        errors = []
         if result['failed']:
-            root['error'] = 'reference witness verification failed: ' + str(result['failed'])
+            errors.append('reference witness verification failed: ' + str(result['failed']))
+        if entries.keys() == set(inventory):
+            root['clause_inventory'] = c._clause_inventory_pin(inventory)
+        else:
+            errors.append('reference walk and report have different clause inventories')
+            failed += 1
+        if errors:
+            root['error'] = '; '.join(errors)
         for field, store in (('witness_store', raw), ('control_store', controls)):
             path = Path(str(out_path) + '.' + ident + '.' + field + '.pkl.gz')
             blob = gzip.compress(pickle.dumps(store, protocol=5))

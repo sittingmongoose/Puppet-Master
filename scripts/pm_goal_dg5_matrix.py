@@ -61,12 +61,40 @@ def line_text(path, line):
         return None
 
 
-def load_closure(paths):
+def _inventory_pin_matches(pin, ids):
+    return (isinstance(pin, dict) and pin.get('identity') == 'dg5-distinct-keywords-v1'
+            and pin.get('count') == len(ids)
+            and pin.get('sha256') == hashlib.sha256('\n'.join(sorted(ids)).encode()).hexdigest())
+
+
+def _root_inventories(paths):
+    inventories, bindings = {}, collections.defaultdict(set)
+    for path in paths:
+        report = json.loads(Path(path).read_text())
+        if report.get('mode') != 'assertion-inventory' or report.get('collection_failures'):
+            raise ValueError(f'invalid assertion inventory report: {path}')
+        for ident, entry in report['roots'].items():
+            keys = entry.get('clause_ids', [])
+            ids = set(keys)
+            error = entry.get('error')
+            if not error and (len(ids) != len(keys) or not _inventory_pin_matches(entry.get('clause_inventory'), ids)):
+                error = 'assertion inventory has a missing or invalid clause pin'
+            current = (ids, error)
+            if ident in inventories and inventories[ident] != current:
+                raise ValueError(f'conflicting assertion inventories for {ident}')
+            inventories[ident] = current
+            for row in entry.get('rows', ()):
+                bindings[row, ident].update(entry.get('families', ()))
+    return inventories, bindings
+
+
+def load_closure(paths, inventory_paths=()):
     """row name -> list of merged (root id, family list, counts, uncovered clause count).
 
     Reports with matching clause inventories can contribute coverage for the same root.
     Missing or renamed clause keys and failed verification block closure.
     """
+    inventories, bindings = _root_inventories(inventory_paths)
     grouped = collections.defaultdict(list)
     for path in paths:
         report = json.loads(Path(path).read_text())
@@ -74,6 +102,19 @@ def load_closure(paths):
             clauses = entry.get('clauses', {})
             uncovered = {c for c, e in clauses.items() if e['cls'] == 'UNCOVERED'}
             errors = [entry['error']] if entry.get('error') else []
+            clause_ids = set(clauses)
+            census = inventories.get(ident)
+            pin = entry.get('clause_inventory')
+            if census is not None:
+                ids, error = census
+                if error:
+                    errors.append(error)
+                elif clause_ids != ids:
+                    errors.append('closure report differs from the exact assertion inventory')
+            if pin is not None and not _inventory_pin_matches(pin, clause_ids):
+                errors.append('closure report has an invalid clause inventory pin')
+            if census is None and pin is None and any(c.endswith('/closed_members') for c in clauses):
+                errors.append('legacy closed_members requires an exact assertion inventory')
             verify = entry.get('verify', {})
             failed = verify.get('failed', 0)
             unverifiable = verify.get('unverifiable', 0)
@@ -85,7 +126,7 @@ def load_closure(paths):
             verified_ids = witnessed if verify.get('passed') == len(witnessed) and not errors else set()
             for name in entry.get('rows', []):
                 grouped[(name, ident)].append(dict(report=str(path), families=entry.get('families', []),
-                                                   counts=entry.get('counts', {}), clause_ids=set(clauses),
+                                                   counts=entry.get('counts', {}), clause_ids=clause_ids,
                                                    uncovered_ids=uncovered, verified_ids=verified_ids, errors=errors))
     by_row = collections.defaultdict(list)
     for (name, ident), entries in grouped.items():
@@ -101,6 +142,12 @@ def load_closure(paths):
                                  counts=entries[0]['counts'], uncovered=len(uncovered),
                                  uncovered_clauses=sorted(uncovered),
                                  error='; '.join(errors) if errors else None))
+    for (name, ident), families in bindings.items():
+        if (name, ident) not in grouped:
+            _, error = inventories[ident]
+            by_row[name].append(dict(root=ident, report=None, reports=[], families=sorted(families),
+                                     counts={}, uncovered=0, uncovered_clauses=[],
+                                     error=error or 'no closure report for inventoried root'))
     return by_row
 
 
@@ -363,12 +410,14 @@ def main():
     parser.add_argument('--closure', action='append', default=[])
     parser.add_argument('--shared-proof', action='append', type=Path, default=[],
                         help='shared-adapter proof directory whose kills may be cited for shared rows')
+    parser.add_argument('--root-inventory', action='append', type=Path, default=[],
+                        help='exact assertion inventory reports that bind legacy closure evidence')
     parser.add_argument('--out', type=Path, required=True)
     args = parser.parse_args()
     import pm_goal_dg5_justified as justified
     proofs = [load_proof(path, index) for index, path in enumerate(args.proof)]
     shared_proofs = [load_proof(path, index) for index, path in enumerate(args.shared_proof)]
-    closure = load_closure(args.closure)
+    closure = load_closure(args.closure, args.root_inventory)
     out = dict(schema_id='pm.pnc019.c12_dg5.coverage_matrix.v1', proof_dir=str(args.proof[0]),
                proof_dirs=[str(path) for path in args.proof],
                shared_proof_dirs=[str(path) for path in args.shared_proof], families={},
