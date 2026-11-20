@@ -138,12 +138,14 @@ def update_fixture(route, path):
     actor = goal['user']
     permission = goal['user_permission']
     inspect = w.inspector
-    if route in ('inspect', 'inspect_request_recheck', 'inspect_event_recheck'):
+    if route in ('inspect', 'inspect_request_recheck', 'inspect_event_recheck', 'inspect_receipt_recheck'):
         event_request = inspect.request_for(goal['scope'], progress['publication']['event_id'])
         if route == 'inspect_request_recheck':
             check_projected_request_source(w, oracle.O.CONSUMER_URI, route)
         if route == 'inspect_event_recheck':
             check_inspected_event_source(oracle.O, w, progress)
+        if route == 'inspect_receipt_recheck':
+            check_inspection_receipt_source(oracle.O, w)
         return w, lambda: inspect.inspect(event_request, actor, permission)
     if route in ('audit_current_request', 'audit_terminal_request'):
         check_projected_request_source(w, oracle.O.CONSUMER_URI, route)
@@ -445,6 +447,24 @@ def check_inspected_event_source(module, world, progress):
             'the selected event no longer carries the stored complete producer and EventRecord')
 
 
+def check_inspection_receipt_source(module, world):
+    body = world.body.bank.documents[module.BODY_URI]['$defs']['receipt_read_request']
+    references = world.consumer_bank.documents[module.CONSUMER_URI]['$defs']
+    selected = references['SelectedActiveEvent']['allOf'][1]['properties']['payload']['$ref']
+    observation = references['EventObservation']
+    payload = world.consumer_bank.documents[selected]
+    require('payload' in observation['required'] and observation['properties']['payload'] == {'$ref': selected} and
+            'body_receipt_request' in payload['required'] and
+            payload['properties']['body_receipt_request'] == body, 'inspection receipt schema constraints differ')
+    reader = inspect.getsource(world.inspector.inspect)
+    steps = ("'#/$defs/SelectedActiveEvent', event, where + '/event'", "payload = event['payload']",
+             "payload['body_receipt_request'], where)", "payload=copy.deepcopy(payload)",
+             "'#/$defs/EventObservation', observation, where + '/observation'")
+    require(all(step in reader for step in steps) and
+            [reader.index(step) for step in steps] == sorted(reader.index(step) for step in steps),
+            'inspection no longer uses the same receipt request before and after the check')
+
+
 def check_publication_reused(world, uri):
     publication = inspect.getsource(world.producer.publish)
     advance = inspect.getsource(world.source.advance)
@@ -659,6 +679,10 @@ class OwnerCheck:
                     record['same_projected_request'] = True
                     if edit is None:
                         self.request_projection = bank, args[0], copy.deepcopy(args[-2])
+                if self.declare['route'] == 'inspect_receipt_recheck' and args[-1] == 'dgu/inspect/observation':
+                    require(request_validation and request_validation[0][2] == args[-2]['payload']['body_receipt_request'],
+                            'the inspected observation used different receipt request data')
+                    record['same_projected_request'] = True
                 return original(bank, *args)
             frame = sys._getframe(1)
             site = [str(Path(frame.f_code.co_filename).relative_to(self.source)), frame.f_lineno]
@@ -677,7 +701,7 @@ class OwnerCheck:
                     require(member not in document, 'test document already has the extra member')
                     changed.append((document, member))
                     document[member] = 'gc'
-            if projection or self.declare['route'] in ('receipt_recheck', 'input_recheck'):
+            if projection or self.declare['route'] in ('receipt_recheck', 'input_recheck', 'inspect_receipt_recheck'):
                 request_validation.append((bank, args[0], copy.deepcopy(document)))
             if next_evidence_check:
                 evidence_validation.append((bank, args[0], args[1], copy.deepcopy(document)))
@@ -856,7 +880,7 @@ class OwnerCheck:
                     require(cut.get('same_final_receipt_request'), 'final validator did not check the original request')
                 if self.declare['route'] == 'input_recheck':
                     require(cut.get('same_input_result_request'), 'input result validator did not check the original request')
-                if self.declare['route'] in REQUEST_PROJECTIONS:
+                if self.declare['route'] in REQUEST_PROJECTIONS or self.declare['route'] == 'inspect_receipt_recheck':
                     require(cut.get('same_projected_request'), 'the later result did not get the original request')
                 if self.declare['route'] in ('current_guard_recheck', 'commit_evidence_recheck',
                                              'retry_evidence_recheck') or (
@@ -1761,6 +1785,8 @@ def main():
         ('dg5/dgu/reader/input/request/schema', 'input_recheck'): 'dgu/reader/input/result/schema/request',
         ('dg5/dgu/inspect/request/schema', 'inspect_request_recheck'): 'dgu/inspect/witness/schema/request',
         ('dg5/dgu/inspect/event/schema', 'inspect_event_recheck'): 'dgu/inspect/frozen_producer',
+        ('dg5/dgu/inspect/receipt_request/schema', 'inspect_receipt_recheck'):
+            'dgu/inspect/observation/schema/payload/body_receipt_request',
         ('dg5/dgu/reader/audit/request/schema', 'audit_current_request'): 'dgu/reader/audit/result/schema/request',
         ('dg5/dgu/reader/audit/request/schema', 'audit_terminal_request'): 'dgu/reader/audit/result/schema/request',
         ('dg5/dgu/body/reserve/pending/schema', 'reserve_pending'): 'dgu/body/goal_body_control/schema/record/pending',
