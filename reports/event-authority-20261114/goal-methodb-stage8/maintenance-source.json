@@ -1,0 +1,484 @@
+[
+  {
+    "accepted_branches": {
+      "0": {
+        "maintenance_epoch": 0,
+        "namespace": "pm.goal.execution_binding",
+        "owner_epoch": 1,
+        "qualification": "TEST_ONLY",
+        "restore_epoch": 0,
+        "root_identity": "TEST_ONLY:storage-root:00000000-0000-0000-0000-000000000001",
+        "schema_id": "pm.test_only.storage_maintenance_source.v1",
+        "scopes": {},
+        "storage_instance_id": "bd5a0f35-6696-4d98-9392-f060bb23f3bf"
+      },
+      "1": {
+        "maintenance_epoch": 0,
+        "namespace": "pm.goal.execution_binding",
+        "owner_epoch": 1,
+        "qualification": "TEST_ONLY",
+        "restore_epoch": 0,
+        "root_identity": "TEST_ONLY:storage-root:00000000-0000-0000-0000-000000000001",
+        "schema_id": "pm.test_only.storage_maintenance_source.v1",
+        "scopes": {
+          "TEST_ONLY:scope": {
+            "deletion_requested": false,
+            "holds": [
+              "TEST_ONLY:hold"
+            ]
+          }
+        },
+        "storage_instance_id": "bd5a0f35-6696-4d98-9392-f060bb23f3bf"
+      }
+    },
+    "examples": {
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/maintenance_epoch/minimum": {
+        "control_name": "0",
+        "path": [
+          "maintenance_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/maintenance_epoch/type": {
+        "control_name": "0",
+        "path": [
+          "maintenance_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/namespace/minLength": {
+        "control_name": "0",
+        "path": [
+          "namespace"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/namespace/type": {
+        "control_name": "0",
+        "path": [
+          "namespace"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/owner_epoch/minimum": {
+        "control_name": "0",
+        "path": [
+          "owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/owner_epoch/type": {
+        "control_name": "0",
+        "path": [
+          "owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/qualification/const": {
+        "control_name": "0",
+        "path": [
+          "qualification"
+        ],
+        "value": "TEST_ONLYx"
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/restore_epoch/minimum": {
+        "control_name": "0",
+        "path": [
+          "restore_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/restore_epoch/type": {
+        "control_name": "0",
+        "path": [
+          "restore_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/root_identity/minLength": {
+        "control_name": "0",
+        "path": [
+          "root_identity"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/root_identity/type": {
+        "control_name": "0",
+        "path": [
+          "root_identity"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/schema_id/const": {
+        "control_name": "0",
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.test_only.storage_maintenance_source.v1x"
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/additionalProperties/closed_members": {
+        "control_name": "1",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "scopes",
+          "TEST_ONLY:scope"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/additionalProperties/properties/deletion_requested/type": {
+        "control_name": "1",
+        "path": [
+          "scopes",
+          "TEST_ONLY:scope",
+          "deletion_requested"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/additionalProperties/properties/holds/items/minLength": {
+        "control_name": "1",
+        "path": [
+          "scopes",
+          "TEST_ONLY:scope",
+          "holds",
+          0
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/additionalProperties/properties/holds/items/type": {
+        "control_name": "1",
+        "path": [
+          "scopes",
+          "TEST_ONLY:scope",
+          "holds",
+          0
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/additionalProperties/properties/holds/type": {
+        "control_name": "1",
+        "path": [
+          "scopes",
+          "TEST_ONLY:scope",
+          "holds"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/additionalProperties/required": {
+        "control_name": "1",
+        "member": [
+          "remove",
+          "holds"
+        ],
+        "path": [
+          "scopes",
+          "TEST_ONLY:scope"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/additionalProperties/type": {
+        "control_name": "1",
+        "path": [
+          "scopes",
+          "TEST_ONLY:scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/type": {
+        "control_name": "0",
+        "path": [
+          "scopes"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/storage_instance_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/storage_instance_id/type": {
+        "control_name": "0",
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/type": {
+        "control_name": "0",
+        "path": [],
+        "value": null
+      }
+    },
+    "family": "goal.cancelled",
+    "reference": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource",
+    "root": "dg5:4a3c55d067a22bb4",
+    "route": "maintenance/source",
+    "row": "dg5/maintenance/source/schema",
+    "site": [
+      "scripts/pm_goal_dg_cb_owners.py",
+      1629
+    ],
+    "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+    "transaction": true,
+    "variant": null
+  },
+  {
+    "accepted_branches": {
+      "0": {
+        "maintenance_epoch": 0,
+        "namespace": "pm.goal.execution_binding",
+        "owner_epoch": 1,
+        "qualification": "TEST_ONLY",
+        "restore_epoch": 0,
+        "root_identity": "TEST_ONLY:storage-root:00000000-0000-0000-0000-000000000001",
+        "schema_id": "pm.test_only.storage_maintenance_source.v1",
+        "scopes": {},
+        "storage_instance_id": "bd5a0f35-6696-4d98-9392-f060bb23f3bf"
+      },
+      "1": {
+        "maintenance_epoch": 0,
+        "namespace": "pm.goal.execution_binding",
+        "owner_epoch": 1,
+        "qualification": "TEST_ONLY",
+        "restore_epoch": 0,
+        "root_identity": "TEST_ONLY:storage-root:00000000-0000-0000-0000-000000000001",
+        "schema_id": "pm.test_only.storage_maintenance_source.v1",
+        "scopes": {
+          "TEST_ONLY:scope": {
+            "deletion_requested": false,
+            "holds": [
+              "TEST_ONLY:hold"
+            ]
+          }
+        },
+        "storage_instance_id": "bd5a0f35-6696-4d98-9392-f060bb23f3bf"
+      }
+    },
+    "examples": {
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/closed_members": {
+        "control_name": "0",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/maintenance_epoch/minimum": {
+        "control_name": "0",
+        "path": [
+          "maintenance_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/maintenance_epoch/type": {
+        "control_name": "0",
+        "path": [
+          "maintenance_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/namespace/minLength": {
+        "control_name": "0",
+        "path": [
+          "namespace"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/namespace/type": {
+        "control_name": "0",
+        "path": [
+          "namespace"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/owner_epoch/minimum": {
+        "control_name": "0",
+        "path": [
+          "owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/owner_epoch/type": {
+        "control_name": "0",
+        "path": [
+          "owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/qualification/const": {
+        "control_name": "0",
+        "path": [
+          "qualification"
+        ],
+        "value": "TEST_ONLYx"
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/restore_epoch/minimum": {
+        "control_name": "0",
+        "path": [
+          "restore_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/restore_epoch/type": {
+        "control_name": "0",
+        "path": [
+          "restore_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/root_identity/minLength": {
+        "control_name": "0",
+        "path": [
+          "root_identity"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/root_identity/type": {
+        "control_name": "0",
+        "path": [
+          "root_identity"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/schema_id/const": {
+        "control_name": "0",
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.test_only.storage_maintenance_source.v1x"
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/additionalProperties/closed_members": {
+        "control_name": "1",
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "scopes",
+          "TEST_ONLY:scope"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/additionalProperties/properties/deletion_requested/type": {
+        "control_name": "1",
+        "path": [
+          "scopes",
+          "TEST_ONLY:scope",
+          "deletion_requested"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/additionalProperties/properties/holds/items/minLength": {
+        "control_name": "1",
+        "path": [
+          "scopes",
+          "TEST_ONLY:scope",
+          "holds",
+          0
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/additionalProperties/properties/holds/items/type": {
+        "control_name": "1",
+        "path": [
+          "scopes",
+          "TEST_ONLY:scope",
+          "holds",
+          0
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/additionalProperties/properties/holds/type": {
+        "control_name": "1",
+        "path": [
+          "scopes",
+          "TEST_ONLY:scope",
+          "holds"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/additionalProperties/required": {
+        "control_name": "1",
+        "member": [
+          "remove",
+          "holds"
+        ],
+        "path": [
+          "scopes",
+          "TEST_ONLY:scope"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/additionalProperties/type": {
+        "control_name": "1",
+        "path": [
+          "scopes",
+          "TEST_ONLY:scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/scopes/type": {
+        "control_name": "0",
+        "path": [
+          "scopes"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/storage_instance_id/minLength": {
+        "control_name": "0",
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/properties/storage_instance_id/type": {
+        "control_name": "0",
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/required": {
+        "control_name": "0",
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource/type": {
+        "control_name": "0",
+        "path": [],
+        "value": null
+      }
+    },
+    "family": "goal.cancelled",
+    "reference": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/MaintenanceSource",
+    "root": "dg5:4a3c55d067a22bb4",
+    "route": "maintenance/source",
+    "row": "dg5/maintenance/source/schema",
+    "site": [
+      "scripts/pm_goal_dg_cb_owners.py",
+      1642
+    ],
+    "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+    "transaction": true,
+    "variant": "update"
+  }
+]
