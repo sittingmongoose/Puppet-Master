@@ -1,0 +1,132 @@
+{
+  "accepted_branches": {
+    "0": {
+      "at": "2026-11-20T16:35:20.653Z",
+      "domain_generation": 1,
+      "migration_id": "TEST_ONLY:direct-writer-cutoff",
+      "qualification": "TEST_ONLY",
+      "schema_id": "pm.test_only.writer_domain_cutoff.v1",
+      "storage_instance_id": "e57ef8a5-84b1-454b-998e-74f91a50957d",
+      "withdrawal_id": "TEST_ONLY:withdrawal:00000000-0000-0000-0000-000000000001"
+    }
+  },
+  "census_sha256": "89de308f5aaaa64cd0f14bc0a0be93363ee9156ef586d70197dca3f3ec620677",
+  "examples": {
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff/properties/at/format": {
+      "control_name": "0",
+      "path": [
+        "at"
+      ],
+      "value": "not-a-date-time"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff/properties/at/type": {
+      "control_name": "0",
+      "path": [
+        "at"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff/properties/domain_generation/minimum": {
+      "control_name": "0",
+      "path": [
+        "domain_generation"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff/properties/domain_generation/type": {
+      "control_name": "0",
+      "path": [
+        "domain_generation"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff/properties/migration_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "migration_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff/properties/migration_id/type": {
+      "control_name": "0",
+      "path": [
+        "migration_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff/properties/qualification/const": {
+      "control_name": "0",
+      "path": [
+        "qualification"
+      ],
+      "value": "TEST_ONLYx"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff/properties/schema_id/const": {
+      "control_name": "0",
+      "path": [
+        "schema_id"
+      ],
+      "value": "pm.test_only.writer_domain_cutoff.v1x"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff/properties/storage_instance_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff/properties/storage_instance_id/type": {
+      "control_name": "0",
+      "path": [
+        "storage_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff/properties/withdrawal_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "withdrawal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff/properties/withdrawal_id/type": {
+      "control_name": "0",
+      "path": [
+        "withdrawal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff/type": {
+      "control_name": "0",
+      "path": [],
+      "value": null
+    }
+  },
+  "family": "goal.cancelled",
+  "reference": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WriterDomainCutoff",
+  "root": "dg5:9f8dfa35b554ac9a",
+  "route": "domain/cutoff",
+  "row": "dg5/domain/cutoff/schema",
+  "site": [
+    "scripts/pm_goal_dg_cb_owners.py",
+    1613
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "transaction": true
+}
