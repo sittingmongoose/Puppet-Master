@@ -67,7 +67,8 @@ function forcedWork(events, renderer) {
 }
 
 // In the page: count the stage's writes on its root and its draws
-const ARM = () => {
+// (exported for tools/onb-rest-arm.selftest.mjs, which runs it against a stub stage)
+export const ARM = () => {
 	const host = document.querySelector('#pm-o55-onboarding .o55-stage'), st = host && host.__pipStage;
 	if (!st || !st.root || typeof st.render !== 'function') return 'no stage (#pm-o55-onboarding .o55-stage with its __pipStage)';
 	if (window.__onbr) { window.__onbr.mo.disconnect(); window.__onbr.unwrap(); }
@@ -75,8 +76,10 @@ const ARM = () => {
 	const walk = (n, f) => { f(n); for (let c = n.firstChild; c; c = c.nextSibling) walk(c, f); };
 	walk(root, (n) => seen.add(n));
 	// NieR's bracket parts are made once and kept in gHud.__b (54-art-nier.js): a target change takes them out and
-	// puts them back in their place; they are not new nodes even when detached at arm time
-	if (st.gHud && st.gHud.__b) for (const p of st.gHud.__b) seen.add(p);
+	// puts them back in their place; they are not new nodes even when detached at arm time. R124 F4-2: seed each
+	// part's subtree too, not only the part: show(8, true) re-inserts __b[8] with the text node it already had, and
+	// that old text is not created (the label can be detached at arm time in a fly-in or when the target hides it).
+	if (st.gHud && st.gHud.__b) for (const p of st.gHud.__b) walk(p, (n) => seen.add(n));
 	const desc = (e) => { if (!e || e.nodeType !== 1) return e && e.parentElement ? desc(e.parentElement) + ' text' : '(detached)'; const c = typeof e.className === 'string' ? e.className : (e.className && e.className.baseVal) || ''; return e.tagName.toLowerCase() + (c.trim() ? '.' + c.trim().split(/\s+/).slice(0, 2).join('.') : ''); };
 	const GROUPS = [['shadows', '.pst-shadows'], ['hud', '.pst-hud'], ['fx', '.pst-fx'], ['trail', '.pst-trail'], ['props', '.pst-props, .pst-pstr'], ['pip', '.pst-pip'], ['bubble', '.pst-bubble'], ['tip', '.pst-tip'], ['hudhtml', '.pst-hudhtml'], ['terrain', '.pst-terrain'], ['back', '.pst-back']];
 	const groupOf = (n) => {
