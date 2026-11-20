@@ -29,8 +29,17 @@ PROJECTOR_ORIGINAL = {
     for where in ('project/original', 'project/lower_original', 'cutover/original')
 }
 PROJECTOR_APPEND = {row.replace('/root/', '/append/root/'): code for row, code in PROJECTOR_ORIGINAL.items()}
-READ_APPEND = HISTORICAL_APPEND | PROJECTOR_APPEND
-ORIGINAL_SCHEMAS = HISTORICAL_ORIGINAL | PROJECTOR_ORIGINAL
+CURRENT_ORIGINAL = {
+    f'dg5/read_current/{phase}/root/schema': f'read_current/{phase}/root'
+    for phase in ('original', 'final')
+}
+CURRENT_APPEND = {row.replace('/root/', '/append/root/'): code for row, code in CURRENT_ORIGINAL.items()}
+READER_APPEND = HISTORICAL_APPEND | CURRENT_APPEND
+READER_ORIGINAL = HISTORICAL_ORIGINAL | CURRENT_ORIGINAL
+READ_APPEND = READER_APPEND | PROJECTOR_APPEND
+ORIGINAL_SCHEMAS = READER_ORIGINAL | PROJECTOR_ORIGINAL
+READER_COMPARISONS = {'read_historical': (902, 'read_historical/final_fence'),
+                      'read_current': (928, 'read_current/final_original')}
 DEPENDENCIES = {
     'dg5/start/commit/schema': ('start/retained_native', 'commit', 'StorageCommit', 1272, 'commit'),
     'dg5/start/origin/schema': ('start/retained_native', 'origin', 'StorageOrigin', 1272, 'origin'),
@@ -64,7 +73,7 @@ class ForwardedCall(worker.CompleteCall):
 
         def observe(bank, reference, value, prefix='root'):
             reader_append = self.row in READ_APPEND
-            if self.row in HISTORICAL_APPEND and prefix == 'read_historical/root':
+            if self.row in READER_APPEND and prefix == self.code.split('/')[0] + '/root':
                 target = bank.lookup(reference)
                 embedded = target.contents['properties']['original']
                 original = target.resolver.lookup(embedded['$ref'])
@@ -123,6 +132,8 @@ class HistoricalOriginalCall(worker.CompleteCall):
     def in_child(self, sender, edit, cut, replay):
         retained = self.declaration['validation_site'] == [READERS, 94]
         code = ORIGINAL_SCHEMAS[self.row]
+        reader_method = code.split('/')[0]
+        comparison_site, _ = READER_COMPARISONS.get(reader_method, (None, None))
         reader = worker.stage.original.R
         validate, same = worker.world.Bank.validate, reader.same
         forwarded, historical = [], []
@@ -142,7 +153,7 @@ class HistoricalOriginalCall(worker.CompleteCall):
                                'the enclosing schema must require the original retained definition')
                 forwarded.append(dict(site=(READERS, 256), value=copy.deepcopy(value['native_start']),
                                       errors=worker.error_records(bank.errors(reference, value))))
-            if prefix == 'read_historical/root':
+            if comparison_site is not None and prefix == reader_method + '/root':
                 target = bank.lookup(reference)
                 child = target.contents['properties']['original']
                 original = target.resolver.lookup(child['$ref'])
@@ -161,11 +172,11 @@ class HistoricalOriginalCall(worker.CompleteCall):
         def compare(final, original):
             result = same(final, original)
             frame = sys._getframe(1)
-            if frame.f_code.co_filename == reader.__file__ and frame.f_lineno == 902:
+            if frame.f_code.co_filename == reader.__file__ and frame.f_lineno == comparison_site:
                 value, other = (final, original) if '/final/' in self.row else (original, final)
                 ref = self.fixture.world.edition.consumer + '#/$defs/OriginalStarted'
                 worker.require(not self.fixture.bank.errors(ref, other), 'the other original copy must validate')
-                forwarded.append(dict(site=(READERS, 902), value=copy.deepcopy(value), same=result,
+                forwarded.append(dict(site=(READERS, comparison_site), value=copy.deepcopy(value), same=result,
                                       expected=copy.deepcopy(other),
                                       errors=worker.error_records(self.fixture.bank.errors(ref, value))))
             return result
@@ -179,7 +190,7 @@ class HistoricalOriginalCall(worker.CompleteCall):
 
         with ExitStack() as changes:
             changes.enter_context(patch.object(worker.world.Bank, 'validate', observe))
-            if not retained:
+            if not retained and comparison_site is not None:
                 changes.enter_context(patch.object(reader, 'same', compare))
             super().in_child(Receipt(), edit, cut, replay)
 
@@ -211,7 +222,7 @@ def check_calls(example, collector, ident, later_code, *, alter_copy=False):
         worker.require(positive_forward['same'] and not forward['same'] and
                        positive_forward['expected'] == forward['expected'] == control['input'],
                        'the comparison did not use the same schema-valid document')
-    if example.row in HISTORICAL_APPEND or example.row in HISTORICAL_ORIGINAL:
+    if example.row in READER_APPEND or example.row in READER_ORIGINAL:
         worker.require(accepted['historical'] == [control['input']] and not disabled['historical'],
                        'the final historical document did not use the same validated append value')
     return control
@@ -220,7 +231,7 @@ def check_calls(example, collector, ident, later_code, *, alter_copy=False):
 def original_later_code(name, specification):
     if specification['validation_site'] == [READERS, 94]:
         return ORIGINAL_SCHEMAS[name] + '/schema/native_start:additionalProperties'
-    return None if name in PROJECTOR_ORIGINAL else 'read_historical/final_fence'
+    return None if name in PROJECTOR_ORIGINAL else READER_COMPARISONS[ORIGINAL_SCHEMAS[name].split('/')[0]][1]
 
 
 def check_root(out, name, specification, sites, reference, previous, alter_copy, reference_digest):

@@ -624,3 +624,18 @@ PROOFS['dg5/cutover/original/append/root/schema'] = dict(
         'Restoring the early check restores the original refusal.'
     ),
 )
+
+PROOFS['dg5/read_current/original/root/schema'] = dict(
+    kind='entailment',
+    families=['goal_run.started'],
+    depends_on=['dg5/read_current/root/schema'],
+    sites=[('scripts/pm_goal_dg_s_readers.py', 94), ('scripts/pm_goal_dg_s_readers.py', 253), ('scripts/pm_goal_dg_s_readers.py', 255), ('scripts/pm_goal_dg_s_readers.py', 256), ('scripts/pm_goal_dg_s_readers.py', 914), ('scripts/pm_goal_dg_s_readers.py', 928), ('scripts/pm_goal_dg_s_readers.py', 935), ('scripts/pm_goal_dg_s_readers.py', 937)],
+    argument=(
+        'The retained document at 94 is unchanged in the required native_start member at '
+        '255–256. The reader requires type-exact equality of the two original documents at 928 '
+        'and checks the same required OriginalStarted object in the result at 935–937. The '
+        'valid example records the same JSON there. Disabling only the retained site produces '
+        'the same validation message at 256, and disabling only the enclosing site causes the '
+        'comparison to refuse.'
+    ),
+)

@@ -55,7 +55,8 @@ class Fixture(stage.Fixture):
             return projector.replay, (generation,)
         if self.route.startswith('read_original/'):
             _, reader, _ = stage.original.projected(self.world)
-            return reader.read_historical, (stage.original.sreq(self.world),)
+            method = self.route.split('/')[1]
+            return getattr(reader, method), (stage.original.sreq(self.world),)
         if self.route == 'projection/record':
             readers = stage.original.R
             return readers.projection_record, (self.world, readers.original_started(self.world))
@@ -83,9 +84,10 @@ class Fixture(stage.Fixture):
             return self.issue_arguments(owner, kind)
         if self.route in ('publish_result', 'publish_original_append'):
             return self.world.start.commit_start, (stage.original.request(self.world), self.handles)
-        if self.route.startswith('read_append/read_historical/'):
+        if self.route.startswith(('read_append/read_historical/', 'read_append/read_current/')):
             _, reader, _ = stage.original.projected(self.world)
-            return reader.read_historical, (stage.original.sreq(self.world),)
+            method = self.route.split('/')[1]
+            return getattr(reader, method), (stage.original.sreq(self.world),)
         if self.route.startswith(('read_append/', 'read_native/')):
             method = 'inspect_original' if self.route.startswith('read_append/') else 'read_retained_native'
             reader = stage.original.R.StartedReaders(self.world.registry, world=self.world)
