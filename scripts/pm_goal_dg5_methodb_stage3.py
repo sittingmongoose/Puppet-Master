@@ -131,7 +131,9 @@ def update_fixture(route, path):
     if route == 'inspect':
         event_request = inspect.request_for(goal['scope'], progress['publication']['event_id'])
         return w, lambda: inspect.inspect(event_request, actor, permission)
-    if route == 'input':
+    if route == 'input_recheck':
+        check_input_request_reused(w, oracle.O.CONSUMER_URI)
+    if route in ('input', 'input_recheck'):
         return w, oracle._input_call(w, goal, oracle.op_of(admission))
     if route == 'receipt_recheck':
         check_receipt_request_reused(w.body)
@@ -260,6 +262,19 @@ def check_receipt_request_reused(body):
             in private, 'receipt request definition changed')
 
 
+def check_input_request_reused(world, uri):
+    reader = inspect.getsource(world.source.read_input_content)
+    steps = ("'#/$defs/InputReadRequest', request, where + '/request')",
+             "request=request, input=inp,", "'#/$defs/InputReadResult', out, where + '/result')")
+    require(all(step in reader for step in steps) and
+            [reader.index(step) for step in steps] == sorted(reader.index(step) for step in steps),
+            'input reader no longer forwards the checked request to the result')
+    result = world.consumer_bank.documents[uri]['$defs']['InputReadResult']
+    require('request' in result['required'] and
+            result['properties']['request'] == {'$ref': uri + '#/$defs/InputReadRequest'},
+            'input result no longer requires the same request schema')
+
+
 def check_publication_reused(world, uri):
     publication = inspect.getsource(world.producer.publish)
     advance = inspect.getsource(world.source.advance)
@@ -335,14 +350,20 @@ class OwnerCheck:
         record = dict(errors=[], cut=self.row in tables.CUT, observations=[])
         changed = []
         expected = self.code + '/schema/'  # extra member is rejected at the enclosing object
-        receipt_validation = []
+        request_validation = []
 
         def observe(bank, *args):
             if args[-1] != self.code:
                 if self.declare['route'] == 'receipt_recheck' and args[-1] == 'dgu/reader/receipt/final/receipt_request':
-                    require(receipt_validation == [(bank, args[0], args[-2])],
+                    require(request_validation == [(bank, args[0], args[-2])],
                             'final receipt validation received a different reference or request')
                     record['same_final_receipt_request'] = True
+                if self.declare['route'] == 'input_recheck' and args[-1] == 'dgu/reader/input/result':
+                    first_bank, first_ref, first_document = request_validation[0]
+                    require(first_bank is bank and args[0] == first_ref.replace('InputReadRequest', 'InputReadResult') and
+                            first_document == args[-2]['request'],
+                            'input result validation received a different request')
+                    record['same_input_result_request'] = True
                 return original(bank, *args)
             frame = sys._getframe(1)
             site = [str(Path(frame.f_code.co_filename).relative_to(self.source)), frame.f_lineno]
@@ -354,8 +375,8 @@ class OwnerCheck:
                 require(member not in document, 'test document already has the extra member')
                 changed.append((document, member))
                 document[member] = 'gc'
-            if self.declare['route'] == 'receipt_recheck':
-                receipt_validation.append((bank, args[0], copy.deepcopy(document)))
+            if self.declare['route'] in ('receipt_recheck', 'input_recheck'):
+                request_validation.append((bank, args[0], copy.deepcopy(document)))
             validator_args = args[:-1]
             sink = []
             saved = closure.CAPTURE[0]
@@ -506,6 +527,8 @@ class OwnerCheck:
                 before, cut, restored = self.runs[-3:]
                 if self.declare['route'] == 'receipt_recheck':
                     require(cut.get('same_final_receipt_request'), 'final validator did not check the original request')
+                if self.declare['route'] == 'input_recheck':
+                    require(cut.get('same_input_result_request'), 'input result validator did not check the original request')
                 require(before == restored and before['observations'] == cut['observations'] and
                         bool(cut['errors']) == bool(later),
                         'the complete call did not restore the same document and validation message')
@@ -902,6 +925,7 @@ def main():
         'dg5/dgu/reader/receipt/receipt_request/schema': (
             'receipt_recheck', 'dgu/reader/receipt/final/receipt_request/schema/'),
         'dg5/dgu/producer/publish/publication/schema': ('publish_receipted', 'dgu/progress/schema/'),
+        'dg5/dgu/reader/input/request/schema': ('input_recheck', 'dgu/reader/input/result/schema/request'),
     }.get(row)
     if 'later_refusal' in declare:
         require((declare['route'], declare['later_refusal']) == later_route,
