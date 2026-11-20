@@ -100,7 +100,12 @@ def check_closure_reports():
         root = merged(first, second)
         assert root['error'] and root['uncovered_clauses'] == [first_id], root
 
-        write_report(second, {first_id: dict(cls='KILLED')})
+        for details in ({}, {'verify': {'passed': 0}}):
+            write_report(second, {first_id: dict(cls='KILLED')}, **details)
+            root = merged(first, second)
+            assert root['error'] is None and root['uncovered_clauses'] == [first_id], root
+
+        write_report(second, {first_id: dict(cls='KILLED')}, verify=dict(passed=1, failed=0))
         root = merged(first, second)
         assert root['error'] is None and root['uncovered'] == 0, root
 

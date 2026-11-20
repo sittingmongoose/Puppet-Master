@@ -36,8 +36,9 @@ recorded. ``--shared-proof`` directories supply cited witnesses for shared
 ``pm_goal_test_*`` rows only when their collection sites and source-bindings for every cited
 site file exactly match this family's proof; the citation is recorded separately and never
 counts as a family attempt. Merge closure reports for the same root only when their exact
-clause inventories agree and no report has a root or verification error. Otherwise keep
-the reported uncovered clauses and block closure.
+clause inventories agree and no report has a root or verification error. A checked
+witness for the exact clause can discharge an uncovered entry from another report.
+Keep all reported uncovered clauses when any report in the group has an error.
 
 Usage: python3 scripts/pm_goal_dg5_matrix.py PROOF_DIR... --family F [--closure REPORT ...]
        [--shared-proof SHARED_PROOF_DIR ...] --out matrix.json
@@ -80,17 +81,20 @@ def load_closure(paths):
             if not errors and (failed or unverifiable or mismatch):
                 errors.append(f'{Path(path).name}: clause verification has {failed} failures, '
                               f'{unverifiable} unverifiable, {mismatch} sampled mismatches')
+            witnessed = {c for c, e in clauses.items() if e['cls'] in ('KILLED', 'COVERED_LATER')}
+            verified_ids = witnessed if verify.get('passed') == len(witnessed) and not errors else set()
             for name in entry.get('rows', []):
                 grouped[(name, ident)].append(dict(report=str(path), families=entry.get('families', []),
                                                    counts=entry.get('counts', {}), clause_ids=set(clauses),
-                                                   uncovered_ids=uncovered, errors=errors))
+                                                   uncovered_ids=uncovered, verified_ids=verified_ids, errors=errors))
     by_row = collections.defaultdict(list)
     for (name, ident), entries in grouped.items():
         errors = [error for e in entries for error in e['errors']]
         if any(e['clause_ids'] != entries[0]['clause_ids'] for e in entries[1:]):
             errors.append('clause inventories differ across reports for this root')
-        uncovered_sets = [e['uncovered_ids'] for e in entries]
-        uncovered = set.union(*uncovered_sets) if errors else set.intersection(*uncovered_sets)
+        uncovered = set.union(*(e['uncovered_ids'] for e in entries))
+        if not errors:
+            uncovered.difference_update(*(e['verified_ids'] for e in entries))
         by_row[name].append(dict(root=ident, report=entries[0]['report'],
                                  reports=[e['report'] for e in entries],
                                  families=sorted({f for e in entries for f in e['families']}),
