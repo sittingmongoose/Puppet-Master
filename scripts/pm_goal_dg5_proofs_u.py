@@ -412,6 +412,20 @@ PROOFS = {
             'record and checks equality before the write. Body Control requires the identical '
             'pending schema for a non-null value. The complete call passed the same invalid '
             'document to that later check with only the earlier check disabled.')),
+    'dg5/dgu/sir/terminal/result/schema': dict(
+        kind='entailed-by-stored-terminal-result',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 841), (U, 859), (U, 876), (U, 877), (U, 889), (U, 893),
+               ('Plans/goal_update_command_custody.schema.json', 2079),
+               ('Plans/goal_update_command_custody.schema.json', 2170),
+               ('Plans/goal_update_command_custody.schema.json', 2261)],
+        argument=(
+            'Terminalize validates each of its three result variants and then places the same '
+            'document in the corresponding stored Terminal branch. Every branch requires the '
+            'original result definition. Each complete call refuses in its stored terminal when '
+            'only the earlier check is disabled. The matching later branch repeats the exact '
+            'result-rule messages for the invalid documents from each variant.')),
     'dg5/dgu/inspect/request/schema': dict(
         kind='entailed-by-inspection-witness-request',
         families=['goal.updated'],
