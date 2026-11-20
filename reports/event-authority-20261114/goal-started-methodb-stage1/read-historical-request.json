@@ -1,0 +1,21 @@
+{
+  "row": "dg5/read_historical/request/schema",
+  "fixtures": [
+    {
+      "route": "read_historical",
+      "edition": "v3",
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
