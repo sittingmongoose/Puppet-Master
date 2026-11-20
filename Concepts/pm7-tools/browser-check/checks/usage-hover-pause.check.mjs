@@ -143,7 +143,9 @@ export function judge(rec, { rest, back }) {
 	const endDelay = endT != null ? endT - end : null;
 	const endOk = endDelay != null && late != null && endDelay >= REST_MS - 2 && endDelay <= REST_MS + late + 2;
 	const backDelay = backT != null && endT != null ? backT - endT : null;
-	const backFrames = backT != null && endT != null ? rec.frames.filter((x) => x.t > endT && x.t < backT).length : null;
+	// R125 #2: the sample that first shows the return is counted, so a light first seen on the third sample after the
+	// end reads 3 frames and fails; two frames means the return is on the first or the second drawn sample.
+	const backFrames = backT != null && endT != null ? rec.frames.filter((x) => x.t > endT && x.t <= backT).length : null;
 	const backOk = backFrames != null && backFrames <= 2;
 	const capOk = backT != null && backT - end <= back;
 	return {

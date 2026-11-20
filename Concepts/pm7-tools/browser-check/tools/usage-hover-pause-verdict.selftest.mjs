@@ -1,7 +1,11 @@
 // R100 T1/T2/T3: the measured states must decide the verdict, including an already-applied light and visible opacity.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { judge } from '../checks/usage-hover-pause.check.mjs';
+import { pathToFileURL } from 'node:url';
+import { resolve } from 'node:path';
+// node tools/usage-hover-pause-verdict.selftest.mjs [check file]: the argument runs the same assertions against another
+// revision of the check, which is how each item's RED run shows the old verdict misjudging a constructed record.
+const { judge } = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/usage-hover-pause.check.mjs');
 const make = () => ({
  wheels:[100,200,300,400,500],scrolls:[120,220,320,420,520],ops:[{t:101,op:'wheel'},{t:670,op:null}],
  probe:{due:650,fired:670},
@@ -100,6 +104,27 @@ test('TB6 item 2: the 400 ms outer cap fails a page that returns very late even 
  assert.equal(v.r2.back,330);
  assert.equal(v.r2.backFrames,2);
  assert.equal(v.r2.ok,false);
+});
+// R125 #2: the occupied sample is counted. Two dark samples and a return on the third used to read 2 and pass.
+test('R125 #2: a light first seen on the third sample after the pause end fails',()=>{
+ const r=make();
+ r.ops=[{t:101,op:'wheel'},{t:670,op:null}];
+ r.cls=[{t:700,card:'new',on:true}];
+ for(const f of r.frames)Object.assign(f,{op:f.t<670?'wheel':null,lit:f.t>=700?['new']:[],tools:f.t>=700?.9:0});
+ const v=j(r);
+ assert.equal(v.r2.end,150);
+ assert.equal(v.r2.back,30);
+ assert.equal(v.r2.backFrames,3);
+ assert.equal(v.r2.ok,false);
+});
+test('R125 #2 control: a return on the second sample is still within two frames',()=>{
+ const r=make();
+ r.ops=[{t:101,op:'wheel'},{t:670,op:null}];
+ r.cls=[{t:690,card:'new',on:true}];
+ for(const f of r.frames)Object.assign(f,{op:f.t<670?'wheel':null,lit:f.t>=690?['new']:[],tools:f.t>=690?.9:0});
+ const v=j(r);
+ assert.equal(v.r2.backFrames,2);
+ assert.equal(v.r2.ok,true);
 });
 // TB6 item 1: a 258 ms driver gap is reported as a broken burst; a 30 ms cadence is not.
 test('TB6 item 1: a 258 ms driver gap is reported as a broken burst; a 30 ms cadence is not',()=>{
