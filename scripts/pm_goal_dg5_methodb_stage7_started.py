@@ -105,7 +105,16 @@ def frame_payload(directory, negative):
     return world, S.encode_event_frame, (event, 1), {}
 
 
+def event_record(directory, negative):
+    world, _, outcome = source.started(source.Suite(directory))
+    event = outcome['original_append']['event']
+    if negative:
+        event['correlation_id'] = ''
+    return world, S.validate_event_record, (event, 'append/event'), {}
+
+
 CASES = {
+    'event-record': (pilot.STORAGE, 473, 'append/event/schema/correlation_id', event_record),
     'frame-payload': (pilot.STORAGE, 441, 'frame/payload_cap', frame_payload),
     'frame-header': (pilot.STORAGE, 440, 'frame/header_cap', frame_header),
     'stored-group': (pilot.STORAGE, 1618, 'group/schema', stored_group),
