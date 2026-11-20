@@ -20,7 +20,8 @@ import { r113Cases } from '../helpers/usage-hover-pause-r113.mjs';
 import { burstState, burstWhy, REST_MS } from '../helpers/burst-rest.mjs';
 
 // the recorder, installed once in the app's frame; __uhp.start() clears it and starts a window, __uhp.stop() ends it
-const INSTALL = () => {
+// (exported for tools/usage-hover-pause-probe.selftest.mjs, which runs it against a stub page and a timer queue)
+export const INSTALL = () => {
 	if (window.__uhp) return true;
 	const sc = document.getElementById('pmuScroll');
 	let board = document.getElementById('pmuBoard');
@@ -31,9 +32,19 @@ const INSTALL = () => {
 	// The last input arms a 150 ms probe of the host's own timer lateness. The page's pause ends at that same rest, so a
 	// loaded host's late timer is measured here instead of assumed (TB6 item 2: the old wall-clock 200 ms bound read
 	// 197-257 ms on a correct page). 150 is literal: INSTALL is serialised into the page and cannot close over REST_MS.
+	// R125 #1: the probe is armed at the capture phase on window, which runs before any listener the page registered on
+	// the scroller. Its deadline therefore starts at the input's dispatch, before the page's own handler has run and
+	// before the page re-arms its rest timer, so it fires ahead of that timer: the page's later work (its wheelEnd fit
+	// before the marker's removal) can no longer be read as timer lateness and cannot widen the end allowance.
 	const armProbe = (t) => { R.probe = { due: t + 150, fired: null }; clearTimeout(R.probeTimer); R.probeTimer = setTimeout(() => { R.probe.fired = performance.now(); }, 150); };
-	sc.addEventListener('wheel', () => { if (R.on) { const t = performance.now(); R.wheels.push(t); armProbe(t); } }, { passive: true, capture: true });
-	sc.addEventListener('scroll', () => { if (R.on) { const t = performance.now(); R.scrolls.push(t); armProbe(t); } }, { passive: true });
+	const onInput = (list) => (e) => {
+		if (!R.on) return;
+		if (!(e.target === sc || (sc.contains && sc.contains(e.target)))) return;
+		const t = performance.now();
+		R[list].push(t); armProbe(t);
+	};
+	window.addEventListener('wheel', onInput('wheels'), { passive: true, capture: true });
+	window.addEventListener('scroll', onInput('scrolls'), { passive: true, capture: true });
 	sc.addEventListener('transitionrun', (e) => {
 		if (!R.on) return;
 		const t = e.target, card = t.closest && t.closest('.pmu-card');
