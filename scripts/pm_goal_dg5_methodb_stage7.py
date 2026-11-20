@@ -116,7 +116,7 @@ def event_record(directory, negative):
     return world, updated.O.S.validate_event_record, (event, 'append/event'), {}
 
 
-FAILURE_ONLY = {'event-record'}
+FAILURE_ONLY = {'event-record', 'frame-event-record'}
 
 
 def frame_header_cap(directory, negative):
@@ -133,8 +133,22 @@ def frame_payload_cap(directory, negative):
     return world, updated.O.S.encode_event_frame, (event, 1), {}
 
 
+def frame_event_record(directory, negative):
+    world, event = published_event(directory)
+    storage = updated.O.S
+    header = storage.canonical(storage.event_header(event))
+    if negative:
+        event['correlation_id'] = ''
+    payload = storage.canonical(event)
+    prefix = storage._prefix(len(header), len(payload), 0, 1, event['sequence_id'],
+                             storage.crc32(header), storage.crc32(payload))
+    return world, storage.decode_frame, (prefix + header + payload, 0), dict(
+        generation=1, prior_sequence=None, prior_control=False)
+
+
 # The explicit lines match the input matrix. Validate the observed location on every run.
 CASES = {
+    'frame-event-record': (STORAGE, 581, 'Corrupt:event_record:frame/event/schema/correlation_id', frame_event_record),
     'frame-payload-cap': (STORAGE, 441, 'frame/payload_cap', frame_payload_cap),
     'frame-header-cap': (STORAGE, 440, 'frame/header_cap', frame_header_cap),
     'event-record': (STORAGE, 473, 'append/event/schema/correlation_id', event_record),
