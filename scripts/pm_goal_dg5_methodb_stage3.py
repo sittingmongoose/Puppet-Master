@@ -152,6 +152,23 @@ def certified_fixture(route, path):
         request = oracle.W.guard_request(w, ctx['scope'], ctx['op'], 'original_certification',
                                          'TEST_ONLY:guard-request:method-b')
         return w, lambda: w.guard.read_guard(request)
+    if route == 'prepare':
+        return w, lambda: w.coordinator.prepare(ctx)
+    if route == 'retained':
+        run.until('release')
+        return w, lambda: w.coordinator.retained_authority(ctx['scope'], ctx['op'])
+    if route == 'retry':
+        run.until('append')
+        return w, lambda: w.coordinator.held_retry(ctx, run.obs['intent'], run.obs['control_armed'])
+    if route == 'readback':
+        run.until('commit')
+        return w, lambda: w.coordinator.readback(ctx, run.obs['committed'])
+    if route == 'current':
+        run.until('release')
+        return w, lambda: w.coordinator.read_current(ctx)
+    if route == 'consumer_current':
+        run.until('release')
+        return w, lambda: run.consumer().read_current(ctx)
     if route == 'arm':
         run.until('prepare')
         return w, lambda: w.coordinator.arm(ctx, run.obs['prepared'])
