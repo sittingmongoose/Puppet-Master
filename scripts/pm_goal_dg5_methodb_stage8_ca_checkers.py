@@ -2,6 +2,7 @@
 """Exercise selected original Goal Cancelled checker rows from the current caller list."""
 
 import argparse
+from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
@@ -61,7 +62,25 @@ def append_template_value(directory, negative):
     return world, route.append_original, (), {"lose_ack": True}
 
 
+
+def replay_operation(directory, negative):
+    world, route = cancelled.c1_route(cancelled.Suite(directory))
+    route.run()
+    world.root = world.storage.root
+    accept = world.sir.accept
+    if negative:
+        def accept_with_altered_result(request):
+            handle, result = accept(request)
+            altered = deepcopy(result)
+            altered["identity"]["operation_id"] = "TEST_ONLY:other-operation"
+            return handle, altered
+
+        world.sir.accept = accept_with_altered_result
+    return world, route.replay, (deepcopy(route.request),), {}
+
+
 CASES = {
+    "replay-operation": (C1, 819, "C1/replay/operation", replay_operation),
     "template-value": (ASSIGNMENT, 716, "C4A/append_reserved/template_producer", append_template_value),
     "audit-permission": (C1, 833, "C1/audit_read/audit_permission", audit_permission),
     "occurrence": (C1, 562, "C1/freeze_event/accepted_occurrence", occurrence),
