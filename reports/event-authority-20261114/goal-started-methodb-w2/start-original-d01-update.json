@@ -1,0 +1,62 @@
+{
+  "row": "dg5/start/original_d01_update/schema",
+  "fixtures": [
+    {
+      "route": "publish_update",
+      "edition": "v3",
+      "root": "dg5:2f21bc7a24e648ff",
+      "hash_seed": 8,
+      "schema_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageWorkflowUpdate",
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "publish_update",
+      "edition": "v7",
+      "root": "dg5:c651a5509ffc7be6",
+      "hash_seed": 8,
+      "schema_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageWorkflowUpdate",
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "publish_update",
+      "edition": "v7",
+      "root": "dg5:b1b81b9cb4c4a828",
+      "hash_seed": 9,
+      "schema_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageWorkflowUpdate",
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}

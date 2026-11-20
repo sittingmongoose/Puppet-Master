@@ -152,6 +152,8 @@ class Fixture(stage.Fixture):
                     yield origin_control
         elif self.route in ('read_historical/root', 'read_current/root'):
             yield from self.transition_controls(value, ('original', 'native_start', 'original_d01_update', 'record'))
+        elif self.route == 'publish_update':
+            yield from self.transition_controls(value, ('record',))
         elif self.route.startswith(('read_original/', 'project_original/')):
             path = ('original_d01_update', 'record')
             if self.route.endswith('/enclosing'):
