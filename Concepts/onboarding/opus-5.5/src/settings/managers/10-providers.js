@@ -185,6 +185,14 @@
     if (!Array.isArray(acc.models)) acc.models = (p.models || []).map(m => ({ id: m.id, enabled: !!m.enabled }));
     if (typeof acc.defaultModel !== 'string') { const want = (p.routing || {}).defaultModel; acc.defaultModel = accModelOn(acc, want) ? want : ((acc.models.find(m => m.enabled) || {}).id || ''); }
     if (!acc.props || typeof acc.props !== 'object' || Array.isArray(acc.props)) acc.props = {};
+    /* FO-228: a reload rebuilds the accounts from the fixture, and the project projection keeps only each account's
+       model choices beside the depth (the engine's save writes accountModels); read them back here, the same round
+       trip the depth record makes. A model no longer on the account keeps the migration's own default. */
+    const savedModel = (state.accountModels || {})[`${p.id}/${acc.id}`];
+    if (savedModel && typeof savedModel === 'object') {
+      if (typeof savedModel.pick === 'string') acc.props[ACCOUNT_MODEL] = savedModel.pick;
+      if (typeof savedModel.model === 'string' && accModelOn(acc, savedModel.model)) acc.defaultModel = savedModel.model;
+    }
     /* USG-1 (Jared 2026-10-10): an account's own switch level is ai.accounts.hard-switch-level at scope account and
        ai.accounts.account-threshold-override is retired. A value saved under the old id is read once and carried to the
        new one (an own value already there wins), held under the warn level that applies to the account; then the old
