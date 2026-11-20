@@ -1,0 +1,47 @@
+{
+  "row": "dg5/start/body_commitment/schema",
+  "fixtures": [
+    {
+      "route": "body_commitment",
+      "edition": "v3",
+      "edit": [
+        0,
+        [
+          "record",
+          "identity"
+        ],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [
+          "identity"
+        ],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "body_commitment",
+      "edition": "v7",
+      "edit": [
+        0,
+        [
+          "record",
+          "identity"
+        ],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [
+          "identity"
+        ],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
