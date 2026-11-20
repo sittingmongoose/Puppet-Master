@@ -11,9 +11,15 @@
 //             getState().providers still name claude-opus
 //   picker    the account's shared picker picks Claude Opus at Max depth; after reloadProject the row still names
 //             Claude Opus · Max depth, acc.props keeps the pick and pm51.o55Depth keeps the record
+//   shots     --set shots=1 writes original-size (1920x1080) screenshots of the fixed screen after the reload in
+//             Basic Dark and NieR Dark (--set looks=, --set shotDir=<dir>; default the run folder's shots/)
 // Fails main 3af916f4b6 (both choices back to the fixture after the reload; the depth record alone survives) and
 // passes the head, both surfaces.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-account-model-reload.check.mjs --set page=<build> --set sandbox=0
+import fs from 'node:fs';
+import path from 'node:path';
+import { setLookBySetting } from '../helpers/settings-look.mjs';
+
 const ACC_KEY = 'acc-claude-code-work-claude';
 const PICK_ID = 'ai.accounts.default-model';
 
@@ -115,5 +121,43 @@ export const tests = {
 		const afterState = await f.evaluate(ACCOUNT_STATE);
 		await t.check(`FO-228 after the reload the picker still names Claude Opus at Max depth ("${after.small}")`, /Claude Opus/.test(after.name) && after.small.includes('Max depth'), JSON.stringify(after));
 		await t.check('FO-228 after the reload the account keeps the pick and the depth record', !!afterState && afterState.pick === 'claude-code/claude-opus' && !!afterState.depth && afterState.depth.model === 'claude-code/claude-opus' && afterState.depth.effort === 'Max', JSON.stringify(afterState));
+	},
+	/* evidence shots (--set shots=1): both choices made by real presses, the project reloaded, then the fixed screen
+	   at original size in each look; the state is asserted again before each shot so a picture never stands alone */
+	'FO-228 shots of the fixed screen after the reload': async (t) => {
+		if (String(t.args.shots || '') !== '1') { await t.check('shots are written only with --set shots=1', true); return; }
+		const dir = String(t.args.shotDir || path.join(t.run.dir, 'shots'));
+		fs.mkdirSync(dir, { recursive: true });
+		const f = await t.app.open();
+		await t.viewport(1920, 1080);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		let item = await toWorkClaude(t, f);
+		const dd = item.locator('.pm51-dd:has(select[data-action="pm51-providers-account-model-default"])').first();
+		await dd.locator('.pm51-dd-trigger').scrollIntoViewIfNeeded();
+		await dd.locator('.pm51-dd-trigger').click();
+		await t.page.waitForTimeout(450);
+		await f.locator('.pm51-popout [role="option"]').filter({ hasText: 'Claude Opus' }).first().click();
+		await t.page.waitForTimeout(700);
+		item = await toWorkClaude(t, f);
+		const trig = item.locator(`.o55-msel[data-o55-msel="${PICK_ID}"] [role="combobox"]`).first();
+		await trig.scrollIntoViewIfNeeded();
+		await trig.click();
+		await t.page.waitForTimeout(450);
+		await f.locator('.o55-pick-pop.is-open [role="option"]').filter({ hasText: 'Claude Opus' }).first().click();
+		await t.page.waitForTimeout(350);
+		await f.locator('[role="listbox"][aria-label^="Thinking depth"] [role="option"]').filter({ hasText: 'Max' }).first().click();
+		await t.page.waitForTimeout(700);
+		await f.evaluate(() => window.PM12_KIMI.reloadProject());
+		await t.settle();
+		for (const look of String(t.args.looks || 'basic-dark,nier-dark').split(',')) {
+			await setLookBySetting(t, f, look);
+			await toWorkClaude(t, f);
+			await f.evaluate(() => { const el = document.querySelector('.pm51-acc-item[data-acc="acc-claude-code-work-claude"]'); if (el) el.scrollIntoView({ block: 'start' }); });
+			await t.page.waitForTimeout(500);
+			const after = await f.evaluate(ACCOUNT_STATE);
+			await t.check(`FO-228 ${look}: the reload kept both choices before the shot`, !!after && after.defaultModel === 'claude-opus' && after.pick === 'claude-code/claude-opus', JSON.stringify(after));
+			fs.writeFileSync(path.join(dir, `fo228-${look}-after-reload.png`), await t.page.screenshot());
+		}
 	}
 };
