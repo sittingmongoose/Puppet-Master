@@ -6,7 +6,7 @@
 // (4) R67-T2: a DroppedFrame's hasPartialUpdate says the frame depended on a partial update, not that it was shown
 //     (Chrome still reports kDropped for kDidNotPresentFrame / kReplacedByNewReporter). Each DroppedFrame is classified by
 //     its frame reporter's final state (PipelineReporter frame_reporter / chrome_frame_reporter, matched by renderer,
-//     layer tree and frame sequence): dropped = not presented, presented partial = partial; with no reporter the
+//     layer tree, frame sequence and timestamp): dropped = not presented, presented partial = partial; with no reporter the
 //     presentation is unknown, and the events without the flag are only that, never called fully dropped.
 // (5) PM7PERF-FRAMETRACE-PAC-AS-PAINT: PaintArtifactCompositor::Update is Chrome's layerization of the whole page,
 //     not Blink paint; the old paint pattern matched it before layerize was tried, so 83-89% of the stage's "paint"
@@ -70,7 +70,7 @@ const drops = (state, key = 'frame_reporter', flag = true) => {
 	for (let k = 0; k < 20; k++) {
 		const ts = 5000 + k * 90000, seq = 900 + k;
 		out.push({ name: 'DroppedFrame', ph: 'I', ts, pid: 20, tid: 4, args: { frameSeqId: seq, hasPartialUpdate: flag, layerTreeId: 1 } });
-		if (state) out.push({ name: 'PipelineReporter', ph: 'b', ts: ts - 4000, pid: 20, tid: 4, id2: { local: '0x' + seq }, args: { [key]: { state, frame_sequence: seq, layer_tree_host_id: 1 } } });
+		if (state) out.push({ name: 'PipelineReporter', ph: 'b', ts, pid: 20, tid: 4, id2: { local: '0x' + seq }, args: { [key]: { state, frame_sequence: seq, layer_tree_host_id: 1 } } });
 	}
 	return out;
 };
@@ -90,6 +90,22 @@ assert.equal(unknown.notPresentedPerSec + unknown.partialPerSec, 0, '(4) and is 
 const bare = ft.summarise([...ev, ...drops(null, 'frame_reporter', false)], { url: page }).frames;
 assert.equal(bare.unflaggedPerSec, 10, '(4) DroppedFrame events without the flag are reported under that name');
 assert.equal(bare.presentationUnknownPerSec, 10, '(4) and their presentation is still unknown without a reporter');
+
+// A reused sequence in the same renderer and tree belongs to a different frame when its timestamp differs.
+const [firstDrop, firstReporter] = drops('STATE_DROPPED');
+const forkReporter = (ts, source, state) => ({
+	...firstReporter, ts, args: { frame_reporter: {
+		...firstReporter.args.frame_reporter, frame_source: source, state
+	} }
+});
+const originalReporter = forkReporter(firstDrop.ts, 1, 'STATE_DROPPED');
+const reusedReporter = forkReporter(firstDrop.ts + 1000000, 2, 'STATE_PRESENTED_ALL');
+const reused = ft.summarise([...ev, reusedReporter, firstDrop, originalReporter], { url: page }).frames;
+assert.equal(reused.notPresentedPerSec, 0.5, 'a reused frame sequence at a different time cannot override a drop');
+assert.equal(reused.presentedAllPerSec, 0, 'the later frame did not present the earlier frame');
+const sameFrameFork = forkReporter(firstDrop.ts, 1, 'STATE_PRESENTED_PARTIAL');
+const forked = ft.summarise([...ev, firstDrop, originalReporter, sameFrameFork], { url: page }).frames;
+assert.equal(forked.partialPerSec, 0.5, 'reporters that share the frame identity still combine their final states');
 
 // (5) one renderer, a 1 s window: Blink Paint 300 ms, a full PAC Update 100 ms holding a 60 ms Layerize (self 40 ms),
 // a repainted-layers update 150 ms, another PAC event 50 ms. The old helper filed all 240 ms of PAC under paint.

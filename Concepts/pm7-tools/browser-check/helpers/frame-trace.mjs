@@ -32,6 +32,8 @@ export const whyNot = (mask) => { const out = []; for (let b = 0; b < 24; b++) i
 const q = (sorted, f) => sorted.length ? sorted[Math.min(sorted.length - 1, Math.floor(f * sorted.length))] : 0;
 const r1 = (x) => Math.round(x * 10) / 10;
 const r2 = (x) => Math.round(x * 100) / 100;
+// Chrome writes the same frame timestamp on DroppedFrame and the PipelineReporter begin.
+const frameKey = (tree, sequence, ts) => sequence != null && Number.isFinite(ts) ? `${tree ?? '?'}:${sequence}:${ts}` : null;
 
 // Complete ('X') events of one thread, with B/E pairs folded in, sorted by start
 function threadEvents(events, pid, tid) {
@@ -202,7 +204,7 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 	for (const e of events) {
 		if (e.pid === rpid) {
 			if (e.name === 'DrawFrame') drawFrames++;
-			else if (e.name === 'DroppedFrame') { droppedFrames++; if (!e.args?.hasPartialUpdate) unflaggedDrops++; dropKeys.push(`${e.args?.layerTreeId ?? '?'}:${e.args?.frameSeqId ?? '?'}`); }
+			else if (e.name === 'DroppedFrame') { droppedFrames++; if (!e.args?.hasPartialUpdate) unflaggedDrops++; dropKeys.push(frameKey(e.args?.layerTreeId, e.args?.frameSeqId, e.ts)); }
 			else if (e.name === 'BeginFrame') beginFrames++;
 		}
 		if (e.name === 'Animation') {
@@ -217,7 +219,7 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		}
 	}
 	const states = {}; let smooth = 0, smoothDropped = 0;
-	// the page renderer's frame reporters by layer tree and frame sequence, with the final states they ended in
+	// the page renderer's frame reporters by layer tree, frame sequence and timestamp
 	const reported = new Map();
 	for (const e of events) {
 		if (e.name !== 'PipelineReporter' || (e.ph !== 'b' && e.ph !== 'B')) continue;
@@ -226,10 +228,12 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		const s = String(rep.state || '').replace(/^STATE_/, '');
 		states[s] = (states[s] || 0) + 1;
 		if (rep.affects_smoothness) { smooth++; if (s === 'DROPPED') smoothDropped++; }
-		if (e.pid === rpid && rep.frame_sequence != null) {
-			const k = `${rep.layer_tree_host_id ?? '?'}:${rep.frame_sequence}`, set = reported.get(k) || new Set();
-			set.add(s); reported.set(k, set);
-		}
+		if (e.pid !== rpid) continue;
+		const key = frameKey(rep.layer_tree_host_id, rep.frame_sequence, e.ts);
+		if (key === null) continue;
+		const set = reported.get(key) || new Set();
+		set.add(s);
+		reported.set(key, set);
 	}
 	// R67-T2: a DroppedFrame's hasPartialUpdate says the frame depended on a partial update, not that it was shown (Chrome
 	// still reports kDropped for kDidNotPresentFrame and kReplacedByNewReporter). Each DroppedFrame is classified by the
@@ -268,7 +272,7 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		dispatched,
 		drawn: { perSec: r1(draws.length / secs), gapP50: r2(q(gaps, 0.5)), gapP95: r2(q(gaps, 0.95)), gapMax: r2(gaps[gaps.length - 1] || 0), drawP50: r2(q(drawDur, 0.5)), drawP95: r2(q(drawDur, 0.95)) },
 		// droppedPerSec counts every DroppedFrame event of the page's renderer, as every table has. Each is classified by its
-		// frame reporter's final state (matched by layer tree and frame sequence): notPresentedPerSec ended DROPPED (never
+		// frame reporter's final state (matched by layer tree, frame sequence and timestamp): notPresentedPerSec ended DROPPED (never
 		// shown), partialPerSec ended PRESENTED_PARTIAL (the compositor's part, a scroll say, shown; a main-thread change
 		// late), presentedAllPerSec ended PRESENTED_ALL, presentationUnknownPerSec had no reporter with a final state in the
 		// trace. unflaggedPerSec counts the DroppedFrame events without hasPartialUpdate: only that, it proves no presentation
