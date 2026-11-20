@@ -291,6 +291,40 @@ async function cell(t, surface, w, h) {
 		}
 	}
 
+	// FO-103 B: with an item's full path text decorated, File actions › Open still acts on the row's own file.
+	if (parts.includes('103b')) {
+		await f.evaluate(([a, b]) => {
+			window.__frpText = [];
+			document.querySelectorAll(`${a}, ${b}`).forEach((r) => {
+				const el = r.closest('.fm-changeitem, .fm-openitem').querySelector('.fm-cpath');
+				window.__frpText.push([el, el.innerHTML]);
+				el.textContent = el.textContent.trim() + ' (decorated)';
+			});
+		}, [SEL.changed, SEL.editors]);
+		for (const r of rows.filter((x) => x.kind !== 'recent')) {
+			const err = await menuOpen(r);
+			await t.check(`FO-103 ${tag}: with its path text decorated, File actions › Open on the ${r.kind} row for ${r.want} still opens it`, !err, JSON.stringify(err));
+		}
+		await f.evaluate(() => { for (const [el, html] of window.__frpText) el.innerHTML = html; delete window.__frpText; });
+	}
+
+	// FO-103 C: a row named only by its demo arg, with a note after the file, is still found.
+	if (parts.includes('103c')) {
+		const r = rows.filter((x) => x.kind === 'recent').find((x) => !x.want.includes('/')) || rows.find((x) => x.kind === 'recent');
+		const name = r.want.split('/').pop();
+		await f.evaluate(([id, name]) => {
+			const e = document.querySelector(`[data-frp="${id}"]`);
+			window.__frpAttr = [e.getAttribute('data-path'), e.getAttribute('data-demo-arg')];
+			e.removeAttribute('data-path'); e.setAttribute('data-demo-arg', `cmd.file.open -> ${name} (recently opened)`);
+		}, [r.id, name]);
+		const err = await menuOpen(r);
+		await t.check(`FO-103 ${tag}: a Recent row named only by its demo arg with a note ('-> ${name} (recently opened)') still opens ${r.want}`, !err, JSON.stringify(err));
+		await f.evaluate((id) => {
+			const e = document.querySelector(`[data-frp="${id}"]`), [p, a] = window.__frpAttr;
+			if (p != null) e.setAttribute('data-path', p); if (a != null) e.setAttribute('data-demo-arg', a); delete window.__frpAttr;
+		}, r.id);
+	}
+
 	// FO-238: Open pressed by a real pointer inside the folder's real collapse window (the batch 12e+13 deep review
 	// found this kit never pressed Open in the state the bug needs: the row already collapsed while its node is still
 	// open, 205-250 ms into the collapse — on the pre-13 page nothing opens then). Runs at 1920x1080 in basic-dark
@@ -373,40 +407,6 @@ async function cell(t, surface, w, h) {
 			hit.length >= 1 && hit.every((p) => p.tookEffect),
 			hit.length ? JSON.stringify(presses) : `could not reach the window: ${JSON.stringify(presses)}`);
 	} else if (parts.includes('238')) t.log(`FO-238 ${tag}: the timed Open row runs at 1920x1080 only`);
-
-	// FO-103 B: with an item's full path text decorated, File actions › Open still acts on the row's own file.
-	if (parts.includes('103b')) {
-		await f.evaluate(([a, b]) => {
-			window.__frpText = [];
-			document.querySelectorAll(`${a}, ${b}`).forEach((r) => {
-				const el = r.closest('.fm-changeitem, .fm-openitem').querySelector('.fm-cpath');
-				window.__frpText.push([el, el.innerHTML]);
-				el.textContent = el.textContent.trim() + ' (decorated)';
-			});
-		}, [SEL.changed, SEL.editors]);
-		for (const r of rows.filter((x) => x.kind !== 'recent')) {
-			const err = await menuOpen(r);
-			await t.check(`FO-103 ${tag}: with its path text decorated, File actions › Open on the ${r.kind} row for ${r.want} still opens it`, !err, JSON.stringify(err));
-		}
-		await f.evaluate(() => { for (const [el, html] of window.__frpText) el.innerHTML = html; delete window.__frpText; });
-	}
-
-	// FO-103 C: a row named only by its demo arg, with a note after the file, is still found.
-	if (parts.includes('103c')) {
-		const r = rows.filter((x) => x.kind === 'recent').find((x) => !x.want.includes('/')) || rows.find((x) => x.kind === 'recent');
-		const name = r.want.split('/').pop();
-		await f.evaluate(([id, name]) => {
-			const e = document.querySelector(`[data-frp="${id}"]`);
-			window.__frpAttr = [e.getAttribute('data-path'), e.getAttribute('data-demo-arg')];
-			e.removeAttribute('data-path'); e.setAttribute('data-demo-arg', `cmd.file.open -> ${name} (recently opened)`);
-		}, [r.id, name]);
-		const err = await menuOpen(r);
-		await t.check(`FO-103 ${tag}: a Recent row named only by its demo arg with a note ('-> ${name} (recently opened)') still opens ${r.want}`, !err, JSON.stringify(err));
-		await f.evaluate((id) => {
-			const e = document.querySelector(`[data-frp="${id}"]`), [p, a] = window.__frpAttr;
-			if (p != null) e.setAttribute('data-path', p); if (a != null) e.setAttribute('data-demo-arg', a); delete window.__frpAttr;
-		}, r.id);
-	}
 }
 
 export const tests = {};
