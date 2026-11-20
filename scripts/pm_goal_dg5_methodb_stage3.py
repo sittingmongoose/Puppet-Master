@@ -1610,6 +1610,120 @@ def normalized_scope(nodes):
             'normalized identity scope premise changed')
 
 
+def nonterminal_outcome_implication(nodes, name, path, errors, go, expected):
+    prefix = IDENTITY.removesuffix('IdentityEnvelope')
+    main = prefix + 'CommandOutcomeRecord'
+    original = main + '/properties/'
+    refined = NORMALIZED.removesuffix('NormalizedIdentity') + 'NonterminalOutcome/allOf/1/properties/'
+    schema = nodes[main]['node']
+    constraints = schema['properties']
+    rules = schema['allOf']
+    field = path[-1] if path else None
+    require(expected and go.locations(errors) == set(expected), 'the exact outcome counterparts did not refuse')
+    peer = None
+    explanation = ''
+    if name.startswith(IDENTITY + '/'):
+        field_constraints = nodes[IDENTITY]['node']['properties'][field]
+        keyword = name.rsplit('/', 1)[-1]
+        if field == 'command_instance_id':
+            member = rules[0]['properties']['identity']
+            identifier = nodes[prefix + 'Id']['node']
+            require(member['required'] == [field] and member['properties'][field]['$ref'] == '#/$defs/Id' and
+                    (field_constraints[keyword] == identifier[keyword] or
+                     keyword == 'type' and field_constraints[keyword] == ['string', 'null'] and
+                     identifier[keyword] == 'string'),
+                    'command instance identifier constraints changed')
+            peer = prefix + 'Id/' + keyword
+        else:
+            identity = nodes[IDENTITY]['node']
+            app, project = identity['allOf']
+            require(field in ('project_id', 'project_home_server_id') and field in identity['required'] and
+                    'scope_kind' in identity['required'] and identity['properties']['scope_kind']['enum'] ==
+                    ['application', 'project'] and app['if']['properties']['scope_kind']['const'] == 'application' and
+                    project['if']['properties']['scope_kind']['const'] == 'project' and
+                    app['then']['properties'][field]['type'] == 'null' and
+                    project['then']['properties'][field]['type'] == 'string' and
+                    field_constraints['type'] == ['string', 'null'],
+                    'the optional project identifier constraints changed')
+            base = IDENTITY + '/properties/' + field + '/' + keyword
+            condition = IDENTITY + '/allOf/1/then/properties/' + field + '/' + keyword
+            if keyword != 'type':
+                require(project['then']['properties'][field][keyword] == field_constraints[keyword],
+                        'the same identifier bound is absent in the project branch')
+            peer = condition if name == base else base
+        explanation = 'The identity and its selected scope enforce the same bound.'
+    elif name in (original + 'outcome/enum', refined + 'outcome/enum'):
+        active = set(nodes[refined + 'outcome']['node']['enum'])
+        all_outcomes = set(constraints['outcome']['enum'])
+        terminal = rules[1]
+        require(active < all_outcomes and set(terminal['if']['properties']['outcome']['enum']) ==
+                all_outcomes - active and
+                terminal['then']['properties']['owner_result_ref']['$ref'] == '#/$defs/Id' and
+                nodes[refined + 'owner_result_ref']['node']['type'] == 'null' and
+                nodes[prefix + 'Id']['node']['type'] == 'string',
+                'terminal outcomes no longer require a result identifier')
+        peer = refined + 'outcome/enum' if name.startswith(original) else original + 'outcome/enum'
+        explanation = 'Every other permitted outcome requires a result identifier, which the nonterminal schema requires to be null.'
+    elif name.startswith(refined + 'owner_result_'):
+        owner_result = rules[2]
+        schema_ref = prefix + 'OwnerResultSchemaRef'
+        require(owner_result['if']['properties']['owner_result_ref']['type'] == 'string' and
+                owner_result['then']['properties']['owner_result_schema_ref']['$ref'] == '#/$defs/OwnerResultSchemaRef' and
+                nodes[schema_ref]['node']['type'] == 'object' and
+                set(owner_result['else']['properties']) == {'owner_result_schema_ref', 'owner_result_sha256'} and
+                all(item['type'] == 'null' for item in owner_result['else']['properties'].values()) and
+                all(nodes[refined + member]['node']['type'] == 'null' and member in schema['required'] for member in
+                    ('owner_result_ref', 'owner_result_schema_ref', 'owner_result_sha256')) and
+                constraints['owner_result_ref']['oneOf'][0]['$ref'] == '#/$defs/Id' and
+                constraints['owner_result_ref']['oneOf'][1]['type'] == 'null',
+                'the owner result alternatives no longer require the same null values')
+        peer = (original + field + '/oneOf' if field == 'owner_result_ref'
+                else main + '/allOf/2/else/properties/' + field + '/type')
+        explanation = 'A result identifier would require a nonnull schema reference. A null identifier requires both other result fields to be null.'
+    else:
+        acknowledgement, same_frame = rules[4], rules[7]
+        framed = acknowledgement['then']['properties']
+        unframed = acknowledgement['else']['properties']
+        same = same_frame['then']['properties']
+        receipt = 'acknowledgement_receipt_ref'
+        frame = 'acknowledgement_frame_id'
+        offset = 'acknowledgement_frame_offset'
+        flag = 'same_frame_acknowledged'
+        identifier = nodes[prefix + 'Id']['node']
+        require(acknowledgement['if']['properties'][receipt]['type'] == 'string' and
+                acknowledgement['if']['required'] == [receipt] and
+                framed[frame]['$ref'] == '#/$defs/Id' and
+                framed[offset]['type'] == 'integer' and framed[offset]['minimum'] == 0 and
+                unframed[frame]['type'] == unframed[offset]['type'] == 'null' and unframed[flag]['const'] is False and
+                same_frame['if']['properties'][flag]['const'] is True and same_frame['if']['required'] == [flag] and
+                set(same_frame['then']['required']) == {frame, offset, receipt} <= set(schema['required']) and
+                same[offset]['const'] == 0 and constraints[offset]['minimum'] == 0 and
+                constraints[offset]['type'] == ['integer', 'null'] and
+                all(constraints[key]['type'] == ['string', 'null'] and
+                    same[key]['type'] == identifier['type'] == 'string' and
+                    all(same[key][bound] == constraints[key][bound] == identifier[bound]
+                        for bound in ('minLength', 'maxLength')) for key in (frame, receipt)),
+                'the same-frame and acknowledgement constraints changed')
+        if '/then/required' in name:
+            peer = main + '/required'
+        elif name == main + '/allOf/4/else/properties/' + flag + '/const':
+            peer = main + '/allOf/7/then/properties/' + receipt + '/type'
+        elif field == offset:
+            keyword = name.rsplit('/', 1)[-1]
+            peer = (original + offset + '/' + keyword if '/allOf/4/' in name else
+                    main + '/allOf/4/then/properties/' + offset + '/' + keyword)
+        elif name.startswith(main + '/allOf/7/then/') and field in (frame, receipt):
+            peer = (original + field + '/' + name.rsplit('/', 1)[-1] if not name.endswith('/type') else
+                    main + '/allOf/4/else/properties/' + flag + '/const' if field == receipt else prefix + 'Id/type')
+        else:
+            keyword = name.rsplit('/', 1)[-1]
+            peer = (prefix + 'Id/' + keyword if field == frame else
+                    main + '/allOf/7/then/properties/' + field + '/' + keyword)
+        explanation = 'The receipt and same-frame branches require the same frame identifier and offset bounds.'
+    require(peer in expected, f'{name}: the source counterpart did not remain')
+    return dict(source=peer, same_document_path=path, premise=explanation, remaining_rules=expected)
+
+
 def normalized_rule_implication(nodes, name, path, errors, locations, other):
     normalized_scope(nodes)
     require(len(path) == 2 and path[0] == 'owner_identity', 'normalized identity implication path changed')
@@ -1712,10 +1826,12 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         if example.get('inspection_event_selector'):
             result[name] = inspection_event_selector(nodes, validator, go, control, name, disable)
             continue
-        if 'certified_payload_selector' in example:
-            require(ident == 'dg5:9c8b338493d0a78c', 'unexpected certified payload selector')
+        selector_keys = {'dg5:9c8b338493d0a78c': 'certified_payload_selector',
+                         'dg5:e38a415fe4943e1c': 'outcome_selector'}
+        select = selector_keys.get(ident)
+        if select in example:
             value = control
-            for change in example['certified_payload_selector']:
+            for change in example[select]:
                 value = edit_example(go, value, change['path'], change)
             before = go.errors_of(validator, value)
             cut = go.errors_of(validator, value, disable)
@@ -1723,9 +1839,17 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
             require(go.locations(before) == set(example['expected_before']) and
                     go.locations(cut) == set(example['expected_disabled']) and
                     errors_list(before) != errors_list(cut) and errors_list(before) == errors_list(restored),
-                    'the certified selector did not change and restore the exact validation messages')
+                    'the selector did not change and restore the exact validation messages')
             result[name] = dict(cls='SELECTOR_OR_NEGATED', input=value, original=errors_list(before),
                                 cut=errors_list(cut), restored=errors_list(restored), condition=name)
+            continue
+        if example.get('outcome_unreachable'):
+            require(ident == 'dg5:e38a415fe4943e1c', 'unexpected nonterminal outcome rule')
+            node = nodes[name.rsplit('/', 1)[0]]
+            premise = go.pinned_proof(node, nodes, validator, inventory[name])
+            require(premise and premise['cls'] == 'UNREACHABLE' and not go.errors_of(validator, control, disable),
+                    f'{name}: original nonterminal outcome can reach the rule')
+            result[name] = premise
             continue
         if example.get('inspection_unreachable_application'):
             selected_event_scope(nodes)
@@ -1860,6 +1984,15 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         elif cut and 'certified_payload_messages' in example:
             record.update(cls='COVERED_LATER', implication=certified_payload_implication(
                 nodes, name, cut, go, example['certified_payload_messages']))
+        elif cut and 'outcome_implication' in example:
+            record.update(cls='COVERED_LATER', implication=nonterminal_outcome_implication(
+                nodes, name, path, cut, go, example['outcome_implication']))
+        elif cut and 'outcome_pin' in example:
+            require(ident == 'dg5:e38a415fe4943e1c', 'unexpected pinned outcome rule')
+            node = nodes[name.rsplit('/', 1)[0]]
+            premise = go.pinned_proof(node, nodes, validator, keyword)
+            require(premise and premise['cls'] == example['outcome_pin'], 'the declared outcome pin changed')
+            record.update(cls='COVERED_LATER', implication=premise)
         elif cut and 'normalized_paired_rule' in example:
             record.update(cls='COVERED_LATER', implication=normalized_rule_implication(
                 nodes, name, path, cut, locations, example['normalized_paired_rule']))
