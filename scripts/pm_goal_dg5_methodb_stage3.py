@@ -768,7 +768,8 @@ def origin_implication(nodes, name, path, errors, locations):
     parent = name.split('/allOf/', 1)[0].split('/properties/', 1)[0]
     member = path[-1]
     index, kind = {'bound_plan_ref': (0, 'plan_build'), 'owning_workflow_ref': (1, 'internal_workflow')}[member]
-    require(parent.endswith('#/$defs/origin') and path in (['record', member], ['origin', member]),
+    require(parent.endswith('#/$defs/origin') and path in (
+        ['record', member], ['origin', member], ['record', 'pending', 'origin', member]),
             'unexpected origin location')
     node = nodes[parent]['node']
     conditional = node['allOf'][index]
@@ -792,15 +793,32 @@ def origin_implication(nodes, name, path, errors, locations):
 
 def pending_branch_locations(nodes, record, path, observed):
     """Keep the surviving field checks after verifying the enclosing nullable branch."""
-    member = path[0]
+    observed = body_pending_locations(nodes, path, observed)
+    prefix = path[:2] if path[:2] == ['record', 'pending'] else []
+    member = path[len(prefix)]
     if member not in ('origin', 'accepted_revision'):
         return observed
     parent = record.split('#', 1)[0] + '#/$defs/pending/properties/' + member
     choices = nodes[parent]['node']['anyOf']
     require(choices[0]['$ref'] in (record, '#' + record.split('#', 1)[1]) and choices[1]['type'] == 'null',
             'pending record no longer uses the same optional branch')
-    enclosing = {('anyOf', (member,), parent + '/anyOf'), ('type', (member,), parent + '/anyOf/1/type')}
+    enclosing = {('anyOf', (*prefix, member), parent + '/anyOf'), ('type', (*prefix, member), parent + '/anyOf/1/type')}
     require(enclosing <= observed, 'expected both enclosing nullable messages')
+    return observed - enclosing
+
+
+def body_pending_locations(nodes, path, observed):
+    if path[:2] != ['record', 'pending']:
+        return observed
+    parent = ('https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/'
+              'goal_cancel_command_custody.schema.json#/$defs/BodyControlV2/properties/pending')
+    choices = nodes[parent]['node']['anyOf']
+    require(choices[0]['$ref'] == ('https://puppetmaster.local/schemas/goal_body_custody/1.0.0/'
+                                  'goal_body_custody.schema.json#/$defs/pending') and
+            choices[1]['type'] == 'null', 'body control no longer uses the same pending record')
+    at = tuple(path[:2])
+    enclosing = {('anyOf', at, parent + '/anyOf'), ('type', at, parent + '/anyOf/1/type')}
+    require(enclosing <= observed, 'expected both enclosing pending messages')
     return observed - enclosing
 
 
@@ -1083,11 +1101,12 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
             then = nodes[name.rsplit('/',1)[0]]['node']
             nullable = nodes[property_id]['node']['anyOf']
             require(name == bound + '/allOf/0/then/properties/blocked_reason_ref/minLength' and
-                    path in (['record', 'blocked_reason_ref'], ['after_record', 'blocked_reason_ref']) and
+                    path in (['record', 'blocked_reason_ref'], ['after_record', 'blocked_reason_ref'],
+                             ['record', 'pending', 'after_record', 'blocked_reason_ref']) and
                     other == property_id + '/anyOf/0/minLength' and
                     then['type'] == nullable[0]['type'] == 'string' and nullable[1]['type'] == 'null' and
                     then['minLength'] == nullable[0]['minLength'], 'blocked reason rules changed')
-            require(locations(cut) == {
+            require(body_pending_locations(nodes, path, locations(cut)) == {
                 ('minLength', tuple(path), other), ('anyOf', tuple(path), property_id + '/anyOf'),
                 ('type', tuple(path), property_id + '/anyOf/1/type'),
             }, 'the identical length rule did not remain')
