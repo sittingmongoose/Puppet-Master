@@ -42,6 +42,7 @@ REFUSAL_CLASSES = ('Refusal', 'DGRefusal', 'LaneRefusal', 'AdapterRefusal', 'Sto
 FROZEN = {}
 MEMBERS = {}   # id of an object reachable from a memoized singleton -> that singleton's digest
 FAILURES = []
+_CONTEXT_SENTINELS = {}
 
 
 NUMRULE_ROUTES = {'integer': 'number', 'uint64': 'number', 'boolean': 'boolean',
@@ -368,6 +369,15 @@ def restore_files(root, files):
         path.write_bytes(raw)
 
 
+def bind_context_sentinel(module, name):
+    """Name an identity-only test sentinel from an authored source file."""
+    value = vars(module)[name]
+    if type(value) is not object:
+        raise TypeError(f'{module.__name__}.{name} is not an identity-only sentinel')
+    digest = hashlib.sha256(Path(module.__file__).read_bytes()).hexdigest()
+    _CONTEXT_SENTINELS[value] = ('source_sentinel', module.__name__, name, digest)
+
+
 def context_value(value, world, seen=None, frozen=True):
     """Bind complete caller data without serializing an original capability.
 
@@ -378,6 +388,8 @@ def context_value(value, world, seen=None, frozen=True):
     seen = {} if seen is None else seen
     if value is None or type(value) in (bool, int, float, str, bytes):
         return (type(value).__name__, value)
+    if type(value) is object and value in _CONTEXT_SENTINELS:
+        return _CONTEXT_SENTINELS[value]
     if isinstance(value, Path):
         return ('path', str(value))
     if value is world:

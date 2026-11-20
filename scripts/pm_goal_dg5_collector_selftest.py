@@ -361,7 +361,24 @@ def check_pass2_parent_release():
         tables._PREDICATES.clear()
 
 
+def check_named_context_sentinel():
+    import pm_goal_dg5_boundaries as bridge
+    import pm_goal_dg_cf1_oracles as cf1
+
+    bridge.bind_context_sentinel(cf1, 'DELETE')
+    descriptor = bridge.context_value(cf1.DELETE, None)
+    assert descriptor[:3] == ('source_sentinel', cf1.__name__, 'DELETE')
+    assert len(descriptor[3]) == 64
+    try:
+        bridge.context_value(object(), None)
+    except TypeError:
+        pass
+    else:
+        raise AssertionError('arbitrary identity-only object was accepted')
+
+
 def main():
+    check_named_context_sentinel()
     check_frame_error_target_mapping()
     check_closure_memo_and_dump_recipe()
     check_dynamic_validator_capture()
