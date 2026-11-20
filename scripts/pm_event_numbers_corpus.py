@@ -903,12 +903,13 @@ def cli_subprocess_status(helper_file):
     return process.returncode, printed
 
 
-def datetime_integration_checks(m, root, inventory_check):
-    """The date-time suite. Only scope="all" calls this."""
+def datetime_integration_checks(m, root, inventory_check, *, include_regression=True):
+    """Date-time owner checks. Replay runs the regressions as separate witnesses."""
     wire = json.loads((root / "Plans/seglog_frame_v2_wire_fixtures.json").read_text())
     checks = {"datetime_inventory_complete_and_classified": inventory_check["status"] == "pass"}
-    from pm_event_datetime_admission_checks import regression_checks
-    checks.update(regression_checks(root))
+    if include_regression:
+        from pm_event_datetime_admission_checks import regression_checks
+        checks.update(regression_checks(root))
     # Reviews C6-B1 and C7-B1/B2: schema fences inside any Markdown container,
     # and fences after misleading boundaries, are discovered (CommonMark is
     # authoritative; the over-inclusive supplementary scan only adds spans).
@@ -960,6 +961,26 @@ def datetime_integration_checks(m, root, inventory_check):
     return checks
 
 
+def case_failures(m, c, corpus):
+    """Evaluate one corpus case and verify its recorded outcome and postconditions."""
+    failures = []
+    _RETAINED_CALLS["calls"] = None
+    actual, result = evaluate(m, c, corpus)
+    expected = ({"outcome": "refusal", "error": c["error"]} if "error" in c
+                else {"outcome": "acceptance", "output": c["output"]})
+    if actual != expected:
+        failures.append({"id": c["id"], "expected": expected, "actual": actual})
+    elif "output" in c:
+        for error in success_errors(result, c):
+            failures.append({"id": c["id"], "postcondition": error})
+    if "verifier_calls" in c and (_RETAINED_CALLS["calls"] is None or len(_RETAINED_CALLS["calls"]) != c["verifier_calls"]):
+        failures.append({"id": c["id"], "postcondition": "verifier calls %s, expected %d" % (
+            None if _RETAINED_CALLS["calls"] is None else len(_RETAINED_CALLS["calls"]), c["verifier_calls"])})
+    if not c.get("target_predicate"):
+        failures.append({"id": c["id"], "missing_target_predicate": True})
+    return actual, failures
+
+
 def run_corpus(path, *, scope="all"):
     if scope not in SCOPES:
         raise ValueError("unknown self-test scope: " + repr(scope))
@@ -985,21 +1006,9 @@ def run_corpus(path, *, scope="all"):
                     "native_authority": "NOT_RUN", "self_test_scope": scope}
     failures, outcomes = [], {}
     for c in cases:
-        _RETAINED_CALLS["calls"] = None
-        actual, result = evaluate(m, c, corpus)
-        expected = ({"outcome": "refusal", "error": c["error"]} if "error" in c
-                    else {"outcome": "acceptance", "output": c["output"]})
+        actual, errors = case_failures(m, c, corpus)
         outcomes[c["id"]] = actual
-        if actual != expected:
-            failures.append({"id": c["id"], "expected": expected, "actual": actual})
-        elif "output" in c:
-            for error in success_errors(result, c):
-                failures.append({"id": c["id"], "postcondition": error})
-        if "verifier_calls" in c and (_RETAINED_CALLS["calls"] is None or len(_RETAINED_CALLS["calls"]) != c["verifier_calls"]):
-            failures.append({"id": c["id"], "postcondition": "verifier calls %s, expected %d" % (
-                None if _RETAINED_CALLS["calls"] is None else len(_RETAINED_CALLS["calls"]), c["verifier_calls"])})
-        if not c.get("target_predicate"):
-            failures.append({"id": c["id"], "missing_target_predicate": True})
+        failures.extend(errors)
     # The CLI check's own nested run needs only its failing case; it skips the
     # owner checks, which the outer run performs.
     checks = number_integration_checks(m, root) if not _CLI_STATE["nested"] else {}
