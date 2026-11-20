@@ -44,7 +44,17 @@ def codec_key(directory, negative):
     return world, A.exact_json, ({1 if negative else '1': 'test value'},), {}
 
 
+def issue_immutable(directory, negative):
+    world = start_world(directory)
+    owner = world.owners['native']
+    original_ref = 'TEST_ONLY:stage7-original-ref'
+    owner.issue(None, {'value': 'first'}, ref=original_ref)
+    ref = original_ref if negative else original_ref + ':second'
+    return world, owner.issue, (None, {'value': 'second'}), {'ref': ref}
+
+
 CASES = {
+    'issue-immutable': (ADAPTERS, 466, 'issue/immutable_ref', issue_immutable),
     'codec-key': (ADAPTERS, 421, 'custody/exact_json/key', codec_key),
     'registry-role-match': (ADAPTERS, 330, 'registry/role', registry_role_match),
     'registry-duplicate': (ADAPTERS, 322, 'registry/duplicate_id', registry_duplicate),
