@@ -167,6 +167,18 @@ def fixture(declare, route, directory):
         if edition == 'integrated_native':
             check_checkpoint_repeated(owner)
         return world, owner.project, (('checkpoints', owner.checkpoint_key(scope)),)
+    if route['call'] == 'decode_projection':
+        owner = world.projector_class(world)
+        owner.project()
+        owner.cutover()
+        _, _, generation, wrapper = owner.stored_projection()
+        scope = owner.request()['scope']
+        generation_id = generation['generation_id']
+
+        def decode():
+            return owner.decode(copy.deepcopy(wrapper), scope, generation_id)
+
+        return world, decode, (wrapper, scope, generation_id)
     if route['call'] in ('read_checkpoint', 'checkpoint_wrapper'):
         owner = world.projector_class(world)
         owner.project()
@@ -1045,7 +1057,7 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
     elif scoped:
         nodes, walked = closure._scoped_census(plain, ident, bank, closure._realm_location)
         selected = plain.schema.get('$ref', '').endswith(
-            ('#/$defs/CombinedStorageProjection', '#/$defs/CancelledProjection'))
+            ('#/$defs/CombinedStorageProjection', '#/$defs/CancelledProjection', '#/$defs/StorageProjection'))
         validator = scoped_validator(plain, nodes, bank if selected else None)
     else:
         validator = closure.closure_validator(plain, ident, bank)
@@ -1084,6 +1096,9 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
             continue
         path = rule_path(accepted, example['path'])
         control = accepted
+        if 'stored_control' in example:
+            require(plain.schema['$ref'].endswith('#/$defs/StorageProjection'), 'unexpected stored projection control')
+            control = branch_controls[example['stored_control']]
         if 'control' in example:
             change = example['control']
             control = edit_example(go, control, rule_path(control, change['path']), change)
@@ -1426,7 +1441,7 @@ class OwnerExample:
                 returned = stored
             result['value_sha256'] = value_sha(returned)
             if edit and not (self.checkpoint or self.preserved_head or self.filesafe_effects) and self.route['call'] not in (
-                    'read_c3_proof', 'read_request'):
+                    'read_c3_proof', 'read_request', 'decode_projection'):
                 require(returned.get(edit) == 'example', 'the accepted call did not return the altered document')
         except Exception as error:
             if type(error).__name__ not in bridge.REFUSAL_CLASSES:
@@ -1550,7 +1565,8 @@ class OwnerExample:
                             f"single-check trial {record['kill']}: {record.get('cut_errors')}")
                 require(before == restored and before['observations'] == disabled['observations'],
                         'the same invalid document and message must be restored')
-                if self.preserved_head or self.filesafe_effects or self.route['call'] in ('read_c3_proof', 'read_request'):
+                if self.preserved_head or self.filesafe_effects or self.route['call'] in (
+                        'read_c3_proof', 'read_request', 'decode_projection'):
                     require(disabled['value_sha256'] == self.trials[0]['value_sha256'],
                             'the accepted read must return the original retained value')
                 require(before['refusal'] == self.route['refusal'] and before['detail'] == self.route['detail'],
