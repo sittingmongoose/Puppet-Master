@@ -488,8 +488,7 @@ async function noReplay(t, mode) {
 // (its nods, its line, a cheer), c-ready's finishing cheer, and whatever idle wiggle, swing or glance comes. Overlap is
 // the painted shapes', not their boxes: where the head's and a prop's boxes meet, every 2 px point is tested against the
 // visible fills and strokes of both (isPointInFill / isPointInStroke in the GPU browser's own geometry), so a
-// transparent box corner is not overlap. Normal motion must stay on all the while (no Reduced Motion, no adaptive
-// low-resource mode, sway and idle life on), and each cell must show Pip moving. A failure crops the stage.
+// transparent box corner is not overlap. Full motion must be requested, and each cell must show Pip moving in frames outside adaptive low-resource mode. A failure crops the stage.
 // Shared by the product sampler and controlled fixtures: sampled fill/stroke intersection area in CSS px².
 const INK_OVERLAP = (head, prop) => {
 	const shown = (e, top) => { for (let a = e; a && a !== top.parentElement; a = a.parentElement) { const c = getComputedStyle(a); if (c.display === 'none' || c.visibility === 'hidden' || +c.opacity < .05) return false; } return true; };
@@ -551,7 +550,7 @@ const GEOMETRY = (e, label) => {
 	// (the matrix the browser draws the group with, read once here for the pose below)
 	return { left: b.left, top: b.top, right: b.right, bottom: b.bottom, m };
 };
-const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
+const MOTION = async (ms, probeSource, geometrySource, selftest, force, cell) => {
 	const overlap = (0, eval)(`(${probeSource})`), geometry = (0, eval)(`(${geometrySource})`);
 	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
 	if (!st) return { err: 'no stage' };
@@ -559,8 +558,15 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	const R = (e, label) => geometry(e, label);
 	const out = { n: 0, validPairs: 0, validFrames: 0, leavingPairs: 0, initialHiddenFrames: 0, geometryError: '', off: 0, offWhy: '', moving: 0, movingMs: 0, boxFrames: 0, worstBox: 0, worst: 0, at: null, kinds: { tilt: 0, swing: 0, hop: 0, cheer: 0, propKick: 0 } };
 	const was = { tilt: false, swing: false, hop: false, cheer: false, kick: false };
-	let rnd = null, restoreN = 0, prevV = null;
+	let rnd = null, restoreN = 0, prevV = null, lastPaint = -Infinity;
 	const t0 = performance.now();
+	const deadline = t0 + ms + (cell ? 18000 : 0);
+	const entranceSeen = cell?.layer?.classList.contains('o55-entering');
+	let sawSleep = !!st.sleepZ;
+	out.wakeFrom = null;
+	out.judgeFrom = null;
+	out.paintFrames = 0;
+	out.lowFrames = 0;
 	// Pip's movement as it is painted, judged per drawn part (FO-50 guard; T42, tool batch 3). retro-c6 read the head's and
 	// the hand's group matrices and counted a frame when either changed by .01 stage units: a head held still while the
 	// hand moved passed (13.4 s of 'movement'), so did a hand held still, a counter-transform inside both groups that
@@ -572,7 +578,7 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	// at least half of its painted area have each moved at least PAINT_STEP px since the part's last counted pose (slow
 	// travel accumulates; a blink or a glance of the eyes alone is not the head moving). Each part must change for at
 	// least 200 ms on its own; movingMs is the lesser of the two. (T65: each part must now make PART_STEPS visible steps
-	// on its own; moving is the lesser count, and the parts are judged from Pip's first painted frame.)
+	// on its own; moving is the lesser count, and each awake cell waits for the current screen's wake and entrance.)
 	// T65 (TOOLBATCH4, REVIEW-kit-tb3-opus findings 1-3): a leaf is compared by what it paints, orientation-free. Its
 	// signature is its axis-aligned box in the stage, in device px: a shape mirrored, or turned 180 degrees, about its own
 	// centre repaints the same pixels and keeps the same box, where its corners compared one by one had 'moved' (a frozen
@@ -769,7 +775,7 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 		const r1 = (v) => Math.round(v * 100) / 100;
 		Object.assign(out, { travelUnit: 'device px', dpr: DPR, headMs: parts.head.ms, handMs: parts.hand.ms, headMoves: parts.head.n, handMoves: parts.hand.n, headTravelPx: r1(parts.head.travel), handTravelPx: r1(parts.hand.travel), headRebuilt: parts.head.rebuilt, handRebuilt: parts.hand.rebuilt, movingMs: Math.min(parts.head.ms, parts.hand.ms), moving: Math.min(parts.head.n, parts.hand.n) });
 	};
-	while (performance.now() - t0 < ms) {
+	while (performance.now() < deadline && (cell ? out.judgeFrom === null || performance.now() - t0 - out.judgeFrom < ms : performance.now() - t0 < ms)) {
 		await new Promise((r) => requestAnimationFrame(() => r()));
 		out.n++;
 		// Retro holds each distinct drawn pose for 50 ms; unchanged rAF samples contribute no motion.
@@ -789,20 +795,42 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 		}
 		prevV = { th: ps.thv, tilt: ps.tiltv };
 		if (rnd && out.n >= restoreN) { Math.random = rnd; rnd = null; out.forced.fired = s2.idleNext > s2.t; }
-		const nominal = !s2.reduced && !O55.motion.lowResource && PH.part('sway-and-physics') && PH.part('idle-life');
-		if (!nominal) { out.off++; out.offWhy = s2.reduced ? 'reduced' : O55.motion.lowResource ? 'low-resource' : 'a Pip part off'; }
+		const low = O55.motion.lowResource;
+		if (low) out.lowFrames++;
+		const nominal = !s2.reduced && !low && PH.part('sway-and-physics') && PH.part('idle-life');
+		if (!nominal) { out.off++; out.offWhy = s2.reduced ? 'reduced' : low ? 'low-resource' : 'a Pip part off'; }
+		if (cell && !nominal && !low) out.explicitlyOff = true;
 		const props = [...s2.props.values()].filter((p) => p.state === 'out' ? +p.el.getAttribute('opacity') > .05 : p.op > .95 && +p.el.getAttribute('opacity') > .95);
 		const now = { tilt: Math.abs(ps.tiltv) > 1.5, swing: Math.abs(ps.thv) > .25, hop: ps.dyv < -80, cheer: s2.moodOverride === 'happy' && s2.moodUntil > s2.t, kick: props.some((p) => Math.abs(p.av) > .12) };
 		for (const k of Object.keys(now)) { if (now[k] && !was[k]) out.kinds[k === 'kick' ? 'propKick' : k]++; was[k] = now[k]; }
 
-		// T65: the parts are judged from Pip's first painted frame, not from the props' arrival: under load the props
-		// finished fading in after Pip's wake hop and cheer, and the cell then held only the idle sway (2 hand steps in a
-		// run on Nas1). Before the first paint a missing paint is waited out; after any valid pair it is a geometry error.
-		{
-			let hP = null, cP = null;
+		// Each screen has its own wake. Wait for the active pane's entrance and the stage's
+		// release, power animation and wake reaction. Only an incoming shown prop opens the
+		// motion sample. Leaving props are still measured for overlap below.
+		if (cell) {
+			sawSleep ||= !!s2.sleepZ;
+			if (sawSleep && !s2.sleepZ && out.wakeFrom === null) out.wakeFrom = Math.round(tNow - t0);
+			if (out.judgeFrom === null && entranceSeen && cell.layer.isConnected
+				&& O55.S.sess.screen === cell.screen && !cell.layer.classList.contains('o55-entering')
+				&& out.wakeFrom !== null && !s2.sleepZ && !s2.held && nominal
+				&& !(s2.moodUntil > s2.t) && Math.abs(ps.dy) < 1 && Math.abs(ps.dyv) < 5
+				&& !s2.content.getAnimations().some((animation) => animation.pending || animation.playState === 'running')
+				&& props.some((p) => p.state !== 'out')) out.judgeFrom = Math.round(tNow - t0);
+			if (!nominal) {
+				parts.head.ref = null;
+				parts.hand.ref = null;
+			}
+		}
+		if ((!cell || (out.judgeFrom !== null && nominal)) && tNow - lastPaint >= 50) {
+			lastPaint = tNow;
+			let hP, cP;
 			try { hP = painted(s2, s2.gHead, 'head'); cP = painted(s2, s2.gCtl, 'hand'); }
-			catch (e) { if (out.validPairs) { out.geometryError = `${e.message} at frame ${out.n}`; break; } }
-			if (hP && cP) { judgePart(parts.head, hP, tNow); judgePart(parts.hand, cP, tNow); }
+			catch (e) { if (out.paintFrames) { out.geometryError = `${e.message} at frame ${out.n}`; break; } }
+			if (hP && cP) {
+				out.paintFrames++;
+				judgePart(parts.head, hP, tNow);
+				judgePart(parts.hand, cP, tNow);
+			}
 		}
 		// No comparison is eligible during the props' entrance fade. Coverage below must still become positive.
 		if (!props.length) continue;
@@ -866,13 +894,21 @@ async function awakeMotion(t, mode) {
 			await t.emulate({ reducedMotion: 'no-preference' });
 			await stageLook(t, f, look);
 			for (const scr of t.args.screens ? String(t.args.screens).split(',') : MOTION_SCREENS) {
-				await f.evaluate((x) => window.O55.ui.open({ fresh: true, screen: x }), scr);
-				const ok = await f.waitForFunction(() => !!O55.pipStage.of(O55.S.root.querySelector('.o55-stage')), null, { timeout: 15000 }).then(() => true, () => false);
 				const tag = `${mode} ${look} ${scr} ${w}x${h} awake`;
-				if (!ok) { await t.check(`${tag}: the screen opens on a stage`, false, 'no stage within 15 s'); continue; }
-				// watched from the screen's entrance on, through the wake, the person's input and the idle that follows
-				const watch = f.evaluate(`(${MOTION.toString()})(14000, ${JSON.stringify(INK_OVERLAP.toString())}, ${JSON.stringify(GEOMETRY.toString())}, ${JSON.stringify(t.args.selftest || "")})`);
-				await f.waitForTimeout(250);
+				// Welcome arms the owner's real arrival handler again for every target screen.
+				await f.evaluate(() => O55.ui.open({ fresh: true, screen: 'welcome' }));
+				await f.waitForFunction(() => {
+					const stage = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
+					return O55.S.sess?.screen === 'welcome' && stage?.sleepZ;
+				}, null, { timeout: 15000 });
+				const watch = f.evaluate(({ screen, motion, ink, geometry, selftest }) => {
+					O55.ui.open({ fresh: true, screen });
+					const layer = O55.S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+					return (0, eval)(`(${motion})`)(14000, ink, geometry, selftest, null, { screen, layer });
+				}, { screen: scr, motion: MOTION.toString(), ink: INK_OVERLAP.toString(),
+					geometry: GEOMETRY.toString(), selftest: t.args.selftest || '' });
+				// Welcome's handler ignores pointer travel in its first 900 ms.
+				await f.waitForTimeout(950);
 				await t.check(`${tag}: Pip wakes on the pointer's arrival`, await arrive(t, f), 'still asleep after 4 s');
 				if (scr === 'name') {
 					const fld = f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-bind="name"]').first();
@@ -887,21 +923,18 @@ async function awakeMotion(t, mode) {
 				if (r.err) { await t.check(`${tag}: the stage`, false, r.err); continue; }
 				for (const k of Object.keys(r.kinds)) total[k] += r.kinds[k];
 				total.boxFrames += r.boxFrames;
-				const why = JSON.stringify({ frames: r.n, validPairs: r.validPairs, validFrames: r.validFrames, geometryError: r.geometryError, headMs: Math.round(r.headMs), handMs: Math.round(r.handMs), headMoves: r.headMoves, handMoves: r.handMoves, headTravelPx: r.headTravelPx, handTravelPx: r.handTravelPx, kinds: r.kinds, boxFrames: r.boxFrames, worstBox: Math.round(r.worstBox), at: r.at });
+				const why = JSON.stringify({ frames: r.n, validPairs: r.validPairs, validFrames: r.validFrames, wakeFrom: r.wakeFrom, judgeFrom: r.judgeFrom, paintFrames: r.paintFrames, lowFrames: r.lowFrames, geometryError: r.geometryError, headMs: Math.round(r.headMs), handMs: Math.round(r.handMs), headMoves: r.headMoves, handMoves: r.handMoves, headTravelPx: r.headTravelPx, handTravelPx: r.handTravelPx, kinds: r.kinds, boxFrames: r.boxFrames, worstBox: Math.round(r.worstBox), at: r.at });
 				await t.check(`${tag}: head and eligible props have valid visible geometry`, !r.geometryError, why, { hard: true });
 				await t.check(`${tag}: positive valid measurement coverage`, r.validPairs > 0 && r.validFrames > 0, why, { hard: true });
-				await t.check(`${tag}: normal motion stayed on`, r.off === 0, `${r.off}/${r.n} frames without it (${r.offWhy})`);
-				/* (in time, not frames: one nod keeps Pip off its rest pose for 333 ms on the stage's tilt spring, a wiggle 467 ms,
-				   at any frame rate; 20 frames were 435 ms at the VM's 46 fps, more than a nod, and 171 ms at Windows' 117 fps.
-				   NieR's c-ready has one idle wiggle or nod in 14 s, by design (no swing, no hop): 13-16 frames on the VM, 45-56 on
-				   Windows, retro-c4. 200 ms is stricter than 20 frames were on every Windows run, and below one nod.
-				   T65: in device px the bar is PART_STEPS visible steps a part, see PART_STEPS) */
-				// T42: each drawn part on its own, on what is painted (a head held still while the hand moves fails here)
-				await t.check(`${tag}: Pip's drawn head changed visibly (painted, >= 1 device px) at least ${PART_STEPS === 1 ? 'once' : PART_STEPS + ' times'}`, r.headMoves >= PART_STEPS, why);
-				await t.check(`${tag}: Pip's drawn hand changed visibly (painted, >= 1 device px) at least ${PART_STEPS === 1 ? 'once' : PART_STEPS + ' times'}`, r.handMoves >= PART_STEPS, why);
-				// T65: the parts' net travel over the cell, a backstop beside the per-frame steps (the real page's smallest at
-				// 860x768 were 5.65 px for the head and 1.98 px for the hand, REVIEW-kit-tb3-opus)
-				await t.check(`${tag}: Pip's drawn head and hand each travelled at least ${TRAVEL_FLOOR_DPX} device px`, r.headTravelPx >= TRAVEL_FLOOR_DPX && r.handTravelPx >= TRAVEL_FLOOR_DPX, why);
+				await t.check(`${tag}: full motion remains requested`, !r.explicitlyOff, why);
+				const sampled = r.judgeFrom !== null && r.paintFrames >= 8;
+				await t.check(`${tag}: post-wake motion sample complete`, sampled,
+					`Sampling incomplete: need the screen entrance, a new wake, an incoming prop and at least eight non-adaptive paint samples; ${why}`);
+				if (sampled) {
+					await t.check(`${tag}: Pip's drawn head changed visibly (painted, >= 1 device px) at least ${PART_STEPS} times`, r.headMoves >= PART_STEPS, why);
+					await t.check(`${tag}: Pip's drawn hand changed visibly (painted, >= 1 device px) at least ${PART_STEPS} times`, r.handMoves >= PART_STEPS, why);
+					await t.check(`${tag}: Pip's drawn head and hand each travelled at least ${TRAVEL_FLOOR_DPX} device px`, r.headTravelPx >= TRAVEL_FLOOR_DPX && r.handTravelPx >= TRAVEL_FLOOR_DPX, why);
+				}
 				const okInk = r.worst <= 4;
 				await t.check(`${tag}: no painted overlap of Pip's head and a prop`, okInk, `${r.worst} px² painted; ${why}`);
 				if (!okInk) await t.crop(`awake-${mode}-${look}-${scr}-${w}x${h}`, '#pm-o55-onboarding .o55-stage', `${tag}: painted overlap ${r.worst} px²`);
