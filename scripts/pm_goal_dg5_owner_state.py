@@ -47,6 +47,9 @@ What a hook excludes, and why (the only exclusions)
 * `functools.lru_cache` wrappers: memo of a pure function (counted in `opaque`
   as `memo`). Listed for the reviewer; no owner here keeps state in one.
 
+The judge applies `covered_later_check` only to a same-code later refusal (a
+different-code refusal is judged KILLED_CODE or CANNOT_DECIDE first, addendum 1).
+
 A walk that meets a value it cannot classify does not guess: the digest is None
 with the reason, and the judge gives CANNOT_DECIDE.
 """
@@ -395,6 +398,38 @@ HOOKS = {
         note='DG-R / DG-INT cancellation worlds and the W12B migration boundary (Method B harness), including '
              'the int schema cache (success entries, hits, misses).'),
 }
+
+
+def covered_later_check(intact, restoration, cut):
+    """COVERED_LATER only when the refused cut trial left the intact trial's after-state.
+
+    `intact` and `restoration` are the intact trial run twice with nothing cut
+    (the stock judge: the restoration and its repeat; the forked Method B judge:
+    the defect trial and its restoration), the determinism control. Every
+    digest must exist, the two intact runs must agree, and the cut trial must
+    equal them on both the store and the owners' in-memory state.
+    """
+    trials = dict(intact=intact, restoration=restoration, cut=cut)
+    out = dict(intact=intact, restoration=restoration, cut=cut)
+    for name, state in trials.items():
+        if state is None:
+            return dict(out, verdict='CANNOT_DECIDE', reason=f'{name} trial exported no after-state')
+        for part in ('store_sha256', 'owner_sha256'):
+            if not state.get(part):
+                why = state.get('owner_reason') if part == 'owner_sha256' else None
+                return dict(out, verdict='CANNOT_DECIDE',
+                            reason=f'{name} trial has no {part}' + (f' ({why})' if why else ''))
+    for part in ('store_sha256', 'owner_sha256'):
+        if intact[part] != restoration[part]:
+            return dict(out, verdict='CANNOT_DECIDE',
+                        reason=f'intact trial is not deterministic: {part} differs between its two runs')
+    differs = [part for part in ('store_sha256', 'owner_sha256') if cut[part] != intact[part]]
+    if differs:
+        # Addendum 1 (pm-ea-lead 1121124828-43f4): a same-code later refusal is COVERED_LATER
+        # only if the after-states are equal, else CANNOT_DECIDE. `effect` keeps why.
+        return dict(out, verdict='CANNOT_DECIDE', effect=differs,
+                    reason='cut trial left a different after-state: ' + ', '.join(differs))
+    return dict(out, verdict='COVERED_LATER', reason=None)
 
 
 def owner_state_digest(family, world, arguments=None, inventory=None):

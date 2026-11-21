@@ -24,11 +24,17 @@ in this shared runner (GH2 and GO reuse it; see "Extension points" below):
   replayed. KILLED needs both: the complete checker accepts with exactly that
   row cut, and an uncached restoration run returns the same refusal. A later
   refusal (COVERED_LATER), a cut exception or a failed restoration earns no
-  credit. COVERED_LATER also needs the cut trial's after-state to equal the
-  intact trial's (store digest and owner in-memory digest, `after_state`);
-  a differing after-state is CUT_LEFT_EFFECT, and a missing digest or an
-  intact trial that does not repeat its own after-state is CANNOT_DECIDE
-  (rulings 1121112536-0b66 (3), 1121115610-7650). Neither earns credit. A declared duplicate set (tuple target) is DUPLICATE_SET_KILLED only
+  credit. A later refusal is judged in this order (rulings 1121112536-0b66 (3),
+  1121115610-7650, addendum 1 = 1121124828-43f4 (1)):
+  KILLED_CODE (a kill, shown apart from KILLED) when the declared target is the
+  row's own guard with its own code, the intact run is exact, the cut refuses
+  with a DIFFERENT owner refusal code and the uncached restoration repeats the
+  intact result (errors and code); a crash is never KILLED_CODE. A
+  different-code refusal that misses any condition is CANNOT_DECIDE, never
+  COVERED_LATER. A same-code later refusal is COVERED_LATER only when the cut
+  trial's after-state equals the intact trial's (store digest and owner
+  in-memory digest; the intact trial is the restoration, run a second time as
+  its determinism control), else CANNOT_DECIDE. CANNOT_DECIDE never credits. A declared duplicate set (tuple target) is DUPLICATE_SET_KILLED only
   when its joint cut accepts, each single-site cut still refuses with the peer
   site, and restoration repeats the refusal.
 
@@ -165,10 +171,11 @@ def boundary_of(family, label):
     return 'retained_history'
 
 
-# --- COVERED_LATER after-state rule --------------------------------------------
-# Classes a later refusal can get. Only KILLED and DUPLICATE_SET_KILLED ever
-# credit; these three never do (the matrix and every consumer credit by name).
-LATER_REFUSAL_CLASSES = ('COVERED_LATER', 'CUT_LEFT_EFFECT', 'CANNOT_DECIDE')
+# --- later-refusal rules (KILLED_CODE, then the COVERED_LATER after-state rule) ---
+# The kill classes that credit (KILLED_CODE shown apart from KILLED in every tally).
+KILL_CLASSES = ('KILLED', 'DUPLICATE_SET_KILLED', 'KILLED_CODE')
+# Classes a later refusal can get: KILLED_CODE credits as a kill; these never credit.
+LATER_REFUSAL_CLASSES = ('COVERED_LATER', 'CANNOT_DECIDE')
 
 
 def after_state(result):
@@ -181,35 +188,40 @@ def after_state(result):
         return None
     owner = result.get('owner_state') or {}
     return dict(store_sha256=result.get('store_after_sha256'), owner_sha256=result.get('owner_state_sha256'),
-                owner_hook=owner.get('hook'), owner_reason=owner.get('reason'), owner_objects=owner.get('objects'))
+                owner_hook=owner.get('hook'), owner_reason=owner.get('reason'), owner_objects=owner.get('objects'),
+                refusal_code=result.get('refusal_code'))
+
+
+def killed_code_check(target, intact_code, restoration_code, cut_code):
+    """KILLED_CODE's four conditions (addendum 1); the caller has already found the intact
+    run exact (outcome exact_expected), the restoration's errors equal to it and the cut
+    refusing at a later row. Returns dict(verdict=KILLED_CODE|None, different_code, ...)."""
+    out = dict(intact_code=intact_code, restoration_code=restoration_code, cut_code=cut_code)
+    if isinstance(cut_code, str) and cut_code.startswith('crash:'):
+        # Addendum 1 and METHOD-RULING addendum C: a crash is never KILLED_CODE and never cover.
+        return dict(out, verdict=None, different_code=False, crash=True, reason='cut trial crashed (' + cut_code + ')')
+    known = all(isinstance(c, str) and c and not c.startswith('crash:') for c in (intact_code, cut_code))
+    different = known and cut_code != intact_code
+    out['different_code'] = different
+    if not different:
+        return dict(out, verdict=None, reason='no different owner refusal code' if not known else 'same code')
+    if not isinstance(target, str):
+        return dict(out, verdict=None, reason='declared target is a set, not one guard')
+    import pm_goal_dg5_boundaries as bridge
+    own = bridge.row_code_check(target, intact_code)
+    out['own_guard'] = own
+    if not own['own']:
+        return dict(out, verdict=None, reason='declared target is not the row guard with its own code: ' + str(own['why']))
+    if restoration_code != intact_code:
+        return dict(out, verdict=None, reason='restoration did not repeat the intact refusal code')
+    return dict(out, verdict='KILLED_CODE', reason=None)
 
 
 def covered_later_check(intact, restoration, cut):
-    """COVERED_LATER only when the refused cut trial left the intact trial's after-state.
-
-    `intact` is the original complete call and `restoration` the uncached rerun
-    with nothing cut: the intact trial run twice (determinism control). Every
-    digest must exist, the two intact runs must agree, and the cut trial must
-    equal them on both the store and the owners' in-memory state.
-    """
-    trials = dict(intact=intact, restoration=restoration, cut=cut)
-    out = dict(intact=intact, restoration=restoration, cut=cut)
-    for name, state in trials.items():
-        if state is None:
-            return dict(out, verdict='CANNOT_DECIDE', reason=f'{name} trial exported no after-state')
-        for part in ('store_sha256', 'owner_sha256'):
-            if not state.get(part):
-                why = state.get('owner_reason') if part == 'owner_sha256' else None
-                return dict(out, verdict='CANNOT_DECIDE',
-                            reason=f'{name} trial has no {part}' + (f' ({why})' if why else ''))
-    for part in ('store_sha256', 'owner_sha256'):
-        if intact[part] != restoration[part]:
-            return dict(out, verdict='CANNOT_DECIDE',
-                        reason=f'intact trial is not deterministic: {part} differs between its two runs')
-    differs = [part for part in ('store_sha256', 'owner_sha256') if cut[part] != intact[part]]
-    if differs:
-        return dict(out, verdict='CUT_LEFT_EFFECT', reason='cut trial after-state differs: ' + ', '.join(differs))
-    return dict(out, verdict='COVERED_LATER', reason=None)
+    """The shared after-state rule (pm_goal_dg5_owner_state.covered_later_check; the forked
+    Method B judge applies the same function)."""
+    from pm_goal_dg5_owner_state import covered_later_check as rule
+    return rule(intact, restoration, cut)
 
 
 class Collector:
@@ -330,7 +342,8 @@ class Collector:
         record = dict(id=len(self.ledger), label=label, family=fam, input_sha256=before, valid=valid, target=target,
             generated=generated, errors=sorted(errors), first=first, sig=self._signature(merged),
             failing=tuple(sorted(name for name, holds in merged.items() if not holds)),
-            after_state=after_state(result))
+            after_state=after_state(result),
+            refusal_code=result.get('refusal_code') if isinstance(result, dict) else None)
         self.ledger.append(record)
         one = len(errors) == 1 and first in errors
         for name, holds in merged.items():
@@ -352,17 +365,23 @@ class Collector:
         """One full complete-checker run, uncached, with exactly `cut` disabled."""
         return self._trial(evaluate, value, cut)[0]
 
-    def _trial(self, evaluate, value, cut):
-        """`_replay` and the trial's after-state (store and owner digests; None when the call exports none)."""
-        saved = (tables.CUT, tables.NO_CACHE, self.active, self.replaying)
+    def _trial(self, evaluate, value, cut, *, state=False):
+        """`_replay` and the trial's after-state (store and owner digests; None when the call exports none).
+
+        With `state`, the call is asked for its owner in-memory digest
+        (`tables.AFTER_STATE`); a store-bound call computes it only then, because
+        the walk is the costly part and only the judged trials need it.
+        """
+        saved = (tables.CUT, tables.NO_CACHE, self.active, self.replaying, getattr(tables, 'AFTER_STATE', False))
         tables.CUT, tables.NO_CACHE, self.active, self.replaying = frozenset(cut), True, [], True
+        tables.AFTER_STATE = state
         try:
             result = evaluate(copy.deepcopy(value))
             return sorted(set(result['errors'] if isinstance(result, dict) else result)), after_state(result)
         except Exception as exc:
             return 'exception:' + type(exc).__name__, None
         finally:
-            tables.CUT, tables.NO_CACHE, self.active, self.replaying = saved
+            tables.CUT, tables.NO_CACHE, self.active, self.replaying, tables.AFTER_STATE = saved
 
     def _judge(self, record, evaluate, value):
         target, valid = record.get('target'), record.get('valid')
@@ -397,8 +416,11 @@ class Collector:
             record['kill'] = 'NOT_REPLAYED_CAP'
             return
         self.replay_attempts[key] += 1
-        cut, cut_state = self._trial(evaluate, value, targets)
-        restoration, restoration_state = self._trial(evaluate, value, ())
+        cut, cut_state = self._trial(evaluate, value, targets, state=True)
+        later = isinstance(cut, list) and bool(cut)
+        # A later refusal is judged on after-states: the intact trial runs twice with its
+        # owner digest (restoration and its repeat, the determinism control).
+        restoration, restoration_state = self._trial(evaluate, value, (), state=later)
         record['cut_errors'] = cut
         record['restoration_errors'] = restoration
         if restoration != sorted(errors):
@@ -408,9 +430,30 @@ class Collector:
         elif len(targets) > 1 and not cut:
             self._site_cuts(record, evaluate, value, targets, errors, key)
         elif cut:
-            check = covered_later_check(record.get('after_state'), restoration_state, cut_state)
-            record['covered_later_check'] = check
-            record['kill'] = check['verdict']
+            # After KILLED (the cut accepts): KILLED_CODE, then the after-state rule.
+            code = killed_code_check(record['target'], record.get('refusal_code'),
+                                     (restoration_state or {}).get('refusal_code'), (cut_state or {}).get('refusal_code'))
+            record['killed_code_check'] = code
+            if code['verdict'] == 'KILLED_CODE':
+                record['kill'] = 'KILLED_CODE'
+                self.replays[key] += 1
+            elif code.get('crash'):
+                record['kill'] = 'CANNOT_DECIDE'   # a crash is not cover (addendum C) and not KILLED_CODE
+                record['cannot_decide_reason'] = code['reason']
+            elif code['different_code']:
+                record['kill'] = 'CANNOT_DECIDE'   # a different-code refusal is never COVERED_LATER
+                record['cannot_decide_reason'] = 'different-code later refusal: ' + code['reason']
+            else:
+                repeat, repeat_state = self._trial(evaluate, value, (), state=True)
+                record['restoration_repeat_errors'] = repeat
+                check = covered_later_check(restoration_state, repeat_state, cut_state)
+                if repeat != restoration:
+                    check = dict(check, verdict='CANNOT_DECIDE', reason='intact trial is not deterministic: '
+                                 'its repeat refused differently')
+                record['covered_later_check'] = check
+                record['kill'] = check['verdict']
+                if check['verdict'] == 'CANNOT_DECIDE':
+                    record['cannot_decide_reason'] = check['reason']
             if len(targets) == 1 and len(cut) == 1:
                 joint = self._replay(evaluate, value, targets | set(cut))
                 record['joint_cut'] = dict(rows=sorted(targets | set(cut)), errors=joint)
@@ -638,7 +681,7 @@ def generate(collector, *, replace=False):
     path.write_text(json.dumps(mapping, indent=2, sort_keys=True)+'\n')
     witnesses = {}
     for record in collector.ledger:
-        if record.get('kill') in ('KILLED', 'DUPLICATE_SET_KILLED'):
+        if record.get('kill') in KILL_CLASSES:
             target = record['target'] if isinstance(record['target'], str) else '|'.join(sorted(record['target']))
             witnesses.setdefault(target, dict(expected_refusal=record['target'], source=record['label'],
                 family=record['family'], input_sha256=record['input_sha256'], kill=record['kill']))
@@ -662,8 +705,8 @@ def table_records(collector):
     return by_sig
 
 
-PREFERENCE = {'KILLED': 0, 'DUPLICATE_SET_KILLED': 1, 'NOT_REPLAYED_CAP': 2, 'COVERED_LATER': 3,
-              'CUT_LEFT_EFFECT': 4, 'CANNOT_DECIDE': 5}
+PREFERENCE = {'KILLED': 0, 'DUPLICATE_SET_KILLED': 1, 'KILLED_CODE': 2, 'NOT_REPLAYED_CAP': 3, 'COVERED_LATER': 4,
+              'CANNOT_DECIDE': 5}
 
 
 def vectors_for(collector, names, by_sig):
@@ -1016,6 +1059,25 @@ def judge_self_test():
         rows.append(dict(case='later_refusal_without_after_state',expected_outcome='exact_expected',
                          actual_outcome=record.get('outcome'),
                          expected_kill='CANNOT_DECIDE',actual_kill=record.get('kill'),cut=record.get('cut_errors')))
+        # Exported refusal codes: a different-code later refusal at the row's own code is
+        # KILLED_CODE; the same chain refusing with one shared code stays with the after-state rule.
+        def coded(value, shared=False):
+            gate=common.Gates();gate.require('dg5/selftest/first/schema', value['x'])
+            if not gate.errors:gate.require('dg5/selftest/second/schema', value['x'])
+            errors=sorted(gate.errors)
+            row=errors[0].split('/')[-2] if errors else None
+            code=None if not errors else ('selftest/shared/schema/x' if shared else f'selftest/{row}/schema/x')
+            return dict(errors=errors,refusal_code=code,
+                        store_after_sha256='0'*64,owner_state_sha256='1'*64,owner_state=dict(hook='selftest'))
+        collector.invoke('judge/killed_code',coded,dict(x=False),False,target='dg5/selftest/first/schema',generated=True)
+        record=collector.ledger[-1]
+        rows.append(dict(case='killed_code',expected_outcome='exact_expected',actual_outcome=record.get('outcome'),
+                         expected_kill='KILLED_CODE',actual_kill=record.get('kill'),cut=record.get('cut_errors')))
+        collector.invoke('judge/same_code_not_killed_code',lambda v:coded(v,True),dict(x=False),False,
+                         target='dg5/selftest/first/schema',generated=True)
+        record=collector.ledger[-1]
+        rows.append(dict(case='same_code_later_refusal',expected_outcome='exact_expected',actual_outcome=record.get('outcome'),
+                         expected_kill='COVERED_LATER',actual_kill=record.get('kill'),cut=record.get('cut_errors')))
         # The same chain with an exported, unchanged after-state is COVERED_LATER.
         def chained_state(value):
             return dict(errors=chained(value),store_after_sha256='0'*64,owner_state_sha256='1'*64,
@@ -1052,7 +1114,7 @@ def judge_self_test():
 
 # --- ledger outputs ------------------------------------------------------------
 def ledger_summary(collector, rows):
-    """Per-row kill ledger; credit only KILLED / DUPLICATE_SET_KILLED replays."""
+    """Per-row kill ledger; credit only KILLED / DUPLICATE_SET_KILLED / KILLED_CODE replays (by class)."""
     per = collections.defaultdict(lambda: collections.defaultdict(collections.Counter))
     kills = collections.defaultdict(lambda: collections.defaultdict(list))
     for record in collector.ledger:
@@ -1064,7 +1126,7 @@ def ledger_summary(collector, rows):
             per[name][record['family']][record.get('outcome')] += 1
             if record.get('kill'):
                 per[name][record['family']]['kill:' + record['kill']] += 1
-            if record.get('kill') in ('KILLED', 'DUPLICATE_SET_KILLED'):
+            if record.get('kill') in KILL_CLASSES:
                 kills[name][record['family']].append(dict(label=record['label'], input_sha256=record['input_sha256'],
                     kill=record['kill'], set=None if isinstance(target, str) else sorted(target)))
     out = []
