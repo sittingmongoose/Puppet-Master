@@ -32,4 +32,19 @@ assert.ok(inside.worst > 1, `an in-window glyph-scale failure must fail the row 
 assert.equal(inside.valueFails, 1, `the in-window failure must be counted (got ${inside.valueFails})`);
 const outside = everyFrame(frames(2, 6));
 assert.ok(outside.worst <= 1 && (outside.valueFails || 0) === 0, `a scale step before the first change is outside the window (worst ${outside.worst}, count ${outside.valueFails})`);
-console.log('stop-chip-frame: 2 cases pass');
+// R64 A2: a visual fault while already flowing cannot contribute to its own allowance.
+for (const layer of ['g', 'b']) {
+	const R = frames(Infinity, 1);
+	for (const row of R.rows) row.flow = 'flowing';
+	R.baseline = R.rows.map((row, i) => ({
+		...row, g: { ...row.g, v: 1 - 0.008 * i }, b: { ...row.b, v: 1 - 0.008 * i },
+	}));
+	for (const [i, row] of R.rows.entries()) row[layer].v = 1 - 0.008 * i;
+	const steady = everyFrame(R);
+	assert.ok(steady.worst <= 1 && steady.valueFails === 0, 'the quiet ordinary step is accepted');
+	for (const row of R.rows.slice(4)) row[layer].v -= 0.1;
+	const step = everyFrame(R);
+	assert.equal(step.valueFails, 1, `the flowing ${layer} step past the quiet bound must be counted`);
+	assert.ok(step.worst > 1, 'the step cannot calibrate its own bound');
+}
+console.log('stop-chip-frame: 6 cases pass');

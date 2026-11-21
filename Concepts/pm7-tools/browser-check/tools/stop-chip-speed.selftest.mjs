@@ -124,4 +124,45 @@ assert.equal(nierGone.ok, true, `NieR dropping its glow inside the Fast window m
 const notNierGone = nierGlowThenGone();
 for (const r of notNierGone.rows) delete r.nier;
 assert.equal(judge(notNierGone).ok, false, 'the same disappearing backlight outside NieR must fail');
-console.log('stop-chip-speed: 11 cases pass');
+// R74 C2: terminal loss of both loops must fail every speed/cadence, even with a good earlier sample.
+const bothGone = staleBacklightPage();
+for (let i = 1; i < bothGone.rows.length; i += 2) delete bothGone.rows[i].g;
+const noLoops = judge(bothGone);
+assert.equal(noLoops.ok, false, 'earlier durations cannot replace missing terminal loops');
+assert.deepEqual(noLoops.bad.filter((x) => x.missing && x.layer === 'glyph').map((x) => `${x.speed}/${x.flow}`).sort(),
+	['Fast/flowing', 'Fast/waiting', 'Slow/flowing', 'Slow/waiting'], 'all four terminal glyphs are missing');
+// R74/R75 C3: Fast briefly has a glow while waiting. Its flowing pace never shows one.
+const waitingGlow = nierGlowThenGone();
+waitingGlow.rows.splice(2, 1);
+waitingGlow.marks[1].i--;
+assert.equal(judge(waitingGlow).ok, true, 'a waiting glow does not require a flowing glow in NieR');
+waitingGlow.rows[0].b.dur = BASE.waiting;
+assert.equal(judge(waitingGlow).ok, true, 'a transient unscaled glow does not replace a glyph-only NieR terminal sample');
+waitingGlow.rows[1].b = { dur: BASE.waiting };
+const visibleGlow = judge(waitingGlow);
+assert.deepEqual(visibleGlow.bad, [{ speed: 'Fast', flow: 'waiting', layer: 'backlight', dur: 3200, want: 1920 }],
+	'a glow still present at the end of its pace must scale in NieR too');
+// R62 A2: keep an ineligible pre-application sample, then judge the first later frame.
+const judgePrompt = mod.judgeSpeedPrompt || judge;
+function promptPage() {
+	const R = runPage(true);
+	for (const m of R.marks) {
+		m.appliedFrame = R.rows[m.i].t;
+		R.rows[m.i].g.dur = R.rows[m.i].b.dur = BASE.waiting;
+	}
+	return R;
+}
+const prompt = promptPage();
+assert.equal(judgePrompt(prompt).ok, true, 'the first frame after the save has the new factor');
+const delayed = promptPage();
+delayed.rows.splice(1, 0, { t: 8, flow: 'waiting', g: { dur: BASE.waiting }, b: { dur: BASE.waiting } });
+delayed.marks[1].i++;
+assert.equal(judge(delayed).ok, true, 'the same delayed adoption eventually settles');
+assert.equal(judgePrompt(delayed).ok, false, 'the first eligible frame cannot borrow the later scaled durations');
+const noFrame = promptPage();
+noFrame.marks[0].appliedFrame = noFrame.rows[noFrame.marks[1].i].t;
+assert.equal(judgePrompt(noFrame).ok, false, 'a sample beyond the next speed change cannot stand in');
+const missingFirst = promptPage();
+delete missingFirst.rows[1].g;
+assert.equal(judgePrompt(missingFirst).ok, false, 'missing glyph in the first eligible frame fails');
+console.log('stop-chip-speed: 19 cases pass');

@@ -123,13 +123,13 @@ assert.ok(nBig.worst > 1, `a NieR glyph jump far larger than the reference's on 
 // time 2480, so the close's wall-clock hand-over is 60 ms. Values stay constant; places follow the timing
 // fields. Marks: a word at 1, the open at 5, the close at 155. Both jumps satisfy both caps, no restarts.
 // `closeMs` scales the CHIP's close jump only (the reference keeps its 60 ms): twice the reference must fail.
-function witness(closeMs = 60) {
+function witness(closeMs = 60, closeGap = 60) {
 	const rows = [];
 	let w = 5000;
-	const resumeS = 2540 - closeMs;
+	const resumeS = 2480 + closeGap - closeMs;
 	for (let i = 0; i < 230; i++) {
-		w += 16 + (i === 5 ? 80 : 0) + (i === 155 ? 60 : 0);
-		const t = w - (i >= 5 ? 80 : 0) - (i >= 155 ? 60 : 0);
+		w += 16 + (i === 5 ? 80 : 0) + (i === 155 ? closeGap : 0);
+		const t = w - (i >= 5 ? 80 : 0) - (i >= 155 ? closeGap : 0);
 		const held = i >= 5 && i < 155;
 		const loop = (id, v, s) => held
 			? { id, dur: DUR, delay: 0, s: null, c: 5096, rate: 1, place: 5096 / DUR, state: 'paused', v }
@@ -161,4 +161,11 @@ for (const what of ['open', 'close']) for (const layer of ['glyph', 'backlight']
 // cap and must fail even with the right span.
 const twiceClose = everyFrame(witness(120));
 assert.ok(twiceClose.worst > 1, `a close jump twice the reference's must fail (worst ${twiceClose.worst}; named: ${(twiceClose.known || []).join('; ') || 'none'})`);
-console.log('stop-chip-window: 12 cases pass');
+// R74/R75 C4: the larger close sits inside the open span; both need their own reference.
+const biggerClose = everyFrame(witness(120, 120));
+assert.deepEqual(biggerClose.spans.map((s) => [s.what, s.otherI, Math.round(s.otherMs)]),
+	[['open', 5, 80], ['close', 155, 120]], 'each window event retains its own reference');
+assert.ok(biggerClose.worst <= 1 && biggerClose.restarts.length === 0, 'two reference-matched jumps pass');
+assert.equal(biggerClose.known.filter((k) => k.endsWith('after the open, with the other loop')).length, 2);
+assert.equal(biggerClose.known.filter((k) => k.endsWith('after the close, with the other loop')).length, 2);
+console.log('stop-chip-window: 13 cases pass');
