@@ -40,8 +40,9 @@ commit and base default to the receipt's full SHAs. Fetch `origin/main` in the s
 first. `verify` reads the receipt, report, shared checkout and current origin refs. It checks the
 check host's independent receipt witness, which attests to a clean full remote checkout and
 survives its removal. If the checkout was preserved, verification inspects it again. In the
-shared checkout it checks the full ignored inventory by path and SHA-256, tracked changes, hidden
-index flags and ignored collisions at newly tracked paths. File metadata changes during the
+shared checkout it refuses any staged change anywhere in the repository and names the paths.
+It also checks the full ignored inventory by path and SHA-256, tracked changes, hidden index
+flags and ignored collisions at newly tracked paths. File metadata changes during the
 inventory trigger one re-scan. Verification exits 0 when the receipt matches and reports the
 original checker exit. A mismatch is named and returns nonzero. The checker exit still governs
 the landing judgment.
@@ -661,7 +662,8 @@ Anyone who writes a checker input in the shared checkout, including readiness re
 4. In the shared checkout, set `PM_LAND_RECEIPT` to the receipt and `PM_LAND_COMMIT` and
    `PM_LAND_BASE` to its full `head` and `base` SHAs. Fetch and run `verify` under the guard.
    If the base or the branch moved, repeat the rebase, push and check.
-5. With the same guard held, run `git merge --ff-only --no-overwrite-ignore "$PM_LAND_COMMIT"`.
+5. With the same guard held, fast-forward only after `verify` passes immediately beforehand.
+   Run `git merge --ff-only --no-overwrite-ignore "$PM_LAND_COMMIT"`.
    Confirm that shared HEAD and its tree match the receipt. If Git refuses or the fast-forward
    is incomplete, retain the lock and inspect HEAD, index and working files before any repair.
    Preserve any other writer's changes.
@@ -669,13 +671,15 @@ Anyone who writes a checker input in the shared checkout, including readiness re
    shared checkout. A failure on the topic's paths stops publication. If all failures name other
    paths, confirm the shard exists in HEAD and its HEAD manifest references it. Report those
    paths to Jared.
-7. Fetch and run `verify` again under the guard immediately before pushing.
+7. Fetch and run `verify` again under the guard. Push only after it passes immediately beforehand.
 8. Push the exact checked commit to primary main with a lease on the checked base. After a
-   completed fast-forward, any failure before publication requires immediate
-   `git reset --keep origin/main` under the owned guard. Use freshly fetched primary main.
-   If a push returned an uncertain result, check primary first and reconcile against what
-   it accepted. If ownership or a safe reset cannot be established, stop and hand the state
-   to the current owner. Keep other writers' edits.
+   completed fast-forward fails publication, use freshly fetched primary main. If a push
+   returned an uncertain result, check primary first and reconcile against what it accepted.
+   For an unpublished candidate, confirm the index still matches HEAD under the owned guard
+   with `git diff --cached --quiet --no-ext-diff --ignore-submodules=none --ita-visible-in-index HEAD --`.
+   If it passes, run `git reset --keep origin/main` immediately under the same guard. If anyone
+   staged changes in the meantime, ownership was lost, or a safe reset cannot be established,
+   stop and hand off the state. Keep other writers' edits.
 9. Complete the Plans follow-up below under the same logical lock. Reseals follow the assigned
    reseal record.
 10. Confirm primary main contains the exact topic tip, then check the original worktree and
@@ -743,24 +747,31 @@ For an ordinary Plans landing, prepare a fresh full worktree at the newly pushed
 Nas1 is suitable. Copy the same ignored inputs listed above and save their path and SHA-256
 inventory with the generation evidence. Include the raw evidence link and manifest. Run the
 two generation commands together under `long-job` on that host. If a snapshot for this UTC day
-already exists, use the next three-digit sequence in its run ID. The snapshot writes a new
+already exists, use the next three-digit sequence in its run ID. Set `PM_LAND_SCRIPT` to the
+trusted absolute path to the lander script. Run the commands from the fresh full worktree.
+The snapshot writes a new
 tracked run directory and removes older runs. The replaced run stays because the new run
 declares it and validation reads its summary. Git history keeps the removed bytes.
 
-    cd ~/pm-worktrees/snapshot-$(date -u +%Y%m%d)
-    git fetch origin
-    python3 scripts/pm-plan-migration.py snapshot-current \
-        --run-id pds-$(date -u +%Y%m%d)-001-current-planunit-snapshot \
-        --expected-doc-count "$(ls Plans/*.md | wc -l)" \
-        --supersedes-run-id "$(python3 -c "import json;print(json.load(open('Plans/.plan_migration/current_run.json'))['run_id'])")"
-    python3 scripts/pm-landing-check.py --record-baseline \
-        --readiness-audit-root "$PWD/Plans/.audits/event-authority-2026-08-13-currentness"
-    git add Plans/.plan_migration reports/landing-checks/baseline.json
-    git commit -m "plans: refresh the plan-migration snapshot and the landing-check baseline"
-    git push origin HEAD:refs/heads/fix/my-landing-snapshot
+```sh
+set -eu
+git fetch origin
+PM_LAND_TOPIC_BRANCH="fix/landing-snapshot-$(date -u +%Y%m%d-%H%M%S)"
+git switch -c "$PM_LAND_TOPIC_BRANCH" origin/main
+python3 scripts/pm-plan-migration.py snapshot-current \
+    --run-id pds-$(date -u +%Y%m%d)-001-current-planunit-snapshot \
+    --expected-doc-count "$(ls Plans/*.md | wc -l)" \
+    --supersedes-run-id "$(python3 -c "import json;print(json.load(open('Plans/.plan_migration/current_run.json'))['run_id'])")"
+python3 scripts/pm-landing-check.py --record-baseline \
+    --readiness-audit-root "$PWD/Plans/.audits/event-authority-2026-08-13-currentness"
+git add Plans/.plan_migration reports/landing-checks/baseline.json
+git commit -m "plans: refresh the plan-migration snapshot and the landing-check baseline"
+git push origin "HEAD:refs/heads/$PM_LAND_TOPIC_BRANCH"
+long-job start "pm-${PM_LAND_TOPIC_BRANCH#fix/}" -- python3 -B "$PM_LAND_SCRIPT" check "$PM_LAND_TOPIC_BRANCH"
+long-job wait "pm-${PM_LAND_TOPIC_BRANCH#fix/}" --timeout 1500
+```
 
-Check that the generation inventory still matches after recording. Run `pm-land.py check`
-from a clone where the named local follow-up ref equals the pushed tip. Confirm its receipt
+Check that the generation inventory still matches after recording. Confirm the check receipt
 has the ignored-input inventory used to record the baseline. Then judge, verify, fast-forward,
 run the shared shard check, verify again and push under the same hand procedure. If generation
 or validation fails, keep the lock while handing off or recovering the owed follow-up. Remove
