@@ -686,9 +686,13 @@ Anyone who writes a checker input in the shared checkout, including readiness re
     branch before removal. Inspect porcelain, `git ls-files -v` and
     `git ls-files --others --ignored --exclude-standard`. Hand off a switched, changed or
     uncertain worktree, including hidden tracked edits or authored ignored files. Remove the
-    clean worktree from its original clone with `git worktree remove "$PM_LAND_TOPIC_WORKTREE"`,
-    then delete the verified tip with
-    `git update-ref --no-deref -d "refs/heads/$PM_LAND_TOPIC_BRANCH" "$PM_LAND_COMMIT"`.
+    clean worktree from its original clone with `git worktree remove "$PM_LAND_TOPIC_WORKTREE"`.
+    Then confirm the branch still names the verified tip,
+    `test "$(git rev-parse --verify "refs/heads/$PM_LAND_TOPIC_BRANCH")" = "$PM_LAND_COMMIT"`,
+    and delete it with `git branch -d "$PM_LAND_TOPIC_BRANCH"`. `git branch -d` also refuses a
+    branch that another worktree has checked out (such as one that attached at the same tip
+    after the removal) and a tip `main` doesn't contain. If either step refuses, leave the branch
+    and hand it off. Never use `git branch -D` or `git update-ref -d` here.
     Recheck your token under the guard and release your holder.
 
 ### Guarded fast-forward and push commands
