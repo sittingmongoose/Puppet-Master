@@ -12,6 +12,12 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const INPUTS = ['mouse', 'shift-f10', 'menu-key'];
 const KEY = { 'shift-f10': 'Shift+F10', 'menu-key': 'ContextMenu' };
+
+export function pathNotePresent(notes, path, format) {
+  return notes.some(note => format === 'copy'
+    ? note.trim() === 'Copied ' + path
+    : note.trim().endsWith(' · ' + path));
+}
 // A popup trigger opens by every way the owners wire it: a press, and Enter, Space and ArrowDown on the focused trigger.
 const POPUP_INPUTS = ['mouse', 'enter', 'space', 'arrowdown'];
 const PKEY = { enter: 'Enter', space: ' ', arrowdown: 'ArrowDown' };
@@ -1261,16 +1267,20 @@ export default async function (t) {
           const now = await fx(), o = now.opens[0], where = cmd.how === 'open' ? cmd.where : 'auto';
           return now.opens.length === 1 && o.kind === 'editor' && o.path === want && (o.where || 'auto') === where ? null : { opens: now.opens, toasts: now.toasts };
         }
-        if (cmd.how === 'copy') { await until(([w]) => __fx.copies.includes(w) && __fx.toasts.some(m => m.includes(w))); const now = await fx(); return now.copies.includes(want) && now.toasts.some(m => m.includes(want)) ? null : { copies: now.copies, toasts: now.toasts }; }
+        if (cmd.how === 'copy') {
+          await until(() => __fx.copies.length && __fx.toasts.length);
+          const now = await fx();
+          return now.copies.includes(want) && pathNotePresent(now.toasts, want, 'copy') ? null : { copies: now.copies, toasts: now.toasts };
+        }
         if (cmd.how === 'copyfull') {
           await until(([w]) => __fx.copies.some(c => c.endsWith('/' + w)));
           const now = await fx(), c = now.copies.find(c => c.endsWith('/' + want) && c.length > want.length + 1);
           if (c) root = c.slice(0, -(want.length + 1));
-          return c && now.toasts.some(m => m.includes(c)) ? null : { copies: now.copies, toasts: now.toasts };
+          return c && pathNotePresent(now.toasts, c, 'copy') ? null : { copies: now.copies, toasts: now.toasts };
         }
         if (cmd.how === 'source' || cmd.how === 'note') {
-          await until(([w]) => __fx.toasts.some(m => m.includes(w)));
-          const now = await fx(); return now.toasts.some(m => m.includes(want)) && !now.opens.length ? null : { opens: now.opens, toasts: now.toasts };
+          await until(() => __fx.toasts.length > 0);
+          const now = await fx(); return pathNotePresent(now.toasts, want, 'open-with') && !now.opens.length ? null : { opens: now.opens, toasts: now.toasts };
         }
         if (cmd.how === 'terminal') {
           await until(() => __fx.opens.some(o => o.kind === 'terminal') || __fx.reveals.length > 0);
