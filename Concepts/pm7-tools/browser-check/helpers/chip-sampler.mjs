@@ -19,7 +19,7 @@
 //   inset outline) in screen pixels along each axis, read from the element that paints its material (FO-235) } },
 //   and ups: every pointerup's timeStamp (FO-232: the press each frame is judged from).
 import { withPaintedChip } from './painted-chip.mjs';
-import { poseAt, edges } from './carry-frames.mjs';
+import { poseAt, edges, steps } from './carry-frames.mjs';
 
 export const CHIP_SAMPLER = withPaintedChip((opts) => {
 	const W = window.__chipSmp || (window.__chipSmp = { rows: [], shifts: [], strips: [], on: true, ids: 0, ups: [] });
@@ -39,8 +39,10 @@ export const CHIP_SAMPLER = withPaintedChip((opts) => {
 	// that input made and no frame painted yet: Usage's click sets its chosen page at once, and an input task outranks the
 	// read's; the page then syncs its chip with the next frame's layout, painted together with the mark)
 	W.inputAt = -1; for (const ty of ['pointerdown', 'pointerup', 'click', 'keydown', 'keyup']) addEventListener(ty, () => { W.inputAt = performance.now(); }, true);
-	const read = (k) => {
-		const row = { k, ts: W.ts, tl: document.timeline.currentTime, now: performance.now(), s: {}, stale: k === 'task' && W.inputAt > W.tickAt };
+	const read = (k, frame) => {
+		// A queued task can lose to another frame. The older task cannot read the pose from its own frame anymore.
+		if (frame.ts !== W.ts) return;
+		const row = { k, ts: frame.ts, tl: document.timeline.currentTime, now: performance.now(), s: {}, stale: k === 'task' && W.inputAt > frame.tickAt };
 		for (const s of W.strips) {
 			const el = stripOf(s); if (!el) continue;
 			const sr = el.getBoundingClientRect();
@@ -89,10 +91,17 @@ export const CHIP_SAMPLER = withPaintedChip((opts) => {
 	// chosen mark in such a timer (o55AfterPaint): read after it, the frame showed the new mark with the chip not yet synced,
 	// which no frame painted; the next frame painted both. Either way the read says which way it was queued: via)
 	const ch = new MessageChannel();
-	ch.port1.onmessage = () => { if (W.on) read('task'); };
+	ch.port1.onmessage = (e) => { if (W.on) read('task', e.data); };
 	W.via = window.scheduler && typeof scheduler.postTask === 'function' ? 'postTask' : 'message';
-	const post = W.via === 'postTask' ? () => { scheduler.postTask(() => { if (W.on) read('task'); }, { priority: 'user-blocking' }).catch(() => {}); } : () => ch.port2.postMessage(0);
-	const tick = (ts) => { if (!W.on) return; W.ts = ts; W.tickAt = performance.now(); if (W.raf) read('raf'); post(); requestAnimationFrame(tick); };
+	const post = W.via === 'postTask' ? (frame) => { scheduler.postTask(() => { if (W.on) read('task', frame); }, { priority: 'user-blocking' }).catch(() => {}); } : (frame) => ch.port2.postMessage(frame);
+	const tick = (ts) => {
+		if (!W.on) return;
+		W.ts = ts;
+		const frame = { ts, tickAt: performance.now() };
+		if (W.raf) read('raf', frame);
+		post(frame);
+		requestAnimationFrame(tick);
+	};
 	requestAnimationFrame(tick);
 	try {
 		new PerformanceObserver((list) => {
@@ -130,13 +139,51 @@ function originAt(rows, t) { let o = null; for (const r of rows) { if (r.ts > t 
 // there too, read at the item it was bound for, one Usage pitch, 31 px, away: FO-234's signature on a lens)
 export const trusted = (r) => r.box && (r.src === 'carry' ? (r.framePaced && r.heldPose) || (r.st != null && r.st <= r.t) : r.st == null || r.st <= r.t);
 
+// Recover observed held poses when a posted geometry read was overtaken by later renderer frames.
+// A following callback must have read the pose from a carry visible at either post-paint
+// endpoint. A keyframe prediction by itself cannot supply an intermediate pose.
+export function heldBetween(smp, sel, data) {
+	const rows = chipRows(smp, sel).filter((r) => !r.stale && r.box);
+	const records = new Map(data.anims.filter((r) => r.strip === sel && r.framePaced).map((r) => [r.id, r]));
+	const found = new Map();
+	let i = 1;
+	for (const row of data.samples) {
+		const p = row.s[sel];
+		if (!p?.block || p.appliedTl == null || p.appliedTl >= row.t || p.ct == null) continue;
+		while (i < rows.length && rows[i].ts <= p.appliedTl) i++;
+		const a = rows[i - 1], b = rows[i], rec = records.get(p.rec);
+		if (!rec || !a?.heldPose || !b?.heldPose || (p.rec !== a.rec && p.rec !== b.rec) ||
+			p.appliedTl <= a.ts || (p.rec === a.rec && p.ct <= a.ct) || (p.rec === b.rec && p.ct >= b.ct) || !a.so || !b.so ||
+			a.so.some((v, k) => v !== b.so[k])) continue;
+		const shape = rec.rebased != null && row.now < rec.rebased ? { ...rec, kf: rec.kfPrev, dur: rec.durPrev } : rec;
+		found.set(p.appliedTl, { t: p.appliedTl, box: rel(p.block, a.so), poseTime: p.ct, src: 'rec:' + rec.id, now: row.now,
+			rec: shape, before: a.ts, after: b.ts });
+	}
+	return [...found.values()];
+}
+
+// Keep the one-frame bound, including when a gap can be split by observed held poses.
+export function presentationSteps(samples, held) {
+	const gaps = [];
+	for (let i = 1; i < samples.length; i++) {
+		const a = samples[i - 1], b = samples[i];
+		if (b.t - a.t <= 80) continue;
+		const between = held.filter((p) => p.before === a.ts && p.after === b.ts);
+		const raw = steps([a, b], { presentationGaps: true }).gaps[0];
+		const observed = [{ ...a, t: a.ts }, ...between, { ...b, t: b.ts }];
+		const judged = between.length ? steps(observed, { oneFrame: true }).worst : raw;
+		gaps.push({ ...raw, held: between.length, judged });
+	}
+	return gaps;
+}
+
 // every frame drawn, on the frame grid the reads give (each read's frame time; frames inside a long task every 1/60 s):
 // a carried block from the first frame that draws it (a block that waited for it starts at that frame's time less its
 // hold; one given its trip's start time, from the frame after it was made) until the first frame of the block that
 // replaced it, or, replaced by none, the frame after it was cancelled; its pose from its keyframes on its own clock (a
 // change's keyframes are the trip under way up to where the change starts, so its last keyframes hold at every time).
 // Otherwise the chip the read of that frame saw (the lens).
-export function drawnFrames(smp, sel, anims0) {
+export function drawnFrames(smp, sel, anims0, observed = []) {
 	const anims = started(anims0);
 	const rows = smp.rows.filter((r) => r.k === 'task' && r.s[sel]);
 	const recs = anims.filter((r) => r.strip === sel && r.start != null).sort((a, b) => a.created - b.created);
@@ -146,7 +193,8 @@ export function drawnFrames(smp, sel, anims0) {
 	// (a block that waited for its first frame: the compositor's own start for it, plus its hold, is that frame)
 	const D = new Map(recs.map((r) => [r, !r.explicit && !r.startFromProbe ? r.start + (r.hold || 0) : r.drawnAt != null ? r.drawnAt : after(r.created)]));
 	const replaced = new Set(recs.filter((r, i) => r.cancelled != null && recs[i + 1] && recs[i + 1].created - r.cancelled <= 200 && recs[i + 1].created >= r.cancelled - 0.5));
-	const ts = [...new Set(rows.map((r) => r.ts))].sort((a, b) => a - b), byTs = new Map(rows.map((r) => [r.ts, r]));
+	const bridged = new Map(observed.map((p) => [p.t, p]));
+	const ts = [...new Set([...rows.map((r) => r.ts), ...bridged.keys()])].sort((a, b) => a - b), byTs = new Map(rows.map((r) => [r.ts, r]));
 	// a block's keyframes place it from its box when it was made, in the strip as it was then
 	const sr = rows.map((r) => ({ ts: r.now, so: r.s[sel].so }));
 	const originOf = (rec) => originAt(sr, rec.created);
@@ -155,6 +203,12 @@ export function drawnFrames(smp, sel, anims0) {
 	const out = [];
 	let held = null;
 	for (const T of grid) {
+		const bridge = bridged.get(T);
+		if (bridge) {
+			held = { rec: bridge.rec.id, ct: bridge.poseTime, sample: bridge.now };
+			out.push(bridge);
+			continue;
+		}
 		const row = byTs.get(T), x = row && row.s[sel];
 		// A frame-paced carry keeps the last applied pose between callbacks, including during a long task.
 		if (row && !row.stale) held = x?.framePaced && x.heldPose ? { ...x, sample: row.now } : null;
