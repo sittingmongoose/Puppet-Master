@@ -224,7 +224,9 @@ function carryHold(tab, pane) {
    the icons, the inverse tick and the rows share one clock, whatever the shell's fit pass costs this frame. paneOf: the
    view that comes in (read in that frame); after(pane): a strip's own fitting of that view */
 function playTabs(st, from, dir, paneOf, after, left, wait) {
-  requestAnimationFrame(function step() {
+  let first = null;
+  requestAnimationFrame(function step(now) {
+    if (first == null) first = now;
     /* (a pane held for the switcher's carry: the change waits, frame by frame, until its chip has landed: carryHold) */
     if (wait && D.on && wait()) { requestAnimationFrame(step); return; }
     if (!D.on) { if (left) releaseLeaving(left); return; }
@@ -237,7 +239,17 @@ function playTabs(st, from, dir, paneOf, after, left, wait) {
        with the rest of the change, or the shell's fit pass would eat it and the brackets would just appear */
     const ret = document.getElementById('o55np-reticle');
     if (ret && fam() === 'nier' && !reduced()) ret.querySelectorAll(':scope > i').forEach(i => i.getAnimations().forEach(a => anims.push(a)));
-    startTogether(anims);
+    /* a change held for the carry goes on, when its moves start, as far along as it would be had it begun in the click's
+       frame: the rows due by then come in that far, the held pane is that far out, so the new view is no later than
+       without the hold (Alexis: 517 ms against main's 467 ms). Set in the page's own start (o.release, the frame they
+       play in): set before it, the start's hold took them back to their first frame, and the pane showed for two
+       frames, then went blank */
+    if (wait && first != null && window.PM_START_ON_SHOWN) {
+      window.PM_START_ON_SHOWN(anims, { release() {
+        const t = document.timeline.currentTime, ahead = t == null ? 0 : t - first;
+        if (ahead > 0) anims.forEach(a => { try { if (a.playState !== 'idle' && (a.currentTime || 0) < ahead) a.currentTime = ahead; } catch (e) { /* gone */ } });
+      } });
+    } else startTogether(anims);
   });
 }
 
