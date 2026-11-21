@@ -146,7 +146,8 @@ def install(prove):
             judge(self, record, evaluate, value)
             if record.get('kill') == 'CUT_EXCEPTION' and evaluate is not None:
                 record['cut_exception_site'] = cut_site(self, evaluate, value, record['target'])
-            if record.get('kill') == 'COVERED_LATER' and evaluate is not None:
+            if record.get('kill') in sweep.LATER_REFUSAL_CLASSES and evaluate is not None:
+                # Evidence only, for every later-refusal class (COVERED_LATER, CUT_LEFT_EFFECT, CANNOT_DECIDE).
                 record['dg5_chain'] = chain(self, evaluate, value, record['target'])
         sweep.Collector._judge = judged
         sweep.Collector._go_cut_sites = True
