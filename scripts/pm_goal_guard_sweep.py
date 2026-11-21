@@ -1076,7 +1076,7 @@ def judge_self_test():
             # site where its row refused. Without it the own-guard condition fails closed.
             where=['scripts/selftest_owner.py', 10 if row == 'first' else 20]
             return dict(errors=errors,refusal_code=code,
-                        refusal_origin=dict(site=where,frames=[['selftest_owner.py',where[1],'check']]) if origin else None,
+                        refusal_origin=dict(site=where,frames=[where+['check',False,False]]) if origin else None,
                         refusing_sites=[(e,where) for e in errors],
                         store_after_sha256='0'*64,owner_state_sha256='1'*64,owner_state=dict(hook='selftest'))
         collector.invoke('judge/killed_code',coded,dict(x=False),False,target='dg5/selftest/first/schema',generated=True)
