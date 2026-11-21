@@ -19,6 +19,7 @@ from collections import Counter
 from contextlib import contextmanager
 from copy import deepcopy
 from datetime import datetime, timezone
+from decimal import Decimal
 from pathlib import Path, PurePosixPath
 from typing import Any, Iterable
 from urllib.parse import urlparse
@@ -136,6 +137,15 @@ def sha256_file(path: Path) -> str:
 
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def parse_exact_json_int(token: str) -> int:
+    # The JSON decoder has already checked the token's integer syntax. Decimal
+    # converts long tokens exactly without changing Python's process-wide limit.
+    try:
+        return int(token)
+    except ValueError:
+        return int(Decimal(token))
 
 
 def write_report(report: dict[str, Any], report_path: str | None) -> None:
@@ -925,7 +935,7 @@ def iter_repo_files(capture_paths: Iterable[str] | None = None) -> list[Path]:
 def parse_json_or_jsonl(path: Path) -> int:
     """Parse one JSON artifact and return the number of nonblank JSONL rows read."""
     if path.suffix == ".json":
-        load_json(path)
+        json.loads(path.read_text(encoding="utf-8"), parse_int=parse_exact_json_int)
         return 0
     jsonl_lines = 0
     # JSON Lines records are delimited by LF bytes.  ``str.splitlines()`` is
@@ -935,7 +945,7 @@ def parse_json_or_jsonl(path: Path) -> int:
         for line in stream:
             if not line.strip():
                 continue
-            json.loads(line)
+            json.loads(line, parse_int=parse_exact_json_int)
             jsonl_lines += 1
     return jsonl_lines
 
@@ -3589,7 +3599,7 @@ def source_confidence_scan_active_examples() -> tuple[list[dict[str, Any]], int,
             path_failures, path_scanned, path_allowed = source_confidence_scan_markdown(path)
         elif suffix == ".json":
             path_failures, path_scanned, path_allowed = source_confidence_scan_json_value(
-                value=load_json(path),
+                value=json.loads(path.read_text(encoding="utf-8"), parse_int=parse_exact_json_int),
                 path_key=path_key,
                 location="$",
             )
@@ -3601,7 +3611,7 @@ def source_confidence_scan_active_examples() -> tuple[list[dict[str, Any]], int,
                 if not line.strip():
                     continue
                 line_failures, line_scanned, line_allowed = source_confidence_scan_json_value(
-                    value=json.loads(line),
+                    value=json.loads(line, parse_int=parse_exact_json_int),
                     path_key=path_key,
                     location=f"${line_number}",
                 )

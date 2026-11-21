@@ -117,6 +117,21 @@ def run_fault(name, number, ref_location='timestamp', reader_fault='live_state')
                 return storage
             return original_load(path)
         dt.load = changed
+    if number == '5':
+        document = copy.deepcopy(original_load('Plans/dt_event_contracts.schema.json'))
+        definition = name.replace('.', '_') + '_checkpoint'
+        try:
+            # The source profile supplies the exact length that rejects LF.
+            # Keep the pattern so the checker still generates every identifier probe.
+            checkpoint_schema = dt.checkpoint_source_constraints(document['$defs'][definition])
+            anchor = checkpoint_schema['properties']['index_read_token']['properties']['generation_anchor_sha256']
+            del anchor['maxLength']
+        except (KeyError, TypeError):
+            return 1, dict(status='not_run', families=0, checks=0, failures=[],
+                           mutation_setup_error=definition + ' is missing effective generation_anchor_sha256.maxLength')
+        document['$defs'][definition] = checkpoint_schema
+        schema_fault(document, definition)
+
     weakened_source = source
     if number == '1':
         weakened_source = weakened(source, FAULT_ROWS['1'])
@@ -139,12 +154,7 @@ def run_fault(name, number, ref_location='timestamp', reader_fault='live_state')
         return (weakened_source if c['event_type'] == name else source)(c, *args, **kwargs)
     dt.source_valid = changed_source
     weakened_checkpoint = checkpoint
-    if number == '5':
-        document = copy.deepcopy(original_load('Plans/dt_event_contracts.schema.json'))
-        definition = name.replace('.', '_') + '_checkpoint'
-        del document['$defs'][definition]['properties']['index_read_token']['properties']['generation_anchor_sha256']['maxLength']
-        schema_fault(document, definition)
-    elif number == '7':
+    if number == '7':
         weakened_checkpoint = weakened(checkpoint, FAULT_ROWS['7'])
     def changed_checkpoint(c, *args, **kwargs):
         return (weakened_checkpoint if c['event_type'] == name else checkpoint)(c, *args, **kwargs)
@@ -232,6 +242,7 @@ def main():
     if len(set(targets)) != len(targets) or any(name not in families for name in targets):
         parser.error('--family must name distinct drafted DT families')
     results = {}; failures = []
+    setup_failures = 0
     controls = reference_controls()
     failures.extend('schema reference control: ' + name for name, passed in controls.items() if not passed)
     for name in targets:
@@ -250,10 +261,17 @@ def main():
                              result['checks'] == len(families) and any(
                                  'standing_missing_' + name.replace('.', '_') in error
                                  for error in result.get('schema_reference_errors', []))))
+            if number == '5':
+                rejected = rejected and name + ': standing check 5' in messages
             row[number] = {'case': CASES[number], 'status': 'pass' if rejected else 'fail',
                            'full_checker_status': result['status'], 'exit_code': code,
                            'families_checked': result['families'], 'assertions': result['checks'],
                            'failures': messages}
+            setup_error = result.get('mutation_setup_error')
+            if setup_error:
+                setup_failures += 1
+                row[number]['exit_code'] = None
+                row[number]['mutation_setup_error'] = setup_error
             if number == '9':
                 locations = {}
                 for location in ['optional', 'unused_definition', 'mirror']:
@@ -281,12 +299,13 @@ def main():
                     rejected = False
                     row[number]['status'] = 'fail'
             if not rejected:
-                failures.append(name + ': standing check ' + number + ' failed to reject fault')
+                detail = ' mutation setup failed: ' + setup_error if setup_error else ' failed to reject fault'
+                failures.append(name + ': standing check ' + number + detail)
         results[name] = row
         print(name + ': ' + ', '.join(k + '=' + v['status'] for k, v in row.items()), file=sys.stderr, flush=True)
     print(json.dumps({'status': 'pass' if not failures else 'fail', 'families': len(targets),
                       'checker_families': len(families),
-                      'full_checker_runs': 1 + 17 * len(targets), 'per_family': results,
+                      'full_checker_runs': 1 + 17 * len(targets) - setup_failures, 'per_family': results,
                       'reference_controls': controls,
                       'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return int(bool(failures))
